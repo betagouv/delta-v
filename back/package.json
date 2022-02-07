@@ -1,0 +1,55 @@
+{
+  "name": "delta-v",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node dist/index.js",
+    "build": "tsc -p ./tsconfig.build.json",
+    "lint": "eslint --ext .ts src/ tests/",
+    "lint:fix": "yarn lint --fix",
+    "test": "jest --detectOpenHandles"
+  },
+  "dependencies": {
+    "joi": "^17.6.0",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "express-pino-logger": "^7.0.0",
+    "faker": "^5.5.3",
+    "pino": "^7.6.5",
+    "pino-pretty": "^7.5.1"
+  },
+  "devDependencies": {
+    "@snowpact/eslint-config": "^1.2.1",
+    "@types/body-parser": "^1.19.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/express-pino-logger": "^4.0.3",
+    "@types/faker": "^6.6.9",
+    "@types/jest": "^27.4.0",
+    "@types/node": "14.11.1",
+    "@types/nodemailer": "^6.4.4",
+    "@types/pino": "^7.0.5",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.5.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "supertest": "^6.2.2",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  },
+  "repository": "git@github.com:sabalot/test-circle-ci-clever-cloud.git",
+  "author": "Sabalot <s.sabalot@gmail.com>",
+  "license": "MIT"
+}

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "strict": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "types": ["node", "jest"],
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*",
+    "types/**/*",
+    "tests/**/*",
+    "src/**/*.json",
+    "fixtures/**/*",
+    "jest.config.ts",
+    "local.config.ts"
+  ],
+  "exclude": ["node_modules"]
+}

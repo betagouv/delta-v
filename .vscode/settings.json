@@ -1,0 +1,15 @@
+{
+  "eslint.workingDirectories": [
+    {
+      "directory": "back",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "front",
+      "changeProcessCWD": true
+    },
+  ],
+  "cSpell.words": [
+    "middlewares"
+  ]
+}

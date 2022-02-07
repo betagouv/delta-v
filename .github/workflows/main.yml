@@ -1,0 +1,22 @@
+name: Test clever cloud
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: cd back
+      - run: yarn
+      - run: yarn lint
+      - run: yarn test

@@ -29,13 +29,13 @@ Il s'agit d'une interface web pour les clients.
 **La partie Admin**
 
 - Langage : [Typescript](https://www.typescriptlang.org/)
-- Framework : [React](https://fr.reactjs.org/) avec peut être [React Admin](https://marmelab.com/react-admin/)
+- Framework : [React](https://fr.reactjs.org/) avec peut-être [React Admin](https://marmelab.com/react-admin/)
 
 Il s'agit d'une interface web permettant à l'administration compétente de modifier les données qui vont être affichées sur les différents clients.
 
 ### Infrastructure
 
-Pour l'infrastrure, nous utilisons [Clever Cloud](https://clever-cloud.com/fr/) pour :
+Pour l'infrastructure, nous utilisons [Clever Cloud](https://clever-cloud.com/fr/) pour :
 - L'instance Back-End, Front-End et Admin
 - La base de données PostgreSql
 - les fichiers statiques
