@@ -1,0 +1,41 @@
+version: '3.8'
+
+x-envs: &common-envs
+  PORT: 8080
+
+x-e2e-test-envs: &common-e2e-test-envs
+  <<: *common-envs
+
+services:
+  backend-api: &backend_default
+    image: node:14
+    restart: unless-stopped
+    volumes:
+      - ./back/:/usr/app:delegated
+      - ./:/all-projects:delegated
+    networks:
+      - backend
+    environment:
+      <<: *common-envs
+    working_dir: /usr/app
+    command: yarn dev
+
+  backend-api-delta-v:
+    <<: *backend_default
+    container_name: backend-api-delta-v
+    ports:
+      - 8080:8080
+
+  e2e-test-backend-api-delta-v:
+    <<: *backend_default
+    container_name: e2e-test-backend-api-delta-v
+    ports:
+      - 8180:8080
+    environment:
+      <<: *common-e2e-test-envs
+
+networks:
+  backend:
+
+volumes:
+  db-data:
