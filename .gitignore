@@ -2,6 +2,9 @@
 # Dependency directories
 node_modules/
 
+# build
+dist/
+
 # History management
 .history/
 
