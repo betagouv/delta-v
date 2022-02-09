@@ -8,7 +8,7 @@ on:
       - master
 
 jobs:
-  test:
+  test-back:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,3 +22,17 @@ jobs:
       - run: yarn
       - run: yarn lint
       - run: yarn test
+
+  deploy-back-production:
+    runs-on: ubuntu-latest
+    # if: github.ref == 'refs/heads/master'
+    needs: test-back
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
+      - uses: 47ng/actions-clever-cloud@v1
+        with:
+          alias: delta-v-back-prod
+        env:
+          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
