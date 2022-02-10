@@ -11,7 +11,13 @@
     "build": "tsc -p ./tsconfig.build.json",
     "lint": "eslint --ext .ts src/ tests/",
     "lint:fix": "yarn lint --fix",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "ts-typeorm": "ts-node ./node_modules/.bin/typeorm --config ./src/loader/ormconfig.ts",
+    "typeorm:drop": "yarn ts-typeorm schema:drop",
+    "migration:generate": "yarn ts-typeorm migration:generate",
+    "migration:run": "yarn ts-typeorm migration:run",
+    "migration:revert": "yarn ts-typeorm migration:revert",
+    "migration:create": "yarn ts-typeorm migration:create -d ./src/migrations/ -n "
   },
   "dependencies": {
     "body-parser": "^1.19.1",
@@ -20,8 +26,10 @@
     "express-pino-logger": "^7.0.0",
     "faker": "^5.5.3",
     "joi": "^17.6.0",
+    "pg": "^8.7.3",
     "pino": "^7.6.5",
-    "pino-pretty": "^7.5.1"
+    "pino-pretty": "^7.5.1",
+    "typeorm": "^0.2.41"
   },
   "devDependencies": {
     "@snowpact/eslint-config": "^1.2.1",
