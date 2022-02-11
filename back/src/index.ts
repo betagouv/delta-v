@@ -5,4 +5,4 @@ declare global {
   namespace Express {}
 }
 
-bootstrap();
+void bootstrap();

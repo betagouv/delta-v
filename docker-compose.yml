@@ -2,9 +2,15 @@ version: '3.8'
 
 x-envs: &common-envs
   PORT: 8080
+  DB_HOST: 'database-delta-v'
+  DB_PORT: 5432
+  DB_USERNAME: postgres
+  DB_PASSWORD: pass
+  DB_DATABASE: postgres
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
+  DB_HOST: 'e2e-test-database-delta-v'
 
 services:
   backend-api: &backend_default
@@ -23,19 +29,96 @@ services:
   backend-api-delta-v:
     <<: *backend_default
     container_name: backend-api-delta-v
+    depends_on:
+      - database-delta-v
     ports:
       - 8080:8080
 
   e2e-test-backend-api-delta-v:
     <<: *backend_default
     container_name: e2e-test-backend-api-delta-v
+    depends_on:
+      - e2e-test-database-delta-v
     ports:
       - 8180:8080
     environment:
       <<: *common-e2e-test-envs
+
+  database: &database_default
+    image: postgres:13.4
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/db-files/
+
+  database-delta-v:
+    <<: *database_default
+    container_name: database-delta-v
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  e2e-test-database-delta-v:
+    <<: *database_default
+    container_name: e2e-test-database-delta-v
+    ports:
+      - 5532:5432
+    volumes:
+      - e2e-test-db-data:/var/lib/postgresql/data
+  adminer:
+    image: michalhosna/adminer
+    restart: always
+    ports:
+      - 8081:8080
+    networks:
+      - backend
+    environment:
+      ADMINER_DRIVER: pgsql
+      ADMINER_SERVER: database-delta-v
+      ADMINER_DB: postgres
+      ADMINER_USERNAME: postgres
+      ADMINER_PASSWORD: pass
+      ADMINER_AUTOLOGIN: 1
+      ADMINER_NAME: Delta V - local
+
+
+    
+  frontend-web-delta-v:
+    container_name: frontend-web-delta-v
+    image: node:14
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - ./front/:/usr/app:delegated
+      - ./:/all-projects:delegated
+    networks:
+      - backend
+    working_dir: /usr/app
+    command: yarn dev
+  storybook-delta-v:
+    container_name: storybook-delta-v
+    image: node:14
+    ports:
+      - 9009:9009
+    volumes:
+      - ./front:/usr/app:delegated
+    networks:
+      - backend
+    working_dir: /usr/app
+    command: yarn storybook
+
 
 networks:
   backend:
 
 volumes:
   db-data:
+  e2e-test-db-data:
