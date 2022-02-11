@@ -1,4 +1,4 @@
-name: Test clever cloud
+name: Delta V
 
 on:
   pull_request:
@@ -13,13 +13,28 @@ jobs:
     defaults:
       run:
         working-directory: back
+    env:
+      PORT: 8080
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: pass
+      DB_DATABASE: postgres
 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
+      - name: Setup PostgreSQL
+        uses: Harmon758/postgresql-action@v1
+        with:
+          postgresql version: "13"
+          postgresql db: postgres
+          postgresql user: postgres
+          postgresql password: pass
       - run: yarn
+      - run: yarn migration:run
       - run: yarn lint
       - run: yarn test
 
