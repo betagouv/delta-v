@@ -1,7 +1,7 @@
-import { Repository } from 'typeorm';
-import TestEntity from '../../entities/test.entity';
+import { ITestRepository } from '../../repositories/test.repository';
 
-export default async (testRepository: Repository<TestEntity>): Promise<string | undefined> => {
-  const test = await testRepository.findOne();
+export default async (testRepository: ITestRepository): Promise<string | undefined> => {
+  const test = await testRepository.getFirst();
+
   return test?.id;
 };

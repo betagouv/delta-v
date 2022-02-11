@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn } from 'typeorm';
 
-interface ITestEntity {
+export interface ITestEntity {
   id: string;
 }
 
