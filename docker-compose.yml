@@ -89,6 +89,22 @@ services:
       ADMINER_NAME: Delta V - local
 
 
+    
+  frontend-web-delta-v:
+    container_name: frontend-web-delta-v
+    image: node:14
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - ./front/:/usr/app:delegated
+      - ./:/all-projects:delegated
+    networks:
+      - backend
+    working_dir: /usr/app
+    command: yarn dev
+
+
 networks:
   backend:
 

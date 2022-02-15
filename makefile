@@ -2,6 +2,7 @@ DOCKER_COMPOSE  = docker-compose
 USER =  --user $$(id -u):$$(id -g)
 DOCKER_COMPOSE_RUN  = $(DOCKER_COMPOSE) run $(USER)
 
+FRONT_CONTAINER =  frontend-web-delta-v
 BACK_CONTAINER =  backend-api-delta-v
 DATABASE_CONTAINER = database-delta-v
 ADMIN_DATABASE_CONTAINER = adminer
@@ -19,6 +20,11 @@ BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS)
 start-back: ## Start the backend containers
 	$(DOCKER_COMPOSE) up -d --remove-orphans $(BACK_CONTAINERS)
 	$(DOCKER_COMPOSE) logs -f $(BACK_CONTAINER)
+	
+.PHONY: start-front
+start-front: ## Start the frontend containers
+	$(DOCKER_COMPOSE) up -d --remove-orphans $(FRONT_CONTAINER)
+	$(DOCKER_COMPOSE) logs -f $(FRONT_CONTAINER)
 
 	
 .PHONY: stop
@@ -39,6 +45,10 @@ run-back-e2e: ## Run command in the backend test container
 .PHONY: y-i-back
 y-i-back: ## Install dependencies for the backend
 	$(DOCKER_COMPOSE) run --rm --no-deps $(BACK_CONTAINER) yarn install
+
+.PHONY: y-i-front
+y-i-front: ## Install dependencies for the frontend
+	$(DOCKER_COMPOSE) run --rm --no-deps $(FRONT_CONTAINER) yarn install
 
 ## TESTS
 
