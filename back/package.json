@@ -1,5 +1,5 @@
 {
-  "name": "delta-v",
+  "name": "delta-v-back",
   "version": "0.0.1",
   "main": "src/index.ts",
   "engines": {
