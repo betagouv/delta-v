@@ -1,6 +1,6 @@
 cd back
-yarn add typescript
+yarn install --production=false
 yarn build
 yarn migration:run
-yarn remove typescript
+yarn install --production=true
 cd ..
