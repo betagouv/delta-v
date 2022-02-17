@@ -3,6 +3,7 @@ USER =  --user $$(id -u):$$(id -g)
 DOCKER_COMPOSE_RUN  = $(DOCKER_COMPOSE) run $(USER)
 
 FRONT_CONTAINER =  frontend-web-delta-v
+STORYBOOK_CONTAINER =  storybook-delta-v
 BACK_CONTAINER =  backend-api-delta-v
 DATABASE_CONTAINER = database-delta-v
 ADMIN_DATABASE_CONTAINER = adminer
@@ -23,15 +24,18 @@ start-back: ## Start the backend containers
 	
 .PHONY: start-front
 start-front: ## Start the frontend containers
-	$(DOCKER_COMPOSE) up -d --remove-orphans $(FRONT_CONTAINER)
-	$(DOCKER_COMPOSE) logs -f $(FRONT_CONTAINER)
+	$(DOCKER_COMPOSE) up --remove-orphans $(FRONT_CONTAINER)
+
+.PHONY: start-storybook
+start-storybook: ## Start the storybook containers
+	$(DOCKER_COMPOSE) up --remove-orphans $(STORYBOOK_CONTAINER)
 
 	
 .PHONY: stop
 stop: ## Stop all the containers
 	$(DOCKER_COMPOSE) stop
 
-## INSTANCE BACKEND RUN
+## INSTANCE RUN
 
 .PHONY: run-back
 run-back: ## Run command in the backend container
@@ -39,6 +43,10 @@ run-back: ## Run command in the backend container
 .PHONY: run-back-e2e
 run-back-e2e: ## Run command in the backend test container
 	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: run-front
+run-front: ## Run command in the frontend container
+	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) $(filter-out $@,$(MAKECMDGOALS))
 
 ## DEPENDENCIES
 

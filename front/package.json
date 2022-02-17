@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "craco start",
-    "build": "env-cmd -f ./.env craco build",
+    "start": "node server.js",
+    "build": "craco build",
     "storybook": "start-storybook -p 9009",
     "test": "craco test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
@@ -15,7 +16,7 @@
     "@heroicons/react": "^1.0.5",
     "@tailwindcss/forms": "^0.4.0",
     "classnames": "^2.3.1",
-    "dotenv": "16.0.0",
+    "express": "^4.17.3",
     "query-string": "^7.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -80,5 +81,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "webpack": "^5"
   }
 }
