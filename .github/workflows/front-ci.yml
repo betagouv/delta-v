@@ -1,6 +1,7 @@
 name: Delta V - front
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - front/**
