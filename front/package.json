@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "craco start",
-    "build": "env-cmd -f ./.env craco build",
+    "start": "node server.js",
+    "build": "craco build",
     "storybook": "start-storybook -p 9009",
     "test": "craco test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
@@ -81,5 +82,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "webpack": "^5"
   }
 }

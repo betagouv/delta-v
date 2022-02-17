@@ -103,6 +103,17 @@ services:
       - backend
     working_dir: /usr/app
     command: yarn dev
+  storybook-delta-v:
+    container_name: storybook-delta-v
+    image: node:14
+    ports:
+      - 9009:9009
+    volumes:
+      - ./front:/usr/app:delegated
+    networks:
+      - backend
+    working_dir: /usr/app
+    command: yarn storybook
 
 
 networks:
