@@ -1,11 +1,15 @@
-name: Delta V
+name: Delta V - back
 
 on:
   pull_request:
+    paths:
+      - back/**
   push:
     branches:
       - develop
       - master
+    paths:
+      - back/**
 
 jobs:
   test-back:
