@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: git fetch --prune --unshallow
-      - uses: 47ng/actions-clever-cloud@v1
+      - uses: 47ng/actions-clever-cloud@master
         with:
           alias: delta-v-front-prod
         env:
