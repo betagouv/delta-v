@@ -1,7 +1,5 @@
 import { Response, NextFunction, Request } from 'express';
-import { getCustomRepository } from 'typeorm';
 import { HttpStatuses } from '../../core/httpStatuses';
-import TestRepository from '../../repositories/test.repository';
 import serializer from './serializer';
 
 import service from './service';
@@ -12,7 +10,7 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const testId = await service(getCustomRepository(TestRepository));
+    const testId = await service();
 
     const response = serializer(testId);
 

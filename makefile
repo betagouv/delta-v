@@ -86,6 +86,14 @@ db-migrate-run: ## run migrations for dev database
 db-migrate-run-e2e: ## run migrations for e2e database
 	$(DOCKER_COMPOSE_RUN) --rm $(TEST_BACK_CONTAINER) yarn migration:run
 
+.PHONY: db-fixtures-load
+db-fixtures-load: ## load fixtures
+	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) yarn fixtures:load
+
+.PHONY: db-fixtures-clear-load
+db-fixtures-clear-load: ## load fixtures
+	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) bash -c "yarn typeorm:drop && yarn migration:run && yarn fixtures:load"
+
 ## HELP
 
 .DEFAULT_GOAL := help

@@ -7,17 +7,13 @@ export const buildConnectionOptions = (
   connectionConfig?: PostgresConnectionOptions,
 ): PostgresConnectionOptions => {
   const config = buildConfig();
-
-  const socketPath = config.INSTANCE_CONNECTION_NAME
-    ? `/cloudsql/${config.INSTANCE_CONNECTION_NAME}`
-    : undefined;
   const buildPath = (ext: string): string =>
     path.resolve(__dirname, '..', 'migrations', `*.${ext}`);
 
   const dbEnvConfig: PostgresConnectionOptions = {
     type: 'postgres',
-    host: socketPath ? socketPath : config.DB_HOST,
-    port: socketPath ? undefined : config.DB_PORT,
+    host: config.DB_HOST,
+    port: config.DB_PORT,
     username: config.DB_USERNAME,
     password: config.DB_PASSWORD,
     database: config.DB_DATABASE,
@@ -25,10 +21,6 @@ export const buildConnectionOptions = (
     logging: config.DB_LOGGING,
     synchronize: false,
     migrations: [buildPath('ts'), buildPath('js')],
-    extra: {
-      connectionLimit: 10, // default: 10
-      socketPath,
-    },
     cli: {
       migrationsDir: './src/migrations',
     },
