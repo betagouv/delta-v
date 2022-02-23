@@ -1,0 +1,95 @@
+entity: ProductEntity
+items:
+  product1:
+    id: '{{datatype.uuid}}'
+    name: 'Maroquinerie'
+    info: 'Cela compose les Sac à dos, main, pochette...'
+    childrenQuestion: 'Quel type de produits ?'
+    nomenclatures:
+      - '42'
+  product4:
+    id: '{{datatype.uuid}}'
+    name: 'Sac à Main'
+    info: '{{lorem.sentence}}'
+    childrenQuestion: 'Quelle est la matière constitutive du produit ?'
+    parentProduct: '@product1'
+    nomenclatures:
+      - '4202'
+  product5:
+    id: '{{datatype.uuid}}'
+    name: 'Pochettes ou Portefeuilles'
+    info: '{{lorem.sentence}}'
+    childrenQuestion: 'Quelle est la matière constitutive du produit ?'
+    parentProduct: '@product1'
+    nomenclatures:
+      - '4202'
+  product16:
+    id: '{{datatype.uuid}}'
+    name: 'Cuire'
+    info: '{{lorem.sentence}}'
+    parentProduct: '@product4'
+    nomenclatures:
+      - '42022100'
+  product17:
+    id: '{{datatype.uuid}}'
+    name: 'Plastique'
+    info: '{{lorem.sentence}}'
+    parentProduct: '@product4'
+    nomenclatures:
+      - '42022210'
+  product18:
+    id: '{{datatype.uuid}}'
+    name: 'Autre'
+    info: '{{lorem.sentence}}'
+    parentProduct: '@product4'
+    nomenclatures:
+      - '42022290'
+      - '42022900'
+  product19:
+    id: '{{datatype.uuid}}'
+    name: 'Cuire'
+    info: '{{lorem.sentence}}'
+    parentProduct: '@product5'
+    nomenclatures:
+      - '42023100'
+  product20:
+    id: '{{datatype.uuid}}'
+    name: 'Plastique'
+    info: '{{lorem.sentence}}'
+    parentProduct: '@product5'
+    nomenclatures:
+      - '42023210'
+  product21:
+    id: '{{datatype.uuid}}'
+    name: 'Autre'
+    info: '{{lorem.sentence}}'
+    parentProduct: '@product5'
+    nomenclatures:
+      - '42023290'
+      - '42023900'
+  product{2..3}:
+    id: '{{datatype.uuid}}'
+    name: '{{lorem.word}}'
+    info: '{{lorem.sentence}}'
+    childrenQuestion: '{{lorem.sentence}}'
+    nomenclatures:
+      - '{{datatype.number}}'
+      - '{{datatype.number}}'
+  product{6..15}:
+    id: '{{datatype.uuid}}'
+    name: '{{lorem.word}}'
+    parentProduct: '@product{2..3}'
+    info: '{{lorem.sentence}}'
+    childrenQuestion: '{{lorem.sentence}}'
+    nomenclatures:
+      - '{{datatype.number}}'
+      - '{{datatype.number}}'
+  product{22..50}:
+    id: '{{datatype.uuid}}'
+    name: '{{lorem.word}}'
+    parentProduct: '@product{6..15}'
+    info: '{{lorem.sentence}}'
+    childrenQuestion: '{{lorem.sentence}}'
+    nomenclatures:
+      - '{{datatype.number}}'
+      - '{{datatype.number}}'
