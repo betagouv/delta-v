@@ -1,21 +1,18 @@
 import { Column, Entity, PrimaryColumn, Tree, TreeChildren, TreeParent } from 'typeorm';
 
-export interface IProduct {
+export interface Product {
   id: string;
   parentProductId?: string;
   name: string;
   info?: string;
   childrenQuestion?: string;
-}
-
-export interface IProductEntity extends IProduct {
-  subProducts?: IProductEntity[];
-  parentProduct?: IProductEntity;
+  subProducts?: ProductEntity[];
+  parentProduct?: ProductEntity;
 }
 
 @Entity('product')
 @Tree('closure-table')
-export default class ProductEntity implements IProductEntity {
+export class ProductEntity implements Product {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
 
@@ -32,8 +29,8 @@ export default class ProductEntity implements IProductEntity {
   childrenQuestion?: string;
 
   @TreeChildren()
-  subProducts?: IProductEntity[];
+  subProducts?: Product[];
 
   @TreeParent()
-  parentProduct?: IProductEntity;
+  parentProduct?: Product;
 }

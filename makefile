@@ -14,8 +14,15 @@ TEST_DATABASE_CONTAINER =  e2e-test-database-delta-v
 DATABASE_CONTAINERS =  $(DATABASE_CONTAINER) $(ADMIN_DATABASE_CONTAINER)
 BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS)
 
+##
+## -------------------------
+## | Delta V - Dev         |
+## -------------------------
+##
 
-## DOCKER MANAGER
+##
+## -- DOCKER MANAGER --
+##
 	
 .PHONY: start-back
 start-back: ## Start the backend containers
@@ -35,7 +42,9 @@ start-storybook: ## Start the storybook containers
 stop: ## Stop all the containers
 	$(DOCKER_COMPOSE) stop
 
-## INSTANCE RUN
+##
+## -- INSTANCE RUN --
+##
 
 .PHONY: run-back
 run-back: ## Run command in the backend container
@@ -48,7 +57,9 @@ run-back-e2e: ## Run command in the backend test container
 run-front: ## Run command in the frontend container
 	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) $(filter-out $@,$(MAKECMDGOALS))
 
-## DEPENDENCIES
+##
+## -- DEPENDENCIES --
+##
 
 .PHONY: y-i-back
 y-i-back: ## Install dependencies for the backend
@@ -58,14 +69,23 @@ y-i-back: ## Install dependencies for the backend
 y-i-front: ## Install dependencies for the frontend
 	$(DOCKER_COMPOSE) run --rm --no-deps $(FRONT_CONTAINER) yarn install
 
-## TESTS
+##
+## -- TESTS --
+##
 
 .PHONY: test-back
 test-back: ## Run the tests for the backend
 	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest tests/$(filter-out $@,$(MAKECMDGOALS)) --color
 	$(DOCKER_COMPOSE) stop $(TEST_DATABASE_CONTAINER)
 
-## DATABASE
+.PHONY: test-back-watch
+test-back-watch: ## Run the tests for the backend with watch
+	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest:watch tests/$(filter-out $@,$(MAKECMDGOALS)) --color
+	$(DOCKER_COMPOSE) stop $(TEST_DATABASE_CONTAINER)
+
+##
+## -- DATABASE --
+##
 
 .PHONY: db-drop
 db-drop: ## drop the database
@@ -94,9 +114,15 @@ db-fixtures-load: ## load fixtures
 db-fixtures-clear-load: ## load fixtures
 	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) bash -c "yarn typeorm:drop && yarn migration:run && yarn fixtures:load"
 
-## HELP
-
-.DEFAULT_GOAL := help
-help: ## This help
-	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~ AUTO-DOCUMENTED HELP ~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ARGS = $(filter-out $@,$(MAKECMDGOALS))
+.DEFAULT_GOAL := help   # Show help without arguments
+SPACE  = 40             # Space before description
+%:                      # Recipe generate AGRS
+	@:
+help:                   # Recipe generate help with double hash prefix
+	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-${SPACE}s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 .PHONY: help
+##
