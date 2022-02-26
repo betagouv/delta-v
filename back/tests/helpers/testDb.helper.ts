@@ -1,11 +1,12 @@
 import { Connection } from 'typeorm';
-import ProductEntity from '../../src/entities/product.entity';
+import { Product, ProductEntity } from '../../src/entities/product.entity';
 import { initDatabase } from '../../src/loader/database';
 
 export interface ITestDbManager {
   getConnection: () => Connection;
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
+  persistProduct: (args: Product) => Promise<Product>;
   clear: () => Promise<void>;
 }
 
@@ -22,6 +23,8 @@ export const testDbManager = (): ITestDbManager => {
     disconnect: async (): Promise<void> => {
       await connection.close();
     },
+    persistProduct: async (args: Product): Promise<Product> =>
+      connection.manager.save(ProductEntity, args),
     clear: async (): Promise<void> => {
       await Promise.all(
         ENTITIES.map(async (entity) => {

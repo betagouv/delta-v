@@ -11,7 +11,9 @@
     "build": "tsc -p ./tsconfig.build.json",
     "lint": "eslint --ext .ts src/ tests/",
     "lint:fix": "yarn lint --fix",
-    "test": "jest --detectOpenHandles",
+    "test": "yarn jest",
+    "jest": "jest -i --verbose",
+    "jest:watch": "jest -i --verbose --watch",
     "ts-typeorm": "ts-node ./node_modules/.bin/typeorm --config ./src/loader/ormconfig.ts",
     "typeorm:drop": "yarn ts-typeorm schema:drop",
     "migration:generate": "yarn ts-typeorm migration:generate",
@@ -33,6 +35,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.7",
     "@snowpact/eslint-config": "^1.2.1",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",

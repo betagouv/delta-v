@@ -45,7 +45,8 @@ jobs:
 
   deploy-back-production:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'NOT DEPLOY'
+    # if: github.ref == 'refs/heads/master'
     needs: test-back
     steps:
       - uses: actions/checkout@v2

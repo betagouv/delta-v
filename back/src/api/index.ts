@@ -1,4 +1,4 @@
 import { Router } from 'express';
-import hello from './hello';
+import { productRouter } from './product';
 
-export default Router().use(hello);
+export default Router().use(productRouter);
