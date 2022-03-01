@@ -6,6 +6,9 @@ export interface Product {
   name: string;
   info?: string;
   childrenQuestion?: string;
+  nomenclatures?: string[];
+  customDuty?: number;
+  vat?: number;
   subProducts?: ProductEntity[];
   parentProduct?: ProductEntity;
 }
@@ -27,6 +30,15 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'text', nullable: true })
   childrenQuestion?: string;
+
+  @Column({ type: 'simple-array', nullable: true })
+  nomenclatures?: string[];
+
+  @Column({ type: 'decimal', nullable: true })
+  customDuty?: number;
+
+  @Column({ type: 'decimal', nullable: true })
+  vat?: number;
 
   @TreeChildren()
   subProducts?: Product[];
