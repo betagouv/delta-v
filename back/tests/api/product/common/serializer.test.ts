@@ -11,6 +11,9 @@ describe('test get all product serializer', () => {
       name: parentProduct1.name,
       info: parentProduct1.info,
       childrenQuestion: parentProduct1.childrenQuestion,
+      customDuty: parentProduct1.customDuty,
+      vat: parentProduct1.vat,
+      nomenclatures: parentProduct1.nomenclatures,
     });
 
     expect(serializedProduct.subProducts).toMatchObject([

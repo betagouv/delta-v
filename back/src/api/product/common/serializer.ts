@@ -5,6 +5,9 @@ export interface SerializedProduct {
   name: string;
   info?: string;
   childrenQuestion?: string;
+  customDuty?: number;
+  vat?: number;
+  nomenclatures?: string[];
   subProducts?: SerializedProduct[];
 }
 
@@ -13,5 +16,8 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   name: product.name,
   info: product.info,
   childrenQuestion: product.childrenQuestion,
+  customDuty: product.customDuty,
+  vat: product.vat,
+  nomenclatures: product.nomenclatures,
   subProducts: product.subProducts?.map(productSerializer),
 });
