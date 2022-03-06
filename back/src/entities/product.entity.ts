@@ -34,10 +34,10 @@ export class ProductEntity implements Product {
   @Column({ type: 'simple-array', nullable: true })
   nomenclatures?: string[];
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'float', nullable: true })
   customDuty?: number;
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'float', nullable: true })
   vat?: number;
 
   @TreeChildren()

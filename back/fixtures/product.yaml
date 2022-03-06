@@ -28,8 +28,8 @@ items:
     name: 'Cuire'
     info: '{{lorem.sentence}}'
     parentProduct: '@product4'
-    customDuty: '3'
-    vat: '20'
+    customDuty: 3
+    vat: 20
     nomenclatures:
       - '42022100'
   product17:
@@ -37,8 +37,8 @@ items:
     name: 'Plastique'
     info: '{{lorem.sentence}}'
     parentProduct: '@product4'
-    customDuty: '9.7'
-    vat: '20'
+    customDuty: 9.7
+    vat: 20
     nomenclatures:
       - '42022210'
   product18:
@@ -46,8 +46,8 @@ items:
     name: 'Autre'
     info: '{{lorem.sentence}}'
     parentProduct: '@product4'
-    customDuty: '3.7'
-    vat: '20'
+    customDuty: 3.7
+    vat: 20
     nomenclatures:
       - '42022290'
       - '42022900'
@@ -55,8 +55,8 @@ items:
     id: '{{datatype.uuid}}'
     name: 'Cuire'
     info: '{{lorem.sentence}}'
-    customDuty: '3'
-    vat: '20'
+    customDuty: 3
+    vat: 20
     parentProduct: '@product5'
     nomenclatures:
       - '42023100'
@@ -64,8 +64,8 @@ items:
     id: '{{datatype.uuid}}'
     name: 'Plastique'
     info: '{{lorem.sentence}}'
-    customDuty: '9.7'
-    vat: '20'
+    customDuty: 9.7
+    vat: 20
     parentProduct: '@product5'
     nomenclatures:
       - '42023210'
@@ -73,8 +73,8 @@ items:
     id: '{{datatype.uuid}}'
     name: 'Autre'
     info: '{{lorem.sentence}}'
-    customDuty: '3.7'
-    vat: '20'
+    customDuty: 3.7
+    vat: 20
     parentProduct: '@product5'
     nomenclatures:
       - '42023290'
@@ -101,8 +101,8 @@ items:
     name: '{{lorem.word}}'
     parentProduct: '@product{6..15}'
     info: '{{lorem.sentence}}'
-    customDuty: '5'
-    vat: '20'
+    customDuty: 5
+    vat: 20
     childrenQuestion: '{{lorem.sentence}}'
     nomenclatures:
       - '{{datatype.number}}'
