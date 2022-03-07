@@ -1,109 +1,334 @@
 entity: ProductEntity
 items:
-  product1:
+  # Lether goods
+  leatherGoods:
     id: '{{datatype.uuid}}'
     name: 'Maroquinerie'
-    info: 'Cela compose les Sac à dos, main, pochette...'
-    childrenQuestion: 'Quel type de produits ?'
-    nomenclatures:
-      - '42'
-  product4:
-    id: '{{datatype.uuid}}'
-    name: 'Sac à Main'
-    info: '{{lorem.sentence}}'
+    info: 'Cela compose les sacs à main, les pochettes et les portefeuilles'
     childrenQuestion: 'Quelle est la matière constitutive du produit ?'
-    parentProduct: '@product1'
     nomenclatures:
       - '4202'
-  product5:
-    id: '{{datatype.uuid}}'
-    name: 'Pochettes ou Portefeuilles'
-    info: '{{lorem.sentence}}'
-    childrenQuestion: 'Quelle est la matière constitutive du produit ?'
-    parentProduct: '@product1'
-    nomenclatures:
-      - '4202'
-  product16:
+  leatherHandbagWallet:
     id: '{{datatype.uuid}}'
     name: 'Cuire'
-    info: '{{lorem.sentence}}'
-    parentProduct: '@product4'
-    customDuty: '3'
-    vat: '20'
+    info: 'Maroquinerie en cuire'
+    parentProduct: '@leatherGoods'
+    customDuty: 3
+    vat: 20
     nomenclatures:
       - '42022100'
-  product17:
+      - '42023100'
+  plasticHandbagWallet:
     id: '{{datatype.uuid}}'
     name: 'Plastique'
-    info: '{{lorem.sentence}}'
-    parentProduct: '@product4'
-    customDuty: '9.7'
-    vat: '20'
+    info: 'Maroquinerie en plastique'
+    parentProduct: '@leatherGoods'
+    customDuty: 9.7
+    vat: 20
     nomenclatures:
       - '42022210'
-  product18:
+      - '42023210'
+  otherHandbagWallet:
     id: '{{datatype.uuid}}'
     name: 'Autre'
-    info: '{{lorem.sentence}}'
-    parentProduct: '@product4'
-    customDuty: '3.7'
-    vat: '20'
+    info: 'Maroquinerie en autre matière (textile, papier, carton, etc.)'
+    parentProduct: '@leatherGoods'
+    customDuty: 3.7
+    vat: 20
     nomenclatures:
       - '42022290'
       - '42022900'
-  product19:
-    id: '{{datatype.uuid}}'
-    name: 'Cuire'
-    info: '{{lorem.sentence}}'
-    customDuty: '3'
-    vat: '20'
-    parentProduct: '@product5'
-    nomenclatures:
-      - '42023100'
-  product20:
-    id: '{{datatype.uuid}}'
-    name: 'Plastique'
-    info: '{{lorem.sentence}}'
-    customDuty: '9.7'
-    vat: '20'
-    parentProduct: '@product5'
-    nomenclatures:
-      - '42023210'
-  product21:
-    id: '{{datatype.uuid}}'
-    name: 'Autre'
-    info: '{{lorem.sentence}}'
-    customDuty: '3.7'
-    vat: '20'
-    parentProduct: '@product5'
-    nomenclatures:
       - '42023290'
       - '42023900'
-  product{2..3}:
+
+  # Beauty products
+  beautyProducts:
     id: '{{datatype.uuid}}'
-    name: '{{lorem.word}}'
-    info: '{{lorem.sentence}}'
-    childrenQuestion: '{{lorem.sentence}}'
+    name: 'Produits de beauté'
+    info: 'Cela compose les produits de beauté'
+    childrenQuestion: 'Quel type de produits ?'
     nomenclatures:
-      - '{{datatype.number}}'
-      - '{{datatype.number}}'
-  product{6..15}:
+      - '33'
+  mackupParfumes:
     id: '{{datatype.uuid}}'
-    name: '{{lorem.word}}'
-    parentProduct: '@product{2..3}'
-    info: '{{lorem.sentence}}'
-    childrenQuestion: '{{lorem.sentence}}'
+    name: 'Maquillage / Parfum / Eau de toilette'
+    info: 'Produits de type maquillage, parfum et eau de toilette'
+    parentProduct: '@beautyProducts'
+    customDuty: 0
+    vat: 20
     nomenclatures:
-      - '{{datatype.number}}'
-      - '{{datatype.number}}'
-  product{22..50}:
+      - '3304'
+      - '33030010'
+      - '33030090'
+  wig:
     id: '{{datatype.uuid}}'
-    name: '{{lorem.word}}'
-    parentProduct: '@product{6..15}'
-    info: '{{lorem.sentence}}'
-    customDuty: '5'
-    vat: '20'
-    childrenQuestion: '{{lorem.sentence}}'
+    name: 'Perruques et autres articles en cheveux'
+    info: 'Perruques et autres articles en cheveux (synthétique, cheveux et autres)'
+    parentProduct: '@beautyProducts'
+    customDuty: 2.2
+    vat: 20
     nomenclatures:
-      - '{{datatype.number}}'
-      - '{{datatype.number}}'
+      - '67041100'
+      - '67041900'
+      - '67042000'
+      - '67049000'
+
+  # jewelry
+  jewelry:
+    id: '{{datatype.uuid}}'
+    name: 'Bijouterie'
+    info: 'Cela compose les bijoux'
+    childrenQuestion: 'Quel type de produits ?'
+    nomenclatures:
+      - '71'
+      - '91'
+  jewelryGoods:
+    id: '{{datatype.uuid}}'
+    name: 'Bijoux'
+    info: 'Bijoux'
+    parentProduct: '@jewelry'
+    childrenQuestion: 'Est-ce de la bijouterie fantaisie ou en métaux précieux ?'
+    nomenclatures:
+      - '7117'
+      - '7113'
+  watches:
+    id: '{{datatype.uuid}}'
+    name: 'Montres'
+    info: 'Montres'
+    parentProduct: '@jewelry'
+    customDuty: 4.5
+    vat: 20
+    nomenclatures:
+      - '9101'
+      - '9102'
+  fancy:
+    id: '{{datatype.uuid}}'
+    name: 'Bijoux fantaisie'
+    info: 'Bijoux fantaisie en métaux communs (même argentés, dorés ou platinés) ou autres.'
+    parentProduct: '@jewelryGoods'
+    customDuty: 4
+    vat: 20
+    nomenclatures:
+      - '71171100'
+      - '71171900'
+      - '71179000'
+  preciousMetals:
+    id: '{{datatype.uuid}}'
+    name: 'Bijoux en métaux précieux'
+    info: 'En métaux précieux ou revêtus, plaqués, doublés de métaux précieux (argent, or, platine ...)'
+    parentProduct: '@jewelryGoods'
+    customDuty: 2.5
+    vat: 20
+    nomenclatures:
+      - '71171100'
+      - '71171900'
+      - '71179000'
+
+  # fabrics and clothes
+  fabricsClothes:
+    id: '{{datatype.uuid}}'
+    name: 'Tissus & vêtements'
+    info: 'Tissus & vêtements'
+    childrenQuestion: 'Quel type de produits ?'
+  fabrics:
+    id: '{{datatype.uuid}}'
+    name: 'Tissus bruts'
+    info: 'Tissus bruts'
+    parentProduct: '@fabricsClothes'
+    childrenQuestion: 'Quelle est la matière constitutive du produit ?'
+    nomenclatures:
+      - '5208'
+      - '5210'
+      - '5211'
+      - '5309'
+      - '5407'
+      - '5408'
+      - '5801'
+  clothes:
+    id: '{{datatype.uuid}}'
+    name: 'Vêtements'
+    info: 'Vètements'
+    parentProduct: '@fabricsClothes'
+    childrenQuestion: 'Quel type de produits ?'
+  basicFabrics:
+    id: '{{datatype.uuid}}'
+    name: 'Coton / Lin / Synthétique / Velours'
+    info: "Il s'agit de tissus bruts en coton, Lin, synthétique ou en velours."
+    parentProduct: '@fabrics'
+    customDuty: 8
+    vat: 20
+    nomenclatures:
+      - '5208'
+      - '5210'
+      - '5211'
+      - '5309'
+      - '5407'
+      - '5408'
+      - '5801'
+  otherFabrics:
+    id: '{{datatype.uuid}}'
+    name: 'Soie / Laine'
+    info: 'Les produits en soie ou en laine ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    parentProduct: '@fabrics'
+  adultClothes:
+    id: '{{datatype.uuid}}'
+    name: 'Vêtement pour adulte'
+    info: 'Vêtement pour adulte.'
+    childrenQuestion: 'Quel type de produits ?'
+    parentProduct: '@clothes'
+  childrenClothes:
+    id: '{{datatype.uuid}}'
+    name: 'Vêtement pour enfant'
+    info: 'Les vêtements pour enfant ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    parentProduct: '@clothes'
+  textileAccessory:
+    id: '{{datatype.uuid}}'
+    name: 'Accessoire en textiles'
+    info: 'Accessoire en textiles.'
+    childrenQuestion: 'Quel type de produits ?'
+    parentProduct: '@clothes'
+  generalClothes:
+    id: '{{datatype.uuid}}'
+    name: 'Manteau / Costumes / chemises / Slips ...'
+    info: 'Vêtements adultes dans la liste suivante : \n- Manteaux, cabans, capes,anoraks, blousons, etc. \n- Costumes, complets, ensembles, vestons, pantalons, salopettes, shorts, survêtements, robes, jupes, etc. \n- Chemises, chemisettes, chemisiers, blouses, T-shirts et maillots de corps, chandails, pull-overs, cardigans, gilets, etc. \n- Slips, caleçons, chemises de nuit, pyjamas, peignoirs, robes de chambre, combinaisons, etc.'
+    parentProduct: '@adultClothes'
+    customDuty: 12
+    vat: 20
+  lingerie:
+    id: '{{datatype.uuid}}'
+    name: 'Lingerie'
+    info: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
+    parentProduct: '@adultClothes'
+    customDuty: 6.5
+    vat: 20
+    nomenclatures:
+      - '6212'
+  clothesWithLether:
+    id: '{{datatype.uuid}}'
+    name: 'Vêtements et accessoire adulte en cuir'
+    info: 'Vêtements et accessoire adulte en cuir.'
+    parentProduct: '@adultClothes'
+    nomenclatures:
+      - '4203'
+  letherClothes:
+    id: '{{datatype.uuid}}'
+    name: 'Vêtements en cuir'
+    info: 'Vêtements en cuir.'
+    parentProduct: '@clothesWithLether'
+    customDuty: 4
+    vat: 20
+    nomenclatures:
+      - '42031000'
+  letherGloves:
+    id: '{{datatype.uuid}}'
+    name: 'Gants en cuir'
+    info: 'Gants en cuire.'
+    parentProduct: '@clothesWithLether'
+    customDuty: 7
+    vat: 20
+    nomenclatures:
+      - '42032990'
+  letherAccessory:
+    id: '{{datatype.uuid}}'
+    name: 'Ceintures et autres accessoires en cuir'
+    info: 'Ceintures et autres accessoires en cuir.'
+    parentProduct: '@clothesWithLether'
+    customDuty: 5
+    vat: 20
+    nomenclatures:
+      - '42033000'
+      - '42034000'
+  socks:
+    id: '{{datatype.uuid}}'
+    name: 'Collants / bas / mi-bas / chaussettes'
+    info: 'Collants, bas, mi-bas, chaussettes, etc.'
+    parentProduct: '@textileAccessory'
+    customDuty: 12
+    vat: 20
+    nomenclatures:
+      - '6115'
+  tie:
+    id: '{{datatype.uuid}}'
+    name: 'Cravates / nœuds papillon'
+    info: 'Cravates, nœuds papillon, etc.'
+    parentProduct: '@textileAccessory'
+    customDuty: 6.3
+    vat: 20
+    nomenclatures:
+      - '6215'
+  otherTextileAccessory:
+    id: '{{datatype.uuid}}'
+    name: 'Autres accessoires textiles'
+    info: 'Châles, écharpes, foulards, cache-nez, cache-col, gants etc. Ces produits ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    parentProduct: '@textileAccessory'
+
+  # Hightech Products
+  hightech:
+    id: '{{datatype.uuid}}'
+    name: 'Produits du numérique – High Tech'
+    info: 'Produits du numérique – High Tech'
+    childrenQuestion: 'Quel type de produits ?'
+    nomenclatures:
+      - '85'
+      - '84'
+      - '95'
+      - '90'
+  smartphone:
+    id: '{{datatype.uuid}}'
+    name: 'Smartphone / Ordinateur portable / Tablette numérique'
+    info: 'Smartphone, ordinateur portable et tablette numérique.'
+    parentProduct: '@hightech'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '85171300'
+      - '84713000'
+  camera:
+    id: '{{datatype.uuid}}'
+    name: 'Appareil photo numérique / Caméscope'
+    info: 'Appareil photo numérique et caméscope.'
+    parentProduct: '@hightech'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '85171300'
+      - '84713000'
+  dvdVideogame:
+    id: '{{datatype.uuid}}'
+    name: 'Baladeur MP3 / DVD / CD / Consoles de jeux vidéos / Jeux vidéos'
+    info: 'Baladeur MP3 / DVD / CD / Consoles de jeux vidéos / Jeux vidéos.'
+    parentProduct: '@hightech'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '85219000'
+      - '85234910'
+      - '852341'
+      - '95045000'
+  television:
+    id: '{{datatype.uuid}}'
+    name: 'Téléviseurs'
+    info: 'Téléviseurs.'
+    parentProduct: '@hightech'
+    customDuty: 14
+    vat: 20
+    nomenclatures:
+      - '852872'
+  dvdPlayer:
+    id: '{{datatype.uuid}}'
+    name: 'Lecteurs DVD'
+    info: 'Lecteurs DVD.'
+    parentProduct: '@hightech'
+    customDuty: 3.5
+    vat: 20
+    nomenclatures:
+      - '85219000'
+  binoculars:
+    id: '{{datatype.uuid}}'
+    name: 'Jumelles'
+    info: 'Jumelles.'
+    parentProduct: '@hightech'
+    customDuty: 4.2
+    vat: 20
+    nomenclatures:
+      - '90051000'
