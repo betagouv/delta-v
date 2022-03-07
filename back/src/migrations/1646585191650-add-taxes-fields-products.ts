@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddTaxesFieldsProducts1646064354600 implements MigrationInterface {
-  name = 'AddTaxesFieldsProducts1646064354600';
+export class AddTaxesFieldsProducts1646585191650 implements MigrationInterface {
+  name = 'AddTaxesFieldsProducts1646585191650';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`ALTER TABLE "product" ADD "nomenclatures" text`);
-    await queryRunner.query(`ALTER TABLE "product" ADD "customDuty" numeric`);
-    await queryRunner.query(`ALTER TABLE "product" ADD "vat" numeric`);
+    await queryRunner.query(`ALTER TABLE "product" ADD "customDuty" double precision`);
+    await queryRunner.query(`ALTER TABLE "product" ADD "vat" double precision`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
