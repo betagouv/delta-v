@@ -2,6 +2,11 @@ name: Delta V - front
 
 on:
   workflow_dispatch:
+    inputs:
+      job:
+        description: "Job to run."
+        required: true
+        default: "prod-deploy"
   pull_request:
     paths:
       - front/**
@@ -43,7 +48,7 @@ jobs:
 
   deploy-front-production:
     runs-on: ubuntu-latest
-    if: github.ref == 'NOT DEPLOY'
+    if: ${{ github.event.inputs.job == 'prod-deploy'}}
     # if: github.ref == 'refs/heads/master'
     needs: test-front
     steps:
