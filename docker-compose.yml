@@ -7,10 +7,12 @@ x-envs: &common-envs
   DB_USERNAME: postgres
   DB_PASSWORD: pass
   DB_DATABASE: postgres
+  LOG_LEVEL: info
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
   DB_HOST: 'e2e-test-database-delta-v'
+  LOG_LEVEL: fatal
 
 services:
   backend-api: &backend_default

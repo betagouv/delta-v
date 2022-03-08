@@ -58,6 +58,7 @@ jobs:
       - run: git fetch --prune --unshallow
       - uses: 47ng/actions-clever-cloud@v1
         with:
+          timeout: 1800
           alias: delta-v-back-prod
         env:
           CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}

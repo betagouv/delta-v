@@ -3893,6 +3893,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.isplainobject@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
+
 lodash.memoize@4.x:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -4745,6 +4750,13 @@ real-require@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/real-require/-/real-require-0.1.0.tgz#736ac214caa20632847b7ca8c1056a0767df9381"
   integrity sha512-r/H9MzAWtrv8aSVjPCMFpDMl5q66GqtmmRkRjpHTsp4zBAa+snZyiQNlMONiUmEJcsnaw0wCauJ2GWODr/aFkg==
+
+redact-object@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/redact-object/-/redact-object-3.0.1.tgz#325232841dda6da24df8020156fb9c0e2ceb828b"
+  integrity sha512-0SzTKMvQyrSjIwXq4RW+jo7nC/CaemsyYZahUj++ikzzxxfsRsr3+jQ6hHDkK5WHmmhCTqLtqcjqmxsmDITIpg==
+  dependencies:
+    lodash.isplainobject "^4.0.6"
 
 reflect-metadata@^0.1.13:
   version "0.1.13"
