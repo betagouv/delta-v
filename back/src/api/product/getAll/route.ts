@@ -11,9 +11,9 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const testId = await service({ productRepository: getCustomRepository(ProductRepository) });
+    const products = await service({ productRepository: getCustomRepository(ProductRepository) });
 
-    const response = serializer(testId);
+    const response = serializer(products);
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {
