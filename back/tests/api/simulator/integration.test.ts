@@ -4,7 +4,7 @@ import { ShopingProduct } from '../../../src/api/simulator/services';
 import { Product } from '../../../src/entities/product.entity';
 import buildTestApp from '../../helpers/testApp.helper';
 import { testDbManager } from '../../helpers/testDb.helper';
-import { prepareContextProduct } from '../../prepareContext/product';
+import { prepareContextProduct } from '../../utils/prepareContext/product';
 
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
