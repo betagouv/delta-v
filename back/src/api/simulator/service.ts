@@ -8,14 +8,16 @@ import {
   ProductTaxesDetails,
   ShopingProduct,
 } from './services';
+import { isFreeFranchise } from './services/franchise.service';
 
 interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
+  border?: boolean;
   shopingProducts: ShopingProduct[];
 }
 
 interface SimulateServiceResponse {
-  products: ProductTaxesDetails[];
+  products?: ProductTaxesDetails[];
   total: number;
   totalCustomDuty: number;
   totalVat: number;
@@ -23,17 +25,22 @@ interface SimulateServiceResponse {
 
 export const service = async ({
   productRepository,
+  border = false,
   shopingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
   const productIds = shopingProducts.map(({ id }) => id);
   const products = await productRepository.getManyByIds(productIds);
 
+  const total = getTotalProducts(shopingProducts);
+  if (isFreeFranchise({ total, border })) {
+    return { total, totalCustomDuty: 0, totalVat: 0 };
+  }
   const completeShopingProducts = getCompleteShopingProducts(shopingProducts, products);
   const productstaxesDetails = completeShopingProducts.map(getProductTaxesDetails);
 
   return {
     products: productstaxesDetails,
-    total: getTotalProducts(shopingProducts),
+    total,
     totalCustomDuty: getTotalProductsCustomDuty(productstaxesDetails),
     totalVat: getTotalProductsVat(productstaxesDetails),
   };

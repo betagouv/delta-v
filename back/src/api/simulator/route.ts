@@ -14,9 +14,10 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { shopingProducts } = req.body;
+    const { shopingProducts, border } = req.body;
     const response = await service({
       shopingProducts,
+      border,
       productRepository: getCustomRepository(ProductRepository),
     });
     return res.send(response).status(HttpStatuses.OK);

@@ -55,7 +55,7 @@ describe('test simulator service', () => {
     const shopingProduct = {
       id: product.id,
       amount: 3,
-      price: 85,
+      price: 150,
     };
     const productRepository = productRepositoryMock({ getManyByIds: [] });
 
@@ -67,5 +67,81 @@ describe('test simulator service', () => {
       expect(error.statusCode).toBe(HttpStatuses.NOT_FOUND);
       expect(error.code).toBe('PRODUCT_NOT_FOUND');
     }
+  });
+  describe('border user', () => {
+    it('should return 0 taxes - user with total < 75', async () => {
+      const product = productEntityFactory({ customDuty: 12, vat: 20 });
+      const shopingProduct = {
+        id: product.id,
+        amount: 2,
+        price: 30,
+      };
+      const productRepository = productRepositoryMock({ getManyByIds: [product] });
+
+      const result = await service({
+        shopingProducts: [shopingProduct],
+        border: true,
+        productRepository,
+      });
+
+      expect(result.totalCustomDuty).toEqual(0);
+      expect(result.totalVat).toEqual(0);
+    });
+    it('should return taxes - user with total > 75', async () => {
+      const product = productEntityFactory({ customDuty: 12, vat: 20 });
+      const shopingProduct = {
+        id: product.id,
+        amount: 2,
+        price: 40,
+      };
+      const productRepository = productRepositoryMock({ getManyByIds: [product] });
+
+      const result = await service({
+        shopingProducts: [shopingProduct],
+        border: true,
+        productRepository,
+      });
+
+      expect(result.totalCustomDuty).not.toEqual(0);
+      expect(result.totalVat).not.toEqual(0);
+    });
+  });
+  describe('not border user', () => {
+    it('should return 0 taxes - user with total < 300', async () => {
+      const product = productEntityFactory({ customDuty: 12, vat: 20 });
+      const shopingProduct = {
+        id: product.id,
+        amount: 2,
+        price: 145,
+      };
+      const productRepository = productRepositoryMock({ getManyByIds: [product] });
+
+      const result = await service({
+        shopingProducts: [shopingProduct],
+        border: false,
+        productRepository,
+      });
+
+      expect(result.totalCustomDuty).toEqual(0);
+      expect(result.totalVat).toEqual(0);
+    });
+    it('should return taxes - user with total > 300', async () => {
+      const product = productEntityFactory({ customDuty: 12, vat: 20 });
+      const shopingProduct = {
+        id: product.id,
+        amount: 2,
+        price: 155,
+      };
+      const productRepository = productRepositoryMock({ getManyByIds: [product] });
+
+      const result = await service({
+        shopingProducts: [shopingProduct],
+        border: false,
+        productRepository,
+      });
+
+      expect(result.totalCustomDuty).not.toEqual(0);
+      expect(result.totalVat).not.toEqual(0);
+    });
   });
 });

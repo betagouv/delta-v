@@ -5,6 +5,7 @@ import { ShopingProduct } from './services';
 export interface SimulateRequest {
   body: {
     shopingProducts: ShopingProduct[];
+    border: boolean;
   };
 }
 
@@ -21,6 +22,7 @@ export const simulateValidator: IRequestValidatorSchema = {
       )
       .min(1)
       .required(),
+    border: validator.boolean().required(),
   }),
 };
 

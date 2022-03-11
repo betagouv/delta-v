@@ -44,7 +44,7 @@ describe('test simulator API', () => {
     ];
     const { status, body } = await request(testApp)
       .post('/api/simulator')
-      .send({ shopingProducts });
+      .send({ shopingProducts, border: false });
     expect(status).toBe(200);
 
     const finalProducts = shopingProducts.map((shopingProduct, index: number) => {
