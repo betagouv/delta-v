@@ -20,6 +20,7 @@ describe('test simulator validator', () => {
             price: 40,
           },
         ],
+        border: false,
       },
     };
     expect(isValid(validData)).toBe(true);
@@ -34,6 +35,7 @@ describe('test simulator validator', () => {
             price: 85,
           },
         ],
+        border: false,
       },
     };
     expect(isValid(validData)).toBe(false);
@@ -47,6 +49,7 @@ describe('test simulator validator', () => {
             price: 85,
           },
         ],
+        border: false,
       },
     };
     expect(isValid(validData)).toBe(false);
@@ -61,6 +64,7 @@ describe('test simulator validator', () => {
             price: 85,
           },
         ],
+        border: false,
       },
     };
     expect(isValid(validData)).toBe(false);
@@ -75,6 +79,7 @@ describe('test simulator validator', () => {
             price: 0,
           },
         ],
+        border: false,
       },
     };
     expect(isValid(validData)).toBe(false);
@@ -83,6 +88,46 @@ describe('test simulator validator', () => {
     const validData = {
       body: {
         shopingProducts: [],
+        border: false,
+      },
+    };
+    expect(isValid(validData)).toBe(false);
+  });
+  it('should not validate data - missing border', () => {
+    const validData = {
+      body: {
+        shopingProducts: [
+          {
+            id: faker.datatype.uuid(),
+            amount: 3,
+            price: 85,
+          },
+          {
+            id: faker.datatype.uuid(),
+            amount: 5,
+            price: 40,
+          },
+        ],
+      },
+    };
+    expect(isValid(validData)).toBe(false);
+  });
+  it('should not validate data - bad format border', () => {
+    const validData = {
+      body: {
+        shopingProducts: [
+          {
+            id: faker.datatype.uuid(),
+            amount: 3,
+            price: 85,
+          },
+          {
+            id: faker.datatype.uuid(),
+            amount: 5,
+            price: 40,
+          },
+        ],
+        border: 'bad',
       },
     };
     expect(isValid(validData)).toBe(false);
