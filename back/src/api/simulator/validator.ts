@@ -6,6 +6,7 @@ export interface SimulateRequest {
   body: {
     shopingProducts: ShopingProduct[];
     border: boolean;
+    adult: boolean;
   };
 }
 
@@ -23,6 +24,7 @@ export const simulateValidator: IRequestValidatorSchema = {
       .min(1)
       .required(),
     border: validator.boolean().required(),
+    adult: validator.boolean().default(true),
   }),
 };
 

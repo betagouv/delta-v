@@ -2,14 +2,14 @@ entity: ProductEntity
 items:
   # Lether goods
   leatherGoods:
-    id: '{{datatype.uuid}}'
+    id: 'b515f453-93c1-4312-b973-6703802f5d12'
     name: 'Maroquinerie'
     info: 'Cela compose les sacs à main, les pochettes et les portefeuilles'
     childrenQuestion: 'Quelle est la matière constitutive du produit ?'
     nomenclatures:
       - '4202'
   leatherHandbagWallet:
-    id: '{{datatype.uuid}}'
+    id: 'da645720-8577-4498-8ee2-096e371a15e2'
     name: 'Cuire'
     info: 'Maroquinerie en cuire'
     parentProduct: '@leatherGoods'
@@ -19,7 +19,7 @@ items:
       - '42022100'
       - '42023100'
   plasticHandbagWallet:
-    id: '{{datatype.uuid}}'
+    id: '2a25c354-d073-4db5-a76e-aa8d243cfff8'
     name: 'Plastique'
     info: 'Maroquinerie en plastique'
     parentProduct: '@leatherGoods'
@@ -29,7 +29,7 @@ items:
       - '42022210'
       - '42023210'
   otherHandbagWallet:
-    id: '{{datatype.uuid}}'
+    id: '5abad90c-ff8b-4faa-b816-88926bd92b1e'
     name: 'Autre'
     info: 'Maroquinerie en autre matière (textile, papier, carton, etc.)'
     parentProduct: '@leatherGoods'
@@ -43,14 +43,14 @@ items:
 
   # Beauty products
   beautyProducts:
-    id: '{{datatype.uuid}}'
+    id: '966d4619-e2b8-4f38-8db1-b02739e88d0d'
     name: 'Produits de beauté'
     info: 'Cela compose les produits de beauté'
     childrenQuestion: 'Quel type de produits ?'
     nomenclatures:
       - '33'
   mackupParfumes:
-    id: '{{datatype.uuid}}'
+    id: '4072b5ee-598d-4a2d-95cb-7ae51f9d4905'
     name: 'Maquillage / Parfum / Eau de toilette'
     info: 'Produits de type maquillage, parfum et eau de toilette'
     parentProduct: '@beautyProducts'
@@ -61,7 +61,7 @@ items:
       - '33030010'
       - '33030090'
   wig:
-    id: '{{datatype.uuid}}'
+    id: '8f29a374-089a-4ac3-823a-a4be307de7eb'
     name: 'Perruques et autres articles en cheveux'
     info: 'Perruques et autres articles en cheveux (synthétique, cheveux et autres)'
     parentProduct: '@beautyProducts'
@@ -75,7 +75,7 @@ items:
 
   # jewelry
   jewelry:
-    id: '{{datatype.uuid}}'
+    id: '691e3721-0f5a-49c2-ae96-b1063db2bf33'
     name: 'Bijouterie'
     info: 'Cela compose les bijoux'
     childrenQuestion: 'Quel type de produits ?'
@@ -83,7 +83,7 @@ items:
       - '71'
       - '91'
   jewelryGoods:
-    id: '{{datatype.uuid}}'
+    id: 'ae81eba5-1199-4df3-a8c0-2b717b799555'
     name: 'Bijoux'
     info: 'Bijoux'
     parentProduct: '@jewelry'
@@ -92,7 +92,7 @@ items:
       - '7117'
       - '7113'
   watches:
-    id: '{{datatype.uuid}}'
+    id: 'd97c1392-01f1-423b-afd6-982fe79856df'
     name: 'Montres'
     info: 'Montres'
     parentProduct: '@jewelry'
@@ -102,7 +102,7 @@ items:
       - '9101'
       - '9102'
   fancy:
-    id: '{{datatype.uuid}}'
+    id: '32901991-257d-47f2-b209-a9d4af2026e3'
     name: 'Bijoux fantaisie'
     info: 'Bijoux fantaisie en métaux communs (même argentés, dorés ou platinés) ou autres.'
     parentProduct: '@jewelryGoods'
@@ -113,7 +113,7 @@ items:
       - '71171900'
       - '71179000'
   preciousMetals:
-    id: '{{datatype.uuid}}'
+    id: '04c1a6cd-881b-4d2c-b7dc-5e824d390b4d'
     name: 'Bijoux en métaux précieux'
     info: 'En métaux précieux ou revêtus, plaqués, doublés de métaux précieux (argent, or, platine ...)'
     parentProduct: '@jewelryGoods'
@@ -126,12 +126,12 @@ items:
 
   # fabrics and clothes
   fabricsClothes:
-    id: '{{datatype.uuid}}'
+    id: 'a87e1335-e50f-4e93-a45d-dcfde72fab92'
     name: 'Tissus & vêtements'
     info: 'Tissus & vêtements'
     childrenQuestion: 'Quel type de produits ?'
   fabrics:
-    id: '{{datatype.uuid}}'
+    id: '586be6b5-0375-44f4-aa58-d47966599ae0'
     name: 'Tissus bruts'
     info: 'Tissus bruts'
     parentProduct: '@fabricsClothes'
@@ -145,13 +145,13 @@ items:
       - '5408'
       - '5801'
   clothes:
-    id: '{{datatype.uuid}}'
+    id: 'e9186bbf-3c3c-4e12-85e1-6bcbc5e8a046'
     name: 'Vêtements'
     info: 'Vètements'
     parentProduct: '@fabricsClothes'
     childrenQuestion: 'Quel type de produits ?'
   basicFabrics:
-    id: '{{datatype.uuid}}'
+    id: '74c87cd7-60dc-4f38-b5de-cfd935752f3c'
     name: 'Coton / Lin / Synthétique / Velours'
     info: "Il s'agit de tissus bruts en coton, Lin, synthétique ou en velours."
     parentProduct: '@fabrics'
@@ -166,36 +166,36 @@ items:
       - '5408'
       - '5801'
   otherFabrics:
-    id: '{{datatype.uuid}}'
+    id: '7a33a05b-4966-4ba3-bc0d-ecbd77ef36ea'
     name: 'Soie / Laine'
     info: 'Les produits en soie ou en laine ont un tarif particulier. Veuillez vous référer au douanier directement.'
     parentProduct: '@fabrics'
   adultClothes:
-    id: '{{datatype.uuid}}'
+    id: 'b47dab76-acca-4d78-ba3b-7323b17dcb8b'
     name: 'Vêtement pour adulte'
     info: 'Vêtement pour adulte.'
     childrenQuestion: 'Quel type de produits ?'
     parentProduct: '@clothes'
   childrenClothes:
-    id: '{{datatype.uuid}}'
+    id: '47a31843-233e-4b45-b7e6-26c262e1047d'
     name: 'Vêtement pour enfant'
     info: 'Les vêtements pour enfant ont un tarif particulier. Veuillez vous référer au douanier directement.'
     parentProduct: '@clothes'
   textileAccessory:
-    id: '{{datatype.uuid}}'
+    id: '6f10aafc-422b-4d4e-94ed-632feec05a6b'
     name: 'Accessoire en textiles'
     info: 'Accessoire en textiles.'
     childrenQuestion: 'Quel type de produits ?'
     parentProduct: '@clothes'
   generalClothes:
-    id: '{{datatype.uuid}}'
+    id: '4dbcac27-c57e-4c8f-befb-9c8092c1c450'
     name: 'Manteau / Costumes / chemises / Slips ...'
     info: 'Vêtements adultes dans la liste suivante : \n- Manteaux, cabans, capes,anoraks, blousons, etc. \n- Costumes, complets, ensembles, vestons, pantalons, salopettes, shorts, survêtements, robes, jupes, etc. \n- Chemises, chemisettes, chemisiers, blouses, T-shirts et maillots de corps, chandails, pull-overs, cardigans, gilets, etc. \n- Slips, caleçons, chemises de nuit, pyjamas, peignoirs, robes de chambre, combinaisons, etc.'
     parentProduct: '@adultClothes'
     customDuty: 12
     vat: 20
   lingerie:
-    id: '{{datatype.uuid}}'
+    id: 'e6520fa8-8e59-4d57-ab98-3a5ad690ac5a'
     name: 'Lingerie'
     info: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
     parentProduct: '@adultClothes'
@@ -204,14 +204,14 @@ items:
     nomenclatures:
       - '6212'
   clothesWithLether:
-    id: '{{datatype.uuid}}'
+    id: '98b58ced-de0c-40d9-95cc-8247fe63fe17'
     name: 'Vêtements et accessoire adulte en cuir'
     info: 'Vêtements et accessoire adulte en cuir.'
     parentProduct: '@adultClothes'
     nomenclatures:
       - '4203'
   letherClothes:
-    id: '{{datatype.uuid}}'
+    id: 'c965f1dd-ee73-443f-8e8d-62710e5dd300'
     name: 'Vêtements en cuir'
     info: 'Vêtements en cuir.'
     parentProduct: '@clothesWithLether'
@@ -220,7 +220,7 @@ items:
     nomenclatures:
       - '42031000'
   letherGloves:
-    id: '{{datatype.uuid}}'
+    id: '490069df-a2da-4441-ab87-40e275695bd7'
     name: 'Gants en cuir'
     info: 'Gants en cuire.'
     parentProduct: '@clothesWithLether'
@@ -229,7 +229,7 @@ items:
     nomenclatures:
       - '42032990'
   letherAccessory:
-    id: '{{datatype.uuid}}'
+    id: '70869c09-f83c-4d35-8d7c-d783c9b543fe'
     name: 'Ceintures et autres accessoires en cuir'
     info: 'Ceintures et autres accessoires en cuir.'
     parentProduct: '@clothesWithLether'
@@ -239,7 +239,7 @@ items:
       - '42033000'
       - '42034000'
   socks:
-    id: '{{datatype.uuid}}'
+    id: '625cccf5-9e28-4895-86b5-556d0ba2e202'
     name: 'Collants / bas / mi-bas / chaussettes'
     info: 'Collants, bas, mi-bas, chaussettes, etc.'
     parentProduct: '@textileAccessory'
@@ -248,7 +248,7 @@ items:
     nomenclatures:
       - '6115'
   tie:
-    id: '{{datatype.uuid}}'
+    id: '7847b3cb-69e9-4c17-bd75-3d1573084d18'
     name: 'Cravates / nœuds papillon'
     info: 'Cravates, nœuds papillon, etc.'
     parentProduct: '@textileAccessory'
@@ -257,14 +257,14 @@ items:
     nomenclatures:
       - '6215'
   otherTextileAccessory:
-    id: '{{datatype.uuid}}'
+    id: '9e3362d5-9e9f-4302-afcf-53ceed1f0832'
     name: 'Autres accessoires textiles'
     info: 'Châles, écharpes, foulards, cache-nez, cache-col, gants etc. Ces produits ont un tarif particulier. Veuillez vous référer au douanier directement.'
     parentProduct: '@textileAccessory'
 
   # Hightech Products
   hightech:
-    id: '{{datatype.uuid}}'
+    id: '39da7995-b4a4-4f7b-8b9f-1d34290d4671'
     name: 'Produits du numérique – High Tech'
     info: 'Produits du numérique – High Tech'
     childrenQuestion: 'Quel type de produits ?'
@@ -274,7 +274,7 @@ items:
       - '95'
       - '90'
   smartphone:
-    id: '{{datatype.uuid}}'
+    id: '6b6c5a03-e573-47c7-b718-aa8c86ae5483'
     name: 'Smartphone / Ordinateur portable / Tablette numérique'
     info: 'Smartphone, ordinateur portable et tablette numérique.'
     parentProduct: '@hightech'
@@ -284,7 +284,7 @@ items:
       - '85171300'
       - '84713000'
   camera:
-    id: '{{datatype.uuid}}'
+    id: '68859709-924c-4a2a-bea2-debe856c4b23'
     name: 'Appareil photo numérique / Caméscope'
     info: 'Appareil photo numérique et caméscope.'
     parentProduct: '@hightech'
@@ -294,7 +294,7 @@ items:
       - '85171300'
       - '84713000'
   dvdVideogame:
-    id: '{{datatype.uuid}}'
+    id: 'f8755a08-ea1e-478f-9097-be48e8dae64f'
     name: 'Baladeur MP3 / DVD / CD / Consoles de jeux vidéos / Jeux vidéos'
     info: 'Baladeur MP3 / DVD / CD / Consoles de jeux vidéos / Jeux vidéos.'
     parentProduct: '@hightech'
@@ -306,7 +306,7 @@ items:
       - '852341'
       - '95045000'
   television:
-    id: '{{datatype.uuid}}'
+    id: 'ab2d3793-8054-4d87-8cf8-cde1cbf839c3'
     name: 'Téléviseurs'
     info: 'Téléviseurs.'
     parentProduct: '@hightech'
@@ -315,7 +315,7 @@ items:
     nomenclatures:
       - '852872'
   dvdPlayer:
-    id: '{{datatype.uuid}}'
+    id: 'f4362dc8-dfc3-4142-adc1-f2e57815fd5a'
     name: 'Lecteurs DVD'
     info: 'Lecteurs DVD.'
     parentProduct: '@hightech'
@@ -324,7 +324,7 @@ items:
     nomenclatures:
       - '85219000'
   binoculars:
-    id: '{{datatype.uuid}}'
+    id: '8874fd65-6fc7-4f7a-b41e-d1979187fa8f'
     name: 'Jumelles'
     info: 'Jumelles.'
     parentProduct: '@hightech'
