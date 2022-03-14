@@ -1,5 +1,6 @@
 import request from 'supertest';
 import api from '../../../src/api';
+import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 import { ProductTaxesDetails, ShopingProduct } from '../../../src/api/simulator/services';
 import { Product } from '../../../src/entities/product.entity';
 import buildTestApp from '../../helpers/testApp.helper';
@@ -34,6 +35,7 @@ interface SimulateEndpointOptions {
   shopingProducts: ShopingProduct[];
   border?: boolean;
   adult?: boolean;
+  meanOfTransport?: MeansOfTransport;
 }
 
 interface SimulateEndpointResponse {
@@ -49,10 +51,11 @@ const simulateEndpoint = async ({
   shopingProducts,
   border = false,
   adult = true,
+  meanOfTransport = MeansOfTransport.CAR,
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
   const { status, body } = await request(testApp)
     .post('/api/simulator')
-    .send({ shopingProducts, border, adult });
+    .send({ shopingProducts, border, adult, meanOfTransport });
 
   if (!products) {
     return { status, body };
@@ -171,28 +174,45 @@ describe('test simulator API', () => {
     });
     describe('not border user', () => {
       describe('adult user', () => {
-        it('should pay franchise - total > 300 ', async () => {
-          const shopingProducts = await prepareProductPrice(301);
+        test.each([
+          [450, MeansOfTransport.PLANE],
+          [432, MeansOfTransport.BOAT],
+          [302, MeansOfTransport.TRAIN],
+          [310, MeansOfTransport.CAR],
+          [301, MeansOfTransport.OTHER],
+        ])('should pay - total = %p and meanOfTransport = %p', async (total, meanOfTransport) => {
+          const shopingProducts = await prepareProductPrice(total);
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: false,
             adult: true,
+            meanOfTransport,
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toBeGreaterThan(0);
           expect(body.totalVat).toBeGreaterThan(0);
         });
-        it('should not pay franchise - total < 300 ', async () => {
-          const shopingProducts = await prepareProductPrice(299);
-          const { body, status } = await simulateEndpoint({
-            shopingProducts,
-            border: false,
-            adult: true,
-          });
-          expect(status).toBe(200);
-          expect(body.totalCustomDuty).toEqual(0);
-          expect(body.totalVat).toEqual(0);
-        });
+        test.each([
+          [425, MeansOfTransport.PLANE],
+          [420, MeansOfTransport.BOAT],
+          [150, MeansOfTransport.TRAIN],
+          [255, MeansOfTransport.CAR],
+          [299, MeansOfTransport.OTHER],
+        ])(
+          'should not pay - total = %p and meanOfTransport = %p',
+          async (total, meanOfTransport) => {
+            const shopingProducts = await prepareProductPrice(total);
+            const { body, status } = await simulateEndpoint({
+              shopingProducts,
+              border: false,
+              adult: true,
+              meanOfTransport,
+            });
+            expect(status).toBe(200);
+            expect(body.totalCustomDuty).toEqual(0);
+            expect(body.totalVat).toEqual(0);
+          },
+        );
       });
       describe('not adult user', () => {
         it('should pay franchise - total > 150 ', async () => {
