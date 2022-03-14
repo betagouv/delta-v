@@ -2,32 +2,38 @@ import { faker } from '@faker-js/faker';
 import { validatorHelper } from '../../../src/core/testHelpers';
 import { simulateValidator } from '../../../src/api/simulator/validator';
 
-const { isValid } = validatorHelper(simulateValidator);
+const { isValid, getParsedData } = validatorHelper(simulateValidator);
+
+const defalutValidBody = {
+  shopingProducts: [
+    {
+      id: faker.datatype.uuid(),
+      amount: 3,
+      price: 85,
+    },
+    {
+      id: faker.datatype.uuid(),
+      amount: 5,
+      price: 40,
+    },
+  ],
+  border: false,
+  adult: true,
+};
 
 describe('test simulator validator', () => {
   it('should validate data', () => {
-    const validData = {
+    const data = {
       body: {
-        shopingProducts: [
-          {
-            id: faker.datatype.uuid(),
-            amount: 3,
-            price: 85,
-          },
-          {
-            id: faker.datatype.uuid(),
-            amount: 5,
-            price: 40,
-          },
-        ],
-        border: false,
+        ...defalutValidBody,
       },
     };
-    expect(isValid(validData)).toBe(true);
+    expect(isValid(data)).toBe(true);
   });
   it('should not validate data - ID not uuid', () => {
-    const validData = {
+    const data = {
       body: {
+        ...defalutValidBody,
         shopingProducts: [
           {
             id: faker.datatype.string(),
@@ -35,28 +41,28 @@ describe('test simulator validator', () => {
             price: 85,
           },
         ],
-        border: false,
       },
     };
-    expect(isValid(validData)).toBe(false);
+    expect(isValid(data)).toBe(false);
   });
   it('should not validate data - ID not defined', () => {
-    const validData = {
+    const data = {
       body: {
+        ...defalutValidBody,
         shopingProducts: [
           {
             amount: 0,
             price: 85,
           },
         ],
-        border: false,
       },
     };
-    expect(isValid(validData)).toBe(false);
+    expect(isValid(data)).toBe(false);
   });
   it('should not validate data - amount should be higher than 0', () => {
-    const validData = {
+    const data = {
       body: {
+        ...defalutValidBody,
         shopingProducts: [
           {
             id: faker.datatype.uuid(),
@@ -64,14 +70,14 @@ describe('test simulator validator', () => {
             price: 85,
           },
         ],
-        border: false,
       },
     };
-    expect(isValid(validData)).toBe(false);
+    expect(isValid(data)).toBe(false);
   });
   it('should not validate data - price should be higher than 0', () => {
-    const validData = {
+    const data = {
       body: {
+        ...defalutValidBody,
         shopingProducts: [
           {
             id: faker.datatype.uuid(),
@@ -79,57 +85,55 @@ describe('test simulator validator', () => {
             price: 0,
           },
         ],
-        border: false,
       },
     };
-    expect(isValid(validData)).toBe(false);
+    expect(isValid(data)).toBe(false);
   });
   it("should not validate data - shopingProducts can't be empty", () => {
-    const validData = {
+    const data = {
       body: {
+        ...defalutValidBody,
         shopingProducts: [],
-        border: false,
       },
     };
-    expect(isValid(validData)).toBe(false);
+    expect(isValid(data)).toBe(false);
   });
   it('should not validate data - missing border', () => {
-    const validData = {
+    const data = {
       body: {
-        shopingProducts: [
-          {
-            id: faker.datatype.uuid(),
-            amount: 3,
-            price: 85,
-          },
-          {
-            id: faker.datatype.uuid(),
-            amount: 5,
-            price: 40,
-          },
-        ],
+        ...defalutValidBody,
+        border: undefined,
       },
     };
-    expect(isValid(validData)).toBe(false);
+    expect(isValid(data)).toBe(false);
   });
   it('should not validate data - bad format border', () => {
-    const validData = {
+    const data = {
       body: {
-        shopingProducts: [
-          {
-            id: faker.datatype.uuid(),
-            amount: 3,
-            price: 85,
-          },
-          {
-            id: faker.datatype.uuid(),
-            amount: 5,
-            price: 40,
-          },
-        ],
+        ...defalutValidBody,
         border: 'bad',
       },
     };
-    expect(isValid(validData)).toBe(false);
+    expect(isValid(data)).toBe(false);
+  });
+  it('should not validate data - default value adult', () => {
+    const data = {
+      body: {
+        ...defalutValidBody,
+        adult: undefined,
+      },
+    };
+
+    expect(isValid(data)).toBe(true);
+    expect(getParsedData(data).body.adult).toBe(true);
+  });
+  it('should not validate data - bad format adult', () => {
+    const data = {
+      body: {
+        ...defalutValidBody,
+        adult: 'bad',
+      },
+    };
+    expect(isValid(data)).toBe(false);
   });
 });
