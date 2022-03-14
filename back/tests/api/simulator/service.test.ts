@@ -1,3 +1,4 @@
+import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 import { service } from '../../../src/api/simulator/service';
 import { HttpStatuses } from '../../../src/core/httpStatuses';
 import { productEntityFactory } from '../../helpers/factories/product.factory';
@@ -152,44 +153,65 @@ describe('test simulator service', () => {
   });
   describe('not border user', () => {
     describe('adult user', () => {
-      it('should return 0 taxes - user with total < 300', async () => {
-        const product = productEntityFactory({ customDuty: 12, vat: 20 });
-        const shopingProduct = {
-          id: product.id,
-          amount: 2,
-          price: 145,
-        };
-        const productRepository = productRepositoryMock({ getManyByIds: [product] });
+      test.each([
+        [0, 0, 425, MeansOfTransport.PLANE],
+        [0, 0, 425, MeansOfTransport.BOAT],
+        [0, 0, 285, MeansOfTransport.TRAIN],
+        [0, 0, 285, MeansOfTransport.CAR],
+        [0, 0, 285, MeansOfTransport.OTHER],
+      ])(
+        'should return %p for totalCustomDuty and %p for vat - user with total = %p and mean of transport = %p',
+        async (totalCustomDuty, totalVat, total, meanOfTransport) => {
+          const product = productEntityFactory({ customDuty: 12, vat: 20 });
+          const shopingProduct = {
+            id: product.id,
+            amount: 1,
+            price: total,
+            meanOfTransport,
+          };
+          const productRepository = productRepositoryMock({ getManyByIds: [product] });
 
-        const result = await service({
-          shopingProducts: [shopingProduct],
-          border: false,
-          adult: true,
-          productRepository,
-        });
+          const result = await service({
+            shopingProducts: [shopingProduct],
+            border: false,
+            adult: true,
+            meanOfTransport,
+            productRepository,
+          });
 
-        expect(result.totalCustomDuty).toEqual(0);
-        expect(result.totalVat).toEqual(0);
-      });
-      it('should return taxes - user with total > 300', async () => {
-        const product = productEntityFactory({ customDuty: 12, vat: 20 });
-        const shopingProduct = {
-          id: product.id,
-          amount: 2,
-          price: 155,
-        };
-        const productRepository = productRepositoryMock({ getManyByIds: [product] });
+          expect(result.totalCustomDuty).toEqual(totalCustomDuty);
+          expect(result.totalVat).toEqual(totalVat);
+        },
+      );
+      test.each([
+        [0, 0, 435, MeansOfTransport.PLANE],
+        [0, 0, 435, MeansOfTransport.BOAT],
+        [0, 0, 301, MeansOfTransport.TRAIN],
+        [0, 0, 301, MeansOfTransport.CAR],
+        [0, 0, 301, MeansOfTransport.OTHER],
+      ])(
+        'should not return %p for totalCustomDuty and %p for vat - user with total = %p and mean of transport = %p',
+        async (totalCustomDuty, totalVat, total, meanOfTransport) => {
+          const product = productEntityFactory({ customDuty: 12, vat: 20 });
+          const shopingProduct = {
+            id: product.id,
+            amount: 1,
+            price: total,
+          };
+          const productRepository = productRepositoryMock({ getManyByIds: [product] });
 
-        const result = await service({
-          shopingProducts: [shopingProduct],
-          border: false,
-          adult: true,
-          productRepository,
-        });
+          const result = await service({
+            shopingProducts: [shopingProduct],
+            border: false,
+            adult: true,
+            meanOfTransport,
+            productRepository,
+          });
 
-        expect(result.totalCustomDuty).not.toEqual(0);
-        expect(result.totalVat).not.toEqual(0);
-      });
+          expect(result.totalCustomDuty).not.toEqual(totalCustomDuty);
+          expect(result.totalVat).not.toEqual(totalVat);
+        },
+      );
     });
     describe('not adult user', () => {
       it('should return 0 taxes - user with total < 150', async () => {

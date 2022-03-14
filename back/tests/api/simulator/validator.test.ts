@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { validatorHelper } from '../../../src/core/testHelpers';
 import { simulateValidator } from '../../../src/api/simulator/validator';
+import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 
 const { isValid, getParsedData } = validatorHelper(simulateValidator);
 
@@ -17,7 +18,7 @@ const defalutValidBody = {
       price: 40,
     },
   ],
-  border: false,
+  border: true,
   adult: true,
 };
 
@@ -135,5 +136,33 @@ describe('test simulator validator', () => {
       },
     };
     expect(isValid(data)).toBe(false);
+  });
+  it('should not validate data - missing mean of transport', () => {
+    const data = {
+      body: {
+        ...defalutValidBody,
+        border: false,
+        adult: true,
+      },
+    };
+    expect(isValid(data)).toBe(false);
+  });
+  test.each([
+    [true, MeansOfTransport.BOAT],
+    [true, MeansOfTransport.CAR],
+    [true, MeansOfTransport.OTHER],
+    [true, MeansOfTransport.PLANE],
+    [true, MeansOfTransport.TRAIN],
+    [false, 'teebdefgrg'],
+  ])('validate data should be %p - with mean of transport = %p', (result, meanOfTransport) => {
+    const data = {
+      body: {
+        ...defalutValidBody,
+        border: false,
+        adult: true,
+        meanOfTransport,
+      },
+    };
+    expect(isValid(data)).toBe(result);
   });
 });

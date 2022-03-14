@@ -205,15 +205,15 @@ items:
       - '6212'
   clothesWithLether:
     id: '98b58ced-de0c-40d9-95cc-8247fe63fe17'
-    name: 'Vêtements et accessoire adulte en cuir'
-    info: 'Vêtements et accessoire adulte en cuir.'
+    name: 'Vêtements et accessoire adulte en cuire'
+    info: 'Vêtements et accessoire adulte en cuire.'
     parentProduct: '@adultClothes'
     nomenclatures:
       - '4203'
   letherClothes:
     id: 'c965f1dd-ee73-443f-8e8d-62710e5dd300'
-    name: 'Vêtements en cuir'
-    info: 'Vêtements en cuir.'
+    name: 'Vêtements en cuire'
+    info: 'Vêtements en cuire.'
     parentProduct: '@clothesWithLether'
     customDuty: 4
     vat: 20
@@ -221,7 +221,7 @@ items:
       - '42031000'
   letherGloves:
     id: '490069df-a2da-4441-ab87-40e275695bd7'
-    name: 'Gants en cuir'
+    name: 'Gants en cuire'
     info: 'Gants en cuire.'
     parentProduct: '@clothesWithLether'
     customDuty: 7
@@ -230,8 +230,8 @@ items:
       - '42032990'
   letherAccessory:
     id: '70869c09-f83c-4d35-8d7c-d783c9b543fe'
-    name: 'Ceintures et autres accessoires en cuir'
-    info: 'Ceintures et autres accessoires en cuir.'
+    name: 'Ceintures et autres accessoires en cuire'
+    info: 'Ceintures et autres accessoires en cuire.'
     parentProduct: '@clothesWithLether'
     customDuty: 5
     vat: 20

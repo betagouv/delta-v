@@ -14,11 +14,12 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { shopingProducts, border, adult } = req.body;
+    const { shopingProducts, border, adult, meanOfTransport } = req.body;
     const response = await service({
       shopingProducts,
       border,
       adult,
+      meanOfTransport,
       productRepository: getCustomRepository(ProductRepository),
     });
     return res.send(response).status(HttpStatuses.OK);

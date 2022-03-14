@@ -1,4 +1,5 @@
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
+import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
 import {
   getCompleteShopingProducts,
   getProductTaxesDetails,
@@ -14,6 +15,7 @@ interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
   border?: boolean;
   adult?: boolean;
+  meanOfTransport?: MeansOfTransport;
   shopingProducts: ShopingProduct[];
 }
 
@@ -28,13 +30,14 @@ export const service = async ({
   productRepository,
   border = false,
   adult = false,
+  meanOfTransport,
   shopingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
   const productIds = shopingProducts.map(({ id }) => id);
   const products = await productRepository.getManyByIds(productIds);
 
   const total = getTotalProducts(shopingProducts);
-  if (isFreeFranchise({ total, border, adult })) {
+  if (isFreeFranchise({ total, border, adult, meanOfTransport })) {
     return { total, totalCustomDuty: 0, totalVat: 0 };
   }
   const completeShopingProducts = getCompleteShopingProducts(shopingProducts, products);
