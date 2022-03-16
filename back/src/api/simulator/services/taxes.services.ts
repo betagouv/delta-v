@@ -39,3 +39,12 @@ export const getTotalProductsCustomDuty = (ProductsTaxesDetails: ProductTaxesDet
     return total + productTaxesDetails.totalCustomDuty;
   }, 0);
 };
+
+export const getTotalCustomDuty = (total: number, totalCustomDuty: number): number => {
+  if (total < 700) {
+    const uniqueRateCustomDuty = 0.025;
+    const uniqueRateTotalCustomDuty = total * uniqueRateCustomDuty;
+    return Math.min(uniqueRateTotalCustomDuty, totalCustomDuty);
+  }
+  return totalCustomDuty;
+};

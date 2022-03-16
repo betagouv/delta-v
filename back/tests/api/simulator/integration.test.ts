@@ -10,8 +10,8 @@ import { prepareContextProduct } from '../../utils/prepareContext/product';
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
 
-const prepareContext = async (): Promise<Product[]> => {
-  const product1 = await prepareContextProduct({ testDb, vat: 20, customDuty: 5 });
+const prepareContext = async (customDytyProduct1 = 5): Promise<Product[]> => {
+  const product1 = await prepareContextProduct({ testDb, vat: 20, customDuty: customDytyProduct1 });
   const product2 = await prepareContextProduct({ testDb, vat: 20, customDuty: 12 });
 
   return [product1, product2];
@@ -120,6 +120,31 @@ describe('test simulator API', () => {
       totalVat: 330,
     });
   });
+  test.each([
+    [96, 800, 12],
+    [16.25, 650, 12],
+    [13, 650, 2],
+  ])(
+    'should simulate declaration with total custom duty %p€ - totalProducts = %p and customDuty = %p',
+    async (totalCustomDutyExpected, totalProducts, customDuty) => {
+      const products = await prepareContext(customDuty);
+      const shopingProducts: ShopingProduct[] = [
+        {
+          id: products[0].id,
+          amount: 1,
+          price: totalProducts,
+        },
+      ];
+
+      const { body, status } = await simulateEndpoint({
+        products,
+        shopingProducts,
+      });
+      expect(status).toBe(200);
+
+      expect(body.totalCustomDuty).toEqual(totalCustomDutyExpected);
+    },
+  );
 
   describe('manage taxes with franchises', () => {
     describe('border user', () => {

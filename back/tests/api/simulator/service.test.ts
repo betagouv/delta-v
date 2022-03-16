@@ -5,7 +5,7 @@ import { productEntityFactory } from '../../helpers/factories/product.factory';
 import { productRepositoryMock } from '../../mocks/product.repository.mock';
 
 describe('test simulator service', () => {
-  it('should simulate declaration', async () => {
+  it('should simulate declaration - total < 700 use 2.5% by default for custom duty', async () => {
     const product1 = productEntityFactory({ customDuty: 12, vat: 20 });
     const product2 = productEntityFactory({ customDuty: 5, vat: 20 });
     const shopingProduct1 = {
@@ -47,10 +47,31 @@ describe('test simulator service', () => {
         },
       ],
       total: 455,
-      totalCustomDuty: 40.6,
+      totalCustomDuty: 11.375,
       totalVat: 91,
     });
   });
+  test.each([
+    [96, 800, 12],
+    [16.25, 650, 12],
+    [13, 650, 2],
+  ])(
+    'should simulate declaration with total custom duty %p€ - totalProducts = %p and customDuty = %p',
+    async (totalCustomDutyExpected, totalProducts, customDuty) => {
+      const product1 = productEntityFactory({ customDuty, vat: 20 });
+      const shopingProduct1 = {
+        id: product1.id,
+        amount: 1,
+        price: totalProducts,
+      };
+      const productRepository = productRepositoryMock({ getManyByIds: [product1] });
+      const result = await service({
+        shopingProducts: [shopingProduct1],
+        productRepository,
+      });
+      expect(result.totalCustomDuty).toEqual(totalCustomDutyExpected);
+    },
+  );
   it('should throw error - product not found', async () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
     const shopingProduct = {
