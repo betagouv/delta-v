@@ -9,6 +9,7 @@
     "dev": "nodemon",
     "start": "node dist/index.js",
     "build": "tsc -p ./tsconfig.build.json",
+    "install": "sh ./build.sh",
     "lint": "eslint --ext .ts src/ tests/",
     "lint:fix": "yarn lint --fix",
     "test": "yarn jest",
