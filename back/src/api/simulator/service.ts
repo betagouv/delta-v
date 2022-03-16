@@ -3,6 +3,7 @@ import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
 import {
   getCompleteShopingProducts,
   getProductTaxesDetails,
+  getTotalCustomDuty,
   getTotalProducts,
   getTotalProductsCustomDuty,
   getTotalProductsVat,
@@ -42,11 +43,12 @@ export const service = async ({
   }
   const completeShopingProducts = getCompleteShopingProducts(shopingProducts, products);
   const productstaxesDetails = completeShopingProducts.map(getProductTaxesDetails);
+  const totalProductsCustomDuty = getTotalProductsCustomDuty(productstaxesDetails);
 
   return {
     products: productstaxesDetails,
     total,
-    totalCustomDuty: getTotalProductsCustomDuty(productstaxesDetails),
+    totalCustomDuty: getTotalCustomDuty(total, totalProductsCustomDuty),
     totalVat: getTotalProductsVat(productstaxesDetails),
   };
 };
