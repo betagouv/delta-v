@@ -30,6 +30,7 @@ jobs:
       DB_USERNAME: postgres
       DB_PASSWORD: pass
       DB_DATABASE: postgres
+      LOG_LEVEL: fatal
 
     steps:
       - uses: actions/checkout@v2

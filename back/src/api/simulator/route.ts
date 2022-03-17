@@ -22,6 +22,7 @@ export default async (
       meanOfTransport,
       productRepository: getCustomRepository(ProductRepository),
     });
+
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {
     return next(error);
