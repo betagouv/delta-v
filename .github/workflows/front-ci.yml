@@ -43,7 +43,7 @@ jobs:
           postgresql db: postgres
           postgresql user: postgres
           postgresql password: pass
-      - run: yarn
+      - run: "yarn install --ignore-scripts"
       - run: yarn lint
 
   deploy-front-production:
