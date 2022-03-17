@@ -1,6 +1,6 @@
 
-yarn install --production=false
+yarn --production=false --ignore-scripts
 yarn migration:run
 yarn fixtures:load
 yarn build
-yarn install --production=true
+yarn --production=true --ignore-scripts
