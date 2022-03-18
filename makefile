@@ -58,6 +58,17 @@ run-front: ## Run command in the frontend container
 	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) $(filter-out $@,$(MAKECMDGOALS))
 
 ##
+## -- BUILD --
+##
+
+.PHONY: build-front
+build-front: ## build the frontend container
+	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn build-prod
+
+.PHONY: start-build-front
+start-build-front: ## start the build the frontend container
+	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn start
+##
 ## -- DEPENDENCIES --
 ##
 
