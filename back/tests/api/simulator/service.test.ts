@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 import { service } from '../../../src/api/simulator/service';
 import { HttpStatuses } from '../../../src/core/httpStatuses';
@@ -20,6 +21,8 @@ describe('test simulator service', () => {
     };
     const productRepository = productRepositoryMock({ getManyByIds: [product1, product2] });
     const result = await service({
+      border: false,
+      age: 18,
       shopingProducts: [shopingProduct1, shopingProduct2],
       productRepository,
     });
@@ -66,6 +69,8 @@ describe('test simulator service', () => {
       };
       const productRepository = productRepositoryMock({ getManyByIds: [product1] });
       const result = await service({
+        border: false,
+        age: 18,
         shopingProducts: [shopingProduct1],
         productRepository,
       });
@@ -83,7 +88,12 @@ describe('test simulator service', () => {
 
     expect.assertions(2);
     try {
-      await service({ shopingProducts: [shopingProduct], productRepository });
+      await service({
+        border: false,
+        age: 18,
+        shopingProducts: [shopingProduct],
+        productRepository,
+      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       expect(error.statusCode).toBe(HttpStatuses.NOT_FOUND);
@@ -104,7 +114,7 @@ describe('test simulator service', () => {
         const result = await service({
           shopingProducts: [shopingProduct],
           border: true,
-          adult: true,
+          age: faker.datatype.number({ precision: 1, min: 15 }),
           productRepository,
         });
 
@@ -123,7 +133,7 @@ describe('test simulator service', () => {
         const result = await service({
           shopingProducts: [shopingProduct],
           border: true,
-          adult: true,
+          age: faker.datatype.number({ precision: 1, min: 15 }),
           productRepository,
         });
 
@@ -144,7 +154,7 @@ describe('test simulator service', () => {
         const result = await service({
           shopingProducts: [shopingProduct],
           border: true,
-          adult: false,
+          age: faker.datatype.number({ precision: 1, max: 15 }),
           productRepository,
         });
 
@@ -163,7 +173,7 @@ describe('test simulator service', () => {
         const result = await service({
           shopingProducts: [shopingProduct],
           border: true,
-          adult: false,
+          age: faker.datatype.number({ precision: 1, max: 15 }),
           productRepository,
         });
 
@@ -195,7 +205,7 @@ describe('test simulator service', () => {
           const result = await service({
             shopingProducts: [shopingProduct],
             border: false,
-            adult: true,
+            age: faker.datatype.number({ precision: 1, min: 15 }),
             meanOfTransport,
             productRepository,
           });
@@ -224,7 +234,7 @@ describe('test simulator service', () => {
           const result = await service({
             shopingProducts: [shopingProduct],
             border: false,
-            adult: true,
+            age: faker.datatype.number({ precision: 1, min: 15 }),
             meanOfTransport,
             productRepository,
           });
@@ -247,7 +257,7 @@ describe('test simulator service', () => {
         const result = await service({
           shopingProducts: [shopingProduct],
           border: false,
-          adult: false,
+          age: faker.datatype.number({ precision: 1, max: 15 }),
           productRepository,
         });
 
@@ -266,7 +276,7 @@ describe('test simulator service', () => {
         const result = await service({
           shopingProducts: [shopingProduct],
           border: false,
-          adult: false,
+          age: faker.datatype.number({ precision: 1, max: 15 }),
           productRepository,
         });
 

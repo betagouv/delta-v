@@ -14,8 +14,8 @@ import { isFreeFranchise } from './services/franchise.service';
 
 interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
-  border?: boolean;
-  adult?: boolean;
+  border: boolean;
+  age: number;
   meanOfTransport?: MeansOfTransport;
   shopingProducts: ShopingProduct[];
 }
@@ -29,8 +29,8 @@ interface SimulateServiceResponse {
 
 export const service = async ({
   productRepository,
-  border = false,
-  adult = false,
+  border,
+  age,
   meanOfTransport,
   shopingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
@@ -38,7 +38,7 @@ export const service = async ({
   const products = await productRepository.getManyByIds(productIds);
 
   const total = getTotalProducts(shopingProducts);
-  if (isFreeFranchise({ total, border, adult, meanOfTransport })) {
+  if (isFreeFranchise({ total, border, age, meanOfTransport })) {
     return { total, totalCustomDuty: 0, totalVat: 0 };
   }
   const completeShopingProducts = getCompleteShopingProducts(shopingProducts, products);

@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
 import {
   getFranchiseAmount,
@@ -17,13 +18,19 @@ describe('Franchise Service', () => {
     describe('is border user', () => {
       describe('is adult > 15', () => {
         it('should return 75', () => {
-          const result = getFranchiseAmount({ border: true, adult: true });
+          const result = getFranchiseAmount({
+            border: true,
+            age: faker.datatype.number({ precision: 1, min: 15 }),
+          });
           expect(result).toBe(75);
         });
       });
       describe('is not adult < 15', () => {
         it('should return 40', () => {
-          const result = getFranchiseAmount({ border: true, adult: false });
+          const result = getFranchiseAmount({
+            border: true,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
+          });
           expect(result).toBe(40);
         });
       });
@@ -35,7 +42,7 @@ describe('Franchise Service', () => {
           (meanOfTransport, franchise) => {
             const result = getFranchiseAmount({
               border: false,
-              adult: true,
+              age: faker.datatype.number({ precision: 1, min: 15 }),
               meanOfTransport: meanOfTransport as MeansOfTransport,
             });
             expect(result).toBe(franchise);
@@ -44,7 +51,10 @@ describe('Franchise Service', () => {
       });
       describe('is not adult < 15', () => {
         it('should return 150', () => {
-          const result = getFranchiseAmount({ border: false, adult: false });
+          const result = getFranchiseAmount({
+            border: false,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
+          });
           expect(result).toBe(150);
         });
       });
@@ -57,7 +67,11 @@ describe('Franchise Service', () => {
           [true, 50],
           [false, 500],
         ])('should return %p - with total = %p', (expectedResult, total) => {
-          const result = isFreeFranchise({ total, border: true, adult: true });
+          const result = isFreeFranchise({
+            total,
+            border: true,
+            age: faker.datatype.number({ precision: 1, min: 15 }),
+          });
           expect(result).toBe(expectedResult);
         });
       });
@@ -66,7 +80,11 @@ describe('Franchise Service', () => {
           [true, 35],
           [false, 45],
         ])('should return %p - with total = %p', (expectedResult, total) => {
-          const result = isFreeFranchise({ total, border: true, adult: false });
+          const result = isFreeFranchise({
+            total,
+            border: true,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
+          });
           expect(result).toBe(expectedResult);
         });
       });
@@ -90,7 +108,7 @@ describe('Franchise Service', () => {
             const result = isFreeFranchise({
               total,
               border: false,
-              adult: true,
+              age: faker.datatype.number({ precision: 1, min: 15 }),
               meanOfTransport: meanOfTransport,
             });
             expect(result).toBe(expectedResult);
@@ -102,7 +120,11 @@ describe('Franchise Service', () => {
           [true, 145],
           [false, 155],
         ])('should return %p - with total = %p', (expectedResult, total) => {
-          const result = isFreeFranchise({ total, border: false, adult: false });
+          const result = isFreeFranchise({
+            total,
+            border: false,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
+          });
           expect(result).toBe(expectedResult);
         });
       });

@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import request from 'supertest';
 import api from '../../../src/api';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
@@ -34,7 +35,7 @@ interface SimulateEndpointOptions {
   products?: Product[];
   shopingProducts: ShopingProduct[];
   border?: boolean;
-  adult?: boolean;
+  age?: number;
   meanOfTransport?: MeansOfTransport;
 }
 
@@ -50,12 +51,12 @@ const simulateEndpoint = async ({
   products,
   shopingProducts,
   border = false,
-  adult = true,
+  age = faker.datatype.number({ precision: 1, min: 15 }),
   meanOfTransport = MeansOfTransport.CAR,
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
   const { status, body } = await request(testApp)
     .post('/api/simulator')
-    .send({ shopingProducts, border, adult, meanOfTransport });
+    .send({ shopingProducts, border, age, meanOfTransport });
 
   if (!products) {
     return { status, body };
@@ -154,7 +155,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: true,
-            adult: true,
+            age: faker.datatype.number({ precision: 1, min: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toBeGreaterThan(0);
@@ -165,7 +166,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: true,
-            adult: true,
+            age: faker.datatype.number({ precision: 1, min: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toEqual(0);
@@ -178,7 +179,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: true,
-            adult: false,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toBeGreaterThan(0);
@@ -189,7 +190,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: true,
-            adult: false,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toEqual(0);
@@ -210,7 +211,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: false,
-            adult: true,
+            age: faker.datatype.number({ precision: 1, min: 15 }),
             meanOfTransport,
           });
           expect(status).toBe(200);
@@ -230,7 +231,7 @@ describe('test simulator API', () => {
             const { body, status } = await simulateEndpoint({
               shopingProducts,
               border: false,
-              adult: true,
+              age: faker.datatype.number({ precision: 1, min: 15 }),
               meanOfTransport,
             });
             expect(status).toBe(200);
@@ -245,7 +246,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: false,
-            adult: false,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toBeGreaterThan(0);
@@ -256,7 +257,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shopingProducts,
             border: false,
-            adult: false,
+            age: faker.datatype.number({ precision: 1, max: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toEqual(0);

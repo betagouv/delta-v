@@ -7,7 +7,7 @@ export interface SimulateRequest {
   body: {
     shopingProducts: ShopingProduct[];
     border: boolean;
-    adult: boolean;
+    age: number;
     meanOfTransport?: MeansOfTransport;
   };
 }
@@ -26,11 +26,11 @@ export const simulateValidator: IRequestValidatorSchema = {
       .min(1)
       .required(),
     border: validator.boolean().required(),
-    adult: validator.boolean().default(true),
+    age: validator.number().integer().min(0).required(),
     meanOfTransport: validator.string().when('border', {
       is: false,
-      then: validator.when('adult', {
-        is: true,
+      then: validator.when('age', {
+        is: validator.number().min(15),
         then: validator
           .string()
           .valid(...meansOfTransport)

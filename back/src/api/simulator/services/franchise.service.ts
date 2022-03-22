@@ -3,15 +3,17 @@ import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 interface IsFreeFranchiseOptions {
   total: number;
   border: boolean;
-  adult: boolean;
+  age: number;
   meanOfTransport?: MeansOfTransport;
 }
 
 interface GetFranchiseAmountOptions {
   border: boolean;
-  adult: boolean;
+  age: number;
   meanOfTransport?: MeansOfTransport;
 }
+
+const ADULT_AGE = 15;
 
 const getFranchiseForAdultNotBorder = (meanOfTransport: MeansOfTransport): number => {
   switch (meanOfTransport) {
@@ -30,17 +32,17 @@ const getFranchiseForAdultNotBorder = (meanOfTransport: MeansOfTransport): numbe
 
 export const getFranchiseAmount = ({
   border,
-  adult,
+  age,
   meanOfTransport = MeansOfTransport.OTHER,
 }: GetFranchiseAmountOptions): number => {
   if (border) {
-    if (adult) {
+    if (age > ADULT_AGE) {
       return 75;
     } else {
       return 40;
     }
   } else {
-    if (adult) {
+    if (age > ADULT_AGE) {
       return getFranchiseForAdultNotBorder(meanOfTransport);
     } else {
       return 150;
@@ -51,9 +53,9 @@ export const getFranchiseAmount = ({
 export const isFreeFranchise = ({
   total,
   border,
-  adult,
+  age,
   meanOfTransport = MeansOfTransport.OTHER,
 }: IsFreeFranchiseOptions): boolean => {
-  const franchise = getFranchiseAmount({ border, adult, meanOfTransport });
+  const franchise = getFranchiseAmount({ border, age, meanOfTransport });
   return total < franchise;
 };

@@ -3,7 +3,7 @@ import { validatorHelper } from '../../../src/core/testHelpers';
 import { simulateValidator } from '../../../src/api/simulator/validator';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 
-const { isValid, getParsedData } = validatorHelper(simulateValidator);
+const { isValid } = validatorHelper(simulateValidator);
 
 const defalutValidBody = {
   shopingProducts: [
@@ -19,7 +19,7 @@ const defalutValidBody = {
     },
   ],
   border: true,
-  adult: true,
+  age: 20,
 };
 
 describe('test simulator validator', () => {
@@ -117,22 +117,21 @@ describe('test simulator validator', () => {
     };
     expect(isValid(data)).toBe(false);
   });
-  it('should not validate data - default value adult', () => {
+  it('should not validate data - age undefiend', () => {
     const data = {
       body: {
         ...defalutValidBody,
-        adult: undefined,
+        age: undefined,
       },
     };
 
-    expect(isValid(data)).toBe(true);
-    expect(getParsedData(data).body.adult).toBe(true);
+    expect(isValid(data)).toBe(false);
   });
-  it('should not validate data - bad format adult', () => {
+  it('should not validate data - bad format age', () => {
     const data = {
       body: {
         ...defalutValidBody,
-        adult: 'bad',
+        age: 'bad',
       },
     };
     expect(isValid(data)).toBe(false);
@@ -142,10 +141,20 @@ describe('test simulator validator', () => {
       body: {
         ...defalutValidBody,
         border: false,
-        adult: true,
+        age: 18,
       },
     };
     expect(isValid(data)).toBe(false);
+  });
+  it('should validate data - missing mean of transport but age < 15', () => {
+    const data = {
+      body: {
+        ...defalutValidBody,
+        border: false,
+        age: 12,
+      },
+    };
+    expect(isValid(data)).toBe(true);
   });
   test.each([
     [true, MeansOfTransport.BOAT],
@@ -159,7 +168,7 @@ describe('test simulator validator', () => {
       body: {
         ...defalutValidBody,
         border: false,
-        adult: true,
+        age: 18,
         meanOfTransport,
       },
     };
