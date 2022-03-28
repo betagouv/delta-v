@@ -9,6 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "install": "sh ./build.sh",
     "storybook": "start-storybook -p 9009",
     "build-stats": "cross-env ANALYZE=true npm run build",
     "export": "next export",
