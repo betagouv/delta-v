@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@dataesr/react-dsfr';
 import { useFieldArray } from 'react-hook-form';
 
-import InputGroup from '@/components/input/InputGroup';
+import { InputGroup } from '@/components/input/InputGroup';
 
 interface FormSimulatorProps {
   onChangeBorder: (value: string) => void;
