@@ -44,7 +44,7 @@ export const ProductTree: React.FC<ProductTreeProps> = ({ product }) => {
       >
         {' '}
         {isClicable ? ' ➜ ' : ' • '}
-        {product.name} {isClicable ? <ClipboardCopyIcon className="mt-1 w-5 h-5" /> : ''}
+        {product.name} {isClicable ? <ClipboardCopyIcon className="mt-1 h-5 w-5" /> : ''}
       </div>
       {product.subProducts.map((subProduct) => (
         <div className="ml-5" key={subProduct.id}>

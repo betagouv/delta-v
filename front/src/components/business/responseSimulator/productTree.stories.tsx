@@ -1,7 +1,8 @@
 import React from 'react';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Meta } from '@storybook/react';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 
 import { ResponseData, ResponseSimulator } from './responseSimulator';
 
@@ -48,5 +49,5 @@ export const WithVariant = () => {
     totalCustomDuty: 16.75,
     totalVat: 134,
   };
-  return <ResponseSimulator response={responseData}></ResponseSimulator>;
+  return <ResponseSimulator response={responseData} />;
 };

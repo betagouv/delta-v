@@ -1,7 +1,7 @@
 import React from 'react';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Meta } from '@storybook/react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
 
 import { Select } from './Select';

@@ -1,7 +1,8 @@
 import React from 'react';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Meta } from '@storybook/react';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 
 import { Product, ProductTree } from './productTree';
 
@@ -63,5 +64,5 @@ export const WithVariant = () => {
       },
     ],
   };
-  return <ProductTree product={products}></ProductTree>;
+  return <ProductTree product={products} />;
 };

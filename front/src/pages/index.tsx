@@ -117,9 +117,9 @@ const Index = () => {
               register={register}
               control={control}
               errors={formErrors}
-            ></FormSimulator>
+            />
           </form>
-          <ResponseSimulator response={simulateResponse}></ResponseSimulator>
+          <ResponseSimulator response={simulateResponse} />
         </div>
       </div>
     </Main>

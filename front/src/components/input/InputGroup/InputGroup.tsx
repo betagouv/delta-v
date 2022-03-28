@@ -115,7 +115,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
         {loading && 'Loading'}
       </div>
       {error && (
-        <p className="px-2 text-sm text-red-600 flex-row" id="email-error">
+        <p className="flex-row px-2 text-sm text-red-600" id="email-error">
           {error}
         </p>
       )}

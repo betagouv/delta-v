@@ -11,6 +11,6 @@ export default {
 
 export const base = (): JSX.Element => (
   <div>
-     <Input name="test" type="text" placeholder="Placeholder" />
+    <Input name="test" type="text" placeholder="Placeholder" />
   </div>
 );

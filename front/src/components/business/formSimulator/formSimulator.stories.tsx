@@ -1,12 +1,11 @@
 import React from 'react';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Meta } from '@storybook/react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
 
-import { FormSimulatorData } from '@/pages';
-
 import { FormSimulator } from './formSimulator';
+import { FormSimulatorData } from '@/pages';
 
 export default {
   title: 'Components/Business/formSimulator',
@@ -39,6 +38,6 @@ export const WithVariant = () => {
       register={register}
       onChangeBorder={() => undefined}
       onChangeMeanOfTransport={() => undefined}
-    ></FormSimulator>
+    />
   );
 };

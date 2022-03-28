@@ -37,7 +37,7 @@ export const Select: React.FC<ISelectOptions> = ({
     rules,
   });
   return (
-    <div className="p-1 relative rounded-md">
+    <div className="relative rounded-md p-1">
       <Listbox
         disabled={disabled}
         {...field}
@@ -49,7 +49,7 @@ export const Select: React.FC<ISelectOptions> = ({
       >
         {({ open }) => (
           <>
-            <div className="mt-1 relative">
+            <div className="relative mt-1">
               <Listbox.Button
                 className={`bg-white relative w-full border border-gray-300 border-solid rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 sm:text-sm ${
                   error
@@ -58,7 +58,7 @@ export const Select: React.FC<ISelectOptions> = ({
                 } ${disabled ? 'bg-secondary-200 text-secondary-400' : ''}`}
               >
                 <span className="block truncate">{selected?.value}</span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                   <Icon name="chevron-thin-down" />
                 </span>
               </Listbox.Button>
@@ -70,7 +70,7 @@ export const Select: React.FC<ISelectOptions> = ({
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="absolute z-10 mt-1 p-0 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm list-none">
+                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                   {options.map((option) => (
                     <Listbox.Option
                       key={option.id}

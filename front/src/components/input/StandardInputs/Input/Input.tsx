@@ -34,7 +34,7 @@ export const Input: React.FC<IInputOptions> = ({
   register,
 }: IInputOptions) => (
   <div>
-    <div className="p-1 relative rounded-md">
+    <div className="relative rounded-md p-1">
       <input
         id={id ?? name}
         name={name}
