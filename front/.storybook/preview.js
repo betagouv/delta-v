@@ -1,6 +1,6 @@
 import React from 'react';
 import { addParameters } from '@storybook/react';
-import '../src/styles';
+import '../src/styles/global.css';
 
 addParameters({
   layout: 'fullscreen',

@@ -94,6 +94,14 @@ test-back-watch: ## Run the tests for the backend with watch
 	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest:watch tests/$(filter-out $@,$(MAKECMDGOALS)) --color
 	$(DOCKER_COMPOSE) stop $(TEST_DATABASE_CONTAINER)
 
+.PHONY: lint-back
+lint-back: ## Run the linter for the backend
+	$(DOCKER_COMPOSE) run --rm $(BACK_CONTAINER) yarn lint
+
+.PHONY: lint-front
+lint-front: ## Run the linter for the frontend
+	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn lint
+
 ##
 ## -- DATABASE --
 ##

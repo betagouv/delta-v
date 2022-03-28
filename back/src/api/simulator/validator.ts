@@ -23,7 +23,6 @@ export const simulateValidator: IRequestValidatorSchema = {
           price: validator.number().min(0).invalid(0).required(),
         }),
       )
-      .min(1)
       .required(),
     border: validator.boolean().required(),
     age: validator.number().integer().min(0).required(),
