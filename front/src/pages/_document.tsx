@@ -8,6 +8,7 @@ class MyDocument extends Document {
     return (
       <Html lang={AppConfig.locale}>
         <Head />
+
         <body>
           <Main />
           <NextScript />

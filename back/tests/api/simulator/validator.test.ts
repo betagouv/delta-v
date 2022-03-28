@@ -90,15 +90,6 @@ describe('test simulator validator', () => {
     };
     expect(isValid(data)).toBe(false);
   });
-  it("should not validate data - shopingProducts can't be empty", () => {
-    const data = {
-      body: {
-        ...defalutValidBody,
-        shopingProducts: [],
-      },
-    };
-    expect(isValid(data)).toBe(false);
-  });
   it('should not validate data - missing border', () => {
     const data = {
       body: {
