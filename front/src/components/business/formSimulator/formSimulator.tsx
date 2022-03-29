@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Button } from '@dataesr/react-dsfr';
+import { getNames } from 'i18n-iso-countries';
 import { useFieldArray } from 'react-hook-form';
 
 import { InputGroup } from '@/components/input/InputGroup';
@@ -15,12 +16,20 @@ interface FormSimulatorProps {
 }
 
 export const FormSimulator: React.FC<FormSimulatorProps> = ({ register, control, errors }) => {
-  const options = [
+  const meanOfTransportOptions = [
     { value: 'Avion', id: 'plane' },
     { value: 'Bateau', id: 'boat' },
     { value: 'Train', id: 'train' },
     { value: 'Voiture', id: 'car' },
+    { value: 'Autre', id: 'other' },
   ];
+
+  const countriesOptions = useMemo(() => {
+    const countries = getNames('fr', { select: 'official' });
+    const keys = Object.keys(countries);
+    return keys.map((key) => ({ value: countries[key] ?? '', id: key }));
+  }, []);
+
   const { fields } = useFieldArray({
     control,
     name: 'shopingProducts',
@@ -51,9 +60,17 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({ register, control,
         label="Moyen de transport"
         type="select"
         register={register('meanOfTransport')}
-        options={options}
+        options={meanOfTransportOptions}
         control={control}
         error={errors?.meanOfTransport?.message}
+      />
+      <br />
+      <InputGroup
+        name="country"
+        label="Pays d'origine"
+        type="select"
+        control={control}
+        options={countriesOptions}
       />
       <br />
       <div>
