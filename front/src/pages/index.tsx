@@ -69,7 +69,9 @@ const Index = () => {
     );
 
     const formatedData: FormSimulatorData = {
-      ...data,
+      age: data.age,
+      border: data.border,
+      meanOfTransport: data.meanOfTransport,
       shopingProducts,
     };
 
