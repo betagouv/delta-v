@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import { Title } from '@dataesr/react-dsfr';
 import { ToastContainer } from 'react-toastify';
 
 import { AppConfig } from '@/utils/AppConfig';
@@ -11,12 +10,12 @@ type IMainProps = {
 };
 
 const Main = (props: IMainProps) => (
-  <div className="px-1 w-full antialiased text-gray-700">
+  <div className="w-full px-1 text-gray-700 antialiased">
     {props.meta}
 
     <div className="mx-auto max-w-screen-xl">
-      <Title as="h1">{AppConfig.site_name}</Title>
-      <div className="py-5 text-xl content">{props.children}</div>
+      <h1 className="text-2xl">{AppConfig.site_name}</h1>
+      <div className="py-5 text-xl">{props.children}</div>
       <ToastContainer />
     </div>
   </div>
