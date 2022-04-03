@@ -1,50 +1,62 @@
-import { CompleteShopingProduct, getProductCustomDuty, getProductVat } from '.';
+import {
+  LIMIT_UNIQUE_CUSTOM_DUTY,
+  ProductTaxes,
+  ProductTaxesInterface,
+  UNIQUE_CUSTOM_DUTY,
+} from '../../../entities/productTaxes.entity';
+import { manageFreeProducts } from './freeProduct.service';
 
-export interface ProductTaxesDetails {
-  name: string;
-  amount: number;
-  unitPrice: number;
-  totalPrice: number;
-  customDuty: number;
-  vat: number;
-  totalCustomDuty: number;
-  totalVat: number;
+const getTotalProductsTaxes = (productsTaxes: ProductTaxesInterface[]): number => {
+  return getTotalProductsVat(productsTaxes) + getTotalProductsCustomDuty(productsTaxes);
+};
+
+export const getTotalProductsVat = (productsTaxes: ProductTaxesInterface[]): number => {
+  return productsTaxes.reduce((total, ProductTaxes) => {
+    return total + ProductTaxes.getTotalVat();
+  }, 0);
+};
+
+export const getTotalProductsCustomDuty = (
+  ProductsTaxesDetails: ProductTaxesInterface[],
+): number => {
+  return ProductsTaxesDetails.reduce((total, productTaxesDetails) => {
+    return total + productTaxesDetails.getTotalCustomDuty();
+  }, 0);
+};
+
+interface ManageProductTaxeDetailsOptions {
+  total: number;
+  franchiseAmount: number;
+  productsTaxes: ProductTaxesInterface[];
 }
 
-export const getProductTaxesDetails = (
-  completeShopingProduct: CompleteShopingProduct,
-): ProductTaxesDetails => {
-  const { amount, price, product } = completeShopingProduct;
-
-  return {
-    name: product.name,
-    amount,
-    unitPrice: price,
-    totalPrice: amount * price,
-    totalCustomDuty: getProductCustomDuty(completeShopingProduct),
-    totalVat: getProductVat(completeShopingProduct),
-    customDuty: product.customDuty ?? 0,
-    vat: product.vat ?? 0,
-  };
-};
-
-export const getTotalProductsVat = (ProductsTaxesDetails: ProductTaxesDetails[]): number => {
-  return ProductsTaxesDetails.reduce((total, productTaxesDetails) => {
-    return total + productTaxesDetails.totalVat;
-  }, 0);
-};
-
-export const getTotalProductsCustomDuty = (ProductsTaxesDetails: ProductTaxesDetails[]): number => {
-  return ProductsTaxesDetails.reduce((total, productTaxesDetails) => {
-    return total + productTaxesDetails.totalCustomDuty;
-  }, 0);
-};
-
-export const getTotalCustomDuty = (total: number, totalCustomDuty: number): number => {
-  if (total < 700) {
-    const uniqueRateCustomDuty = 0.025;
-    const uniqueRateTotalCustomDuty = total * uniqueRateCustomDuty;
-    return Math.min(uniqueRateTotalCustomDuty, totalCustomDuty);
+export const manageProductTaxeDetails = ({
+  total,
+  franchiseAmount,
+  productsTaxes,
+}: ManageProductTaxeDetailsOptions): ProductTaxesInterface[] => {
+  if (total < franchiseAmount) {
+    return productsTaxes.map((product) => product.resetFreeTaxeDetails());
   }
-  return totalCustomDuty;
+
+  const defaultTaxeProducts = manageFreeProducts({ franchiseAmount, productsTaxes });
+  const defaultTotalTaxes = getTotalProductsTaxes(defaultTaxeProducts);
+  if (total < LIMIT_UNIQUE_CUSTOM_DUTY) {
+    const uniqueRateProducts = productsTaxes.map((product) => {
+      const newProduct = new ProductTaxes({}).setFromProductTaxes(product);
+      newProduct.setCustomDuty(UNIQUE_CUSTOM_DUTY);
+      return newProduct;
+    });
+    const uniqueRateTaxeProducts = manageFreeProducts({
+      franchiseAmount,
+      productsTaxes: uniqueRateProducts,
+    });
+    const uniqueRateTotalTaxes = getTotalProductsTaxes(uniqueRateTaxeProducts);
+
+    if (uniqueRateTotalTaxes < defaultTotalTaxes) {
+      return uniqueRateTaxeProducts;
+    }
+  }
+
+  return defaultTaxeProducts;
 };

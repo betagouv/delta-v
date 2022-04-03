@@ -1,9 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
-import {
-  getFranchiseAmount,
-  isFreeFranchise,
-} from '../../../../src/api/simulator/services/franchise.service';
+import { getFranchiseAmount } from '../../../../src/api/simulator/services/franchise.service';
 
 const meansOfTransportCases = [
   [MeansOfTransport.PLANE, 430],
@@ -56,76 +53,6 @@ describe('Franchise Service', () => {
             age: faker.datatype.number({ precision: 1, max: 15 }),
           });
           expect(result).toBe(150);
-        });
-      });
-    });
-  });
-  describe('test function isFreeFranchise', () => {
-    describe('is border user', () => {
-      describe('is adult > 15', () => {
-        test.each([
-          [true, 50],
-          [false, 500],
-        ])('should return %p - with total = %p', (expectedResult, total) => {
-          const result = isFreeFranchise({
-            total,
-            border: true,
-            age: faker.datatype.number({ precision: 1, min: 15 }),
-          });
-          expect(result).toBe(expectedResult);
-        });
-      });
-      describe('is not adult < 15', () => {
-        test.each([
-          [true, 35],
-          [false, 45],
-        ])('should return %p - with total = %p', (expectedResult, total) => {
-          const result = isFreeFranchise({
-            total,
-            border: true,
-            age: faker.datatype.number({ precision: 1, max: 15 }),
-          });
-          expect(result).toBe(expectedResult);
-        });
-      });
-    });
-    describe('is not border user', () => {
-      describe('is adult > 15', () => {
-        test.each([
-          [true, 425, MeansOfTransport.PLANE],
-          [false, 435, MeansOfTransport.PLANE],
-          [true, 425, MeansOfTransport.BOAT],
-          [false, 435, MeansOfTransport.BOAT],
-          [true, 299, MeansOfTransport.TRAIN],
-          [false, 301, MeansOfTransport.TRAIN],
-          [true, 299, MeansOfTransport.CAR],
-          [false, 301, MeansOfTransport.CAR],
-          [true, 299, MeansOfTransport.OTHER],
-          [false, 301, MeansOfTransport.OTHER],
-        ])(
-          'should return %p - with total = %p and meanOfTransport = %p ',
-          (expectedResult, total, meanOfTransport) => {
-            const result = isFreeFranchise({
-              total,
-              border: false,
-              age: faker.datatype.number({ precision: 1, min: 15 }),
-              meanOfTransport: meanOfTransport,
-            });
-            expect(result).toBe(expectedResult);
-          },
-        );
-      });
-      describe('is not adult < 15', () => {
-        test.each([
-          [true, 145],
-          [false, 155],
-        ])('should return %p - with total = %p', (expectedResult, total) => {
-          const result = isFreeFranchise({
-            total,
-            border: false,
-            age: faker.datatype.number({ precision: 1, max: 15 }),
-          });
-          expect(result).toBe(expectedResult);
         });
       });
     });

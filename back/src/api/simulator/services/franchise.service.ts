@@ -1,12 +1,5 @@
 import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 
-interface IsFreeFranchiseOptions {
-  total: number;
-  border: boolean;
-  age: number;
-  meanOfTransport?: MeansOfTransport;
-}
-
 interface GetFranchiseAmountOptions {
   border: boolean;
   age: number;
@@ -48,14 +41,4 @@ export const getFranchiseAmount = ({
       return 150;
     }
   }
-};
-
-export const isFreeFranchise = ({
-  total,
-  border,
-  age,
-  meanOfTransport = MeansOfTransport.OTHER,
-}: IsFreeFranchiseOptions): boolean => {
-  const franchise = getFranchiseAmount({ border, age, meanOfTransport });
-  return total < franchise;
 };

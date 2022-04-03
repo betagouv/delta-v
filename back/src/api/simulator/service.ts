@@ -1,16 +1,13 @@
+import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes.entity';
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
 import {
   getCompleteShopingProducts,
-  getProductTaxesDetails,
-  getTotalCustomDuty,
   getTotalProducts,
-  getTotalProductsCustomDuty,
-  getTotalProductsVat,
-  ProductTaxesDetails,
+  manageProductTaxeDetails,
   ShopingProduct,
 } from './services';
-import { isFreeFranchise } from './services/franchise.service';
+import { getFranchiseAmount } from './services/franchise.service';
 
 interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
@@ -21,10 +18,8 @@ interface SimulateServiceOptions {
 }
 
 interface SimulateServiceResponse {
-  products?: ProductTaxesDetails[];
-  total: number;
-  totalCustomDuty: number;
-  totalVat: number;
+  products: ProductTaxesInterface[];
+  franchiseAmount: number;
 }
 
 export const service = async ({
@@ -38,17 +33,20 @@ export const service = async ({
   const products = await productRepository.getManyByIds(productIds);
 
   const total = getTotalProducts(shopingProducts);
-  if (isFreeFranchise({ total, border, age, meanOfTransport })) {
-    return { total, totalCustomDuty: 0, totalVat: 0 };
-  }
+  const franchiseAmount = getFranchiseAmount({ border, age, meanOfTransport });
   const completeShopingProducts = getCompleteShopingProducts(shopingProducts, products);
-  const productstaxesDetails = completeShopingProducts.map(getProductTaxesDetails);
-  const totalProductsCustomDuty = getTotalProductsCustomDuty(productstaxesDetails);
+  const productsTaxes = completeShopingProducts.map((product) =>
+    new ProductTaxes({}).setFromCompleteShopingProduct(product),
+  );
+
+  const productDetailled = manageProductTaxeDetails({
+    franchiseAmount,
+    total,
+    productsTaxes,
+  });
 
   return {
-    products: productstaxesDetails,
-    total,
-    totalCustomDuty: getTotalCustomDuty(total, totalProductsCustomDuty),
-    totalVat: getTotalProductsVat(productstaxesDetails),
+    products: productDetailled,
+    franchiseAmount,
   };
 };

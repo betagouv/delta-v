@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 import request from 'supertest';
 import api from '../../../src/api';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
-import { ProductTaxesDetails, ShopingProduct } from '../../../src/api/simulator/services';
 import { Product } from '../../../src/entities/product.entity';
 import buildTestApp from '../../helpers/testApp.helper';
 import { testDbManager } from '../../helpers/testDb.helper';
@@ -17,6 +16,12 @@ const prepareContext = async (customDytyProduct1 = 5): Promise<Product[]> => {
 
   return [product1, product2];
 };
+
+export interface ShopingProduct {
+  id: string;
+  amount: number;
+  price: number;
+}
 
 const prepareProductPrice = async (price = 500): Promise<ShopingProduct[]> => {
   const products = await prepareContext();
@@ -37,6 +42,21 @@ interface SimulateEndpointOptions {
   border?: boolean;
   age?: number;
   meanOfTransport?: MeansOfTransport;
+}
+export interface ProductTaxesDetails {
+  id: string;
+  name: string;
+  amount: number;
+  unitPrice: number;
+  totalPrice: number;
+  customDuty: number;
+  vat: number;
+  totalCustomDuty: number;
+  totalVat: number;
+  totalTaxes: number;
+  unitCustomDuty: number;
+  unitVat: number;
+  unitTaxes: number;
 }
 
 interface SimulateEndpointResponse {
@@ -64,16 +84,22 @@ const simulateEndpoint = async ({
 
   const productTaxesDetails = shopingProducts.map(
     (shopingProduct, index: number): ProductTaxesDetails => {
+      const unitCustomDuty = (shopingProduct.price * (products[index].customDuty ?? 0)) / 100;
+      const unitVat = (shopingProduct.price * (products[index].vat ?? 0)) / 100;
       return {
+        id: products[index].id,
         name: products[index].name,
         amount: shopingProduct.amount,
         unitPrice: shopingProduct.price,
         totalPrice: shopingProduct.amount * shopingProduct.price,
         customDuty: products[index].customDuty ?? 0,
         vat: products[index].vat ?? 0,
-        totalCustomDuty:
-          (shopingProduct.amount * shopingProduct.price * (products[index].customDuty ?? 0)) / 100,
-        totalVat: (shopingProduct.amount * shopingProduct.price * (products[index].vat ?? 0)) / 100,
+        totalCustomDuty: shopingProduct.amount * unitCustomDuty,
+        totalVat: shopingProduct.amount * unitVat,
+        totalTaxes: shopingProduct.amount * (unitCustomDuty + unitVat),
+        unitCustomDuty,
+        unitVat,
+        unitTaxes: unitCustomDuty + unitVat,
       };
     },
   );
@@ -108,17 +134,19 @@ describe('test simulator API', () => {
       },
     ];
 
-    const { body, status, productTaxesDetails } = await simulateEndpoint({
+    const { body, status } = await simulateEndpoint({
       products,
       shopingProducts,
     });
     expect(status).toBe(200);
 
-    expect(body).toEqual({
-      products: productTaxesDetails,
+    expect(body.products.length).toBe(3);
+
+    expect(body).toMatchObject({
       total: 1650,
-      totalCustomDuty: 187.5,
-      totalVat: 330,
+      totalCustomDuty: 151.5,
+      totalVat: 270,
+      franchiseAmount: 300,
     });
   });
   test.each([
