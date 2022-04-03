@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 
 import { FormSimulator } from '@/components/business/formSimulator';
-import { ProductTree } from '@/components/business/productTree';
+import { Product, ProductTree } from '@/components/business/productTree';
 import { ResponseSimulator } from '@/components/business/responseSimulator';
 import { Meta } from '@/layout/Meta';
 import { useProductsStore } from '@/stores/product.store';
@@ -20,13 +20,12 @@ export interface FormSimulatorData {
 
 interface ShopingProduct {
   id: string;
+  name?: string;
   amount: number;
   price: number;
 }
 
 const Index = () => {
-  const [meanOfTransport, setMeanOfTransport] = useState();
-
   const getSimulateResponse = useSimulateStore((state) => state.getSimulateResponse);
   const simulateResponse = useSimulateStore((state) => state.simulateResponse);
   const getProductsResponse = useProductsStore((state) => state.getProductsResponse);
@@ -35,7 +34,6 @@ const Index = () => {
 
   const {
     handleSubmit,
-    setValue,
     register,
     control,
     setError,
@@ -45,15 +43,19 @@ const Index = () => {
       border: false,
       age: 30,
       meanOfTransport: 'plane',
-      shopingProducts: [
-        { id: '', amount: 0, price: 0 },
-        { id: '', amount: 0, price: 0 },
-        { id: '', amount: 0, price: 0 },
-        { id: '', amount: 0, price: 0 },
-        { id: '', amount: 0, price: 0 },
-      ],
+      shopingProducts: [],
     },
   });
+
+  const {
+    fields: productFields,
+    append: appendProduct,
+    remove: removeProduct,
+  } = useFieldArray({
+    control,
+    name: 'shopingProducts',
+  });
+
   useEffect(() => {
     if (error) {
       const formattedErrors = formatValidationsErrors(error);
@@ -64,9 +66,11 @@ const Index = () => {
   }, [error, getProductsResponse, setError]);
 
   const onSubmit = async (data: FormSimulatorData) => {
-    const shopingProducts: ShopingProduct[] = data.shopingProducts.filter(
-      ({ id, amount, price }) => id && amount && price,
-    );
+    const shopingProducts: ShopingProduct[] = data.shopingProducts.map(({ id, amount, price }) => ({
+      id,
+      amount,
+      price,
+    }));
 
     const formatedData: FormSimulatorData = {
       age: data.age,
@@ -78,15 +82,12 @@ const Index = () => {
     await getSimulateResponse(formatedData);
   };
 
-  const onChangeBorder = (value: string) => {
-    const border = value === '1';
-    setValue('border', border);
+  const onAddProduct = (product: Product) => {
+    appendProduct({ id: product.id, name: product.name, amount: 1, price: 1 });
   };
 
-  const onChangeMeanOfTransport = (e: any) => {
-    const dataMeanOfTransport = e.target.value;
-    setMeanOfTransport(dataMeanOfTransport);
-    setValue('meanOfTransport', dataMeanOfTransport);
+  const onRemoveProduct = (index: number) => {
+    removeProduct(index);
   };
 
   return (
@@ -99,26 +100,25 @@ const Index = () => {
       }
     >
       <div className="flex flex-row">
-        <div className="grow">
+        <div className="w-1/2">
           {productsResponse &&
             productsResponse.map((product) => (
               <>
                 <div key={product.id}>
-                  <ProductTree product={product} />
+                  <ProductTree product={product} onAddProduct={onAddProduct} />
                 </div>
                 <br />
               </>
             ))}
         </div>
-        <div className="grow">
+        <div className="w-1/2">
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormSimulator
-              onChangeBorder={onChangeBorder}
-              onChangeMeanOfTransport={onChangeMeanOfTransport}
-              meanOfTransport={meanOfTransport}
               register={register}
               control={control}
               errors={formErrors}
+              fields={productFields}
+              remove={onRemoveProduct}
             />
           </form>
           <ResponseSimulator response={simulateResponse} />

@@ -1,21 +1,25 @@
 import React, { useMemo } from 'react';
 
-import { Button } from '@dataesr/react-dsfr';
 import { getNames } from 'i18n-iso-countries';
-import { useFieldArray } from 'react-hook-form';
 
+import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 
 interface FormSimulatorProps {
-  onChangeBorder: (value: string) => void;
-  onChangeMeanOfTransport: (e: any) => void;
-  meanOfTransport?: string;
+  remove: (index: number) => void;
+  fields: Record<'id', string>[];
   register: any;
   control: any;
   errors: any;
 }
 
-export const FormSimulator: React.FC<FormSimulatorProps> = ({ register, control, errors }) => {
+export const FormSimulator: React.FC<FormSimulatorProps> = ({
+  register,
+  remove,
+  control,
+  errors,
+  fields,
+}) => {
   const meanOfTransportOptions = [
     { value: 'Avion', id: 'plane' },
     { value: 'Bateau', id: 'boat' },
@@ -29,11 +33,6 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({ register, control,
     const keys = Object.keys(countries);
     return keys.map((key) => ({ value: countries[key] ?? '', id: key }));
   }, []);
-
-  const { fields } = useFieldArray({
-    control,
-    name: 'shopingProducts',
-  });
 
   return (
     <>
@@ -75,47 +74,60 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({ register, control,
       <br />
       <div>
         <div className="text-sm">Liste des produits</div>
+        {fields.length > 0 && <div>---------------------</div>}
+
         {fields.map((value, index) => (
-          <div className="flex flex-row gap-5" key={index}>
-            <div className="grow">
-              <InputGroup
-                key={value.id}
-                name={`shopingProducts.${index}.id`}
-                label="Id produit"
-                type="text"
-                register={register(`shopingProducts.${index}.id`)}
-                error={errors?.shopingProducts?.[index]?.id?.message}
-              />
+          <>
+            <div className="flex flex-row items-end gap-5" key={index}>
+              <input key={value.id} {...register(`shopingProducts.${index}.id`)} hidden />
+              <div className="grow">
+                <InputGroup
+                  key={value.id}
+                  name={`shopingProducts.${index}.name`}
+                  disabled
+                  label="Nom du produit"
+                  type="text"
+                  register={register(`shopingProducts.${index}.name`)}
+                  error={errors?.shopingProducts?.[index]?.id?.message}
+                />
+              </div>
+              <div className="grow">
+                <InputGroup
+                  key={value.id}
+                  name={`shopingProducts.${index}.amount`}
+                  label="Quantité produit"
+                  type="number"
+                  register={register(`shopingProducts.${index}.amount`)}
+                  error={errors?.shopingProducts?.[index]?.amount?.message}
+                />
+              </div>
+              <div className="grow">
+                <InputGroup
+                  key={value.id}
+                  name={`shopingProducts.${index}.price`}
+                  label="Prix unitaire produit"
+                  type="number"
+                  register={register(`shopingProducts.${index}.price`)}
+                  error={errors?.shopingProducts?.[index]?.price?.message}
+                />
+              </div>
+
+              <div className="mb-1 grow">
+                <Button type="button" size="sm" onClick={() => remove(index)}>
+                  Retirer
+                </Button>
+              </div>
             </div>
-            <div className="grow">
-              <InputGroup
-                key={value.id}
-                name={`shopingProducts.${index}.amount`}
-                label="Quantité produit"
-                type="number"
-                register={register(`shopingProducts.${index}.amount`)}
-                error={errors?.shopingProducts?.[index]?.amount?.message}
-              />
-            </div>
-            <div className="grow">
-              <InputGroup
-                key={value.id}
-                name={`shopingProducts.${index}.price`}
-                label="Prix unitaire produit"
-                type="number"
-                register={register(`shopingProducts.${index}.price`)}
-                error={errors?.shopingProducts?.[index]?.price?.message}
-              />
-            </div>
-          </div>
+            <div>---------------------</div>
+          </>
         ))}
       </div>
       {/* <input hidden {...register('shopingProducts')}></input> */}
       {errors?.shopingProducts && (
         <div className="text-red-500">{errors.shopingProducts.message}</div>
       )}
-
-      <Button submit size="sm" title="title">
+      <br />
+      <Button type="submit" size="base">
         Simuler
       </Button>
     </>

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { ClipboardCopyIcon } from '@heroicons/react/solid';
-import { toast } from 'react-toastify';
+import { PlusCircleIcon } from '@heroicons/react/solid';
 
 export interface Product {
   id: string;
@@ -16,25 +15,17 @@ export interface Product {
 
 interface ProductTreeProps {
   product: Product;
+  onAddProduct: (product: Product) => void;
 }
 
-export const ProductTree: React.FC<ProductTreeProps> = ({ product }) => {
+export const ProductTree: React.FC<ProductTreeProps> = ({ product, onAddProduct }) => {
   const isClicable = product.customDuty !== null && product.vat !== null;
   const onClick = () => {
     if (!isClicable) {
       return;
     }
 
-    navigator.clipboard.writeText(product.id);
-    toast.info(`L'Id du produit à été copié dans le presse papier`, {
-      position: 'bottom-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      theme: 'colored',
-    });
+    onAddProduct(product);
   };
   return (
     <>
@@ -44,11 +35,11 @@ export const ProductTree: React.FC<ProductTreeProps> = ({ product }) => {
       >
         {' '}
         {isClicable ? ' ➜ ' : ' • '}
-        {product.name} {isClicable ? <ClipboardCopyIcon className="mt-1 h-5 w-5" /> : ''}
+        {product.name} {isClicable ? <PlusCircleIcon className="ml-1 mt-1 h-5 w-5" /> : ''}
       </div>
       {product.subProducts.map((subProduct) => (
         <div className="ml-5" key={subProduct.id}>
-          <ProductTree product={subProduct} />
+          <ProductTree product={subProduct} onAddProduct={onAddProduct} />
         </div>
       ))}
     </>
