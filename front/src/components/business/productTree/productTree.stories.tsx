@@ -64,5 +64,5 @@ export const WithVariant = () => {
       },
     ],
   };
-  return <ProductTree product={products} />;
+  return <ProductTree product={products} onAddProduct={() => 0} />;
 };
