@@ -73,12 +73,11 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({
       />
       <br />
       <div>
-        <div className="text-sm">Liste des produits</div>
-        {fields.length > 0 && <div>---------------------</div>}
+        {fields.length > 0 && <div className="mb-4 text-lg">Liste des produits</div>}
 
         {fields.map((value, index) => (
           <>
-            <div className="flex flex-row items-end gap-5" key={index}>
+            <div className="mb-4 flex flex-row items-end gap-5" key={index}>
               <input key={value.id} {...register(`shopingProducts.${index}.id`)} hidden />
               <div className="grow">
                 <InputGroup
@@ -118,7 +117,6 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({
                 </Button>
               </div>
             </div>
-            <div>---------------------</div>
           </>
         ))}
       </div>
