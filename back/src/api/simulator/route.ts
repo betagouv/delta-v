@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import { HttpStatuses } from '../../core/httpStatuses';
 import { ValidatedRequest } from '../../core/utils/validatedExpressRequest';
 import ProductRepository from '../../repositories/product.repository';
+import { serializeSimulator } from './serializer';
 import { service } from './service';
 import { SimulateRequest } from './validator';
 
@@ -15,13 +16,15 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { shopingProducts, border, age, meanOfTransport } = req.body;
-    const response = await service({
+    const { products, franchiseAmount } = await service({
       shopingProducts,
       border,
       age,
       meanOfTransport,
       productRepository: getCustomRepository(ProductRepository),
     });
+
+    const response = serializeSimulator({ products, franchiseAmount });
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {
