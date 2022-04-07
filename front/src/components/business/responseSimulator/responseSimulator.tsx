@@ -83,7 +83,7 @@ export const ResponseSimulator: React.FC<ResponseSimulatorProps> = ({ response }
                       </div>
                       <div className="text-sm font-semibold">TVA apliqué : {product.vat}%</div>
                       <div className="text-sm font-semibold">
-                        Droit de douane appliqué : {product.totalCustomDuty}%
+                        Droit de douane appliqué : {product.customDuty}%
                       </div>
                     </Disclosure.Panel>
                   </>
