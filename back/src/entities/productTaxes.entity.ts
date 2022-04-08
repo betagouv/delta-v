@@ -1,3 +1,4 @@
+import currency from 'currency.js';
 import { v4 as uuid } from 'uuid';
 import { CompleteShopingProduct } from '../api/simulator/services';
 
@@ -110,31 +111,31 @@ export class ProductTaxes implements ProductTaxesInterface {
   }
 
   getUnitCustomDuty = (): number => {
-    return (this.unitPrice * this.customDuty) / 100;
+    return currency(this.unitPrice).multiply(this.customDuty).divide(100).value;
   };
 
   getUnitVat = (): number => {
-    return (this.unitPrice * this.vat) / 100;
+    return currency(this.unitPrice).multiply(this.vat).divide(100).value;
   };
 
   getUnitTaxes = (): number => {
-    return this.getUnitCustomDuty() + this.getUnitVat();
+    return currency(this.getUnitCustomDuty()).add(this.getUnitVat()).value;
   };
 
   getTotalCustomDuty = (): number => {
-    return this.getUnitCustomDuty() * this.amount;
+    return currency(this.getUnitCustomDuty()).multiply(this.amount).value;
   };
 
   getTotalVat = (): number => {
-    return this.getUnitVat() * this.amount;
+    return currency(this.getUnitVat()).multiply(this.amount).value;
   };
 
   getTotalTaxes = (): number => {
-    return this.getTotalCustomDuty() + this.getTotalVat();
+    return currency(this.getTotalCustomDuty()).add(this.getTotalVat()).value;
   };
 
   getTotalPrice = (): number => {
-    return this.unitPrice * this.amount;
+    return currency(this.unitPrice).multiply(this.amount).value;
   };
 
   resetAmount = (): ProductTaxesInterface => {

@@ -1,3 +1,4 @@
+import currency from 'currency.js';
 import { Product } from '../../../entities/product.entity';
 import productNotFoundError from '../../common/errors/productNotFound.error';
 
@@ -38,6 +39,6 @@ export const getCompleteShopingProducts = (
 
 export const getTotalProducts = (shopingProducts: ShopingProduct[]): number => {
   return shopingProducts.reduce((total, shopingProduct) => {
-    return total + shopingProduct.amount * shopingProduct.price;
+    return currency(shopingProduct.amount).multiply(shopingProduct.price).add(total).value;
   }, 0);
 };

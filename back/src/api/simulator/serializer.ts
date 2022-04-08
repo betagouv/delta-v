@@ -1,3 +1,4 @@
+import currency from 'currency.js';
 import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
 
 interface ProductSerializer {
@@ -51,16 +52,22 @@ export const serializeSimulator = ({
   franchiseAmount,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
   const totalCustomDuty = products.reduce(
-    (acc, productTaxes) => acc + productTaxes.getTotalCustomDuty(),
+    (acc, productTaxes) => currency(acc).add(productTaxes.getTotalCustomDuty()).value,
     0,
   );
-  const totalVat = products.reduce((acc, productTaxes) => acc + productTaxes.getTotalVat(), 0);
+  const totalVat = products.reduce(
+    (acc, productTaxes) => currency(acc).add(productTaxes.getTotalVat()).value,
+    0,
+  );
   return {
     products: products.map(serializeProduct),
-    total: products.reduce((total, productTaxes) => total + productTaxes.getTotalPrice(), 0),
+    total: products.reduce(
+      (total, productTaxes) => currency(total).add(productTaxes.getTotalPrice()).value,
+      0,
+    ),
     totalCustomDuty,
     totalVat,
-    totalTaxes: totalCustomDuty + totalVat,
+    totalTaxes: currency(totalCustomDuty).add(totalVat).value,
     franchiseAmount,
   };
 };
