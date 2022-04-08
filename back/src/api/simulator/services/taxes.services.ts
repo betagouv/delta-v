@@ -1,3 +1,4 @@
+import currency from 'currency.js';
 import {
   LIMIT_UNIQUE_CUSTOM_DUTY,
   ProductTaxes,
@@ -7,12 +8,13 @@ import {
 import { manageFreeProducts } from './freeProduct.service';
 
 const getTotalProductsTaxes = (productsTaxes: ProductTaxesInterface[]): number => {
-  return getTotalProductsVat(productsTaxes) + getTotalProductsCustomDuty(productsTaxes);
+  return currency(getTotalProductsVat(productsTaxes)).add(getTotalProductsCustomDuty(productsTaxes))
+    .value;
 };
 
 export const getTotalProductsVat = (productsTaxes: ProductTaxesInterface[]): number => {
   return productsTaxes.reduce((total, ProductTaxes) => {
-    return total + ProductTaxes.getTotalVat();
+    return currency(total).add(ProductTaxes.getTotalVat()).value;
   }, 0);
 };
 
@@ -20,7 +22,7 @@ export const getTotalProductsCustomDuty = (
   ProductsTaxesDetails: ProductTaxesInterface[],
 ): number => {
   return ProductsTaxesDetails.reduce((total, productTaxesDetails) => {
-    return total + productTaxesDetails.getTotalCustomDuty();
+    return currency(total).add(productTaxesDetails.getTotalCustomDuty()).value;
   }, 0);
 };
 
