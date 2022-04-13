@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { Alpha2Code } from 'i18n-iso-countries';
 import request from 'supertest';
 import api from '../../../src/api';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
@@ -41,6 +42,7 @@ interface SimulateEndpointOptions {
   shopingProducts: ShopingProduct[];
   border?: boolean;
   age?: number;
+  country?: Alpha2Code;
   meanOfTransport?: MeansOfTransport;
 }
 export interface ProductTaxesDetails {
@@ -73,10 +75,11 @@ const simulateEndpoint = async ({
   border = false,
   age = faker.datatype.number({ precision: 1, min: 15 }),
   meanOfTransport = MeansOfTransport.CAR,
+  country = 'US',
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
   const { status, body } = await request(testApp)
     .post('/api/simulator')
-    .send({ shopingProducts, border, age, meanOfTransport });
+    .send({ shopingProducts, border, age, country, meanOfTransport });
 
   if (!products) {
     return { status, body };

@@ -70,6 +70,7 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({
         type="select"
         control={control}
         options={countriesOptions}
+        error={errors?.country?.message}
       />
       <br />
       <div>

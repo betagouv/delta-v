@@ -15,11 +15,12 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { shopingProducts, border, age, meanOfTransport } = req.body;
+    const { shopingProducts, border, age, country, meanOfTransport } = req.body;
     const { products, franchiseAmount } = await service({
       shopingProducts,
       border,
       age,
+      country,
       meanOfTransport,
       productRepository: getCustomRepository(ProductRepository),
     });

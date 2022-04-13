@@ -28,7 +28,7 @@ interface SerializedSimulatorResponse {
   totalCustomDuty: number;
   totalVat: number;
   totalTaxes: number;
-  franchiseAmount: number;
+  franchiseAmount: number | string;
 }
 
 const serializeProduct = (productTaxes: ProductTaxesInterface): ProductSerializer => ({
@@ -68,6 +68,6 @@ export const serializeSimulator = ({
     totalCustomDuty,
     totalVat,
     totalTaxes: currency(totalCustomDuty).add(totalVat).value,
-    franchiseAmount,
+    franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
   };
 };

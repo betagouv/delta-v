@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { Alpha2Code } from 'i18n-iso-countries';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import { FormSimulator } from '@/components/business/formSimulator';
@@ -15,6 +16,7 @@ export interface FormSimulatorData {
   border?: boolean;
   age: number;
   meanOfTransport: string;
+  country: Alpha2Code;
   shopingProducts: ShopingProduct[];
 }
 
@@ -43,6 +45,7 @@ const Index = () => {
       border: false,
       age: 30,
       meanOfTransport: 'plane',
+      country: 'US',
       shopingProducts: [],
     },
   });
@@ -76,6 +79,7 @@ const Index = () => {
       age: data.age,
       border: data.border,
       meanOfTransport: data.meanOfTransport,
+      country: data.country,
       shopingProducts,
     };
 
