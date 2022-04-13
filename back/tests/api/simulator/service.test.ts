@@ -25,6 +25,7 @@ describe('test simulator service', () => {
       shopingProducts: [shopingProduct1, shopingProduct2],
       meanOfTransport: MeansOfTransport.TRAIN,
       productRepository,
+      country: 'US',
     });
     expect(result).toMatchObject({
       products: [
@@ -75,6 +76,7 @@ describe('test simulator service', () => {
         age: 18,
         shopingProducts: [shopingProduct1],
         productRepository,
+        country: 'US',
       });
       const totalCustomDuty = result.products.reduce(
         (acc, product) => acc + product.getTotalCustomDuty(),
@@ -99,6 +101,7 @@ describe('test simulator service', () => {
         age: 18,
         shopingProducts: [shopingProduct],
         productRepository,
+        country: 'US',
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

@@ -20,6 +20,7 @@ const defalutValidBody = {
   ],
   border: true,
   age: 20,
+  country: faker.address.countryCode('alpha-2'),
 };
 
 describe('test simulator validator', () => {
@@ -123,6 +124,25 @@ describe('test simulator validator', () => {
       body: {
         ...defalutValidBody,
         age: 'bad',
+      },
+    };
+    expect(isValid(data)).toBe(false);
+  });
+  it('should not validate data - country undefiend', () => {
+    const data = {
+      body: {
+        ...defalutValidBody,
+        country: undefined,
+      },
+    };
+
+    expect(isValid(data)).toBe(false);
+  });
+  it('should not validate data - bad country', () => {
+    const data = {
+      body: {
+        ...defalutValidBody,
+        country: 'bad',
       },
     };
     expect(isValid(data)).toBe(false);

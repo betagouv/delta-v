@@ -1,3 +1,4 @@
+import { Alpha2Code, getAlpha2Codes } from 'i18n-iso-countries';
 import { buildValidationMiddleware, IRequestValidatorSchema } from '../../core/middlewares';
 import { validator } from '../../core/validator';
 import { MeansOfTransport, meansOfTransport } from '../common/enums/meansOfTransport.enum';
@@ -8,6 +9,7 @@ export interface SimulateRequest {
     shopingProducts: ShopingProduct[];
     border: boolean;
     age: number;
+    country: Alpha2Code;
     meanOfTransport?: MeansOfTransport;
   };
 }
@@ -26,6 +28,10 @@ export const simulateValidator: IRequestValidatorSchema = {
       .required(),
     border: validator.boolean().required(),
     age: validator.number().integer().min(0).required(),
+    country: validator
+      .string()
+      .valid(...Object.keys(getAlpha2Codes()))
+      .required(),
     meanOfTransport: validator.string().when('border', {
       is: false,
       then: validator.when('age', {

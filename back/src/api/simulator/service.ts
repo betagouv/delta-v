@@ -1,3 +1,4 @@
+import { Alpha2Code } from 'i18n-iso-countries';
 import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes.entity';
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
@@ -13,6 +14,7 @@ interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
   border: boolean;
   age: number;
+  country: Alpha2Code;
   meanOfTransport?: MeansOfTransport;
   shopingProducts: ShopingProduct[];
 }
@@ -26,6 +28,7 @@ export const service = async ({
   productRepository,
   border,
   age,
+  country,
   meanOfTransport,
   shopingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
@@ -33,7 +36,7 @@ export const service = async ({
   const products = await productRepository.getManyByIds(productIds);
 
   const total = getTotalProducts(shopingProducts);
-  const franchiseAmount = getFranchiseAmount({ border, age, meanOfTransport });
+  const franchiseAmount = getFranchiseAmount({ border, age, country, meanOfTransport });
   const completeShopingProducts = getCompleteShopingProducts(shopingProducts, products);
   const productsTaxes = completeShopingProducts.map((product) =>
     new ProductTaxes({}).setFromCompleteShopingProduct(product),

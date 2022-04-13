@@ -37,13 +37,13 @@ export const manageProductTaxeDetails = ({
   franchiseAmount,
   productsTaxes,
 }: ManageProductTaxeDetailsOptions): ProductTaxesInterface[] => {
-  if (total < franchiseAmount) {
+  if (total <= franchiseAmount) {
     return productsTaxes.map((product) => product.resetFreeTaxeDetails());
   }
 
   const defaultTaxeProducts = manageFreeProducts({ franchiseAmount, productsTaxes });
   const defaultTotalTaxes = getTotalProductsTaxes(defaultTaxeProducts);
-  if (total < LIMIT_UNIQUE_CUSTOM_DUTY) {
+  if (total <= LIMIT_UNIQUE_CUSTOM_DUTY) {
     const uniqueRateProducts = productsTaxes.map((product) => {
       const newProduct = new ProductTaxes({}).setFromProductTaxes(product);
       newProduct.setCustomDuty(UNIQUE_CUSTOM_DUTY);
@@ -55,7 +55,7 @@ export const manageProductTaxeDetails = ({
     });
     const uniqueRateTotalTaxes = getTotalProductsTaxes(uniqueRateTaxeProducts);
 
-    if (uniqueRateTotalTaxes < defaultTotalTaxes) {
+    if (uniqueRateTotalTaxes <= defaultTotalTaxes) {
       return uniqueRateTaxeProducts;
     }
   }
