@@ -1,46 +1,5 @@
 entity: ProductEntity
 items:
-  # Lether goods
-  leatherGoods:
-    id: 'b515f453-93c1-4312-b973-6703802f5d12'
-    name: 'Maroquinerie'
-    info: 'Cela compose les sacs à main, les pochettes et les portefeuilles'
-    childrenQuestion: 'Quelle est la matière constitutive du produit ?'
-    nomenclatures:
-      - '4202'
-  leatherHandbagWallet:
-    id: 'da645720-8577-4498-8ee2-096e371a15e2'
-    name: 'Cuir'
-    info: 'Maroquinerie en cuir'
-    parentProduct: '@leatherGoods'
-    customDuty: 3
-    vat: 20
-    nomenclatures:
-      - '42022100'
-      - '42023100'
-  plasticHandbagWallet:
-    id: '2a25c354-d073-4db5-a76e-aa8d243cfff8'
-    name: 'Plastique'
-    info: 'Maroquinerie en plastique'
-    parentProduct: '@leatherGoods'
-    customDuty: 9.7
-    vat: 20
-    nomenclatures:
-      - '42022210'
-      - '42023210'
-  otherHandbagWallet:
-    id: '5abad90c-ff8b-4faa-b816-88926bd92b1e'
-    name: 'Autre'
-    info: 'Maroquinerie en autre matière (textile, papier, carton, etc.)'
-    parentProduct: '@leatherGoods'
-    customDuty: 3.7
-    vat: 20
-    nomenclatures:
-      - '42022290'
-      - '42022900'
-      - '42023290'
-      - '42023900'
-
   # Beauty products
   beautyProducts:
     id: '966d4619-e2b8-4f38-8db1-b02739e88d0d'
@@ -51,7 +10,7 @@ items:
       - '33'
   mackupParfumes:
     id: '4072b5ee-598d-4a2d-95cb-7ae51f9d4905'
-    name: 'Maquillage / Parfum / Eau de toilette'
+    name: 'Maquillage, Parfums, Eaux de toilettes'
     info: 'Produits de type maquillage, parfum et eau de toilette'
     parentProduct: '@beautyProducts'
     customDuty: 0
@@ -62,7 +21,7 @@ items:
       - '33030090'
   wig:
     id: '8f29a374-089a-4ac3-823a-a4be307de7eb'
-    name: 'Perruques et autres articles en cheveux'
+    name: 'Perruque et autre article en cheveux'
     info: 'Perruques et autres articles en cheveux (synthétique, cheveux et autres)'
     parentProduct: '@beautyProducts'
     customDuty: 2.2
@@ -85,16 +44,16 @@ items:
   jewelryGoods:
     id: 'ae81eba5-1199-4df3-a8c0-2b717b799555'
     name: 'Bijoux'
-    info: 'Bijoux'
+    info: 'Les bijoux'
     parentProduct: '@jewelry'
-    childrenQuestion: 'Est-ce de la bijouterie fantaisie ou en métaux précieux ?'
+    childrenQuestion: 'Est-il en argent, or, platine ou autres métaux précieux ?'
     nomenclatures:
       - '7117'
       - '7113'
   watches:
     id: 'd97c1392-01f1-423b-afd6-982fe79856df'
-    name: 'Montres'
-    info: 'Montres'
+    name: 'Montre'
+    info: 'Les montres'
     parentProduct: '@jewelry'
     customDuty: 4.5
     vat: 20
@@ -103,7 +62,7 @@ items:
       - '9102'
   fancy:
     id: '32901991-257d-47f2-b209-a9d4af2026e3'
-    name: 'Bijoux fantaisie'
+    name: 'Bijoux non précieux'
     info: 'Bijoux fantaisie en métaux communs (même argentés, dorés ou platinés) ou autres.'
     parentProduct: '@jewelryGoods'
     customDuty: 4
@@ -125,84 +84,22 @@ items:
       - '71179000'
 
   # fabrics and clothes
-  fabricsClothes:
+  fashion:
     id: 'a87e1335-e50f-4e93-a45d-dcfde72fab92'
-    name: 'Tissus & vêtements'
-    info: 'Tissus & vêtements'
-    childrenQuestion: 'Quel type de produits ?'
-  fabrics:
-    id: '586be6b5-0375-44f4-aa58-d47966599ae0'
-    name: 'Tissus bruts'
-    info: 'Tissus bruts'
-    parentProduct: '@fabricsClothes'
-    childrenQuestion: 'Quelle est la matière constitutive du produit ?'
-    nomenclatures:
-      - '5208'
-      - '5210'
-      - '5211'
-      - '5309'
-      - '5407'
-      - '5408'
-      - '5801'
+    name: 'Mode'
+    info: 'Mode'
   clothes:
     id: 'e9186bbf-3c3c-4e12-85e1-6bcbc5e8a046'
     name: 'Vêtements'
     info: 'Vètements'
-    parentProduct: '@fabricsClothes'
+    parentProduct: '@fashion'
     childrenQuestion: 'Quel type de produits ?'
-  basicFabrics:
-    id: '74c87cd7-60dc-4f38-b5de-cfd935752f3c'
-    name: 'Coton / Lin / Synthétique / Velours'
-    info: "Il s'agit de tissus bruts en coton, Lin, synthétique ou en velours."
-    parentProduct: '@fabrics'
-    customDuty: 8
-    vat: 20
-    nomenclatures:
-      - '5208'
-      - '5210'
-      - '5211'
-      - '5309'
-      - '5407'
-      - '5408'
-      - '5801'
-  otherFabrics:
-    id: '7a33a05b-4966-4ba3-bc0d-ecbd77ef36ea'
-    name: 'Soie / Laine'
-    info: 'Les produits en soie ou en laine ont un tarif particulier. Veuillez vous référer au douanier directement.'
-    parentProduct: '@fabrics'
   adultClothes:
     id: 'b47dab76-acca-4d78-ba3b-7323b17dcb8b'
     name: 'Vêtement pour adulte'
     info: 'Vêtement pour adulte.'
     childrenQuestion: 'Quel type de produits ?'
     parentProduct: '@clothes'
-  childrenClothes:
-    id: '47a31843-233e-4b45-b7e6-26c262e1047d'
-    name: 'Vêtement pour enfant'
-    info: 'Les vêtements pour enfant ont un tarif particulier. Veuillez vous référer au douanier directement.'
-    parentProduct: '@clothes'
-  textileAccessory:
-    id: '6f10aafc-422b-4d4e-94ed-632feec05a6b'
-    name: 'Accessoire en textiles'
-    info: 'Accessoire en textiles.'
-    childrenQuestion: 'Quel type de produits ?'
-    parentProduct: '@clothes'
-  generalClothes:
-    id: '4dbcac27-c57e-4c8f-befb-9c8092c1c450'
-    name: 'Manteau / Costumes / chemises / Slips ...'
-    info: 'Vêtements adultes dans la liste suivante : \n- Manteaux, cabans, capes,anoraks, blousons, etc. \n- Costumes, complets, ensembles, vestons, pantalons, salopettes, shorts, survêtements, robes, jupes, etc. \n- Chemises, chemisettes, chemisiers, blouses, T-shirts et maillots de corps, chandails, pull-overs, cardigans, gilets, etc. \n- Slips, caleçons, chemises de nuit, pyjamas, peignoirs, robes de chambre, combinaisons, etc.'
-    parentProduct: '@adultClothes'
-    customDuty: 12
-    vat: 20
-  lingerie:
-    id: 'e6520fa8-8e59-4d57-ab98-3a5ad690ac5a'
-    name: 'Lingerie'
-    info: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
-    parentProduct: '@adultClothes'
-    customDuty: 6.5
-    vat: 20
-    nomenclatures:
-      - '6212'
   clothesWithLether:
     id: '98b58ced-de0c-40d9-95cc-8247fe63fe17'
     name: 'Vêtements et accessoire adulte en cuir'
@@ -238,20 +135,28 @@ items:
     nomenclatures:
       - '42033000'
       - '42034000'
-  socks:
-    id: '625cccf5-9e28-4895-86b5-556d0ba2e202'
-    name: 'Collants / bas / mi-bas / chaussettes'
-    info: 'Collants, bas, mi-bas, chaussettes, etc.'
-    parentProduct: '@textileAccessory'
-    customDuty: 12
+
+  clothesWithoutLether:
+    id: '98b58ced-de0c-40d9-95cc-8247fe63fe17'
+    name: 'Vêtements sans cuir'
+    info: 'Vêtements sans cuir.'
+    parentProduct: '@adultClothes'
+    nomenclatures:
+      - '4203'
+  lingerie:
+    id: 'e6520fa8-8e59-4d57-ab98-3a5ad690ac5a'
+    name: 'Lingerie'
+    info: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
+    parentProduct: '@adultClothes'
+    customDuty: 6.5
     vat: 20
     nomenclatures:
-      - '6115'
+      - '6212'
   tie:
     id: '7847b3cb-69e9-4c17-bd75-3d1573084d18'
     name: 'Cravates / nœuds papillon'
     info: 'Cravates, nœuds papillon, etc.'
-    parentProduct: '@textileAccessory'
+    parentProduct: '@adultClothes'
     customDuty: 6.3
     vat: 20
     nomenclatures:
@@ -260,12 +165,292 @@ items:
     id: '9e3362d5-9e9f-4302-afcf-53ceed1f0832'
     name: 'Autres accessoires textiles'
     info: 'Châles, écharpes, foulards, cache-nez, cache-col, gants etc. Ces produits ont un tarif particulier. Veuillez vous référer au douanier directement.'
-    parentProduct: '@textileAccessory'
+    parentProduct: '@adultClothes'
+  generalClothes:
+    id: '4dbcac27-c57e-4c8f-befb-9c8092c1c450'
+    name: 'Autres vètements'
+    info: 'Vêtements adultes dans la liste suivante : \n- Manteaux, cabans, capes,anoraks, blousons, etc. \n- Costumes, complets, ensembles, vestons, pantalons, salopettes, shorts, survêtements, robes, jupes, etc. \n- Chemises, chemisettes, chemisiers, blouses, T-shirts et maillots de corps, chandails, pull-overs, cardigans, gilets, etc. \n- Slips, caleçons, chemises de nuit, pyjamas, peignoirs, robes de chambre, combinaisons, etc.'
+    parentProduct: '@adultClothes'
+    customDuty: 12
+    vat: 20
+  childrenClothes:
+    id: '47a31843-233e-4b45-b7e6-26c262e1047d'
+    name: 'Vêtement pour enfant'
+    info: 'Les vêtements pour enfant ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    parentProduct: '@clothes'
+  shoes:
+    id: 'f17e401f-bd89-41ea-8b90-2999d1aff7a1'
+    name: 'Chaussure'
+    info: 'Les chaussures ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    parentProduct: '@fashion'
+  leatherGoods:
+    id: 'b515f453-93c1-4312-b973-6703802f5d12'
+    name: 'Maroquinerie'
+    info: 'Cela compose les sacs à main, les pochettes et les portefeuilles'
+    parentProduct: '@fashion'
+    childrenQuestion: 'Sélectionnez la matière de votre sac'
+    nomenclatures:
+      - '4202'
+  leatherHandbagWallet:
+    id: 'da645720-8577-4498-8ee2-096e371a15e2'
+    name: 'Cuir'
+    info: 'Maroquinerie en cuir'
+    parentProduct: '@leatherGoods'
+    customDuty: 3
+    vat: 20
+    nomenclatures:
+      - '42022100'
+      - '42023100'
+  plasticHandbagWallet:
+    id: '2a25c354-d073-4db5-a76e-aa8d243cfff8'
+    name: 'Plastique'
+    info: 'Maroquinerie en plastique'
+    parentProduct: '@leatherGoods'
+    customDuty: 9.7
+    vat: 20
+    nomenclatures:
+      - '42022210'
+      - '42023210'
+  textileHandbagWallet:
+    id: '88583916-3842-4a22-89b0-53691a3a6476'
+    name: 'Textile'
+    info: 'Maroquinerie en plastique'
+    parentProduct: '@leatherGoods'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '42023290'
+  otherHandbagWallet:
+    id: '5abad90c-ff8b-4faa-b816-88926bd92b1e'
+    name: 'Autre'
+    info: 'Maroquinerie en autre matière (textile, papier, carton, etc.)'
+    parentProduct: '@leatherGoods'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '42022290'
+      - '42022900'
+      - '42023900'
+  fabrics:
+    id: '586be6b5-0375-44f4-aa58-d47966599ae0'
+    name: 'Tissus'
+    info: 'Tissus bruts'
+    parentProduct: '@fashion'
+    childrenQuestion: 'Quelle est la matière constitutive du produit ?'
+    nomenclatures:
+      - '5208'
+      - '5210'
+      - '5211'
+      - '5309'
+      - '5407'
+      - '5408'
+      - '5801'
+  particularFabrics:
+    id: '7a33a05b-4966-4ba3-bc0d-ecbd77ef36ea'
+    name: 'Soie / Laine'
+    info: 'Les produits en soie ou en laine ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    parentProduct: '@fabrics'
+  basicFabrics:
+    id: '74c87cd7-60dc-4f38-b5de-cfd935752f3c'
+    name: 'Autres'
+    info: "Il s'agit de tissus bruts en coton, Lin, synthétique ou en velours."
+    parentProduct: '@fabrics'
+    customDuty: 8
+    vat: 20
+    nomenclatures:
+      - '5208'
+      - '5210'
+      - '5211'
+      - '5309'
+      - '5407'
+      - '5408'
+      - '5801'
+
+  # Hobbies
+  hobbies:
+    id: 'b6d362a7-1c58-40ef-9a7f-7e0247cb4286'
+    name: 'Loisires'
+    info: 'Produit de loisires'
+  sports:
+    id: '358018bd-2dec-4a75-b5df-677c37094a8a'
+    name: 'Sports'
+    info: 'Produits de sport'
+    parentProduct: '@hobbies'
+    nomenclatures:
+      - '9506'
+      - '9507'
+      - '1200'
+  ski:
+    id: '60ee02ea-4b21-4423-af16-cf7a97908041'
+    name: 'Skis de fond ou skis alpins et fixations pour skis'
+    info: 'Skis de fond ou skis alpins et fixations pour skis'
+    parentProduct: '@sports'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '95061100'
+      - '1200'
+  windsurfBoards:
+    id: '79724169-58db-4dac-9d17-1dd3961c533f'
+    name: 'Planches à voiles'
+    info: 'Planches à voiles'
+    parentProduct: '@sports'
+    customDuty: 2.7
+    vat: 20
+    nomenclatures:
+      - '95062100'
+  golfClubs:
+    id: '4b4f4ba2-2e9f-4ad6-af0f-24c6b91681cc'
+    name: 'Clubs de golf'
+    info: 'Clubs de golf'
+    parentProduct: '@sports'
+    customDuty: 2.7
+    vat: 20
+    nomenclatures:
+      - '95063100'
+  fishingRod:
+    id: '07a36ba5-1763-41bd-a78d-8e33ae4bc0f3'
+    name: 'Canne à pêche'
+    info: 'Canne à pêche'
+    parentProduct: '@sports'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '95071000'
+  tennisRacket:
+    id: '860f29d6-9059-4349-a283-a44b6f86c2ee'
+    name: 'Raquette de tennis (même non cordées)'
+    info: 'Raquette de tennis (même non cordées)'
+    parentProduct: '@sports'
+    customDuty: 4.7
+    vat: 20
+    nomenclatures:
+      - '95065100'
+
+  books:
+    id: '860d84d1-3b96-491f-99a9-f012c7337ea8'
+    name: 'Livres'
+    info: 'Livres'
+    customDuty: 0
+    vat: 5.5
+    parentProduct: '@hobbies'
+    nomenclatures:
+      - '4901'
+
+  musicInstrument:
+    id: '3a3dc758-4c88-45e0-9a7c-e38a6cc7df4c'
+    name: 'Instrument de musique'
+    info: 'Instrument de musique'
+    parentProduct: '@hobbies'
+    nomenclatures:
+      - '92'
+  stringInstrument:
+    id: 'bdc204f1-1de8-493c-9ebb-484e954a6124'
+    name: 'Instrument à cordes'
+    info: 'Instrument à cordes'
+    parentProduct: '@musicInstrument'
+    nomenclatures:
+      - '9201'
+      - '9202'
+  stringInstrumentKeyboard:
+    id: '18ce819a-b7f9-4717-be61-d682802140f9'
+    name: 'A clavier'
+    info: 'Instruments à clavier'
+    parentProduct: '@stringInstrument'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '920110'
+      - '920120'
+      - '920190'
+  stringInstrumentOther:
+    id: '99cb5eb0-38f9-4fc8-9ada-12093779463c'
+    name: 'Autre'
+    info: 'Autre instruments à corde'
+    parentProduct: '@stringInstrument'
+    customDuty: 3.2
+    vat: 20
+    nomenclatures:
+      - '92021010'
+      - '92029030'
+
+  windInstrument:
+    id: 'a111cbcb-c877-45fc-a613-a02fc3f909c4'
+    name: 'Instrument à vent'
+    info: 'Instrument à vent'
+    parentProduct: '@musicInstrument'
+    nomenclatures:
+      - '9205'
+  accordions:
+    id: '3f7944b1-21f6-4751-bb22-1239380d6957'
+    name: 'Accordéons'
+    info: 'Accordéons'
+    parentProduct: '@windInstrument'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '92059010'
+  otherWindInstrument:
+    id: '0191a97d-2ca4-45aa-9cf7-ef592ea1a022'
+    name: 'Autres'
+    info: 'Autres instruments à vent'
+    parentProduct: '@windInstrument'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '92059010'
+
+  percussionInstrument:
+    id: '38a848fd-3afe-4583-a329-52a78fc16535'
+    name: 'Instrument à percussion'
+    info: 'Djambe, percussions, caisse...'
+    parentProduct: '@musicInstrument'
+    customDuty: 3.2
+    vat: 20
+    nomenclatures:
+      - '92060000'
+
+  electricInstrument:
+    id: 'd3d679bd-e2e1-4483-981f-03d0fd18915a'
+    name: 'Instrument électrique'
+    info: 'Instrument électrique'
+    parentProduct: '@musicInstrument'
+    nomenclatures:
+      - '9207'
+  electricGuitar:
+    id: '1e79551b-0ca2-49af-bc24-5f208fe85e37'
+    name: 'Guitare'
+    info: 'Guitare électrique'
+    parentProduct: '@electricInstrument'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '92079010'
+  otherEectricInstrument:
+    id: '4674be9c-fa2a-4100-b072-03ee65c8df48'
+    name: 'Autres'
+    info: 'Autres instrument électrique'
+    parentProduct: '@electricInstrument'
+    customDuty: 3.2
+    vat: 20
+    nomenclatures:
+      - '92071030'
+      - '92071050'
+
+  musicBox:
+    id: 'f9039f41-21d6-4d99-bc4a-a337a45a6d02'
+    name: 'Boite à musique'
+    info: 'Boite à musique'
+    parentProduct: '@musicInstrument'
+    customDuty: 2.7
+    vat: 20
+    nomenclatures:
+      - '92081000'
 
   # Hightech Products
   hightech:
     id: '39da7995-b4a4-4f7b-8b9f-1d34290d4671'
-    name: 'Produits du numérique – High Tech'
+    name: 'Multimédia'
     info: 'Produits du numérique – High Tech'
     childrenQuestion: 'Quel type de produits ?'
     nomenclatures:
@@ -273,38 +458,6 @@ items:
       - '84'
       - '95'
       - '90'
-  smartphone:
-    id: '6b6c5a03-e573-47c7-b718-aa8c86ae5483'
-    name: 'Smartphone / Ordinateur portable / Tablette numérique'
-    info: 'Smartphone, ordinateur portable et tablette numérique.'
-    parentProduct: '@hightech'
-    customDuty: 0
-    vat: 20
-    nomenclatures:
-      - '85171300'
-      - '84713000'
-  camera:
-    id: '68859709-924c-4a2a-bea2-debe856c4b23'
-    name: 'Appareil photo numérique / Caméscope'
-    info: 'Appareil photo numérique et caméscope.'
-    parentProduct: '@hightech'
-    customDuty: 0
-    vat: 20
-    nomenclatures:
-      - '85171300'
-      - '84713000'
-  dvdVideogame:
-    id: 'f8755a08-ea1e-478f-9097-be48e8dae64f'
-    name: 'Baladeur MP3 / DVD / CD / Consoles de jeux vidéos / Jeux vidéos'
-    info: 'Baladeur MP3 / DVD / CD / Consoles de jeux vidéos / Jeux vidéos.'
-    parentProduct: '@hightech'
-    customDuty: 0
-    vat: 20
-    nomenclatures:
-      - '85219000'
-      - '85234910'
-      - '852341'
-      - '95045000'
   television:
     id: 'ab2d3793-8054-4d87-8cf8-cde1cbf839c3'
     name: 'Téléviseurs'
@@ -332,3 +485,324 @@ items:
     vat: 20
     nomenclatures:
       - '90051000'
+  otherHightech:
+    id: '6b6c5a03-e573-47c7-b718-aa8c86ae5483'
+    name: 'Autres'
+    info: 'Autres appareils multimédia.'
+    parentProduct: '@hightech'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '85171300'
+      - '84713000'
+      - '85171300'
+      - '84713000'
+      - '85219000'
+      - '85234910'
+      - '852341'
+      - '95045000'
+
+  # Maison
+  house:
+    id: 'eb007bb8-b847-4342-96fa-a62a3f4c338e'
+    name: 'Maison'
+    info: 'Produits de la maison'
+  furniture:
+    id: '29b7fc70-1976-4c87-87a7-62e8582d1e98'
+    name: 'Meubles'
+    info: 'Meubles'
+    parentProduct: '@house'
+    nomenclatures:
+      - '9403'
+      - '9404'
+  metalFurniture:
+    id: 'e383fcf7-4f41-4ff1-b74c-8e5785c08f5a'
+    name: 'Métal'
+    info: 'Meubles en métal'
+    parentProduct: '@furniture'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '940310'
+      - '940320'
+  plasticFurniture:
+    id: 'd5cc2f34-ce4c-4ae3-b392-9f321a1e88d1'
+    name: 'Plastique'
+    info: 'Meubles en plastique'
+    parentProduct: '@furniture'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '94037000'
+  bambooFurniture:
+    id: '4f2a426a-f2e5-44ed-9cac-9cde68734c9e'
+    name: 'Bambou'
+    info: 'Meubles en bambou'
+    parentProduct: '@furniture'
+    customDuty: 5.6
+    vat: 20
+    nomenclatures:
+      - '94038200'
+  rattanFurniture:
+    id: '54cf64c8-1530-4220-87ed-fcd061bc8c72'
+    name: 'Rotin'
+    info: 'Meubles en rotin'
+    parentProduct: '@furniture'
+    customDuty: 5.6
+    vat: 20
+    nomenclatures:
+      - '94038300'
+  woodFurniture:
+    id: '59a618f4-d7e8-49a0-8ca3-e8c64121a621'
+    name: 'Bois'
+    info: 'Meubles en bois'
+    parentProduct: '@furniture'
+    nomenclatures:
+      - '940340'
+      - '940330'
+      - '940350'
+  kitchenWoodFurniture:
+    id: '398d82be-8a03-4e64-ae43-6f5c57f0b8b4'
+    name: 'Cuisine'
+    info: 'Meubles en bois pour cuisine'
+    parentProduct: '@woodFurniture'
+    customDuty: 2.7
+    vat: 20
+    nomenclatures:
+      - '940340'
+  otherWoodFurniture:
+    id: 'a3c6bfdb-b4a0-4a47-9ada-b02b0e4864d8'
+    name: 'Autre'
+    info: 'Autre meubles en bois'
+    parentProduct: '@woodFurniture'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '940330'
+      - '940350'
+
+  bedding:
+    id: '17e249d9-a6ec-4810-83c7-d6d3dd997e75'
+    name: 'Literie'
+    info: 'Matelas, couvre lits, couvre pieds, édredons et couettes...'
+    parentProduct: '@house'
+    customDuty: 3.7
+    vat: 20
+    nomenclatures:
+      - '940421'
+      - '940429'
+      - '940440'
+
+  decoration:
+    id: '2fc73f85-3c15-49d4-a694-037d88ad6884'
+    name: 'Décoration'
+    info: 'Décoration de la maison'
+    parentProduct: '@house'
+    nomenclatures:
+      - '940421'
+      - '940429'
+      - '940440'
+  woodenFloor:
+    id: '25fa9541-684b-46bf-a99f-9ed828433ca2'
+    name: 'Parquet'
+    info: 'Parquet'
+    customDuty: 0
+    vat: 20
+    parentProduct: '@decoration'
+    nomenclatures:
+      - '4409'
+  mirror:
+    id: '3dd401cd-3a12-4f33-a50c-058e8c174396'
+    name: 'Miroir'
+    info: 'Miroir'
+    customDuty: 4
+    vat: 20
+    parentProduct: '@decoration'
+    nomenclatures:
+      - '7009'
+  lamp:
+    id: '9e1c9e85-6ac9-4e6b-a91e-307840e5bb80'
+    name: 'Luminaire'
+    info: 'Luminaire'
+    parentProduct: '@decoration'
+    nomenclatures:
+      - '9405'
+  plasticLamp:
+    id: '264b9764-d3ba-4b5a-86fd-5c752ba9542d'
+    name: 'Plastique'
+    info: 'Luminaire en plastique'
+    customDuty: 4.7
+    vat: 20
+    parentProduct: '@lamp'
+    nomenclatures:
+      - '940511'
+  ceramicLamp:
+    id: 'b8a1e105-6ebd-4805-b6f6-a71a1c9d2f41'
+    name: 'Céramique'
+    info: 'Luminaire en céramique'
+    customDuty: 4.7
+    vat: 20
+    parentProduct: '@lamp'
+    nomenclatures:
+      - '940519'
+  glassLamp:
+    id: '7d0696a5-5329-403a-8150-7091d442d916'
+    name: 'Verre'
+    info: 'Luminaire en verre'
+    customDuty: 3.7
+    vat: 20
+    parentProduct: '@lamp'
+    nomenclatures:
+      - '940521'
+  otherLamp:
+    id: '1ed29a09-0c81-47a9-aabb-75be36751e04'
+    name: 'Autre'
+    info: 'Luminaire en autre matière'
+    customDuty: 2.7
+    vat: 20
+    parentProduct: '@lamp'
+    nomenclatures:
+      - '940529'
+
+  dishes:
+    id: 'c36e0b8a-7796-4048-a1e8-dd1d72c9dc1a'
+    name: 'Vaisselle'
+    info: 'Vaisselle'
+    parentProduct: '@house'
+    nomenclatures:
+      - '6911'
+      - '6912'
+      - '7013'
+  porcelainDishes:
+    id: 'eb1951b0-addd-433c-b920-68faa0df8d94'
+    name: 'Porcelaine'
+    info: 'Vaisselle en porcelaine'
+    customDuty: 12
+    vat: 20
+    parentProduct: '@dishes'
+    nomenclatures:
+      - '691110'
+      - '691190'
+  crystalDishes:
+    id: '8ac5c806-652b-426a-a606-b43e1de995db'
+    name: 'Cristal'
+    info: 'Vaisselle en cristal'
+    customDuty: 11
+    vat: 20
+    parentProduct: '@dishes'
+    nomenclatures:
+      - '7013'
+  commonGroundDishes:
+    id: 'd29b054e-dbb1-4ad0-ad59-bd786be1cdef'
+    name: 'Terre commune'
+    info: 'Vaisselle en terre commune'
+    customDuty: 5
+    vat: 20
+    parentProduct: '@dishes'
+    nomenclatures:
+      - '69120021'
+      - '69120081'
+  sandstoneDishes:
+    id: '10070436-b6d9-4291-a6d6-a46ba652ae93'
+    name: 'Grès'
+    info: 'Vaisselle en grès'
+    customDuty: 5.5
+    vat: 20
+    parentProduct: '@dishes'
+    nomenclatures:
+      - '69120023'
+      - '69120083'
+  earthenwareDishes:
+    id: '24f98895-f100-4434-b764-3c89b66f8a47'
+    name: 'Faïence'
+    info: 'Vaisselle en faïence'
+    customDuty: 9
+    vat: 20
+    parentProduct: '@dishes'
+    nomenclatures:
+      - '69120025'
+      - '69120085'
+  otherDishes:
+    id: '1066203c-f4d7-4a53-9117-8d3c36fb51ad'
+    name: 'Autre'
+    info: 'Vaisselle en autre matière'
+    customDuty: 7
+    vat: 20
+    parentProduct: '@dishes'
+    nomenclatures:
+      - '69120029'
+      - '69120089'
+
+  art:
+    id: '0791fbf5-7a0a-46cd-b7ca-6d3532ec6a8f'
+    name: 'Objet d’art et de collection'
+    info: 'Objet d’art et de collection'
+    customDuty: 0
+    vat: 20
+    parentProduct: '@house'
+    nomenclatures:
+      - '9701'
+      - '9706'
+
+  # Voiture et accessoires
+  carAccessory:
+    id: 'e62a2f29-8dbc-4ffa-983b-7abfb63b2ac8'
+    name: 'Voiture et accessoires'
+    info: 'Voiture et accessoires'
+  carRadio:
+    id: '19ae6573-be49-4943-a6c6-6d3e824c9e92'
+    name: 'Autoradio lecteur CD'
+    info: 'Autoradio lecteur CD'
+    customDuty: 3.5
+    vat: 20
+    parentProduct: '@carAccessory'
+    nomenclatures:
+      - '85272120'
+  gps:
+    id: '25c008af-4134-40f0-a4ee-14c8618695ac'
+    name: 'GPS'
+    info: 'GPS'
+    customDuty: 0
+    vat: 20
+    parentProduct: '@carAccessory'
+    nomenclatures:
+      - '852691'
+  rims:
+    id: 'b432c1ae-5df2-4bf5-9eec-d86a564accf5'
+    name: 'Jantes'
+    info: 'Jantes alu'
+    customDuty: 4.5
+    vat: 20
+    parentProduct: '@carAccessory'
+    nomenclatures:
+      - '87087050'
+  tire:
+    id: '280a7975-3323-4a0b-aaa6-15d6c36f0859'
+    name: 'Pneu'
+    info: 'Pneu'
+    customDuty: 4.5
+    vat: 20
+    parentProduct: '@carAccessory'
+    nomenclatures:
+      - '40111000'
+
+  # Divers
+  various:
+    id: 'fb4e21e3-78b1-4cc6-b8f1-55e501b6b878'
+    name: 'Divers'
+    info: 'Divers'
+  electronicCigarettes:
+    id: '325ef6eb-7029-4813-983c-585e16e5af8e'
+    name: 'Cigarettes électroniques'
+    info: 'Cigarettes électroniques'
+    customDuty: 3.7
+    vat: 20
+    parentProduct: '@various'
+    nomenclatures:
+      - '85434000'
+
+  # Alimentaire
+  food:
+    id: 'd886c17b-a43e-42f1-81af-1f6d96d586de'
+    name: 'Alimentaire'
+    info: 'Les produits alimentaires ont un tarif particulier. Veuillez vous référer au douanier directement.'
