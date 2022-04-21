@@ -2,6 +2,7 @@ export type ButtonSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl';
 export type ButtonVariant = 'normal' | 'outlined' | 'ghost';
 export type ButtonColor = 'primary' | 'secondary';
 export type IconPosition = 'left' | 'right';
+export type ButtonRounded = 'full' | 'lg' | 'md' | 'base' | 'none';
 
 type ClassesType = {
   classes?: { [key: string]: boolean };
@@ -9,6 +10,10 @@ type ClassesType = {
 
 type IButtonStyle = {
   disabled: ClassesType;
+  fullWidth: ClassesType;
+  rounded: {
+    [key in ButtonRounded]: ClassesType;
+  } & ClassesType;
   type: {
     [key in ButtonVariant]?: {
       // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -29,18 +34,53 @@ const styleManager: IButtonStyle = {
     'items-center': true,
     border: true,
     'font-medium': true,
-    rounded: true,
     'shadow-sm': true,
     'focus:outline-none': true,
     'focus:ring-2': true,
     'focus:ring-offset-2': true,
     'focus:ring-primary-500': true,
+    'place-content-center': true,
+  },
+  rounded: {
+    full: {
+      classes: {
+        'rounded-full': true,
+      },
+    },
+    lg: {
+      classes: {
+        'rounded-lg': true,
+      },
+    },
+    md: {
+      classes: {
+        'rounded-md': true,
+      },
+    },
+    base: {
+      classes: {
+        rounded: true,
+      },
+    },
+    none: {
+      classes: {
+        rounded: false,
+        'rounded-md': false,
+        'rounded-lg': false,
+        'rounded-full': false,
+      },
+    },
   },
   disabled: {
     classes: {
       'disabled:opacity-60': true,
       'disabled:cursor-not-allowed': true,
       'disabled:shadow-none': true,
+    },
+  },
+  fullWidth: {
+    classes: {
+      'w-full': true,
     },
   },
   iconPosition: {
@@ -167,7 +207,9 @@ interface IGetButtonStyleOptions {
   color: ButtonColor;
   size: ButtonSize;
   iconPosition: IconPosition;
+  rounded: ButtonRounded;
   disabled: boolean;
+  fullWidth: boolean;
 }
 
 export const getButtonStyle = ({
@@ -175,7 +217,9 @@ export const getButtonStyle = ({
   color,
   size,
   iconPosition,
+  rounded,
   disabled,
+  fullWidth,
 }: IGetButtonStyleOptions): { [key: string]: boolean } => {
   return {
     ...styleManager.classes,
@@ -183,6 +227,8 @@ export const getButtonStyle = ({
     ...styleManager.size[size].classes,
     ...styleManager.iconPosition[iconPosition].classes,
     ...styleManager.type[variant]?.[color]?.classes,
+    ...styleManager.rounded[rounded].classes,
     ...(disabled ? styleManager.disabled.classes : {}),
+    ...(fullWidth ? styleManager.fullWidth.classes : {}),
   };
 };

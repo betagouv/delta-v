@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { Icon } from '../Icon';
 import {
   ButtonColor,
+  ButtonRounded,
   ButtonSize,
   ButtonVariant,
   getButtonStyle,
@@ -32,10 +33,11 @@ export interface IButtonProps {
   size?: ButtonSize;
   icon?: string;
   iconPosition?: IconPosition;
-  autoWidth?: boolean;
   variant?: ButtonVariant;
+  rounded?: ButtonRounded;
   uppercase?: boolean;
   disabled?: boolean;
+  fullWidth?: boolean;
   loading?: boolean;
   mobileVariant?: 'icon' | 'fullWidth';
   type?: 'button' | 'submit';
@@ -52,7 +54,9 @@ export const Button: React.FC<IButtonProps> = ({
   icon,
   iconPosition = 'right',
   variant = 'normal',
+  rounded = 'full',
   disabled = false,
+  fullWidth = false,
   loading = false,
   type = 'button',
   external,
@@ -78,7 +82,9 @@ export const Button: React.FC<IButtonProps> = ({
     variant,
     size,
     iconPosition,
+    rounded,
     disabled: buttonDisabled,
+    fullWidth,
   });
   const customIconClassName = getIconStyle({
     size,
@@ -88,6 +94,7 @@ export const Button: React.FC<IButtonProps> = ({
 
   return (
     <button
+      data-testid="button-element"
       type={type}
       onClick={onClick}
       disabled={buttonDisabled}

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Meta } from '@storybook/react';
 
 import { Button } from './Button';
@@ -68,6 +66,34 @@ export const withVariant = (): JSX.Element => (
     <br />
     <Button variant="ghost" icon="menu" disabled>
       Ghost with icon
+    </Button>
+    <br />
+    <br />
+    <Button rounded="none">Not rounded</Button>
+    <br />
+    <br />
+    <Button rounded="base">Base rounded</Button>
+    <br />
+    <br />
+    <Button rounded="md">MD rounded</Button>
+    <br />
+    <br />
+    <Button rounded="lg">LG rounded</Button>
+    <br />
+    <br />
+    <Button rounded="full">Full rounded</Button>
+    <br />
+    <br />
+    <Button fullWidth>Full with button</Button>
+    <br />
+    <br />
+    <Button fullWidth icon="menu">
+      Full with button - icon right
+    </Button>
+    <br />
+    <br />
+    <Button fullWidth icon="menu" iconPosition="left">
+      Full with button - icon left
     </Button>
   </div>
 );

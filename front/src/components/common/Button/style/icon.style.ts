@@ -29,7 +29,7 @@ const styleManager: IIconStyle = {
   size: {
     xs: {
       classes: {
-        'h-base': true,
+        'h-5': true,
         'w-4': true,
       },
       position: {
