@@ -11,16 +11,20 @@ module.exports = {
       colors: {
         primary: {
           100: '#ecf1fa',
-          200: '#dbe2f5',
-          300: '#c7d6f0',
-          400: '#9fb7e8',
-          500: '#8eabe3',
-          600: '#7d9ee0',
-          700: '#6990da',
-          800: '#5882d5',
-          900: '#3f70ce',
+          200: '#b3b3de',
+          300: '#9999d3',
+          400: '#6666bd',
+          500: '#3333a7',
+          600: '#000091',
+          700: '#000074',
+          800: '#000057',
+          900: '#00003a',
         },
         secondary: colors.gray,
+        disabled: {
+          background: '#E5E5E5',
+          text: '#929292',
+        },
         cancel: colors.red,
       },
       spacing: {
