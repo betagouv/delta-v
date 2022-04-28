@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
@@ -33,8 +31,28 @@ export const Base = (): JSX.Element => {
   } = methods;
 
   return (
-    <div>
-      <Select error={errors.comment?.message} name="comment" options={options} control={control} />
-    </div>
+    <>
+      <div>
+        <span>Small width :</span>
+        <Select
+          error={errors.comment?.message}
+          name="comment"
+          options={options}
+          control={control}
+        />
+      </div>
+      <br />
+      <br />
+      <div>
+        <span>Full width :</span>
+        <Select
+          error={errors.comment?.message}
+          name="comment"
+          options={options}
+          control={control}
+          fullWidth
+        />
+      </div>
+    </>
   );
 };

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';

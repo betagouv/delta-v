@@ -3,15 +3,11 @@ import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Input } from '../StandardInputs/Input';
+import { IRadioType } from '../StandardInputs/Radio';
 import { IOptions, Select } from '../StandardInputs/Select';
 import { TextArea } from '../StandardInputs/TextArea';
 import { Toggle } from '../StandardInputs/Toggle';
-
-interface IRadioType {
-  id: string;
-  name: string;
-  value: string;
-}
+import { Icon } from '@/components/common/Icon';
 
 export interface IErrorType {
   message: string;
@@ -49,6 +45,7 @@ export interface IInputGroupProps {
   register?: UseFormRegisterReturn;
   rows?: number;
   specificClassName?: string;
+  fullWidth?: boolean;
   control?: any;
   rules?: any;
 }
@@ -64,36 +61,45 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   error,
   rows,
   specificClassName,
+  fullWidth,
   register,
   control,
   rules,
 }: IInputGroupProps) => {
+  const inputDisabled = disabled || loading;
   return (
     <div>
       <div>
         <div>
-          <label htmlFor={name} className={`block text-sm font-medium text-secondary-700`}>
+          <label htmlFor={name} className={`block text-sm font-bold`} data-testid="label-element">
             {label}
           </label>
           {type === 'select' && (
             <Select
               name={name}
-              disabled={disabled}
+              disabled={inputDisabled}
               options={options ?? []}
               error={error}
               control={control}
               rules={rules}
+              fullWidth={fullWidth}
             />
           )}
           {type === 'toggle' && (
-            <Toggle name={name} disabled={disabled} error={error} control={control} rules={rules} />
+            <Toggle
+              name={name}
+              disabled={inputDisabled}
+              error={error}
+              control={control}
+              rules={rules}
+            />
           )}
           {type === 'textarea' && (
             <TextArea
               id={name}
               name={name}
               placeholder={placeholder}
-              disabled={disabled}
+              disabled={inputDisabled}
               error={error}
               rows={rows}
               specificClassName={specificClassName}
@@ -106,18 +112,24 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               name={name}
               type={type}
               placeholder={placeholder}
-              disabled={disabled}
+              disabled={inputDisabled}
               error={error}
               register={register}
+              fullWidth={fullWidth}
             />
           )}
         </div>
         {loading && 'Loading'}
       </div>
       {error && (
-        <p className="flex-row px-2 text-sm text-red-600" id="email-error">
-          {error}
-        </p>
+        <div data-testid="error-element" className="flex pl-2 text-sm text-red-600">
+          <div className="flex h-3 w-3 self-center">
+            <Icon name="cancel-circle" />
+          </div>
+          <p className="pl-1" id="email-error">
+            {error}
+          </p>
+        </div>
       )}
     </div>
   );

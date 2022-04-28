@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
@@ -34,14 +32,14 @@ export const Base = (): JSX.Element => {
   return (
     <div>
       <div>
-        <InputGroup name="test" label="Label" placeholder="Placeholder" type="text" />
+        <InputGroup name="test" label="Simple input" placeholder="Placeholder" type="text" />
       </div>
       <br />
       <div>
         <InputGroup
           name="test"
-          label="Label"
-          error={errors.comment?.message}
+          label="Input with error"
+          error="Huston we have a problem"
           placeholder="Placeholder"
           type="text"
         />
@@ -50,7 +48,7 @@ export const Base = (): JSX.Element => {
       <div>
         <InputGroup
           name="test"
-          label="Label"
+          label="Select"
           placeholder="Placeholder"
           type="select"
           options={options}
@@ -59,34 +57,12 @@ export const Base = (): JSX.Element => {
       </div>
       <br />
       <div>
-        <InputGroup
-          name="test"
-          label="Label"
-          placeholder="Placeholder"
-          type="select"
-          options={options}
-          error={errors.comment?.message}
-          control={control}
-        />
-      </div>
-      <br />
-      <div>
-        <InputGroup name="test" label="Label" placeholder="Placeholder" type="textarea" />
-      </div>
-      <br />
-      <div>
-        <InputGroup
-          name="test"
-          label="Label"
-          placeholder="Placeholder"
-          type="textarea"
-          error={errors.comment?.message}
-        />
+        <InputGroup name="test" label="Simple textarea" placeholder="Placeholder" type="textarea" />
       </div>
       <div>
         <InputGroup
           name="test"
-          label="Label"
+          label="Simple toggle"
           placeholder="Placeholder"
           type="toggle"
           control={control}
