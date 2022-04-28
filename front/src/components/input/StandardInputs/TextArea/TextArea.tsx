@@ -29,6 +29,7 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
   return (
     <div className="p-1">
       <textarea
+        data-testid="textarea-element"
         rows={rows}
         id={name}
         placeholder={placeholder}
@@ -38,7 +39,7 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
           `border-secondary-300 border focus:outline-none focus:ring-1  ${
             error
               ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
-              : 'focus:ring-blue-300 focus:border-blue-300'
+              : 'focus:ring-primary-600 focus:border-primary-600'
           } block w-full sm:text-sm rounded-md p-2`
         }`}
         {...register}

@@ -20,6 +20,7 @@ export interface ISelectOptions {
   control?: any;
   name: string;
   rules?: any;
+  fullWidth?: boolean;
 }
 
 export const Select: React.FC<ISelectOptions> = ({
@@ -29,6 +30,7 @@ export const Select: React.FC<ISelectOptions> = ({
   control,
   name,
   rules,
+  fullWidth,
 }: ISelectOptions) => {
   const [selected, setSelected] = useState(options[0]);
   const { field } = useController({
@@ -36,8 +38,19 @@ export const Select: React.FC<ISelectOptions> = ({
     name,
     rules,
   });
+
+  let classNameButton = `bg-white relative border border-secondary-300 border-solid rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600 sm:text-sm`;
+  classNameButton += fullWidth ? ' w-full' : ' w-auto';
+  classNameButton += error
+    ? ' border-red-300 focus:ring-red-500 focus:border-red-500'
+    : ' border-secondary-300 focus:ring-primary-600 focus:border-primary-600';
+  classNameButton += disabled ? ' bg-secondary-200 text-secondary-400' : '';
+
+  let classNameOptions =
+    'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm';
+  classNameOptions += fullWidth ? ' w-full' : ' w-auto';
   return (
-    <div className="relative rounded-md p-1">
+    <div>
       <Listbox
         disabled={disabled}
         {...field}
@@ -50,15 +63,9 @@ export const Select: React.FC<ISelectOptions> = ({
         {({ open }) => (
           <>
             <div className="relative mt-1">
-              <Listbox.Button
-                className={`bg-white relative w-full border border-gray-300 border-solid rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 sm:text-sm ${
-                  error
-                    ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
-                    : 'border-secondary-300 focus:ring-blue-300 focus:border-blue-300'
-                } ${disabled ? 'bg-secondary-200 text-secondary-400' : ''}`}
-              >
+              <Listbox.Button data-testid="select-element" className={classNameButton}>
                 <span className="block truncate">{selected?.value}</span>
-                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5">
                   <Icon name="chevron-thin-down" />
                 </span>
               </Listbox.Button>
@@ -70,7 +77,7 @@ export const Select: React.FC<ISelectOptions> = ({
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <Listbox.Options className={classNameOptions}>
                   {options.map((option) => (
                     <Listbox.Option
                       key={option.id}

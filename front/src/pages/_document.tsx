@@ -10,8 +10,10 @@ class MyDocument extends Document {
         <Head />
 
         <body>
-          <Main />
-          <NextScript />
+          <section className="font-marianne text-secondary-800">
+            <Main />
+            <NextScript />
+          </section>
         </body>
       </Html>
     );
