@@ -1,4 +1,3 @@
-import React from 'react';
 import { addParameters } from '@storybook/react';
 import '../src/styles/global.css';
 

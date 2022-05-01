@@ -3,7 +3,8 @@ import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Input } from '../StandardInputs/Input';
-import { IRadioType } from '../StandardInputs/Radio';
+import { IRadioType, Radio } from '../StandardInputs/Radio';
+import { IRadioCardType, RadioCard } from '../StandardInputs/RadioCard';
 import { IOptions, Select } from '../StandardInputs/Select';
 import { TextArea } from '../StandardInputs/TextArea';
 import { Toggle } from '../StandardInputs/Toggle';
@@ -30,6 +31,8 @@ export interface IInputGroupProps {
     | 'tel'
     | 'select'
     | 'toggle'
+    | 'radio'
+    | 'radioCard'
     | 'checkbox'
     | 'textarea'
     | 'file';
@@ -38,6 +41,7 @@ export interface IInputGroupProps {
   disabled?: boolean;
   loading?: boolean;
   radioValues?: IRadioType[];
+  radioCardValues?: IRadioCardType[];
   variant?: 'default' | 'rounded';
   error?: string;
   elementRef?: object;
@@ -56,6 +60,8 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   name,
   type,
   options,
+  radioValues,
+  radioCardValues,
   disabled,
   loading,
   error,
@@ -106,18 +112,43 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               register={register}
             />
           )}
-          {type !== 'select' && type !== 'textarea' && type !== 'toggle' && (
-            <Input
+          {type === 'radio' && (
+            <Radio
               id={name}
               name={name}
-              type={type}
-              placeholder={placeholder}
               disabled={inputDisabled}
               error={error}
+              radioValues={radioValues ?? []}
               register={register}
-              fullWidth={fullWidth}
             />
           )}
+          {type === 'radioCard' && (
+            <RadioCard
+              id={name}
+              name={name}
+              disabled={inputDisabled}
+              error={error}
+              radioCardValues={radioCardValues ?? []}
+              register={register}
+              control={control}
+            />
+          )}
+          {type !== 'select' &&
+            type !== 'textarea' &&
+            type !== 'toggle' &&
+            type !== 'radio' &&
+            type !== 'radioCard' && (
+              <Input
+                id={name}
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                disabled={inputDisabled}
+                error={error}
+                register={register}
+                fullWidth={fullWidth}
+              />
+            )}
         </div>
         {loading && 'Loading'}
       </div>

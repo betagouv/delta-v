@@ -2,7 +2,6 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IRadioType {
   id: string;
-  name: string;
   value: string;
 }
 
@@ -17,8 +16,7 @@ export interface IRadioOptions {
   rules?: any;
 }
 
-export const Radio: React.FC<IRadioOptions> = ({ radioValues, register }) => {
-  // const [checked, setChecked] = useState(defaultChecked);
+export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) => {
   return (
     <div className="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-5">
       {radioValues.map((radioValue) => (
@@ -26,7 +24,7 @@ export const Radio: React.FC<IRadioOptions> = ({ radioValues, register }) => {
           <input
             data-testid="radio-element"
             id={radioValue.id}
-            name={radioValue.name}
+            name={name}
             type="radio"
             className="h-4 w-4 border-black text-primary-600 focus:ring-transparent"
             {...register}

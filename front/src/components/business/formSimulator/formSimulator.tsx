@@ -4,6 +4,7 @@ import { getNames } from 'i18n-iso-countries';
 
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
+import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 
 interface FormSimulatorProps {
   remove: (index: number) => void;
@@ -20,12 +21,32 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({
   errors,
   fields,
 }) => {
-  const meanOfTransportOptions = [
-    { value: 'Avion', id: 'plane' },
-    { value: 'Bateau', id: 'boat' },
-    { value: 'Train', id: 'train' },
-    { value: 'Voiture', id: 'car' },
-    { value: 'Autre', id: 'other' },
+  const meanOfTransportOptions: IRadioCardType[] = [
+    {
+      id: 'car',
+      value: 'Voiture',
+      svgIcon: 'car',
+    },
+    {
+      id: 'plane',
+      value: 'Avion',
+      svgIcon: 'plane',
+    },
+    {
+      id: 'boat',
+      value: 'Bateau',
+      svgIcon: 'boat',
+    },
+    {
+      id: 'train',
+      value: 'Train',
+      svgIcon: 'train',
+    },
+    {
+      id: 'other',
+      value: 'Autre',
+      svgIcon: 'other',
+    },
   ];
 
   const countriesOptions = useMemo(() => {
@@ -57,9 +78,9 @@ export const FormSimulator: React.FC<FormSimulatorProps> = ({
       <InputGroup
         name="meanOfTransport"
         label="Moyen de transport"
-        type="select"
+        type="radioCard"
         register={register('meanOfTransport')}
-        options={meanOfTransportOptions}
+        radioCardValues={meanOfTransportOptions}
         control={control}
         error={errors?.meanOfTransport?.message}
       />
