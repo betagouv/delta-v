@@ -50,77 +50,75 @@ export const Select: React.FC<ISelectOptions> = ({
     'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm';
   classNameOptions += fullWidth ? ' w-full' : ' w-auto';
   return (
-    <div>
-      <Listbox
-        disabled={disabled}
-        {...field}
-        value={selected}
-        onChange={(e) => {
-          field.onChange(e?.id);
-          setSelected(e);
-        }}
-      >
-        {({ open }) => (
-          <>
-            <div className="relative mt-1">
-              <Listbox.Button data-testid="select-element" className={classNameButton}>
-                <span className="block truncate">{selected?.value}</span>
-                <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5">
-                  <Icon name="chevron-thin-down" />
-                </span>
-              </Listbox.Button>
+    <Listbox
+      disabled={disabled}
+      {...field}
+      value={selected}
+      onChange={(e) => {
+        field.onChange(e?.id);
+        setSelected(e);
+      }}
+    >
+      {({ open }) => (
+        <>
+          <div className="relative mt-1">
+            <Listbox.Button data-testid="select-element" className={classNameButton}>
+              <span className="block truncate">{selected?.value}</span>
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5">
+                <Icon name="chevron-thin-down" />
+              </span>
+            </Listbox.Button>
 
-              <Transition
-                show={open}
-                as={Fragment}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Listbox.Options className={classNameOptions}>
-                  {options.map((option) => (
-                    <Listbox.Option
-                      key={option.id}
-                      className={({ active }) =>
-                        classNames(
-                          active ? 'text-white bg-primary-600' : 'text-secondary-900',
-                          'cursor-default select-none relative py-2 pl-3 pr-9',
-                        )
-                      }
-                      value={option}
-                    >
-                      {({ selected: selectedValue, active }) => (
-                        <>
+            <Transition
+              show={open}
+              as={Fragment}
+              leave="transition ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Listbox.Options className={classNameOptions}>
+                {options.map((option) => (
+                  <Listbox.Option
+                    key={option.id}
+                    className={({ active }) =>
+                      classNames(
+                        active ? 'text-white bg-primary-600' : 'text-secondary-900',
+                        'cursor-default select-none relative py-2 pl-3 pr-9',
+                      )
+                    }
+                    value={option}
+                  >
+                    {({ selected: selectedValue, active }) => (
+                      <>
+                        <span
+                          className={classNames(
+                            selectedValue ? 'font-semibold' : 'font-normal',
+                            'block truncate',
+                          )}
+                        >
+                          {option.value}
+                        </span>
+
+                        {selectedValue ? (
                           <span
                             className={classNames(
-                              selectedValue ? 'font-semibold' : 'font-normal',
-                              'block truncate',
+                              active ? 'text-white' : 'text-primary-600',
+                              'absolute inset-y-0 right-0 flex items-center pr-4',
                             )}
                           >
-                            {option.value}
+                            <CheckIcon className="h-6 w-5" aria-hidden="true" />
                           </span>
-
-                          {selectedValue ? (
-                            <span
-                              className={classNames(
-                                active ? 'text-white' : 'text-primary-600',
-                                'absolute inset-y-0 right-0 flex items-center pr-4',
-                              )}
-                            >
-                              <CheckIcon className="h-6 w-5" aria-hidden="true" />
-                            </span>
-                          ) : null}
-                        </>
-                      )}
-                    </Listbox.Option>
-                  ))}
-                </Listbox.Options>
-              </Transition>
-            </div>
-          </>
-        )}
-      </Listbox>
-    </div>
+                        ) : null}
+                      </>
+                    )}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </Transition>
+          </div>
+        </>
+      )}
+    </Listbox>
   );
 };
 

@@ -17,6 +17,7 @@ const customJestConfig = {
     '^.+\\.ts?$': 'ts-jest',
   },
   moduleNameMapper: {
+    '^@/public$': '<rootDir>/public/$1',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
 };

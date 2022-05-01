@@ -26,17 +26,14 @@ export const Base = (): JSX.Element => {
   const radioValues: IRadioType[] = [
     {
       id: 'oui',
-      name: 'happy',
       value: 'Oui',
     },
     {
       id: 'non',
-      name: 'happy',
       value: 'Non',
     },
     {
       id: 'maybe',
-      name: 'happy',
       value: 'Peut être',
     },
   ];
