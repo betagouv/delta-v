@@ -62,7 +62,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({ radioCardValues, control, n
               <div className="h-8">
                 <SvgIcon name={radioCardValue.svgIcon} />
               </div>
-              <RadioGroup.Label as="p" className="text-[13px]">
+              <RadioGroup.Label as="p" className="text-center">
                 {radioCardValue.value}
               </RadioGroup.Label>
             </div>
