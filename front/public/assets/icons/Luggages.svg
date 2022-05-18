@@ -1,0 +1,35 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="2" y="45" width="3" height="3" rx="1" fill="#646060"/>
+<rect x="25" y="45" width="2" height="3" rx="1" fill="#646060"/>
+<rect x="10" y="2" width="9" height="14" rx="1" stroke="#D2D3D8" stroke-width="2"/>
+<rect x="10" width="9" height="3" rx="1" fill="#646060"/>
+<rect y="10" width="29" height="36" rx="3" fill="#9090FD"/>
+<rect x="6" y="10" width="1" height="33" fill="#8181E0"/>
+<rect x="22" y="10" width="1" height="33" fill="#8181E0"/>
+<rect y="36" width="29" height="4" fill="#000091"/>
+<rect x="7" y="21.8036" width="12" height="4" transform="rotate(-8.64424 7 21.8036)" fill="#FBFFE0"/>
+<rect y="17" width="29" height="4" fill="#000091"/>
+<circle cx="20" cy="29" r="2" fill="#C9F4BA"/>
+<rect x="17.0431" y="31" width="3" height="3" transform="rotate(20.3468 17.0431 31)" fill="#E6A8FC"/>
+<rect x="23" y="30" width="27" height="20" rx="1" fill="#C09A77"/>
+<mask id="mask0_45_6203" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="23" y="30" width="27" height="20">
+<rect x="23" y="30" width="27" height="20" rx="1" fill="#C09A77"/>
+</mask>
+<g mask="url(#mask0_45_6203)">
+<circle cx="23.5" cy="30.5" r="3.5" fill="#FDB64C"/>
+<circle cx="23.5" cy="49.5" r="4.5" fill="#FDB64C"/>
+<circle cx="49.5" cy="30.5" r="3.5" fill="#FDB64C"/>
+<circle cx="49.5" cy="49.5" r="4.5" fill="#FDB64C"/>
+</g>
+<rect x="30" y="37" width="13" height="1" fill="#9E7B5B"/>
+<rect x="30" y="39" width="13" height="1" fill="#9E7B5B"/>
+<rect x="32" y="27" width="9" height="8" rx="2" stroke="#C09A77" stroke-width="2"/>
+<mask id="mask1_45_6203" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="31" y="26" width="11" height="10">
+<rect x="32" y="27" width="9" height="8" rx="2" stroke="#C09A77" stroke-width="2"/>
+</mask>
+<g mask="url(#mask1_45_6203)">
+<path d="M30 28.5H43V30H30V28.5Z" fill="#9E7B5B"/>
+</g>
+<circle cx="30" cy="37" r="2" fill="#FBBEFC"/>
+<rect x="30.0477" y="38" width="6" height="4" transform="rotate(49.6347 30.0477 38)" fill="#CFF0F8"/>
+</svg>
