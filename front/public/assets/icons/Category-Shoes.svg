@@ -1,0 +1,25 @@
+<svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 0.00050354H10V1.0005C11.8697 4.11673 13.8042 5.42026 15.5613 6.0005H21C24.866 6.0005 28 9.13451 28 13.0005L10 13.0005H0V6.0005V0.00050354Z" fill="#DC3B3B"/>
+<mask id="mask0_80_7945" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="14">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 0.00050354H10V1.0005C11.8697 4.11673 13.8042 5.42026 15.5613 6.0005H21C24.866 6.0005 28 9.13451 28 13.0005L10 13.0005H0V6.0005V0.00050354Z" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask0_80_7945)">
+<ellipse cx="24.5" cy="10.5005" rx="6.5" ry="4.5" transform="rotate(90 24.5 10.5005)" fill="#EDE9E9"/>
+</g>
+<rect y="13.0005" width="28" height="3" fill="#EDE9E9"/>
+<circle cx="4" cy="7.0005" r="2.25" fill="white" stroke="black" stroke-width="0.5"/>
+<line x1="7.84189" y1="2.52616" x2="10.8419" y2="1.52616" stroke="#EDE9E9"/>
+<line x1="9.84189" y1="4.52616" x2="12.8419" y2="3.52616" stroke="#EDE9E9"/>
+<line x1="11.8787" y1="6.51543" x2="15.8787" y2="5.51543" stroke="#EDE9E9"/>
+<line y1="12.5005" x2="28" y2="12.5005" stroke="black"/>
+<line x1="3.5" y1="13.0005" x2="3.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="0.5" y1="13.0005" x2="0.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="6.5" y1="13.0005" x2="6.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="9.5" y1="13.0005" x2="9.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="12.5" y1="13.0005" x2="12.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="15.5" y1="13.0005" x2="15.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="18.5" y1="13.0005" x2="18.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="21.5" y1="13.0005" x2="21.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="24.5" y1="13.0005" x2="24.5" y2="16.0005" stroke="#D6CCCC"/>
+<line x1="27.5" y1="13.0005" x2="27.5" y2="16.0005" stroke="#D6CCCC"/>
+</svg>

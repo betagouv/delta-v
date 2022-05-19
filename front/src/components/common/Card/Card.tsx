@@ -5,7 +5,7 @@ import { SvgIcon, SvgNames } from '../SvgIcon';
 type CardVariant = 'vertical' | 'horizontal';
 type CardRounded = 'full' | 'lg' | 'md' | 'base' | 'none';
 
-export interface ICardProps {
+export interface CardProps {
   variant?: CardVariant;
   rounded?: CardRounded;
   disabled?: boolean;
@@ -16,7 +16,7 @@ export interface ICardProps {
   description: string;
 }
 
-export const Card: React.FC<ICardProps> = ({
+export const Card: React.FC<CardProps> = ({
   variant = 'horizontal',
   rounded = 'lg',
   disabled = false,
@@ -25,7 +25,7 @@ export const Card: React.FC<ICardProps> = ({
   title,
   subtitle,
   description,
-}: ICardProps) => {
+}: CardProps) => {
   let className = 'flex h-auto items-center border border-gray-300 bg-white p-3';
   if (variant === 'vertical') {
     className += ' flex-col text-center';
