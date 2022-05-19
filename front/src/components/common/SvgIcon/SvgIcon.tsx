@@ -3,6 +3,11 @@ import React from 'react';
 import BoatIcon from '@/public/assets/icons/Boat.svg';
 import CalculatorIcon from '@/public/assets/icons/Calculator.svg';
 import CarIcon from '@/public/assets/icons/Car.svg';
+import CategoryAccessoryIcon from '@/public/assets/icons/Category-Accessory.svg';
+import CategoryClothesIcon from '@/public/assets/icons/Category-Clothes.svg';
+import CategoryFabricsIcon from '@/public/assets/icons/Category-Fabrics.svg';
+import CategoryLeatherGoodsIcon from '@/public/assets/icons/Category-Leather-Goods.svg';
+import CategoryShoesIcon from '@/public/assets/icons/Category-Shoes.svg';
 import LuggagesIcon from '@/public/assets/icons/Luggages.svg';
 import MailIcon from '@/public/assets/icons/Mail.svg';
 import OtherIcon from '@/public/assets/icons/Other.svg';
@@ -19,7 +24,12 @@ export type SvgNames =
   | 'luggages'
   | 'calculator'
   | 'phone'
-  | 'mail';
+  | 'mail'
+  | 'categoryAccessory'
+  | 'categoryClothes'
+  | 'categoryFabrics'
+  | 'categoryShoes'
+  | 'categoryLeatherGoods';
 
 export interface ISvgIconProps {
   name: SvgNames;
@@ -45,6 +55,16 @@ const getSvgFromName = (name: SvgNames): any => {
       return PhoneIcon;
     case 'mail':
       return MailIcon;
+    case 'categoryAccessory':
+      return CategoryAccessoryIcon;
+    case 'categoryClothes':
+      return CategoryClothesIcon;
+    case 'categoryFabrics':
+      return CategoryFabricsIcon;
+    case 'categoryShoes':
+      return CategoryShoesIcon;
+    case 'categoryLeatherGoods':
+      return CategoryLeatherGoodsIcon;
     default:
       return undefined;
   }
