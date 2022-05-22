@@ -26,7 +26,7 @@ export const Card: React.FC<CardProps> = ({
   subtitle,
   description,
 }: CardProps) => {
-  let className = 'flex h-auto items-center border border-gray-300 bg-white p-3';
+  let className = 'flex h-auto items-center border border-gray-300 bg-white p-3 flex-1 gap-4';
   if (variant === 'vertical') {
     className += ' flex-col text-center';
   } else if (variant === 'horizontal') {
@@ -37,7 +37,7 @@ export const Card: React.FC<CardProps> = ({
     className += ' opacity-50';
   }
   if (!fullWidth) {
-    className += ' w-auto';
+    className += ' w-fit';
   }
 
   switch (rounded) {
@@ -45,7 +45,7 @@ export const Card: React.FC<CardProps> = ({
       className += ' rounded-full';
       break;
     case 'lg':
-      className += ' rounded-lg';
+      className += ' rounded-[10px]';
       break;
     case 'md':
       className += ' rounded-md';
@@ -68,7 +68,7 @@ export const Card: React.FC<CardProps> = ({
       <div className="flex flex-1 flex-col">
         <span className="text-base font-bold">{title}</span>
         {subtitle && <span className="font-bold text-primary-700">{subtitle}</span>}
-        <span className="leading-4 text-gray-500">{description}</span>
+        <div className="whitespace-pre-wrap leading-4 text-gray-500">{description}</div>
       </div>
     </div>
   );

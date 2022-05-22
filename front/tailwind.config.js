@@ -1,6 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
 const path = require('path');
-
-// eslint-disable-next-line import/no-extraneous-dependencies
+const plugin = require('tailwindcss/plugin');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -44,6 +45,13 @@ module.exports = {
   variants: {
     extend: {},
   },
-  // eslint-disable-next-line global-require
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    // eslint-disable-next-line func-names
+    plugin(function ({ addBase, theme }) {
+      addBase({
+        h1: { fontSize: theme('fontSize.3xl'), lineHeight: theme('lineHeight.none') },
+      });
+    }),
+  ],
 };

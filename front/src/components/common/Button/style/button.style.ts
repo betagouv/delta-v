@@ -11,6 +11,7 @@ type ClassesType = {
 type IButtonStyle = {
   disabled: ClassesType;
   fullWidth: ClassesType;
+  notFullWidth: ClassesType;
   rounded: {
     [key in ButtonRounded]: ClassesType;
   } & ClassesType;
@@ -81,6 +82,11 @@ const styleManager: IButtonStyle = {
   fullWidth: {
     classes: {
       'w-full': true,
+    },
+  },
+  notFullWidth: {
+    classes: {
+      'w-fit': true,
     },
   },
   iconPosition: {
@@ -229,6 +235,6 @@ export const getButtonStyle = ({
     ...styleManager.type[variant]?.[color]?.classes,
     ...styleManager.rounded[rounded].classes,
     ...(disabled ? styleManager.disabled.classes : {}),
-    ...(fullWidth ? styleManager.fullWidth.classes : {}),
+    ...(fullWidth ? styleManager.fullWidth.classes : styleManager.notFullWidth.classes),
   };
 };
