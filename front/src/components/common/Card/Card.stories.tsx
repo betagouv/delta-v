@@ -17,6 +17,15 @@ export const withVariant = (): JSX.Element => (
       svgName="luggages"
     />
     <br />
+    <p>Basic card horizontal not full width :</p>
+    <br />
+    <Card
+      title="Préparer mon voyage"
+      description="Les documents à prévoir avant votre voyage, les conseils..."
+      svgName="calculator"
+      fullWidth={false}
+    />
+    <br />
     <p>Card with subtitle :</p>
     <br />
     <Card

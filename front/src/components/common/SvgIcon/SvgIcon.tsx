@@ -13,6 +13,7 @@ import MailIcon from '@/public/assets/icons/Mail.svg';
 import OtherIcon from '@/public/assets/icons/Other.svg';
 import PhoneIcon from '@/public/assets/icons/Phone.svg';
 import PlaneIcon from '@/public/assets/icons/Plane.svg';
+import QuestionIcon from '@/public/assets/icons/Question.svg';
 import TrainIcon from '@/public/assets/icons/Train.svg';
 
 export type SvgNames =
@@ -25,6 +26,7 @@ export type SvgNames =
   | 'calculator'
   | 'phone'
   | 'mail'
+  | 'question'
   | 'categoryAccessory'
   | 'categoryClothes'
   | 'categoryFabrics'
@@ -55,6 +57,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return PhoneIcon;
     case 'mail':
       return MailIcon;
+    case 'question':
+      return QuestionIcon;
     case 'categoryAccessory':
       return CategoryAccessoryIcon;
     case 'categoryClothes':
