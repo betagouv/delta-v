@@ -13,15 +13,6 @@ import {
 } from './style/button.style';
 import { getIconStyle } from './style/icon.style';
 
-interface IOptionalProps {
-  as?: any;
-  href?: string;
-  target?: string;
-  to?: string;
-  rel?: string;
-  onClick?: () => void;
-}
-
 export interface IButtonProps {
   children: any;
   className?: { [key: string]: boolean };
@@ -45,8 +36,6 @@ export interface IButtonProps {
 }
 
 export const Button: React.FC<IButtonProps> = ({
-  href,
-  to,
   onClick,
   color = 'primary',
   size = 'base',
@@ -59,22 +48,8 @@ export const Button: React.FC<IButtonProps> = ({
   fullWidth = false,
   loading = false,
   type = 'button',
-  external,
   children,
 }: IButtonProps) => {
-  const buttonProps: IOptionalProps = {};
-
-  if (href) {
-    buttonProps.as = 'a';
-    buttonProps.href = href;
-    if (external) {
-      buttonProps.target = '_blank';
-      buttonProps.rel = 'noopener noreferrer';
-    }
-  } else if (to) {
-    buttonProps.to = to;
-  }
-
   const buttonDisabled = disabled || loading;
 
   const customButtonClassName = getButtonStyle({

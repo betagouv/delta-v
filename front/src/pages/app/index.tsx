@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { Card } from '@/components/common/Card';
 import { Typography } from '@/components/common/Typography';
 import { Input } from '@/components/input/StandardInputs/Input';
@@ -5,6 +7,7 @@ import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
+  const router = useRouter();
   return (
     <Main
       meta={
@@ -66,7 +69,7 @@ const Index = () => {
           Pour vous permettre d’être facilement en règle si vous avez acheté des produits à
           l’étranger et de vous assurer un passage rapide et fluide lors de votre retour en France.
         </Typography>
-        <Typography weight="bold" variant="body1" tag="a" to="test">
+        <Typography weight="bold" variant="body1" tag="a" onClick={() => router.push('/test')}>
           En savoir plus 🡢
         </Typography>
       </div>

@@ -6,6 +6,8 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { FormSimulator } from '@/components/business/formSimulator';
 import { Product, ProductTree } from '@/components/business/productTree';
 import { ResponseSimulator } from '@/components/business/responseSimulator';
+import { Button } from '@/components/common/Button';
+import { Link } from '@/components/common/Link';
 import { Meta } from '@/layout/Meta';
 import { useProductsStore } from '@/stores/product.store';
 import { useSimulateStore } from '@/stores/simulate.store';
@@ -115,7 +117,10 @@ const Index = () => {
               </>
             ))}
         </div>
-        <div className="w-1/2">
+        <div className="w-1/2 p-5">
+          <Link to="/app">
+            <Button>Application</Button>
+          </Link>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormSimulator
               register={register}
