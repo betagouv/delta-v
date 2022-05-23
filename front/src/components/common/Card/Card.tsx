@@ -14,6 +14,7 @@ export interface CardProps {
   title: string;
   subtitle?: string;
   description: string;
+  onClick?: () => void;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -25,6 +26,7 @@ export const Card: React.FC<CardProps> = ({
   title,
   subtitle,
   description,
+  onClick,
 }: CardProps) => {
   let className = 'flex h-auto items-center border border-gray-300 bg-white p-3 flex-1 gap-4';
   if (variant === 'vertical') {
@@ -61,7 +63,7 @@ export const Card: React.FC<CardProps> = ({
   }
 
   return (
-    <div className={className}>
+    <div className={className} onClick={onClick}>
       <div className="h-14 w-14">
         <SvgIcon name={svgName} />
       </div>

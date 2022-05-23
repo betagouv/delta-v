@@ -15,6 +15,7 @@ export const withVariant = (): JSX.Element => (
       title="Préparer mon voyage"
       description="Les documents à prévoir avant votre voyage, les conseils..."
       svgName="luggages"
+      fullWidth={true}
     />
     <br />
     <p>Basic card horizontal not full width :</p>
@@ -24,6 +25,17 @@ export const withVariant = (): JSX.Element => (
       description="Les documents à prévoir avant votre voyage, les conseils..."
       svgName="calculator"
       fullWidth={false}
+    />
+    <br />
+    <p>Basic card horizontal with click :</p>
+    <br />
+    <Card
+      title="Préparer mon voyage"
+      description="Les documents à prévoir avant votre voyage, les conseils..."
+      svgName="train"
+      fullWidth={true}
+      // eslint-disable-next-line no-alert
+      onClick={() => alert('clicked')}
     />
     <br />
     <p>Card with subtitle :</p>

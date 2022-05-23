@@ -1,7 +1,6 @@
 import React from 'react';
 
 import cn from 'classnames';
-import Link from 'next/link';
 
 import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
 import { Color, getColor, getFontWeight, Weight } from './style/typography.style';
@@ -12,7 +11,7 @@ export interface ITypographyProps {
   variant?: Variant;
   color?: Color;
   weight?: Weight;
-  to?: string;
+  onClick?: () => void;
 }
 
 export const Typography: React.FC<ITypographyProps> = ({
@@ -21,7 +20,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   color = 'primary',
   children,
   weight = 'normal',
-  to,
+  onClick,
 }) => {
   let usedVariant = variant;
   if (usedVariant === null) {
@@ -36,16 +35,8 @@ export const Typography: React.FC<ITypographyProps> = ({
   const CustomTag = tag ?? 'p';
 
   return (
-    <>
-      {to ? (
-        <Link href={to}>
-          <a>
-            <CustomTag className={className}>{children}</CustomTag>
-          </a>
-        </Link>
-      ) : (
-        <CustomTag className={className}>{children}</CustomTag>
-      )}
-    </>
+    <CustomTag onClick={onClick} className={className} data-testid="typography-element">
+      {children}
+    </CustomTag>
   );
 };

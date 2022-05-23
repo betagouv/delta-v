@@ -11,27 +11,27 @@ const items: Item[] = [
   {
     title: 'Vêtements',
     svgNames: 'categoryClothes',
-    href: '/test/',
+    to: '/test/',
   },
   {
     title: 'Tissus',
     svgNames: 'categoryFabrics',
-    href: '/',
+    to: '/',
   },
   {
     title: 'Chaussures',
     svgNames: 'categoryShoes',
-    href: '/',
+    to: '/',
   },
   {
     title: 'Maroquinerie',
     svgNames: 'categoryLeatherGoods',
-    href: '/',
+    to: '/',
   },
   {
     title: 'Accessoires',
     svgNames: 'categoryAccessory',
-    href: '/',
+    to: '/',
   },
 ];
 
