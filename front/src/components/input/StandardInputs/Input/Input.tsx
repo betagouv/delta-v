@@ -45,11 +45,11 @@ export const Input: React.FC<IInputOptions> = ({
   leadingAddons,
   register,
 }: IInputOptions) => {
-  let parentClassName = 'w-full mt-1 relative';
+  let parentClassName = 'mt-1 relative';
   if (fullWidth) {
-    parentClassName += ' max-w-full';
+    parentClassName += ' w-full';
   } else {
-    parentClassName += ' max-w-xs';
+    parentClassName += ' w-fit';
   }
   let className =
     'block w-full border-secondary-300 px-4 border border-solid sm:text-sm rounded-full focus:outline-none focus:ring-1 placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
