@@ -102,6 +102,17 @@ export const Base = (): JSX.Element => {
       </div>
       <br />
       <div>
+        <InputGroup
+          name="test"
+          label="Simple Select"
+          placeholder="Placeholder"
+          type="simple-select"
+          options={options}
+          control={control}
+        />
+      </div>
+      <br />
+      <div>
         <InputGroup name="test" label="Simple textarea" placeholder="Placeholder" type="textarea" />
       </div>
       <div>

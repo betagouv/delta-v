@@ -6,6 +6,7 @@ import { Input } from '../StandardInputs/Input';
 import { IRadioType, Radio } from '../StandardInputs/Radio';
 import { IRadioCardType, RadioCard } from '../StandardInputs/RadioCard';
 import { IOptions, Select } from '../StandardInputs/Select';
+import { SimpleSelect } from '../StandardInputs/SimpleSelect';
 import { TextArea } from '../StandardInputs/TextArea';
 import { Toggle } from '../StandardInputs/Toggle';
 import { Icon } from '@/components/common/Icon';
@@ -29,6 +30,7 @@ export interface IInputGroupProps {
     | 'datetime'
     | 'email'
     | 'tel'
+    | 'simple-select'
     | 'select'
     | 'toggle'
     | 'radio'
@@ -50,6 +52,10 @@ export interface IInputGroupProps {
   rows?: number;
   specificClassName?: string;
   fullWidth?: boolean;
+  trailingIcon?: string;
+  leadingIcon?: string;
+  trailingAddons?: string;
+  leadingAddons?: string;
   control?: any;
   rules?: any;
 }
@@ -68,6 +74,10 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   rows,
   specificClassName,
   fullWidth,
+  trailingIcon,
+  leadingIcon,
+  trailingAddons,
+  leadingAddons,
   register,
   control,
   rules,
@@ -77,7 +87,11 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
     <div>
       <div>
         <div>
-          <label htmlFor={name} className={`block text-sm font-bold`} data-testid="label-element">
+          <label
+            htmlFor={name}
+            className={`block text-base font-bold mb-4`}
+            data-testid="label-element"
+          >
             {label}
           </label>
           {type === 'select' && (
@@ -88,6 +102,17 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               error={error}
               control={control}
               rules={rules}
+              fullWidth={fullWidth}
+            />
+          )}
+          {type === 'simple-select' && (
+            <SimpleSelect
+              name={name}
+              disabled={inputDisabled}
+              options={options ?? []}
+              error={error}
+              control={control}
+              register={register}
               fullWidth={fullWidth}
             />
           )}
@@ -134,6 +159,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
             />
           )}
           {type !== 'select' &&
+            type !== 'simple-select' &&
             type !== 'textarea' &&
             type !== 'toggle' &&
             type !== 'radio' &&
@@ -147,6 +173,10 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
                 error={error}
                 register={register}
                 fullWidth={fullWidth}
+                leadingAddons={leadingAddons}
+                trailingAddons={trailingAddons}
+                leadingIcon={leadingIcon}
+                trailingIcon={trailingIcon}
               />
             )}
         </div>
