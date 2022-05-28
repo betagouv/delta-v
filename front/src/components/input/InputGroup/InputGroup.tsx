@@ -2,6 +2,7 @@ import React from 'react';
 
 import { UseFormRegisterReturn } from 'react-hook-form';
 
+import { Comboboxes } from '../StandardInputs/Comboboxes';
 import { Input } from '../StandardInputs/Input';
 import { IRadioType, Radio } from '../StandardInputs/Radio';
 import { IRadioCardType, RadioCard } from '../StandardInputs/RadioCard';
@@ -37,6 +38,7 @@ export interface IInputGroupProps {
     | 'radioCard'
     | 'checkbox'
     | 'textarea'
+    | 'comboboxes'
     | 'file';
   withSeparator?: boolean;
   required?: boolean;
@@ -105,6 +107,17 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               fullWidth={fullWidth}
             />
           )}
+          {type === 'comboboxes' && (
+            <Comboboxes
+              name={name}
+              disabled={inputDisabled}
+              options={options ?? []}
+              error={error}
+              control={control}
+              rules={rules}
+              fullWidth={fullWidth}
+            />
+          )}
           {type === 'simple-select' && (
             <SimpleSelect
               name={name}
@@ -160,6 +173,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
           )}
           {type !== 'select' &&
             type !== 'simple-select' &&
+            type !== 'comboboxes' &&
             type !== 'textarea' &&
             type !== 'toggle' &&
             type !== 'radio' &&
