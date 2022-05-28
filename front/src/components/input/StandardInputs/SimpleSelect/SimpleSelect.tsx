@@ -1,13 +1,13 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-export interface IOptions {
+export interface Options {
   id: number | string;
   value: string;
 }
 
-export interface ISimpleSelectOptions {
+export interface SimpleSelectOptions {
   disabled?: boolean;
-  options: IOptions[];
+  options: Options[];
   error?: string;
   register?: UseFormRegisterReturn;
   control?: any;
@@ -15,7 +15,7 @@ export interface ISimpleSelectOptions {
   fullWidth?: boolean;
 }
 
-export const SimpleSelect: React.FC<ISimpleSelectOptions> = ({
+export const SimpleSelect: React.FC<SimpleSelectOptions> = ({
   options,
   disabled,
   error,
