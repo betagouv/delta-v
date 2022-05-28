@@ -1,19 +1,17 @@
-import { useRouter } from 'next/router';
-
 import { Card } from '@/components/common/Card';
+import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { Input } from '@/components/input/StandardInputs/Input';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const router = useRouter();
   return (
     <Main
       meta={
         <Meta
-          title="Next.js Boilerplate Presentation"
-          description="Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
+          title="Déclaration Douane"
+          description="Déclaration Douane est un outil pour les particuliers qui permet de déclarer..."
         />
       }
     >
@@ -43,14 +41,15 @@ const Index = () => {
             rounded="lg"
             fullWidth
           />
-
-          <Card
-            title="Simuler mes achats"
-            description="Calculez les droits de douanes de vos achats en quelques clics"
-            svgName="calculator"
-            rounded="lg"
-            fullWidth
-          />
+          <Link to="/app/simulateur/configuration">
+            <Card
+              title="Simuler mes achats"
+              description="Calculez les droits de douanes de vos achats en quelques clics"
+              svgName="calculator"
+              rounded="lg"
+              fullWidth
+            />
+          </Link>
 
           <Card
             title="FAQ"
@@ -69,9 +68,11 @@ const Index = () => {
           Pour vous permettre d’être facilement en règle si vous avez acheté des produits à
           l’étranger et de vous assurer un passage rapide et fluide lors de votre retour en France.
         </Typography>
-        <Typography weight="bold" variant="body1" tag="a" onClick={() => router.push('/test')}>
-          En savoir plus 🡢
-        </Typography>
+        <Link to="/test">
+          <Typography weight="bold" variant="body1" tag="p">
+            En savoir plus 🡢
+          </Typography>
+        </Link>
       </div>
       <div className="flex flex-col gap-6 px-4 py-8">
         <Typography weight="bold" variant="h1" tag="h1" color="secondary">
