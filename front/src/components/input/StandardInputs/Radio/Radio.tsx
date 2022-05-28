@@ -19,17 +19,18 @@ export interface IRadioOptions {
 export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) => {
   return (
     <div className="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-5">
-      {radioValues.map((radioValue) => (
-        <div key={radioValue.id} className="flex items-center">
+      {radioValues.map((radioValue, index) => (
+        <div key={index} className="flex items-center">
           <input
             data-testid="radio-element"
-            id={radioValue.id}
             name={name}
+            id={index.toString()}
+            value={radioValue.id}
             type="radio"
             className="h-4 w-4 border-black text-primary-600 focus:ring-transparent"
             {...register}
           />
-          <label htmlFor={radioValue.id} className="ml-3 block text-sm text-black">
+          <label htmlFor={index.toString()} className="ml-3 block text-sm text-black">
             {radioValue.value}
           </label>
         </div>

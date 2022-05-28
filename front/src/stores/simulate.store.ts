@@ -1,12 +1,14 @@
+import { Alpha2Code } from 'i18n-iso-countries';
 import create from 'zustand';
 
 import axios from '@/config/axios';
 
 interface SimulateParams {
   border?: boolean;
-  age: number;
-  meanOfTransport: string;
-  shopingProducts: ShopingProduct[];
+  age?: number;
+  meanOfTransport?: string;
+  country?: Alpha2Code;
+  shopingProducts?: ShopingProduct[];
 }
 
 interface ShopingProduct {
