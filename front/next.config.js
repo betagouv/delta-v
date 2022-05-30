@@ -37,4 +37,13 @@ module.exports = withBundleAnalyzer({
     return config;
   },
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/app/simulateur/configuration',
+        destination: '/app/simulateur/configuration/age',
+        permanent: true,
+      },
+    ];
+  },
 });
