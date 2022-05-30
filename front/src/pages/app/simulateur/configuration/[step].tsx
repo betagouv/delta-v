@@ -7,6 +7,7 @@ import { Control, useForm, UseFormRegister } from 'react-hook-form';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
+import { ProgressBar } from '@/components/common/ProgressBar';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -15,7 +16,7 @@ import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { Meta } from '@/layout/Meta';
 import { SimulateParams, SimulateSteps, useSimulatorStore } from '@/stores/simulator.store';
 import { Main } from '@/templates/Main';
-import { getNextStep } from '@/utils/steps';
+import { getNextStep, getProgressionStep } from '@/utils/steps';
 
 export interface FormSimulatorData {
   border?: string;
@@ -197,6 +198,9 @@ const Configuration = () => {
         />
       }
     >
+      <div className="absolute top-0 h-auto w-full">
+        <ProgressBar progression={getProgressionStep(step)} />
+      </div>
       <div className="flex flex-col gap-6 px-4 py-8">
         <Link back>
           <div className="flex flex-row items-end">

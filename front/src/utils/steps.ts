@@ -17,3 +17,20 @@ export const getNextStep = (step: SimulateSteps, simulateParams: SimulateParams)
       return SimulateSteps.AGE;
   }
 };
+
+export const getProgressionStep = (step: SimulateSteps): number => {
+  switch (step) {
+    case SimulateSteps.AGE:
+      return 25;
+    case SimulateSteps.MEAN_OF_TRANSPORT:
+      return 50;
+    case SimulateSteps.COUNTRY:
+      return 75;
+    case SimulateSteps.BORDER:
+      return 87;
+    case SimulateSteps.SHOPPING_PRODUCTS:
+      return 100;
+    default:
+      return 25;
+  }
+};
