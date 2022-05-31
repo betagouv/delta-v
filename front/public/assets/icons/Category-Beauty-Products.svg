@@ -1,0 +1,26 @@
+<svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="12.7059" width="6" height="8" fill="#323232"/>
+<rect y="17.7059" width="6" height="1" fill="#F8CE3C"/>
+<path d="M1 7.70588L3.55279 6.42949C4.21769 6.09704 5 6.58053 5 7.32391V12.7059H1V7.70588Z" fill="#CE2828"/>
+<path d="M6 0.705879H17L16 16.7059H8L6 0.705879Z" fill="#E1ABDC"/>
+<mask id="mask0_158_10832" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="0" width="11" height="17">
+<path d="M6 0.705879H17L16 16.7059H8L6 0.705879Z" fill="#E1ABDC"/>
+</mask>
+<g mask="url(#mask0_158_10832)">
+<rect x="6" y="3.70579" width="11" height="1" fill="#C288BD"/>
+<rect x="8" y="4.70579" width="10" height="1" transform="rotate(-90 8 4.70579)" fill="#C288BD"/>
+<rect x="6" y="4.70579" width="10" height="1" transform="rotate(-90 6 4.70579)" fill="#C288BD"/>
+<rect x="10" y="4.70579" width="10" height="1" transform="rotate(-90 10 4.70579)" fill="#C288BD"/>
+<rect x="12" y="4.70579" width="10" height="1" transform="rotate(-90 12 4.70579)" fill="#C288BD"/>
+<rect x="14" y="4.70579" width="10" height="1" transform="rotate(-90 14 4.70579)" fill="#C288BD"/>
+<rect x="16" y="4.70579" width="10" height="1" transform="rotate(-90 16 4.70579)" fill="#C288BD"/>
+</g>
+<rect x="9" y="16.7059" width="6" height="4" fill="#8CC0C4"/>
+<rect x="10" y="16.7059" width="1" height="4" fill="#B3E5E9"/>
+<rect x="13" y="16.7059" width="1" height="4" fill="#B3E5E9"/>
+<circle opacity="0.7" cx="10" cy="9.70579" r="1" fill="white"/>
+<circle opacity="0.7" cx="14" cy="13.7058" r="1" fill="white"/>
+<circle opacity="0.7" r="0.5" transform="matrix(1 0 0 -1 9.5 7.20579)" fill="white"/>
+<circle opacity="0.7" r="0.5" transform="matrix(1 0 0 -1 12.5 10.2058)" fill="white"/>
+<circle opacity="0.7" r="0.5" transform="matrix(1 0 0 -1 10.5 14.2058)" fill="white"/>
+</svg>

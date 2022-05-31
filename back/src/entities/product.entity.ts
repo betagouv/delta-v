@@ -4,6 +4,8 @@ export interface Product {
   id: string;
   parentProductId?: string;
   name: string;
+  icon?: string;
+  finalProduct: boolean;
   info?: string;
   childrenQuestion?: string;
   nomenclatures?: string[];
@@ -24,6 +26,12 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'varchar' })
   name: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  icon?: string;
+
+  @Column({ type: 'boolean', default: false })
+  finalProduct: boolean;
 
   @Column({ type: 'text', nullable: true })
   info?: string;

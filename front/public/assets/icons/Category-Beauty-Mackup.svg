@@ -1,0 +1,17 @@
+<svg width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="13.3332" width="5" height="6.66667" fill="#323232"/>
+<rect y="17.4999" width="5" height="0.833334" fill="#F8CE3C"/>
+<path d="M0.833252 9.16667L2.71937 8.22361C3.38428 7.89116 4.16659 8.37465 4.16659 9.11803V13.3333H0.833252V9.16667Z" fill="#CE2828"/>
+<line x1="8.25" y1="11.875" x2="8.25" stroke="black"/>
+<line x1="9.375" y1="1.125" x2="7.5" y2="1.125" stroke="black"/>
+<line x1="9.375" y1="2.375" x2="7.5" y2="2.375" stroke="black"/>
+<line x1="9.375" y1="3.625" x2="7.5" y2="3.625" stroke="black"/>
+<line x1="9.375" y1="4.875" x2="7.5" y2="4.875" stroke="black"/>
+<rect x="6.25" y="10" width="4.375" height="10" fill="#323232"/>
+<mask id="mask0_86_8652" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="10" width="5" height="10">
+<rect x="6.25" y="10" width="4.375" height="10" fill="#323232"/>
+</mask>
+<g mask="url(#mask0_86_8652)">
+<path d="M6.25 18.125C6.84524 18.125 8.17857 17.875 8.75 16.875C9.32143 15.875 10.6548 15.2083 11.25 15" stroke="#65B6B6"/>
+</g>
+</svg>

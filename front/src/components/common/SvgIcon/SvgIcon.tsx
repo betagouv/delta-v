@@ -4,10 +4,16 @@ import BoatIcon from '@/public/assets/icons/Boat.svg';
 import CalculatorIcon from '@/public/assets/icons/Calculator.svg';
 import CarIcon from '@/public/assets/icons/Car.svg';
 import CategoryAccessoryIcon from '@/public/assets/icons/Category-Accessory.svg';
+import CategoryMackUpIcon from '@/public/assets/icons/Category-Beauty-Mackup.svg';
+import CategoryBeautyProductsIcon from '@/public/assets/icons/Category-Beauty-Products.svg';
 import CategoryClothesIcon from '@/public/assets/icons/Category-Clothes.svg';
 import CategoryFabricsIcon from '@/public/assets/icons/Category-Fabrics.svg';
+import CategoryFoodIcon from '@/public/assets/icons/Category-Food.svg';
+import CategoryHightechIcon from '@/public/assets/icons/Category-Hightech.svg';
+import CategoryJewelryIcon from '@/public/assets/icons/Category-Jewelry.svg';
 import CategoryLeatherGoodsIcon from '@/public/assets/icons/Category-Leather-Goods.svg';
 import CategoryShoesIcon from '@/public/assets/icons/Category-Shoes.svg';
+import CategoryWigIcon from '@/public/assets/icons/Category-Wig.svg';
 import LuggagesIcon from '@/public/assets/icons/Luggages.svg';
 import MailIcon from '@/public/assets/icons/Mail.svg';
 import OtherIcon from '@/public/assets/icons/Other.svg';
@@ -28,10 +34,16 @@ export type SvgNames =
   | 'mail'
   | 'question'
   | 'categoryAccessory'
+  | 'categoryBeautyProducts'
+  | 'categoryJewelry'
+  | 'categoryFood'
   | 'categoryClothes'
   | 'categoryFabrics'
   | 'categoryShoes'
-  | 'categoryLeatherGoods';
+  | 'categoryLeatherGoods'
+  | 'categoryMackup'
+  | 'categoryHighTech'
+  | 'categoryWig';
 
 export interface ISvgIconProps {
   name: SvgNames;
@@ -69,6 +81,18 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryShoesIcon;
     case 'categoryLeatherGoods':
       return CategoryLeatherGoodsIcon;
+    case 'categoryBeautyProducts':
+      return CategoryBeautyProductsIcon;
+    case 'categoryJewelry':
+      return CategoryJewelryIcon;
+    case 'categoryFood':
+      return CategoryFoodIcon;
+    case 'categoryMackup':
+      return CategoryMackUpIcon;
+    case 'categoryHighTech':
+      return CategoryHightechIcon;
+    case 'categoryWig':
+      return CategoryWigIcon;
     default:
       return undefined;
   }

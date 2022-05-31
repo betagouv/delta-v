@@ -3,6 +3,7 @@ import { Product } from '../../../entities/product.entity';
 export interface SerializedProduct {
   id: string;
   name: string;
+  icon?: string;
   info?: string;
   childrenQuestion?: string;
   customDuty?: number;
@@ -14,6 +15,7 @@ export interface SerializedProduct {
 export const productSerializer = (product: Product): SerializedProduct => ({
   id: product.id,
   name: product.name,
+  icon: product.icon,
   info: product.info,
   childrenQuestion: product.childrenQuestion,
   customDuty: product.customDuty,
