@@ -41,7 +41,7 @@ module.exports = withBundleAnalyzer({
     return [
       {
         source: '/app/simulateur/configuration',
-        destination: '/app/simulateur/configuration/age',
+        destination: '/app/simulateur/configuration/etape1',
         permanent: true,
       },
     ];
