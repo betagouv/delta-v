@@ -7,9 +7,7 @@
     {
       "directory": "front",
       "changeProcessCWD": true
-    },
+    }
   ],
-  "cSpell.words": [
-    "middlewares"
-  ]
+  "cSpell.words": ["middlewares", "partialize", "zustand"]
 }
