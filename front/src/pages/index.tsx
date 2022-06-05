@@ -4,12 +4,12 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import { FormSimulator } from '@/components/business/formSimulator';
-import { Product, ProductTree } from '@/components/business/productTree';
+import { ProductTree } from '@/components/business/productTree';
 import { ResponseSimulator } from '@/components/business/responseSimulator';
 import { Button } from '@/components/common/Button';
 import { Link } from '@/components/common/Link';
 import { Meta } from '@/layout/Meta';
-import { useProductsStore } from '@/stores/product.store';
+import { Product, useProductsStore } from '@/stores/product.store';
 import { useSimulateStore } from '@/stores/simulate.store';
 import { Main } from '@/templates/Main';
 import { formatValidationsErrors } from '@/utils/error';
@@ -19,10 +19,10 @@ export interface FormSimulatorData {
   age: number;
   meanOfTransport: string;
   country: Alpha2Code;
-  shopingProducts: ShopingProduct[];
+  shoppingProducts: ShoppingProduct[];
 }
 
-interface ShopingProduct {
+interface ShoppingProduct {
   id: string;
   name?: string;
   amount: number;
@@ -48,7 +48,7 @@ const Index = () => {
       age: 30,
       meanOfTransport: 'plane',
       country: 'US',
-      shopingProducts: [],
+      shoppingProducts: [],
     },
   });
 
@@ -58,7 +58,7 @@ const Index = () => {
     remove: removeProduct,
   } = useFieldArray({
     control,
-    name: 'shopingProducts',
+    name: 'shoppingProducts',
   });
 
   useEffect(() => {
@@ -71,18 +71,20 @@ const Index = () => {
   }, [error, getProductsResponse, setError]);
 
   const onSubmit = async (data: FormSimulatorData) => {
-    const shopingProducts: ShopingProduct[] = data.shopingProducts.map(({ id, amount, price }) => ({
-      id,
-      amount,
-      price,
-    }));
+    const shoppingProducts: ShoppingProduct[] = data.shoppingProducts.map(
+      ({ id, amount, price }) => ({
+        id,
+        amount,
+        price,
+      }),
+    );
 
     const formatedData: FormSimulatorData = {
       age: data.age,
       border: data.border,
       meanOfTransport: data.meanOfTransport,
       country: data.country,
-      shopingProducts,
+      shoppingProducts,
     };
 
     await getSimulateResponse(formatedData);

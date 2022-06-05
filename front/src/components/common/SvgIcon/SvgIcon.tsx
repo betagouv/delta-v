@@ -1,5 +1,6 @@
 import React from 'react';
 
+import BasketIcon from '@/public/assets/icons/Basket.svg';
 import BoatIcon from '@/public/assets/icons/Boat.svg';
 import CalculatorIcon from '@/public/assets/icons/Calculator.svg';
 import CarIcon from '@/public/assets/icons/Car.svg';
@@ -33,6 +34,7 @@ export type SvgNames =
   | 'phone'
   | 'mail'
   | 'question'
+  | 'basket'
   | 'categoryAccessory'
   | 'categoryBeautyProducts'
   | 'categoryJewelry'
@@ -71,6 +73,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return MailIcon;
     case 'question':
       return QuestionIcon;
+    case 'basket':
+      return BasketIcon;
     case 'categoryAccessory':
       return CategoryAccessoryIcon;
     case 'categoryClothes':

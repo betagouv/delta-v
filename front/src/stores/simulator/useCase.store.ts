@@ -3,7 +3,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
 // eslint-disable-next-line import/no-cycle
-import { SIMULATOR_EMPTY_STATE } from './appState.store';
+import { ShoppingProduct, SIMULATOR_EMPTY_STATE } from './appState.store';
 
 export enum MeansOfTransport {
   PLANE = 'plane',
@@ -19,6 +19,7 @@ export interface SimulatorUseCaseSlice {
   validateStep3: (country: Alpha2Code) => void;
   validateStep4: (border: boolean) => void;
   resetSteps: (step: number) => void;
+  addProduct: (shoppingProduct: ShoppingProduct) => void;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set) => ({
@@ -69,6 +70,13 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       if (step <= 1) {
         newState.simulator.appState.age = SIMULATOR_EMPTY_STATE.age;
       }
+      return newState;
+    });
+  },
+  addProduct: (shoppingProduct: ShoppingProduct): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.simulator.appState.shoppingProducts.push(shoppingProduct);
       return newState;
     });
   },

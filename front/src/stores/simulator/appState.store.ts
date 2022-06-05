@@ -11,13 +11,20 @@ export enum MeansOfTransport {
   OTHER = 'other',
 }
 
+export interface ShoppingProduct {
+  id: string;
+  amount: number;
+  price: number;
+}
+
 export interface SimulatorAppStateSlice {
   simulator: {
     appState: {
-      age: number | undefined;
-      meanOfTransport: MeansOfTransport | undefined;
-      country: Alpha2Code | undefined;
-      border: boolean | undefined;
+      age?: number;
+      meanOfTransport?: MeansOfTransport;
+      country?: Alpha2Code;
+      border?: boolean;
+      shoppingProducts?: ShoppingProduct[];
     };
   };
 }
@@ -27,6 +34,7 @@ export const SIMULATOR_EMPTY_STATE = {
   meanOfTransport: undefined,
   country: undefined,
   border: undefined,
+  shoppingProducts: [],
 };
 
 export const createSimulatorAppStateSlice: StoreSlice<SimulatorAppStateSlice> = () => ({
