@@ -51,13 +51,15 @@ const Index = () => {
             />
           </Link>
 
-          <Card
-            title="FAQ"
-            description="Une question ? Retrouvez toutes nos réponses ici"
-            svgName="question"
-            rounded="lg"
-            fullWidth
-          />
+          <Link to="/app/faqs/">
+            <Card
+              title="FAQ"
+              description="Une question ? Retrouvez toutes nos réponses ici"
+              svgName="question"
+              rounded="lg"
+              fullWidth
+            />
+          </Link>
         </div>
       </div>
       <div className="flex flex-col gap-6 bg-primary-100 px-4 py-8">
