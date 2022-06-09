@@ -14,7 +14,7 @@ import {
 import { getIconStyle } from './style/icon.style';
 
 export interface IButtonProps {
-  children: any;
+  children?: any;
   className?: { [key: string]: boolean };
   href?: string;
   to?: string;
@@ -22,6 +22,7 @@ export interface IButtonProps {
   onClick?: () => void;
   color?: ButtonColor;
   size?: ButtonSize;
+  iconSize?: ButtonSize;
   icon?: string;
   iconPosition?: IconPosition;
   variant?: ButtonVariant;
@@ -39,6 +40,7 @@ export const Button: React.FC<IButtonProps> = ({
   onClick,
   color = 'primary',
   size = 'base',
+  iconSize = 'base',
   className = {},
   icon,
   iconPosition = 'right',
@@ -75,10 +77,10 @@ export const Button: React.FC<IButtonProps> = ({
       disabled={buttonDisabled}
       className={cn({ ...customButtonClassName, ...className })}
     >
-      <span>{children}</span>
+      {children && <span>{children}</span>}
       {icon && !loading && (
         <div className={cn(customIconClassName)}>
-          <Icon name={icon} />
+          <Icon name={icon} size={iconSize} />
         </div>
       )}
       {loading && (

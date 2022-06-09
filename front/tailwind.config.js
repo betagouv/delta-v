@@ -29,10 +29,12 @@ module.exports = {
         cancel: colors.red,
       },
       spacing: {
+        extraSmall: '0.75rem',
         small: '1rem',
         lightBase: '1.25rem',
         base: '1.5rem',
         largeBase: '1.75rem',
+        modal: '2rem',
       },
       borderRadius: {
         '4xl': '2rem',
@@ -48,7 +50,9 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     // eslint-disable-next-line func-names
-    plugin(function ({ addBase, theme }) {
+    plugin(function ({ addBase, theme, addVariant }) {
+      addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
       addBase({
         h1: { fontSize: theme('fontSize.3xl'), lineHeight: theme('lineHeight.none') },
       });

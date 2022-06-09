@@ -7,7 +7,7 @@ import { Meta } from '@/layout/Meta';
 import { FAQS_STORE } from '@/stores/faqs.store';
 import { Main } from '@/templates/Main';
 
-const Configuration = () => {
+const FaqPage = () => {
   const router = useRouter();
   const linkId = router.query.id as string | undefined;
   return (
@@ -28,4 +28,4 @@ const Configuration = () => {
   );
 };
 
-export default Configuration;
+export default FaqPage;
