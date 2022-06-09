@@ -22,13 +22,15 @@ export const ModalBorder: React.FC<ModalBorderProps> = ({ onClose, open }) => {
           </p>
           <div className="mt-small grid w-full grid-cols-2 gap-base">
             <Badge
-              title="ain"
+              name="Ain"
+              department="01"
               svgName="ain"
               rounded="lg"
               // TODO: add onClick function
             />
             <Badge
-              title="hauteSavoie"
+              name="Haute-Savoie"
+              department="74"
               svgName="hauteSavoie"
               rounded="lg"
               // TODO: add onClick function

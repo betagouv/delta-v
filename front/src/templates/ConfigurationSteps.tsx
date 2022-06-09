@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 import { Main } from './Main';
 import { BackButton } from '@/components/common/BackButton';
@@ -13,15 +13,6 @@ type IMainProps = {
 };
 
 const ConfigurationSteps = (props: IMainProps) => {
-  const [open, setOpen] = useState(false);
-
-  const onClose = (): void => {
-    setOpen(false);
-  };
-
-  const onClick = (): void => {
-    setOpen(true);
-  };
   return (
     <Main
       meta={
@@ -35,7 +26,7 @@ const ConfigurationSteps = (props: IMainProps) => {
         <ProgressBar progression={props.progression} />
       </div>
       <div className="flex flex-col gap-6 px-4 py-8">
-        <BackButton open={open} onClose={onClose} onClick={onClick} />
+        <BackButton />
         <div className="flex flex-row gap-2">
           <div>
             <SvgIcon name="calculator" />

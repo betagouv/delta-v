@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 
-import { DeleteModal } from './DeleteModal';
+import { OnActionModal } from './OnActionModal';
 import { Button } from '@/components/common/Button';
 
 export default {
-  title: 'Components/Business/DeleteModal',
-  component: DeleteModal,
+  title: 'Components/Business/OnActionModal',
+  component: OnActionModal,
 } as Meta;
 
 export const WithVariant = () => {
@@ -19,7 +19,7 @@ export const WithVariant = () => {
   };
   return (
     <>
-      <DeleteModal open={open} onClose={onClose} />
+      <OnActionModal open={open} onClose={onClose} />
       <Button onClick={() => setOpen(true)}>Open</Button>
     </>
   );

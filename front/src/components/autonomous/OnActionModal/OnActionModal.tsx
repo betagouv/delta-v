@@ -3,12 +3,12 @@ import React from 'react';
 import { Button } from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
 
-interface DeleteModalProps {
+interface OnActionModalProps {
   open: boolean;
   onClose?: () => void;
 }
 
-export const DeleteModal: React.FC<DeleteModalProps> = ({ onClose, open }) => {
+export const OnActionModal: React.FC<OnActionModalProps> = ({ onClose, open }) => {
   // TODO: Function to delete product in the cart
   return (
     <>

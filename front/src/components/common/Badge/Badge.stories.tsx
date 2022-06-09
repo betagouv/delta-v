@@ -11,7 +11,7 @@ export const withVariant = (): JSX.Element => (
   <div className="p-3">
     <p>Basic Badge horizontal :</p>
     <br />
-    <Badge title="ain" svgName="ain" fullWidth={true} />
+    <Badge name="Ain" department="01" svgName="ain" fullWidth={true} />
     <br />
   </div>
 );

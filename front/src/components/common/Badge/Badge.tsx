@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { SvgIcon, SvgNames } from '../SvgIcon';
-import { CITIES } from './const';
 
 type BadgeVariant = 'vertical' | 'horizontal';
 type BadgeRounded = 'full' | 'lg' | 'md' | 'base' | 'none';
@@ -12,7 +11,8 @@ export interface BadgeProps {
   disabled?: boolean;
   fullWidth?: boolean;
   svgName: SvgNames;
-  title: string;
+  name: string;
+  department?: string;
   onClick?: () => void;
 }
 
@@ -22,7 +22,8 @@ export const Badge: React.FC<BadgeProps> = ({
   disabled = false,
   fullWidth = false,
   svgName,
-  title,
+  name,
+  department,
   onClick,
 }: BadgeProps) => {
   let className = 'flex h-auto items-center border border-gray-300 bg-white p-3 flex-1 gap-4';
@@ -59,16 +60,14 @@ export const Badge: React.FC<BadgeProps> = ({
       break;
   }
 
-  const city = CITIES.find((x) => x.id === title);
-
   return (
     <div className={className} onClick={onClick}>
       <div className="flex w-24 flex-1 flex-col items-center justify-center">
         <div className="h-14 w-14">
           <SvgIcon name={svgName} />
         </div>
-        <span className="text-small">{city?.name}</span>
-        <span className="text-small">{city?.department}</span>
+        <span className="text-small">{name}</span>
+        <span className="text-small">{department}</span>
       </div>
     </div>
   );
