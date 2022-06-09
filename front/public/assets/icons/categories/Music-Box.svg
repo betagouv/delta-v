@@ -1,0 +1,14 @@
+<svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="5.625" width="12.375" height="10.9091" fill="#9E7B5B"/>
+<rect x="5.625" y="10.9091" width="2.25" height="1.09091" fill="#9E7B5B"/>
+<rect x="15.75" y="10.9091" width="2.25" height="1.09091" fill="#9E7B5B"/>
+<line x1="6.75" y1="4.86365" x2="2.25" y2="4.86365" stroke="#FDC36D"/>
+<line x1="2.75" y1="4.36365" x2="2.75" y2="8.72728" stroke="#FDC36D"/>
+<line x1="3.375" y1="9.22729" y2="9.22729" stroke="#EA4141"/>
+<line x1="5.625" y1="3.02271" x2="18" y2="3.02271" stroke="black" stroke-opacity="0.4" stroke-width="0.5"/>
+<line x1="10.125" y1="5.20459" x2="13.5" y2="5.20459" stroke="black" stroke-width="0.5"/>
+<line x1="13.25" y1="7.63635" x2="13.25" y2="5.45453" stroke="black" stroke-width="0.5"/>
+<line x1="10.4375" y1="8.72729" x2="10.4375" y2="5.45457" stroke="black" stroke-width="0.5"/>
+<ellipse cx="9.84375" cy="8.45453" rx="0.84375" ry="0.818182" fill="black"/>
+<ellipse cx="12.6562" cy="7.90912" rx="0.84375" ry="0.818182" fill="black"/>
+</svg>

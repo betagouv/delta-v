@@ -1,28 +1,25 @@
 import { useEffect } from 'react';
 
+import { Header } from '@/components/business/header';
 import { CategoryList, Item } from '@/components/common/CategoryList';
-import { Icon } from '@/components/common/Icon';
-import { Link } from '@/components/common/Link';
-import { SvgIcon } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { TitleHeader } from '@/components/common/TitleHeader';
 import { Input } from '@/components/input/StandardInputs/Input';
 import { Meta } from '@/layout/Meta';
-import { useProductsStore } from '@/stores/product.store';
+import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const productsResponse = useProductsStore((state) => state.productsResponse);
-  const getProductsResponse = useProductsStore((state) => state.getProductsResponse);
+  const productsResponse = useStore((state) => state.products.appState.products);
+  const getProductsResponse = useStore((state) => state.getProductsResponse);
+  const shoppingProducts = useStore((state) => state.simulator.appState.shoppingProducts);
 
   const displayedProducts = productsResponse?.map((product): Item => {
     return {
       to: `/app/simulateur/produits/${product.id}`,
-      svgNames: product.icon ?? 'luggages',
+      svgNames: product.icon ?? 'categoryOther',
       title: product.name,
     };
   });
-
-  console.log(productsResponse);
 
   useEffect(() => {
     getProductsResponse();
@@ -37,29 +34,23 @@ const Index = () => {
       }
     >
       <div className="flex flex-col gap-6 px-4 py-8">
-        <Link back>
-          <div className="flex flex-row items-end">
-            <div className="mr-4 h-5 w-5">
-              <Icon name="chevron-thin-left" />
-            </div>
-            <Typography> Retour</Typography>
-          </div>
-        </Link>
-        <div className="flex flex-row gap-2">
-          <div>
-            <SvgIcon name="calculator" />
-          </div>
-          <div className="mt-3">
-            <Typography weight="bold" variant="h1" tag="h1" color="secondary">
+        <Header
+          withCart
+          nbCartItems={shoppingProducts?.length}
+          cartLink="/app/simulateur/pannier"
+        />
+        <TitleHeader
+          title={
+            <>
               Quels achats
               <br />
               souhaitez-vous
               <br />
               déclarer ?
-            </Typography>
-          </div>
-        </div>
-
+            </>
+          }
+          icon="calculator"
+        />
         <Input
           name="search"
           type="text"

@@ -1,0 +1,26 @@
+<svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="2" width="12" height="20" rx="1" fill="#8BD2F1"/>
+<rect width="12" height="20" rx="1" fill="#D4F1FE"/>
+<mask id="mask0_237_12986" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="12" height="20">
+<rect width="12" height="20" fill="#D4F1FE"/>
+</mask>
+<g mask="url(#mask0_237_12986)">
+<g opacity="0.31">
+<circle cx="1.5" cy="1.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="1.5" cy="6" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="1.5" cy="10.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="1.5" cy="15" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="1.5" cy="19.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="6" cy="1.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="6" cy="6" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="6" cy="10.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="6" cy="15" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="6" cy="19.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="10.5" cy="1.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="10.5" cy="6" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="10.5" cy="10.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="10.5" cy="15" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+<circle cx="10.5" cy="19.5" r="2.25" stroke="#8181E0" stroke-width="0.5"/>
+</g>
+</g>
+</svg>

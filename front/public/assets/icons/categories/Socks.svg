@@ -1,0 +1,18 @@
+<svg width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.7002 0H4.94221V10.3331L1.15781 14.6653C0.0677847 15.9131 0.195689 17.8083 1.44349 18.8983L1.48999 18.9389C2.73779 20.029 4.63297 19.9011 5.723 18.6533L10.7002 12.9556L10.7002 12.9556H10.7002V0Z" fill="#54BE4A"/>
+<mask id="mask0_123_7681" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="11" height="20">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.7002 0H4.94221V10.3331L1.15781 14.6653C0.0677847 15.9131 0.195689 17.8083 1.44349 18.8983L1.48999 18.9389C2.73779 20.029 4.63297 19.9011 5.723 18.6533L10.7002 12.9556L10.7002 12.9556H10.7002V0Z" fill="#54BE4A"/>
+</mask>
+<g mask="url(#mask0_123_7681)">
+<circle cx="1.5" cy="18.5" r="3.5" fill="#F7E868"/>
+<circle cx="11.5" cy="12.5" r="3.5" fill="#F7E868"/>
+<circle cx="11.5" cy="12.5" r="2.625" fill="#F7E868" stroke="white" stroke-width="0.25" stroke-dasharray="0.5 0.5"/>
+<circle cx="1.5" cy="18.5" r="2.625" fill="#F7E868" stroke="white" stroke-width="0.25" stroke-dasharray="0.5 0.5"/>
+</g>
+<line x1="6.25" y1="1.09278e-08" x2="6.25" y2="3" stroke="#48A740" stroke-width="0.5"/>
+<line x1="5.25" y1="1.09278e-08" x2="5.25" y2="3" stroke="#48A740" stroke-width="0.5"/>
+<line x1="7.25" y1="1.09278e-08" x2="7.25" y2="3" stroke="#48A740" stroke-width="0.5"/>
+<line x1="8.25" y1="1.09278e-08" x2="8.25" y2="3" stroke="#48A740" stroke-width="0.5"/>
+<line x1="9.25" y1="1.09278e-08" x2="9.25" y2="3" stroke="#48A740" stroke-width="0.5"/>
+<line x1="10.25" y1="1.09278e-08" x2="10.25" y2="3" stroke="#48A740" stroke-width="0.5"/>
+</svg>

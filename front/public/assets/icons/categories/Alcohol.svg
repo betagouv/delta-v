@@ -1,0 +1,22 @@
+<svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="8" width="3" height="7" fill="#4A753F"/>
+<rect x="8" width="3" height="2" fill="#772D29"/>
+<path d="M5 8.5C5 6.01472 7.01472 4 9.5 4C11.9853 4 14 6.01472 14 8.5V20H5V8.5Z" fill="#4A753F"/>
+<rect x="7" y="8" width="7" height="6" fill="#F9EED1"/>
+<mask id="mask0_142_8623" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="7" y="8" width="7" height="6">
+<rect x="7" y="8" width="7" height="6" fill="#F9EED1"/>
+</mask>
+<g mask="url(#mask0_142_8623)">
+<rect x="8.125" y="9.125" width="6.75" height="3.75" stroke="#9D3C3C" stroke-width="0.25"/>
+</g>
+<rect x="7" y="15" width="7" height="2" fill="#F9EED1"/>
+<ellipse cx="11.9951" cy="9.77438" rx="0.5" ry="1.27422" transform="rotate(25.2134 11.9951 9.77438)" fill="#8FC187"/>
+<ellipse cx="11.0547" cy="9.82667" rx="0.5" ry="1.23959" transform="rotate(-19.3331 11.0547 9.82667)" fill="#8FC187"/>
+<circle cx="10.5" cy="10.5" r="0.5" fill="#A263D4"/>
+<circle cx="11.5" cy="10.5" r="0.5" fill="#A263D4"/>
+<circle cx="11.5" cy="12.5" r="0.5" fill="#A263D4"/>
+<circle cx="12.5" cy="10.5" r="0.5" fill="#A263D4"/>
+<circle cx="11" cy="11.5" r="0.5" fill="#A263D4"/>
+<circle cx="12" cy="11.5" r="0.5" fill="#A263D4"/>
+<rect y="14" width="5" height="6" fill="white"/>
+</svg>

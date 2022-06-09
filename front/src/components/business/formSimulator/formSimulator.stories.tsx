@@ -22,7 +22,7 @@ export const WithVariant = () => {
       border: false,
       age: 30,
       meanOfTransport: 'plane',
-      shopingProducts: [
+      shoppingProducts: [
         { id: '1', name: 'Sac en cuir', amount: 0, price: 0 },
         { id: '2', name: 'téléphone portable', amount: 0, price: 0 },
       ],
@@ -30,7 +30,7 @@ export const WithVariant = () => {
   });
   const { fields: productFields, remove: removeProduct } = useFieldArray({
     control,
-    name: 'shopingProducts',
+    name: 'shoppingProducts',
   });
   return (
     <FormSimulator

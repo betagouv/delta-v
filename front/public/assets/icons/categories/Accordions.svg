@@ -1,0 +1,41 @@
+<svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.1362 2.66431L13.7869 20.5103L16.7613 20.9019C17.3088 20.974 17.8112 20.5885 17.8833 20.041L19.9715 4.17782C20.0436 3.63026 19.6581 3.12794 19.1106 3.05585L16.1362 2.66431Z" fill="#DF4949"/>
+<path d="M7.07295 1.59736L4.7563 19.1955L1.90589 18.8203C1.42677 18.7572 1.0895 18.3177 1.15257 17.8386L3.24083 1.97544C3.3039 1.49633 3.74343 1.15906 4.22254 1.22213L7.07295 1.59736Z" fill="#F3F0F0" stroke="#DF4949" stroke-width="0.25"/>
+<mask id="mask0_136_8402" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="8" height="20">
+<rect x="7.2132" y="1.48975" width="18" height="4" transform="rotate(97.4994 7.2132 1.48975)" fill="#F3F0F0"/>
+</mask>
+<g mask="url(#mask0_136_8402)">
+<line x1="6.90977" y1="3.79483" x2="2.94399" y2="3.27277" stroke="black" stroke-width="0.25"/>
+<line x1="6.64872" y1="5.77774" x2="2.68294" y2="5.25568" stroke="black" stroke-width="0.25"/>
+<line x1="6.38768" y1="7.76053" x2="2.42189" y2="7.23846" stroke="black" stroke-width="0.25"/>
+<line x1="6.12669" y1="9.74344" x2="2.16091" y2="9.22137" stroke="black" stroke-width="0.25"/>
+<line x1="5.86564" y1="11.7263" x2="1.89986" y2="11.2043" stroke="black" stroke-width="0.25"/>
+<line x1="5.6046" y1="13.7093" x2="1.63881" y2="13.1872" stroke="black" stroke-width="0.25"/>
+<line x1="5.34355" y1="15.6922" x2="1.37776" y2="15.1701" stroke="black" stroke-width="0.25"/>
+<line x1="5.08256" y1="17.6751" x2="1.11678" y2="17.153" stroke="black" stroke-width="0.25"/>
+<rect x="8.04803" y="2.80994" width="1.6" height="3" transform="rotate(97.4994 8.04803 2.80994)" fill="#363636"/>
+<rect x="7.65649" y="5.7843" width="1.6" height="3" transform="rotate(97.4994 7.65649 5.7843)" fill="#363636"/>
+<rect x="7.1344" y="9.75" width="1.6" height="3" transform="rotate(97.4994 7.1344 9.75)" fill="#363636"/>
+<rect x="6.61237" y="13.7158" width="1.6" height="3" transform="rotate(97.4994 6.61237 13.7158)" fill="#363636"/>
+</g>
+<line x1="7.70886" y1="1.555" x2="5.35957" y2="19.401" stroke="#DF4949"/>
+<line x1="16.6319" y1="2.72956" x2="14.2826" y2="20.5756" stroke="#DF4949"/>
+<path d="M8.20459 1.62024L10.057 2.87272L12.1704 2.1423L14.0228 3.39478L16.1362 2.66436L13.7869 20.5104L11.9345 19.2579L9.82109 19.9883L7.96872 18.7359L5.85531 19.4663L8.20459 1.62024Z" fill="#C4C4C4"/>
+<line x1="12.1572" y1="4.15787" x2="10.1995" y2="19.0296" stroke="black" stroke-opacity="0.2" stroke-width="0.5"/>
+<line x1="9.91333" y1="5.87967" x2="8.47766" y2="16.7856" stroke="black" stroke-opacity="0.2" stroke-width="0.5"/>
+<line x1="13.8791" y1="6.40177" x2="12.4434" y2="17.3077" stroke="black" stroke-opacity="0.2" stroke-width="0.5"/>
+<circle cx="17.297" cy="5.33869" r="0.5" transform="rotate(7.49939 17.297 5.33869)" fill="white"/>
+<circle cx="17.036" cy="7.3216" r="0.5" transform="rotate(7.49939 17.036 7.3216)" fill="white"/>
+<circle cx="16.775" cy="9.30451" r="0.5" transform="rotate(7.49939 16.775 9.30451)" fill="white"/>
+<circle cx="16.514" cy="11.2874" r="0.5" transform="rotate(7.49939 16.514 11.2874)" fill="white"/>
+<circle cx="16.2529" cy="13.2702" r="0.5" transform="rotate(7.49939 16.2529 13.2702)" fill="white"/>
+<circle cx="15.9919" cy="15.2531" r="0.5" transform="rotate(7.49939 15.9919 15.2531)" fill="white"/>
+<circle cx="15.7309" cy="17.236" r="0.5" transform="rotate(7.49939 15.7309 17.236)" fill="white"/>
+<circle cx="18.719" cy="6.03022" r="0.5" transform="rotate(7.49939 18.719 6.03022)" fill="white"/>
+<circle cx="18.4579" cy="8.01313" r="0.5" transform="rotate(7.49939 18.4579 8.01313)" fill="white"/>
+<circle cx="18.1969" cy="9.99604" r="0.5" transform="rotate(7.49939 18.1969 9.99604)" fill="white"/>
+<circle cx="17.9359" cy="11.9789" r="0.5" transform="rotate(7.49939 17.9359 11.9789)" fill="white"/>
+<circle cx="17.6749" cy="13.9617" r="0.5" transform="rotate(7.49939 17.6749 13.9617)" fill="white"/>
+<circle cx="17.4138" cy="15.9446" r="0.5" transform="rotate(7.49939 17.4138 15.9446)" fill="white"/>
+<circle cx="17.1528" cy="17.9276" r="0.5" transform="rotate(7.49939 17.1528 17.9276)" fill="white"/>
+</svg>

@@ -1,4 +1,4 @@
-import { Product } from '../../../entities/product.entity';
+import { Product, ProductDisplayTypes } from '../../../entities/product.entity';
 
 export interface SerializedProduct {
   id: string;
@@ -6,6 +6,7 @@ export interface SerializedProduct {
   icon?: string;
   info?: string;
   finalProduct: boolean;
+  productDisplayTypes: ProductDisplayTypes;
   childrenQuestion?: string;
   customDuty?: number;
   vat?: number;
@@ -18,6 +19,7 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   name: product.name,
   icon: product.icon,
   finalProduct: product.finalProduct,
+  productDisplayTypes: product.productDisplayTypes,
   info: product.info,
   childrenQuestion: product.childrenQuestion,
   customDuty: product.customDuty,

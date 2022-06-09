@@ -1,0 +1,32 @@
+<svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.0386 2.15626C3.01405 1.73883 3.16917 1.33083 3.46485 1.03515C4.03655 0.463452 4.96345 0.463452 5.53515 1.03515C5.83083 1.33083 5.98595 1.73883 5.9614 2.15626L5.5 10L5.91192 17.0026C5.9597 17.815 5.31378 18.5 4.5 18.5C3.68622 18.5 3.0403 17.815 3.08808 17.0026L3.5 10L3.0386 2.15626Z" fill="#F36E5C"/>
+<mask id="mask0_132_8009" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="0" width="3" height="19">
+<path d="M3.0386 2.15626C3.01405 1.73883 3.16917 1.33083 3.46485 1.03515C4.03655 0.463452 4.96345 0.463452 5.53515 1.03515C5.83083 1.33083 5.98595 1.73883 5.9614 2.15626L5.5 10L5.91192 17.0026C5.9597 17.815 5.31378 18.5 4.5 18.5C3.68622 18.5 3.0403 17.815 3.08808 17.0026L3.5 10L3.0386 2.15626Z" fill="#F36E5C"/>
+</mask>
+<g mask="url(#mask0_132_8009)">
+<line x1="2" y1="2.5" x2="7" y2="2.5" stroke="#FFDBDB"/>
+<line x1="2" y1="17.5" x2="7" y2="17.5" stroke="#FFDBDB"/>
+<line x1="2" y1="3.75" x2="7" y2="3.75" stroke="#FFDBDB" stroke-width="0.5"/>
+<line x1="2" y1="15.75" x2="7" y2="15.75" stroke="#FFDBDB" stroke-width="0.5"/>
+</g>
+<rect x="4" y="8" width="1" height="4" fill="#1A1A1A"/>
+<path d="M7.0386 2.15626C7.01405 1.73883 7.16917 1.33083 7.46485 1.03515C8.03655 0.463452 8.96345 0.463452 9.53515 1.03515C9.83083 1.33083 9.98595 1.73883 9.9614 2.15626L9.5 10L9.91192 17.0026C9.9597 17.815 9.31378 18.5 8.5 18.5C7.68622 18.5 7.0403 17.815 7.08808 17.0026L7.5 10L7.0386 2.15626Z" fill="#F36E5C"/>
+<mask id="mask1_132_8009" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="7" y="0" width="3" height="19">
+<path d="M7.0386 2.15626C7.01405 1.73883 7.16917 1.33083 7.46485 1.03515C8.03655 0.463452 8.96345 0.463452 9.53515 1.03515C9.83083 1.33083 9.98595 1.73883 9.9614 2.15626L9.5 10L9.91192 17.0026C9.9597 17.815 9.31378 18.5 8.5 18.5C7.68622 18.5 7.0403 17.815 7.08808 17.0026L7.5 10L7.0386 2.15626Z" fill="#F36E5C"/>
+</mask>
+<g mask="url(#mask1_132_8009)">
+<line x1="6" y1="2.5" x2="11" y2="2.5" stroke="#FFDBDB"/>
+<line x1="6" y1="17.5" x2="11" y2="17.5" stroke="#FFDBDB"/>
+<line x1="6" y1="3.75" x2="11" y2="3.75" stroke="#FFDBDB" stroke-width="0.5"/>
+<line x1="6" y1="15.75" x2="11" y2="15.75" stroke="#FFDBDB" stroke-width="0.5"/>
+</g>
+<rect x="8" y="8" width="1" height="4" fill="#1A1A1A"/>
+<line x1="11.25" y1="2" x2="11.25" y2="18" stroke="black" stroke-width="0.5"/>
+<rect x="10.7" y="1" width="1" height="3" rx="0.5" fill="#9E7B5B"/>
+<rect x="12.5" y="3" width="1" height="2" rx="0.5" transform="rotate(90 12.5 3)" fill="#9E7B5B"/>
+<line x1="10.5" y1="16.75" x2="12.5" y2="16.75" stroke="black" stroke-width="0.5"/>
+<line y1="-0.25" x2="16" y2="-0.25" transform="matrix(4.37114e-08 1 1 -4.37114e-08 1.5 2)" stroke="black" stroke-width="0.5"/>
+<rect width="1" height="3" rx="0.5" transform="matrix(-1 0 0 1 1.80005 1)" fill="#9E7B5B"/>
+<rect width="1" height="2" rx="0.5" transform="matrix(4.37114e-08 1 1 -4.37114e-08 0 3)" fill="#9E7B5B"/>
+<line y1="-0.25" x2="2" y2="-0.25" transform="matrix(-1 0 0 1 2 17)" stroke="black" stroke-width="0.5"/>
+</svg>

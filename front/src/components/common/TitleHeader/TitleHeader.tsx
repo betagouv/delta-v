@@ -4,11 +4,11 @@ import { SvgIcon, SvgNames } from '../SvgIcon';
 import { Typography } from '../Typography';
 
 export interface TitleHeaderProps {
-  title: string;
+  title: React.ReactNode;
   icon: SvgNames;
 }
 
-const splitTitle = (item: string): string[] => {
+export const splitTitle = (item: string): string[] => {
   const titleSplit = item.split(' ');
   if (titleSplit.length === 1) {
     return [item];
@@ -19,7 +19,7 @@ const splitTitle = (item: string): string[] => {
 };
 
 export const TitleHeader: React.FC<TitleHeaderProps> = ({ title, icon }: TitleHeaderProps) => {
-  const [firstLine, secondLine] = splitTitle(title);
+  // const [firstLine, secondLine] = splitTitle(title);
   return (
     <div className="flex flex-row gap-2">
       <div>
@@ -27,12 +27,7 @@ export const TitleHeader: React.FC<TitleHeaderProps> = ({ title, icon }: TitleHe
       </div>
       <div className="mt-3">
         <Typography weight="bold" variant="h1" tag="h1" color="secondary">
-          {firstLine}
-          {secondLine && (
-            <span>
-              <br /> {secondLine}
-            </span>
-          )}
+          {title}
         </Typography>
       </div>
     </div>

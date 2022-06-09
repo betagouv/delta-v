@@ -1,0 +1,28 @@
+<svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.7694 9.20764C5.70353 6.66323 6.90212 3.73653 9.44653 2.67067C11.9909 1.6048 14.9176 2.80339 15.9835 5.3478L21.2908 18.0172L12.0767 21.877L6.7694 9.20764Z" fill="#64ADE1"/>
+<mask id="mask0_116_9726" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="2" width="16" height="20">
+<path d="M6.7694 9.20764C5.70353 6.66323 6.90212 3.73653 9.44653 2.67067C11.9909 1.6048 14.9176 2.80339 15.9835 5.3478L21.2908 18.0172L12.0767 21.877L6.7694 9.20764Z" fill="#64ADE1"/>
+</mask>
+<g mask="url(#mask0_116_9726)">
+<line x1="5.91367" y1="9.28714" x2="11.7814" y2="13.5985" stroke="black" stroke-opacity="0.1"/>
+<rect x="10.6292" y="18.4216" width="9.9899" height="3.74621" transform="rotate(-22.7291 10.6292 18.4216)" fill="#B3EAEA"/>
+<line x1="12.0115" y1="17.8426" x2="13.459" y2="21.2979" stroke="#86C5C5" stroke-width="0.5"/>
+<line x1="14.3151" y1="16.8776" x2="15.7625" y2="20.3329" stroke="#86C5C5" stroke-width="0.5"/>
+<line x1="16.6186" y1="15.9127" x2="18.0661" y2="19.368" stroke="#86C5C5" stroke-width="0.5"/>
+<line x1="18.9221" y1="14.9477" x2="20.3696" y2="18.403" stroke="#86C5C5" stroke-width="0.5"/>
+<ellipse cx="10.3378" cy="4.56623" rx="7" ry="2.5" transform="rotate(-28.8367 10.3378 4.56623)" fill="#2683C4"/>
+<line x1="15.4973" y1="8.20746" x2="17.3028" y2="12.8701" stroke="white" stroke-width="0.5"/>
+<line x1="14.681" y1="10.0555" x2="15.4548" y2="12.0538" stroke="white" stroke-width="0.5"/>
+<line x1="17.3454" y1="9.02386" x2="18.1192" y2="11.0221" stroke="white" stroke-width="0.5"/>
+<line x1="14.2074" y1="11.5027" x2="18.87" y2="9.69722" stroke="white" stroke-width="0.5"/>
+<line x1="14.8239" y1="9.73208" x2="16.8222" y2="8.9583" stroke="white" stroke-width="0.5"/>
+<line x1="15.8556" y1="12.3965" x2="17.8539" y2="11.6227" stroke="white" stroke-width="0.5"/>
+</g>
+<path d="M5.89255 15.3632C4.60393 14.8713 3.95807 13.4279 4.44998 12.1393C4.94189 10.8507 6.3853 10.2048 7.67392 10.6967L13.541 12.9364L11.7596 17.6029L5.89255 15.3632Z" fill="#64ADE1"/>
+<mask id="mask1_116_9726" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="10" width="10" height="8">
+<path d="M5.89258 15.3631C4.60396 14.8712 3.9581 13.4278 4.45001 12.1392C4.94193 10.8505 6.38533 10.2047 7.67395 10.6966L13.5411 12.9363L11.7597 17.6028L5.89258 15.3631Z" fill="#64ADE1"/>
+</mask>
+<g mask="url(#mask1_116_9726)">
+<circle cx="6.00003" cy="13.0001" r="3" fill="#2683C5"/>
+</g>
+</svg>

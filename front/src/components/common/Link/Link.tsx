@@ -29,14 +29,16 @@ export const Link: React.FC<LinkProps> = ({
     }
   };
 
-  return (
-    <>
-      {(to || back) && <div onClick={handleClick}>{children}</div>}
-      {href && (
-        <NextLink href={href}>
-          <a target={external ? '_blank' : '_self'}>{children}</a>
-        </NextLink>
-      )}
-    </>
-  );
+  if (to || back) {
+    return <div onClick={handleClick}>{children}</div>;
+  }
+  if (href) {
+    return (
+      <NextLink href={href}>
+        <a target={external ? '_blank' : '_self'}>{children}</a>
+      </NextLink>
+    );
+  }
+
+  return <></>;
 };

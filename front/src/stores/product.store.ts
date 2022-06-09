@@ -52,9 +52,10 @@ export const useProductsStore = create<ProductResponse>(
         return findProduct(get().productsResponse, id);
       },
       getProductsResponse: async () => {
+        if (get().productsResponse.length > 0) {
+          return;
+        }
         try {
-          console.log(get().simulateParams);
-
           if (get().simulateParams && get().simulateParams !== []) {
             return;
           }
