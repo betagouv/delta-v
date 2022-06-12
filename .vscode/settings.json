@@ -9,5 +9,12 @@
       "changeProcessCWD": true
     }
   ],
-  "cSpell.words": ["middlewares", "partialize", "zustand"]
+  "cSpell.words": [
+    "middlewares",
+    "partialize",
+    "zustand",
+    "Hightech",
+    "Mackup",
+    "middlewares"
+  ]
 }

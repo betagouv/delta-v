@@ -1,0 +1,21 @@
+<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.95 0C2.21619 0 0 2.21619 0 4.95V18H8.1H9.9H18V8.55C18 8.1 16.2 4.95 13.05 5.4C11.3026 5.64963 10.3197 4.90396 9.83126 4.1232C9.43775 1.78297 7.40209 0 4.95 0Z" fill="#6476D3"/>
+<rect y="14" width="18" height="4" fill="#F3F0F0"/>
+<mask id="mask0_136_7913" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="14" width="18" height="4">
+<rect y="14" width="18" height="4" fill="#F3F0F0"/>
+</mask>
+<g mask="url(#mask0_136_7913)">
+<line x1="13.125" y1="14" x2="13.125" y2="18" stroke="black" stroke-width="0.25"/>
+<line x1="2.625" y1="14" x2="2.625" y2="18" stroke="black" stroke-width="0.25"/>
+<line x1="4.625" y1="14" x2="4.625" y2="18" stroke="black" stroke-width="0.25"/>
+<line x1="6.625" y1="14" x2="6.625" y2="18" stroke="black" stroke-width="0.25"/>
+<line x1="8.625" y1="14" x2="8.625" y2="18" stroke="black" stroke-width="0.25"/>
+<line x1="10.625" y1="14" x2="10.625" y2="18" stroke="black" stroke-width="0.25"/>
+<line x1="14.625" y1="14" x2="14.625" y2="18" stroke="black" stroke-width="0.25"/>
+<line x1="16.625" y1="14" x2="16.625" y2="18" stroke="black" stroke-width="0.25"/>
+<rect x="1.5" y="13" width="1.6" height="3" fill="#363636"/>
+<rect x="4.5" y="13" width="1.6" height="3" fill="#363636"/>
+<rect x="8.5" y="13" width="1.6" height="3" fill="#363636"/>
+<rect x="12.5" y="13" width="1.6" height="3" fill="#363636"/>
+</g>
+</svg>

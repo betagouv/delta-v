@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/ubuntu/projects/beta.gouv/delta-v'
+grep -E '(^[a-zA-Z_-]+:.*?##.*$)|(^##)'  makefile | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-40             s\033[0m %s\n", $1, $2}' | sed -e 's/\[32m##/[33m/'
+make: Leaving directory '/home/ubuntu/projects/beta.gouv/delta-v'
+ 

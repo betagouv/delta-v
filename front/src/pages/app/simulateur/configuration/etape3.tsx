@@ -43,7 +43,7 @@ const Configuration = () => {
     if (meanOfTransport === 'car' && data.country === 'CH') {
       router.push(`/app/simulateur/configuration/etape4`);
     }
-    router.push(`/app`);
+    router.push(`/app/simulateur/produits`);
   };
 
   const countriesOptions = useMemo(() => {

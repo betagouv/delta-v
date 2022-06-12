@@ -1,12 +1,16 @@
+/* eslint-disable import/no-cycle */
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// eslint-disable-next-line import/no-cycle
+import { createProductsAppStateSlice, ProductsAppStateSlice } from './products/appState.store';
+import { createUseCaseProductSlice, ProductsUseCaseSlice } from './products/useCase.store';
 import { createSimulatorAppStateSlice, SimulatorAppStateSlice } from './simulator/appState.store';
-// eslint-disable-next-line import/no-cycle
 import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/useCase.store';
 
-export type StoreState = SimulatorUseCaseSlice & SimulatorAppStateSlice;
+export type StoreState = SimulatorUseCaseSlice &
+  SimulatorAppStateSlice &
+  ProductsUseCaseSlice &
+  ProductsAppStateSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -23,6 +27,8 @@ export const useStore = create<StoreState>(
     (set, get, api) => ({
       ...createSimulatorAppStateSlice(set, get, api),
       ...createUseCaseSimulatorSlice(set, get, api),
+      ...createUseCaseProductSlice(set, get, api),
+      ...createProductsAppStateSlice(set, get, api),
     }),
     {
       name: 'app-storage',

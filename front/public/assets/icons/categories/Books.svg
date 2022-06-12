@@ -1,0 +1,21 @@
+<svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 1C0 0.447715 0.447715 0 1 0H13C13.5523 0 14 0.447715 14 1V20H2.9C1.29837 20 0 18.7016 0 17.1V1Z" fill="#5F90D9"/>
+<mask id="mask0_136_7780" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="14" height="20">
+<path d="M0 1C0 0.447715 0.447715 0 1 0H13C13.5523 0 14 0.447715 14 1V20H2.9C1.29837 20 0 18.7016 0 17.1V1Z" fill="#5F90D9"/>
+</mask>
+<g mask="url(#mask0_136_7780)">
+<line x1="1.75" y1="17" x2="1.75" y2="-1" stroke="#3A5F98" stroke-width="0.5"/>
+</g>
+<rect x="5" y="2" width="7" height="3" fill="white"/>
+<rect x="5" y="12" width="7" height="1" fill="white"/>
+<path d="M0 17.5C0 16.1193 1.11929 15 2.5 15H14V20H2.5C1.11929 20 0 18.8807 0 17.5Z" fill="#F0E6CC"/>
+<mask id="mask1_136_7780" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="15" width="14" height="5">
+<path d="M0 17.5C0 16.1193 1.11929 15 2.5 15H14V20H2.5C1.11929 20 0 18.8807 0 17.5Z" fill="#F0E6CC"/>
+</mask>
+<g mask="url(#mask1_136_7780)">
+<line x1="14" y1="16.15" y2="16.15" stroke="black" stroke-opacity="0.1" stroke-width="0.3"/>
+<line x1="14" y1="17.15" y2="17.15" stroke="black" stroke-opacity="0.1" stroke-width="0.3"/>
+<line x1="14" y1="18.15" y2="18.15" stroke="black" stroke-opacity="0.1" stroke-width="0.3"/>
+<line x1="14" y1="19.15" y2="19.15" stroke="black" stroke-opacity="0.1" stroke-width="0.3"/>
+</g>
+</svg>

@@ -1,0 +1,19 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1.25" y="6.66669" width="17.5" height="13.3333" fill="#EBCDA1"/>
+<rect x="3.75" y="12.2222" width="5" height="7.77778" fill="#9E7B5B"/>
+<rect x="11.5" y="12.4722" width="4.5" height="3.94444" fill="#73B6C5" stroke="#9E7B5B" stroke-width="0.5"/>
+<line x1="13.6875" y1="12.2222" x2="13.6875" y2="16.6667" stroke="#9E7B5B" stroke-width="0.5"/>
+<line x1="11.25" y1="14.75" x2="16.25" y2="14.75" stroke="#9E7B5B" stroke-width="0.5"/>
+<path d="M1.25 0H18.75L20 11.1111H0L1.25 0Z" fill="#D27C61"/>
+<mask id="mask0_142_8527" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="12">
+<path d="M1.25 0H18.75L20 11.1111H0L1.25 0Z" fill="#D27C61"/>
+</mask>
+<g mask="url(#mask0_142_8527)">
+<line x1="4.37114e-08" y1="9.75" x2="20" y2="9.75" stroke="#C96748" stroke-width="0.5"/>
+<line x1="4.37114e-08" y1="7.52777" x2="20" y2="7.52777" stroke="#C96748" stroke-width="0.5"/>
+<line x1="4.37114e-08" y1="5.30554" x2="20" y2="5.30555" stroke="#C96748" stroke-width="0.5"/>
+<line x1="4.37114e-08" y1="3.08331" x2="20" y2="3.08332" stroke="#C96748" stroke-width="0.5"/>
+<line x1="4.37114e-08" y1="0.861084" x2="20" y2="0.861088" stroke="#C96748" stroke-width="0.5"/>
+</g>
+<ellipse cx="6.875" cy="17.2222" rx="0.625" ry="0.555556" fill="#DEC175"/>
+</svg>

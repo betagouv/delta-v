@@ -8,10 +8,10 @@ interface SimulateParams {
   age?: number;
   meanOfTransport?: string;
   country?: Alpha2Code;
-  shopingProducts?: ShopingProduct[];
+  shoppingProducts?: ShoppingProduct[];
 }
 
-interface ShopingProduct {
+interface ShoppingProduct {
   id: string;
   amount: number;
   price: number;

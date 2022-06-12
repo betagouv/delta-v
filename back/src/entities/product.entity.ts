@@ -4,6 +4,9 @@ export interface Product {
   id: string;
   parentProductId?: string;
   name: string;
+  icon?: string;
+  finalProduct: boolean;
+  productDisplayTypes: ProductDisplayTypes;
   info?: string;
   childrenQuestion?: string;
   nomenclatures?: string[];
@@ -11,6 +14,14 @@ export interface Product {
   vat?: number;
   subProducts?: ProductEntity[];
   parentProduct?: ProductEntity;
+}
+
+export enum ProductDisplayTypes {
+  category = 'category',
+  notManaged = 'not-managed',
+  addable = 'addable',
+  radio = 'radio',
+  radioCard = 'radio-card',
 }
 
 @Entity('product')
@@ -24,6 +35,15 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'varchar' })
   name: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  icon?: string;
+
+  @Column({ type: 'boolean', default: false })
+  finalProduct: boolean;
+
+  @Column({ type: 'enum', default: ProductDisplayTypes.category, enum: ProductDisplayTypes })
+  productDisplayTypes: ProductDisplayTypes;
 
   @Column({ type: 'text', nullable: true })
   info?: string;

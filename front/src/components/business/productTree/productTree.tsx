@@ -2,16 +2,7 @@ import React from 'react';
 
 import { PlusCircleIcon } from '@heroicons/react/solid';
 
-export interface Product {
-  id: string;
-  name: string;
-  info: string;
-  childrenQuestion: string | null;
-  nomenclatures: string[] | null;
-  customDuty: number | null;
-  vat: number | null;
-  subProducts: Product[];
-}
+import { Product } from '@/stores/product.store';
 
 interface ProductTreeProps {
   product: Product;
@@ -19,9 +10,9 @@ interface ProductTreeProps {
 }
 
 export const ProductTree: React.FC<ProductTreeProps> = ({ product, onAddProduct }) => {
-  const isClicable = product.customDuty !== null && product.vat !== null;
+  const isClickable = product.customDuty !== null && product.vat !== null;
   const onClick = () => {
-    if (!isClicable) {
+    if (!isClickable) {
       return;
     }
 
@@ -30,12 +21,12 @@ export const ProductTree: React.FC<ProductTreeProps> = ({ product, onAddProduct 
   return (
     <>
       <div
-        className={`text-xl inline-flex ${isClicable ? 'cursor-pointer text-blue-600' : ''}`}
+        className={`text-xl inline-flex ${isClickable ? 'cursor-pointer text-blue-600' : ''}`}
         onClick={onClick}
       >
         {' '}
-        {isClicable ? ' ➜ ' : ' • '}
-        {product.name} {isClicable ? <PlusCircleIcon className="ml-1 mt-1 h-5 w-5" /> : ''}
+        {isClickable ? ' ➜ ' : ' • '}
+        {product.name} {isClickable ? <PlusCircleIcon className="ml-1 mt-1 h-5 w-5" /> : ''}
       </div>
       {product.subProducts.map((subProduct) => (
         <div className="ml-5" key={subProduct.id}>

@@ -18,7 +18,7 @@ export interface IRadioOptions {
 
 export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) => {
   return (
-    <div className="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-5">
+    <div className="flex items-center space-y-0 space-x-5">
       {radioValues.map((radioValue, index) => (
         <div key={index} className="flex items-center">
           <input
