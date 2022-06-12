@@ -4,7 +4,8 @@ import { Meta } from '@storybook/react';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 
-import { Product, ProductTree } from './productTree';
+import { ProductTree } from './productTree';
+import { Product, ProductDisplayTypes } from '@/stores/products/appState.store';
 
 export default {
   title: 'Components/Business/productTree',
@@ -16,6 +17,8 @@ export const WithVariant = () => {
     id: '691e3721-0f5a-49c2-ae96-b1063db2bf33',
     name: 'Bijouterie',
     info: 'Cela compose les bijoux',
+    finalProduct: true,
+    productDisplayTypes: ProductDisplayTypes.addable,
     childrenQuestion: 'Quel type de produits ?',
     customDuty: null,
     vat: null,
@@ -25,6 +28,8 @@ export const WithVariant = () => {
         id: 'ae81eba5-1199-4df3-a8c0-2b717b799555',
         name: 'Bijoux',
         info: 'Bijoux',
+        finalProduct: true,
+        productDisplayTypes: ProductDisplayTypes.addable,
         childrenQuestion: 'Est-ce de la bijouterie fantaisie ou en métaux précieux ?',
         customDuty: null,
         vat: null,
@@ -34,6 +39,8 @@ export const WithVariant = () => {
             id: '32901991-257d-47f2-b209-a9d4af2026e3',
             name: 'Bijoux fantaisie',
             info: 'Bijoux fantaisie en métaux communs (même argentés, dorés ou platinés) ou autres.',
+            finalProduct: true,
+            productDisplayTypes: ProductDisplayTypes.addable,
             childrenQuestion: null,
             customDuty: 4,
             vat: 20,
@@ -44,6 +51,8 @@ export const WithVariant = () => {
             id: '04c1a6cd-881b-4d2c-b7dc-5e824d390b4d',
             name: 'Bijoux en métaux précieux',
             info: 'En métaux précieux ou revêtus, plaqués, doublés de métaux précieux (argent, or, platine ...)',
+            finalProduct: true,
+            productDisplayTypes: ProductDisplayTypes.addable,
             childrenQuestion: null,
             customDuty: 2.5,
             vat: 20,
@@ -56,6 +65,8 @@ export const WithVariant = () => {
         id: 'd97c1392-01f1-423b-afd6-982fe79856df',
         name: 'Montres',
         info: 'Montres',
+        finalProduct: true,
+        productDisplayTypes: ProductDisplayTypes.addable,
         childrenQuestion: null,
         customDuty: 4.5,
         vat: 20,
