@@ -41,6 +41,7 @@ const Index = () => {
             rounded="lg"
             fullWidth
           />
+
           <Link to="/app/simulateur/configuration">
             <Card
               title="Simuler mes achats"

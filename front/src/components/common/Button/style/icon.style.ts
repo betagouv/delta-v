@@ -8,6 +8,7 @@ type IIconStyle = {
   loading: ClassesType;
   size: {
     [key in ButtonSize]?: {
+      size: number;
       position: {
         // eslint-disable-next-line @typescript-eslint/no-shadow
         [key in IconPosition]?: ClassesType;
@@ -28,6 +29,7 @@ const styleManager: IIconStyle = {
   },
   size: {
     xs: {
+      size: 8,
       classes: {
         'h-5': true,
         'w-4': true,
@@ -48,6 +50,7 @@ const styleManager: IIconStyle = {
       },
     },
     sm: {
+      size: 12,
       classes: {
         'h-6': true,
         'w-base': true,
@@ -68,6 +71,7 @@ const styleManager: IIconStyle = {
       },
     },
     base: {
+      size: 16,
       classes: {
         'h-6': true,
         'w-base': true,
@@ -88,6 +92,7 @@ const styleManager: IIconStyle = {
       },
     },
     lg: {
+      size: 20,
       classes: {
         'h-7': true,
         'w-6': true,
@@ -108,6 +113,7 @@ const styleManager: IIconStyle = {
       },
     },
     xl: {
+      size: 24,
       classes: {
         'h-7': true,
         'w-6': true,
@@ -136,6 +142,10 @@ interface IGetIconStyleOptions {
   loading: boolean;
 }
 
+interface IGetIconSizeOptions {
+  size?: ButtonSize;
+}
+
 export const getIconStyle = ({
   size,
   position,
@@ -147,4 +157,8 @@ export const getIconStyle = ({
     ...styleManager.size[size]?.position[position]?.classes,
     ...(loading ? styleManager.loading.classes : {}),
   };
+};
+
+export const getIconSize = ({ size }: IGetIconSizeOptions): number | undefined => {
+  return size ? styleManager.size[size]?.size : undefined;
 };

@@ -11,3 +11,6 @@ build/
 
 # Optional npm cache directory
 .npm
+
+# Optional vscode info
+.vscode/

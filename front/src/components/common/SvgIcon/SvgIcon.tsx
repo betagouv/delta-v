@@ -63,6 +63,8 @@ import CategoryViolins from '@/public/assets/icons/categories/Violins.svg';
 import CategoryWig from '@/public/assets/icons/categories/Wig.svg';
 import CategoryWindsurf from '@/public/assets/icons/categories/Windsurf.svg';
 import CategoryWoodenFloor from '@/public/assets/icons/categories/Wooden-Floor.svg';
+import AinIcon from '@/public/assets/icons/City-Ain.svg';
+import HauteSavoieIcon from '@/public/assets/icons/City-Haute-Savoie.svg';
 import Luggages from '@/public/assets/icons/Luggages.svg';
 import Mail from '@/public/assets/icons/Mail.svg';
 import Other from '@/public/assets/icons/Other.svg';
@@ -83,6 +85,8 @@ export type SvgNames =
   | 'mail'
   | 'question'
   | 'basket'
+  | 'ain'
+  | 'hauteSavoie'
   | 'categoryAccessory'
   | 'categoryAccordions'
   | 'categoryAdultClothes'
@@ -172,6 +176,10 @@ const getSvgFromName = (name: SvgNames): any => {
       return Question;
     case 'basket':
       return Basket;
+    case 'ain':
+      return AinIcon;
+    case 'hauteSavoie':
+      return HauteSavoieIcon;
     case 'categoryAccessory':
       return CategoryAccessory;
     case 'categoryAccordions':
