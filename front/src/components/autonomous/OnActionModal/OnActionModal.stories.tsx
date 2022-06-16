@@ -19,7 +19,7 @@ export const WithVariant = () => {
   };
   return (
     <>
-      <OnActionModal open={open} onClose={onClose} />
+      <OnActionModal open={open} onSuccess={onClose} onReject={onClose} />
       <Button onClick={() => setOpen(true)}>Open</Button>
     </>
   );

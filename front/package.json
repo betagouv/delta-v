@@ -39,6 +39,7 @@
     "react-icomoon": "^2.4.9",
     "react-query": "^3.34.17",
     "react-toastify": "^8.2.0",
+    "uuid": "^8.3.2",
     "zustand": "^3.7.1"
   },
   "devDependencies": {
@@ -59,6 +60,7 @@
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.18",
     "@types/react": "^17.0.39",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "autoprefixer": "^10.4.2",

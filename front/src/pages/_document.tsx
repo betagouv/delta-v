@@ -1,4 +1,4 @@
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import Document, { Html, Main, NextScript, Head } from 'next/document';
 
 import { AppConfig } from '@/utils/AppConfig';
 
@@ -6,11 +6,26 @@ import { AppConfig } from '@/utils/AppConfig';
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang={AppConfig.locale}>
-        <Head />
-
-        <body>
-          <section className="font-marianne text-secondary-800">
+      <Html lang={AppConfig.locale} className="h-full">
+        <Head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `var _paq = window._paq = window._paq || [];
+          /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+          _paq.push(['trackPageView']);
+          _paq.push(['enableLinkTracking']);
+          (function() {
+            var u="https://declare-douane.matomo.cloud/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '1']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src='//cdn.matomo.cloud/declare-douane.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+          })();`,
+            }}
+          />
+        </Head>
+        <body className="h-full">
+          <section className="h-full font-marianne text-secondary-800">
             <Main />
             <NextScript />
           </section>

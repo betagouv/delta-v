@@ -37,9 +37,6 @@ const styleManager: IButtonStyle = {
     'font-medium': true,
     'shadow-sm': true,
     'focus:outline-none': true,
-    'focus:ring-2': true,
-    'focus:ring-offset-2': true,
-    'focus:ring-primary-500': true,
     'place-content-center': true,
   },
   rounded: {

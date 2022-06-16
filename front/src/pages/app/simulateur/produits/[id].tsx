@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import Error from 'next/error';
 import { useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
 
-import { FormSimulatorData } from '@/components/business/formAddProduct';
-import { FormSelectProduct } from '@/components/business/formSelectProduct';
+import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { Header } from '@/components/business/header';
 import { CategoryList } from '@/components/common/CategoryList';
 import { TitleHeader } from '@/components/common/TitleHeader';
@@ -31,13 +31,14 @@ const ProductSearch = () => {
       };
     }) ?? [];
 
-  const onSubmit = (data: FormSimulatorData) => {
-    const product: ShoppingProduct = {
-      id: currentProduct?.id ?? '12',
-      price: data.price ?? 1,
+  const onAddProduct = ({ product, price }: OnAddProductOptions) => {
+    const shoppingProduct: ShoppingProduct = {
+      id: uuidv4(),
+      product,
+      price,
       amount: 1,
     };
-    addProduct(product);
+    addProduct(shoppingProduct);
     router.push('/app/simulateur/produits');
   };
 
@@ -58,7 +59,7 @@ const ProductSearch = () => {
         />
       }
     >
-      <div className="flex flex-col gap-6 px-4 py-8">
+      <div className="flex flex-col gap-6">
         <Header
           withCart
           nbCartItems={shoppingProducts?.length}
@@ -66,7 +67,7 @@ const ProductSearch = () => {
         />
         <TitleHeader title={currentProduct?.name} icon="calculator" />
         {selectedProduct?.finalProduct ? (
-          <FormSelectProduct currentProduct={currentProduct} onSubmit={onSubmit} />
+          <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
         ) : (
           <CategoryList items={displayedProducts} title="Catégories" />
         )}

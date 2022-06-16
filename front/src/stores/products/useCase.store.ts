@@ -2,8 +2,8 @@
 import dayjs from 'dayjs';
 
 import { StoreSlice } from '../store';
-import { Product } from './appState.store';
 import axios from '@/config/axios';
+import { Product } from '@/model/product';
 
 export interface ProductsUseCaseSlice {
   findProduct: (id: string) => Product | undefined;

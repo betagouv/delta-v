@@ -1,4 +1,4 @@
-export type Color = 'primary' | 'secondary';
+export type Color = 'primary' | 'secondary' | 'light-gray';
 export type Weight = 'thin' | 'light' | 'normal' | 'medium' | 'bold' | 'extrabold';
 
 export const getFontWeight = (weight: Weight): string => {
@@ -23,9 +23,11 @@ export const getFontWeight = (weight: Weight): string => {
 export const getColor = (color: Color): string => {
   switch (color) {
     case 'primary':
-      return 'text-primary-700';
+      return 'text-primary-600';
     case 'secondary':
-      return 'text-secondary-700';
+      return 'text-secondary-800';
+    case 'light-gray':
+      return 'text-gray-400';
     default:
       return 'text-primary-700';
   }

@@ -84,7 +84,13 @@ const currentProduct: Product = {
 export const base = (): JSX.Element => (
   <div className="p-3">
     <br />
-    <FormSelectProduct currentProduct={currentProduct} onSubmit={() => {}} />
+    <FormSelectProduct
+      currentProduct={currentProduct}
+      onAddProduct={() => {
+        // eslint-disable-next-line no-alert
+        alert('click');
+      }}
+    />
     <br />
   </div>
 );

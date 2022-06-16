@@ -2,6 +2,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
+import { Product } from '@/model/product';
 
 export enum MeansOfTransport {
   PLANE = 'plane',
@@ -13,6 +14,7 @@ export enum MeansOfTransport {
 
 export interface ShoppingProduct {
   id: string;
+  product: Product;
   amount: number;
   price: number;
 }

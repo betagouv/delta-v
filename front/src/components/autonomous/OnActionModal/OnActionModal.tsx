@@ -5,14 +5,15 @@ import Modal from '@/components/common/Modal';
 
 interface OnActionModalProps {
   open: boolean;
-  onClose?: () => void;
+  onSuccess: () => void;
+  onReject: () => void;
 }
 
-export const OnActionModal: React.FC<OnActionModalProps> = ({ onClose, open }) => {
+export const OnActionModal: React.FC<OnActionModalProps> = ({ onSuccess, onReject, open }) => {
   // TODO: Function to delete product in the cart
   return (
     <>
-      <Modal title="Êtes-vous sur de vouloir supprimer cet achat ?" open={open} onClose={onClose}>
+      <Modal title="Êtes-vous sur de vouloir supprimer cet achat ?" open={open} onClose={onReject}>
         <div className="grid w-full grid-cols-2 gap-base">
           <Button
             type="submit"
@@ -22,7 +23,7 @@ export const OnActionModal: React.FC<OnActionModalProps> = ({ onClose, open }) =
             className={{ 'row-start-1': true }}
             fullWidth
             // TODO: Replace with onDeleteProduct
-            onClick={onClose}
+            onClick={onSuccess}
           >
             Oui
           </Button>
@@ -33,7 +34,7 @@ export const OnActionModal: React.FC<OnActionModalProps> = ({ onClose, open }) =
             rounded="full"
             className={{ 'row-start-1': true }}
             fullWidth
-            onClick={onClose}
+            onClick={onReject}
           >
             Non
           </Button>

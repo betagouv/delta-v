@@ -30,7 +30,11 @@ export const Link: React.FC<LinkProps> = ({
   };
 
   if (to || back) {
-    return <div onClick={handleClick}>{children}</div>;
+    return (
+      <div onClick={handleClick} className="cursor-pointer">
+        {children}
+      </div>
+    );
   }
   if (href) {
     return (

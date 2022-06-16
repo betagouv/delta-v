@@ -13,4 +13,5 @@ build/
 .npm
 
 # Optional vscode info
-.vscode/
+.vscode/*
+!.vscode/settings.json

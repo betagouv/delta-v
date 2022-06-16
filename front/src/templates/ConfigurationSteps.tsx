@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
 
 import { Main } from './Main';
-import { BackButton } from '@/components/common/BackButton';
+import { Header } from '@/components/business/header';
 import { ProgressBar } from '@/components/common/ProgressBar';
-import { SvgIcon } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { TitleHeader } from '@/components/common/TitleHeader';
 import { Meta } from '@/layout/Meta';
 
 type IMainProps = {
@@ -22,25 +21,23 @@ const ConfigurationSteps = (props: IMainProps) => {
         />
       }
     >
-      <div className="absolute top-0 h-auto w-full">
+      <div className="absolute inset-x-0 top-0 h-auto w-full">
         <ProgressBar progression={props.progression} />
       </div>
-      <div className="flex flex-col gap-6 px-4 py-8">
-        <BackButton />
-        <div className="flex flex-row gap-2">
-          <div>
-            <SvgIcon name="calculator" />
-          </div>
-          <div className="mt-3">
-            <Typography weight="bold" variant="h1" tag="h1" color="secondary">
+      <div className="mb-8 flex flex-col gap-6">
+        <Header />
+        <TitleHeader
+          title={
+            <>
               Simuler
               <br />
               mes achats
-            </Typography>
-          </div>
-        </div>
-        {props.children}
+            </>
+          }
+          icon="calculator"
+        />
       </div>
+      {props.children}
     </Main>
   );
 };

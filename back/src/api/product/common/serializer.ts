@@ -5,6 +5,7 @@ export interface SerializedProduct {
   name: string;
   icon?: string;
   info?: string;
+  radioValue?: string;
   finalProduct: boolean;
   productDisplayTypes: ProductDisplayTypes;
   childrenQuestion?: string;
@@ -18,6 +19,7 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   id: product.id,
   name: product.name,
   icon: product.icon,
+  radioValue: product.radioValue,
   finalProduct: product.finalProduct,
   productDisplayTypes: product.productDisplayTypes,
   info: product.info,
