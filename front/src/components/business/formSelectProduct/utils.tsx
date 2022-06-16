@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import InputGroup from '@/components/input/InputGroup/InputGroup';
 import { IRadioType } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
-import { Product, ProductDisplayTypes } from '@/stores/products/appState.store';
+import { Product, ProductDisplayTypes } from '@/model/product';
 
 export interface FormSelectProductData {
   [key: string]: boolean | number | string | undefined;
@@ -49,7 +49,7 @@ export const getSteps = ({ currentProduct, lastId }: GetSteps): Product[] => {
 
 export const getRadioProductForm = (product: Product, register: any): ReactNode => {
   const radioValues: IRadioType[] = product.subProducts.map((subProduct): IRadioType => {
-    return { id: subProduct.id, value: subProduct.name };
+    return { id: subProduct.id, value: subProduct.radioValue ?? subProduct.name };
   });
   return (
     <InputGroup

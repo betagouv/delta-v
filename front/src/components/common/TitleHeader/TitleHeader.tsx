@@ -22,11 +22,18 @@ export const TitleHeader: React.FC<TitleHeaderProps> = ({ title, icon }: TitleHe
   // const [firstLine, secondLine] = splitTitle(title);
   return (
     <div className="flex flex-row gap-2">
-      <div>
+      <div className="h-16 w-16">
         <SvgIcon name={icon} />
       </div>
-      <div className="mt-3">
-        <Typography weight="bold" variant="h1" tag="h1" color="secondary">
+      <div className="mt-1">
+        <Typography
+          weight="bold"
+          variant="h1"
+          tag="h1"
+          color="secondary"
+          size="text-3xl"
+          lineHeight="leading-tight"
+        >
           {title}
         </Typography>
       </div>

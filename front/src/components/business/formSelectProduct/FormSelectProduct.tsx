@@ -10,16 +10,24 @@ import {
   getRadioProductForm,
   getSteps,
 } from './utils';
-import { Product, ProductDisplayTypes } from '@/stores/products/appState.store';
+import { Product, ProductDisplayTypes } from '@/model/product';
+
+export interface OnAddProductOptions {
+  product: Product;
+  price: number;
+  devise: string;
+}
+
+type OnAddProduct = (options: OnAddProductOptions) => void;
 
 interface FormSelectProductProps {
   currentProduct: Product;
-  onSubmit: (data: any) => void;
+  onAddProduct: OnAddProduct;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   currentProduct,
-  onSubmit,
+  onAddProduct,
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
 
@@ -74,6 +82,17 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       ...getDefaultValues(steps),
     });
   }, [steps]);
+
+  const onSubmit = (data: FormSelectProductData): void => {
+    const product = steps.pop();
+    if (product) {
+      onAddProduct({
+        product,
+        price: (data.price as number) ?? 1,
+        devise: (data.devise as string) ?? 'eur',
+      });
+    }
+  };
 
   const multiForm = steps.map((step): ReactNode => {
     if (step.productDisplayTypes === ProductDisplayTypes.addable) {

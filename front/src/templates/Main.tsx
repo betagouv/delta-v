@@ -8,11 +8,11 @@ type IMainProps = {
 };
 
 const Main = (props: IMainProps) => (
-  <div className="w-full antialiased">
+  <div className="h-full w-full antialiased">
     {props.meta}
 
-    <div className="mx-auto max-w-screen-xl">
-      <div>{props.children}</div>
+    <div className="mx-auto h-full max-w-screen-xl p-4">
+      {props.children}
       <ToastContainer />
     </div>
   </div>

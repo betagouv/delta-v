@@ -15,12 +15,26 @@ const Index = () => {
         />
       }
     >
-      <div className="flex flex-col gap-6 px-4 py-8">
+      <div className="mb-8 flex flex-col gap-6">
         <div>
-          <Typography weight="bold" variant="h1" tag="h1" color="secondary">
+          <Typography
+            weight="bold"
+            variant="h1"
+            tag="h1"
+            size="text-3xl"
+            color="secondary"
+            lineHeight="leading-none"
+          >
             Bonjour
           </Typography>
-          <Typography weight="bold" variant="h1" tag="h1" color="primary">
+          <Typography
+            weight="bold"
+            variant="h1"
+            tag="h1"
+            size="text-3xl"
+            color="primary"
+            lineHeight="leading-none"
+          >
             Bienvenue !
           </Typography>
         </div>
@@ -63,8 +77,8 @@ const Index = () => {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col gap-6 bg-primary-100 px-4 py-8">
-        <Typography weight="bold" variant="h1" tag="h1" color="secondary">
+      <div className="-mx-4 flex flex-col gap-6 bg-primary-100 px-4 py-7">
+        <Typography weight="bold" size="text-2xl" color="secondary">
           Pourquoi déclarer mes achats effectués à l’étranger ?
         </Typography>
         <Typography weight="normal" variant="body1" tag="p" color="secondary">
@@ -77,8 +91,8 @@ const Index = () => {
           </Typography>
         </Link>
       </div>
-      <div className="flex flex-col gap-6 px-4 py-8">
-        <Typography weight="bold" variant="h1" tag="h1" color="secondary">
+      <div className="flex flex-col gap-6 py-7">
+        <Typography weight="bold" size="text-2xl" color="secondary">
           Besoin d’aide ?
         </Typography>
         <div className="flex flex-row gap-6">

@@ -77,7 +77,8 @@ items:
       - '9102'
   fancy:
     id: '32901991-257d-47f2-b209-a9d4af2026e3'
-    name: 'Non'
+    name: 'Bijoux en métaux communs'
+    radioValue: 'Non'
     info: 'Bijoux fantaisie en métaux communs (même argentés, dorés ou platinés) ou autres.'
     parentProduct: '@jewelryGoods'
     productDisplayTypes: 'addable'
@@ -89,7 +90,8 @@ items:
       - '71179000'
   preciousMetals:
     id: '04c1a6cd-881b-4d2c-b7dc-5e824d390b4d'
-    name: 'Oui'
+    name: 'Bijoux en métaux précieux'
+    radioValue: 'Oui'
     info: 'En métaux précieux ou revêtus, plaqués, doublés de métaux précieux (argent, or, platine ...)'
     parentProduct: '@jewelryGoods'
     productDisplayTypes: 'addable'
@@ -126,7 +128,8 @@ items:
     finalProduct: true
   clothesWithLeather:
     id: '98b58ced-de0c-40d9-95cc-8247fe63fe17'
-    name: 'Oui'
+    name: 'Vêtements adulte en cuir.'
+    radioValue: 'Oui'
     info: 'Vêtements adulte en cuir.'
     parentProduct: '@adultClothes'
     productDisplayTypes: 'addable'
@@ -136,7 +139,8 @@ items:
       - '42031000'
   clothesWithoutLeather:
     id: '15edcc66-1123-47cb-855e-d0eae1233682'
-    name: 'Non'
+    name: 'Vêtements adulte sans cuir.'
+    radioValue: 'Non'
     info: 'Vêtements sans cuir.'
     childrenQuestion: 'Est-ce un soutiens-george, gaines, corsets, jarretelles ou jarretières ?'
     productDisplayTypes: 'radio'
@@ -145,7 +149,8 @@ items:
       - '4203'
   lingerie:
     id: 'e6520fa8-8e59-4d57-ab98-3a5ad690ac5a'
-    name: 'Oui'
+    name: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
+    radioValue: 'Oui'
     info: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
     parentProduct: '@clothesWithoutLeather'
     productDisplayTypes: 'addable'
@@ -155,7 +160,8 @@ items:
       - '6212'
   generalClothes:
     id: '4dbcac27-c57e-4c8f-befb-9c8092c1c450'
-    name: 'Non'
+    name: 'Vêtements adultes'
+    radioValue: 'Non'
     info: 'Vêtements adultes dans la liste suivante : \n- Manteaux, cabans, capes,anoraks, blousons, etc. \n- Costumes, complets, ensembles, vestons, pantalons, salopettes, shorts, survêtements, robes, jupes, etc. \n- Chemises, chemisettes, chemisiers, blouses, T-shirts et maillots de corps, chandails, pull-overs, cardigans, gilets, etc. \n- Slips, caleçons, chemises de nuit, pyjamas, peignoirs, robes de chambre, combinaisons, etc.'
     parentProduct: '@clothesWithoutLeather'
     productDisplayTypes: 'addable'
@@ -722,7 +728,8 @@ items:
       - '940350'
   kitchenWoodFurniture:
     id: '398d82be-8a03-4e64-ae43-6f5c57f0b8b4'
-    name: 'Oui'
+    name: 'Meubles en bois pour cuisine'
+    radioValue: 'Oui'
     info: 'Meubles en bois pour cuisine'
     parentProduct: '@woodFurniture'
     productDisplayTypes: 'addable'
@@ -732,7 +739,8 @@ items:
       - '940340'
   otherWoodFurniture:
     id: 'a3c6bfdb-b4a0-4a47-9ada-b02b0e4864d8'
-    name: 'Non'
+    name: 'Autre meubles en bois'
+    radioValue: 'Non'
     info: 'Autre meubles en bois'
     parentProduct: '@woodFurniture'
     productDisplayTypes: 'addable'

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { BackButton } from '@/components/common/BackButton';
+import { Header } from '@/components/business/header';
 import { Faqs } from '@/components/common/Faq';
 import { TitleHeader } from '@/components/common/TitleHeader';
 import { Meta } from '@/layout/Meta';
@@ -19,8 +19,8 @@ const FaqPage = () => {
         />
       }
     >
-      <div className="flex flex-col gap-6 px-4 py-8">
-        <BackButton />
+      <div className="flex flex-col gap-6">
+        <Header />
         <TitleHeader title="FAQ" icon="question" />
         <Faqs items={FAQS_STORE} linkId={linkId} />
       </div>

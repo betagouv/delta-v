@@ -20,6 +20,8 @@ export interface SimulatorUseCaseSlice {
   validateStep4: (border: boolean) => void;
   resetSteps: (step: number) => void;
   addProduct: (shoppingProduct: ShoppingProduct) => void;
+  removeProduct: (id: string) => void;
+  updateProduct: (shoppingProduct: ShoppingProduct) => void;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set) => ({
@@ -76,6 +78,27 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
   addProduct: (shoppingProduct: ShoppingProduct): void => {
     set((state: any) => {
       const newState = { ...state };
+      newState.simulator.appState.shoppingProducts.push(shoppingProduct);
+      return newState;
+    });
+  },
+  removeProduct: (id: string): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      const newShoppingProducts = newState.simulator.appState.shoppingProducts.filter(
+        (product: ShoppingProduct) => product.id !== id,
+      );
+      newState.simulator.appState.shoppingProducts = newShoppingProducts;
+      return newState;
+    });
+  },
+  updateProduct: (shoppingProduct: ShoppingProduct): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      const newShoppingProducts = newState.simulator.appState.shoppingProducts.filter(
+        (product: ShoppingProduct) => product.id !== shoppingProduct.id,
+      );
+      newState.simulator.appState.shoppingProducts = newShoppingProducts;
       newState.simulator.appState.shoppingProducts.push(shoppingProduct);
       return newState;
     });

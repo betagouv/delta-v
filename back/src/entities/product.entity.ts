@@ -7,6 +7,7 @@ export interface Product {
   icon?: string;
   finalProduct: boolean;
   productDisplayTypes: ProductDisplayTypes;
+  radioValue?: string;
   info?: string;
   childrenQuestion?: string;
   nomenclatures?: string[];
@@ -44,6 +45,9 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'enum', default: ProductDisplayTypes.category, enum: ProductDisplayTypes })
   productDisplayTypes: ProductDisplayTypes;
+
+  @Column({ type: 'text', nullable: true })
+  radioValue?: string;
 
   @Column({ type: 'text', nullable: true })
   info?: string;

@@ -51,11 +51,11 @@ module.exports = {
     require('@tailwindcss/forms'),
     // eslint-disable-next-line func-names
     plugin(function ({ addBase, theme, addVariant }) {
-      addVariant('child', '& > *');
-      addVariant('child-hover', '& > *:hover');
       addBase({
         h1: { fontSize: theme('fontSize.3xl'), lineHeight: theme('lineHeight.none') },
       });
+      addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
     }),
   ],
 };
