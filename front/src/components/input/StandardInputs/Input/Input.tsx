@@ -52,29 +52,26 @@ export const Input: React.FC<IInputOptions> = ({
     parentClassName += ' w-fit';
   }
   let className =
-    'block w-full border-secondary-300 px-4 border border-solid sm:text-sm rounded-full focus:outline-none focus:ring-1 placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
+    'block w-full border-secondary-300 px-4 py-2 border border-solid text-base rounded-full focus:outline-none focus:ring-transparent focus:border-secondary-300 placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
   if (error) {
-    className +=
-      ' border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500';
-  } else {
-    className += ' focus:ring-primary-600 focus:border-primary-600';
+    className += ' border-red-300 text-red-900 placeholder-red-300 focus:border-red-500';
   }
 
   if (trailingIcon || trailingAddons) {
-    className += ' pr-10';
+    className += ' pr-11';
   }
   if (leadingIcon || leadingAddons) {
-    className += ' pl-10';
+    className += ' pl-11';
   }
   return (
     <div className={parentClassName}>
       {leadingIcon && (
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex h-full w-9 items-center pl-3">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex h-full w-9 items-center pl-4">
           <Icon name={leadingIcon} />
         </div>
       )}
       {leadingAddons && (
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex h-full w-9 items-center pl-3">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex h-full w-9 items-center pl-4">
           {leadingAddons}
         </div>
       )}
@@ -90,12 +87,12 @@ export const Input: React.FC<IInputOptions> = ({
         {...register}
       />
       {trailingIcon && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-3">
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
           <Icon name={trailingIcon} />
         </div>
       )}
       {trailingAddons && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-3">
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
           {trailingAddons}
         </div>
       )}

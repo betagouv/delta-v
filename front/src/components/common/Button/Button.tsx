@@ -22,7 +22,6 @@ export interface IButtonProps {
   onClick?: () => void;
   color?: ButtonColor;
   size?: ButtonSize;
-  iconSize?: ButtonSize;
   icon?: string;
   iconPosition?: IconPosition;
   variant?: ButtonVariant;
@@ -40,7 +39,6 @@ export const Button: React.FC<IButtonProps> = ({
   onClick,
   color = 'primary',
   size = 'base',
-  iconSize = 'base',
   className = {},
   icon,
   iconPosition = 'right',
@@ -80,7 +78,7 @@ export const Button: React.FC<IButtonProps> = ({
       {children && <span>{children}</span>}
       {icon && !loading && (
         <div className={cn(customIconClassName)}>
-          <Icon name={icon} size={iconSize} />
+          <Icon name={icon} />
         </div>
       )}
       {loading && (

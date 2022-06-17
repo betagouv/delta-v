@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Add from '@/public/assets/icons/Add.svg';
 import Basket from '@/public/assets/icons/Basket.svg';
 import Boat from '@/public/assets/icons/Boat.svg';
 import Calculator from '@/public/assets/icons/Calculator.svg';
@@ -74,6 +75,7 @@ import Question from '@/public/assets/icons/Question.svg';
 import Train from '@/public/assets/icons/Train.svg';
 
 export type SvgNames =
+  | 'add'
   | 'boat'
   | 'car'
   | 'plane'
@@ -154,6 +156,8 @@ export interface ISvgIconProps {
 
 const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
+    case 'add':
+      return Add;
     case 'boat':
       return Boat;
     case 'car':

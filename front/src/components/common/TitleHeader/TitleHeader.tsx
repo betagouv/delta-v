@@ -22,7 +22,7 @@ export const TitleHeader: React.FC<TitleHeaderProps> = ({ title, icon }: TitleHe
   // const [firstLine, secondLine] = splitTitle(title);
   return (
     <div className="flex flex-row gap-2">
-      <div className="h-16 w-16">
+      <div className="h-14">
         <SvgIcon name={icon} />
       </div>
       <div className="mt-1">

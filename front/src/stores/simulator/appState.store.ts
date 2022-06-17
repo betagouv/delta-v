@@ -26,7 +26,7 @@ export interface SimulatorAppStateSlice {
       meanOfTransport?: MeansOfTransport;
       country?: Alpha2Code;
       border?: boolean;
-      shoppingProducts?: ShoppingProduct[];
+      shoppingProducts: ShoppingProduct[];
     };
   };
 }

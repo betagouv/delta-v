@@ -19,7 +19,8 @@ type IIconStyle = {
 
 const styleManager: IIconStyle = {
   classes: {
-    'justify-self-stretch': true,
+    flex: true,
+    'items-center': true,
   },
   loading: {
     classes: {
@@ -31,20 +32,17 @@ const styleManager: IIconStyle = {
     xs: {
       size: 8,
       classes: {
-        'h-5': true,
-        'w-4': true,
+        'h-4': true,
       },
       position: {
         left: {
           classes: {
-            '-ml-0.5': true,
             'mr-2': true,
           },
         },
         right: {
           classes: {
             'ml-2': true,
-            '-mr-0.5': true,
           },
         },
       },
@@ -52,20 +50,17 @@ const styleManager: IIconStyle = {
     sm: {
       size: 12,
       classes: {
-        'h-6': true,
-        'w-base': true,
+        'h-4': true,
       },
       position: {
         left: {
           classes: {
-            '-ml-0.5': true,
             'mr-2': true,
           },
         },
         right: {
           classes: {
             'ml-2': true,
-            '-mr-0.5': true,
           },
         },
       },
@@ -73,20 +68,17 @@ const styleManager: IIconStyle = {
     base: {
       size: 16,
       classes: {
-        'h-6': true,
-        'w-base': true,
+        'h-5': true,
       },
       position: {
         left: {
           classes: {
-            '-ml-1': true,
             'mr-2': true,
           },
         },
         right: {
           classes: {
             'ml-2': true,
-            '-mr-1': true,
           },
         },
       },
@@ -94,20 +86,17 @@ const styleManager: IIconStyle = {
     lg: {
       size: 20,
       classes: {
-        'h-7': true,
-        'w-6': true,
+        'h-5': true,
       },
       position: {
         left: {
           classes: {
-            '-ml-1': true,
             'mr-3': true,
           },
         },
         right: {
           classes: {
             'ml-3': true,
-            '-mr-1': true,
           },
         },
       },
@@ -115,20 +104,17 @@ const styleManager: IIconStyle = {
     xl: {
       size: 24,
       classes: {
-        'h-7': true,
-        'w-6': true,
+        'h-6': true,
       },
       position: {
         left: {
           classes: {
-            '-ml-1': true,
             'mr-3': true,
           },
         },
         right: {
           classes: {
             'ml-3': true,
-            '-mr-1': true,
           },
         },
       },

@@ -59,15 +59,7 @@ const ProductSearch = () => {
       }
     >
       <div className="flex flex-col gap-6">
-<<<<<<< Updated upstream
-        <Header
-          withCart
-          nbCartItems={shoppingProducts?.length}
-          cartLink="/app/simulateur/pannier"
-        />
-=======
         <Header withCart />
->>>>>>> Stashed changes
         <TitleHeader title={currentProduct?.name} icon="calculator" />
         {selectedProduct?.finalProduct ? (
           <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />

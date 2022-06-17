@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { Combobox } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
@@ -67,43 +66,35 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
       }}
     >
       <div className="relative mt-1">
-        <Combobox.Input
-          className={classNameCombobox}
-          onChange={(event) => setQuery(event.target.value)}
-          displayValue={(option?: Options) => option?.value ?? ''}
-        />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-          <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        <Combobox.Button className={classNames(fullWidth ? 'w-full' : 'w-fit')}>
+          <Combobox.Input
+            className={classNameCombobox}
+            onChange={(event) => setQuery(event.target.value)}
+            displayValue={(option?: Options) => option?.value ?? ''}
+          />
         </Combobox.Button>
         {filteredOptions.length > 0 && (
-          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md p-0 py-1 text-base focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
               <Combobox.Option
                 key={option.id}
                 value={option}
-                className={({ active }) =>
-                  classNames(
-                    active ? 'text-white bg-primary-600' : 'text-secondary-900',
-                    'cursor-default select-none relative py-2 pl-3 pr-9',
-                  )
-                }
+                className="relative cursor-default select-none py-2 pl-3 pr-9"
               >
-                {({ active, selected }) => (
+                {({ selected }) => (
                   <>
                     <span className={classNames('block truncate', selected && 'font-semibold')}>
                       {option.value}
                     </span>
 
-                    {selected && (
-                      <span
-                        className={classNames(
-                          active ? 'text-white' : 'text-primary-600',
-                          'absolute inset-y-0 right-0 flex items-center pr-4',
-                        )}
-                      >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    )}
+                    <input
+                      id="candidates"
+                      aria-describedby="candidates-description"
+                      name="candidates"
+                      type="checkbox"
+                      className="absolute inset-y-0 right-4 flex h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600"
+                      checked={selected}
+                    />
                   </>
                 )}
               </Combobox.Option>
