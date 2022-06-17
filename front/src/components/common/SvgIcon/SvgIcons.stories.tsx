@@ -11,6 +11,7 @@ export default {
 } as Meta;
 
 const iconNames: SvgNames[] = [
+  'add',
   'boat',
   'car',
   'other',

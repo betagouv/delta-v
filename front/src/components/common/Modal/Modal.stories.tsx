@@ -16,7 +16,7 @@ type FormValues = {
 };
 
 export const ModalWithTextArea = (): JSX.Element => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const methods = useForm<FormValues>({
     defaultValues: {
       comment: '',
@@ -33,7 +33,12 @@ export const ModalWithTextArea = (): JSX.Element => {
 
   return (
     <div>
-      <Modal title="firstName" open={open} onClose={onClose}>
+      <Modal
+        title="Êtes-vous sur de vouloir quitter la simulation ?"
+        subtitle="Si vous quittez la simulation vous perdrez toutes vos données."
+        open={open}
+        onClose={onClose}
+      >
         <div className="align-center w-5/6">
           <InputGroup
             type="textarea"

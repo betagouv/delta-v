@@ -15,7 +15,7 @@ module.exports = {
           200: '#b3b3de',
           300: '#9999d3',
           400: '#6666bd',
-          500: '#3333a7',
+          500: '#0C0CCF',
           600: '#000091',
           700: '#000074',
           800: '#000057',
@@ -23,7 +23,7 @@ module.exports = {
         },
         secondary: colors.gray,
         disabled: {
-          background: '#E5E5E5',
+          bg: '#E5E5E5',
           text: '#929292',
         },
         cancel: colors.red,
@@ -34,7 +34,7 @@ module.exports = {
         lightBase: '1.25rem',
         base: '1.5rem',
         largeBase: '1.75rem',
-        modal: '2rem',
+        modal: '35px',
       },
       borderRadius: {
         '4xl': '2rem',

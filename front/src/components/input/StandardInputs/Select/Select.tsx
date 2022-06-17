@@ -39,7 +39,7 @@ export const Select: React.FC<ISelectOptions> = ({
     rules,
   });
 
-  let classNameButton = `bg-white relative border border-secondary-300 border-solid rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600 sm:text-sm`;
+  let classNameButton = `bg-white relative border border-secondary-300 border-solid rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600 text-base`;
   classNameButton += fullWidth ? ' w-full' : ' w-auto';
   classNameButton += error
     ? ' border-red-300 focus:ring-red-500 focus:border-red-500'
@@ -65,7 +65,7 @@ export const Select: React.FC<ISelectOptions> = ({
             <Listbox.Button data-testid="select-element" className={classNameButton}>
               <span className="block truncate">{selected?.value}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5">
-                <Icon name="chevron-thin-down" />
+                {open ? <Icon name="chevron-thin-up" /> : <Icon name="chevron-thin-down" />}
               </span>
             </Listbox.Button>
 

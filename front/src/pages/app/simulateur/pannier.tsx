@@ -3,9 +3,9 @@ import { useRef, useState } from 'react';
 import { OnActionModal } from '@/components/autonomous/OnActionModal';
 import { Header } from '@/components/business/header';
 import { Button } from '@/components/common/Button';
-import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { ProductBasket } from '@/components/common/ProductBasket';
+import { SvgIcon } from '@/components/common/SvgIcon';
 import { TitleHeader } from '@/components/common/TitleHeader';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
@@ -32,18 +32,9 @@ const Pannier = () => {
         />
       }
     >
-      <OnActionModal
-        open={openActionModal}
-        onSuccess={onDelete}
-        onReject={() => setOpenActionModal(false)}
-      />
       <div className="flex h-full flex-col">
         <div className="mb-6 flex flex-col gap-6">
-          <Header
-            withCart
-            nbCartItems={shoppingProducts?.length}
-            cartLink="/app/simulateur/pannier"
-          />
+          <Header withCart />
           <TitleHeader title="Mes achats" icon="calculator" />
         </div>
         <div className="flex flex-col gap-3">
@@ -59,10 +50,12 @@ const Pannier = () => {
               />
             </div>
           ))}
+        </div>
+        <div className="mt-3">
           <Link to="/app/simulateur/produits">
-            <div className="flex flex-row justify-center rounded-[10px] bg-primary-100 py-4 px-8">
-              <div className="pt-[2px] pr-3 text-primary-600">
-                <Icon name="plus" size="lg" color="primary" />
+            <div className="flex flex-row items-center justify-center rounded-[10px] bg-primary-100 py-3.5 px-8">
+              <div className="mr-3 mt-[2px] h-6 w-6 text-primary-600">
+                <SvgIcon name="add" />
               </div>
               <Typography color="primary" size="text-lg">
                 Ajouter un nouvel achat
@@ -71,10 +64,17 @@ const Pannier = () => {
           </Link>
         </div>
         <div className="mb-8 flex-1" />
-        <Button fullWidth size="xl">
-          Valider ma simulation
-        </Button>
+        <div className="pb-4">
+          <Button fullWidth size="xl">
+            Valider ma simulation
+          </Button>
+        </div>
       </div>
+      <OnActionModal
+        open={openActionModal}
+        onSuccess={onDelete}
+        onReject={() => setOpenActionModal(false)}
+      />
     </Main>
   );
 };

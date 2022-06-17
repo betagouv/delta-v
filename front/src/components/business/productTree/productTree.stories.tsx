@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 import { ProductTree } from './productTree';
-import { Product, ProductDisplayTypes } from '@/stores/products/appState.store';
+import { Product, ProductDisplayTypes } from '@/model/product';
 
 export default {
   title: 'Components/Business/productTree',

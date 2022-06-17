@@ -40,7 +40,7 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
             error
               ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
               : 'focus:ring-primary-600 focus:border-primary-600'
-          } block w-full sm:text-sm rounded-md p-2`
+          } block w-full text-base rounded-md p-2`
         }`}
         {...register}
         name={name}

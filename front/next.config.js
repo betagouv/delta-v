@@ -37,13 +37,14 @@ module.exports = withBundleAnalyzer({
     return config;
   },
   reactStrictMode: true,
-  async redirects() {
-    return [
-      {
-        source: '/app/simulateur/configuration',
-        destination: '/app/simulateur/configuration/etape1',
-        permanent: true,
-      },
-    ];
+  async rewrites() {
+    const rewritesUrls = [];
+    if (process.env.NODE_ENV === 'development') {
+      rewritesUrls.push({
+        source: '/api/:path*',
+        destination: 'http://backend-api-delta-v:8080/api/:path*',
+      });
+    }
+    return rewritesUrls;
   },
 });

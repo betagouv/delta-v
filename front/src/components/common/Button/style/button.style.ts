@@ -23,7 +23,7 @@ type IButtonStyle = {
   };
   size: {
     [key in ButtonSize]: ClassesType;
-  };
+  } & ClassesType;
   iconPosition: {
     [key in IconPosition]: ClassesType;
   };
@@ -36,6 +36,9 @@ const styleManager: IButtonStyle = {
     border: true,
     'font-medium': true,
     'shadow-sm': true,
+    'focus:ring-2': true,
+    'focus:ring-offset-2': true,
+    'focus:ring-primary-600': true,
     'focus:outline-none': true,
     'place-content-center': true,
   },
@@ -71,9 +74,11 @@ const styleManager: IButtonStyle = {
   },
   disabled: {
     classes: {
-      'disabled:opacity-60': true,
       'disabled:cursor-not-allowed': true,
       'disabled:shadow-none': true,
+      'disabled:bg-disabled-bg': true,
+      'disabled:text-disabled-text': true,
+      'disabled:border-transparent': true,
     },
   },
   fullWidth: {
@@ -100,6 +105,9 @@ const styleManager: IButtonStyle = {
     },
   },
   size: {
+    classes: {
+      'font-normal': true,
+    },
     xs: {
       classes: {
         'px-2.5': true,
@@ -117,7 +125,7 @@ const styleManager: IButtonStyle = {
     base: {
       classes: {
         'px-4': true,
-        'py-2': true,
+        'py-2.5': true,
         'text-sm': true,
       },
     },
@@ -146,7 +154,7 @@ const styleManager: IButtonStyle = {
         classes: {
           'bg-primary-600': true,
           'hover:bg-primary-700': true,
-          'disabled:bg-primary-600': true,
+          'active:bg-primary-500': true,
         },
       },
       secondary: {
@@ -227,6 +235,7 @@ export const getButtonStyle = ({
   return {
     ...styleManager.classes,
     ...styleManager.type[variant]?.classes,
+    ...styleManager.size.classes,
     ...styleManager.size[size].classes,
     ...styleManager.iconPosition[iconPosition].classes,
     ...styleManager.type[variant]?.[color]?.classes,

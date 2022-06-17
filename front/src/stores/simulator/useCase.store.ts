@@ -22,9 +22,10 @@ export interface SimulatorUseCaseSlice {
   addProduct: (shoppingProduct: ShoppingProduct) => void;
   removeProduct: (id: string) => void;
   updateProduct: (shoppingProduct: ShoppingProduct) => void;
+  getNbProductsInCart: () => number;
 }
 
-export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set) => ({
+export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
   validateStep1: (age: number): void => {
     set((state: any) => {
       const newState = { ...state };
@@ -102,5 +103,8 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       newState.simulator.appState.shoppingProducts.push(shoppingProduct);
       return newState;
     });
+  },
+  getNbProductsInCart: (): number => {
+    return get().simulator?.appState?.shoppingProducts?.length ?? 0;
   },
 });

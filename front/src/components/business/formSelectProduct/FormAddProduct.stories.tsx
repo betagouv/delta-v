@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 
 import { FormSelectProduct } from './FormSelectProduct';
-import { Product, ProductDisplayTypes } from '@/stores/products/appState.store';
+import { Product, ProductDisplayTypes } from '@/model/product';
 
 export default {
   title: 'Components/Business/FormSelectProduct',

@@ -52,9 +52,10 @@ export const RadioCard: React.FC<IRadioOptions> = ({ radioCardValues, control, n
             value={radioCardValue}
             className={({ checked, disabled }) =>
               classNames(
-                disabled ? 'opacity-50' : '',
-                checked ? 'font-extrabold border-2' : 'font-ligh border hover:bg-gray-50',
-                'border-gray-200 rounded-xl py-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
+                'text-[13px]',
+                disabled ? 'opacity-50 cursor-not-allowed' : '',
+                checked ? 'font-bold border-2' : 'font-normal border hover:bg-gray-50',
+                'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
               )
             }
           >

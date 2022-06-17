@@ -34,11 +34,7 @@ const Index = () => {
       }
     >
       <div className="flex flex-col gap-6">
-        <Header
-          withCart
-          nbCartItems={shoppingProducts?.length}
-          cartLink="/app/simulateur/pannier"
-        />
+        <Header withCart nbCartItems={shoppingProducts?.length} />
         <TitleHeader
           title={
             <>

@@ -104,8 +104,6 @@ services:
     networks:
       - backend
     working_dir: /usr/app
-    environment:
-      NEXT_PUBLIC_API_BASE_URL: http://localhost:8080
     command: yarn dev
 
   storybook-delta-v:
