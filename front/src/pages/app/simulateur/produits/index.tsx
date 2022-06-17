@@ -11,7 +11,6 @@ import { Main } from '@/templates/Main';
 const Index = () => {
   const productsResponse = useStore((state) => state.products.appState.products);
   const getProductsResponse = useStore((state) => state.getProductsResponse);
-  const shoppingProducts = useStore((state) => state.simulator.appState.shoppingProducts);
 
   const displayedProducts = productsResponse?.map((product): Item => {
     return {
@@ -34,11 +33,15 @@ const Index = () => {
       }
     >
       <div className="flex flex-col gap-6">
+<<<<<<< Updated upstream
         <Header
           withCart
           nbCartItems={shoppingProducts?.length}
           cartLink="/app/simulateur/pannier"
         />
+=======
+        <Header withCart />
+>>>>>>> Stashed changes
         <TitleHeader
           title={
             <>

@@ -15,7 +15,7 @@ export const base = (): JSX.Element => (
     <br />
     <p>With cart :</p>
     <br />
-    <Header withCart nbCartItems={5} cartLink="/test" />
+    <Header withCart />
     <br />
   </div>
 );

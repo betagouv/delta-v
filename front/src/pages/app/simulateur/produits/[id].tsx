@@ -17,7 +17,6 @@ const ProductSearch = () => {
   const findProduct = useStore((state) => state.findProduct);
   const getProductsResponse = useStore((state) => state.getProductsResponse);
   const addProduct = useStore((state) => state.addProduct);
-  const shoppingProducts = useStore((state) => state.simulator.appState.shoppingProducts);
   const router = useRouter();
   const { id } = router.query;
   const currentProduct = findProduct(id as string);
@@ -60,11 +59,15 @@ const ProductSearch = () => {
       }
     >
       <div className="flex flex-col gap-6">
+<<<<<<< Updated upstream
         <Header
           withCart
           nbCartItems={shoppingProducts?.length}
           cartLink="/app/simulateur/pannier"
         />
+=======
+        <Header withCart />
+>>>>>>> Stashed changes
         <TitleHeader title={currentProduct?.name} icon="calculator" />
         {selectedProduct?.finalProduct ? (
           <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
