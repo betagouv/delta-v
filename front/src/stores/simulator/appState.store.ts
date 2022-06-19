@@ -15,6 +15,7 @@ export enum MeansOfTransport {
 export interface ShoppingProduct {
   id: string;
   product: Product;
+  name: string;
   amount: number;
   price: number;
 }

@@ -38,7 +38,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
           </Typography>
         </div>
         <Typography weight="light" color="light-gray">
-          Jeans Levis
+          {shoppingProduct.name}
         </Typography>
       </div>
       <div>

@@ -27,7 +27,7 @@ export const withVariant = (): JSX.Element => (
     <p>Product basket :</p>
     <br />
     <ProductBasket
-      shoppingProduct={{ id: '12', product, price: 25.99, amount: 1 }}
+      shoppingProduct={{ id: '12', product, price: 25.99, name: 'Jean Levis', amount: 1 }}
       // eslint-disable-next-line no-alert
       onUpdateProduct={() => alert('On Update')}
       // eslint-disable-next-line no-alert
