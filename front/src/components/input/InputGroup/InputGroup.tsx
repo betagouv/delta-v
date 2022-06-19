@@ -87,8 +87,8 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   const inputDisabled = disabled || loading;
   return (
     <div>
-      <div>
-        <div>
+      <>
+        <>
           <label
             htmlFor={name}
             className={`block text-base font-bold mb-4`}
@@ -193,9 +193,9 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
                 trailingIcon={trailingIcon}
               />
             )}
-        </div>
+        </>
         {loading && 'Loading'}
-      </div>
+      </>
       {error && (
         <div data-testid="error-element" className="flex pl-2 text-sm text-red-600">
           <div className="flex h-3 w-3 self-center">

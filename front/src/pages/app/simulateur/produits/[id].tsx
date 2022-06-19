@@ -30,10 +30,11 @@ const ProductSearch = () => {
       };
     }) ?? [];
 
-  const onAddProduct = ({ product, price }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, price, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       product,
+      name,
       price,
       amount: 1,
     };
@@ -58,7 +59,7 @@ const ProductSearch = () => {
         />
       }
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex h-full flex-col gap-6">
         <Header withCart />
         <TitleHeader title={currentProduct?.name} icon="calculator" />
         {selectedProduct?.finalProduct ? (

@@ -64,6 +64,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
           setSelectedOption(e);
         }
       }}
+      disabled={disabled}
     >
       <div className="relative mt-1">
         <Combobox.Button className={classNames(fullWidth ? 'w-full' : 'w-fit')}>

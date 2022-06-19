@@ -10,10 +10,12 @@ import {
   getRadioProductForm,
   getSteps,
 } from './utils';
+import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
 export interface OnAddProductOptions {
   product: Product;
+  name: string;
   price: number;
   devise: string;
 }
@@ -77,6 +79,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   useEffect(() => {
     reset({
+      name: undefined,
       price: undefined,
       devise: 'eur',
       ...getDefaultValues(steps),
@@ -87,6 +90,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     const product = steps.pop();
     if (product) {
       onAddProduct({
+        name: (data.name as string) ?? '',
         product,
         price: (data.price as number) ?? 1,
         devise: (data.devise as string) ?? 'eur',
@@ -94,35 +98,43 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     }
   };
 
-  const multiForm = steps.map((step): ReactNode => {
-    if (step.productDisplayTypes === ProductDisplayTypes.addable) {
-      return <FormAddProduct control={control} register={register} />;
-    }
+  const multiForm = steps
+    .map((step): ReactNode | undefined => {
+      if (step.productDisplayTypes === ProductDisplayTypes.notManaged) {
+        return <div>Produit non géré</div>;
+      }
 
-    if (step.productDisplayTypes === ProductDisplayTypes.notManaged) {
-      return <div>Produit non géré</div>;
-    }
+      if (step.productDisplayTypes === ProductDisplayTypes.radio) {
+        return getRadioProductForm(step, register);
+      }
 
-    if (step.productDisplayTypes === ProductDisplayTypes.radio) {
-      return getRadioProductForm(step, register);
-    }
+      if (step.productDisplayTypes === ProductDisplayTypes.radioCard) {
+        return getRadioCardProductForm(step, register, control);
+      }
+      return undefined;
+    })
+    .filter((formElement) => formElement !== undefined);
 
-    if (step.productDisplayTypes === ProductDisplayTypes.radioCard) {
-      return getRadioCardProductForm(step, register, control);
-    }
-
-    return <></>;
-  });
+  const isAddAble =
+    steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
 
   return multiForm.length > 0 ? (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {multiForm.map((form, index) => {
-        return (
-          <div className="mb-5" key={index}>
-            {form}
-          </div>
-        );
-      })}
+    <form onSubmit={handleSubmit(onSubmit)} className="h-full">
+      <div className="flex h-full flex-col gap-6">
+        <InputGroup
+          fullWidth
+          name="name"
+          type="text"
+          label="Nommez votre achat"
+          placeholder="Exemple : Jeans, pantalon noir, slim..."
+          control={control}
+          register={register('name', { required: true })}
+        />
+        {multiForm.map((form, index) => {
+          return <div key={index}>{form}</div>;
+        })}
+        <FormAddProduct disabled={!isAddAble} control={control} register={register} />
+      </div>
     </form>
   ) : (
     <></>

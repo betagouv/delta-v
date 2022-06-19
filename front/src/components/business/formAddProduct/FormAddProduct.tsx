@@ -6,6 +6,7 @@ import { InputGroup } from '@/components/input/InputGroup';
 interface FormAddProductProps {
   register: any;
   control: any;
+  disabled?: boolean;
 }
 
 export interface FormSimulatorData {
@@ -23,11 +24,14 @@ const selectOptions = [
 export const FormAddProduct: React.FC<FormAddProductProps> = ({
   register,
   control,
+  disabled = false,
 }: FormAddProductProps) => {
   return (
     <>
       <InputGroup
+        disabled={disabled}
         label="Saisissez le montant"
+        placeholder="Montant"
         type="number"
         fullWidth={false}
         name="price"
@@ -35,8 +39,8 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
         register={register('price', { required: true })}
         control={control}
       />
-      <br />
       <InputGroup
+        disabled={disabled}
         label="Choisissez la devise"
         type="simple-select"
         fullWidth={false}
@@ -45,13 +49,10 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
         register={register('devise', { required: true })}
         control={control}
       />
-      <div className="absolute inset-x-0 bottom-0 w-full">
-        <div className="p-4">
-          <Button fullWidth={true} type="submit">
-            Valider
-          </Button>
-        </div>
-      </div>
+      <div className="flex-1" />
+      <Button disabled={disabled} fullWidth={true} type="submit">
+        Valider
+      </Button>
     </>
   );
 };
