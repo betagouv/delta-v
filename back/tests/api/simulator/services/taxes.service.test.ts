@@ -1,12 +1,12 @@
 import {
-  CompleteShopingProduct,
-  manageProductTaxeDetails,
+  CompleteShoppingProduct,
+  manageProductTaxesDetails,
 } from '../../../../src/api/simulator/services';
 import { ProductTaxes } from '../../../../src/entities/productTaxes.entity';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 import { productTaxesEntityFactory } from '../../../helpers/factories/productTaxes.factory';
 describe('taxes service', () => {
-  describe('manageProductTaxeDetails', () => {
+  describe('manageProductTaxesDetails', () => {
     test.each([
       [5, 750, 5],
       [2.5, 650, 5],
@@ -19,7 +19,7 @@ describe('taxes service', () => {
           unitPrice: total,
         });
 
-        const productsTaxes = manageProductTaxeDetails({
+        const productsTaxes = manageProductTaxesDetails({
           total,
           franchiseAmount: 430,
           productsTaxes: [productTaxes],
@@ -30,41 +30,39 @@ describe('taxes service', () => {
     );
   });
   describe('getProductTaxesDetails', () => {
-    const highCustomDutyProdyct = productEntityFactory({ customDuty: 12, vat: 20 });
-    const lowCustomDutyProdyct = productEntityFactory({ customDuty: 5, vat: 20 });
-    const completeShopingProduct1: CompleteShopingProduct = {
-      id: highCustomDutyProdyct.id,
-      amount: 1,
+    const highCustomDutyProduct = productEntityFactory({ customDuty: 12, vat: 20 });
+    const lowCustomDutyProduct = productEntityFactory({ customDuty: 5, vat: 20 });
+    const completeShoppingProduct1: CompleteShoppingProduct = {
+      id: highCustomDutyProduct.id,
+      name: 'Hello',
       price: 50,
-      product: highCustomDutyProdyct,
+      product: highCustomDutyProduct,
     };
-    const completeShopingProduct2: CompleteShopingProduct = {
-      id: lowCustomDutyProdyct.id,
-      amount: 1,
+    const completeShoppingProduct2: CompleteShoppingProduct = {
+      id: lowCustomDutyProduct.id,
+      name: 'Hello 2',
       price: 50,
-      product: lowCustomDutyProdyct,
+      product: lowCustomDutyProduct,
     };
     it('should be return products taxes - low taxes', () => {
-      const productTaxe = new ProductTaxes({});
-      productTaxe.setFromCompleteShopingProduct(completeShopingProduct1);
+      const productTaxes = new ProductTaxes({});
+      productTaxes.setFromCompleteShoppingProduct(completeShoppingProduct1);
 
-      expect(productTaxe).toMatchObject({
-        _id: highCustomDutyProdyct.id,
-        _name: highCustomDutyProdyct.name,
-        _amount: 1,
+      expect(productTaxes).toMatchObject({
+        _id: highCustomDutyProduct.id,
+        _name: highCustomDutyProduct.name,
         _unitPrice: 50,
         _vat: 20,
         _customDuty: 12,
       });
     });
     it('should be return products taxes - high taxes', () => {
-      const productTaxe = new ProductTaxes({});
-      productTaxe.setFromCompleteShopingProduct(completeShopingProduct2);
+      const productTaxes = new ProductTaxes({});
+      productTaxes.setFromCompleteShoppingProduct(completeShoppingProduct2);
 
-      expect(productTaxe).toMatchObject({
-        _id: lowCustomDutyProdyct.id,
-        _name: lowCustomDutyProdyct.name,
-        _amount: 1,
+      expect(productTaxes).toMatchObject({
+        _id: lowCustomDutyProduct.id,
+        _name: lowCustomDutyProduct.name,
         _unitPrice: 50,
         _vat: 20,
         _customDuty: 5,

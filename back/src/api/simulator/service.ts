@@ -3,10 +3,10 @@ import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
 import {
-  getCompleteShopingProducts,
+  getCompleteShoppingProducts,
   getTotalProducts,
-  manageProductTaxeDetails,
-  ShopingProduct,
+  manageProductTaxesDetails,
+  ShoppingProduct,
 } from './services';
 import { getFranchiseAmount } from './services/franchise.service';
 
@@ -16,7 +16,7 @@ interface SimulateServiceOptions {
   age: number;
   country: Alpha2Code;
   meanOfTransport?: MeansOfTransport;
-  shopingProducts: ShopingProduct[];
+  shoppingProducts: ShoppingProduct[];
 }
 
 interface SimulateServiceResponse {
@@ -30,26 +30,26 @@ export const service = async ({
   age,
   country,
   meanOfTransport,
-  shopingProducts,
+  shoppingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
-  const productIds = shopingProducts.map(({ id }) => id);
+  const productIds = shoppingProducts.map(({ id }) => id);
   const products = await productRepository.getManyByIds(productIds);
 
-  const total = getTotalProducts(shopingProducts);
+  const total = getTotalProducts(shoppingProducts);
   const franchiseAmount = getFranchiseAmount({ border, age, country, meanOfTransport });
-  const completeShopingProducts = getCompleteShopingProducts(shopingProducts, products);
-  const productsTaxes = completeShopingProducts.map((product) =>
-    new ProductTaxes({}).setFromCompleteShopingProduct(product),
+  const completeShoppingProducts = getCompleteShoppingProducts(shoppingProducts, products);
+  const productsTaxes = completeShoppingProducts.map((product) =>
+    new ProductTaxes({}).setFromCompleteShoppingProduct(product),
   );
 
-  const productDetailled = manageProductTaxeDetails({
+  const productDetailed = manageProductTaxesDetails({
     franchiseAmount,
     total,
     productsTaxes,
   });
 
   return {
-    products: productDetailled,
+    products: productDetailed,
     franchiseAmount,
   };
 };

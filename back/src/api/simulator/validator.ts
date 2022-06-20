@@ -2,11 +2,11 @@ import { Alpha2Code, getAlpha2Codes } from 'i18n-iso-countries';
 import { buildValidationMiddleware, IRequestValidatorSchema } from '../../core/middlewares';
 import { validator } from '../../core/validator';
 import { MeansOfTransport, meansOfTransport } from '../common/enums/meansOfTransport.enum';
-import { ShopingProduct } from './services';
+import { ShoppingProduct } from './services';
 
 export interface SimulateRequest {
   body: {
-    shopingProducts: ShopingProduct[];
+    shoppingProducts: ShoppingProduct[];
     border: boolean;
     age: number;
     country: Alpha2Code;
@@ -16,12 +16,12 @@ export interface SimulateRequest {
 
 export const simulateValidator: IRequestValidatorSchema = {
   body: validator.object({
-    shopingProducts: validator
+    shoppingProducts: validator
       .array()
       .items(
         validator.object({
           id: validator.string().uuid().required(),
-          amount: validator.number().integer().min(1).required(),
+          name: validator.string(),
           price: validator.number().min(0).invalid(0).required(),
         }),
       )

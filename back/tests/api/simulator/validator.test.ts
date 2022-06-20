@@ -5,16 +5,16 @@ import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport
 
 const { isValid } = validatorHelper(simulateValidator);
 
-const defalutValidBody = {
-  shopingProducts: [
+const defaultValidBody = {
+  shoppingProducts: [
     {
       id: faker.datatype.uuid(),
-      amount: 3,
+      name: faker.commerce.productName(),
       price: 85,
     },
     {
       id: faker.datatype.uuid(),
-      amount: 5,
+      name: faker.commerce.productName(),
       price: 40,
     },
   ],
@@ -27,7 +27,7 @@ describe('test simulator validator', () => {
   it('should validate data', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
       },
     };
     expect(isValid(data)).toBe(true);
@@ -35,11 +35,10 @@ describe('test simulator validator', () => {
   it('should not validate data - ID not uuid', () => {
     const data = {
       body: {
-        ...defalutValidBody,
-        shopingProducts: [
+        ...defaultValidBody,
+        shoppingProducts: [
           {
             id: faker.datatype.string(),
-            amount: 0,
             price: 85,
           },
         ],
@@ -50,25 +49,9 @@ describe('test simulator validator', () => {
   it('should not validate data - ID not defined', () => {
     const data = {
       body: {
-        ...defalutValidBody,
-        shopingProducts: [
+        ...defaultValidBody,
+        shoppingProducts: [
           {
-            amount: 0,
-            price: 85,
-          },
-        ],
-      },
-    };
-    expect(isValid(data)).toBe(false);
-  });
-  it('should not validate data - amount should be higher than 0', () => {
-    const data = {
-      body: {
-        ...defalutValidBody,
-        shopingProducts: [
-          {
-            id: faker.datatype.uuid(),
-            amount: 0,
             price: 85,
           },
         ],
@@ -79,11 +62,10 @@ describe('test simulator validator', () => {
   it('should not validate data - price should be higher than 0', () => {
     const data = {
       body: {
-        ...defalutValidBody,
-        shopingProducts: [
+        ...defaultValidBody,
+        shoppingProducts: [
           {
             id: faker.datatype.uuid(),
-            amount: 1,
             price: 0,
           },
         ],
@@ -94,7 +76,7 @@ describe('test simulator validator', () => {
   it('should not validate data - missing border', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         border: undefined,
       },
     };
@@ -103,7 +85,7 @@ describe('test simulator validator', () => {
   it('should not validate data - bad format border', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         border: 'bad',
       },
     };
@@ -112,7 +94,7 @@ describe('test simulator validator', () => {
   it('should not validate data - age undefiend', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         age: undefined,
       },
     };
@@ -122,7 +104,7 @@ describe('test simulator validator', () => {
   it('should not validate data - bad format age', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         age: 'bad',
       },
     };
@@ -131,7 +113,7 @@ describe('test simulator validator', () => {
   it('should not validate data - country undefiend', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         country: undefined,
       },
     };
@@ -141,7 +123,7 @@ describe('test simulator validator', () => {
   it('should not validate data - bad country', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         country: 'bad',
       },
     };
@@ -150,7 +132,7 @@ describe('test simulator validator', () => {
   it('should not validate data - missing mean of transport', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         border: false,
         age: 18,
       },
@@ -160,7 +142,7 @@ describe('test simulator validator', () => {
   it('should validate data - missing mean of transport but age < 15', () => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         border: false,
         age: 12,
       },
@@ -177,7 +159,7 @@ describe('test simulator validator', () => {
   ])('validate data should be %p - with mean of transport = %p', (result, meanOfTransport) => {
     const data = {
       body: {
-        ...defalutValidBody,
+        ...defaultValidBody,
         border: false,
         age: 18,
         meanOfTransport,
