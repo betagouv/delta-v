@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { OnActionModal } from '@/components/autonomous/OnActionModal';
 import { Header } from '@/components/business/header';
 import { Button } from '@/components/common/Button';
@@ -13,6 +15,7 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Pannier = () => {
+  const router = useRouter();
   const shoppingProducts = useStore((state) => state.simulator.appState.shoppingProducts);
   const removeProduct = useStore((state) => state.removeProduct);
   const [openActionModal, setOpenActionModal] = useState(false);
@@ -46,7 +49,9 @@ const Pannier = () => {
                   idToDelete.current = shoppingProduct.id;
                   setOpenActionModal(true);
                 }}
-                onUpdateProduct={() => {}}
+                onUpdateProduct={() => {
+                  router.push(`/app/simulateur/pannier/modifier/${shoppingProduct.id}`);
+                }}
               />
             </div>
           ))}
