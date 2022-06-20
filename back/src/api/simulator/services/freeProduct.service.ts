@@ -1,4 +1,4 @@
-import { ProductTaxes, ProductTaxesInterface } from '../../../entities/productTaxes.entity';
+import { ProductTaxesInterface } from '../../../entities/productTaxes.entity';
 
 interface SeparateFreeAndPaidProductsOptions {
   franchiseAmount: number;
@@ -10,8 +10,9 @@ interface SeparateFreeAndPaidProductsResponse {
   paidProducts: ProductTaxesInterface[];
 }
 
-interface UnitProducts {
+interface SimpleProduct {
   id: string;
+  customName?: string;
   price: number;
   taxes: number;
 }
@@ -20,21 +21,31 @@ export const separateFreeAndPaidProducts = ({
   franchiseAmount,
   productsTaxes,
 }: SeparateFreeAndPaidProductsOptions): SeparateFreeAndPaidProductsResponse => {
-  const produitThatCanFitInFranchise = productsTaxes.filter(
+  const productThatCanFitInFranchise = productsTaxes.filter(
     (productTaxesDetails) => productTaxesDetails.unitPrice <= franchiseAmount,
   );
-  const produitThatCantFitInFranchise = productsTaxes.filter(
+  const productThatCantFitInFranchise = productsTaxes.filter(
     (productTaxesDetails) => productTaxesDetails.unitPrice > franchiseAmount,
   );
 
-  const unitProducts = getUnitProducts(produitThatCanFitInFranchise);
-  const { fitProducts, notFitProducts } = getBestFitProducts(unitProducts, franchiseAmount);
-  const freeProductsTaxDetails = mergeUnitProducts(fitProducts, productsTaxes);
-  const notFreeProductsTaxDetails = mergeUnitProducts(notFitProducts, productsTaxes);
+  const simpleProducts: SimpleProduct[] = productThatCanFitInFranchise.map(
+    (productTaxesDetails) => ({
+      id: productTaxesDetails.id,
+      customName: productTaxesDetails.customName,
+      price: productTaxesDetails.unitPrice,
+      taxes: productTaxesDetails.getUnitTaxes(),
+    }),
+  );
+  const { fitProducts, notFitProducts } = getBestFitProducts(simpleProducts, franchiseAmount);
+  const freeProductsTaxDetails = mergeSimpleProducts(fitProducts, productThatCanFitInFranchise);
+  const notFreeProductsTaxDetails = mergeSimpleProducts(
+    notFitProducts,
+    productThatCanFitInFranchise,
+  );
 
   return {
-    freeProducts: freeProductsTaxDetails.map((product) => product.resetFreeTaxeDetails()),
-    paidProducts: [...notFreeProductsTaxDetails, ...produitThatCantFitInFranchise],
+    freeProducts: freeProductsTaxDetails.map((product) => product.resetFreeTaxesDetails()),
+    paidProducts: [...notFreeProductsTaxDetails, ...productThatCantFitInFranchise],
   };
 };
 
@@ -50,57 +61,29 @@ export const manageFreeProducts = ({
   return [...freeProducts, ...paidProducts];
 };
 
-const mergeUnitProducts = (
-  unitProducts: UnitProducts[],
+const mergeSimpleProducts = (
+  simpleProducts: SimpleProduct[],
   productsTaxes: ProductTaxesInterface[],
 ): ProductTaxesInterface[] => {
-  const mergedProductsTaxes: ProductTaxesInterface[] = [];
-  unitProducts.forEach((unitProduct) => {
-    const indexExistingProductTaxes = mergedProductsTaxes.findIndex(
-      (productTaxes) =>
-        productTaxes.id === unitProduct.id && productTaxes.unitPrice === unitProduct.price,
-    );
-    const productTaxes = productsTaxes.find(
-      (productTaxes) =>
-        productTaxes.id === unitProduct.id && productTaxes.unitPrice === unitProduct.price,
-    );
-
-    if (indexExistingProductTaxes !== -1) {
-      mergedProductsTaxes[indexExistingProductTaxes].addProduct(1);
-    } else if (productTaxes) {
-      const newProductTaxes = new ProductTaxes({}).setFromProductTaxes(productTaxes);
-      newProductTaxes.resetAmount();
-      mergedProductsTaxes.push(newProductTaxes);
-    }
-  });
-
-  return mergedProductsTaxes;
-};
-
-const getUnitProducts = (productsTaxesDetails: ProductTaxesInterface[]): UnitProducts[] => {
-  return productsTaxesDetails.reduce(
-    (accumulator: UnitProducts[], currentProduct: ProductTaxesInterface) => {
-      for (let index = 0; index < currentProduct.amount; index++) {
-        accumulator.push({
-          id: currentProduct.id,
-          price: currentProduct.unitPrice,
-          taxes: currentProduct.getUnitTaxes(),
-        });
-      }
-
-      return accumulator;
-    },
-    [],
-  );
+  return simpleProducts
+    .map((simpleProduct) => {
+      return productsTaxes.find(
+        (productTaxes) =>
+          productTaxes.id === simpleProduct.id &&
+          productTaxes.unitPrice === simpleProduct.price &&
+          productTaxes.customName === simpleProduct.customName,
+      );
+    })
+    .filter((productTaxes) => productTaxes !== undefined) as ProductTaxesInterface[];
 };
 
 interface GetBestFitProductsResponse {
-  fitProducts: UnitProducts[];
-  notFitProducts: UnitProducts[];
+  fitProducts: SimpleProduct[];
+  notFitProducts: SimpleProduct[];
 }
 
 const getBestFitProducts = (
-  unitProducts: UnitProducts[],
+  unitProducts: SimpleProduct[],
   franchiseAmount: number,
 ): GetBestFitProductsResponse => {
   let idxItem = 0,

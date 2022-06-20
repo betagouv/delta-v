@@ -1,33 +1,28 @@
 import currency from 'currency.js';
 import { v4 as uuid } from 'uuid';
-import { CompleteShopingProduct } from '../api/simulator/services';
+import { CompleteShoppingProduct } from '../api/simulator/services';
 
 export interface ProductTaxesInterface {
   id: string;
   name: string;
-  amount: number;
+  customName?: string;
   unitPrice: number;
   customDuty: number;
   vat: number;
   setFromProductTaxes(productTaxes: ProductTaxesInterface): ProductTaxesInterface;
-  setFromCompleteShopingProduct(
-    completeShopingProduct: CompleteShopingProduct,
+  setFromCompleteShoppingProduct(
+    completeShoppingProduct: CompleteShoppingProduct,
   ): ProductTaxesInterface;
-  getTotalPrice(): number;
   getUnitCustomDuty(): number;
   getUnitVat(): number;
   getUnitTaxes(): number;
-  getTotalCustomDuty(): number;
-  getTotalVat(): number;
-  getTotalTaxes(): number;
-  resetAmount(): ProductTaxesInterface;
-  addProduct(amount: number): ProductTaxesInterface;
-  resetFreeTaxeDetails(): ProductTaxesInterface;
+  resetFreeTaxesDetails(): ProductTaxesInterface;
   setCustomDuty(customDuty: number): ProductTaxesInterface;
 }
 export interface ProductTaxesConstructorOptions {
   id?: string;
   name?: string;
+  customName?: string;
   amount?: number;
   unitPrice?: number;
   customDuty?: number;
@@ -40,15 +35,22 @@ export const UNIQUE_CUSTOM_DUTY = 2.5;
 export class ProductTaxes implements ProductTaxesInterface {
   private _id: string;
   private _name: string;
-  private _amount: number;
+  private _customName?: string;
   private _unitPrice: number;
   private _vat: number;
   private _customDuty: number;
 
-  constructor({ id, name, amount, unitPrice, customDuty, vat }: ProductTaxesConstructorOptions) {
+  constructor({
+    id,
+    name,
+    customName,
+    unitPrice,
+    customDuty,
+    vat,
+  }: ProductTaxesConstructorOptions) {
     this._id = id ?? uuid();
     this._name = name ?? '';
-    this._amount = amount ?? 0;
+    this._customName = customName;
     this._unitPrice = unitPrice ?? 0;
     this._customDuty = customDuty ?? 0;
     this._vat = vat ?? 0;
@@ -59,7 +61,7 @@ export class ProductTaxes implements ProductTaxesInterface {
   setFromProductTaxes = (productTaxes: ProductTaxesInterface): ProductTaxesInterface => {
     this._id = productTaxes.id;
     this._name = productTaxes.name;
-    this._amount = productTaxes.amount;
+    this._customName = productTaxes.customName;
     this._unitPrice = productTaxes.unitPrice;
     this._customDuty = productTaxes.customDuty;
     this._vat = productTaxes.vat;
@@ -67,18 +69,18 @@ export class ProductTaxes implements ProductTaxesInterface {
     return this;
   };
 
-  setFromCompleteShopingProduct = (
-    completeShopingProduct: CompleteShopingProduct,
+  setFromCompleteShoppingProduct = (
+    completeShoppingProduct: CompleteShoppingProduct,
   ): ProductTaxesInterface => {
     const {
-      amount,
+      name: customName,
       price,
       product: { customDuty, vat, id, name },
-    } = completeShopingProduct;
+    } = completeShoppingProduct;
 
     this._id = id;
     this._name = name;
-    this._amount = amount;
+    this._customName = customName;
     this._unitPrice = price;
     this._customDuty = customDuty ?? 0;
     this._vat = vat ?? 0;
@@ -94,8 +96,8 @@ export class ProductTaxes implements ProductTaxesInterface {
     return this._name;
   }
 
-  get amount(): number {
-    return this._amount;
+  get customName(): string | undefined {
+    return this._customName;
   }
 
   get unitPrice(): number {
@@ -122,33 +124,7 @@ export class ProductTaxes implements ProductTaxesInterface {
     return currency(this.getUnitCustomDuty()).add(this.getUnitVat()).value;
   };
 
-  getTotalCustomDuty = (): number => {
-    return currency(this.getUnitCustomDuty()).multiply(this.amount).value;
-  };
-
-  getTotalVat = (): number => {
-    return currency(this.getUnitVat()).multiply(this.amount).value;
-  };
-
-  getTotalTaxes = (): number => {
-    return currency(this.getTotalCustomDuty()).add(this.getTotalVat()).value;
-  };
-
-  getTotalPrice = (): number => {
-    return currency(this.unitPrice).multiply(this.amount).value;
-  };
-
-  resetAmount = (): ProductTaxesInterface => {
-    this._amount = 1;
-    return this;
-  };
-
-  addProduct = (amount = 1): ProductTaxesInterface => {
-    this._amount += amount;
-    return this;
-  };
-
-  resetFreeTaxeDetails = (): ProductTaxesInterface => {
+  resetFreeTaxesDetails = (): ProductTaxesInterface => {
     this._customDuty = 0;
     this._vat = 0;
     return this;

@@ -4,13 +4,13 @@ import { productTaxesEntityFactory } from '../../helpers/factories/productTaxes.
 describe('test serializer', () => {
   it('should serialize data', () => {
     const product1 = productTaxesEntityFactory({
-      amount: 1,
+      customName: 'product1',
       unitPrice: 85,
       customDuty: 12,
       vat: 20,
     });
     const product2 = productTaxesEntityFactory({
-      amount: 2,
+      customName: 'product2',
       unitPrice: 100,
       customDuty: 5,
       vat: 20,
@@ -23,36 +23,28 @@ describe('test serializer', () => {
     expect(serializedData).toMatchObject({
       products: [
         {
-          amount: 1,
+          customName: 'product1',
           unitPrice: 85,
           customDuty: 12,
           vat: 20,
-          totalPrice: 85,
           unitCustomDuty: 10.2,
           unitVat: 17,
           unitTaxes: 27.2,
-          totalCustomDuty: 10.2,
-          totalVat: 17,
-          totalTaxes: 27.2,
         },
         {
-          amount: 2,
+          customName: 'product2',
           unitPrice: 100,
           customDuty: 5,
           vat: 20,
-          totalPrice: 200,
           unitCustomDuty: 5,
           unitVat: 20,
           unitTaxes: 25,
-          totalCustomDuty: 10,
-          totalVat: 40,
-          totalTaxes: 50,
         },
       ],
-      total: 285,
-      totalCustomDuty: 20.2,
-      totalVat: 57,
-      totalTaxes: 77.2,
+      total: 185,
+      totalCustomDuty: 15.2,
+      totalVat: 37,
+      totalTaxes: 52.2,
       franchiseAmount: 500,
     });
   });

@@ -7,7 +7,7 @@ export const productTaxesEntityFactory = (
   return new ProductTaxes({
     id: args.id ?? faker.datatype.uuid(),
     name: args.id ?? faker.commerce.productName(),
-    amount: args.amount ?? 1,
+    customName: args.customName,
     customDuty: args.customDuty ?? 5,
     vat: args.vat ?? 20,
     unitPrice: args.unitPrice ?? 100,

@@ -8,21 +8,19 @@ describe('test simulator service', () => {
   it('should simulate declaration', async () => {
     const product1 = productEntityFactory({ customDuty: 12, vat: 20 });
     const product2 = productEntityFactory({ customDuty: 5, vat: 20 });
-    const shopingProduct1 = {
+    const shoppingProduct1 = {
       id: product1.id,
-      amount: 3,
       price: 85,
     };
-    const shopingProduct2 = {
+    const shoppingProduct2 = {
       id: product2.id,
-      amount: 5,
       price: 40,
     };
     const productRepository = productRepositoryMock({ getManyByIds: [product1, product2] });
     const result = await service({
       border: false,
       age: 18,
-      shopingProducts: [shopingProduct1, shopingProduct2],
+      shoppingProducts: [shoppingProduct1, shoppingProduct2],
       meanOfTransport: MeansOfTransport.TRAIN,
       productRepository,
       country: 'US',
@@ -30,17 +28,8 @@ describe('test simulator service', () => {
     expect(result).toMatchObject({
       products: [
         {
-          _id: product2.id,
-          _name: product2.name,
-          _amount: 1,
-          _unitPrice: 40,
-          _customDuty: 0,
-          _vat: 0,
-        },
-        {
           _id: product1.id,
           _name: product1.name,
-          _amount: 3,
           _unitPrice: 85,
           _customDuty: 0,
           _vat: 0,
@@ -48,10 +37,9 @@ describe('test simulator service', () => {
         {
           _id: product2.id,
           _name: product2.name,
-          _amount: 4,
           _unitPrice: 40,
-          _customDuty: 2.5,
-          _vat: 20,
+          _customDuty: 0,
+          _vat: 0,
         },
       ],
       franchiseAmount: 300,
@@ -65,21 +53,20 @@ describe('test simulator service', () => {
     'should simulate declaration with total custom duty %p€ - totalProducts = %p and customDuty = %p',
     async (totalCustomDutyExpected, totalProducts, customDuty) => {
       const product1 = productEntityFactory({ customDuty, vat: 20 });
-      const shopingProduct1 = {
+      const shoppingProduct1 = {
         id: product1.id,
-        amount: 1,
         price: totalProducts,
       };
       const productRepository = productRepositoryMock({ getManyByIds: [product1] });
       const result = await service({
         border: false,
         age: 18,
-        shopingProducts: [shopingProduct1],
+        shoppingProducts: [shoppingProduct1],
         productRepository,
         country: 'US',
       });
       const totalCustomDuty = result.products.reduce(
-        (acc, product) => acc + product.getTotalCustomDuty(),
+        (acc, product) => acc + product.getUnitCustomDuty(),
         0,
       );
       expect(totalCustomDuty).toEqual(totalCustomDutyExpected);
@@ -87,9 +74,8 @@ describe('test simulator service', () => {
   );
   it('should throw error - product not found', async () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
-    const shopingProduct = {
+    const shoppingProduct = {
       id: product.id,
-      amount: 3,
       price: 150,
     };
     const productRepository = productRepositoryMock({ getManyByIds: [] });
@@ -99,7 +85,7 @@ describe('test simulator service', () => {
       await service({
         border: false,
         age: 18,
-        shopingProducts: [shopingProduct],
+        shoppingProducts: [shoppingProduct],
         productRepository,
         country: 'US',
       });

@@ -4,17 +4,13 @@ import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
 interface ProductSerializer {
   id: string;
   name: string;
-  amount: number;
+  customName?: string;
   customDuty: number;
   vat: number;
   unitPrice: number;
-  totalPrice: number;
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
-  totalCustomDuty: number;
-  totalVat: number;
-  totalTaxes: number;
 }
 
 interface SerializedSimulatorOptions {
@@ -34,17 +30,13 @@ interface SerializedSimulatorResponse {
 const serializeProduct = (productTaxes: ProductTaxesInterface): ProductSerializer => ({
   id: productTaxes.id,
   name: productTaxes.name,
-  amount: productTaxes.amount,
+  customName: productTaxes.customName,
   unitPrice: productTaxes.unitPrice,
   customDuty: productTaxes.customDuty,
   vat: productTaxes.vat,
-  totalPrice: productTaxes.getTotalPrice(),
   unitCustomDuty: productTaxes.getUnitCustomDuty(),
   unitVat: productTaxes.getUnitVat(),
   unitTaxes: productTaxes.getUnitTaxes(),
-  totalCustomDuty: productTaxes.getTotalCustomDuty(),
-  totalVat: productTaxes.getTotalVat(),
-  totalTaxes: productTaxes.getTotalTaxes(),
 });
 
 export const serializeSimulator = ({
@@ -52,17 +44,17 @@ export const serializeSimulator = ({
   franchiseAmount,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
   const totalCustomDuty = products.reduce(
-    (acc, productTaxes) => currency(acc).add(productTaxes.getTotalCustomDuty()).value,
+    (acc, productTaxes) => currency(acc).add(productTaxes.getUnitCustomDuty()).value,
     0,
   );
   const totalVat = products.reduce(
-    (acc, productTaxes) => currency(acc).add(productTaxes.getTotalVat()).value,
+    (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVat()).value,
     0,
   );
   return {
     products: products.map(serializeProduct),
     total: products.reduce(
-      (total, productTaxes) => currency(total).add(productTaxes.getTotalPrice()).value,
+      (total, productTaxes) => currency(total).add(productTaxes.unitPrice).value,
       0,
     ),
     totalCustomDuty,

@@ -11,35 +11,35 @@ import { prepareContextProduct } from '../../utils/prepareContext/product';
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
 
-const prepareContext = async (customDytyProduct1 = 5): Promise<Product[]> => {
-  const product1 = await prepareContextProduct({ testDb, vat: 20, customDuty: customDytyProduct1 });
+const prepareContext = async (customDutyProduct1 = 5): Promise<Product[]> => {
+  const product1 = await prepareContextProduct({ testDb, vat: 20, customDuty: customDutyProduct1 });
   const product2 = await prepareContextProduct({ testDb, vat: 20, customDuty: 12 });
+  const product3 = await prepareContextProduct({ testDb, vat: 20, customDuty: 12 });
 
-  return [product1, product2];
+  return [product1, product2, product3];
 };
 
-export interface ShopingProduct {
+export interface ShoppingProduct {
   id: string;
-  amount: number;
+  name?: string;
   price: number;
 }
 
-const prepareProductPrice = async (price = 500): Promise<ShopingProduct[]> => {
+const prepareProductPrice = async (price = 500): Promise<ShoppingProduct[]> => {
   const products = await prepareContext();
-  const shopingProducts: ShopingProduct[] = [
+  const shoppingProducts: ShoppingProduct[] = [
     {
       id: products[0].id,
-      amount: 1,
       price,
     },
   ];
 
-  return shopingProducts;
+  return shoppingProducts;
 };
 
 interface SimulateEndpointOptions {
   products?: Product[];
-  shopingProducts: ShopingProduct[];
+  shoppingProducts: ShoppingProduct[];
   border?: boolean;
   age?: number;
   country?: Alpha2Code;
@@ -48,14 +48,9 @@ interface SimulateEndpointOptions {
 export interface ProductTaxesDetails {
   id: string;
   name: string;
-  amount: number;
   unitPrice: number;
-  totalPrice: number;
   customDuty: number;
   vat: number;
-  totalCustomDuty: number;
-  totalVat: number;
-  totalTaxes: number;
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
@@ -71,7 +66,7 @@ interface SimulateEndpointResponse {
 
 const simulateEndpoint = async ({
   products,
-  shopingProducts,
+  shoppingProducts,
   border = false,
   age = faker.datatype.number({ precision: 1, min: 15 }),
   meanOfTransport = MeansOfTransport.CAR,
@@ -79,27 +74,22 @@ const simulateEndpoint = async ({
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
   const { status, body } = await request(testApp)
     .post('/api/simulator')
-    .send({ shopingProducts, border, age, country, meanOfTransport });
+    .send({ shoppingProducts, border, age, country, meanOfTransport });
 
   if (!products) {
     return { status, body };
   }
 
-  const productTaxesDetails = shopingProducts.map(
-    (shopingProduct, index: number): ProductTaxesDetails => {
-      const unitCustomDuty = (shopingProduct.price * (products[index].customDuty ?? 0)) / 100;
-      const unitVat = (shopingProduct.price * (products[index].vat ?? 0)) / 100;
+  const productTaxesDetails = shoppingProducts.map(
+    (shoppingProduct, index: number): ProductTaxesDetails => {
+      const unitCustomDuty = (shoppingProduct.price * (products[index].customDuty ?? 0)) / 100;
+      const unitVat = (shoppingProduct.price * (products[index].vat ?? 0)) / 100;
       return {
         id: products[index].id,
         name: products[index].name,
-        amount: shopingProduct.amount,
-        unitPrice: shopingProduct.price,
-        totalPrice: shopingProduct.amount * shopingProduct.price,
+        unitPrice: shoppingProduct.price,
         customDuty: products[index].customDuty ?? 0,
         vat: products[index].vat ?? 0,
-        totalCustomDuty: shopingProduct.amount * unitCustomDuty,
-        totalVat: shopingProduct.amount * unitVat,
-        totalTaxes: shopingProduct.amount * (unitCustomDuty + unitVat),
         unitCustomDuty,
         unitVat,
         unitTaxes: unitCustomDuty + unitVat,
@@ -124,31 +114,36 @@ describe('test simulator API', () => {
   });
   it('should simulate declaration', async () => {
     const products = await prepareContext();
-    const shopingProducts: ShopingProduct[] = [
+    const shoppingProducts: ShoppingProduct[] = [
       {
         id: products[0].id,
-        amount: 3,
+        name: 'product1',
         price: 50,
       },
       {
         id: products[1].id,
-        amount: 5,
+        name: 'product2',
         price: 300,
+      },
+      {
+        id: products[1].id,
+        name: 'product3',
+        price: 500,
       },
     ];
 
     const { body, status } = await simulateEndpoint({
       products,
-      shopingProducts,
+      shoppingProducts,
     });
     expect(status).toBe(200);
 
     expect(body.products.length).toBe(3);
 
     expect(body).toMatchObject({
-      total: 1650,
-      totalCustomDuty: 151.5,
-      totalVat: 270,
+      total: 850,
+      totalCustomDuty: 62.5,
+      totalVat: 110,
       franchiseAmount: 300,
     });
   });
@@ -160,17 +155,16 @@ describe('test simulator API', () => {
     'should simulate declaration with total custom duty %p€ - totalProducts = %p and customDuty = %p',
     async (totalCustomDutyExpected, totalProducts, customDuty) => {
       const products = await prepareContext(customDuty);
-      const shopingProducts: ShopingProduct[] = [
+      const shoppingProducts: ShoppingProduct[] = [
         {
           id: products[0].id,
-          amount: 1,
           price: totalProducts,
         },
       ];
 
       const { body, status } = await simulateEndpoint({
         products,
-        shopingProducts,
+        shoppingProducts,
       });
       expect(status).toBe(200);
 
@@ -182,9 +176,9 @@ describe('test simulator API', () => {
     describe('border user', () => {
       describe('adult user', () => {
         it('should pay franchise - total > 75 ', async () => {
-          const shopingProducts = await prepareProductPrice(80);
+          const shoppingProducts = await prepareProductPrice(80);
           const { body, status } = await simulateEndpoint({
-            shopingProducts,
+            shoppingProducts,
             border: true,
             age: faker.datatype.number({ precision: 1, min: 15 }),
           });
@@ -193,9 +187,9 @@ describe('test simulator API', () => {
           expect(body.totalVat).toBeGreaterThan(0);
         });
         it('should not pay franchise - total < 75 ', async () => {
-          const shopingProducts = await prepareProductPrice(70);
+          const shoppingProducts = await prepareProductPrice(70);
           const { body, status } = await simulateEndpoint({
-            shopingProducts,
+            shoppingProducts,
             border: true,
             age: faker.datatype.number({ precision: 1, min: 15 }),
           });
@@ -206,9 +200,9 @@ describe('test simulator API', () => {
       });
       describe('not adult user', () => {
         it('should pay franchise - total > 40 ', async () => {
-          const shopingProducts = await prepareProductPrice(41);
+          const shoppingProducts = await prepareProductPrice(41);
           const { body, status } = await simulateEndpoint({
-            shopingProducts,
+            shoppingProducts,
             border: true,
             age: faker.datatype.number({ precision: 1, max: 15 }),
           });
@@ -217,9 +211,9 @@ describe('test simulator API', () => {
           expect(body.totalVat).toBeGreaterThan(0);
         });
         it('should not pay franchise - total < 40 ', async () => {
-          const shopingProducts = await prepareProductPrice(39);
+          const shoppingProducts = await prepareProductPrice(39);
           const { body, status } = await simulateEndpoint({
-            shopingProducts,
+            shoppingProducts,
             border: true,
             age: faker.datatype.number({ precision: 1, max: 15 }),
           });
@@ -238,9 +232,9 @@ describe('test simulator API', () => {
           [310, MeansOfTransport.CAR],
           [301, MeansOfTransport.OTHER],
         ])('should pay - total = %p and meanOfTransport = %p', async (total, meanOfTransport) => {
-          const shopingProducts = await prepareProductPrice(total);
+          const shoppingProducts = await prepareProductPrice(total);
           const { body, status } = await simulateEndpoint({
-            shopingProducts,
+            shoppingProducts,
             border: false,
             age: faker.datatype.number({ precision: 1, min: 15 }),
             meanOfTransport,
@@ -258,9 +252,9 @@ describe('test simulator API', () => {
         ])(
           'should not pay - total = %p and meanOfTransport = %p',
           async (total, meanOfTransport) => {
-            const shopingProducts = await prepareProductPrice(total);
+            const shoppingProducts = await prepareProductPrice(total);
             const { body, status } = await simulateEndpoint({
-              shopingProducts,
+              shoppingProducts,
               border: false,
               age: faker.datatype.number({ precision: 1, min: 15 }),
               meanOfTransport,
@@ -273,9 +267,9 @@ describe('test simulator API', () => {
       });
       describe('not adult user', () => {
         it('should pay franchise - total > 150 ', async () => {
-          const shopingProducts = await prepareProductPrice(151);
+          const shoppingProducts = await prepareProductPrice(151);
           const { body, status } = await simulateEndpoint({
-            shopingProducts,
+            shoppingProducts,
             border: false,
             age: faker.datatype.number({ precision: 1, max: 15 }),
           });
@@ -284,9 +278,9 @@ describe('test simulator API', () => {
           expect(body.totalVat).toBeGreaterThan(0);
         });
         it('should not pay franchise - total < 150 ', async () => {
-          const shopingProducts = await prepareProductPrice(149);
+          const shoppingProducts = await prepareProductPrice(149);
           const { body, status } = await simulateEndpoint({
-            shopingProducts,
+            shoppingProducts,
             border: false,
             age: faker.datatype.number({ precision: 1, max: 15 }),
           });

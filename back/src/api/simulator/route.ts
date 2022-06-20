@@ -15,9 +15,9 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { shopingProducts, border, age, country, meanOfTransport } = req.body;
+    const { shoppingProducts, border, age, country, meanOfTransport } = req.body;
     const { products, franchiseAmount } = await service({
-      shopingProducts,
+      shoppingProducts,
       border,
       age,
       country,
