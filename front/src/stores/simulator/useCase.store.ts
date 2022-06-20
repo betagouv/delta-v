@@ -23,6 +23,14 @@ export interface SimulatorUseCaseSlice {
   removeProduct: (id: string) => void;
   updateProduct: (shoppingProduct: ShoppingProduct) => void;
   getNbProductsInCart: () => number;
+  findShoppingProduct: (id: string) => ShoppingProduct | undefined;
+  updateShoppingProduct: (options: UpdateShoppingProductOptions) => void;
+}
+
+interface UpdateShoppingProductOptions {
+  id: string;
+  name: string;
+  price: number;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
@@ -106,5 +114,26 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
   },
   getNbProductsInCart: (): number => {
     return get().simulator?.appState?.shoppingProducts?.length ?? 0;
+  },
+  findShoppingProduct: (id: string): ShoppingProduct | undefined => {
+    return (
+      get().simulator?.appState?.shoppingProducts?.find(
+        (product: ShoppingProduct) => product.id === id,
+      ) ?? undefined
+    );
+  },
+  updateShoppingProduct: ({ id, name, price }: UpdateShoppingProductOptions): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      const currentShoppingProduct = newState.simulator.appState.shoppingProducts.find(
+        (product: ShoppingProduct) => product.id === id,
+      );
+      const newShoppingProducts = newState.simulator.appState.shoppingProducts.filter(
+        (product: ShoppingProduct) => product.id !== id,
+      );
+      newState.simulator.appState.shoppingProducts = newShoppingProducts;
+      newState.simulator.appState.shoppingProducts.push({ ...currentShoppingProduct, name, price });
+      return newState;
+    });
   },
 });
