@@ -4,7 +4,11 @@ import { persist } from 'zustand/middleware';
 
 import { createProductsAppStateSlice, ProductsAppStateSlice } from './products/appState.store';
 import { createUseCaseProductSlice, ProductsUseCaseSlice } from './products/useCase.store';
-import { createSimulatorAppStateSlice, SimulatorAppStateSlice } from './simulator/appState.store';
+import {
+  createSimulatorAppStateSlice,
+  MeansOfTransport,
+  SimulatorAppStateSlice,
+} from './simulator/appState.store';
 import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/useCase.store';
 
 export type StoreState = SimulatorUseCaseSlice &
@@ -33,6 +37,22 @@ export const useStore = create<StoreState>(
     {
       name: 'app-storage',
       getStorage: () => localStorage,
+      version: 1,
+      migrate(persistedState: StoreState, version) {
+        const newPersistedState = { ...persistedState };
+        if (version === 0) {
+          newPersistedState.simulator.appState.age = newPersistedState.simulator.appState.age ?? 0;
+          newPersistedState.simulator.appState.meanOfTransport =
+            newPersistedState.simulator.appState.meanOfTransport ?? MeansOfTransport.PLANE;
+          newPersistedState.simulator.appState.country =
+            newPersistedState.simulator.appState.country ?? 'DE';
+          newPersistedState.simulator.appState.border =
+            newPersistedState.simulator.appState.border ?? false;
+          newPersistedState.simulator.appState.shoppingProducts = [];
+        }
+
+        return newPersistedState;
+      },
     },
   ),
 );
