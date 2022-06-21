@@ -100,10 +100,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   const multiForm = steps
     .map((step): ReactNode | undefined => {
-      if (step.productDisplayTypes === ProductDisplayTypes.notManaged) {
-        return <div>Produit non géré</div>;
-      }
-
       if (step.productDisplayTypes === ProductDisplayTypes.radio) {
         return getRadioProductForm(step, register);
       }
@@ -118,7 +114,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   const isAddAble =
     steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
 
-  return multiForm.length > 0 ? (
+  return currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
       <div className="flex h-full flex-col gap-6">
         <InputGroup
@@ -137,6 +133,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       </div>
     </form>
   ) : (
-    <></>
+    <div>Produit non géré</div>
   );
 };
