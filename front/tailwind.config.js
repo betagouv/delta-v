@@ -27,6 +27,8 @@ module.exports = {
           text: '#929292',
         },
         cancel: colors.red,
+        link: '#6A6AF4',
+        success: '#27A658',
       },
       spacing: {
         extraSmall: '0.75rem',

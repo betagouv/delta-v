@@ -3,15 +3,13 @@ import { Alpha2Code } from 'i18n-iso-countries';
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
 // eslint-disable-next-line import/no-cycle
-import { ShoppingProduct, SIMULATOR_EMPTY_STATE } from './appState.store';
-
-export enum MeansOfTransport {
-  PLANE = 'plane',
-  BOAT = 'boat',
-  TRAIN = 'train',
-  CAR = 'car',
-  OTHER = 'other',
-}
+import {
+  MeansOfTransport,
+  ShoppingProduct,
+  SimulatorResponse,
+  SIMULATOR_EMPTY_STATE,
+} from './appState.store';
+import axios from '@/config/axios';
 
 export interface SimulatorUseCaseSlice {
   validateStep1: (age: number) => void;
@@ -25,6 +23,7 @@ export interface SimulatorUseCaseSlice {
   getNbProductsInCart: () => number;
   findShoppingProduct: (id: string) => ShoppingProduct | undefined;
   updateShoppingProduct: (options: UpdateShoppingProductOptions) => void;
+  simulate: () => void;
 }
 
 interface UpdateShoppingProductOptions {
@@ -37,24 +36,27 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
   validateStep1: (age: number): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.simulator.appState.age = age;
+      newState.simulator.appState.simulatorRequest.age = age;
       return newState;
     });
   },
   validateStep2: (meanOfTransport: MeansOfTransport): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.simulator.appState.meanOfTransport = meanOfTransport;
+      newState.simulator.appState.simulatorRequest.meanOfTransport = meanOfTransport;
       return newState;
     });
   },
   validateStep3: (country: Alpha2Code): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.simulator.appState.country = country;
+      newState.simulator.appState.simulatorRequest.country = country;
 
-      if (country !== 'CH' || state.simulator.appState.meanOfTransport !== MeansOfTransport.CAR) {
-        newState.simulator.appState.border = false;
+      if (
+        country !== 'CH' ||
+        state.simulator.appState.simulatorRequest.meanOfTransport !== MeansOfTransport.CAR
+      ) {
+        newState.simulator.appState.simulatorRequest.border = false;
       }
       return newState;
     });
@@ -62,7 +64,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
   validateStep4: (border: boolean): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.simulator.appState.border = border;
+      newState.simulator.appState.simulatorRequest.border = border;
       return newState;
     });
   },
@@ -70,16 +72,20 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     set((state: any) => {
       const newState = { ...state };
       if (step <= 4) {
-        newState.simulator.appState.border = SIMULATOR_EMPTY_STATE.border;
+        newState.simulator.appState.simulatorRequest.border =
+          SIMULATOR_EMPTY_STATE.simulatorRequest.border;
       }
       if (step <= 3) {
-        newState.simulator.appState.country = SIMULATOR_EMPTY_STATE.country;
+        newState.simulator.appState.simulatorRequest.country =
+          SIMULATOR_EMPTY_STATE.simulatorRequest.country;
       }
       if (step <= 2) {
-        newState.simulator.appState.meanOfTransport = SIMULATOR_EMPTY_STATE.meanOfTransport;
+        newState.simulator.appState.simulatorRequest.meanOfTransport =
+          SIMULATOR_EMPTY_STATE.simulatorRequest.meanOfTransport;
       }
       if (step <= 1) {
-        newState.simulator.appState.age = SIMULATOR_EMPTY_STATE.age;
+        newState.simulator.appState.simulatorRequest.age =
+          SIMULATOR_EMPTY_STATE.simulatorRequest.age;
       }
       return newState;
     });
@@ -87,37 +93,39 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
   addProduct: (shoppingProduct: ShoppingProduct): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.simulator.appState.shoppingProducts.push(shoppingProduct);
+      newState.simulator.appState.simulatorRequest.shoppingProducts.push(shoppingProduct);
       return newState;
     });
   },
   removeProduct: (id: string): void => {
     set((state: any) => {
       const newState = { ...state };
-      const newShoppingProducts = newState.simulator.appState.shoppingProducts.filter(
-        (product: ShoppingProduct) => product.id !== id,
-      );
-      newState.simulator.appState.shoppingProducts = newShoppingProducts;
+      const newShoppingProducts =
+        newState.simulator.appState.simulatorRequest.shoppingProducts.filter(
+          (product: ShoppingProduct) => product.id !== id,
+        );
+      newState.simulator.appState.simulatorRequest.shoppingProducts = newShoppingProducts;
       return newState;
     });
   },
   updateProduct: (shoppingProduct: ShoppingProduct): void => {
     set((state: any) => {
       const newState = { ...state };
-      const newShoppingProducts = newState.simulator.appState.shoppingProducts.filter(
-        (product: ShoppingProduct) => product.id !== shoppingProduct.id,
-      );
-      newState.simulator.appState.shoppingProducts = newShoppingProducts;
-      newState.simulator.appState.shoppingProducts.push(shoppingProduct);
+      const newShoppingProducts =
+        newState.simulator.appState.simulatorRequest.shoppingProducts.filter(
+          (product: ShoppingProduct) => product.id !== shoppingProduct.id,
+        );
+      newState.simulator.appState.simulatorRequest.shoppingProducts = newShoppingProducts;
+      newState.simulator.appState.simulatorRequest.shoppingProducts.push(shoppingProduct);
       return newState;
     });
   },
   getNbProductsInCart: (): number => {
-    return get().simulator?.appState?.shoppingProducts?.length ?? 0;
+    return get().simulator?.appState?.simulatorRequest.shoppingProducts?.length ?? 0;
   },
   findShoppingProduct: (id: string): ShoppingProduct | undefined => {
     return (
-      get().simulator?.appState?.shoppingProducts?.find(
+      get().simulator?.appState?.simulatorRequest.shoppingProducts?.find(
         (product: ShoppingProduct) => product.id === id,
       ) ?? undefined
     );
@@ -125,15 +133,51 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
   updateShoppingProduct: ({ id, name, price }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
-      const currentShoppingProduct = newState.simulator.appState.shoppingProducts.find(
-        (product: ShoppingProduct) => product.id === id,
-      );
-      const newShoppingProducts = newState.simulator.appState.shoppingProducts.filter(
-        (product: ShoppingProduct) => product.id !== id,
-      );
-      newState.simulator.appState.shoppingProducts = newShoppingProducts;
-      newState.simulator.appState.shoppingProducts.push({ ...currentShoppingProduct, name, price });
+      const currentShoppingProduct =
+        newState.simulator.appState.simulatorRequest.shoppingProducts.find(
+          (product: ShoppingProduct) => product.id === id,
+        );
+      const newShoppingProducts =
+        newState.simulator.appState.simulatorRequest.shoppingProducts.filter(
+          (product: ShoppingProduct) => product.id !== id,
+        );
+      newState.simulator.appState.simulatorRequest.shoppingProducts = newShoppingProducts;
+      newState.simulator.appState.simulatorRequest.shoppingProducts.push({
+        ...currentShoppingProduct,
+        name,
+        price,
+      });
       return newState;
     });
+  },
+  simulate: async () => {
+    try {
+      const simulatorData = get().simulator.appState;
+      const data = {
+        age: simulatorData.simulatorRequest.age,
+        meanOfTransport: simulatorData.simulatorRequest.meanOfTransport,
+        country: simulatorData.simulatorRequest.country,
+        border: simulatorData.simulatorRequest.border,
+        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts.map(
+          (product: ShoppingProduct) => ({
+            id: product.product.id,
+            name: product.name,
+            price: product.price,
+          }),
+        ),
+      };
+      const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;
+      set((state: any) => {
+        const newState = { ...state };
+        newState.simulator.appState.simulatorResponse = response;
+        return newState;
+      });
+    } catch (error: any) {
+      set((state: any) => {
+        const newState = { ...state };
+        newState.simulator.appState.error = error?.response?.data;
+        return newState;
+      });
+    }
   },
 });

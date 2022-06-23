@@ -42,7 +42,7 @@ const UpdateProductBasket = () => {
 
   const onUpdateShoppingProduct = ({ price, name }: FormUpdateShoppingProduct) => {
     updateShoppingProduct({ id: id as string, price, name: name ?? '' });
-    router.push('/app/simulateur/pannier');
+    router.push('/simulateur/pannier');
   };
 
   if (!currentProduct) {

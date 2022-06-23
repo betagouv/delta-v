@@ -36,7 +36,7 @@ const Configuration = () => {
       return;
     }
     validateStep1(data.age);
-    router.push(`/app/simulateur/configuration/etape2`);
+    router.push(`/simulateur/configuration/etape2`);
   };
 
   return (

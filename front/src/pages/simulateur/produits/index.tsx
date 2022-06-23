@@ -14,7 +14,7 @@ const Index = () => {
 
   const displayedProducts = productsResponse?.map((product): Item => {
     return {
-      to: `/app/simulateur/produits/${product.id}`,
+      to: `/simulateur/produits/${product.id}`,
       svgNames: product.icon ?? 'categoryOther',
       title: product.name,
     };

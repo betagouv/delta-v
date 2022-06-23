@@ -24,7 +24,7 @@ const ProductSearch = () => {
   const displayedProducts =
     currentProduct?.subProducts.map((product) => {
       return {
-        to: `/app/simulateur/produits/${product.id}`,
+        to: `/simulateur/produits/${product.id}`,
         svgNames: product.icon ?? 'categoryOther',
         title: product.name,
       };
@@ -39,7 +39,7 @@ const ProductSearch = () => {
       amount: 1,
     };
     addProduct(shoppingProduct);
-    router.push('/app/simulateur/produits');
+    router.push('/simulateur/produits');
   };
 
   useEffect(() => {

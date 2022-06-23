@@ -20,24 +20,57 @@ export interface ShoppingProduct {
   price: number;
 }
 
+interface DetailedProduct {
+  id: string;
+  name: string;
+  customName?: string;
+  unitPrice: number;
+  unitCustomDuty: number;
+  unitVat: number;
+  unitTaxes: number;
+  customDuty: number;
+  vat: number;
+}
+
+export interface SimulatorResponse {
+  products?: DetailedProduct[];
+  total: number;
+  totalCustomDuty: number;
+  totalVat: number;
+  totalTaxes: number;
+  franchiseAmount: number;
+}
+
+export interface SimulatorRequest {
+  age?: number;
+  meanOfTransport?: MeansOfTransport;
+  country?: Alpha2Code;
+  border?: boolean;
+  shoppingProducts: ShoppingProduct[];
+}
+
+export interface SimulatorData {
+  simulatorRequest: SimulatorRequest;
+  simulatorResponse?: SimulatorResponse;
+  error?: any;
+}
+
 export interface SimulatorAppStateSlice {
   simulator: {
-    appState: {
-      age?: number;
-      meanOfTransport?: MeansOfTransport;
-      country?: Alpha2Code;
-      border?: boolean;
-      shoppingProducts: ShoppingProduct[];
-    };
+    appState: SimulatorData;
   };
 }
 
 export const SIMULATOR_EMPTY_STATE = {
-  age: undefined,
-  meanOfTransport: undefined,
-  country: undefined,
-  border: undefined,
-  shoppingProducts: [],
+  simulatorRequest: {
+    age: undefined,
+    meanOfTransport: undefined,
+    country: undefined,
+    border: undefined,
+    shoppingProducts: [],
+  },
+  simulatorResponse: undefined,
+  error: undefined,
 };
 
 export const createSimulatorAppStateSlice: StoreSlice<SimulatorAppStateSlice> = () => ({

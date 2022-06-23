@@ -1,139 +1,129 @@
-import { useEffect } from 'react';
-
-import { Alpha2Code } from 'i18n-iso-countries';
-import { useFieldArray, useForm } from 'react-hook-form';
-
-import { FormSimulator } from '@/components/business/formSimulator';
-import { ProductTree } from '@/components/business/productTree';
-import { ResponseSimulator } from '@/components/business/responseSimulator';
-import { Button } from '@/components/common/Button';
+import { Card } from '@/components/common/Card';
 import { Link } from '@/components/common/Link';
+import { Typography } from '@/components/common/Typography';
+import { Input } from '@/components/input/StandardInputs/Input';
 import { Meta } from '@/layout/Meta';
-import { Product, useProductsStore } from '@/stores/product.store';
-import { useSimulateStore } from '@/stores/simulate.store';
 import { Main } from '@/templates/Main';
-import { formatValidationsErrors } from '@/utils/error';
-
-export interface FormSimulatorData {
-  border?: boolean;
-  age: number;
-  meanOfTransport: string;
-  country: Alpha2Code;
-  shoppingProducts: ShoppingProduct[];
-}
-
-interface ShoppingProduct {
-  id: string;
-  name?: string;
-  amount: number;
-  price: number;
-}
 
 const Index = () => {
-  const getSimulateResponse = useSimulateStore((state) => state.getSimulateResponse);
-  const simulateResponse = useSimulateStore((state) => state.simulateResponse);
-  const getProductsResponse = useProductsStore((state) => state.getProductsResponse);
-  const productsResponse = useProductsStore((state) => state.productsResponse);
-  const error = useSimulateStore((state) => state.error);
-
-  const {
-    handleSubmit,
-    register,
-    control,
-    setError,
-    formState: { errors: formErrors },
-  } = useForm<FormSimulatorData>({
-    defaultValues: {
-      border: false,
-      age: 30,
-      meanOfTransport: 'plane',
-      country: 'US',
-      shoppingProducts: [],
-    },
-  });
-
-  const {
-    fields: productFields,
-    append: appendProduct,
-    remove: removeProduct,
-  } = useFieldArray({
-    control,
-    name: 'shoppingProducts',
-  });
-
-  useEffect(() => {
-    if (error) {
-      const formattedErrors = formatValidationsErrors(error);
-      formattedErrors.forEach((e) => setError(e.name as any, { type: e.type, message: e.message }));
-    }
-
-    getProductsResponse();
-  }, [error, getProductsResponse, setError]);
-
-  const onSubmit = async (data: FormSimulatorData) => {
-    const shoppingProducts: ShoppingProduct[] = data.shoppingProducts.map(
-      ({ id, amount, price }) => ({
-        id,
-        amount,
-        price,
-      }),
-    );
-
-    const formatedData: FormSimulatorData = {
-      age: data.age,
-      border: data.border,
-      meanOfTransport: data.meanOfTransport,
-      country: data.country,
-      shoppingProducts,
-    };
-
-    await getSimulateResponse(formatedData);
-  };
-
-  const onAddProduct = (product: Product) => {
-    appendProduct({ id: product.id, name: product.name, amount: 1, price: 1 });
-  };
-
-  const onRemoveProduct = (index: number) => {
-    removeProduct(index);
-  };
-
   return (
     <Main
       meta={
         <Meta
-          title="Next.js Boilerplate Presentation"
-          description="Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
+          title="Déclaration Douane"
+          description="Déclaration Douane est un outil pour les particuliers qui permet de déclarer..."
         />
       }
     >
-      <div className="flex flex-row">
-        <div className="w-1/2">
-          {productsResponse &&
-            productsResponse.map((product) => (
-              <>
-                <div key={product.id}>
-                  <ProductTree product={product} onAddProduct={onAddProduct} />
-                </div>
-                <br />
-              </>
-            ))}
+      <div className="mb-8 flex flex-col gap-6">
+        <div>
+          <Typography
+            weight="bold"
+            variant="h1"
+            tag="h1"
+            size="text-3xl"
+            color="secondary"
+            lineHeight="leading-none"
+          >
+            Bonjour
+          </Typography>
+          <Typography
+            weight="bold"
+            variant="h1"
+            tag="h1"
+            size="text-3xl"
+            color="primary"
+            lineHeight="leading-none"
+          >
+            Bienvenue !
+          </Typography>
         </div>
-        <div className="w-1/2 p-5">
-          <Link to="/app">
-            <Button>Application</Button>
-          </Link>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormSimulator
-              register={register}
-              control={control}
-              errors={formErrors}
-              fields={productFields}
-              remove={onRemoveProduct}
+
+        <Input
+          name="search"
+          type="text"
+          fullWidth
+          placeholder="Que recherchez-vous ?"
+          trailingIcon="search"
+        ></Input>
+
+        <div className="flex flex-col gap-4">
+          <Card
+            title="Préparer mon voyage"
+            description="Les documents à prévoir avant votre voyage, les conseils..."
+            svgName="luggages"
+            rounded="lg"
+            fullWidth
+          />
+
+          <Link to="/simulateur/configuration/etape1">
+            <Card
+              title="Simuler mes achats"
+              description="Calculez les droits de douanes de vos achats en quelques clics"
+              svgName="calculator"
+              rounded="lg"
+              fullWidth
             />
-          </form>
-          <ResponseSimulator response={simulateResponse} />
+          </Link>
+
+          <Link to="/faqs/">
+            <Card
+              title="FAQ"
+              description="Une question ? Retrouvez toutes nos réponses ici"
+              svgName="question"
+              rounded="lg"
+              fullWidth
+            />
+          </Link>
         </div>
+      </div>
+      <div className="-mx-4 flex flex-col gap-6 bg-primary-100 px-4 py-7">
+        <Typography weight="bold" size="text-2xl" color="secondary">
+          Pourquoi déclarer mes achats effectués à l’étranger ?
+        </Typography>
+        <Typography weight="normal" variant="body1" tag="p" color="secondary">
+          Pour vous permettre d’être facilement en règle si vous avez acheté des produits à
+          l’étranger et de vous assurer un passage rapide et fluide lors de votre retour en France.
+        </Typography>
+        <Link to="/test">
+          <Typography weight="bold" variant="body1" tag="p">
+            En savoir plus 🡢
+          </Typography>
+        </Link>
+      </div>
+      <div className="flex flex-col gap-6 py-7">
+        <Typography weight="bold" size="text-2xl" color="secondary">
+          Besoin d’aide ?
+        </Typography>
+        <div className="flex flex-row gap-6">
+          <Card
+            title="FAQ"
+            variant="vertical"
+            description="Une question ? Retrouvez toutes nos réponses ici"
+            svgName="question"
+            rounded="lg"
+            fullWidth
+          />
+          <Card
+            title="Mail"
+            description="Vous pouvez nous poser votre question par mail"
+            svgName="mail"
+            rounded="lg"
+            variant="vertical"
+            fullWidth
+          />
+        </div>
+        <Card
+          title="Info Douane Service"
+          subtitle="0 800 94 40 40"
+          description={
+            'Du lundi au vendredi, sauf jours fériés, de 8h30 à 18h.\nService et appel gratuits.'
+          }
+          svgName="phone"
+          rounded="lg"
+          variant="horizontal"
+          fullWidth
+        />
       </div>
     </Main>
   );

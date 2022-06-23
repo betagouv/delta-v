@@ -19,12 +19,12 @@ interface ShoppingProduct {
 
 export const useSimulateStore = create((set: any) => ({
   error: undefined,
-  simulateResponse: undefined,
-  getSimulateResponse: async (data: SimulateParams) => {
+  simulatorResponse: undefined,
+  getsimulatorResponse: async (data: SimulateParams) => {
     try {
       set({ error: undefined });
       const response = await axios.post('/api/simulator', data);
-      set({ simulateResponse: response.data });
+      set({ simulatorResponse: response.data });
     } catch (error: any) {
       set({ error: error?.response?.data });
     }
