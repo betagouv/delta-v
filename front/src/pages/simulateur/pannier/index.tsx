@@ -16,7 +16,9 @@ import { Main } from '@/templates/Main';
 
 const Pannier = () => {
   const router = useRouter();
-  const shoppingProducts = useStore((state) => state.simulator.appState.shoppingProducts);
+  const shoppingProducts = useStore(
+    (state) => state.simulator.appState.simulatorRequest.shoppingProducts,
+  );
   const removeProduct = useStore((state) => state.removeProduct);
   const [openActionModal, setOpenActionModal] = useState(false);
   const idToDelete = useRef('');
@@ -50,14 +52,14 @@ const Pannier = () => {
                   setOpenActionModal(true);
                 }}
                 onUpdateProduct={() => {
-                  router.push(`/app/simulateur/pannier/modifier/${shoppingProduct.id}`);
+                  router.push(`/simulateur/pannier/modifier/${shoppingProduct.id}`);
                 }}
               />
             </div>
           ))}
         </div>
         <div className="mt-3">
-          <Link to="/app/simulateur/produits">
+          <Link to="/simulateur/produits">
             <div className="flex flex-row items-center justify-center rounded-[10px] bg-primary-100 py-3.5 px-8">
               <div className="mr-3 mt-[2px] h-6 w-6 text-primary-600">
                 <SvgIcon name="add" />
@@ -70,9 +72,11 @@ const Pannier = () => {
         </div>
         <div className="mb-8 flex-1" />
         <div className="pb-4">
-          <Button fullWidth size="xl">
-            Valider ma simulation
-          </Button>
+          <Link to="/simulateur/recapitulatif">
+            <Button fullWidth size="xl">
+              Valider ma simulation
+            </Button>
+          </Link>
         </div>
       </div>
       <OnActionModal

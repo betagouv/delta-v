@@ -22,6 +22,11 @@ export type StoreSlice<T> = (
   api: StoreApi<StoreState>,
 ) => T;
 
+const dummyStorageApi = {
+  getItem: () => null,
+  setItem: () => undefined,
+};
+
 /**
  * Make sure to enforce type for each slice
  */
@@ -36,19 +41,21 @@ export const useStore = create<StoreState>(
     }),
     {
       name: 'app-storage',
-      getStorage: () => localStorage,
-      version: 1,
+      getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
+      version: 2,
       migrate(persistedState: StoreState, version) {
         const newPersistedState = { ...persistedState };
-        if (version === 0) {
-          newPersistedState.simulator.appState.age = newPersistedState.simulator.appState.age ?? 0;
-          newPersistedState.simulator.appState.meanOfTransport =
-            newPersistedState.simulator.appState.meanOfTransport ?? MeansOfTransport.PLANE;
-          newPersistedState.simulator.appState.country =
-            newPersistedState.simulator.appState.country ?? 'DE';
-          newPersistedState.simulator.appState.border =
-            newPersistedState.simulator.appState.border ?? false;
-          newPersistedState.simulator.appState.shoppingProducts = [];
+        if (version !== 2) {
+          newPersistedState.simulator.appState.simulatorRequest.age =
+            newPersistedState.simulator.appState.simulatorRequest.age ?? 0;
+          newPersistedState.simulator.appState.simulatorRequest.meanOfTransport =
+            newPersistedState.simulator.appState.simulatorRequest.meanOfTransport ??
+            MeansOfTransport.PLANE;
+          newPersistedState.simulator.appState.simulatorRequest.country =
+            newPersistedState.simulator.appState.simulatorRequest.country ?? 'DE';
+          newPersistedState.simulator.appState.simulatorRequest.border =
+            newPersistedState.simulator.appState.simulatorRequest.border ?? false;
+          newPersistedState.simulator.appState.simulatorRequest.shoppingProducts = [];
         }
 
         return newPersistedState;

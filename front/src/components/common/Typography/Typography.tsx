@@ -30,6 +30,8 @@ export interface ITypographyProps {
   variant?: Variant;
   color?: Color;
   weight?: Weight;
+  italic?: boolean;
+  underline?: boolean;
   onClick?: () => void;
 }
 
@@ -41,6 +43,8 @@ export const Typography: React.FC<ITypographyProps> = ({
   lineHeight = 'leading-normal',
   children,
   weight = 'normal',
+  italic = false,
+  underline = false,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -49,11 +53,13 @@ export const Typography: React.FC<ITypographyProps> = ({
   }
 
   const className = cn({
-    [`${usedVariant}`]: true,
+    // [`${usedVariant}`]: true,
     [getFontWeight(weight)]: true,
     [getColor(color)]: true,
     [size]: true,
     [lineHeight]: true,
+    italic,
+    underline,
   });
   const CustomTag = tag ?? 'p';
 

@@ -11,7 +11,9 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ withCart = false }: HeaderProps) => {
-  const shoppingProducts = useStore((state) => state.simulator.appState.shoppingProducts);
+  const shoppingProducts = useStore(
+    (state) => state.simulator.appState.simulatorRequest.shoppingProducts,
+  );
   const [nbCartItems, setNbCartItems] = useState(0);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ withCart = false }: HeaderProps)
       <BackButton />
       <div className="flex-1" />
       {withCart && (
-        <Link to="/app/simulateur/pannier">
+        <Link to="/simulateur/pannier">
           <div className="flex flex-row">
             <div className="mt-1 mr-1  h-7 w-7 ">
               <SvgIcon name="basket" />

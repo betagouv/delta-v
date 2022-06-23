@@ -67,7 +67,7 @@ const Configuration = () => {
       return;
     }
     validateStep2(data.meanOfTransport);
-    router.push(`/app/simulateur/configuration/etape3`);
+    router.push(`/simulateur/configuration/etape3`);
   };
 
   useEffect(() => {

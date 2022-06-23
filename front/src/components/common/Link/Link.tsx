@@ -32,7 +32,7 @@ export const Link: React.FC<LinkProps> = ({
   return (
     <>
       {(to || back) && (
-        <div onClick={handleClick} className="cursor-pointer">
+        <div onClick={handleClick} className="unde cursor-pointer">
           {children}
         </div>
       )}
