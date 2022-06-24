@@ -11,7 +11,7 @@ import { prepareContextProduct } from '../../utils/prepareContext/product';
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
 
-const prepareContext = async (customDutyProduct1 = 5): Promise<Product[]> => {
+const prepareContext = async (customDutyProduct1 = 10): Promise<Product[]> => {
   const product1 = await prepareContextProduct({ testDb, vat: 20, customDuty: customDutyProduct1 });
   const product2 = await prepareContextProduct({ testDb, vat: 20, customDuty: 12 });
   const product3 = await prepareContextProduct({ testDb, vat: 20, customDuty: 12 });
@@ -142,7 +142,7 @@ describe('test simulator API', () => {
 
     expect(body).toMatchObject({
       total: 850,
-      totalCustomDuty: 62.5,
+      totalCustomDuty: 65,
       totalVat: 110,
       franchiseAmount: 300,
     });

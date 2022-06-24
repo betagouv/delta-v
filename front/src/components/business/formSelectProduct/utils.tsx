@@ -53,7 +53,7 @@ export const getRadioProductForm = (product: Product, register: any): ReactNode 
   });
   return (
     <InputGroup
-      register={register(product.id)}
+      register={register}
       name={product.id}
       radioValues={radioValues}
       type="radio"
@@ -71,7 +71,7 @@ export const getRadioCardProductForm = (
     (subProduct): IRadioCardType => {
       return {
         id: subProduct.id,
-        value: subProduct.name,
+        value: subProduct.radioValue ?? subProduct.name,
         svgIcon: subProduct.icon ?? 'categoryOther',
       };
     },
@@ -79,7 +79,7 @@ export const getRadioCardProductForm = (
   return (
     <InputGroup
       control={control}
-      register={register(product.id)}
+      register={register}
       name={product.id}
       radioCardValues={radioCardValues}
       type="radioCard"

@@ -22,6 +22,7 @@ export const Base = (): JSX.Element => {
   const {
     formState: { errors },
     control,
+    register,
   } = methods;
 
   const radioCardValues: IRadioCardType[] = [
@@ -57,6 +58,7 @@ export const Base = (): JSX.Element => {
     <div>
       <RadioCard
         control={control}
+        register={register('happy')}
         error={errors.happy?.message}
         name="happy"
         radioCardValues={radioCardValues}

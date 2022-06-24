@@ -43,7 +43,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     setSteps(getSteps({ currentProduct, lastId: idSelectedStep }));
   };
 
-  const { handleSubmit, register, control, watch, reset } = useForm<FormSelectProductData>({
+  const { handleSubmit, register, control, reset } = useForm<FormSelectProductData>({
     defaultValues: {
       price: undefined,
       devise: 'eur',
@@ -51,31 +51,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     },
   });
 
-  const idsToWatch = steps
-    .filter(
-      (step) =>
-        step.productDisplayTypes === ProductDisplayTypes.radio ||
-        step.productDisplayTypes === ProductDisplayTypes.radioCard,
-    )
-    .map((step) => step.id);
-
   const [idSelectedStep, setIdSelectedStep] = useState<string | undefined>();
-
-  useEffect(() => {
-    watch((value, { name, type }) => {
-      const notResetSteps = !name || type !== 'change' || !idsToWatch.includes(name);
-      if (notResetSteps) {
-        return;
-      }
-
-      const idSelected = value[name];
-
-      if (typeof idSelected === 'string' && idSelected !== idSelectedStep) {
-        setIdSelectedStep(idSelected);
-        onSelectStep(idSelected);
-      }
-    });
-  }, [watch(idsToWatch)]);
 
   useEffect(() => {
     reset({
@@ -98,14 +74,37 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     }
   };
 
+  interface EventChangeRadio {
+    type: string;
+    target: {
+      name: string;
+      value: string;
+    };
+  }
+  const onChangeRadio = ({ type, target: { name, value } }: EventChangeRadio) => {
+    const notResetSteps = !name || type !== 'change';
+    if (notResetSteps) {
+      return;
+    }
+    if (typeof value === 'string' && value !== idSelectedStep) {
+      setIdSelectedStep(value);
+      onSelectStep(value);
+    }
+  };
+
   const multiForm = steps
     .map((step): ReactNode | undefined => {
+      const fieldRegister = register(step.id, {
+        onChange: (e) => {
+          onChangeRadio(e);
+        },
+      });
       if (step.productDisplayTypes === ProductDisplayTypes.radio) {
-        return getRadioProductForm(step, register);
+        return getRadioProductForm(step, fieldRegister);
       }
 
       if (step.productDisplayTypes === ProductDisplayTypes.radioCard) {
-        return getRadioCardProductForm(step, register, control);
+        return getRadioCardProductForm(step, fieldRegister, control);
       }
       return undefined;
     })

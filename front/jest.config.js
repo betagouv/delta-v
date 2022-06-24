@@ -17,7 +17,7 @@ const customJestConfig = {
     '^.+\\.ts?$': 'ts-jest',
   },
   moduleNameMapper: {
-    '^@/public$': '<rootDir>/public/$1',
+    '\\.svg$': '<rootDir>/src/__mocks__/svg.ts',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
 };

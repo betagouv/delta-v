@@ -1,10 +1,9 @@
 import { useState } from 'react';
 
-import { RadioGroup } from '@headlessui/react';
-import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
-import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
+import { RadioCardElement } from './RadioCardElement';
+import { SvgNames } from '@/components/common/SvgIcon';
 
 export interface IRadioCardType {
   id: string;
@@ -22,11 +21,11 @@ export interface IRadioOptions {
   register?: UseFormRegisterReturn;
   control: any;
   rules?: any;
+  onChange?: () => void;
 }
 
 export const RadioCard: React.FC<IRadioOptions> = ({ radioCardValues, control, name, rules }) => {
-  const [card, setCard] = useState();
-
+  const [card, setCard] = useState<IRadioCardType>();
   const { field } = useController({
     control,
     name,
@@ -34,42 +33,22 @@ export const RadioCard: React.FC<IRadioOptions> = ({ radioCardValues, control, n
   });
 
   return (
-    <RadioGroup
-      data-testid="radio-card-element"
-      {...field}
-      value={card}
-      onChange={(e: any) => {
-        field.onChange(e?.id);
-        setCard(e);
-      }}
-      className="mt-2 flex"
-    >
+    <div data-testid="radio-cards-element" className="mt-2 flex">
       <div className="flex flex-row flex-wrap content-center justify-center gap-5">
         {radioCardValues.map((radioCardValue) => (
-          <RadioGroup.Option
-            disabled={radioCardValue.disabled}
+          <RadioCardElement
             key={radioCardValue.id}
-            value={radioCardValue}
-            className={({ checked, disabled }) =>
-              classNames(
-                'text-[13px]',
-                disabled ? 'opacity-50 cursor-not-allowed' : '',
-                checked ? 'font-bold border-2' : 'font-normal border hover:bg-gray-50',
-                'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
-              )
-            }
-          >
-            <div className="flex flex-col">
-              <div className="h-8">
-                <SvgIcon name={radioCardValue.svgIcon} />
-              </div>
-              <RadioGroup.Label as="p" className="text-center">
-                {radioCardValue.value}
-              </RadioGroup.Label>
-            </div>
-          </RadioGroup.Option>
+            svgIcon={radioCardValue.svgIcon}
+            value={radioCardValue.value}
+            disabled={radioCardValue.disabled}
+            checked={card?.id === radioCardValue.id}
+            onClick={() => {
+              setCard(radioCardValue);
+              field.onChange(radioCardValue.id);
+            }}
+          />
         ))}
       </div>
-    </RadioGroup>
+    </div>
   );
 };
