@@ -15,6 +15,7 @@ export interface Product {
   vat?: number;
   subProducts?: ProductEntity[];
   parentProduct?: ProductEntity;
+  relatedWords: string[];
 }
 
 export enum ProductDisplayTypes {
@@ -63,6 +64,9 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'float', nullable: true })
   vat?: number;
+
+  @Column({ type: 'simple-array', default: '' })
+  relatedWords: string[];
 
   @TreeChildren()
   subProducts?: Product[];

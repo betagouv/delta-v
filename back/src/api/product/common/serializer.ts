@@ -13,6 +13,7 @@ export interface SerializedProduct {
   vat?: number;
   nomenclatures?: string[];
   subProducts?: SerializedProduct[];
+  relatedWords: string[];
 }
 
 export const productSerializer = (product: Product): SerializedProduct => ({
@@ -27,5 +28,6 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   customDuty: product.customDuty,
   vat: product.vat,
   nomenclatures: product.nomenclatures,
+  relatedWords: product.relatedWords,
   subProducts: product.subProducts?.map(productSerializer),
 });

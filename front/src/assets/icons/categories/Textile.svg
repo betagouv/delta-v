@@ -1,0 +1,19 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15C0 6.71573 6.71573 0 15 0C23.2843 0 30 6.71573 30 15Z" fill="#8AC4D7"/>
+<mask id="mask0_116_8254" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
+<path d="M30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15C0 6.71573 6.71573 0 15 0C23.2843 0 30 6.71573 30 15Z" fill="#9E7B5B"/>
+</mask>
+<g mask="url(#mask0_116_8254)">
+<rect x="-3" width="9" height="33" fill="black" fill-opacity="0.03"/>
+<rect x="6" y="-1" width="3" height="36" fill="white" fill-opacity="0.5"/>
+<rect x="-8" y="21" width="3" height="48" transform="rotate(-90 -8 21)" fill="white" fill-opacity="0.5"/>
+<rect x="11" y="-1" width="3" height="36" fill="white" fill-opacity="0.5"/>
+<rect x="22" y="-1" width="3" height="36" fill="white" fill-opacity="0.5"/>
+<rect x="27" y="-1" width="3" height="36" fill="white" fill-opacity="0.5"/>
+<rect x="-8" y="16" width="3" height="48" transform="rotate(-90 -8 16)" fill="white" fill-opacity="0.5"/>
+<line x1="2.5" y1="1" x2="2.5" y2="30" stroke="white"/>
+<line x1="17.5" y1="-2" x2="17.5" y2="30" stroke="white"/>
+<line y1="8.5" x2="34" y2="8.5" stroke="white"/>
+<line y1="25.5" x2="34" y2="25.5" stroke="white"/>
+</g>
+</svg>

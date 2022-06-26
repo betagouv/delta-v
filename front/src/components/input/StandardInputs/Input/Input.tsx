@@ -3,6 +3,7 @@ import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Icon } from '@/components/common/Icon';
+import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
 
 export interface IInputOptions {
   placeholder?: string;
@@ -24,6 +25,7 @@ export interface IInputOptions {
   error?: string;
   fullWidth?: boolean;
   trailingIcon?: string;
+  trailingSvgIcon?: SvgNames;
   leadingIcon?: string;
   trailingAddons?: string;
   leadingAddons?: string;
@@ -40,6 +42,7 @@ export const Input: React.FC<IInputOptions> = ({
   fullWidth,
   error,
   trailingIcon,
+  trailingSvgIcon,
   leadingIcon,
   trailingAddons,
   leadingAddons,
@@ -57,7 +60,7 @@ export const Input: React.FC<IInputOptions> = ({
     className += ' border-red-300 text-red-900 placeholder-red-300 focus:border-red-500';
   }
 
-  if (trailingIcon || trailingAddons) {
+  if (trailingIcon || trailingAddons || trailingSvgIcon) {
     className += ' pr-11';
   }
   if (leadingIcon || leadingAddons) {
@@ -89,6 +92,11 @@ export const Input: React.FC<IInputOptions> = ({
       {trailingIcon && (
         <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
           <Icon name={trailingIcon} />
+        </div>
+      )}
+      {trailingSvgIcon && (
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
+          <SvgIcon name={trailingSvgIcon} />
         </div>
       )}
       {trailingAddons && (

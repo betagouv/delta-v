@@ -1,26 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Header } from '@/components/business/header';
 import { Search } from '@/components/business/search';
-import { CategoryList, Item } from '@/components/common/CategoryList';
 import { TitleHeader } from '@/components/common/TitleHeader';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
-const Index = () => {
-  const products = useStore((state) => state.products.appState.products);
+const SearchProduct = () => {
   const searchProducts = useStore((state) => state.searchProducts);
   const getProductsResponse = useStore((state) => state.getProductsResponse);
-  const [displayProducts, setDisplayProducts] = useState(true);
-
-  const displayedProducts = products?.map((product): Item => {
-    return {
-      to: `/simulateur/produits/${product.id}`,
-      svgNames: product.icon ?? 'categoryOther',
-      title: product.name,
-    };
-  });
 
   useEffect(() => {
     getProductsResponse();
@@ -48,16 +37,9 @@ const Index = () => {
           }
           icon="calculator"
         />
-        <Search
-          withSearchIcon
-          onSearch={searchProducts}
-          onChange={(displayResult) => {
-            setDisplayProducts(!displayResult);
-          }}
-        />
-        {displayProducts && <CategoryList items={displayedProducts} title="Catégories" />}
+        <Search onSearch={searchProducts} />
       </div>
     </Main>
   );
 };
-export default Index;
+export default SearchProduct;

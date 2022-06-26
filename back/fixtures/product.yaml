@@ -5,16 +5,18 @@ items:
     id: '966d4619-e2b8-4f38-8db1-b02739e88d0d'
     icon: 'categoryBeautyProducts'
     name: 'Produits de beauté'
-    info: 'Cela compose les produits de beauté'
+    info: 'Produits de beauté'
+    relatedWords: 'Produits de beauté'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
     nomenclatures:
       - '33'
-  mackupParfumes:
+  mackup:
     id: '4072b5ee-598d-4a2d-95cb-7ae51f9d4905'
-    name: 'Maquillage, Parfums, Eaux de toilettes'
+    name: 'Maquillage'
     icon: 'categoryMackup'
-    info: 'Produits de type maquillage, parfum et eau de toilette'
+    info: 'Maquillage'
+    relatedWords: 'rouge à lèvres,mascara,eye liner,fard à paupières,fond de teint,anticernes,correcteur,base de teint,fixateur,poudre de soleil,poudre,bb crème,cc crème,crème,blush,highlighter,palette,kit maquillage,maquillage,crayon,khol,faux cils,gel,beaume,gloss,crayon à lèvres,repulpeur,vernis,démaquillant'
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -22,13 +24,54 @@ items:
     vat: 20
     nomenclatures:
       - '3304'
+  perfume:
+    id: '7d333bbc-a4e3-4ace-bc94-157745a87f87'
+    name: 'Parfums'
+    icon: 'categoryPerfume'
+    info: 'Parfums'
+    relatedWords: >
+      chanel n°5,one million,bleu,yves saint laurent libre,le mâle,jean paul gauthier,yves saint laurent,chanel,armani,armani my way,lancôme,lancôme la nuit trésor,
+      paco rabanne,paco rabanne,one million,scandal,kenzo,flower by kenzo,mugler,mugler alien,ck one,calvin klein,calvin klein ck one,dior,dior sauvage,bleu de chanel,
+      lancôme la vie est belle,coco mademoiselle,coco maemoiselle de chanel,black opium,black opium yves saint laurent,phantom paco rabanne,j'adore dior,
+      good girl carolina herrera,l'interdit givenchy,miss dior,boss bottled hugo boss,terre d'hermès hermès,hermès,hugo boss,dior homme intense,boss,chance eau tendre chanel,
+      si armani,armani,chloé,la petite robe noire guerlain,guerlain,chanel numéro 5,idole lancôme,irresistible givenchy,angel nova mugler,nina ricci,mon guerlain,
+      lady million paco rabanne,libre yves saint laurent,l'homme hyves saint laurent,si passione armani,scandal pour homme jean paul gauthier,chrome azzaro,
+      flowerbomb viktor&rolf,only the brave diesel,allure homme chanel,miss dior rose n' roses dior,yes i am cacharel,dior homme original,flora gorgious gardenia gucci,
+      invictus legende paco rabanne
+    parentProduct: '@beautyProducts'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
       - '33030010'
+  cologne:
+    id: 'c18d59dc-140f-409c-b7cd-502b85fbfef0'
+    name: 'Eaux de toilettes'
+    icon: 'categoryCologne'
+    info: 'Eaux de toilettes'
+    relatedWords: >
+      chanel n°5,one million,bleu,yves saint laurent libre,le mâle,jean paul gauthier,yves saint laurent,chanel,armani,armani my way,lancôme,lancôme la nuit trésor,
+      paco rabanne,paco rabanne,one million,scandal,kenzo,flower by kenzo,mugler,mugler alien,ck one,calvin klein,calvin klein ck one,dior,dior sauvage,bleu de chanel,
+      lancôme la vie est belle,coco mademoiselle,coco maemoiselle de chanel,black opium,black opium yves saint laurent,phantom paco rabanne,j'adore dior,
+      good girl carolina herrera,l'interdit givenchy,miss dior,boss bottled hugo boss,terre d'hermès hermès,hermès,hugo boss,dior homme intense,boss,chance eau tendre chanel,
+      si armani,armani,chloé,la petite robe noire guerlain,guerlain,chanel numéro 5,idole lancôme,irresistible givenchy,angel nova mugler,nina ricci,mon guerlain,
+      lady million paco rabanne,libre yves saint laurent,l'homme hyves saint laurent,si passione armani,scandal pour homme jean paul gauthier,chrome azzaro,
+      flowerbomb viktor&rolf,only the brave diesel,allure homme chanel,miss dior rose n' roses dior,yes i am cacharel,dior homme original,flora gorgious gardenia gucci,
+      invictus legende paco rabanne
+    parentProduct: '@beautyProducts'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
       - '33030090'
   wig:
     id: '8f29a374-089a-4ac3-823a-a4be307de7eb'
     name: 'Perruque et autre article en cheveux'
     icon: 'categoryWig'
     info: 'Perruques et autres articles en cheveux (synthétique, cheveux et autres)'
+    relatedWords: 'perruque,extensions,tresses,nattes,cheveux,rajouts,volumateur'
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -56,6 +99,8 @@ items:
     name: 'Bijoux'
     icon: 'categoryJewelry'
     info: 'Les bijoux'
+    relatedWords: >
+      bijoux,bague,boucles d'oreille,bracelet,alliance,collier,chaîne,anneau,chevalière,piercing,créoles,schocker,raz-le-cou,sautoir,pendentif,écarteur,gourmette
     parentProduct: '@jewelry'
     childrenQuestion: 'Est-il en argent, or, platine ou autres métaux précieux ?'
     finalProduct: true
@@ -67,6 +112,8 @@ items:
     id: 'd97c1392-01f1-423b-afd6-982fe79856df'
     name: 'Montre'
     info: 'Les montres'
+    icon: 'categoryWatches'
+    relatedWords: 'montre,rolex,iwc,swatch,nixon,cluse,louis pion,daniel wellington,lip,lacoste,tissot,casio,michel herbelin,seiko,michael kors,fossil,cartier,zadig et voltaire,diesel,flik flak,hamilton,festina,g shock,tommy hilfiger,olivia burton,lotus,skagen,omega,tag heuer,longiness,tudor,breitling,patek,richard mille,o carat,piaget,aerowatch,alpina,hermès,versace,boucheron,breguet,bremont,breitling,chanel,gucci,hublot,jaeger-lecoutre,bulgari,montblanc,chopard,chronoswiss,citizen,tiffany,van cleef and arpels,ulysse nardin,hyt,armin strom,bovet,piaget,zenith,blancpain,beaume & mercier,tudor,maurice lacroix,oris,alpina'
     parentProduct: '@jewelry'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -152,6 +199,8 @@ items:
     name: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
     radioValue: 'Oui'
     info: 'Soutiens-gorge, gaines, corsets, bretelles, jarretelles, jarretières, etc.'
+    relatedWords: 'Soutiens-gorge, gaines, corests, bretelles, jarretelles, jarretières'
+    finalProduct: true
     parentProduct: '@clothesWithoutLeather'
     productDisplayTypes: 'addable'
     customDuty: 6.5
@@ -162,36 +211,59 @@ items:
     id: '4dbcac27-c57e-4c8f-befb-9c8092c1c450'
     name: 'Vêtements adultes'
     radioValue: 'Non'
-    info: 'Vêtements adultes dans la liste suivante : \n- Manteaux, cabans, capes,anoraks, blousons, etc. \n- Costumes, complets, ensembles, vestons, pantalons, salopettes, shorts, survêtements, robes, jupes, etc. \n- Chemises, chemisettes, chemisiers, blouses, T-shirts et maillots de corps, chandails, pull-overs, cardigans, gilets, etc. \n- Slips, caleçons, chemises de nuit, pyjamas, peignoirs, robes de chambre, combinaisons, etc.'
+    info: 'Vêtements adultes'
+    relatedWords: >
+      Manteaux,cabans,capes,anoraks,blousons,bombers,veste,kway,doudoune,parka,blazer,perfecto,trench,cuir,duffle coat,veste sans manches,doudoune sans manches,pardessus,
+      jean,top,short,bermuda,chino,levi's,leggings,pantalon,sweat,sweat à capuche,hoodie,combinaison,combi short,Costumes,complets,ensembles,vestons,pantalons,salopettes,
+      shorts,survêtements,robes,jupes,Chemises,chemisettes,chemisiers,blouses,T-shirts et maillots de corps,chandails,pull-overs,cardigans,gilets,crop top,dos nu,marcel,
+      polo,lacoste,slim,mum jean,taille haute,taille basse,uniforme,Slips,caleçons,chemises de nuit,pyjamas,peignoirs,robes de chambre,combinaisons,dessous,boxer,tanga,
+      string,slip kangourou
+    finalProduct: true
     parentProduct: '@clothesWithoutLeather'
     productDisplayTypes: 'addable'
     customDuty: 12
     vat: 20
   accessory:
     id: 'c2ca6be7-6b86-42b5-b839-51ba2cc7958c'
-    name: 'Accesoires textile'
+    name: 'Accesoires'
     info: 'Accesoires'
     icon: 'categoryAccessory'
     parentProduct: '@fashion'
     productDisplayTypes: 'category'
     childrenQuestion: 'Quel type de produits ?'
+  leatherAccessory:
+    id: '70869c09-f83c-4d35-8d7c-d783c9b543fe'
+    name: 'Accessoires en cuir'
+    info: 'Accessoires en cuir.'
+    icon: 'categoryLeatherAccessory'
+    relatedWords: 'Accessoires en cuir'
+    parentProduct: '@accessory'
+    productDisplayTypes: 'category'
+    finalProduct: true
+    nomenclatures:
+      - '42033000'
+      - '42034000'
+      - '42032990'
   leatherGloves:
     id: '490069df-a2da-4441-ab87-40e275695bd7'
     name: 'Gants en cuir'
     info: 'Gants en cuir.'
-    parentProduct: '@accessory'
+    relatedWords: 'Gants en cuir'
+    icon: 'categoryFabricGloves'
+    parentProduct: '@leatherAccessory'
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 7
     vat: 20
     nomenclatures:
       - '42032990'
-  leatherAccessory:
-    id: '70869c09-f83c-4d35-8d7c-d783c9b543fe'
-    name: 'Ceintures et autres accessoires en cuir'
-    info: 'Ceintures et autres accessoires en cuir.'
+  leatherOther:
+    id: 'c762dfff-7dce-44ad-b100-4e272cde6088'
+    name: 'Autres accessoires en cuir'
+    info: 'Autres accessoires en cuir.'
     icon: 'categoryLeatherAccessory'
-    parentProduct: '@accessory'
+    relatedWords: 'Autres accessoires en cuir,ceinture en cuir'
+    parentProduct: '@leatherAccessory'
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 5
@@ -199,12 +271,22 @@ items:
     nomenclatures:
       - '42033000'
       - '42034000'
+  textileAccessory:
+    id: '07b13cc2-987b-4c28-9e2e-c271e0717975'
+    name: 'Accessoires en textile'
+    info: 'Accessoires en textile.'
+    icon: 'categoryTie'
+    relatedWords: 'Accessoires en textile'
+    parentProduct: '@accessory'
+    productDisplayTypes: 'category'
+    finalProduct: false
   tie:
     id: '7847b3cb-69e9-4c17-bd75-3d1573084d18'
     name: 'Cravate, noeud papillons...'
     info: 'Cravates, nœuds papillon, etc.'
     icon: 'categoryTie'
-    parentProduct: '@accessory'
+    relatedWords: 'cravate,noeud papillons,bretelles'
+    parentProduct: '@textileAccessory'
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 6.3
@@ -216,7 +298,8 @@ items:
     name: 'Collants, bas, mis-bas, chaussettes...'
     info: 'Collants, bas, mis-bas, chaussettes...'
     icon: 'categorySocks'
-    parentProduct: '@accessory'
+    relatedWords: 'collants,bas,mi-bas,chaussettes,soquettes'
+    parentProduct: '@textileAccessory'
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 12
@@ -228,7 +311,8 @@ items:
     name: 'Echarpe, cache-col, châle, foulard, cache-nez...'
     info: 'Echarpe, cache-col, châle, foulard, cache-nez...'
     icon: 'categoryScarf'
-    parentProduct: '@accessory'
+    relatedWords: 'echarpe,cache-col,châle,foulard,cache-nez'
+    parentProduct: '@textileAccessory'
     productDisplayTypes: 'not-managed'
     finalProduct: true
   fabricGloves:
@@ -236,13 +320,15 @@ items:
     name: 'Gants en tissus'
     info: 'Gants en tissus'
     icon: 'categoryFabricGloves'
-    parentProduct: '@accessory'
+    relatedWords: 'gants en tissus'
+    parentProduct: '@textileAccessory'
     productDisplayTypes: 'not-managed'
     finalProduct: true
   childrenClothes:
     id: '47a31843-233e-4b45-b7e6-26c262e1047d'
     name: 'Vêtement pour enfant'
     info: 'Les vêtements pour enfant ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    relatedWords: 'vêtement pour enfant'
     icon: 'categoryChildrenClothes'
     parentProduct: '@clothes'
     productDisplayTypes: 'not-managed'
@@ -251,6 +337,7 @@ items:
     id: 'f17e401f-bd89-41ea-8b90-2999d1aff7a1'
     name: 'Chaussure'
     info: 'Les chaussures ont un tarif particulier. Veuillez vous référer au douanier directement.'
+    relatedWords: 'ballerines,sneakers,bottes,baskets,bottines,sandales,chaussons,pantoufles,mocassins,claquettes,cuissardes,tropéziennes,charentaises,derby,escarpin,babouches,espadrilles,mules,rangers,richelieu,salomé,santiags,souliers,sabots,tongs,talons,talons aiguilles,hugg,chaussures de ville,méduses,converse,veja,adidas,nike,reebok,asics,doc martins,timberland,jordan,crocs,azzaro,stan smimth,air force one,ben simon,birkenstock,puma,buffalo,geox,bugatti,camper,clarks,kickers,esprit,guess,jb martin,karl lagarfeld,le coq sportif,superstars,mephisto,new balance,no name,palladium,pataugas,pierre cardin,ralph lauren,redskins,skechers,superga,tbs,timberland,vans'
     icon: 'categoryShoes'
     parentProduct: '@fashion'
     productDisplayTypes: 'not-managed'
@@ -259,6 +346,7 @@ items:
     id: 'b515f453-93c1-4312-b973-6703802f5d12'
     name: 'Maroquinerie'
     info: 'Cela compose les sacs à main, les pochettes et les portefeuilles'
+    relatedWords: 'sac à main,sac,sacoche,besace,panier,lacoste,cabas,cartable,portefeuille,porte-monnaie,pochette,porte-carte'
     icon: 'categoryLeatherGoods'
     parentProduct: '@fashion'
     childrenQuestion: 'Sélectionnez la matière de votre sac'
@@ -268,8 +356,10 @@ items:
       - '4202'
   leatherHandbagWallet:
     id: 'da645720-8577-4498-8ee2-096e371a15e2'
-    name: 'Cuir'
+    name: 'Maroquinerie en cuir'
+    radioValue: 'Cuir'
     info: 'Maroquinerie en cuir'
+    icon: 'categoryLeather'
     parentProduct: '@leatherGoods'
     productDisplayTypes: 'addable'
     customDuty: 3
@@ -279,8 +369,10 @@ items:
       - '42023100'
   plasticHandbagWallet:
     id: '2a25c354-d073-4db5-a76e-aa8d243cfff8'
-    name: 'Plastique'
+    name: 'Maroquinerie en plastique'
+    radioValue: 'Plastique'
     info: 'Maroquinerie en plastique'
+    icon: 'categoryPlastic'
     parentProduct: '@leatherGoods'
     productDisplayTypes: 'addable'
     customDuty: 9.7
@@ -290,8 +382,10 @@ items:
       - '42023210'
   textileHandbagWallet:
     id: '88583916-3842-4a22-89b0-53691a3a6476'
-    name: 'Textile'
-    info: 'Maroquinerie en plastique'
+    name: 'Maroquinerie en textile'
+    radioValue: 'Textile'
+    info: 'Maroquinerie en textile'
+    icon: 'categoryTextile'
     parentProduct: '@leatherGoods'
     productDisplayTypes: 'addable'
     customDuty: 3.7
@@ -314,6 +408,7 @@ items:
     id: '586be6b5-0375-44f4-aa58-d47966599ae0'
     name: 'Tissus'
     info: 'Tissus bruts'
+    relatedWords: 'bazin,boubou,popeline,velour,lin,bambou,tissu,caneva,flanelle,gaze,mousseline,feutre,polaire,doublure,jean,simili,simili cuir,cuir,jute,polyester,soie,satin,dentelle,tulle,viscose,coton,synthétique,éponge,nylon,daim,jersey,toile,toile cirée'
     icon: 'categoryFabrics'
     parentProduct: '@fashion'
     childrenQuestion: 'Quelle est la matière constitutive du produit ?'
@@ -328,14 +423,18 @@ items:
       - '5801'
   particularFabrics:
     id: '7a33a05b-4966-4ba3-bc0d-ecbd77ef36ea'
-    name: 'Soie / Laine'
+    name: 'Tissus en soie / Laine'
+    icon: 'categorySilk'
+    relatedWords: 'tissus,soie,laine'
     info: 'Les produits en soie ou en laine ont un tarif particulier. Veuillez vous référer au douanier directement.'
     parentProduct: '@fabrics'
     productDisplayTypes: 'not-managed'
     finalProduct: true
   basicFabrics:
     id: '74c87cd7-60dc-4f38-b5de-cfd935752f3c'
-    name: 'Autres'
+    name: 'Autres Tissus'
+    relatedWords: 'tissus,coton,lin,synthétique,velours'
+    icon: 'categoryCotton'
     info: "Il s'agit de tissus bruts en coton, Lin, synthétique ou en velours."
     parentProduct: '@fabrics'
     productDisplayTypes: 'addable'
@@ -374,6 +473,7 @@ items:
     name: 'Skis de fond ou skis alpins et fixations pour skis'
     info: 'Skis de fond ou skis alpins et fixations pour skis'
     icon: 'categorySki'
+    relatedWords: 'ski,skis,patinettes,chaussures de ski,surf'
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -387,6 +487,7 @@ items:
     name: 'Planches à voiles'
     info: 'Planches à voiles'
     icon: 'categoryWindsurf'
+    relatedWords: 'planche à voile'
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -399,6 +500,7 @@ items:
     name: 'Clubs de golf'
     info: 'Clubs de golf'
     icon: 'categoryGolf'
+    relatedWords: 'clubs de golf'
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -411,6 +513,7 @@ items:
     name: 'Canne à pêche'
     info: 'Canne à pêche'
     icon: 'categoryFishing'
+    relatedWords: 'cannes à pêche'
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -423,6 +526,7 @@ items:
     name: 'Raquette de tennis (même non cordées)'
     info: 'Raquette de tennis (même non cordées)'
     icon: 'categoryTennis'
+    relatedWords: 'raquettes de tennis,raquettes'
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -436,28 +540,58 @@ items:
     name: 'Livres'
     info: 'Livres'
     icon: 'categoryBooks'
-    productDisplayTypes: 'addable'
-    finalProduct: true
+    productDisplayTypes: 'radio'
+    childrenQuestion: 'Est il un catalogue publicitaire ?'
+    finalProduct: false
     customDuty: 0
     vat: 5.5
     parentProduct: '@hobbies'
     nomenclatures:
       - '4901'
+  booksNoCatalog:
+    id: '1d39fe08-d957-4b5c-919e-5632895e6563'
+    name: 'Livres'
+    radioValue: 'Non'
+    info: 'Livres'
+    icon: 'categoryBooks'
+    relatedWords: 'Livres,bd,bandes dessinées,comics,romans,romans graphiques,mangas,ouvrages,livre de poche,bouquin'
+    productDisplayTypes: 'addable'
+    finalProduct: true
+    customDuty: 0
+    vat: 5.5
+    parentProduct: '@books'
+    nomenclatures:
+      - '4901'
+  advertisingCatalog:
+    id: '3ce08fcb-328d-4ed5-ac3f-7557467e5eda'
+    name: 'Catalogue publicitaire'
+    radioValue: 'Oui'
+    info: 'Catalogue publicitaire'
+    relatedWords: 'catalogues publicitaire'
+    productDisplayTypes: 'addable'
+    finalProduct: true
+    customDuty: 0
+    vat: 20
+    parentProduct: '@books'
+    nomenclatures:
+      - '491110'
 
   musicInstrument:
     id: '3a3dc758-4c88-45e0-9a7c-e38a6cc7df4c'
     name: 'Instrument de musique'
     info: 'Instrument de musique'
     icon: 'categoryMusic'
+    relatedWords: 'instrument de musique'
     productDisplayTypes: 'category'
     parentProduct: '@hobbies'
     nomenclatures:
       - '92'
   classicPiano:
     id: 'bdc204f1-1de8-493c-9ebb-484e954a6124'
-    name: 'Pianos droit, à queue'
-    info: 'Pianos droit, à queue'
+    name: 'Piano droit, à queue'
+    info: 'Piano droit, à queue'
     icon: 'categoryPiano'
+    relatedWords: 'piano droit,piano à queue'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -471,6 +605,7 @@ items:
     name: 'Pianos numériques'
     info: 'Pianos numériques'
     icon: 'categoryNumericPiano'
+    relatedWords: 'piano numérique'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -483,6 +618,7 @@ items:
     name: 'Synthétiseurs'
     info: 'Synthétiseurs'
     icon: 'categorySynthesizer'
+    relatedWords: 'synthétiseurs'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -495,6 +631,7 @@ items:
     name: 'Guitares'
     info: 'Guitares'
     icon: 'categoryGuitar'
+    relatedWords: 'Banjo,ukulele,lyre,harpe,guitare'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -507,6 +644,7 @@ items:
     name: 'Guitare électrique'
     info: 'Guitare électrique'
     icon: 'categoryElectricGuitar'
+    relatedWords: 'guitare électrique'
     parentProduct: '@musicInstrument'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -519,6 +657,7 @@ items:
     name: 'Violons'
     info: 'Violons'
     icon: 'categoryViolins'
+    relatedWords: 'Alto,violon,violoncelle,contrebasse'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -543,6 +682,7 @@ items:
     name: 'Cuivre'
     info: 'Cuivre'
     icon: 'categoryCopper'
+    relatedWords: 'trombette,saxophone,baryton,bugle,clairon,cor,cornet à piston,tuba,trombone'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -555,6 +695,7 @@ items:
     name: 'Accordéons'
     info: 'Accordéons'
     icon: 'categoryAccordions'
+    relatedWords: 'bandonéon,accordéons'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -567,6 +708,7 @@ items:
     name: 'Boite à musique'
     info: 'Boite à musique'
     icon: 'categoryMusicBox'
+    relatedWords: 'boite à musique'
     parentProduct: '@musicInstrument'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -574,11 +716,12 @@ items:
     vat: 20
     nomenclatures:
       - '92081000'
-  otherMusicInstrument:
+  percussionMusicInstrument:
     id: '0191a97d-2ca4-45aa-9cf7-ef592ea1a022'
-    name: 'Autres'
-    info: 'Autres'
+    name: 'Instruments à percussion'
+    info: 'Instruments à percussion'
     icon: 'categoryOther'
+    relatedWords: 'tambour,batterie,CRS,caisse claire,bongo,carillon,castagnettes,charleston,cymbale,djembé,tam tam,triangle,maracas,tambourin,timbale'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -600,11 +743,69 @@ items:
       - '84'
       - '95'
       - '90'
+  smartphone:
+    id: '5be67a29-594f-4107-a749-b4903e16aeae'
+    name: 'Smartphone'
+    info: 'Smartphone.'
+    icon: 'categorySmartphone'
+    relatedWords: >
+      iPhone,portable,téléphone,Android,Samsung,Pixel,Google,Google Pixel,Huawei,Xiaomi,One Plus,Nokia,Apple,BlackBerry,Sony,LG,Motorola,Alcatel,Oppo,Realme,
+      Honor,TCL,CAT,Innjoo,Lenovo,Microsoft,HTC,Wiko,ZTE,Vivo,Asus,smartphone,Galaxy,Samsung Galaxy
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '85171300'
+  laptop:
+    id: '987bbd1d-a691-4e22-842b-03665f37b8cb'
+    name: 'Ordinateur portable'
+    info: 'Ordinateur portable.'
+    icon: 'categoryLaptop'
+    relatedWords: >
+      PC,MacBook,Ordinateur,ordinateur portable,portable,laptop,Lenovo,asus,Apple,MSI,Acer,HP,Dell,Fujitsu,Toshiba,Compaq,Roccat,Razer,Dynabook,Huawei,
+      Alienware,Samsung,LG,Thomson,Ordissimo,Gigabyte,Schneider, Sony, Darty
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '84713000'
+  tablet:
+    id: '18628a0b-b3c9-45d9-b7c0-49962af4fc42'
+    name: 'Tablette numérique'
+    info: 'Tablette numérique'
+    icon: 'categoryTablet'
+    relatedWords: >
+      iPad,Apple,Samsung,Huawei,Galaxy, Samsung Galaxy,Lenovo,tablette
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+  camera:
+    id: '7b2988e3-a84e-494e-b746-abd1ec0ddae7'
+    name: 'Appareil photo numérique / Caméscope'
+    info: 'Appareil photo numérique / Caméscope'
+    icon: 'categoryTablet'
+    relatedWords: >
+      appareil photo,appareil numérique,reflex,nikon,canon,sony,lumix,appareil photo numérique,pentax,camescope,caméra,gopro
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '8525'
   television:
     id: 'ab2d3793-8054-4d87-8cf8-cde1cbf839c3'
     name: 'Téléviseurs'
     info: 'Téléviseurs.'
     icon: 'categoryTelevision'
+    relatedWords: >
+      télévision,téléviseur,tv,écran plat
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -617,6 +818,8 @@ items:
     name: 'Lecteurs DVD'
     info: 'Lecteurs DVD.'
     icon: 'categoryDVDPlayer'
+    relatedWords: >
+      lecteur DVD
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -624,11 +827,84 @@ items:
     vat: 20
     nomenclatures:
       - '85219000'
+  mp3Player:
+    id: 'fc068504-2934-409d-b2a0-d4f23a319afa'
+    name: 'Baladeur MP3'
+    info: 'Baladeur MP3'
+    icon: 'categoryMP3'
+    relatedWords: >
+      iPod,baladeur,MP3,baladeur MP3
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '85198'
+  dvd:
+    id: 'ab813077-76dc-4ac8-bd43-c08ed499c497'
+    name: 'DVD'
+    info: 'DVD'
+    icon: 'categoryDVD'
+    relatedWords: >
+      DVD,blue ray
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '85234910'
+  compactDisc:
+    id: '7efa75b6-5667-4fe4-a866-88d9e243c0bd'
+    name: 'Compact disc'
+    info: 'Compact disc'
+    icon: 'categoryCD'
+    relatedWords: >
+      Compact disc,CD
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '852341'
+  gameConsole:
+    id: '39e8e0d3-9b25-4b4f-a318-d29d9e28dbce'
+    name: 'Consoles et machine de jeux vidéos'
+    info: 'Consoles et machine de jeux vidéos'
+    icon: 'categoryGameConsole'
+    relatedWords: >
+      console,Nintendo,Playstation,Xbox,Switch,Nintendo Switch,Gamecube,N64,Wii,Gameboy,Attari 2600,Nintendo DS,PSP,PS4,PS5,Xbox360,
+      PS3,3DS,Xbox One,WiiU,PS Vita,Saturn,Sega
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '95045000'
+  videoGame:
+    id: 'a6370028-6736-440b-aaee-6a5bed6e206e'
+    name: 'Jeux vidéos'
+    info: 'Jeux vidéos'
+    icon: 'categoryVideoGame'
+    relatedWords: >
+      jeux vidéo,jeu console,call of,fifa,call of duty,jeu pc,gaming,mario,mario kart,gta,pokémon
+    parentProduct: '@hightech'
+    finalProduct: true
+    productDisplayTypes: 'addable'
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '95045000'
   binoculars:
     id: '8874fd65-6fc7-4f7a-b41e-d1979187fa8f'
     name: 'Jumelles'
     info: 'Jumelles.'
     icon: 'categoryBinoculars'
+    relatedWords: >
+      jumelles,télescope,longue vue
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -636,24 +912,6 @@ items:
     vat: 20
     nomenclatures:
       - '90051000'
-  otherHightech:
-    id: '6b6c5a03-e573-47c7-b718-aa8c86ae5483'
-    name: 'Autres'
-    info: 'Autres appareils multimédia.'
-    parentProduct: '@hightech'
-    finalProduct: true
-    productDisplayTypes: 'addable'
-    customDuty: 0
-    vat: 20
-    nomenclatures:
-      - '85171300'
-      - '84713000'
-      - '85171300'
-      - '84713000'
-      - '85219000'
-      - '85234910'
-      - '852341'
-      - '95045000'
 
   # Maison
   house:
@@ -667,6 +925,11 @@ items:
     name: 'Meubles'
     info: 'Meubles'
     icon: 'categoryFurniture'
+    relatedWords: >
+      table,chaise,bureau,buffet,armoire,étagères,fauteuil,tabouret,canapé,garde manger,dressing,meuble tv,bibliothèque,coiffeuse,salon,salon marocain,
+      table de chevet,table basse,table de jardin,table à manger,bar,paravent,vaisselier,lit,cadre de lit,tête de lit,casier,chiffonnier,semainier,
+      coffre,malle,commode,meuble à chaussures,meuble,console,guéridon,colonne de salle de bain,berceau,chevet,secrétaire,banc,siège,divan,méridienne,
+      sofa,pouf,poire,desserte,canapé lit,vitrine
     parentProduct: '@house'
     childrenQuestion: 'Sélectionnez la matière de votre meuble'
     finalProduct: true
@@ -676,8 +939,10 @@ items:
       - '9404'
   metalFurniture:
     id: 'e383fcf7-4f41-4ff1-b74c-8e5785c08f5a'
-    name: 'Métal'
+    name: 'Meubles en métal'
+    radioValue: 'Métal'
     info: 'Meubles en métal'
+    icon: 'categoryMetal'
     parentProduct: '@furniture'
     productDisplayTypes: 'addable'
     customDuty: 0
@@ -687,8 +952,10 @@ items:
       - '940320'
   plasticFurniture:
     id: 'd5cc2f34-ce4c-4ae3-b392-9f321a1e88d1'
-    name: 'Plastique'
+    name: 'Meubles en plastique'
+    radioValue: 'Plastique'
     info: 'Meubles en plastique'
+    icon: 'categoryPlastic'
     parentProduct: '@furniture'
     productDisplayTypes: 'addable'
     customDuty: 0
@@ -697,8 +964,10 @@ items:
       - '94037000'
   bambooFurniture:
     id: '4f2a426a-f2e5-44ed-9cac-9cde68734c9e'
-    name: 'Bambou'
+    name: 'Meubles en bambou'
+    radioValue: 'Bambou'
     info: 'Meubles en bambou'
+    icon: 'categoryBamboo'
     parentProduct: '@furniture'
     productDisplayTypes: 'addable'
     customDuty: 5.6
@@ -707,8 +976,10 @@ items:
       - '94038200'
   rattanFurniture:
     id: '54cf64c8-1530-4220-87ed-fcd061bc8c72'
-    name: 'Rotin'
+    name: 'Meubles en rotin'
+    radioValue: 'Rotin'
     info: 'Meubles en rotin'
+    icon: 'categoryRattan'
     parentProduct: '@furniture'
     productDisplayTypes: 'addable'
     customDuty: 5.6
@@ -717,8 +988,10 @@ items:
       - '94038300'
   woodFurniture:
     id: '59a618f4-d7e8-49a0-8ca3-e8c64121a621'
-    name: 'Bois'
+    name: 'Meubles en bois'
+    radioValue: 'Bois'
     info: 'Meubles en bois'
+    icon: 'categoryWood'
     parentProduct: '@furniture'
     childrenQuestion: 'Est-ce un meuble de cuisine ?'
     productDisplayTypes: 'radio'
@@ -755,6 +1028,8 @@ items:
     name: 'Literie'
     info: 'Matelas, couvre lits, couvre pieds, édredons et couettes...'
     icon: 'categoryBedding'
+    relatedWords: >
+      matelas,surmatelas,couvre lit,couvre pied,édredon,couettes
     parentProduct: '@house'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -781,6 +1056,8 @@ items:
     name: 'Parquet'
     info: 'Parquet'
     icon: 'categoryWoodenFloor'
+    relatedWords: >
+      parquet,latte,parquet flottant,planche
     finalProduct: true
     productDisplayTypes: 'addable'
     customDuty: 0
@@ -793,6 +1070,8 @@ items:
     name: 'Miroir'
     info: 'Miroir'
     icon: 'categoryMirror'
+    relatedWords: >
+      miroir
     finalProduct: true
     productDisplayTypes: 'addable'
     customDuty: 4
@@ -805,6 +1084,8 @@ items:
     name: 'Luminaire'
     info: 'Luminaire'
     icon: 'categoryLamp'
+    relatedWords: >
+      lustre,plafonnier,applique,spot,luminaire,suspension,borne,lampes,lampes de chevet,lampe de bureau,lampe de tables
     finalProduct: true
     productDisplayTypes: 'radio-card'
     childrenQuestion: 'Sélectionnez la matière de votre luminaire'
@@ -813,7 +1094,9 @@ items:
       - '9405'
   plasticLamp:
     id: '264b9764-d3ba-4b5a-86fd-5c752ba9542d'
-    name: 'Plastique'
+    name: 'Luminaire en plastique'
+    radioValue: 'Plastique'
+    icon: 'categoryPlastic'
     info: 'Luminaire en plastique'
     productDisplayTypes: 'addable'
     customDuty: 4.7
@@ -823,7 +1106,8 @@ items:
       - '940511'
   ceramicLamp:
     id: 'b8a1e105-6ebd-4805-b6f6-a71a1c9d2f41'
-    name: 'Céramique'
+    name: 'Luminaire en céramique'
+    radioValue: 'Céramique'
     info: 'Luminaire en céramique'
     productDisplayTypes: 'addable'
     customDuty: 4.7
@@ -833,7 +1117,9 @@ items:
       - '940519'
   glassLamp:
     id: '7d0696a5-5329-403a-8150-7091d442d916'
-    name: 'Verre'
+    name: 'Luminaire en verre'
+    radioValue: 'Verre'
+    icon: 'categoryGlass'
     info: 'Luminaire en verre'
     productDisplayTypes: 'addable'
     customDuty: 3.7
@@ -843,7 +1129,8 @@ items:
       - '940521'
   otherLamp:
     id: '1ed29a09-0c81-47a9-aabb-75be36751e04'
-    name: 'Autre'
+    name: 'Luminaire en autre matière'
+    radioValue: 'Autre'
     info: 'Luminaire en autre matière'
     productDisplayTypes: 'addable'
     customDuty: 2.7
@@ -857,6 +1144,8 @@ items:
     name: 'Vaisselle'
     info: 'Vaisselle'
     icon: 'categoryDishes'
+    relatedWords: >
+      assiettes,verres,couvert,fourchette,cuillère,couteau,bol,tasse,casserole,poele,wok,flûte,tasse,mug,cruche,carafe,pichet,soucoupe,ramequin,ménagère
     parentProduct: '@house'
     finalProduct: true
     productDisplayTypes: 'radio-card'
@@ -939,7 +1228,7 @@ items:
     finalProduct: true
     productDisplayTypes: 'addable'
     customDuty: 0
-    vat: 20
+    vat: 5.5
     parentProduct: '@house'
     nomenclatures:
       - '9701'
@@ -957,6 +1246,8 @@ items:
     name: 'Autoradio lecteur CD'
     info: 'Autoradio lecteur CD'
     icon: 'categoryCarRadio'
+    relatedWords: >
+      autoradio,lecteur CD
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 3.5
@@ -969,6 +1260,8 @@ items:
     name: 'GPS'
     info: 'GPS'
     icon: 'categoryGPS'
+    relatedWords: >
+      gps
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 0
@@ -980,6 +1273,8 @@ items:
     id: 'b432c1ae-5df2-4bf5-9eec-d86a564accf5'
     name: 'Jantes'
     info: 'Jantes alu'
+    relatedWords: >
+      jantes alu
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 4.5
@@ -992,6 +1287,8 @@ items:
     name: 'Pneu'
     info: 'Pneu'
     icon: 'categoryTire'
+    relatedWords: >
+      pneu
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 4.5
@@ -1006,12 +1303,16 @@ items:
     name: 'Divers'
     info: 'Divers'
     icon: 'categoryVarious'
+    relatedWords: >
+      cigarette électronique,vapoteuse
     productDisplayTypes: 'category'
   electronicCigarettes:
     id: '325ef6eb-7029-4813-983c-585e16e5af8e'
     name: 'Cigarettes électroniques'
     info: 'Cigarettes électroniques'
     icon: 'categoryElectronicCigarettes'
+    relatedWords: >
+      cigarette électronique,vapoteuse
     productDisplayTypes: 'addable'
     finalProduct: true
     customDuty: 3.7
@@ -1019,6 +1320,20 @@ items:
     parentProduct: '@various'
     nomenclatures:
       - '85434000'
+  sunglasses:
+    id: '366eade8-c3e0-4cac-8a22-5f8c5f160064'
+    name: 'Lunettes solaires'
+    info: 'Lunettes solaires'
+    icon: 'categorySunglasses'
+    relatedWords: >
+      lunettes de soleil,lunette solaires
+    productDisplayTypes: 'addable'
+    finalProduct: true
+    customDuty: 2.9
+    vat: 20
+    parentProduct: '@various'
+    nomenclatures:
+      - '900410'
 
   # Alimentaire
   food:
