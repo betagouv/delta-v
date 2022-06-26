@@ -20,6 +20,7 @@ const product: Product = {
   vat: null,
   nomenclatures: null,
   subProducts: [],
+  relatedWords: [],
 };
 
 export const withVariant = (): JSX.Element => (

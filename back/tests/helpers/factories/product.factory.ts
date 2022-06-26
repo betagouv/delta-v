@@ -9,7 +9,7 @@ const buildSchema = (): Product => {
     info: faker.lorem.paragraph(),
     childrenQuestion: faker.lorem.sentence(),
     finalProduct: faker.datatype.boolean(),
-    productDisplayTypes: faker.random.arrayElement([
+    productDisplayTypes: faker.helpers.arrayElement([
       ProductDisplayTypes.addable,
       ProductDisplayTypes.category,
       ProductDisplayTypes.notManaged,

@@ -2,6 +2,7 @@ import { Meta } from '@storybook/react';
 
 import { FormSelectProduct } from './FormSelectProduct';
 import { Product, ProductDisplayTypes } from '@/model/product';
+import { productFactory } from '@/tests/factories/Product.factory';
 
 export default {
   title: 'Components/Business/FormSelectProduct',
@@ -13,7 +14,7 @@ export interface FormSimulatorData {
   devise?: string;
 }
 
-const currentProduct: Product = {
+const currentProduct: Product = productFactory({
   id: 'b47dab76-acca-4d78-ba3b-7323b17dcb8b',
   name: 'Vêtement pour adulte',
   icon: 'categoryAdultClothes',
@@ -25,7 +26,7 @@ const currentProduct: Product = {
   vat: null,
   nomenclatures: null,
   subProducts: [
-    {
+    productFactory({
       id: '98b58ced-de0c-40d9-95cc-8247fe63fe17',
       name: 'Oui',
       icon: undefined,
@@ -37,8 +38,8 @@ const currentProduct: Product = {
       vat: 20,
       nomenclatures: ['42031000'],
       subProducts: [],
-    },
-    {
+    }),
+    productFactory({
       id: '15edcc66-1123-47cb-855e-d0eae1233682',
       name: 'Non',
       icon: undefined,
@@ -50,7 +51,7 @@ const currentProduct: Product = {
       vat: null,
       nomenclatures: ['4203'],
       subProducts: [
-        {
+        productFactory({
           id: 'e6520fa8-8e59-4d57-ab98-3a5ad690ac5a',
           name: 'Oui',
           icon: undefined,
@@ -62,8 +63,8 @@ const currentProduct: Product = {
           vat: 20,
           nomenclatures: ['6212'],
           subProducts: [],
-        },
-        {
+        }),
+        productFactory({
           id: '4dbcac27-c57e-4c8f-befb-9c8092c1c450',
           name: 'Non',
           icon: undefined,
@@ -75,11 +76,11 @@ const currentProduct: Product = {
           vat: 20,
           nomenclatures: null,
           subProducts: [],
-        },
+        }),
       ],
-    },
+    }),
   ],
-};
+});
 
 export const base = (): JSX.Element => (
   <div className="p-3">
