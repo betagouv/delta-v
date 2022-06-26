@@ -1,29 +1,32 @@
 import { Meta } from '@storybook/react';
-import { useForm } from 'react-hook-form';
 
-import { FormAddProduct } from './Search';
+import { Search } from './Search';
+import { Product } from '@/model/product';
+import { productFactory } from '@/tests/factories/Product.factory';
+import { SearchType } from '@/utils/search';
 
 export default {
-  title: 'Components/Business/FormAddProduct',
-  component: FormAddProduct,
+  title: 'Components/Business/Search',
+  component: Search,
 } as Meta;
 
-export interface FormSimulatorData {
-  price?: number;
-  devise?: string;
-}
-
-const { register, control } = useForm<FormSimulatorData>({
-  defaultValues: {
-    price: undefined,
-    devise: 'eur',
+const arrayProducts: SearchType<Product>[] = [
+  {
+    ...productFactory(),
+    rank: 5,
+    rankedValue: 'hého',
   },
-});
+  {
+    ...productFactory(),
+    rank: 2,
+    rankedValue: 'salut',
+  },
+];
 
 export const base = (): JSX.Element => (
   <div className="p-3">
     <br />
-    <FormAddProduct register={register} control={control} />
+    <Search onSearch={() => arrayProducts} />
     <br />
   </div>
 );
