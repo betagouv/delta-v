@@ -1,0 +1,23 @@
+<svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="path-1-inside-1_147_8531" fill="white">
+<rect x="2.22217" width="15.5556" height="10.8333" rx="0.5"/>
+</mask>
+<rect x="2.22217" width="15.5556" height="10.8333" rx="0.5" fill="#7DDBF9" stroke="#C4C4C4" stroke-width="2" mask="url(#path-1-inside-1_147_8531)"/>
+<path d="M2.07331 9.96778C2.1665 9.8315 2.32095 9.75 2.48605 9.75H17.514C17.6791 9.75 17.8335 9.8315 17.9267 9.96778L19.4652 12.2178C19.6921 12.5496 19.4544 13 19.0524 13H0.947588C0.545576 13 0.307941 12.5496 0.534848 12.2178L2.07331 9.96778Z" fill="#C4C4C4"/>
+<path d="M3.08617 9.75H16.6666L18.3333 11.9167H1.66663L3.08617 9.75Z" fill="#928C8C"/>
+<line x1="2.22217" y1="9.25" x2="17.7777" y2="9.25" stroke="#C4C4C4"/>
+<line x1="2.22217" y1="10.7084" x2="17.7777" y2="10.7084" stroke="#C4C4C4" stroke-width="0.25"/>
+<path d="M5 9.20837L3.33333 12.4584" stroke="#C4C4C4" stroke-width="0.25"/>
+<path d="M7.22217 9.20837L5.5555 12.4584" stroke="#C4C4C4" stroke-width="0.25"/>
+<path d="M8.78674 9.02466L8.43539 12.6421" stroke="#C4C4C4" stroke-width="0.25"/>
+<path d="M10.7676 9.01758L10.8991 12.6489" stroke="#C4C4C4" stroke-width="0.25"/>
+<path d="M12.2222 9.20837L13.8888 12.4584" stroke="#C4C4C4" stroke-width="0.25"/>
+<path d="M14.4445 9.20837L16.1111 12.4584" stroke="#C4C4C4" stroke-width="0.25"/>
+<rect width="12.9263" height="4.36293" transform="matrix(0.863603 0.504172 -0.523317 0.852138 5.61658 0)" fill="url(#paint0_radial_147_8531)"/>
+<defs>
+<radialGradient id="paint0_radial_147_8531" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(6.46315 2.18147) rotate(90) scale(2.18147 6.46315)">
+<stop stop-color="#E7FEFF"/>
+<stop offset="1" stop-color="#C1FBFF" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

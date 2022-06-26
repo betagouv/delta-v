@@ -1,0 +1,50 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="15" fill="url(#paint0_linear_116_8088)"/>
+<mask id="mask0_116_8088" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
+<circle cx="15" cy="15" r="15" fill="url(#paint1_linear_116_8088)"/>
+</mask>
+<g mask="url(#mask0_116_8088)">
+<g opacity="0.22">
+<circle cx="-2" cy="6" r="8.5" stroke="white"/>
+<circle cx="-2" cy="6" r="8.5" stroke="white"/>
+<circle cx="-2" cy="6" r="8.5" stroke="white"/>
+</g>
+<g opacity="0.22">
+<circle cx="-2" cy="23" r="8.5" stroke="white"/>
+<circle cx="-2" cy="23" r="8.5" stroke="white"/>
+<circle cx="-2" cy="23" r="8.5" stroke="white"/>
+</g>
+<g opacity="0.22">
+<circle cx="15" cy="6" r="8.5" stroke="white"/>
+<circle cx="15" cy="6" r="8.5" stroke="white"/>
+<circle cx="15" cy="6" r="8.5" stroke="white"/>
+</g>
+<g opacity="0.22">
+<circle cx="15" cy="23" r="8.5" stroke="white"/>
+<circle cx="15" cy="23" r="8.5" stroke="white"/>
+<circle cx="15" cy="23" r="8.5" stroke="white"/>
+</g>
+<g opacity="0.22">
+<circle cx="32" cy="6" r="8.5" stroke="white"/>
+<circle cx="32" cy="6" r="8.5" stroke="white"/>
+<circle cx="32" cy="6" r="8.5" stroke="white"/>
+</g>
+<g opacity="0.22">
+<circle cx="32" cy="23" r="8.5" stroke="white"/>
+<circle cx="32" cy="23" r="8.5" stroke="white"/>
+<circle cx="32" cy="23" r="8.5" stroke="white"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_116_8088" x1="5.5" y1="6" x2="25" y2="30" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2D2C2C"/>
+<stop offset="0.463542" stop-color="#878080"/>
+<stop offset="0.979167" stop-color="#2C2C2C"/>
+</linearGradient>
+<linearGradient id="paint1_linear_116_8088" x1="5.5" y1="6" x2="25" y2="30" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2D2C2C"/>
+<stop offset="0.463542" stop-color="#878080"/>
+<stop offset="0.979167" stop-color="#2C2C2C"/>
+</linearGradient>
+</defs>
+</svg>

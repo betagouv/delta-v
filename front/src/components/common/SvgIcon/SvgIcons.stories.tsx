@@ -17,11 +17,13 @@ const iconNames: SvgNames[] = [
   'other',
   'plane',
   'train',
+  'liteSearch',
   'luggages',
   'calculator',
   'phone',
   'mail',
   'question',
+  'search',
 ];
 const categoryIcon: SvgNames[] = [
   'categoryAccessory',
@@ -29,6 +31,7 @@ const categoryIcon: SvgNames[] = [
   'categoryAdultClothes',
   'categoryAlcohol',
   'categoryArt',
+  'categoryBamboo',
   'categoryMackup',
   'categoryBeautyProducts',
   'categoryBedding',
@@ -36,13 +39,17 @@ const categoryIcon: SvgNames[] = [
   'categoryBooks',
   'categoryCarRadio',
   'categoryCar',
+  'categoryCD',
   'categoryChildrenClothes',
   'categoryCigarettes',
   'categoryClothes',
+  'categoryCologne',
   'categoryCopper',
+  'categoryCotton',
   'categoryDecoration',
   'categoryDishes',
   'categoryDVDPlayer',
+  'categoryDVD',
   'categoryElectricGuitar',
   'categoryElectronicCigarettes',
   'categoryFabricGloves',
@@ -51,6 +58,8 @@ const categoryIcon: SvgNames[] = [
   'categoryFishing',
   'categoryFood',
   'categoryFurniture',
+  'categoryGameConsole',
+  'categoryGlass',
   'categoryGolf',
   'categoryGPS',
   'categoryGuitar',
@@ -59,28 +68,44 @@ const categoryIcon: SvgNames[] = [
   'categoryHouse',
   'categoryJewelry',
   'categoryLamp',
+  'categoryLaptop',
+  'categoryLeather',
   'categoryLeatherAccessory',
   'categoryLeatherGoods',
+  'categoryMetal',
   'categoryMirror',
+  'categoryMP3',
   'categoryMusicBox',
   'categoryMusic',
   'categoryNumericPiano',
   'categoryOther',
+  'categoryPerfume',
   'categoryPiano',
+  'categoryPlastic',
+  'categoryRattan',
   'categoryRims',
   'categoryScarf',
+  'categorySilk',
   'categoryShoes',
   'categorySki',
+  'categorySmartphone',
   'categorySocks',
   'categorySports',
+  'categorySunglasses',
   'categorySynthesizer',
+  'categoryTablet',
   'categoryTelevision',
   'categoryTennis',
+  'categoryTextile',
   'categoryTie',
   'categoryTire',
   'categoryVarious',
+  'categoryVideoGame',
+  'categoryViolins',
+  'categoryWatches',
   'categoryWig',
   'categoryWindsurf',
+  'categoryWood',
   'categoryWoodenFloor',
 ];
 
@@ -97,9 +122,9 @@ export const Base = (): JSX.Element => {
         ))}
       </div>
       <Typography tag="h2">Icon Categories : </Typography>
-      <div className="grid grid-cols-8">
+      <div className="grid grid-cols-8 content-center">
         {categoryIcon.map((name) => (
-          <div className="flex h-14 w-20 flex-col text-center">
+          <div className="mb-2 flex h-20 w-20 flex-col border p-2 text-center">
             <SvgIcon name={name} />
             <span>{name}</span>
           </div>

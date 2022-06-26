@@ -13,7 +13,7 @@ export interface CardProps {
   svgName: SvgNames;
   title: string;
   subtitle?: string;
-  description: string;
+  description: React.ReactNode;
   onClick?: () => void;
 }
 

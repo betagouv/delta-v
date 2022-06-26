@@ -60,7 +60,7 @@ const ProductSearch = () => {
       }
     >
       <div className="flex h-full flex-col gap-6">
-        <Header withCart />
+        <Header withCart withSearch linkSearch="/simulateur/produits/recherche" />
         <TitleHeader title={currentProduct?.name} icon="calculator" />
         {selectedProduct?.finalProduct ? (
           <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />

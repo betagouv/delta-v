@@ -9,10 +9,12 @@ export interface Product {
   finalProduct: boolean;
   productDisplayTypes: ProductDisplayTypes;
   childrenQuestion: string | null;
-  nomenclatures: string[] | null;
-  customDuty: number | null;
-  vat: number | null;
+  nomenclatures?: string[] | null;
+  customDuty?: number | null;
+  vat?: number | null;
   subProducts: Product[];
+  relatedWords: string[];
+  related?: string;
 }
 
 export enum ProductDisplayTypes {

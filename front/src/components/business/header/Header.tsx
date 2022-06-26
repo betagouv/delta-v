@@ -8,9 +8,14 @@ import { useStore } from '@/stores/store';
 interface HeaderProps {
   withCart?: boolean;
   withSearch?: boolean;
+  linkSearch?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ withCart = false }: HeaderProps) => {
+export const Header: React.FC<HeaderProps> = ({
+  withCart = false,
+  withSearch = false,
+  linkSearch = '/simulateur/produits/recherche',
+}: HeaderProps) => {
   const shoppingProducts = useStore(
     (state) => state.simulator.appState.simulatorRequest.shoppingProducts,
   );
@@ -23,6 +28,13 @@ export const Header: React.FC<HeaderProps> = ({ withCart = false }: HeaderProps)
     <div className="flex flex-row">
       <BackButton />
       <div className="flex-1" />
+      {withSearch && (
+        <Link to={linkSearch}>
+          <div className="mx-4 mt-1 h-7 w-7">
+            <SvgIcon name="liteSearch" />
+          </div>
+        </Link>
+      )}
       {withCart && (
         <Link to="/simulateur/pannier">
           <div className="flex flex-row">

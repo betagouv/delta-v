@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { buildFactory } from '../../../src/core/testHelpers';
-import { Product, ProductDisplayTypes } from '../../../src/entities/product.entity';
+
+import { buildFactory } from './buildFactory';
+import { Product, ProductDisplayTypes } from '@/model/product';
 
 const buildSchema = (): Product => {
   return {
@@ -9,7 +10,7 @@ const buildSchema = (): Product => {
     info: faker.lorem.paragraph(),
     childrenQuestion: faker.lorem.sentence(),
     finalProduct: faker.datatype.boolean(),
-    productDisplayTypes: faker.random.arrayElement([
+    productDisplayTypes: faker.helpers.arrayElement([
       ProductDisplayTypes.addable,
       ProductDisplayTypes.category,
       ProductDisplayTypes.notManaged,
@@ -17,10 +18,11 @@ const buildSchema = (): Product => {
       ProductDisplayTypes.radioCard,
     ]),
     relatedWords: [],
+    subProducts: [],
   };
 };
 
-export const productEntityFactory = (args?: Partial<Product>): Product =>
+export const productFactory = (args?: Partial<Product>): Product =>
   buildFactory<Product>({
     ...buildSchema(),
   })(args);
