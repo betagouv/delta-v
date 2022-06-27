@@ -3,6 +3,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { FormAddProduct } from '../formAddProduct';
+import { ProductNotManaged } from './ProductNotManaged';
 import {
   FormSelectProductData,
   getDefaultValues,
@@ -132,6 +133,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       </div>
     </form>
   ) : (
-    <div>Produit non géré</div>
+    <ProductNotManaged />
   );
 };
