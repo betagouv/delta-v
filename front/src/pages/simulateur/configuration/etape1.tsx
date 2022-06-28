@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
 
@@ -13,8 +15,13 @@ export interface FormSimulatorData {
 }
 
 const Configuration = () => {
-  const resetSteps = useStore((state) => state.resetSteps);
-  const validateStep1 = useStore((state) => state.validateStep1);
+  const { resetSteps, validateStep1 } = useStore(
+    (state) => ({
+      resetSteps: state.resetSteps,
+      validateStep1: state.validateStep1,
+    }),
+    shallow,
+  );
   const router = useRouter();
   const numberStep = 1;
   useEffect(() => {
@@ -65,4 +72,4 @@ const Configuration = () => {
   );
 };
 
-export default Configuration;
+export default simulator(Configuration);

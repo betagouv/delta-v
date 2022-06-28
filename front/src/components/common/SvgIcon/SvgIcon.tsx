@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Add from '@/assets/icons/Add.svg';
+import ArrowRight from '@/assets/icons/Arrow-Right.svg';
 import Basket from '@/assets/icons/Basket.svg';
 import Boat from '@/assets/icons/Boat.svg';
 import Calculator from '@/assets/icons/Calculator.svg';
@@ -100,6 +101,7 @@ import Train from '@/assets/icons/Train.svg';
 
 export type SvgNames =
   | 'add'
+  | 'arrowRight'
   | 'boat'
   | 'car'
   | 'plane'
@@ -206,6 +208,8 @@ const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
     case 'add':
       return Add;
+    case 'arrowRight':
+      return ArrowRight;
     case 'boat':
       return Boat;
     case 'car':

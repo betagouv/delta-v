@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { useRouter } from 'next/router';
+import shallow from 'zustand/shallow';
 
 import { OnActionModal } from '@/components/autonomous/OnActionModal';
 import { Header } from '@/components/business/header';
@@ -10,16 +11,21 @@ import { ProductBasket } from '@/components/common/ProductBasket';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { TitleHeader } from '@/components/common/TitleHeader';
 import { Typography } from '@/components/common/Typography';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Pannier = () => {
   const router = useRouter();
-  const shoppingProducts = useStore(
-    (state) => state.simulator.appState.simulatorRequest.shoppingProducts,
+
+  const { shoppingProducts, removeProduct } = useStore(
+    (state) => ({
+      shoppingProducts: state.simulator.appState.simulatorRequest.shoppingProducts,
+      removeProduct: state.removeProduct,
+    }),
+    shallow,
   );
-  const removeProduct = useStore((state) => state.removeProduct);
   const [openActionModal, setOpenActionModal] = useState(false);
   const idToDelete = useRef('');
 
@@ -87,4 +93,4 @@ const Pannier = () => {
     </Main>
   );
 };
-export default Pannier;
+export default simulator(Pannier);

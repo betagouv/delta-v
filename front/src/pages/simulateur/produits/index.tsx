@@ -1,17 +1,25 @@
 import { useEffect, useState } from 'react';
 
+import shallow from 'zustand/shallow';
+
 import { Header } from '@/components/business/header';
 import { Search } from '@/components/business/search';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import { TitleHeader } from '@/components/common/TitleHeader';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const products = useStore((state) => state.products.appState.products);
-  const searchProducts = useStore((state) => state.searchProducts);
-  const getProductsResponse = useStore((state) => state.getProductsResponse);
+  const { products, searchProducts, getProductsResponse } = useStore(
+    (state) => ({
+      products: state.products.appState.products,
+      searchProducts: state.searchProducts,
+      getProductsResponse: state.getProductsResponse,
+    }),
+    shallow,
+  );
   const [displayProducts, setDisplayProducts] = useState(true);
 
   const displayedProducts = products?.map((product): Item => {
@@ -60,4 +68,4 @@ const Index = () => {
     </Main>
   );
 };
-export default Index;
+export default simulator(Index);

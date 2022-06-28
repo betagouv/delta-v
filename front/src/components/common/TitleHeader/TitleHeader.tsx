@@ -19,20 +19,19 @@ export const splitTitle = (item: string): string[] => {
 };
 
 export const TitleHeader: React.FC<TitleHeaderProps> = ({ title, icon }: TitleHeaderProps) => {
-  // const [firstLine, secondLine] = splitTitle(title);
   return (
     <div className="flex flex-row gap-2">
       <div className="h-14">
         <SvgIcon name={icon} />
       </div>
-      <div className="mt-1">
+      <div className="mt-1 flex-1">
         <Typography
           weight="bold"
           variant="h1"
           tag="h1"
           color="secondary"
           size="text-3xl"
-          lineHeight="leading-tight"
+          lineHeight="leading-none"
         >
           {title}
         </Typography>

@@ -1,15 +1,23 @@
 import { useEffect } from 'react';
 
+import shallow from 'zustand/shallow';
+
 import { Header } from '@/components/business/header';
 import { Search } from '@/components/business/search';
 import { TitleHeader } from '@/components/common/TitleHeader';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const SearchProduct = () => {
-  const searchProducts = useStore((state) => state.searchProducts);
-  const getProductsResponse = useStore((state) => state.getProductsResponse);
+  const { searchProducts, getProductsResponse } = useStore(
+    (state) => ({
+      searchProducts: state.searchProducts,
+      getProductsResponse: state.getProductsResponse,
+    }),
+    shallow,
+  );
 
   useEffect(() => {
     getProductsResponse();
@@ -42,4 +50,4 @@ const SearchProduct = () => {
     </Main>
   );
 };
-export default SearchProduct;
+export default simulator(SearchProduct);

@@ -12,6 +12,7 @@ export default {
 
 const iconNames: SvgNames[] = [
   'add',
+  'arrowRight',
   'boat',
   'car',
   'other',

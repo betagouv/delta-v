@@ -22,7 +22,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
       data-testid="radio-card-element"
       disabled={disabled}
       className={classNames(
-        'text-[13px]',
+        'text-sm',
         disabled ? 'opacity-50 cursor-not-allowed' : '',
         checked ? 'font-bold border-2' : 'font-normal border hover:bg-gray-50',
         'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
