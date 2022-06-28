@@ -7,6 +7,7 @@ import { QrcodeBlock } from '@/components/business/qrcodeBlock';
 import { SummarySimulator } from '@/components/business/summarySimulator';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
@@ -83,4 +84,4 @@ const Summary = () => {
     </Main>
   );
 };
-export default Summary;
+export default simulator(Summary);

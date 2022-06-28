@@ -1,7 +1,10 @@
 import { useMemo } from 'react';
 
+import shallow from 'zustand/shallow';
+
 import { Header } from '@/components/business/header';
 import { SummarySimulator } from '@/components/business/summarySimulator';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
@@ -13,9 +16,14 @@ export interface FormUpdateShoppingProduct {
 }
 
 const Summary = () => {
-  const simulate = useStore((state) => state.simulate);
-  const simulatorRequest = useStore((state) => state.simulator.appState.simulatorRequest);
-  const simulatorResponse = useStore((state) => state.simulator.appState.simulatorResponse);
+  const { simulate, simulatorRequest, simulatorResponse } = useStore(
+    (state) => ({
+      simulate: state.simulate,
+      simulatorRequest: state.simulator.appState.simulatorRequest,
+      simulatorResponse: state.simulator.appState.simulatorResponse,
+    }),
+    shallow,
+  );
 
   useMemo(() => {
     simulate();
@@ -41,4 +49,4 @@ const Summary = () => {
     </Main>
   );
 };
-export default Summary;
+export default simulator(Summary);

@@ -17,6 +17,7 @@ type TextSize =
 type LineHeight =
   | 'leading-none'
   | 'leading-tight'
+  | 'leading-4'
   | 'leading-snug'
   | 'leading-normal'
   | 'leading-relaxed'

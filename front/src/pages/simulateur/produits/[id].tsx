@@ -3,20 +3,27 @@ import { useEffect } from 'react';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
+import shallow from 'zustand/shallow';
 
 import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { Header } from '@/components/business/header';
 import { CategoryList } from '@/components/common/CategoryList';
 import { TitleHeader } from '@/components/common/TitleHeader';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const ProductSearch = () => {
-  const findProduct = useStore((state) => state.findProduct);
-  const getProductsResponse = useStore((state) => state.getProductsResponse);
-  const addProduct = useStore((state) => state.addProduct);
+  const { findProduct, getProductsResponse, addProduct } = useStore(
+    (state) => ({
+      findProduct: state.findProduct,
+      getProductsResponse: state.getProductsResponse,
+      addProduct: state.addProduct,
+    }),
+    shallow,
+  );
   const router = useRouter();
   const { id } = router.query;
   const currentProduct = findProduct(id as string);
@@ -71,4 +78,4 @@ const ProductSearch = () => {
     </Main>
   );
 };
-export default ProductSearch;
+export default simulator(ProductSearch);

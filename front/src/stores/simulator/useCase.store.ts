@@ -87,6 +87,9 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         newState.simulator.appState.simulatorRequest.age =
           SIMULATOR_EMPTY_STATE.simulatorRequest.age;
       }
+      newState.simulator.appState.simulatorRequest.shoppingProducts =
+        SIMULATOR_EMPTY_STATE.simulatorRequest.shoppingProducts;
+      newState.simulator.appState.simulatorResponse = SIMULATOR_EMPTY_STATE.simulatorResponse;
       return newState;
     });
   },

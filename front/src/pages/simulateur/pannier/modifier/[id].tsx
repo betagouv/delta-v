@@ -3,11 +3,13 @@ import { useEffect } from 'react';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import shallow from 'zustand/shallow';
 
 import { FormAddProduct } from '@/components/business/formAddProduct';
 import { Header } from '@/components/business/header';
 import { TitleHeader } from '@/components/common/TitleHeader';
 import { InputGroup } from '@/components/input/InputGroup';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
@@ -19,8 +21,13 @@ export interface FormUpdateShoppingProduct {
 }
 
 const UpdateProductBasket = () => {
-  const findShoppingProduct = useStore((state) => state.findShoppingProduct);
-  const updateShoppingProduct = useStore((state) => state.updateShoppingProduct);
+  const { findShoppingProduct, updateShoppingProduct } = useStore(
+    (state) => ({
+      findShoppingProduct: state.findShoppingProduct,
+      updateShoppingProduct: state.updateShoppingProduct,
+    }),
+    shallow,
+  );
   const router = useRouter();
   const { id } = router.query;
   const currentProduct = findShoppingProduct(id as string);
@@ -81,4 +88,4 @@ const UpdateProductBasket = () => {
     </Main>
   );
 };
-export default UpdateProductBasket;
+export default simulator(UpdateProductBasket);

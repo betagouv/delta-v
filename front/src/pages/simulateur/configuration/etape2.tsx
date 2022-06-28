@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import shallow from 'zustand/shallow';
 
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { MeansOfTransport } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
@@ -42,8 +44,13 @@ const meanOfTransports: IRadioCardType[] = [
 ];
 
 const Configuration = () => {
-  const resetSteps = useStore((state) => state.resetSteps);
-  const validateStep2 = useStore((state) => state.validateStep2);
+  const { resetSteps, validateStep2 } = useStore(
+    (state) => ({
+      resetSteps: state.resetSteps,
+      validateStep2: state.validateStep2,
+    }),
+    shallow,
+  );
   const router = useRouter();
   const numberStep = 2;
   useEffect(() => {
@@ -98,4 +105,4 @@ const Configuration = () => {
   );
 };
 
-export default Configuration;
+export default simulator(Configuration);

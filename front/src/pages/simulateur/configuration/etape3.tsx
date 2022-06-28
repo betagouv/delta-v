@@ -3,9 +3,11 @@ import { useEffect, useMemo } from 'react';
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
+import { simulator } from '@/core/hoc/simulator.hoc';
 import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
 
@@ -14,10 +16,13 @@ export interface FormSimulatorData {
 }
 
 const Configuration = () => {
-  const resetSteps = useStore((state) => state.resetSteps);
-  const validateStep3 = useStore((state) => state.validateStep3);
-  const meanOfTransport = useStore(
-    (state) => state.simulator.appState.simulatorRequest.meanOfTransport,
+  const { resetSteps, validateStep3, meanOfTransport } = useStore(
+    (state) => ({
+      resetSteps: state.resetSteps,
+      validateStep3: state.validateStep3,
+      meanOfTransport: state.simulator.appState.simulatorRequest.meanOfTransport,
+    }),
+    shallow,
   );
   const router = useRouter();
   const numberStep = 3;
@@ -80,4 +85,4 @@ const Configuration = () => {
   );
 };
 
-export default Configuration;
+export default simulator(Configuration);

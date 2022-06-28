@@ -28,11 +28,13 @@ export const Card: React.FC<CardProps> = ({
   description,
   onClick,
 }: CardProps) => {
-  let className = 'flex h-auto items-center border border-gray-300 bg-white p-3 flex-1 gap-4';
+  let className = 'flex h-auto border border-gray-300 bg-white p-3 flex-1 gap-4';
   if (variant === 'vertical') {
-    className += ' flex-col text-center';
-  } else if (variant === 'horizontal') {
-    className += ' text-left gap-2';
+    className += ' flex-col text-center items-center';
+  } else if (variant === 'horizontal' && !subtitle) {
+    className += ' text-left items-end';
+  } else {
+    className += ' text-left items-center';
   }
 
   if (disabled) {
@@ -64,12 +66,12 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div className={className} onClick={onClick}>
-      <div className="h-14 w-14">
+      <div className="h-[50px] w-[50px]">
         <SvgIcon name={svgName} />
       </div>
       <div className="flex flex-1 flex-col">
         <span className="text-base font-bold">{title}</span>
-        {subtitle && <span className="font-bold text-primary-700">{subtitle}</span>}
+        {subtitle && <span className="font-bold leading-4 text-primary-700">{subtitle}</span>}
         <div className="whitespace-pre-wrap leading-4 text-gray-500">{description}</div>
       </div>
     </div>
