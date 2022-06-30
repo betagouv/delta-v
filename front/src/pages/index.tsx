@@ -1,8 +1,8 @@
+import { Search } from '@/components/business/search';
 import { Card } from '@/components/common/Card';
+import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
-import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
-import { Input } from '@/components/input/StandardInputs/Input';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 
@@ -40,13 +40,7 @@ const Index = () => {
           </Typography>
         </div>
 
-        <Input
-          name="search"
-          type="text"
-          fullWidth
-          placeholder="Que recherchez-vous ?"
-          trailingSvgIcon="search"
-        ></Input>
+        <Search onSearch={() => []} withSearchIcon searchType="faq" />
 
         <div className="flex flex-col gap-4">
           <Card
@@ -95,11 +89,13 @@ const Index = () => {
         <Link to="/test">
           <div className="flex flex-row items-center">
             <Typography weight="bold" variant="body1" tag="p" color="link">
-              En savoir plus
+              <div className="flex flex-row">
+                En savoir plus
+                <div className="ml-1 h-3.5 w-3.5">
+                  <Icon name="arrow-right" />
+                </div>
+              </div>
             </Typography>
-            <div className="ml-1 h-3 w-3">
-              <SvgIcon name="arrowRight" />
-            </div>
           </div>
         </Link>
       </div>

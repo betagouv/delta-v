@@ -1,62 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { Disclosure, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 
+import { Icon } from '../Icon';
+
 export interface FaqProps {
-  id: string;
+  id: any;
   question: string;
   answer: string;
-  linkId?: string;
+  open?: boolean;
+  setOpenId: (id: any) => void;
 }
 
-export const Faq: React.FC<FaqProps> = ({ id, question, answer, linkId }: FaqProps) => {
-  const idChosen = linkId === id;
-  const [keyOfOpenDisclosure, setKeyOfOpenDisclosure] = useState(false);
-
-  useEffect(() => {
-    setKeyOfOpenDisclosure(idChosen);
-  }, [idChosen]);
-  const checkOpen = (disclosure: boolean, open: boolean): boolean => {
-    if (disclosure) {
-      return !open;
-    }
-    return open;
-  };
-
+export const Faq: React.FC<FaqProps> = ({
+  id,
+  question,
+  answer,
+  open = false,
+  setOpenId,
+}: FaqProps) => {
   return (
-    <Disclosure as="div" key={id} className="pt-6" id={id}>
-      {({ open }) => (
-        <>
-          <dt className="text-lg">
-            <Disclosure.Button className="flex w-full items-start justify-between text-left text-gray-400">
-              <span
-                className={classNames({
-                  'text-gray-900 text-base': true,
-                  'font-bold': checkOpen(keyOfOpenDisclosure, open),
-                })}
-              >
-                {question}
-              </span>
-              <div>
-                <ChevronDownIcon
-                  className={classNames(
-                    checkOpen(keyOfOpenDisclosure, open) ? '-rotate-180' : 'rotate-0',
-                    'h-6 w-6 transform',
-                  )}
-                  aria-hidden="true"
-                />
-              </div>
-            </Disclosure.Button>
-          </dt>
-          <Transition show={checkOpen(keyOfOpenDisclosure, open)}>
-            <Disclosure.Panel as="dd" className="mt-2 pr-12">
-              <p className="text-sm">{answer}</p>
-            </Disclosure.Panel>
-          </Transition>
-        </>
-      )}
-    </Disclosure>
+    <>
+      <div className="py-3">
+        <dt className="text-lg">
+          <button
+            className="flex w-full flex-row items-start justify-between gap-4 text-left"
+            onClick={() => {
+              setOpenId(open ? undefined : id);
+            }}
+          >
+            <span
+              className={classNames({
+                'text-secondary-800 text-base flex-1': true,
+                'font-bold': open,
+              })}
+            >
+              {question}
+            </span>
+            <div className="h-4 w-4">
+              {open ? <Icon name="chevron-up" /> : <Icon name="chevron-down" />}
+            </div>
+          </button>
+        </dt>
+        <div
+          className={classNames({
+            'mt-2 pr-12': true,
+            hidden: !open,
+          })}
+        >
+          <p>{answer}</p>
+        </div>
+      </div>
+      <div className="border border-secondary-100" />
+    </>
   );
 };

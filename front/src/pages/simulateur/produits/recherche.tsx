@@ -45,7 +45,7 @@ const SearchProduct = () => {
           }
           icon="calculator"
         />
-        <Search onSearch={searchProducts} />
+        <Search onSearch={searchProducts} autoFocus />
       </div>
     </Main>
   );

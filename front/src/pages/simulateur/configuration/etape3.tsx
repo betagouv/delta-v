@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { useStore } from '@/stores/store';
@@ -25,10 +24,9 @@ const Configuration = () => {
     shallow,
   );
   const router = useRouter();
-  const numberStep = 3;
   useEffect(() => {
-    resetSteps(numberStep);
-  }, [numberStep]);
+    resetSteps(3);
+  }, []);
 
   const {
     handleSubmit,
@@ -49,9 +47,18 @@ const Configuration = () => {
 
     if (meanOfTransport === 'car' && data.country === 'CH') {
       router.push(`/simulateur/configuration/etape4`);
+    } else {
+      router.push(`/simulateur/produits`);
     }
-    router.push(`/simulateur/produits`);
   };
+
+  register('country', {
+    onChange: () => {
+      setTimeout(() => {
+        handleSubmit(onSubmit)();
+      }, 500);
+    },
+  });
 
   const countriesOptions = useMemo(() => {
     const countries = getNames('fr', { select: 'official' });
@@ -60,7 +67,7 @@ const Configuration = () => {
   }, []);
 
   return (
-    <ConfigurationSteps progression={75}>
+    <ConfigurationSteps fromProgression={50} toProgression={75}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
           label="Quel est le pays d’où vous arrivez ?"
@@ -72,14 +79,6 @@ const Configuration = () => {
           control={control}
           error={errors?.country?.message}
         />
-        <div className="absolute inset-x-0 bottom-0 w-full">
-          <div className="p-4">
-            {errors?.country && <div className="text-red-500">{errors.country.message}</div>}
-            <Button fullWidth={true} type="submit">
-              Valider
-            </Button>
-          </div>
-        </div>
       </form>
     </ConfigurationSteps>
   );

@@ -30,6 +30,8 @@ export interface IInputOptions {
   trailingAddons?: string;
   leadingAddons?: string;
   register?: UseFormRegisterReturn;
+  autoFocus?: boolean;
+  onClick?: () => void;
 }
 
 export const Input: React.FC<IInputOptions> = ({
@@ -47,6 +49,8 @@ export const Input: React.FC<IInputOptions> = ({
   trailingAddons,
   leadingAddons,
   register,
+  autoFocus = false,
+  onClick = () => {},
 }: IInputOptions) => {
   let parentClassName = 'mt-1 relative';
   if (fullWidth) {
@@ -67,7 +71,7 @@ export const Input: React.FC<IInputOptions> = ({
     className += ' pl-11';
   }
   return (
-    <div className={parentClassName}>
+    <div className={parentClassName} onClick={onClick}>
       {leadingIcon && (
         <div className="pointer-events-none absolute inset-y-0 left-0 flex h-full w-9 items-center pl-4">
           <Icon name={leadingIcon} />
@@ -87,7 +91,9 @@ export const Input: React.FC<IInputOptions> = ({
         disabled={disabled}
         value={value}
         className={className}
+        step={0.01}
         {...register}
+        autoFocus={autoFocus}
       />
       {trailingIcon && (
         <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
