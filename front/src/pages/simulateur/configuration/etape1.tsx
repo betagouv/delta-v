@@ -23,10 +23,9 @@ const Configuration = () => {
     shallow,
   );
   const router = useRouter();
-  const numberStep = 1;
   useEffect(() => {
-    resetSteps(numberStep);
-  }, [numberStep]);
+    resetSteps(1);
+  }, []);
 
   const {
     handleSubmit,
@@ -47,7 +46,7 @@ const Configuration = () => {
   };
 
   return (
-    <ConfigurationSteps progression={25}>
+    <ConfigurationSteps fromProgression={0} toProgression={25}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
           label="Quel âge avez-vous ?"

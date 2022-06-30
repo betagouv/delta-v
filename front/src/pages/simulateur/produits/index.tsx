@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
+import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { Header } from '@/components/business/header';
-import { Search } from '@/components/business/search';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import { TitleHeader } from '@/components/common/TitleHeader';
+import { Input } from '@/components/input/StandardInputs/Input';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const { products, searchProducts, getProductsResponse } = useStore(
+  const { products, getProductsResponse } = useStore(
     (state) => ({
       products: state.products.appState.products,
-      searchProducts: state.searchProducts,
       getProductsResponse: state.getProductsResponse,
     }),
     shallow,
   );
-  const [displayProducts, setDisplayProducts] = useState(true);
+  const router = useRouter();
 
   const displayedProducts = products?.map((product): Item => {
     return {
@@ -56,14 +56,15 @@ const Index = () => {
           }
           icon="calculator"
         />
-        <Search
-          withSearchIcon
-          onSearch={searchProducts}
-          onChange={(displayResult) => {
-            setDisplayProducts(!displayResult);
-          }}
+        <Input
+          name="search"
+          type="text"
+          fullWidth
+          placeholder="Recherchez votre achat"
+          trailingIcon="search"
+          onClick={() => router.push('/simulateur/produits/recherche')}
         />
-        {displayProducts && <CategoryList items={displayedProducts} title="Catégories" />}
+        <CategoryList items={displayedProducts} title="Catégories" />
       </div>
     </Main>
   );

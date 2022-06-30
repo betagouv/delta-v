@@ -5,6 +5,7 @@ import shallow from 'zustand/shallow';
 import { Header } from '@/components/business/header';
 import { QrcodeBlock } from '@/components/business/qrcodeBlock';
 import { SummarySimulator } from '@/components/business/summarySimulator';
+import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
@@ -48,7 +49,7 @@ const Summary = () => {
           simulatorResponse={simulatorResponse}
         />
         <Link to="/simulateur/recapitulatif/qrcode">
-          <QrcodeBlock simulatorRequest={simulatorRequest} />
+          <QrcodeBlock />
         </Link>
         <Typography weight="bold" color="secondary">
           Des questions ?
@@ -77,7 +78,12 @@ const Summary = () => {
         </div>
         <Link to="/">
           <Typography weight="bold" color="link">
-            En savoir plus 🡢
+            <div className="flex flex-row">
+              En savoir plus
+              <div className="ml-1 h-3.5 w-3.5">
+                <Icon name="arrow-right" />
+              </div>
+            </div>
           </Typography>
         </Link>
       </div>

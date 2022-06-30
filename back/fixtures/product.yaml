@@ -239,7 +239,7 @@ items:
     relatedWords: 'Accessoires en cuir'
     parentProduct: '@accessory'
     productDisplayTypes: 'category'
-    finalProduct: true
+    finalProduct: false
     nomenclatures:
       - '42033000'
       - '42034000'
@@ -721,7 +721,7 @@ items:
     name: 'Instruments à percussion'
     info: 'Instruments à percussion'
     icon: 'categoryOther'
-    relatedWords: 'tambour,batterie,CRS,caisse claire,bongo,carillon,castagnettes,charleston,cymbale,djembé,tam tam,triangle,maracas,tambourin,timbale'
+    relatedWords: 'tambour,batterie,caisse claire,bongo,carillon,castagnettes,charleston,cymbale,djembé,tam tam,triangle,maracas,tambourin,timbale'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true

@@ -52,15 +52,13 @@ const Configuration = () => {
     shallow,
   );
   const router = useRouter();
-  const numberStep = 2;
   useEffect(() => {
-    resetSteps(numberStep);
-  }, [numberStep]);
+    resetSteps(2);
+  }, []);
 
   const {
     handleSubmit,
     register,
-    watch,
     control,
     formState: { errors },
   } = useForm<FormSimulatorData>({
@@ -77,12 +75,14 @@ const Configuration = () => {
     router.push(`/simulateur/configuration/etape3`);
   };
 
-  useEffect(() => {
-    handleSubmit(onSubmit)();
-  }, [watch('meanOfTransport')]);
+  register('meanOfTransport', {
+    onChange: () => {
+      handleSubmit(onSubmit)();
+    },
+  });
 
   return (
-    <ConfigurationSteps progression={50}>
+    <ConfigurationSteps fromProgression={25} toProgression={50}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
           label="Quel est votre moyen de transport ?"

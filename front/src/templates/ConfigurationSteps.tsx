@@ -8,10 +8,11 @@ import { Meta } from '@/layout/Meta';
 
 type IMainProps = {
   children: ReactNode;
-  progression: number;
+  fromProgression?: number;
+  toProgression: number;
 };
 
-const ConfigurationSteps = (props: IMainProps) => {
+const ConfigurationSteps = ({ children, fromProgression, toProgression }: IMainProps) => {
   return (
     <Main
       meta={
@@ -22,7 +23,7 @@ const ConfigurationSteps = (props: IMainProps) => {
       }
     >
       <div className="absolute inset-x-0 top-0 h-auto w-full">
-        <ProgressBar progression={props.progression} />
+        <ProgressBar from={fromProgression} to={toProgression} />
       </div>
       <div className="mb-8 flex flex-col gap-6">
         <Header />
@@ -37,7 +38,7 @@ const ConfigurationSteps = (props: IMainProps) => {
           icon="calculator"
         />
       </div>
-      {props.children}
+      {children}
     </Main>
   );
 };

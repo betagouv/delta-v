@@ -8,11 +8,12 @@ import { Input } from '@/components/input/StandardInputs/Input';
 import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
-type SearchDisplayType = 'product';
+type SearchDisplayType = 'product' | 'faq';
 interface SearchProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
   withSearchIcon?: boolean;
+  autoFocus?: boolean;
   searchType?: SearchDisplayType;
 }
 
@@ -33,9 +34,11 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
   onSearch,
   onChange = () => {},
   searchType = 'product',
+  autoFocus = false,
   withSearchIcon = false,
 }: SearchProps<T>) => {
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
+  const [placeholder, setPlaceholder] = useState<string>('');
   const { register, getValues } = useForm<{ searchValue: string }>({
     defaultValues: {
       searchValue: '',
@@ -53,6 +56,19 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
   });
 
   useEffect(() => {
+    switch (searchType) {
+      case 'product':
+        setPlaceholder('Recherchez votre achat');
+        break;
+      case 'faq':
+        setPlaceholder('Saisissez votre recherche');
+        break;
+      default:
+        break;
+    }
+  }, [searchType]);
+
+  useEffect(() => {
     const displayResults = getValues('searchValue').length > 0;
     onChange(displayResults);
   }, [resultSearch]);
@@ -62,12 +78,13 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
   return (
     <div className="h-full" data-testid="search-element">
       <Input
+        autoFocus={autoFocus}
         data-testid="input-search-element"
         name="search"
         type="text"
         fullWidth
-        placeholder="Saisissez votre achat"
-        trailingSvgIcon={withSearchIcon ? 'search' : undefined}
+        placeholder={placeholder}
+        trailingIcon={withSearchIcon ? 'search' : undefined}
         register={register('searchValue')}
       />
       {getValues('searchValue').length === 0 ? (

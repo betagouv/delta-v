@@ -24,12 +24,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
       <div className="p-3 leading-tight">
         <div className="flex">
           <div className="flex-1 leading-none">
-            <Typography
-              weight="extrabold"
-              color="secondary"
-              size="text-lg"
-              lineHeight="leading-none"
-            >
+            <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
               {shoppingProduct.product.name}
             </Typography>
           </div>
@@ -37,7 +32,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
             {shoppingProduct.price} €
           </Typography>
         </div>
-        <Typography weight="light" color="light-gray">
+        <Typography weight="light" color="light-gray" size="text-base">
           {shoppingProduct.name}
         </Typography>
       </div>
@@ -49,7 +44,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                 <Disclosure.Button className="w-full px-4 py-5">
                   <div className="flex">
                     <div className="flex-1 text-left">
-                      <Typography weight="normal" color="secondary">
+                      <Typography weight="normal" color="secondary" size="text-base">
                         Conversion en €
                       </Typography>
                     </div>
@@ -57,49 +52,62 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                       <Icon size="xl" name="chevron-thin-up" />
                     </div>
                   </div>
-                  <div className="p-5 text-left">
-                    <Typography>{`Calcul de la convertion € > €`}</Typography>
+                  <div className="p-6 text-left">
+                    <Typography size="text-base">{`Calcul de la convertion € > €`}</Typography>
                     <div className="leading-none">
-                      <Typography color="light-gray">
+                      <Typography color="light-gray" size="text-base">
                         Taux 1 au {dayjs().format('DD/MM/YYYY')}
                       </Typography>
                     </div>
                     <div className="flex flex-row leading-none">
-                      <Typography color="secondary">{shoppingProduct.price} x 1 =</Typography>
+                      <Typography color="secondary" size="text-base">
+                        {shoppingProduct.price} x 1 =
+                      </Typography>
                       <div className="ml-1">
-                        <Typography color="primary"> {shoppingProduct.price} €</Typography>
+                        <Typography color="primary" size="text-base">
+                          {' '}
+                          {shoppingProduct.price} €
+                        </Typography>
                       </div>
                     </div>
                     <div className="mt-2">
-                      <Typography color="primary">Calcul de la TVA</Typography>
+                      <Typography color="primary" size="text-base">
+                        Calcul de la TVA
+                      </Typography>
                     </div>
                     <div className="flex flex-row">
-                      <Typography color="primary">{shoppingProduct.price}</Typography>
+                      <Typography color="primary" size="text-base">
+                        {shoppingProduct.price}
+                      </Typography>
                       <div className="ml-1">
-                        <Typography color="secondary">
+                        <Typography color="secondary" size="text-base">
                           {' '}
                           x {shoppingProduct.product.vat ?? 0}% =
                         </Typography>
                       </div>
                       <div className="ml-1">
-                        <Typography color="primary">
+                        <Typography color="primary" size="text-base">
                           {((shoppingProduct.product.vat ?? 0) * shoppingProduct.price) / 100} €
                         </Typography>
                       </div>
                     </div>
                     <div className="mt-2">
-                      <Typography color="primary">Calcul des droits de douanes</Typography>
+                      <Typography color="primary" size="text-base">
+                        Calcul des droits de douanes
+                      </Typography>
                     </div>
                     <div className="flex flex-row">
-                      <Typography color="primary">{shoppingProduct.price}</Typography>
+                      <Typography color="primary" size="text-base">
+                        {shoppingProduct.price}
+                      </Typography>
                       <div className="ml-1">
-                        <Typography color="secondary">
+                        <Typography color="secondary" size="text-base">
                           {' '}
                           x {shoppingProduct.product.customDuty ?? 0}% =
                         </Typography>
                       </div>
                       <div className="ml-1">
-                        <Typography color="primary">
+                        <Typography color="primary" size="text-base">
                           {((shoppingProduct.product.customDuty ?? 0) * shoppingProduct.price) /
                             100}{' '}
                           €
@@ -110,7 +118,9 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                   <div className="flex items-end">
                     <div className="flex-1" />
                     <div className="mb-[2px]">
-                      <Typography color="secondary">TOTAL</Typography>
+                      <Typography color="secondary" size="text-base">
+                        TOTAL
+                      </Typography>
                     </div>
                     <div className="ml-5 content-end">
                       <Typography color="primary" size="text-xl">

@@ -19,13 +19,6 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
   simulatorResponse,
   qrCodeVersion = false,
 }: SummarySimulatorProps) => {
-  const simulateDataStringified = JSON.stringify({
-    age: simulatorRequest.age,
-    meanOfTransport: simulatorRequest.meanOfTransport,
-    country: simulatorRequest.country,
-    border: simulatorRequest.border,
-  });
-
   const totalTaxes = simulatorResponse?.totalTaxes ?? 0;
   const [color, setColor] = useState<Color>('primary');
   useEffect(() => {
@@ -45,8 +38,8 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
             <Typography size="text-2xl" color="secondary" weight="bold">
               Récapitulatif
             </Typography>
-            <div className="my-8  h-44">
-              <QRCodeSVG value={simulateDataStringified} level="H" size={176} />
+            <div className="my-8 h-44">
+              <QRCodeSVG value="https://www.douane.gouv.fr/" size={176} />
             </div>
           </div>
         ) : (
@@ -95,21 +88,21 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
         </Typography>
       </div>
       <div className="-mx-4 my-4 border-b-2 border-dashed" />
-      <div className="my-4 flex flex-row">
+      <div className="mt-4 flex flex-row">
         <Typography color="light-gray">Marchandises</Typography>
         <div className="flex-1" />
         <Typography color="light-gray">Droits et taxes</Typography>
       </div>
       <div>
         {simulatorResponse?.products?.map((product, index) => (
-          <div key={index} className="my-4">
+          <div key={index} className="mt-2 mb-4">
             <Typography color="secondary" weight="bold">
               {product.name}
             </Typography>
             <Typography color="secondary" italic>
               {product.customName}
             </Typography>
-            <div className="mt-2 flex flex-row">
+            <div className="mt-1 flex flex-row">
               <Typography color="secondary">{product.unitPrice} €</Typography>
               <div className="flex-1" />
               <Typography color={product.unitTaxes === 0 ? 'success' : 'primary'}>
@@ -124,7 +117,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
         <div className="flex-1" />
         <Typography color="secondary">Total (en €)</Typography>
       </div>
-      <div className="mb-2 flex flex-row">
+      <div className="flex flex-row">
         <div className="flex-1" />
         <Typography color={color} size="text-xl">
           {totalTaxes} €

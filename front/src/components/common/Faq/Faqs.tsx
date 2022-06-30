@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { Typography } from '../Typography';
 import { Faq } from './Faq';
 
 export interface FaqEntity {
@@ -18,6 +19,7 @@ export interface FaqsProps {
 }
 
 export const Faqs: React.FC<FaqsProps> = ({ items, linkId }: FaqsProps) => {
+  const [currentOpenId, setCurrentOpenId] = useState(linkId);
   return (
     <div className="mx-auto max-w-3xl">
       <h2 className="text-lg sm:text-4xl">
@@ -25,15 +27,21 @@ export const Faqs: React.FC<FaqsProps> = ({ items, linkId }: FaqsProps) => {
       </h2>
       {items.map((item) => (
         <div key={item.title}>
-          <dl className="mt-6 space-y-6 divide-y divide-gray-200">
-            <h2 className="mt-10 text-base font-medium text-disabled-text">{item.title}</h2>
+          <dl className="mt-6">
+            <div className="mt-10 mb-3.5">
+              <Typography color="light-gray" size="text-base">
+                {item.title}
+              </Typography>
+            </div>
+            <div className="border border-secondary-100" />
             {item.faqs.map((faq) => (
               <Faq
                 key={faq.id}
                 id={faq.id}
                 answer={faq.answer}
                 question={faq.question}
-                linkId={linkId}
+                open={currentOpenId === faq.id}
+                setOpenId={(id: string) => setCurrentOpenId(id)}
               />
             ))}
           </dl>

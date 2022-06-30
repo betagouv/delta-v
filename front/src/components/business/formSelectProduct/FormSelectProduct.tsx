@@ -124,7 +124,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           label="Nommez votre achat"
           placeholder="Exemple : Jeans, pantalon noir, slim..."
           control={control}
-          register={register('name', { required: true })}
+          register={register('name', { required: false })}
         />
         {multiForm.map((form, index) => {
           return <div key={index}>{form}</div>;

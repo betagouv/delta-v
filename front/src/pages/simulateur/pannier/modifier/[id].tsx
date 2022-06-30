@@ -78,7 +78,7 @@ const UpdateProductBasket = () => {
                 label="Nommez votre achat"
                 placeholder="Exemple : Jeans, pantalon noir, slim..."
                 control={control}
-                register={register('name', { required: true })}
+                register={register('name', { required: false })}
               />
               <FormAddProduct control={control} register={register} />
             </div>

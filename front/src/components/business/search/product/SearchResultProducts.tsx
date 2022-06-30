@@ -20,9 +20,6 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
           >
             <div className="flex flex-col">
               <Typography color="secondary" size="text-lg" lineHeight="leading-none">
-                {resultElement.name}
-              </Typography>
-              <Typography color="light-gray" size="text-sm" lineHeight="leading-none" italic>
                 {resultElement.rankedValue}
               </Typography>
             </div>

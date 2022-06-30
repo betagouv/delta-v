@@ -24,10 +24,9 @@ const Configuration = () => {
     shallow,
   );
   const router = useRouter();
-  const numberStep = 3;
   useEffect(() => {
-    resetSteps(numberStep);
-  }, [numberStep]);
+    resetSteps(4);
+  }, []);
 
   const {
     handleSubmit,
@@ -44,7 +43,7 @@ const Configuration = () => {
       return;
     }
     validateStep4(data.border);
-    router.push(`/app`);
+    router.push(`/simulateur/produits`);
   };
 
   const radioValues: IRadioType[] = [
@@ -52,7 +51,7 @@ const Configuration = () => {
     { id: 'false', value: 'Non' },
   ];
   return (
-    <ConfigurationSteps progression={85}>
+    <ConfigurationSteps fromProgression={75} toProgression={85}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
           label="Êtes-vous dans le cadre d’un déplacement de résident frontalier ?"
