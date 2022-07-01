@@ -1,4 +1,5 @@
 import { Product, ProductDisplayTypes } from '../../../entities/product.entity';
+import { sortProducts } from '../../../utils/product.util';
 
 export interface SerializedProduct {
   id: string;
@@ -29,5 +30,5 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   vat: product.vat,
   nomenclatures: product.nomenclatures,
   relatedWords: product.relatedWords,
-  subProducts: product.subProducts?.map(productSerializer),
+  subProducts: product.subProducts?.sort(sortProducts).map(productSerializer),
 });

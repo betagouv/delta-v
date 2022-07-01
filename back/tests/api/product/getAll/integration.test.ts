@@ -10,17 +10,27 @@ const testApp = buildTestApp(api);
 const testDb = testDbManager();
 
 const prepareContext = async (): Promise<Product[]> => {
-  const parentProduct1 = await prepareContextProduct({ testDb });
-  const parentProduct2 = await prepareContextProduct({ testDb });
-  const childrenProduct1 = await prepareContextProduct({ testDb, parentProduct: parentProduct1 });
-  const childrenProduct2 = await prepareContextProduct({ testDb, parentProduct: parentProduct2 });
+  const parentProduct1 = await prepareContextProduct({ testDb, position: 1 });
+  const parentProduct2 = await prepareContextProduct({ testDb, position: 2 });
+  const childrenProduct1 = await prepareContextProduct({
+    testDb,
+    parentProduct: parentProduct1,
+    position: 1,
+  });
+  const childrenProduct2 = await prepareContextProduct({
+    testDb,
+    parentProduct: parentProduct2,
+    position: 2,
+  });
   const subChildrenProduct1 = await prepareContextProduct({
     testDb,
     parentProduct: childrenProduct1,
+    position: 1,
   });
   const subChildrenProduct2 = await prepareContextProduct({
     testDb,
     parentProduct: childrenProduct1,
+    position: 2,
   });
 
   childrenProduct1.subProducts = [subChildrenProduct1, subChildrenProduct2];
