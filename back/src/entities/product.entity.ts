@@ -4,6 +4,7 @@ export interface Product {
   id: string;
   parentProductId?: string;
   name: string;
+  positionRank: string;
   icon?: string;
   finalProduct: boolean;
   productDisplayTypes: ProductDisplayTypes;
@@ -37,6 +38,9 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'varchar' })
   name: string;
+
+  @Column({ type: 'varchar' })
+  positionRank: string;
 
   @Column({ type: 'varchar', nullable: true })
   icon?: string;

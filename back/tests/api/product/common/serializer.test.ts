@@ -1,10 +1,14 @@
 import { productSerializer } from '../../../../src/api/product/common/serializer';
+import { getRankFromPosition } from '../../../../src/utils/rank.util';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 
 describe('test get all product serializer', () => {
   it('should serialize products', () => {
-    const childrenProduct1 = productEntityFactory();
-    const parentProduct1 = productEntityFactory({ subProducts: [childrenProduct1] });
+    const childrenProduct1 = productEntityFactory({ positionRank: getRankFromPosition(2) });
+    const childrenProduct2 = productEntityFactory({ positionRank: getRankFromPosition(1) });
+    const parentProduct1 = productEntityFactory({
+      subProducts: [childrenProduct1, childrenProduct2],
+    });
     const serializedProduct = productSerializer(parentProduct1);
     expect(serializedProduct).toMatchObject({
       id: parentProduct1.id,
@@ -19,6 +23,9 @@ describe('test get all product serializer', () => {
     });
 
     expect(serializedProduct.subProducts).toMatchObject([
+      {
+        id: childrenProduct2.id,
+      },
       {
         id: childrenProduct1.id,
       },

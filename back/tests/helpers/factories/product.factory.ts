@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { LexoRank } from 'lexorank';
 import { buildFactory } from '../../../src/core/testHelpers';
 import { Product, ProductDisplayTypes } from '../../../src/entities/product.entity';
 
@@ -17,6 +18,7 @@ const buildSchema = (): Product => {
       ProductDisplayTypes.radioCard,
     ]),
     relatedWords: [],
+    positionRank: LexoRank.middle().toString(),
   };
 };
 

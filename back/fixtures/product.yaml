@@ -1,4 +1,5 @@
 entity: ProductEntity
+processor: ./processor/productProcessor
 items:
   # Beauty products
   beautyProducts:
@@ -9,6 +10,7 @@ items:
     relatedWords: 'Produits de beauté'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
+    position: 1
     nomenclatures:
       - '33'
   mackup:
@@ -20,6 +22,7 @@ items:
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 1
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -41,6 +44,7 @@ items:
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 2
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -62,6 +66,7 @@ items:
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 3
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -75,6 +80,7 @@ items:
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 4
     customDuty: 2.2
     vat: 20
     nomenclatures:
@@ -91,6 +97,7 @@ items:
     info: 'Cela compose les bijoux'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
+    position: 2
     nomenclatures:
       - '71'
       - '91'
@@ -105,6 +112,7 @@ items:
     childrenQuestion: 'Est-il en argent, or, platine ou autres métaux précieux ?'
     finalProduct: true
     productDisplayTypes: 'radio'
+    position: 1
     nomenclatures:
       - '7117'
       - '7113'
@@ -117,6 +125,7 @@ items:
     parentProduct: '@jewelry'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 2
     customDuty: 4.5
     vat: 20
     nomenclatures:
@@ -156,6 +165,7 @@ items:
     info: 'Mode'
     icon: 'categoryFashion'
     productDisplayTypes: 'category'
+    position: 3
   clothes:
     id: 'e9186bbf-3c3c-4e12-85e1-6bcbc5e8a046'
     name: 'Vêtements'
@@ -164,6 +174,7 @@ items:
     parentProduct: '@fashion'
     productDisplayTypes: 'category'
     childrenQuestion: 'Quel type de produits ?'
+    position: 1
   adultClothes:
     id: 'b47dab76-acca-4d78-ba3b-7323b17dcb8b'
     name: 'Vêtement pour adulte'
@@ -173,6 +184,7 @@ items:
     parentProduct: '@clothes'
     productDisplayTypes: 'radio'
     finalProduct: true
+    position: 1
   clothesWithLeather:
     id: '98b58ced-de0c-40d9-95cc-8247fe63fe17'
     name: 'Vêtements adulte en cuir.'
@@ -231,6 +243,7 @@ items:
     parentProduct: '@fashion'
     productDisplayTypes: 'category'
     childrenQuestion: 'Quel type de produits ?'
+    position: 3
   leatherAccessory:
     id: '70869c09-f83c-4d35-8d7c-d783c9b543fe'
     name: 'Accessoires en cuir'
@@ -240,6 +253,7 @@ items:
     parentProduct: '@accessory'
     productDisplayTypes: 'category'
     finalProduct: false
+    position: 1
     nomenclatures:
       - '42033000'
       - '42034000'
@@ -253,6 +267,7 @@ items:
     parentProduct: '@leatherAccessory'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 1
     customDuty: 7
     vat: 20
     nomenclatures:
@@ -266,6 +281,7 @@ items:
     parentProduct: '@leatherAccessory'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 2
     customDuty: 5
     vat: 20
     nomenclatures:
@@ -280,19 +296,7 @@ items:
     parentProduct: '@accessory'
     productDisplayTypes: 'category'
     finalProduct: false
-  tie:
-    id: '7847b3cb-69e9-4c17-bd75-3d1573084d18'
-    name: 'Cravate, noeud papillons...'
-    info: 'Cravates, nœuds papillon, etc.'
-    icon: 'categoryTie'
-    relatedWords: 'cravate,noeud papillons,bretelles'
-    parentProduct: '@textileAccessory'
-    productDisplayTypes: 'addable'
-    finalProduct: true
-    customDuty: 6.3
-    vat: 20
-    nomenclatures:
-      - '6215'
+    position: 2
   socks:
     id: '3583393f-710f-4849-ad1f-952480ad44bc'
     name: 'Collants, bas, mis-bas, chaussettes...'
@@ -302,10 +306,25 @@ items:
     parentProduct: '@textileAccessory'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 1
     customDuty: 12
     vat: 20
     nomenclatures:
       - '6115'
+  tie:
+    id: '7847b3cb-69e9-4c17-bd75-3d1573084d18'
+    name: 'Cravate, noeud papillons...'
+    info: 'Cravates, nœuds papillon, etc.'
+    icon: 'categoryTie'
+    relatedWords: 'cravate,noeud papillons,bretelles'
+    parentProduct: '@textileAccessory'
+    productDisplayTypes: 'addable'
+    finalProduct: true
+    position: 2
+    customDuty: 6.3
+    vat: 20
+    nomenclatures:
+      - '6215'
   scarf:
     id: '9e3362d5-9e9f-4302-afcf-53ceed1f0832'
     name: 'Echarpe, cache-col, châle, foulard, cache-nez...'
@@ -315,6 +334,7 @@ items:
     parentProduct: '@textileAccessory'
     productDisplayTypes: 'not-managed'
     finalProduct: true
+    position: 3
   fabricGloves:
     id: '62a95383-369e-438a-a67c-a152494f50a3'
     name: 'Gants en tissus'
@@ -324,6 +344,7 @@ items:
     parentProduct: '@textileAccessory'
     productDisplayTypes: 'not-managed'
     finalProduct: true
+    position: 4
   childrenClothes:
     id: '47a31843-233e-4b45-b7e6-26c262e1047d'
     name: 'Vêtement pour enfant'
@@ -333,6 +354,7 @@ items:
     parentProduct: '@clothes'
     productDisplayTypes: 'not-managed'
     finalProduct: true
+    position: 2
   shoes:
     id: 'f17e401f-bd89-41ea-8b90-2999d1aff7a1'
     name: 'Chaussure'
@@ -342,6 +364,7 @@ items:
     parentProduct: '@fashion'
     productDisplayTypes: 'not-managed'
     finalProduct: true
+    position: 2
   leatherGoods:
     id: 'b515f453-93c1-4312-b973-6703802f5d12'
     name: 'Maroquinerie'
@@ -352,6 +375,7 @@ items:
     childrenQuestion: 'Sélectionnez la matière de votre sac'
     finalProduct: true
     productDisplayTypes: 'radio-card'
+    position: 3
     nomenclatures:
       - '4202'
   leatherHandbagWallet:
@@ -362,7 +386,6 @@ items:
     icon: 'categoryLeather'
     parentProduct: '@leatherGoods'
     productDisplayTypes: 'addable'
-    customDuty: 3
     vat: 20
     nomenclatures:
       - '42022100'
@@ -413,6 +436,7 @@ items:
     parentProduct: '@fashion'
     childrenQuestion: 'Quelle est la matière constitutive du produit ?'
     productDisplayTypes: 'category'
+    position: 4
     nomenclatures:
       - '5208'
       - '5210'
@@ -430,6 +454,7 @@ items:
     parentProduct: '@fabrics'
     productDisplayTypes: 'not-managed'
     finalProduct: true
+    position: 1
   basicFabrics:
     id: '74c87cd7-60dc-4f38-b5de-cfd935752f3c'
     name: 'Autres Tissus'
@@ -439,6 +464,7 @@ items:
     parentProduct: '@fabrics'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 2
     customDuty: 8
     vat: 20
     nomenclatures:
@@ -457,6 +483,7 @@ items:
     info: 'Produit de loisirs'
     icon: 'categoryHobbies'
     productDisplayTypes: 'category'
+    position: 4
   sports:
     id: '358018bd-2dec-4a75-b5df-677c37094a8a'
     name: 'Sports'
@@ -464,6 +491,7 @@ items:
     icon: 'categorySports'
     parentProduct: '@hobbies'
     productDisplayTypes: 'category'
+    position: 1
     nomenclatures:
       - '9506'
       - '9507'
@@ -477,6 +505,7 @@ items:
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 1
     customDuty: 3.7
     vat: 20
     nomenclatures:
@@ -491,6 +520,7 @@ items:
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 2
     customDuty: 2.7
     vat: 20
     nomenclatures:
@@ -504,6 +534,7 @@ items:
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 3
     customDuty: 2.7
     vat: 20
     nomenclatures:
@@ -517,6 +548,7 @@ items:
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 4
     customDuty: 3.7
     vat: 20
     nomenclatures:
@@ -530,6 +562,7 @@ items:
     parentProduct: '@sports'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 5
     customDuty: 4.7
     vat: 20
     nomenclatures:
@@ -543,6 +576,7 @@ items:
     productDisplayTypes: 'radio'
     childrenQuestion: 'Est il un catalogue publicitaire ?'
     finalProduct: false
+    position: 2
     customDuty: 0
     vat: 5.5
     parentProduct: '@hobbies'
@@ -557,6 +591,7 @@ items:
     relatedWords: 'Livres,bd,bandes dessinées,comics,romans,romans graphiques,mangas,ouvrages,livre de poche,bouquin'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 1
     customDuty: 0
     vat: 5.5
     parentProduct: '@books'
@@ -570,6 +605,7 @@ items:
     relatedWords: 'catalogues publicitaire'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 2
     customDuty: 0
     vat: 20
     parentProduct: '@books'
@@ -584,6 +620,7 @@ items:
     relatedWords: 'instrument de musique'
     productDisplayTypes: 'category'
     parentProduct: '@hobbies'
+    position: 3
     nomenclatures:
       - '92'
   classicPiano:
@@ -595,6 +632,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 1
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -609,6 +647,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 2
     customDuty: 3.2
     vat: 20
     nomenclatures:
@@ -622,6 +661,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 3
     customDuty: 3.2
     vat: 20
     nomenclatures:
@@ -635,6 +675,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 4
     customDuty: 3.2
     vat: 20
     nomenclatures:
@@ -648,6 +689,7 @@ items:
     parentProduct: '@musicInstrument'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 5
     customDuty: 3.7
     vat: 20
     nomenclatures:
@@ -661,6 +703,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 6
     customDuty: 3.2
     vat: 20
     nomenclatures:
@@ -673,6 +716,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 7
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -686,6 +730,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 8
     customDuty: 3.2
     vat: 20
     nomenclatures:
@@ -699,6 +744,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 9
     customDuty: 3.7
     vat: 20
     nomenclatures:
@@ -712,6 +758,7 @@ items:
     parentProduct: '@musicInstrument'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 10
     customDuty: 2.7
     vat: 20
     nomenclatures:
@@ -725,6 +772,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 11
     customDuty: 3.2
     vat: 20
     nomenclatures:
@@ -738,6 +786,7 @@ items:
     icon: 'categoryHighTech'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
+    position: 5
     nomenclatures:
       - '85'
       - '84'
@@ -754,6 +803,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 1
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -769,6 +819,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 2
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -783,6 +834,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 3
     customDuty: 0
     vat: 20
   camera:
@@ -795,6 +847,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 4
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -809,6 +862,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 5
     customDuty: 14
     vat: 20
     nomenclatures:
@@ -823,6 +877,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 6
     customDuty: 3.5
     vat: 20
     nomenclatures:
@@ -837,6 +892,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 7
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -851,6 +907,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 8
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -865,6 +922,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 9
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -880,6 +938,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 10
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -894,6 +953,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 11
     customDuty: 0
     vat: 20
     nomenclatures:
@@ -908,6 +968,7 @@ items:
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 12
     customDuty: 4.2
     vat: 20
     nomenclatures:
@@ -920,6 +981,7 @@ items:
     info: 'Produits de la maison'
     icon: 'categoryHouse'
     productDisplayTypes: 'category'
+    position: 6
   furniture:
     id: '29b7fc70-1976-4c87-87a7-62e8582d1e98'
     name: 'Meubles'
@@ -934,6 +996,7 @@ items:
     childrenQuestion: 'Sélectionnez la matière de votre meuble'
     finalProduct: true
     productDisplayTypes: 'radio-card'
+    position: 1
     nomenclatures:
       - '9403'
       - '9404'
@@ -1033,6 +1096,7 @@ items:
     parentProduct: '@house'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 2
     customDuty: 3.7
     vat: 20
     nomenclatures:
@@ -1047,6 +1111,7 @@ items:
     icon: 'categoryDecoration'
     productDisplayTypes: 'category'
     parentProduct: '@house'
+    position: 3
     nomenclatures:
       - '940421'
       - '940429'
@@ -1063,6 +1128,7 @@ items:
     customDuty: 0
     vat: 20
     parentProduct: '@decoration'
+    position: 1
     nomenclatures:
       - '4409'
   mirror:
@@ -1077,6 +1143,7 @@ items:
     customDuty: 4
     vat: 20
     parentProduct: '@decoration'
+    position: 2
     nomenclatures:
       - '7009'
   lamp:
@@ -1090,6 +1157,7 @@ items:
     productDisplayTypes: 'radio-card'
     childrenQuestion: 'Sélectionnez la matière de votre luminaire'
     parentProduct: '@decoration'
+    position: 3
     nomenclatures:
       - '9405'
   plasticLamp:
@@ -1150,6 +1218,7 @@ items:
     finalProduct: true
     productDisplayTypes: 'radio-card'
     childrenQuestion: 'Sélectionnez la matière de votre vaisselle'
+    position: 4
     nomenclatures:
       - '6911'
       - '6912'
@@ -1227,6 +1296,7 @@ items:
     icon: 'categoryArt'
     finalProduct: true
     productDisplayTypes: 'addable'
+    position: 5
     customDuty: 0
     vat: 5.5
     parentProduct: '@house'
@@ -1241,6 +1311,7 @@ items:
     info: 'Voiture et accessoires'
     productDisplayTypes: 'category'
     icon: 'categoryCar'
+    position: 7
   carRadio:
     id: '19ae6573-be49-4943-a6c6-6d3e824c9e92'
     name: 'Autoradio lecteur CD'
@@ -1250,6 +1321,7 @@ items:
       autoradio,lecteur CD
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 1
     customDuty: 3.5
     vat: 20
     parentProduct: '@carAccessory'
@@ -1264,6 +1336,7 @@ items:
       gps
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 2
     customDuty: 0
     vat: 20
     parentProduct: '@carAccessory'
@@ -1277,6 +1350,7 @@ items:
       jantes alu
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 3
     customDuty: 4.5
     vat: 20
     parentProduct: '@carAccessory'
@@ -1291,6 +1365,7 @@ items:
       pneu
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 4
     customDuty: 4.5
     vat: 20
     parentProduct: '@carAccessory'
@@ -1303,6 +1378,7 @@ items:
     name: 'Divers'
     info: 'Divers'
     icon: 'categoryVarious'
+    position: 8
     relatedWords: >
       cigarette électronique,vapoteuse
     productDisplayTypes: 'category'
@@ -1315,6 +1391,7 @@ items:
       cigarette électronique,vapoteuse
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 1
     customDuty: 3.7
     vat: 20
     parentProduct: '@various'
@@ -1329,6 +1406,7 @@ items:
       lunettes de soleil,lunette solaires
     productDisplayTypes: 'addable'
     finalProduct: true
+    position: 2
     customDuty: 2.9
     vat: 20
     parentProduct: '@various'
@@ -1343,3 +1421,4 @@ items:
     icon: 'categoryFood'
     productDisplayTypes: 'not-managed'
     finalProduct: true
+    position: 9
