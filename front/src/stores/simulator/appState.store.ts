@@ -52,6 +52,7 @@ export interface SimulatorRequest {
 export interface SimulatorData {
   simulatorRequest: SimulatorRequest;
   simulatorResponse?: SimulatorResponse;
+  displayInfo: boolean;
   error?: any;
 }
 
@@ -70,6 +71,7 @@ export const SIMULATOR_EMPTY_STATE = {
     shoppingProducts: [],
   },
   simulatorResponse: undefined,
+  displayInfo: true,
   error: undefined,
 };
 

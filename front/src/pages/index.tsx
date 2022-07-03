@@ -51,7 +51,7 @@ const Index = () => {
             fullWidth
           />
 
-          <Link to="/simulateur/configuration/etape1">
+          <Link to="/simulateur">
             <Card
               title="Simuler mes achats"
               description="Calculez les droits de douanes de vos achats en quelques clics"

@@ -12,6 +12,7 @@ import {
 import axios from '@/config/axios';
 
 export interface SimulatorUseCaseSlice {
+  validateStep0: (displayInfo: boolean) => void;
   validateStep1: (age: number) => void;
   validateStep2: (meanOfTransport: MeansOfTransport) => void;
   validateStep3: (country: Alpha2Code) => void;
@@ -33,6 +34,13 @@ interface UpdateShoppingProductOptions {
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
+  validateStep0: (displayInfo: boolean): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.simulator.appState.displayInfo = displayInfo;
+      return newState;
+    });
+  },
   validateStep1: (age: number): void => {
     set((state: any) => {
       const newState = { ...state };

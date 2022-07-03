@@ -37,6 +37,20 @@ module.exports = withBundleAnalyzer({
     return config;
   },
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/simulateur/configuration',
+        destination: '/simulateur/configuration/etape0',
+        permanent: true,
+      },
+      {
+        source: '/simulateur',
+        destination: '/simulateur/configuration/etape0',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     const rewritesUrls = [];
     if (process.env.NODE_ENV === 'development') {

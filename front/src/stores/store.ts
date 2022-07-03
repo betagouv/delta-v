@@ -25,6 +25,7 @@ export type StoreSlice<T> = (
 const dummyStorageApi = {
   getItem: () => null,
   setItem: () => undefined,
+  removeItem: () => undefined,
 };
 
 /**

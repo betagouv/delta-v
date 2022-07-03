@@ -46,7 +46,7 @@ const Configuration = () => {
   };
 
   return (
-    <ConfigurationSteps fromProgression={0} toProgression={25}>
+    <ConfigurationSteps fromProgression={12} toProgression={25}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
           label="Quel âge avez-vous ?"
