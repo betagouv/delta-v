@@ -90,7 +90,7 @@ export const simulator = (Component: React.FC) => {
       const currentLevel = getCurrentLevelPath(path);
 
       if (maxLevel < currentLevel) {
-        router.replace('/simulateur/configuration/etape1');
+        router.replace('/simulateur/configuration/etape0');
       } else {
         setLoading(false);
       }

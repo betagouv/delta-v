@@ -85,7 +85,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
                   aria-describedby="candidates-description"
                   name="candidates"
                   type="checkbox"
-                  className="h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600"
+                  className="h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600 focus:ring-transparent"
                   checked={option.id === selectedOption.id}
                   onChange={() => {}}
                 />

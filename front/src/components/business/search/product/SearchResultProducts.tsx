@@ -1,4 +1,7 @@
-import { Link } from '@/components/common/Link';
+import { useState } from 'react';
+
+import { useRouter } from 'next/router';
+
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
@@ -10,29 +13,38 @@ interface SearchResultProductsProps {
 export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
   resultSearch,
 }: SearchResultProductsProps) => {
+  const router = useRouter();
+  const [productChecked, setProductChecked] = useState<string | undefined>();
+  const onClickProduct = (id: string) => {
+    setProductChecked(id);
+    setTimeout(() => {
+      router.push(`/simulateur/produits/${id}`);
+    }, 500);
+  };
   return (
     <ul className="w-full text-base">
       {resultSearch.map((resultElement) => (
-        <Link key={resultElement.id} to={`/simulateur/produits/${resultElement.id}`}>
-          <li
-            className="flex cursor-default select-none items-center py-2 px-3"
-            data-testid="result-product-search-element"
-          >
-            <div className="flex flex-col">
-              <Typography color="secondary" size="text-lg" lineHeight="leading-none">
-                {resultElement.rankedValue}
-              </Typography>
-            </div>
-            <div className="flex-1" />
-            <input
-              id="candidates"
-              aria-describedby="candidates-description"
-              name="candidates"
-              type="checkbox"
-              className="flex h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600"
-            />
-          </li>
-        </Link>
+        <li
+          key={resultElement.id}
+          className="flex cursor-default select-none items-center py-2 px-3"
+          data-testid="result-product-search-element"
+          onClick={() => onClickProduct(resultElement.id)}
+        >
+          <div className="flex flex-col">
+            <Typography color="secondary" size="text-lg" lineHeight="leading-none">
+              {resultElement.rankedValue}
+            </Typography>
+          </div>
+          <div className="flex-1" />
+          <input
+            id="candidates"
+            aria-describedby="candidates-description"
+            name="candidates"
+            type="checkbox"
+            checked={resultElement.id === productChecked}
+            className="flex h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600 focus:ring-transparent"
+          />
+        </li>
       ))}
     </ul>
   );

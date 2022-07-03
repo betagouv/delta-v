@@ -199,7 +199,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
       {error && (
         <div data-testid="error-element" className="flex pl-2 text-sm text-red-600">
           <div className="flex h-3 w-3 self-center">
-            <Icon name="cancel-circle" />
+            <Icon name="error" />
           </div>
           <p className="pl-1" id="email-error">
             {error}
