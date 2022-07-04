@@ -49,7 +49,7 @@ const UpdateProductBasket = () => {
 
   const onUpdateShoppingProduct = ({ price, name }: FormUpdateShoppingProduct) => {
     updateShoppingProduct({ id: id as string, price, name: name ?? '' });
-    router.push('/simulateur/pannier');
+    router.push('/simulateur/panier');
   };
 
   if (!currentProduct) {

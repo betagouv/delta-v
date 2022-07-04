@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   const onClickBasket = () => {
     if (nbCartItems > 0) {
-      router.push('/simulateur/pannier');
+      router.push('/simulateur/panier');
       return;
     }
     setOpenBasketModal(true);

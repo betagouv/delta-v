@@ -16,7 +16,7 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
-const Pannier = () => {
+const Panier = () => {
   const router = useRouter();
 
   const { shoppingProducts, removeProduct } = useStore(
@@ -58,7 +58,7 @@ const Pannier = () => {
                   setOpenActionModal(true);
                 }}
                 onUpdateProduct={() => {
-                  router.push(`/simulateur/pannier/modifier/${shoppingProduct.id}`);
+                  router.push(`/simulateur/panier/modifier/${shoppingProduct.id}`);
                 }}
               />
             </div>
@@ -93,4 +93,4 @@ const Pannier = () => {
     </Main>
   );
 };
-export default simulator(Pannier);
+export default simulator(Panier);
