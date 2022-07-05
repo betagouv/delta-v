@@ -39,7 +39,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
         <div className="mb-2 mr-1 h-lightBase w-lightBase">
           <SvgIcon name={icon} />
         </div>
-        <p className="text-center text-[9px] leading-none">{title}</p>
+        <p className="text-center text-[9px] leading-none md:text-[12px]">{title}</p>
       </div>
     );
   };
@@ -51,7 +51,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
       </div>
       <Modal
         open={open}
-        title="Cette rubrique n'existe pas encore."
+        title="Cette rubrique n' existe pas encore."
         onClose={() => setOpen(false)}
       />
     </>

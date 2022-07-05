@@ -13,7 +13,7 @@ export const MENU_ITEMS: TabItem[] = [
   {
     icon: 'calculator',
     title: 'Simuler mes achats',
-    path: '/simulateur/configuration/etape1',
+    path: '/simulateur',
   },
   {
     icon: 'question',
