@@ -39,36 +39,50 @@ describe('separateFreeAndPaidProducts', () => {
       { unitPrice: 50, vat: 20, customDuty: 20 },
     ]);
   });
-  it('should get paid and free products - products over and under franchise', () => {
-    const productsTaxes = [
-      productTaxesEntityFactory({ unitPrice: 101, vat: 20, customDuty: 20 }),
-      productTaxesEntityFactory({ unitPrice: 99, vat: 20, customDuty: 20 }),
-    ];
-    const { freeProducts, paidProducts } = separateFreeAndPaidProducts({
-      franchiseAmount: 100,
-      productsTaxes,
-    });
-    expect(freeProducts.length).toEqual(1);
-    expect(paidProducts.length).toEqual(1);
-    expect(paidProducts).toMatchObject([{ unitPrice: 101, vat: 20, customDuty: 20 }]);
-    expect(freeProducts).toMatchObject([{ unitPrice: 99, vat: 0, customDuty: 0 }]);
-  });
-  it('should get paid and free products - products over and under franchise', () => {
-    const productsTaxes = [
-      productTaxesEntityFactory({ unitPrice: 101 }),
-      productTaxesEntityFactory({ unitPrice: 51 }),
-      productTaxesEntityFactory({ unitPrice: 51 }),
-    ];
-    const { freeProducts, paidProducts } = separateFreeAndPaidProducts({
-      franchiseAmount: 100,
-      productsTaxes,
-    });
-
-    expect(freeProducts.length).toEqual(1);
-    expect(paidProducts.length).toEqual(2);
-    expect(paidProducts).toMatchObject([{ unitPrice: 51 }, { unitPrice: 101 }]);
-    expect(freeProducts).toMatchObject([{ unitPrice: 51, vat: 0, customDuty: 0 }]);
-  });
+  it.each([
+    [
+      {
+        dataProducts: [
+          { unitPrice: 101, vat: 20, customDuty: 20 },
+          { unitPrice: 99, vat: 20, customDuty: 20 },
+        ],
+        franchiseAmount: 100,
+        expectedPaidProducts: [{ unitPrice: 101 }],
+        expectedFreeProducts: [{ unitPrice: 99 }],
+      },
+    ],
+    [
+      {
+        dataProducts: [{ unitPrice: 101 }, { unitPrice: 51 }, { unitPrice: 51 }],
+        franchiseAmount: 100,
+        expectedPaidProducts: [{ unitPrice: 51 }, { unitPrice: 101 }],
+        expectedFreeProducts: [{ unitPrice: 51 }],
+      },
+    ],
+    [
+      {
+        dataProducts: [{ unitPrice: 400 }, { unitPrice: 54.98 }],
+        franchiseAmount: 300,
+        expectedPaidProducts: [{ unitPrice: 400 }],
+        expectedFreeProducts: [{ unitPrice: 54.98 }],
+      },
+    ],
+  ])(
+    'should get paid and free products - products over and under franchise',
+    ({ dataProducts, franchiseAmount, expectedPaidProducts, expectedFreeProducts }) => {
+      const productsTaxes = dataProducts.map((dataProduct) =>
+        productTaxesEntityFactory(dataProduct),
+      );
+      const { freeProducts, paidProducts } = separateFreeAndPaidProducts({
+        franchiseAmount,
+        productsTaxes,
+      });
+      expect(freeProducts.length).toEqual(expectedFreeProducts.length);
+      expect(paidProducts.length).toEqual(expectedPaidProducts.length);
+      expect(paidProducts).toMatchObject(expectedPaidProducts);
+      expect(freeProducts).toMatchObject(expectedFreeProducts);
+    },
+  );
   it('should get paid and free products - mixed simple result', () => {
     const productsTaxes = [
       productTaxesEntityFactory({ id: '1', unitPrice: 100, vat: 20, customDuty: 20 }),

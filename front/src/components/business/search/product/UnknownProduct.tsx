@@ -1,35 +1,37 @@
-import { Card } from '@/components/common/Card';
+import { Button } from '@/components/common/Button';
+import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 
-export const UnknownProduct: React.FC = () => {
+interface UnknownProductProps {
+  searchValue: string;
+}
+
+export const UnknownProduct: React.FC<UnknownProductProps> = ({
+  searchValue,
+}: UnknownProductProps) => {
   return (
-    <div className="flex flex-col gap-6" data-testid="empty-result-product-search-element">
+    <div className="flex h-full flex-col" data-testid="empty-result-product-search-element">
       <div className="flex flex-col gap-6 px-4">
+        <Typography color="secondary">Cette marchandise n’est pas encore référencée.</Typography>
         <Typography color="secondary">
-          Nous ne connaissons malheureusement pas ce produit.
-        </Typography>
-        <Typography color="secondary">
-          Notre application s’améliore de jour en jour et la liste de produits s'enrichira
-          prochainement.
-        </Typography>
-        <Typography color="secondary">
-          Dans l’attente de retrouver ce produit ici, vous pouvez vous rapprocher d’agents des
-          douanes pour le déclarer (en aéroport, port, gare ou à la frontière routière).
+          Vous pouvez enregistrer vous même ce produit dans votre simulation ou annuler votre
+          recherche.
         </Typography>
       </div>
+      <div className="flex-1" />
 
-      <Card
-        svgName="phone"
-        title="Info Douane Service"
-        subtitle="0 800 94 40 40"
-        description={
-          <>
-            Du lundi au vendredi, sauf jours fériés, de 8h30 à 18h.
-            <br />
-            Service et appel gratuits.
-          </>
-        }
-      />
+      <div className=" flex w-full flex-col items-center">
+        <div className="flex w-60 flex-col gap-4">
+          <Link to={`/simulateur/produits/ajout?searchValue=${searchValue}`}>
+            <Button fullWidth>Enregistrer la marchandise</Button>
+          </Link>
+          <Link to="/simulateur/produits">
+            <Button fullWidth variant="outlined">
+              Annuler
+            </Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

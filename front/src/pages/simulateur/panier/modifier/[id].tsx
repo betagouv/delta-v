@@ -67,7 +67,7 @@ const UpdateProductBasket = () => {
     >
       <div className="flex h-full flex-col gap-6">
         <Header withCart />
-        <TitleHeader title={currentProduct?.product.name} icon="calculator" />
+        <TitleHeader title={currentProduct?.product?.name} icon="calculator" />
         <div>
           <form onSubmit={handleSubmit(onUpdateShoppingProduct)} className="h-full">
             <div className="flex h-full flex-col gap-6">

@@ -24,9 +24,25 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
       <div className="p-3 leading-tight">
         <div className="flex">
           <div className="flex-1 leading-none">
-            <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
-              {shoppingProduct.product.name}
-            </Typography>
+            {shoppingProduct.product?.name ? (
+              <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
+                shoppingProduct.product?.name
+              </Typography>
+            ) : (
+              <div className="flex flex-row items-center">
+                <div className="mr-1 flex h-2 w-2 text-link">
+                  <Icon name="point" size="xs" />
+                </div>
+                <Typography
+                  weight="bold"
+                  color="secondary"
+                  size="text-lg"
+                  lineHeight="leading-tight"
+                >
+                  Nouvelle marchandise
+                </Typography>
+              </div>
+            )}
           </div>
           <Typography weight="extrabold" color="secondary" size="text-lg" lineHeight="leading-none">
             {shoppingProduct.price} €
@@ -82,12 +98,12 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                       <div className="ml-1">
                         <Typography color="secondary" size="text-base">
                           {' '}
-                          x {shoppingProduct.product.vat ?? 0}% =
+                          x {shoppingProduct.product?.vat ?? 0}% =
                         </Typography>
                       </div>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
-                          {((shoppingProduct.product.vat ?? 0) * shoppingProduct.price) / 100} €
+                          {((shoppingProduct.product?.vat ?? 0) * shoppingProduct.price) / 100} €
                         </Typography>
                       </div>
                     </div>
@@ -103,12 +119,12 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                       <div className="ml-1">
                         <Typography color="secondary" size="text-base">
                           {' '}
-                          x {shoppingProduct.product.customDuty ?? 0}% =
+                          x {shoppingProduct.product?.customDuty ?? 0}% =
                         </Typography>
                       </div>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
-                          {((shoppingProduct.product.customDuty ?? 0) * shoppingProduct.price) /
+                          {((shoppingProduct.product?.customDuty ?? 0) * shoppingProduct.price) /
                             100}{' '}
                           €
                         </Typography>
