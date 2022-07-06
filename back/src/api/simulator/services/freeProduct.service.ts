@@ -32,11 +32,12 @@ export const separateFreeAndPaidProducts = ({
     (productTaxesDetails) => ({
       id: productTaxesDetails.id,
       customName: productTaxesDetails.customName,
-      price: productTaxesDetails.unitPrice,
+      price: productTaxesDetails.unitPrice * 100,
       taxes: productTaxesDetails.getUnitTaxes(),
     }),
   );
-  const { fitProducts, notFitProducts } = getBestFitProducts(simpleProducts, franchiseAmount);
+  const { fitProducts, notFitProducts } = getBestFitProducts(simpleProducts, franchiseAmount * 100);
+  console.log('notFitProducts', notFitProducts);
   const freeProductsTaxDetails = mergeSimpleProducts(fitProducts, productThatCanFitInFranchise);
   const notFreeProductsTaxDetails = mergeSimpleProducts(
     notFitProducts,
@@ -70,7 +71,7 @@ const mergeSimpleProducts = (
       return productsTaxes.find(
         (productTaxes) =>
           productTaxes.id === simpleProduct.id &&
-          productTaxes.unitPrice === simpleProduct.price &&
+          productTaxes.unitPrice === simpleProduct.price / 100 &&
           productTaxes.customName === simpleProduct.customName,
       );
     })

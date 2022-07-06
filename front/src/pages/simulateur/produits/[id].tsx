@@ -51,7 +51,7 @@ const ProductSearch = () => {
 
   useEffect(() => {
     getProductsResponse();
-  }, [getProductsResponse]);
+  }, []);
 
   if (!currentProduct) {
     return <Error statusCode={404} />;

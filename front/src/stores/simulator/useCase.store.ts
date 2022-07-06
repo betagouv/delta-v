@@ -169,13 +169,13 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         meanOfTransport: simulatorData.simulatorRequest.meanOfTransport,
         country: simulatorData.simulatorRequest.country,
         border: simulatorData.simulatorRequest.border,
-        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts.map(
-          (product: ShoppingProduct) => ({
-            id: product.product.id,
+        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts
+          .filter((shoppingProduct) => shoppingProduct.product)
+          .map((product: ShoppingProduct) => ({
+            id: product.product?.id,
             name: product.name,
             price: product.price,
-          }),
-        ),
+          })),
       };
       const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;
       set((state: any) => {
