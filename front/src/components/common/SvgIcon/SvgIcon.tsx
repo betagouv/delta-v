@@ -89,6 +89,8 @@ import CategoryWood from '@/assets/icons/categories/Wood.svg';
 import CategoryWoodenFloor from '@/assets/icons/categories/Wooden-Floor.svg';
 import AinIcon from '@/assets/icons/City-Ain.svg';
 import HauteSavoieIcon from '@/assets/icons/City-Haute-Savoie.svg';
+import Home from '@/assets/icons/Home.svg';
+import Info from '@/assets/icons/Info.svg';
 import LiteSearch from '@/assets/icons/Lite-Search.svg';
 import Luggages from '@/assets/icons/Luggages.svg';
 import Mail from '@/assets/icons/Mail.svg';
@@ -101,6 +103,8 @@ import Train from '@/assets/icons/Train.svg';
 
 export type SvgNames =
   | 'add'
+  | 'home'
+  | 'info'
   | 'arrowRight'
   | 'boat'
   | 'car'
@@ -208,6 +212,10 @@ const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
     case 'add':
       return Add;
+    case 'home':
+      return Home;
+    case 'info':
+      return Info;
     case 'arrowRight':
       return ArrowRight;
     case 'boat':

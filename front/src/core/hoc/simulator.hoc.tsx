@@ -40,7 +40,7 @@ const routes: RouteLevel[] = [
     level: 5,
   },
   {
-    path: '/simulateur/pannier',
+    path: '/simulateur/panier',
     level: 5,
   },
   {

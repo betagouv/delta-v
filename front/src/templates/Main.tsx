@@ -2,6 +2,9 @@ import { ReactNode } from 'react';
 
 import { ToastContainer } from 'react-toastify';
 
+import { MENU_ITEMS } from './const';
+import { TabBar } from '@/components/common/TabBar';
+
 type IMainProps = {
   meta: ReactNode;
   children: ReactNode;
@@ -15,6 +18,7 @@ const Main = (props: IMainProps) => (
       {props.children}
       <ToastContainer />
     </div>
+    <TabBar items={MENU_ITEMS} />
   </div>
 );
 
