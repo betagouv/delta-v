@@ -3,9 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
-import { Header } from '@/components/business/header';
 import { CategoryList, Item } from '@/components/common/CategoryList';
-import { TitleHeader } from '@/components/common/TitleHeader';
 import { Input } from '@/components/input/StandardInputs/Input';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -41,21 +39,21 @@ const Index = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
+      withCart
+      withTitle
+      titleValue={
+        <>
+          Quels achats
+          <br />
+          souhaitez-vous
+          <br />
+          déclarer ?
+        </>
+      }
+      titleIcon="calculator"
     >
       <div className="flex flex-col gap-6">
-        <Header withCart />
-        <TitleHeader
-          title={
-            <>
-              Quels achats
-              <br />
-              souhaitez-vous
-              <br />
-              déclarer ?
-            </>
-          }
-          icon="calculator"
-        />
         <Input
           name="search"
           type="text"

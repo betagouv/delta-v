@@ -6,8 +6,6 @@ import { useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { FormAddProduct } from '@/components/business/formAddProduct';
-import { Header } from '@/components/business/header';
-import { TitleHeader } from '@/components/common/TitleHeader';
 import { InputGroup } from '@/components/input/InputGroup';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -64,13 +62,16 @@ const UpdateProductBasket = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
+      withCart
+      withTitle
+      titleValue={currentProduct?.product?.name}
+      titleIcon="calculator"
     >
-      <div className="flex h-full flex-col gap-6">
-        <Header withCart />
-        <TitleHeader title={currentProduct?.product?.name} icon="calculator" />
+      <div className="flex flex-col gap-6">
         <div>
-          <form onSubmit={handleSubmit(onUpdateShoppingProduct)} className="h-full">
-            <div className="flex h-full flex-col gap-6">
+          <form onSubmit={handleSubmit(onUpdateShoppingProduct)}>
+            <div className="flex flex-col gap-6">
               <InputGroup
                 fullWidth
                 name="name"

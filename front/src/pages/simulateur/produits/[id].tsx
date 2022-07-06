@@ -6,9 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
-import { Header } from '@/components/business/header';
 import { CategoryList } from '@/components/common/CategoryList';
-import { TitleHeader } from '@/components/common/TitleHeader';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
@@ -65,10 +63,15 @@ const ProductSearch = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
+      withCart
+      withSearch
+      linkSearch="/simulateur/produits/recherche"
+      withTitle
+      titleValue={currentProduct?.name}
+      titleIcon="calculator"
     >
-      <div className="flex h-full flex-col gap-6">
-        <Header withCart withSearch linkSearch="/simulateur/produits/recherche" />
-        <TitleHeader title={currentProduct?.name} icon="calculator" />
+      <div className="flex flex-1 flex-col gap-6">
         {selectedProduct?.finalProduct ? (
           <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
         ) : (

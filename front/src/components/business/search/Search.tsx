@@ -76,7 +76,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
   const SearchResult = getSearchResult(searchType, resultSearch);
 
   return (
-    <div className="flex h-full flex-col" data-testid="search-element">
+    <div className="flex flex-1 flex-col gap-4" data-testid="search-element">
       <Input
         autoFocus={autoFocus}
         data-testid="input-search-element"
@@ -90,13 +90,13 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
       {getValues('searchValue').length === 0 ? (
         <></>
       ) : (
-        <div className="h-full pt-4">
+        <>
           {resultSearch.length === 0 ? (
             <UnknownProduct searchValue={getValues('searchValue')} />
           ) : (
             SearchResult
           )}
-        </div>
+        </>
       )}
     </div>
   );

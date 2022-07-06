@@ -51,25 +51,27 @@ const Configuration = () => {
     { id: 'false', value: 'Non' },
   ];
   return (
-    <ConfigurationSteps fromProgression={75} toProgression={85}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InputGroup
-          label="Êtes-vous dans le cadre d’un déplacement de résident frontalier ?"
-          type="radio"
-          name="border"
-          radioValues={radioValues}
-          register={register('border', { required: true })}
-          error={errors?.border?.message}
-        />
-        <div className="absolute inset-x-0 bottom-0 w-full">
-          <div className="p-4">
-            {errors?.border && <div className="text-red-500">{errors.border.message}</div>}
-            <Button fullWidth={true} type="submit">
-              Valider
-            </Button>
-          </div>
-        </div>
-      </form>
+    <ConfigurationSteps
+      fromProgression={75}
+      toProgression={85}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
+      <InputGroup
+        label="Êtes-vous dans le cadre d’un déplacement de résident frontalier ?"
+        type="radio"
+        name="border"
+        radioValues={radioValues}
+        register={register('border', { required: true })}
+        error={errors?.border?.message}
+      />
+      <div className="flex-1" />
+      <div>
+        {errors?.border && <div className="text-red-500">{errors.border.message}</div>}
+        <Button fullWidth={true} type="submit">
+          Valider
+        </Button>
+      </div>
     </ConfigurationSteps>
   );
 };

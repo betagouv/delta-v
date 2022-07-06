@@ -5,9 +5,7 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { Header } from '@/components/business/header';
 import { Button } from '@/components/common/Button';
-import { TitleHeader } from '@/components/common/TitleHeader';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IOptions } from '@/components/input/StandardInputs/Select';
@@ -78,52 +76,54 @@ const AddNewProduct = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
+      withCart
+      withTitle
+      titleValue={
+        <>
+          Nouvelle
+          <br /> marchandise
+        </>
+      }
+      titleIcon="calculator"
     >
-      <div className="flex h-full flex-col gap-6">
-        <Header withCart />
-        <TitleHeader
-          title={
-            <>
-              Nouvelle
-              <br /> marchandise
-            </>
-          }
-          icon="calculator"
-        />
-        <form className="flex h-full flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-          <InputGroup
-            name="productName"
-            type="text"
-            label="Nommer votre achat"
-            placeholder="Exemple : Jeans, pantalon noir, slim..."
-            register={register('productName', { required: true })}
-            fullWidth
-          />
-          <InputGroup
-            name="category"
-            type="simple-select"
-            options={categoryOptions}
-            placeholder="Catégorie"
-            label="Choisissez la catégorie"
-            register={register('category', { required: true })}
-            control={control}
-          />
-          <InputGroup
-            name="price"
-            type="number"
-            label="Saisissez le montant"
-            placeholder="Montant"
-            register={register('price', { required: true })}
-          />
-          <InputGroup
-            label="Choisissez la devise"
-            type="simple-select"
-            fullWidth={false}
-            name="devise"
-            options={selectOptions}
-            register={register('devise', { required: true })}
-          />
-          <div className="flex-1" />
+      <div className="flex flex-1 flex-col gap-6">
+        <form className="flex flex-1 flex-col" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-6">
+            <InputGroup
+              name="productName"
+              type="text"
+              label="Nommer votre achat"
+              placeholder="Exemple : Jeans, pantalon noir, slim..."
+              register={register('productName', { required: true })}
+              fullWidth
+            />
+            <InputGroup
+              name="category"
+              type="simple-select"
+              options={categoryOptions}
+              placeholder="Catégorie"
+              label="Choisissez la catégorie"
+              register={register('category', { required: true })}
+              control={control}
+            />
+            <InputGroup
+              name="price"
+              type="number"
+              label="Saisissez le montant"
+              placeholder="Montant"
+              register={register('price', { required: true })}
+            />
+            <InputGroup
+              label="Choisissez la devise"
+              type="simple-select"
+              fullWidth={false}
+              name="devise"
+              options={selectOptions}
+              register={register('devise', { required: true })}
+            />
+          </div>
+          <div className="mb-8 flex flex-1" />
           {submitted ? (
             <div className="flex justify-center">
               <Typography color="link" size="text-xl" weight="bold">

@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 
-import { Header } from '@/components/business/header';
 import { Search } from '@/components/business/search';
 import { Faqs } from '@/components/common/Faq';
-import { TitleHeader } from '@/components/common/TitleHeader';
 import { Meta } from '@/layout/Meta';
 import { FAQS_STORE } from '@/stores/faqs.store';
 import { Main } from '@/templates/Main';
@@ -19,10 +17,12 @@ const FaqPage = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      titleValue="FAQ"
+      titleIcon="question"
+      withTitle
+      withHeader
     >
       <div className="flex flex-col gap-6">
-        <Header />
-        <TitleHeader title="FAQ" icon="question" />
         <Search onSearch={() => []} withSearchIcon searchType="faq" />
         <Faqs items={FAQS_STORE} linkId={linkId} />
       </div>

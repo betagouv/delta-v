@@ -67,19 +67,22 @@ const Configuration = () => {
   }, []);
 
   return (
-    <ConfigurationSteps fromProgression={50} toProgression={75}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InputGroup
-          label="Quel est le pays d’où vous arrivez ?"
-          type="comboboxes"
-          fullWidth={true}
-          name="country"
-          options={countriesOptions}
-          register={register('country', { required: true })}
-          control={control}
-          error={errors?.country?.message}
-        />
-      </form>
+    <ConfigurationSteps
+      fromProgression={50}
+      toProgression={75}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
+      <InputGroup
+        label="Quel est le pays d’où vous arrivez ?"
+        type="comboboxes"
+        fullWidth={true}
+        name="country"
+        options={countriesOptions}
+        register={register('country', { required: true })}
+        control={control}
+        error={errors?.country?.message}
+      />
     </ConfigurationSteps>
   );
 };

@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 
 import shallow from 'zustand/shallow';
 
-import { Header } from '@/components/business/header';
 import { SummarySimulator } from '@/components/business/summarySimulator';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -37,9 +36,9 @@ const Summary = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
     >
-      <div className="flex flex-col gap-4 pb-4">
-        <Header />
+      <div className="flex flex-col pb-4">
         <SummarySimulator
           simulatorRequest={simulatorRequest}
           simulatorResponse={simulatorResponse}
