@@ -5,9 +5,7 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { Header } from '@/components/business/header';
 import { Button } from '@/components/common/Button';
-import { TitleHeader } from '@/components/common/TitleHeader';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IOptions } from '@/components/input/StandardInputs/Select';
@@ -78,18 +76,18 @@ const AddNewProduct = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
+      withCart
+      withTitle
+      titleValue={
+        <>
+          Nouvelle
+          <br /> marchandise
+        </>
+      }
+      titleIcon="calculator"
     >
       <div className="flex flex-1 flex-col gap-6">
-        <Header withCart />
-        <TitleHeader
-          title={
-            <>
-              Nouvelle
-              <br /> marchandise
-            </>
-          }
-          icon="calculator"
-        />
         <form className="flex flex-1 flex-col" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
             <InputGroup

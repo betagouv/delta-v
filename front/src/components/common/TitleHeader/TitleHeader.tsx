@@ -24,7 +24,7 @@ export const TitleHeader: React.FC<TitleHeaderProps> = ({ title, icon }: TitleHe
       <div className="h-14">
         <SvgIcon name={icon} />
       </div>
-      <div className="mt-1 flex-1">
+      <div className="flex-1">
         <Typography
           weight="bold"
           variant="h1"

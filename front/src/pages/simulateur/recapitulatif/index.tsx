@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import shallow from 'zustand/shallow';
 
-import { Header } from '@/components/business/header';
 import { QrcodeBlock } from '@/components/business/qrcodeBlock';
 import { SummarySimulator } from '@/components/business/summarySimulator';
 import { Icon } from '@/components/common/Icon';
@@ -41,9 +40,9 @@ const Summary = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
     >
       <div className="flex flex-col gap-4 pb-4">
-        <Header />
         <SummarySimulator
           simulatorRequest={simulatorRequest}
           simulatorResponse={simulatorResponse}

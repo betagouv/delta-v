@@ -4,12 +4,10 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { OnActionModal } from '@/components/autonomous/OnActionModal';
-import { Header } from '@/components/business/header';
 import { Button } from '@/components/common/Button';
 import { Link } from '@/components/common/Link';
 import { ProductBasket } from '@/components/common/ProductBasket';
 import { SvgIcon } from '@/components/common/SvgIcon';
-import { TitleHeader } from '@/components/common/TitleHeader';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -42,12 +40,13 @@ const Panier = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
+      withCart
+      withTitle
+      titleValue="Mes achats"
+      titleIcon="calculator"
     >
       <div className="flex flex-1 flex-col">
-        <div className="mb-6 flex flex-col gap-6">
-          <Header withCart />
-          <TitleHeader title="Mes achats" icon="calculator" />
-        </div>
         <div className="flex flex-col gap-3">
           {shoppingProducts?.map((shoppingProduct) => (
             <div key={shoppingProduct.id}>
