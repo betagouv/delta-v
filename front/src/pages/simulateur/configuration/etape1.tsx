@@ -46,27 +46,29 @@ const Configuration = () => {
   };
 
   return (
-    <ConfigurationSteps fromProgression={12} toProgression={25}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InputGroup
-          label="Quel âge avez-vous ?"
-          type="number"
-          name="age"
-          fullWidth={false}
-          placeholder="Votre age ?"
-          trailingAddons="ans"
-          register={register('age', { required: true })}
-          error={errors?.age?.message}
-        />
-        <div className="absolute inset-x-0 bottom-0 w-full">
-          <div className="p-4">
-            {errors?.age && <div className="text-red-500">{errors.age.message}</div>}
-            <Button fullWidth={true} type="submit">
-              Valider
-            </Button>
-          </div>
-        </div>
-      </form>
+    <ConfigurationSteps
+      fromProgression={12}
+      toProgression={25}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
+      <InputGroup
+        label="Quel âge avez-vous ?"
+        type="number"
+        name="age"
+        fullWidth={false}
+        placeholder="Votre age ?"
+        trailingAddons="ans"
+        register={register('age', { required: true })}
+        error={errors?.age?.message}
+      />
+      <div className="flex-1" />
+      <div>
+        {errors?.age && <div className="text-red-500">{errors.age.message}</div>}
+        <Button fullWidth={true} type="submit">
+          Valider
+        </Button>
+      </div>
     </ConfigurationSteps>
   );
 };

@@ -44,49 +44,51 @@ const Configuration = () => {
   };
 
   return (
-    <ConfigurationSteps fromProgression={0} toProgression={12}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-4">
-          <p>
-            Le <span className="font-bold">simulateur DéclareDouane</span> vous permet d’
-            <span className="font-bold">estimer les éventuels droits et taxes</span> que vous auriez
-            à payer si vous rameniez avec vous un produit de l’étranger.
-          </p>
-          <p>
-            Avec seulement quelques infos et en quelques clics vous pourrez calculer vos éventuels
-            droits et taxes.
-          </p>
-          <p>
-            <span className="font-bold">Facilitez votre passage frontière avec ce simulateur</span>,
-            vous n’aurez plus qu’à vous présenter aux agents douaniers si besoin !
-          </p>
-          <div className="flex flex-row">
-            <Checkbox
-              name="notDisplayAnymore"
-              register={register('notDisplayAnymore', { required: false })}
-              error={errors?.notDisplayAnymore?.message}
-            />
-            <label
-              htmlFor="notDisplayAnymore"
-              className="ml-2 block flex-1 text-base"
-              data-testid="label-element"
-            >
-              Ne plus afficher ce message.
-            </label>
-          </div>
+    <ConfigurationSteps
+      fromProgression={0}
+      toProgression={12}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
+      <div className="flex flex-col gap-4">
+        <p>
+          Le <span className="font-bold">simulateur DéclareDouane</span> vous permet d’
+          <span className="font-bold">estimer les éventuels droits et taxes</span> que vous auriez à
+          payer si vous rameniez avec vous un produit de l’étranger.
+        </p>
+        <p>
+          Avec seulement quelques infos et en quelques clics vous pourrez calculer vos éventuels
+          droits et taxes.
+        </p>
+        <p>
+          <span className="font-bold">Facilitez votre passage frontière avec ce simulateur</span>,
+          vous n’aurez plus qu’à vous présenter aux agents douaniers si besoin !
+        </p>
+        <div className="flex flex-row">
+          <Checkbox
+            name="notDisplayAnymore"
+            register={register('notDisplayAnymore', { required: false })}
+            error={errors?.notDisplayAnymore?.message}
+          />
+          <label
+            htmlFor="notDisplayAnymore"
+            className="ml-2 block flex-1 text-base"
+            data-testid="label-element"
+          >
+            Ne plus afficher ce message.
+          </label>
         </div>
+      </div>
+      <div className="flex-1" />
 
-        <div className="absolute inset-x-0 bottom-0 w-full">
-          <div className="p-4">
-            {errors?.notDisplayAnymore && (
-              <div className="text-red-500">{errors.notDisplayAnymore.message}</div>
-            )}
-            <Button fullWidth={true} type="submit">
-              Je commence la simulation
-            </Button>
-          </div>
-        </div>
-      </form>
+      <div>
+        {errors?.notDisplayAnymore && (
+          <div className="text-red-500">{errors.notDisplayAnymore.message}</div>
+        )}
+        <Button fullWidth={true} type="submit">
+          Je commence la simulation
+        </Button>
+      </div>
     </ConfigurationSteps>
   );
 };

@@ -43,7 +43,7 @@ const Panier = () => {
         />
       }
     >
-      <div className="flex h-full flex-col">
+      <div className="flex flex-1 flex-col">
         <div className="mb-6 flex flex-col gap-6">
           <Header withCart />
           <TitleHeader title="Mes achats" icon="calculator" />

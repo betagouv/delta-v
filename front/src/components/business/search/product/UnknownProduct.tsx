@@ -10,7 +10,7 @@ export const UnknownProduct: React.FC<UnknownProductProps> = ({
   searchValue,
 }: UnknownProductProps) => {
   return (
-    <div className="flex h-full flex-col" data-testid="empty-result-product-search-element">
+    <div className="flex flex-1 flex-col" data-testid="empty-result-product-search-element">
       <div className="flex flex-col gap-6 px-4">
         <Typography color="secondary">Cette marchandise n’est pas encore référencée.</Typography>
         <Typography color="secondary">

@@ -115,22 +115,20 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
 
   return currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="h-full">
-      <div className="flex h-full flex-col gap-6">
-        <InputGroup
-          fullWidth
-          name="name"
-          type="text"
-          label="Nommez votre achat"
-          placeholder="Exemple : Jeans, pantalon noir, slim..."
-          control={control}
-          register={register('name', { required: false })}
-        />
-        {multiForm.map((form, index) => {
-          return <div key={index}>{form}</div>;
-        })}
-        <FormAddProduct disabled={!isAddAble} control={control} register={register} />
-      </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
+      <InputGroup
+        fullWidth
+        name="name"
+        type="text"
+        label="Nommez votre achat"
+        placeholder="Exemple : Jeans, pantalon noir, slim..."
+        control={control}
+        register={register('name', { required: false })}
+      />
+      {multiForm.map((form, index) => {
+        return <div key={index}>{form}</div>;
+      })}
+      <FormAddProduct disabled={!isAddAble} control={control} register={register} />
     </form>
   ) : (
     <ProductNotManaged />

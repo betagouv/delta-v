@@ -66,7 +66,7 @@ const ProductSearch = () => {
         />
       }
     >
-      <div className="flex h-full flex-col gap-6">
+      <div className="flex flex-1 flex-col gap-6">
         <Header withCart withSearch linkSearch="/simulateur/produits/recherche" />
         <TitleHeader title={currentProduct?.name} icon="calculator" />
         {selectedProduct?.finalProduct ? (

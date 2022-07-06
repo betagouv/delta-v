@@ -50,11 +50,9 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
         control={control}
       />
       <div className="flex-1" />
-      <div className="pb-4">
-        <Button disabled={disabled} fullWidth={true} type="submit">
-          Valider
-        </Button>
-      </div>
+      <Button disabled={disabled} fullWidth={true} type="submit">
+        Valider
+      </Button>
     </>
   );
 };

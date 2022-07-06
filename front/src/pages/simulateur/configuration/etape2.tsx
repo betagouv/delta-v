@@ -82,25 +82,27 @@ const Configuration = () => {
   });
 
   return (
-    <ConfigurationSteps fromProgression={25} toProgression={50}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InputGroup
-          label="Quel est votre moyen de transport ?"
-          type="radioCard"
-          name="meanOfTransport"
-          radioCardValues={meanOfTransports}
-          register={register('meanOfTransport', { required: true })}
-          control={control}
-          error={errors?.meanOfTransport?.message}
-        />
-        <div className="absolute inset-x-0 bottom-0 w-full">
-          <div className="p-4">
-            {errors?.meanOfTransport && (
-              <div className="text-red-500">{errors.meanOfTransport.message}</div>
-            )}
-          </div>
-        </div>
-      </form>
+    <ConfigurationSteps
+      fromProgression={25}
+      toProgression={50}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
+      <InputGroup
+        label="Quel est votre moyen de transport ?"
+        type="radioCard"
+        name="meanOfTransport"
+        radioCardValues={meanOfTransports}
+        register={register('meanOfTransport', { required: true })}
+        control={control}
+        error={errors?.meanOfTransport?.message}
+      />
+      <div className="flex-1" />
+      <div>
+        {errors?.meanOfTransport && (
+          <div className="text-red-500">{errors.meanOfTransport.message}</div>
+        )}
+      </div>
     </ConfigurationSteps>
   );
 };

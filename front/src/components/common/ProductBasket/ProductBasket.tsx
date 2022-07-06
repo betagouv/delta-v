@@ -26,7 +26,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
           <div className="flex-1 leading-none">
             {shoppingProduct.product?.name ? (
               <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
-                shoppingProduct.product?.name
+                {shoppingProduct.product?.name}
               </Typography>
             ) : (
               <div className="flex flex-row items-center">
