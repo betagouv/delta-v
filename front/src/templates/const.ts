@@ -1,10 +1,16 @@
 import { TabItem } from '@/components/common/TabBar';
 
+export enum Routing {
+  home = '/',
+  simulator = '/simulateur/configuration/etape0',
+  faq = '/faqs',
+}
+
 export const MENU_ITEMS: TabItem[] = [
   {
     icon: 'home',
     title: 'Accueil',
-    path: '/',
+    path: Routing.home,
   },
   {
     title: 'Préparer mon voyage',
@@ -13,12 +19,12 @@ export const MENU_ITEMS: TabItem[] = [
   {
     icon: 'calculator',
     title: 'Simuler mes achats',
-    path: '/simulateur',
+    path: Routing.simulator,
   },
   {
     icon: 'question',
     title: 'FAQ',
-    path: '/faqs',
+    path: Routing.faq,
   },
   {
     icon: 'info',

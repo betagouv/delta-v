@@ -97,7 +97,7 @@ const Configuration = () => {
         control={control}
         error={errors?.meanOfTransport?.message}
       />
-      <div className="flex-1" />
+      <div className="mb-8 flex-1" />
       <div>
         {errors?.meanOfTransport && (
           <div className="text-red-500">{errors.meanOfTransport.message}</div>

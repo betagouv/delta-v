@@ -29,10 +29,10 @@ const Main = ({
   titleValue,
   titleIcon = 'calculator',
 }: IMainProps) => (
-  <div className="antialiased">
+  <div className="h-full antialiased">
     {meta}
 
-    <div className="flex min-h-screen flex-col gap-6 p-4  pb-[90px]">
+    <div className="flex min-h-[calc(100%-74px)] flex-col gap-6 p-4">
       {withHeader && <Header withCart={withCart} withSearch={withSearch} linkSearch={linkSearch} />}
       {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}
       {children}

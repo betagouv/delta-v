@@ -6,7 +6,7 @@ import { AppConfig } from '@/utils/AppConfig';
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang={AppConfig.locale}>
+      <Html lang={AppConfig.locale} className="h-full">
         <Head>
           <script
             dangerouslySetInnerHTML={{
@@ -24,8 +24,8 @@ class MyDocument extends Document {
             }}
           />
         </Head>
-        <body>
-          <section className="font-marianne text-secondary-800">
+        <body className="h-full">
+          <section className="h-full font-marianne text-secondary-800">
             <Main />
             <NextScript />
           </section>
