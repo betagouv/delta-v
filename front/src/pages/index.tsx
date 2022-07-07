@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { Search } from '@/components/business/search';
 import { Card } from '@/components/common/Card';
 import { Icon } from '@/components/common/Icon';
@@ -8,6 +11,7 @@ import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
 
 const Index = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
   return (
     <Main
       meta={
@@ -41,7 +45,9 @@ const Index = () => {
           </Typography>
         </div>
 
-        <Search onSearch={() => []} withSearchIcon searchType="faq" />
+        <div onClick={() => setOpenModal(true)}>
+          <Search onSearch={() => []} withSearchIcon searchType="faq" disabled />
+        </div>
 
         <div className="flex flex-col gap-4">
           <Link to={Routing.prepareMyTrip}>
@@ -89,7 +95,7 @@ const Index = () => {
           Pour vous permettre d’être facilement en règle si vous avez acheté des produits à
           l’étranger et de vous assurer un passage rapide et fluide lors de votre retour en France.
         </Typography>
-        <Link to="/test">
+        <Link to={Routing.faq}>
           <div className="flex flex-row items-center">
             <Typography weight="bold" variant="body1" tag="p" color="link">
               <div className="flex flex-row">
@@ -146,6 +152,7 @@ const Index = () => {
           />
         </Link>
       </div>
+      <ModalUnderConstruction open={openModal} onClose={() => setOpenModal(false)} />
     </Main>
   );
 };

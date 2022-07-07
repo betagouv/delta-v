@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
 import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -28,6 +29,7 @@ const selectOptions = [
 ];
 
 const AddNewProduct = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const router = useRouter();
   const { searchValue } = router.query;
   const productName = typeof searchValue === 'string' ? searchValue : undefined;
@@ -64,8 +66,8 @@ const AddNewProduct = () => {
     setSubmitted(true);
     addProduct({ amount: 1, id: uuidv4(), name: data.productName ?? '', price: data.price ?? 0 });
     setTimeout(() => {
-      router.push('/simulateur/produits');
-    }, 500);
+      setOpenModal(true);
+    }, 250);
   };
 
   return (
@@ -137,6 +139,7 @@ const AddNewProduct = () => {
           )}
         </form>
       </div>
+      <ModalAddProduct open={openModal} onClose={() => setOpenModal(false)} />
     </Main>
   );
 };

@@ -56,7 +56,7 @@ const Configuration = () => {
     onChange: () => {
       setTimeout(() => {
         handleSubmit(onSubmit)();
-      }, 500);
+      }, 250);
     },
   });
 

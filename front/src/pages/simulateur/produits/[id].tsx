@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
 import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { CategoryList } from '@/components/common/CategoryList';
 import { simulator } from '@/core/hoc/simulator.hoc';
@@ -14,6 +15,7 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const ProductSearch = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const { findProduct, getProductsResponse, addProduct } = useStore(
     (state) => ({
       findProduct: state.findProduct,
@@ -44,7 +46,7 @@ const ProductSearch = () => {
       amount: 1,
     };
     addProduct(shoppingProduct);
-    router.push('/simulateur/produits');
+    setOpenModal(true);
   };
 
   useEffect(() => {
@@ -78,6 +80,7 @@ const ProductSearch = () => {
           <CategoryList items={displayedProducts} title="Catégories" />
         )}
       </div>
+      <ModalAddProduct open={openModal} onClose={() => setOpenModal(false)} />
     </Main>
   );
 };

@@ -1,9 +1,6 @@
-import { useState } from 'react';
-
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 
-import Modal from '../Modal';
 import { SvgIcon, SvgNames } from '../SvgIcon';
 
 export interface TabItem {
@@ -17,7 +14,6 @@ interface TabBarProps {
 }
 
 export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
-  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { pathname } = router;
   const splitPath = pathname.split('/');
@@ -31,7 +27,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
           'font-bold': activeTab,
           'opacity-40': !activeTab,
         })}
-        onClick={() => (path ? router.push(path) : setOpen(true))}
+        onClick={() => router.push(path ?? '/')}
         key={path}
       >
         <div className="mb-2 h-6 w-6">
@@ -43,16 +39,9 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
   };
 
   return (
-    <>
-      <div className="sticky bottom-0 z-50 flex w-full flex-row border-t-4 border-primary-600 bg-white py-extraSmall">
-        {items.map((item) => renderTabBarItem(item.title, item.icon, item.path))}
-      </div>
-      <Modal
-        open={open}
-        title="Cette rubrique n' existe pas encore."
-        onClose={() => setOpen(false)}
-      />
-    </>
+    <div className="sticky bottom-0 z-50 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
+      {items.map((item) => renderTabBarItem(item.title, item.icon, item.path))}
+    </div>
   );
 };
 
