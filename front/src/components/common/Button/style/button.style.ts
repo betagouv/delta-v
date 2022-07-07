@@ -165,14 +165,15 @@ const styleManager: IButtonStyle = {
     outlined: {
       classes: {
         'bg-white': true,
-        'hover:text-white': true,
         'disabled:bg-white': true,
       },
       primary: {
         classes: {
           'text-primary-600': true,
           'border-primary-600': true,
-          'hover:bg-primary-600': true,
+          'active:bg-gray-300': true,
+          'active:text-primary-500': true,
+          'active:border-primary-500': true,
           'disabled:text-primary-600': true,
         },
       },
@@ -180,7 +181,9 @@ const styleManager: IButtonStyle = {
         classes: {
           'text-secondary-600': true,
           'border-secondary-600': true,
-          'hover:bg-secondary-600': true,
+          'active:text-secondary-500': true,
+          'active:bg-gray-300': true,
+          'active:border-secondary-500': true,
           'disabled:text-secondary-600': true,
         },
       },

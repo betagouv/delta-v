@@ -19,7 +19,7 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
     setProductChecked(id);
     setTimeout(() => {
       router.push(`/simulateur/produits/${id}`);
-    }, 500);
+    }, 250);
   };
   return (
     <ul className="w-full text-base">

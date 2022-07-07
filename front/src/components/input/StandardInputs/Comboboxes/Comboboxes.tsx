@@ -62,6 +62,8 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
       <div className="relative mt-1">
         <input
           className={classNames(fullWidth ? 'w-full' : 'w-fit', classNameCombobox)}
+          type="search"
+          enterKeyHint="search"
           onChange={(event) => setQuery(event.target.value)}
           disabled={disabled}
           placeholder={placeholder}

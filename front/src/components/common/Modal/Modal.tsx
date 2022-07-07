@@ -8,8 +8,8 @@ import { Typography } from '../Typography';
 export interface IModalProps {
   open: boolean;
   onClose?: () => void;
-  title?: string;
-  subtitle?: string;
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
   children?: any;
 }
 
