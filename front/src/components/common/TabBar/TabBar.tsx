@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
@@ -22,14 +22,12 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
   const { pathname } = router;
   const splitPath = pathname.split('/');
 
-  useEffect(() => {}, []);
-
   const renderTabBarItem = (title: string, icon: SvgNames, path?: string) => {
     const activeTab = splitPath[1] === path?.split('/')[1];
     return (
       <div
         className={classNames({
-          'tab-bar-btn flex-1': true,
+          'flex flex-col items-center flex-1': true,
           'font-bold': activeTab,
           'opacity-40': !activeTab,
         })}
@@ -46,7 +44,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
 
   return (
     <>
-      <div className="fixed bottom-0 z-50 flex w-full flex-row border-t-4 border-primary-600 bg-white py-extraSmall">
+      <div className="sticky bottom-0 z-50 flex w-full flex-row border-t-4 border-primary-600 bg-white py-extraSmall">
         {items.map((item) => renderTabBarItem(item.title, item.icon, item.path))}
       </div>
       <Modal

@@ -65,7 +65,7 @@ const Configuration = () => {
         register={register('border', { required: true })}
         error={errors?.border?.message}
       />
-      <div className="flex-1" />
+      <div className="mb-8 flex-1" />
       <div>
         {errors?.border && <div className="text-red-500">{errors.border.message}</div>}
         <Button fullWidth={true} type="submit">

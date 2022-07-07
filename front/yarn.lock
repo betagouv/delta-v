@@ -8516,6 +8516,11 @@ jest@28.1.1:
     import-local "^3.0.2"
     jest-cli "^28.1.1"
 
+js-flipper@0.153.0:
+  version "0.153.0"
+  resolved "https://registry.yarnpkg.com/js-flipper/-/js-flipper-0.153.0.tgz#b57619ad306fe0df85c0ad2c05fb180e539f3d03"
+  integrity sha512-t7CaZK5yXqAM4hR/AToG+dt/bnuPi4x+cyAkGVRWn+VYf3VStluH+Wvcr40ImAgqc8vWyQL+p5wKIkqHH1gdyg==
+
 js-sha3@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
@@ -10208,6 +10213,11 @@ posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha512-xTgYBc3fuo7Yt7JbiuFxSYGToMoz8fLoE6TC9Wx1P/u+LfeThMOAqmuyECnlBaaJb+u1m9hHiXUEtwW4OzfUJg==
+
+postcss-100vh-fix@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/postcss-100vh-fix/-/postcss-100vh-fix-1.0.2.tgz#d7931b1b9db90c1ea9cafefeb444ad5e534f7550"
+  integrity sha512-t7vqk9AfjI4fXmWlQCEiMZFFhi1hro4WlECINI1TV6Qh1XapUJE++gCmNr95F5Hen/+bz1OmO+SiSB9TZmFmSg==
 
 postcss-calc@^8.2.3:
   version "8.2.4"

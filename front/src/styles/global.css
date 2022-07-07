@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    .tab-bar-btn {
-        @apply flex flex-col items-center px-1
-    }
-}
-
 @font-face {
     font-family: "Marianne";
     font-style: normal;
@@ -110,6 +104,10 @@
 body {
     font-family: "Marianne", sans-serif;
     font-size: 14px;
+}
+
+#__next {
+    @apply h-full;
 }
 
 svg {

@@ -62,7 +62,7 @@ const Configuration = () => {
         register={register('age', { required: true })}
         error={errors?.age?.message}
       />
-      <div className="flex-1" />
+      <div className="mb-8 flex-1" />
       <div>
         {errors?.age && <div className="text-red-500">{errors.age.message}</div>}
         <Button fullWidth={true} type="submit">

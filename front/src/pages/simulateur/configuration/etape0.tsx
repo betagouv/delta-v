@@ -79,7 +79,7 @@ const Configuration = () => {
           </label>
         </div>
       </div>
-      <div className="flex-1" />
+      <div className="mb-8 flex-1" />
 
       <div>
         {errors?.notDisplayAnymore && (
