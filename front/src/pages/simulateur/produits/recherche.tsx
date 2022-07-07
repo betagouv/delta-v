@@ -43,7 +43,7 @@ const SearchProduct = () => {
       titleIcon="calculator"
     >
       <div className="flex flex-1 flex-col gap-6">
-        <Search onSearch={searchProducts} autoFocus />
+        <Search onSearch={searchProducts} autoFocus withSearchIcon />
       </div>
     </Main>
   );

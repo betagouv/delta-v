@@ -57,7 +57,7 @@ const Configuration = () => {
         type="number"
         name="age"
         fullWidth={false}
-        placeholder="Votre age ?"
+        placeholder="Âge"
         trailingAddons="ans"
         register={register('age', { required: true })}
         error={errors?.age?.message}

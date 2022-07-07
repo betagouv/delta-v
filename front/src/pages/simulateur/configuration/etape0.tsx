@@ -50,7 +50,7 @@ const Configuration = () => {
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 text-base">
         <p>
           Le <span className="font-bold">simulateur DéclareDouane</span> vous permet d’
           <span className="font-bold">estimer les éventuels droits et taxes</span> que vous auriez à

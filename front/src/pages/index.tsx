@@ -5,6 +5,7 @@ import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const Index = () => {
   return (
@@ -43,15 +44,17 @@ const Index = () => {
         <Search onSearch={() => []} withSearchIcon searchType="faq" />
 
         <div className="flex flex-col gap-4">
-          <Card
-            title="Préparer mon voyage"
-            description="Les documents à prévoir avant votre voyage, les conseils..."
-            svgName="luggages"
-            rounded="lg"
-            fullWidth
-          />
+          <Link to={Routing.prepareMyTrip}>
+            <Card
+              title="Préparer mon voyage"
+              description="Les documents à prévoir avant votre voyage, les conseils..."
+              svgName="luggages"
+              rounded="lg"
+              fullWidth
+            />
+          </Link>
 
-          <Link to="/simulateur">
+          <Link to={Routing.simulator}>
             <Card
               title="Simuler mes achats"
               description="Calculez les droits de douanes de vos achats en quelques clics"
@@ -61,7 +64,7 @@ const Index = () => {
             />
           </Link>
 
-          <Link to="/faqs/">
+          <Link to={Routing.faq}>
             <Card
               title="FAQ"
               description="Une question ? Retrouvez toutes nos réponses ici"
@@ -104,34 +107,44 @@ const Index = () => {
           Besoin d’aide ?
         </Typography>
         <div className="flex flex-row gap-6">
-          <Card
-            title="FAQ"
-            variant="vertical"
-            description="Une question ? Retrouvez toutes nos réponses ici"
-            svgName="question"
-            rounded="lg"
-            fullWidth
-          />
-          <Card
-            title="Mail"
-            description="Vous pouvez nous poser votre question par mail"
-            svgName="mail"
-            rounded="lg"
-            variant="vertical"
-            fullWidth
-          />
+          <div className="grow">
+            <Link to={Routing.faq}>
+              <Card
+                title="FAQ"
+                variant="vertical"
+                description="Une question ? Retrouvez toutes nos réponses ici"
+                svgName="question"
+                rounded="lg"
+                fullWidth
+              />
+            </Link>
+          </div>
+          <div className="flex grow flex-col">
+            <Link href="mailto: ids@douane.finances.gouv.fr">
+              <Card
+                title="Mail"
+                description="Vous pouvez nous poser votre question par mail"
+                svgName="mail"
+                rounded="lg"
+                variant="vertical"
+                fullWidth
+              />
+            </Link>
+          </div>
         </div>
-        <Card
-          title="Info Douane Service"
-          subtitle="0 800 94 40 40"
-          description={
-            'Du lundi au vendredi, sauf jours \nfériés, de 8h30 à 18h.\nService et appel gratuits.'
-          }
-          svgName="phone"
-          rounded="lg"
-          variant="horizontal"
-          fullWidth
-        />
+        <Link href="tel:0800944040">
+          <Card
+            title="Info Douane Service"
+            subtitle="0 800 94 40 40"
+            description={
+              'Du lundi au vendredi, sauf jours \nfériés, de 8h30 à 18h.\nService et appel gratuits.'
+            }
+            svgName="phone"
+            rounded="lg"
+            variant="horizontal"
+            fullWidth
+          />
+        </Link>
       </div>
     </Main>
   );

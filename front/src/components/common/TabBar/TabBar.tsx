@@ -7,7 +7,7 @@ import Modal from '../Modal';
 import { SvgIcon, SvgNames } from '../SvgIcon';
 
 export interface TabItem {
-  title: string;
+  title: React.ReactNode;
   icon: SvgNames;
   path?: string;
 }
@@ -22,7 +22,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
   const { pathname } = router;
   const splitPath = pathname.split('/');
 
-  const renderTabBarItem = (title: string, icon: SvgNames, path?: string) => {
+  const renderTabBarItem = (title: React.ReactNode, icon: SvgNames, path?: string) => {
     const activeTab = splitPath[1] === path?.split('/')[1];
     return (
       <div
@@ -34,10 +34,10 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
         onClick={() => (path ? router.push(path) : setOpen(true))}
         key={path}
       >
-        <div className="mb-2 h-lightBase w-lightBase">
+        <div className="mb-2 h-6 w-6">
           <SvgIcon name={icon} />
         </div>
-        <p className="text-center text-[9px] leading-none md:text-[12px]">{title}</p>
+        <p className="text-center text-[10px] leading-none md:text-[12px]">{title}</p>
       </div>
     );
   };

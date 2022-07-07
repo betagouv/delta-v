@@ -4,6 +4,8 @@ export enum Routing {
   home = '/',
   simulator = '/simulateur/configuration/etape0',
   faq = '/faqs',
+  prepareMyTrip = '/preparer-mon-voyage',
+  about = '/a-propos',
 }
 
 export const MENU_ITEMS: TabItem[] = [
@@ -13,12 +15,23 @@ export const MENU_ITEMS: TabItem[] = [
     path: Routing.home,
   },
   {
-    title: 'Préparer mon voyage',
+    title: (
+      <>
+        Préparer <br />
+        mon voyage
+      </>
+    ),
     icon: 'luggages',
+    path: Routing.prepareMyTrip,
   },
   {
     icon: 'calculator',
-    title: 'Simuler mes achats',
+    title: (
+      <>
+        Simuler <br />
+        mes achats
+      </>
+    ),
     path: Routing.simulator,
   },
   {
@@ -29,5 +42,6 @@ export const MENU_ITEMS: TabItem[] = [
   {
     icon: 'info',
     title: 'À propos',
+    path: Routing.about,
   },
 ];

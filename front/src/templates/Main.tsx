@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { MENU_ITEMS } from './const';
+import { MENU_ITEMS } from '../utils/const';
 import { Header } from '@/components/business/header';
 import { SvgNames } from '@/components/common/SvgIcon';
 import { TabBar } from '@/components/common/TabBar';
