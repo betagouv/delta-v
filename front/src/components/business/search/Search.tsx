@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
-
 import { SearchResultProducts } from './product/SearchResultProducts';
 import { UnknownProduct } from './product/UnknownProduct';
-import { Input } from '@/components/input/StandardInputs/Input';
+import { Icon } from '@/components/common/Icon';
 import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
@@ -39,21 +37,12 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
 }: SearchProps<T>) => {
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
   const [placeholder, setPlaceholder] = useState<string>('');
-  const { register, getValues } = useForm<{ searchValue: string }>({
-    defaultValues: {
-      searchValue: '',
-    },
-  });
+  const [searchValue, setSearchValue] = useState<string>('');
 
-  register('searchValue', {
-    onChange: () => {
-      const searchValue = getValues('searchValue');
-
-      const productsThatMatch = onSearch(searchValue);
-
-      setResultSearch(productsThatMatch);
-    },
-  });
+  useEffect(() => {
+    const productsThatMatch = onSearch(searchValue);
+    setResultSearch(productsThatMatch);
+  }, [searchValue]);
 
   useEffect(() => {
     switch (searchType) {
@@ -69,7 +58,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
   }, [searchType]);
 
   useEffect(() => {
-    const displayResults = getValues('searchValue').length > 0;
+    const displayResults = searchValue.length > 0;
     onChange(displayResults);
   }, [resultSearch]);
 
@@ -77,25 +66,32 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
 
   return (
     <div className="flex flex-1 flex-col gap-4" data-testid="search-element">
-      <Input
-        autoFocus={autoFocus}
-        data-testid="input-search-element"
-        name="search"
-        type="text"
-        fullWidth
-        placeholder={placeholder}
-        trailingIcon={withSearchIcon ? 'search' : undefined}
-        register={register('searchValue')}
-      />
-      {getValues('searchValue').length === 0 ? (
+      <div className="relative">
+        <input
+          className="w-full rounded-full border py-2 pl-3 pr-10 placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:outline-none"
+          autoFocus={autoFocus}
+          data-testid="input-search-element"
+          placeholder={placeholder}
+          onChange={(event) => setSearchValue(event.target.value)}
+          value={searchValue}
+        />
+        {withSearchIcon && (
+          <div className="absolute inset-y-0 top-[2px] right-0 z-50 flex h-full w-9 items-center pr-4">
+            {searchValue.length === 0 ? (
+              <Icon name="search" />
+            ) : (
+              <div>
+                <Icon name="cross-thin" onClick={() => setSearchValue('')} />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      {searchValue.length === 0 ? (
         <></>
       ) : (
         <>
-          {resultSearch.length === 0 ? (
-            <UnknownProduct searchValue={getValues('searchValue')} />
-          ) : (
-            SearchResult
-          )}
+          {resultSearch.length === 0 ? <UnknownProduct searchValue={searchValue} /> : SearchResult}
         </>
       )}
     </div>

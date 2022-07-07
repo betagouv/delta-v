@@ -78,6 +78,8 @@ const Configuration = () => {
         type="comboboxes"
         fullWidth={true}
         name="country"
+        placeholder="Pays"
+        trailingIcon="search"
         options={countriesOptions}
         register={register('country', { required: true })}
         control={control}

@@ -116,6 +116,8 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               control={control}
               rules={rules}
               fullWidth={fullWidth}
+              placeholder={placeholder}
+              trailingIcon={trailingIcon}
             />
           )}
           {type === 'simple-select' && (

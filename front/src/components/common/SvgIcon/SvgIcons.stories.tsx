@@ -25,6 +25,7 @@ const iconNames: SvgNames[] = [
   'mail',
   'question',
   'search',
+  'info',
 ];
 const categoryIcon: SvgNames[] = [
   'categoryAccessory',
