@@ -9,6 +9,7 @@ import { InputGroup } from '@/components/input/InputGroup';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
+import { disabledCountries } from '@/utils/const';
 
 export interface FormSimulatorData {
   country?: Alpha2Code;
@@ -62,8 +63,9 @@ const Configuration = () => {
 
   const countriesOptions = useMemo(() => {
     const countries = getNames('fr', { select: 'official' });
-    const keys = Object.keys(countries);
-    return keys.map((key) => ({ value: countries[key] ?? '', id: key }));
+    const keys = Object.keys(countries) as Alpha2Code[];
+    const enabledKeys = keys.filter((key) => !disabledCountries.includes(key));
+    return enabledKeys.map((key) => ({ value: countries[key] ?? '', id: key }));
   }, []);
 
   return (

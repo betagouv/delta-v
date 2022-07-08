@@ -14,7 +14,7 @@ import { Main } from '@/templates/Main';
 
 export interface FormUpdateShoppingProduct {
   name?: string;
-  price: number;
+  price: string;
   devise: string;
 }
 
@@ -41,12 +41,12 @@ const UpdateProductBasket = () => {
   useEffect(() => {
     if (currentProduct) {
       setValue('name', currentProduct.name, { shouldValidate: true });
-      setValue('price', currentProduct.price, { shouldValidate: true });
+      setValue('price', `${currentProduct.price}`, { shouldValidate: true });
     }
   }, [currentProduct]);
 
   const onUpdateShoppingProduct = ({ price, name }: FormUpdateShoppingProduct) => {
-    updateShoppingProduct({ id: id as string, price, name: name ?? '' });
+    updateShoppingProduct({ id: id as string, price: parseFloat(price), name: name ?? '' });
     router.push('/simulateur/panier');
   };
 

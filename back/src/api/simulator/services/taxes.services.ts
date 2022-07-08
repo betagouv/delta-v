@@ -64,9 +64,6 @@ export const manageProductTaxesDetails = ({
     });
     const uniqueRateTotalTaxes = getTotalProductsTaxes(uniqueRateTaxesProducts);
 
-    console.log('uniqueRateTotalTaxes', uniqueRateTotalTaxes);
-    console.log('uniqueRateTaxesProducts', uniqueRateTaxesProducts);
-
     if (uniqueRateTotalTaxes <= defaultTotalTaxes) {
       return uniqueRateTaxesProducts;
     }

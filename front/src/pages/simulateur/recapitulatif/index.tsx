@@ -29,7 +29,9 @@ const Summary = () => {
   );
 
   useEffect(() => {
-    simulate();
+    if (!simulatorResponse) {
+      simulate();
+    }
   }, []);
 
   return (

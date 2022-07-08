@@ -17,10 +17,11 @@ import { Main } from '@/templates/Main';
 const Panier = () => {
   const router = useRouter();
 
-  const { shoppingProducts, removeProduct } = useStore(
+  const { shoppingProducts, removeProduct, getBasketProduct } = useStore(
     (state) => ({
       shoppingProducts: state.simulator.appState.simulatorRequest.shoppingProducts,
       removeProduct: state.removeProduct,
+      getBasketProduct: state.getBasketProduct,
     }),
     shallow,
   );
@@ -51,7 +52,7 @@ const Panier = () => {
           {shoppingProducts?.map((shoppingProduct) => (
             <div key={shoppingProduct.id}>
               <ProductBasket
-                shoppingProduct={shoppingProduct}
+                basketProduct={getBasketProduct(shoppingProduct.id) ?? { shoppingProduct }}
                 onDeleteProduct={() => {
                   idToDelete.current = shoppingProduct.id;
                   setOpenActionModal(true);
