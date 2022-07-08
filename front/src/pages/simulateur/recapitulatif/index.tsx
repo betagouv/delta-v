@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import shallow from 'zustand/shallow';
 
-import { QrcodeBlock } from '@/components/business/qrcodeBlock';
 import { SummarySimulator } from '@/components/business/summarySimulator';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
@@ -49,9 +48,6 @@ const Summary = () => {
           simulatorRequest={simulatorRequest}
           simulatorResponse={simulatorResponse}
         />
-        <Link to="/simulateur/recapitulatif/qrcode">
-          <QrcodeBlock />
-        </Link>
         <Typography weight="bold" color="secondary">
           Des questions ?
         </Typography>
