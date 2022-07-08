@@ -16,6 +16,7 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { shoppingProducts, border, age, country, meanOfTransport } = req.body;
+
     const { products, franchiseAmount } = await service({
       shoppingProducts,
       border,

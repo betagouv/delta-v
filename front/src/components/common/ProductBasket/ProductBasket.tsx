@@ -79,65 +79,58 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="flex flex-row leading-none">
                       <Typography color="secondary" size="text-base">
-                        {detailedProduct?.unitPrice ?? shoppingProduct.price} x 1 =
+                        {shoppingProduct.price} x 1 =
                       </Typography>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
-                          {' '}
-                          {detailedProduct?.unitPrice ?? shoppingProduct.price} €
+                          {shoppingProduct.price} €
                         </Typography>
                       </div>
                     </div>
-                    <div className="mt-2">
-                      <Typography color="primary" size="text-base">
-                        Calcul de la TVA
-                      </Typography>
-                    </div>
-                    <div className="flex flex-row">
-                      <Typography color="primary" size="text-base">
-                        {detailedProduct?.unitPrice ?? shoppingProduct.price}
-                      </Typography>
-                      <div className="ml-1">
-                        <Typography color="secondary" size="text-base">
-                          {' '}
-                          x {detailedProduct?.vat ?? shoppingProduct.product?.vat ?? 0}% =
-                        </Typography>
-                      </div>
-                      <div className="ml-1">
-                        <Typography color="primary" size="text-base">
-                          {detailedProduct?.unitVat ??
-                            ((shoppingProduct.product?.vat ?? 0) * shoppingProduct.price) /
-                              100}{' '}
-                          €
-                        </Typography>
-                      </div>
-                    </div>
-                    <div className="mt-2">
-                      <Typography color="primary" size="text-base">
-                        Calcul des droits de douanes
-                      </Typography>
-                    </div>
-                    <div className="flex flex-row">
-                      <Typography color="primary" size="text-base">
-                        {detailedProduct?.unitPrice ?? shoppingProduct.price}
-                      </Typography>
-                      <div className="ml-1">
-                        <Typography color="secondary" size="text-base">
-                          {' '}
-                          x{' '}
-                          {detailedProduct?.customDuty ?? shoppingProduct.product?.customDuty ?? 0}%
-                          =
-                        </Typography>
-                      </div>
-                      <div className="ml-1">
-                        <Typography color="primary" size="text-base">
-                          {detailedProduct?.unitCustomDuty ??
-                            ((shoppingProduct.product?.customDuty ?? 0) * shoppingProduct.price) /
-                              100}{' '}
-                          €
-                        </Typography>
-                      </div>
-                    </div>
+                    {detailedProduct && (
+                      <>
+                        <div className="mt-2">
+                          <Typography color="primary" size="text-base">
+                            Calcul de la TVA
+                          </Typography>
+                        </div>
+                        <div className="flex flex-row">
+                          <Typography color="primary" size="text-base">
+                            {detailedProduct.unitPrice}
+                          </Typography>
+                          <div className="ml-1">
+                            <Typography color="secondary" size="text-base">
+                              x {detailedProduct.vat}% =
+                            </Typography>
+                          </div>
+                          <div className="ml-1">
+                            <Typography color="primary" size="text-base">
+                              {detailedProduct?.unitVat} €
+                            </Typography>
+                          </div>
+                        </div>
+                        <div className="mt-2">
+                          <Typography color="primary" size="text-base">
+                            Calcul des droits de douanes
+                          </Typography>
+                        </div>
+                        <div className="flex flex-row">
+                          <Typography color="primary" size="text-base">
+                            {detailedProduct?.unitPrice ?? shoppingProduct.price}
+                          </Typography>
+                          <div className="ml-1">
+                            <Typography color="secondary" size="text-base">
+                              x {detailedProduct?.customDuty}% =
+                            </Typography>
+                          </div>
+                          <div className="ml-1">
+                            <Typography color="primary" size="text-base">
+                              {detailedProduct?.unitCustomDuty} €
+                            </Typography>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="flex items-end">
                     <div className="flex-1" />
@@ -148,7 +141,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="ml-5 content-end">
                       <Typography color="primary" size="text-xl">
-                        {shoppingProduct.price} €
+                        {detailedProduct ? `${shoppingProduct.price}€` : 'non renseigné'}
                       </Typography>
                     </div>
                   </div>
