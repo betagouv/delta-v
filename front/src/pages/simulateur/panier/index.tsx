@@ -76,13 +76,11 @@ const Panier = () => {
           </Link>
         </div>
         <div className="mb-8 flex-1" />
-        <div className="pb-4">
-          <Link to="/simulateur/recapitulatif">
-            <Button fullWidth size="xl">
-              Valider ma simulation
-            </Button>
-          </Link>
-        </div>
+        <Link to="/simulateur/recapitulatif">
+          <Button fullWidth size="xl">
+            Valider ma simulation
+          </Button>
+        </Link>
       </div>
       <OnActionModal
         open={openActionModal}

@@ -13,10 +13,10 @@ interface ModalAddProductProps {
 export const ModalAddProduct: React.FC<ModalAddProductProps> = ({ onClose, open }) => {
   const router = useRouter();
   const onRedirectBasket = (): void => {
-    // router.push('/simulateur/panier');
-    // if (onClose) {
-    //   onClose();
-    // }
+    router.push('/simulateur/panier');
+    if (onClose) {
+      onClose();
+    }
   };
   const onRedirectProducts = (): void => {
     router.push('/simulateur/produits');

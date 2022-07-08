@@ -72,7 +72,6 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
         <input
           className="w-full rounded-full border border-secondary-300 py-2 pl-3 pr-10 placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none focus:ring-transparent"
           autoFocus={autoFocus}
-          type="search"
           enterKeyHint="search"
           data-testid="input-search-element"
           placeholder={placeholder}
@@ -81,7 +80,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
           disabled={disabled}
         />
         {withSearchIcon && (
-          <div className="absolute inset-y-0 top-[2px] right-0 z-10 flex h-full w-9 items-center pr-4">
+          <div className="absolute inset-y-0 right-0 z-10 flex h-full w-9 items-center pr-4">
             {searchValue.length === 0 ? (
               <Icon name="search" />
             ) : (

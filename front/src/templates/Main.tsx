@@ -28,17 +28,21 @@ const Main = ({
   withTitle = false,
   titleValue,
   titleIcon = 'calculator',
-}: IMainProps) => (
-  <div className="h-full antialiased">
-    {meta}
+}: IMainProps) => {
+  return (
+    <div className="h-full antialiased">
+      {meta}
 
-    <div className="flex min-h-[calc(100%-74px)] flex-col gap-6 p-4">
-      {withHeader && <Header withCart={withCart} withSearch={withSearch} linkSearch={linkSearch} />}
-      {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}
-      {children}
+      <div className="flex min-h-[calc(100%-74px)] flex-col gap-6 p-4">
+        {withHeader && (
+          <Header withCart={withCart} withSearch={withSearch} linkSearch={linkSearch} />
+        )}
+        {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}
+        {children}
+      </div>
+      <TabBar items={MENU_ITEMS} />
     </div>
-    <TabBar items={MENU_ITEMS} />
-  </div>
-);
+  );
+};
 
 export { Main };
