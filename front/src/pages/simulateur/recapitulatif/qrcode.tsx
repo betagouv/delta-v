@@ -25,7 +25,9 @@ const Summary = () => {
   );
 
   useMemo(() => {
-    simulate();
+    if (!simulatorResponse) {
+      simulate();
+    }
   }, []);
 
   return (

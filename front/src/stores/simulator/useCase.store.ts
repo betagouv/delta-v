@@ -4,6 +4,8 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { StoreSlice } from '../store';
 // eslint-disable-next-line import/no-cycle
 import {
+  BasketProduct,
+  DetailedProduct,
   MeansOfTransport,
   ShoppingProduct,
   SimulatorResponse,
@@ -20,8 +22,8 @@ export interface SimulatorUseCaseSlice {
   resetSteps: (step: number) => void;
   addProduct: (shoppingProduct: ShoppingProduct) => void;
   removeProduct: (id: string) => void;
-  updateProduct: (shoppingProduct: ShoppingProduct) => void;
   getNbProductsInCart: () => number;
+  getBasketProduct: (id: string) => BasketProduct | undefined;
   findShoppingProduct: (id: string) => ShoppingProduct | undefined;
   updateShoppingProduct: (options: UpdateShoppingProductOptions) => void;
   simulate: () => void;
@@ -107,6 +109,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       newState.simulator.appState.simulatorRequest.shoppingProducts.push(shoppingProduct);
       return newState;
     });
+    get().simulate();
   },
   removeProduct: (id: string): void => {
     set((state: any) => {
@@ -118,18 +121,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       newState.simulator.appState.simulatorRequest.shoppingProducts = newShoppingProducts;
       return newState;
     });
-  },
-  updateProduct: (shoppingProduct: ShoppingProduct): void => {
-    set((state: any) => {
-      const newState = { ...state };
-      const newShoppingProducts =
-        newState.simulator.appState.simulatorRequest.shoppingProducts.filter(
-          (product: ShoppingProduct) => product.id !== shoppingProduct.id,
-        );
-      newState.simulator.appState.simulatorRequest.shoppingProducts = newShoppingProducts;
-      newState.simulator.appState.simulatorRequest.shoppingProducts.push(shoppingProduct);
-      return newState;
-    });
+    get().simulate();
   },
   getNbProductsInCart: (): number => {
     return get().simulator?.appState?.simulatorRequest.shoppingProducts?.length ?? 0;
@@ -140,6 +132,28 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         (product: ShoppingProduct) => product.id === id,
       ) ?? undefined
     );
+  },
+  getBasketProduct: (id: string): BasketProduct | undefined => {
+    const shoppingProduct =
+      get().simulator?.appState?.simulatorRequest.shoppingProducts?.find(
+        (product: ShoppingProduct) => product.id === id,
+      ) ?? undefined;
+
+    if (!shoppingProduct) {
+      return undefined;
+    }
+
+    const detailedProduct = get().simulator?.appState?.simulatorResponse?.products?.find(
+      (product: DetailedProduct) =>
+        product.id === shoppingProduct.product?.id &&
+        product.customName === shoppingProduct.name &&
+        product.unitPrice === shoppingProduct.price,
+    );
+
+    return {
+      shoppingProduct,
+      detailedProduct,
+    };
   },
   updateShoppingProduct: ({ id, name, price }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
@@ -158,8 +172,10 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         name,
         price,
       });
+
       return newState;
     });
+    get().simulate();
   },
   simulate: async () => {
     try {

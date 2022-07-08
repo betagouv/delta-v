@@ -20,7 +20,7 @@ export interface ShoppingProduct {
   price: number;
 }
 
-interface DetailedProduct {
+export interface DetailedProduct {
   id: string;
   name: string;
   customName?: string;
@@ -30,6 +30,11 @@ interface DetailedProduct {
   unitTaxes: number;
   customDuty: number;
   vat: number;
+}
+
+export interface BasketProduct {
+  shoppingProduct: ShoppingProduct;
+  detailedProduct?: DetailedProduct;
 }
 
 export interface SimulatorResponse {

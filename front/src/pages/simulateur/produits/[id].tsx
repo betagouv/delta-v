@@ -42,7 +42,7 @@ const ProductSearch = () => {
       id: uuidv4(),
       product,
       name,
-      price,
+      price: parseFloat(price),
       amount: 1,
     };
     addProduct(shoppingProduct);

@@ -6,19 +6,21 @@ import dayjs from 'dayjs';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
-import { ShoppingProduct } from '@/stores/simulator/appState.store';
+import { BasketProduct } from '@/stores/simulator/appState.store';
 
 interface ProductBasketProps {
-  shoppingProduct: ShoppingProduct;
+  basketProduct: BasketProduct;
   onUpdateProduct: () => void;
   onDeleteProduct: () => void;
 }
 
 export const ProductBasket: React.FC<ProductBasketProps> = ({
-  shoppingProduct,
+  basketProduct,
   onUpdateProduct,
   onDeleteProduct,
 }: ProductBasketProps) => {
+  const { shoppingProduct, detailedProduct } = basketProduct;
+
   return (
     <div className="w-full divide-y-2 divide-dashed rounded-xl border">
       <div className="p-3 leading-tight">
@@ -77,12 +79,12 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="flex flex-row leading-none">
                       <Typography color="secondary" size="text-base">
-                        {shoppingProduct.price} x 1 =
+                        {detailedProduct?.unitPrice ?? shoppingProduct.price} x 1 =
                       </Typography>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
                           {' '}
-                          {shoppingProduct.price} €
+                          {detailedProduct?.unitPrice ?? shoppingProduct.price} €
                         </Typography>
                       </div>
                     </div>
@@ -93,17 +95,20 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="flex flex-row">
                       <Typography color="primary" size="text-base">
-                        {shoppingProduct.price}
+                        {detailedProduct?.unitPrice ?? shoppingProduct.price}
                       </Typography>
                       <div className="ml-1">
                         <Typography color="secondary" size="text-base">
                           {' '}
-                          x {shoppingProduct.product?.vat ?? 0}% =
+                          x {detailedProduct?.vat ?? shoppingProduct.product?.vat ?? 0}% =
                         </Typography>
                       </div>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
-                          {((shoppingProduct.product?.vat ?? 0) * shoppingProduct.price) / 100} €
+                          {detailedProduct?.unitVat ??
+                            ((shoppingProduct.product?.vat ?? 0) * shoppingProduct.price) /
+                              100}{' '}
+                          €
                         </Typography>
                       </div>
                     </div>
@@ -114,18 +119,21 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="flex flex-row">
                       <Typography color="primary" size="text-base">
-                        {shoppingProduct.price}
+                        {detailedProduct?.unitPrice ?? shoppingProduct.price}
                       </Typography>
                       <div className="ml-1">
                         <Typography color="secondary" size="text-base">
                           {' '}
-                          x {shoppingProduct.product?.customDuty ?? 0}% =
+                          x{' '}
+                          {detailedProduct?.customDuty ?? shoppingProduct.product?.customDuty ?? 0}%
+                          =
                         </Typography>
                       </div>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
-                          {((shoppingProduct.product?.customDuty ?? 0) * shoppingProduct.price) /
-                            100}{' '}
+                          {detailedProduct?.unitCustomDuty ??
+                            ((shoppingProduct.product?.customDuty ?? 0) * shoppingProduct.price) /
+                              100}{' '}
                           €
                         </Typography>
                       </div>

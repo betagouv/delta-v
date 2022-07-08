@@ -37,7 +37,6 @@ export const separateFreeAndPaidProducts = ({
     }),
   );
   const { fitProducts, notFitProducts } = getBestFitProducts(simpleProducts, franchiseAmount * 100);
-  console.log('notFitProducts', notFitProducts);
   const freeProductsTaxDetails = mergeSimpleProducts(fitProducts, productThatCanFitInFranchise);
   const notFreeProductsTaxDetails = mergeSimpleProducts(
     notFitProducts,

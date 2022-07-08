@@ -17,7 +17,7 @@ import { Product, ProductDisplayTypes } from '@/model/product';
 export interface OnAddProductOptions {
   product: Product;
   name: string;
-  price: number;
+  price: string;
   devise: string;
 }
 
@@ -69,7 +69,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       onAddProduct({
         name: (data.name as string) ?? '',
         product,
-        price: (data.price as number) ?? 1,
+        price: (data.price as string) ?? '1',
         devise: (data.devise as string) ?? 'eur',
       });
     }

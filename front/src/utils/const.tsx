@@ -1,3 +1,5 @@
+import { Alpha2Code } from 'i18n-iso-countries';
+
 import { TabItem } from '@/components/common/TabBar';
 
 export enum Routing {
@@ -7,6 +9,21 @@ export enum Routing {
   prepareMyTrip = '/preparer-mon-voyage',
   about = '/a-propos',
 }
+
+export const disabledCountries: Alpha2Code[] = [
+  'BL',
+  'GF',
+  'PF',
+  'TF',
+  'MF',
+  'MQ',
+  'GP',
+  'RE',
+  'YT',
+  'WF',
+  'PM',
+  'NC',
+];
 
 export const MENU_ITEMS: TabItem[] = [
   {
