@@ -4,7 +4,8 @@ import productNotFoundError from '../../common/errors/productNotFound.error';
 
 export interface ShoppingProduct {
   id: string;
-  name?: string;
+  customId: string;
+  customName?: string;
   value: number;
 }
 

@@ -56,7 +56,8 @@ describe('TobaccoGroup', () => {
           product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
           value: dataProduct.value,
           id: faker.datatype.uuid(),
-          name: faker.random.word(),
+          customId: faker.datatype.uuid(),
+          customName: faker.random.word(),
         }));
 
         const tobaccoGroup = new TobaccoGroup({
@@ -111,7 +112,8 @@ describe('TobaccoGroup', () => {
           product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
           value: dataProduct.value,
           id: faker.datatype.uuid(),
-          name: faker.random.word(),
+          customId: faker.datatype.uuid(),
+          customName: faker.random.word(),
         }));
 
         const tobaccoGroup = new TobaccoGroup({

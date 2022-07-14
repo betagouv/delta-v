@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { manageProductTaxesDetails } from '../../../../src/api/simulator/services';
 import {
   CompleteShoppingProduct,
@@ -34,13 +35,15 @@ describe('taxes service', () => {
     const lowCustomDutyProduct = productEntityFactory({ customDuty: 5, vat: 20 });
     const completeShoppingProduct1: CompleteShoppingProduct = {
       id: highCustomDutyProduct.id,
-      name: 'Hello',
+      customId: faker.datatype.uuid(),
+      customName: 'Hello',
       value: 50,
       product: highCustomDutyProduct,
     };
     const completeShoppingProduct2: CompleteShoppingProduct = {
       id: lowCustomDutyProduct.id,
-      name: 'Hello 2',
+      customId: faker.datatype.uuid(),
+      customName: 'Hello 2',
       value: 50,
       product: lowCustomDutyProduct,
     };

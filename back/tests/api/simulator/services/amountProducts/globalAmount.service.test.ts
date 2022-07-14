@@ -13,32 +13,36 @@ describe('checkAmountProducts', () => {
         amountProduct: 'cigarette' as AmountProduct,
       }),
       id: faker.datatype.uuid(),
+      customId: faker.datatype.uuid(),
       value: 50,
-      name: 'marlboro',
+      customName: 'marlboro',
     };
     const completeProduct2: CompleteShoppingProduct = {
       product: productEntityFactory({
         amountProduct: 'cigar' as AmountProduct,
       }),
       id: faker.datatype.uuid(),
+      customId: faker.datatype.uuid(),
       value: 10,
-      name: 'cubain',
+      customName: 'cubain',
     };
     const completeProduct3: CompleteShoppingProduct = {
       product: productEntityFactory({
         amountProduct: 'tobacco' as AmountProduct,
       }),
       id: faker.datatype.uuid(),
+      customId: faker.datatype.uuid(),
       value: 30,
-      name: 'tabac Camel',
+      customName: 'tabac Camel',
     };
     const completeProduct4: CompleteShoppingProduct = {
       product: productEntityFactory({
         amountProduct: 'cigarette' as AmountProduct,
       }),
       id: faker.datatype.uuid(),
+      customId: faker.datatype.uuid(),
       value: 10,
-      name: 'cigarette Camel',
+      customName: 'cigarette Camel',
     };
 
     const result = checkAmountProducts(

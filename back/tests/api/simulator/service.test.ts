@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 import { service } from '../../../src/api/simulator/service';
 import {
@@ -21,13 +22,18 @@ describe('test simulator service', () => {
     });
     const shoppingProduct1 = {
       id: product1.id,
+      customId: faker.datatype.uuid(),
+      customName: 'product 1',
       value: 85,
     };
     const shoppingProduct2 = {
+      customId: faker.datatype.uuid(),
       id: product2.id,
       value: 40,
     };
     const shoppingProduct3 = {
+      customId: faker.datatype.uuid(),
+      customName: 'product 3',
       id: product3.id,
       value: 300,
     };
@@ -47,6 +53,8 @@ describe('test simulator service', () => {
         {
           _id: product2.id,
           _name: product2.name,
+          _customName: undefined,
+          _customId: shoppingProduct2.customId,
           _unitPrice: 40,
           _customDuty: 0,
           _vat: 0,
@@ -54,6 +62,8 @@ describe('test simulator service', () => {
         {
           _id: product1.id,
           _name: product1.name,
+          _customName: 'product 1',
+          _customId: shoppingProduct1.customId,
           _unitPrice: 85,
           _customDuty: 0,
           _vat: 0,
@@ -63,6 +73,17 @@ describe('test simulator service', () => {
         {
           group: GroupedTobacco.allTobaccoProducts,
           isOverMaximum: true,
+          completeShoppingProducts: [
+            {
+              id: product3.id,
+              customName: 'product 3',
+              customId: shoppingProduct3.customId,
+              value: 300,
+              product: {
+                id: product3.id,
+              },
+            },
+          ],
         },
       ],
       franchiseAmount: 300,
@@ -78,6 +99,7 @@ describe('test simulator service', () => {
       const product1 = productEntityFactory({ customDuty, vat: 20 });
       const shoppingProduct1 = {
         id: product1.id,
+        customId: faker.datatype.uuid(),
         value: totalProducts,
       };
       const productRepository = productRepositoryMock({ getManyByIds: [product1] });
@@ -99,6 +121,7 @@ describe('test simulator service', () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
     const shoppingProduct = {
       id: product.id,
+      customId: faker.datatype.uuid(),
       value: 150,
     };
     const productRepository = productRepositoryMock({ getManyByIds: [] });
@@ -122,6 +145,7 @@ describe('test simulator service', () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
     const shoppingProduct = {
       id: product.id,
+      customId: faker.datatype.uuid(),
       value: 150,
     };
     const productRepository = productRepositoryMock({ getManyByIds: [product] });

@@ -21,7 +21,8 @@ export const simulateValidator: IRequestValidatorSchema = {
       .items(
         validator.object({
           id: validator.string().uuid().required(),
-          name: validator.string().allow(''),
+          customName: validator.string().allow(''),
+          customId: validator.string().uuid().required(),
           value: validator.number().min(0).invalid(0).required(),
         }),
       )

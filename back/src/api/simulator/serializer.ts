@@ -5,6 +5,7 @@ import { AmountGroup } from './services/amountProducts/globalAmount.service';
 interface SerializedValueProduct {
   id: string;
   name: string;
+  customId: string;
   customName?: string;
   customDuty: number;
   vat: number;
@@ -20,6 +21,7 @@ interface SerializedAmountProduct {
     id: string;
     name: string;
     customName?: string;
+    customId: string;
     amount: number;
   }[];
   isOverMaximum: boolean;
@@ -44,6 +46,7 @@ interface SerializedSimulatorResponse {
 const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedValueProduct => ({
   id: productTaxes.id,
   name: productTaxes.name,
+  customId: productTaxes.customId,
   customName: productTaxes.customName,
   unitPrice: productTaxes.unitPrice,
   customDuty: productTaxes.customDuty,
@@ -58,7 +61,8 @@ const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProdu
   isOverMaximum: amountGroup.isOverMaximum,
   products: amountGroup.completeShoppingProducts.map((completeShoppingProduct) => ({
     amount: completeShoppingProduct.value,
-    customName: completeShoppingProduct.name,
+    customName: completeShoppingProduct.customName,
+    customId: completeShoppingProduct.customId,
     name: completeShoppingProduct.product.name,
     id: completeShoppingProduct.id,
   })),

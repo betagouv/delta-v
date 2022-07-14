@@ -9,12 +9,13 @@ const defaultValidBody = {
   shoppingProducts: [
     {
       id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
+      customName: faker.commerce.productName(),
+      customId: faker.datatype.uuid(),
       value: 85,
     },
     {
       id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
+      customId: faker.datatype.uuid(),
       value: 40,
     },
   ],

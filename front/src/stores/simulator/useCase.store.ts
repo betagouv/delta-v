@@ -4,8 +4,6 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { StoreSlice } from '../store';
 // eslint-disable-next-line import/no-cycle
 import {
-  BasketProduct,
-  DetailedProduct,
   MeansOfTransport,
   ShoppingProduct,
   SimulatorResponse,
@@ -23,7 +21,6 @@ export interface SimulatorUseCaseSlice {
   addProduct: (shoppingProduct: ShoppingProduct) => void;
   removeProduct: (id: string) => void;
   getNbProductsInCart: () => number;
-  getBasketProduct: (id: string) => BasketProduct | undefined;
   findShoppingProduct: (id: string) => ShoppingProduct | undefined;
   updateShoppingProduct: (options: UpdateShoppingProductOptions) => void;
   simulate: () => void;
@@ -133,28 +130,6 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       ) ?? undefined
     );
   },
-  getBasketProduct: (id: string): BasketProduct | undefined => {
-    const shoppingProduct =
-      get().simulator?.appState?.simulatorRequest.shoppingProducts?.find(
-        (product: ShoppingProduct) => product.id === id,
-      ) ?? undefined;
-
-    if (!shoppingProduct) {
-      return undefined;
-    }
-
-    const detailedProduct = get().simulator?.appState?.simulatorResponse?.valueProducts?.find(
-      (product: DetailedProduct) =>
-        product.id === shoppingProduct.product?.id &&
-        product.customName === shoppingProduct.name &&
-        product.unitPrice === shoppingProduct.value,
-    );
-
-    return {
-      shoppingProduct,
-      detailedProduct,
-    };
-  },
   updateShoppingProduct: ({ id, name, value }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
@@ -189,7 +164,8 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
           .filter((shoppingProduct) => shoppingProduct.product)
           .map((product: ShoppingProduct) => ({
             id: product.product?.id,
-            name: product.name,
+            customName: product.name,
+            customId: product.id,
             value: product.value,
           })),
       };

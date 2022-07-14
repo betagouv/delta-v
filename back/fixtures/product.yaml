@@ -1,6 +1,65 @@
 entity: ProductEntity
 processor: ./processor/productProcessor
 items:
+  # Tobacco Category
+  tobaccoCategory:
+    id: 'e11e633d-d39c-40a7-bf18-161b8fddb167'
+    icon: 'categoryCigarette'
+    name: 'Tabac'
+    info: 'Tabac'
+    relatedWords: 'Tabac'
+    productDisplayTypes: 'category'
+    productType: 'amount'
+    position: 1
+  cigarette:
+    id: 'cf9f2f7a-5732-4792-90eb-3fcb444b84eb'
+    icon: 'categoryCigarette'
+    name: 'Cigarette'
+    info: 'Cigarette'
+    relatedWords: 'Cigarette'
+    finalProduct: true
+    parentProduct: '@tobaccoCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'cigarette'
+    productType: 'amount'
+    position: 1
+  cigarillos:
+    id: '9d5116e7-9f67-450d-86da-18026d6b013d'
+    icon: 'categoryCigarillos'
+    name: 'Cigarillos'
+    info: 'Cigarillos'
+    relatedWords: 'cigarillos'
+    finalProduct: true
+    parentProduct: '@tobaccoCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'cigarillos'
+    productType: 'amount'
+    position: 2
+  cigar:
+    id: '8380ff8c-1456-47c8-9352-eac3fa5322a4'
+    icon: 'categoryCigar'
+    name: 'Cigare'
+    info: 'Cigare'
+    relatedWords: 'cigare'
+    finalProduct: true
+    parentProduct: '@tobaccoCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'cigar'
+    productType: 'amount'
+    position: 3
+  tobacco:
+    id: '4aaebf4c-e817-47f4-8207-7e1b7ce523e0'
+    icon: 'categoryTobacco'
+    name: 'Tabac'
+    info: 'Tabac'
+    relatedWords: 'cabac'
+    finalProduct: true
+    parentProduct: '@tobaccoCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'tobacco'
+    productType: 'amount'
+    position: 4
+
   # Beauty products
   beautyProducts:
     id: '966d4619-e2b8-4f38-8db1-b02739e88d0d'
@@ -10,7 +69,7 @@ items:
     relatedWords: 'Produits de beauté'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
-    position: 1
+    position: 3
     nomenclatures:
       - '33'
   mackup:
@@ -97,7 +156,7 @@ items:
     info: 'Cela compose les bijoux'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
-    position: 2
+    position: 4
     nomenclatures:
       - '71'
       - '91'
@@ -165,7 +224,7 @@ items:
     info: 'Mode'
     icon: 'categoryFashion'
     productDisplayTypes: 'category'
-    position: 3
+    position: 5
   clothes:
     id: 'e9186bbf-3c3c-4e12-85e1-6bcbc5e8a046'
     name: 'Vêtements'
@@ -483,7 +542,7 @@ items:
     info: 'Produit de loisirs'
     icon: 'categoryHobbies'
     productDisplayTypes: 'category'
-    position: 4
+    position: 6
   sports:
     id: '358018bd-2dec-4a75-b5df-677c37094a8a'
     name: 'Sports'
@@ -786,7 +845,7 @@ items:
     icon: 'categoryHighTech'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
-    position: 5
+    position: 7
     nomenclatures:
       - '85'
       - '84'
@@ -981,7 +1040,7 @@ items:
     info: 'Produits de la maison'
     icon: 'categoryHouse'
     productDisplayTypes: 'category'
-    position: 6
+    position: 8
   furniture:
     id: '29b7fc70-1976-4c87-87a7-62e8582d1e98'
     name: 'Meubles'
@@ -1311,7 +1370,7 @@ items:
     info: 'Voiture et accessoires'
     productDisplayTypes: 'category'
     icon: 'categoryCar'
-    position: 7
+    position: 9
   carRadio:
     id: '19ae6573-be49-4943-a6c6-6d3e824c9e92'
     name: 'Autoradio lecteur CD'
@@ -1378,7 +1437,7 @@ items:
     name: 'Divers'
     info: 'Divers'
     icon: 'categoryVarious'
-    position: 8
+    position: 10
     relatedWords: >
       cigarette électronique,vapoteuse
     productDisplayTypes: 'category'
@@ -1421,4 +1480,4 @@ items:
     icon: 'categoryFood'
     productDisplayTypes: 'not-managed'
     finalProduct: true
-    position: 9
+    position: 11

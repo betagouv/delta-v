@@ -21,7 +21,8 @@ const prepareContext = async (customDutyProduct1 = 10): Promise<Product[]> => {
 
 export interface ShoppingProduct {
   id: string;
-  name?: string;
+  customId: string;
+  customName?: string;
   value: number;
 }
 
@@ -30,6 +31,7 @@ const prepareProductPrice = async (value = 500): Promise<ShoppingProduct[]> => {
   const shoppingProducts: ShoppingProduct[] = [
     {
       id: products[0].id,
+      customId: faker.datatype.uuid(),
       value,
     },
   ];
@@ -117,17 +119,20 @@ describe('test simulator API', () => {
     const shoppingProducts: ShoppingProduct[] = [
       {
         id: products[0].id,
-        name: 'product1',
+        customName: 'product1',
+        customId: faker.datatype.uuid(),
         value: 50,
       },
       {
         id: products[1].id,
-        name: 'product2',
+        customName: 'product2',
+        customId: faker.datatype.uuid(),
         value: 300,
       },
       {
         id: products[1].id,
-        name: 'product3',
+        customName: 'product3',
+        customId: faker.datatype.uuid(),
         value: 500,
       },
     ];
@@ -158,6 +163,7 @@ describe('test simulator API', () => {
       const shoppingProducts: ShoppingProduct[] = [
         {
           id: products[0].id,
+          customId: faker.datatype.uuid(),
           value: totalProducts,
         },
       ];

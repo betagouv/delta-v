@@ -22,7 +22,8 @@ describe('test serializer', () => {
       completeShoppingProducts: [
         {
           id: '12',
-          name: 'product3 custom',
+          customId: '12',
+          customName: 'product3 custom',
           product: productEntityFactory({ id: '12', name: 'product3' }),
           value: 200,
         },
@@ -40,6 +41,7 @@ describe('test serializer', () => {
       valueProducts: [
         {
           customName: 'product1',
+          customId: product1.customId,
           unitPrice: 85,
           customDuty: 12,
           vat: 20,
@@ -49,6 +51,7 @@ describe('test serializer', () => {
         },
         {
           customName: 'product2',
+          customId: product2.customId,
           unitPrice: 100,
           customDuty: 5,
           vat: 20,

@@ -53,7 +53,8 @@ describe('ProductTaxes entity', () => {
       const completeShoppingProduct: CompleteShoppingProduct = {
         id: faker.datatype.uuid(),
         value: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
-        name: faker.datatype.string(),
+        customName: faker.datatype.string(),
+        customId: faker.datatype.uuid(),
         product: productEntityFactory({
           customDuty: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
           vat: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
@@ -62,7 +63,7 @@ describe('ProductTaxes entity', () => {
       const productTaxes = new ProductTaxes({});
       productTaxes.setFromCompleteShoppingProduct(completeShoppingProduct);
       expect(productTaxes.id).toEqual(completeShoppingProduct.product.id);
-      expect(productTaxes.customName).toEqual(completeShoppingProduct.name);
+      expect(productTaxes.customName).toEqual(completeShoppingProduct.customName);
       expect(productTaxes.unitPrice).toEqual(completeShoppingProduct.value);
       expect(productTaxes.name).toEqual(completeShoppingProduct.product.name);
       expect(productTaxes.customDuty).toEqual(completeShoppingProduct.product.customDuty);
