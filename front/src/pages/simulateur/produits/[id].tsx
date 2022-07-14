@@ -37,12 +37,12 @@ const ProductSearch = () => {
       };
     }) ?? [];
 
-  const onAddProduct = ({ product, price, name }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       product,
       name,
-      price: parseFloat(price),
+      value: parseFloat(value),
       amount: 1,
     };
     addProduct(shoppingProduct);

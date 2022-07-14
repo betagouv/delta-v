@@ -32,7 +32,7 @@ export interface SimulatorUseCaseSlice {
 interface UpdateShoppingProductOptions {
   id: string;
   name: string;
-  price: number;
+  value: number;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
@@ -143,11 +143,11 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       return undefined;
     }
 
-    const detailedProduct = get().simulator?.appState?.simulatorResponse?.products?.find(
+    const detailedProduct = get().simulator?.appState?.simulatorResponse?.valueProducts?.find(
       (product: DetailedProduct) =>
         product.id === shoppingProduct.product?.id &&
         product.customName === shoppingProduct.name &&
-        product.unitPrice === shoppingProduct.price,
+        product.unitPrice === shoppingProduct.value,
     );
 
     return {
@@ -155,7 +155,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       detailedProduct,
     };
   },
-  updateShoppingProduct: ({ id, name, price }: UpdateShoppingProductOptions): void => {
+  updateShoppingProduct: ({ id, name, value }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
       const currentShoppingProduct =
@@ -170,7 +170,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       newState.simulator.appState.simulatorRequest.shoppingProducts.push({
         ...currentShoppingProduct,
         name,
-        price,
+        value,
       });
 
       return newState;
@@ -190,7 +190,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
           .map((product: ShoppingProduct) => ({
             id: product.product?.id,
             name: product.name,
-            price: product.price,
+            value: product.value,
           })),
       };
       const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;

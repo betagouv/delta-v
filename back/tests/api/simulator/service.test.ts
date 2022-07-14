@@ -1,6 +1,11 @@
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 import { service } from '../../../src/api/simulator/service';
+import {
+  AmountTobaccoProduct,
+  GroupedTobacco,
+} from '../../../src/api/simulator/services/amountProducts/tobacco.service';
 import { HttpStatuses } from '../../../src/core/httpStatuses';
+import { ProductType } from '../../../src/entities/product.entity';
 import { productEntityFactory } from '../../helpers/factories/product.factory';
 import { productRepositoryMock } from '../../mocks/product.repository.mock';
 
@@ -8,25 +13,44 @@ describe('test simulator service', () => {
   it('should simulate declaration', async () => {
     const product1 = productEntityFactory({ customDuty: 12, vat: 20 });
     const product2 = productEntityFactory({ customDuty: 5, vat: 20 });
+    const product3 = productEntityFactory({
+      customDuty: 5,
+      vat: 20,
+      productType: ProductType.amount,
+      amountProduct: AmountTobaccoProduct.cigarette,
+    });
     const shoppingProduct1 = {
       id: product1.id,
-      price: 85,
+      value: 85,
     };
     const shoppingProduct2 = {
       id: product2.id,
-      price: 40,
+      value: 40,
     };
-    const productRepository = productRepositoryMock({ getManyByIds: [product1, product2] });
+    const shoppingProduct3 = {
+      id: product3.id,
+      value: 300,
+    };
+    const productRepository = productRepositoryMock({
+      getManyByIds: [product1, product2, product3],
+    });
     const result = await service({
       border: false,
       age: 18,
-      shoppingProducts: [shoppingProduct1, shoppingProduct2],
+      shoppingProducts: [shoppingProduct1, shoppingProduct2, shoppingProduct3],
       meanOfTransport: MeansOfTransport.TRAIN,
       productRepository,
       country: 'US',
     });
     expect(result).toMatchObject({
-      products: [
+      valueProducts: [
+        {
+          _id: product2.id,
+          _name: product2.name,
+          _unitPrice: 40,
+          _customDuty: 0,
+          _vat: 0,
+        },
         {
           _id: product1.id,
           _name: product1.name,
@@ -34,12 +58,11 @@ describe('test simulator service', () => {
           _customDuty: 0,
           _vat: 0,
         },
+      ],
+      amountProducts: [
         {
-          _id: product2.id,
-          _name: product2.name,
-          _unitPrice: 40,
-          _customDuty: 0,
-          _vat: 0,
+          group: GroupedTobacco.allTobaccoProducts,
+          isOverMaximum: true,
         },
       ],
       franchiseAmount: 300,
@@ -55,7 +78,7 @@ describe('test simulator service', () => {
       const product1 = productEntityFactory({ customDuty, vat: 20 });
       const shoppingProduct1 = {
         id: product1.id,
-        price: totalProducts,
+        value: totalProducts,
       };
       const productRepository = productRepositoryMock({ getManyByIds: [product1] });
       const result = await service({
@@ -65,7 +88,7 @@ describe('test simulator service', () => {
         productRepository,
         country: 'US',
       });
-      const totalCustomDuty = result.products.reduce(
+      const totalCustomDuty = result.valueProducts.reduce(
         (acc, product) => acc + product.getUnitCustomDuty(),
         0,
       );
@@ -76,7 +99,7 @@ describe('test simulator service', () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
     const shoppingProduct = {
       id: product.id,
-      price: 150,
+      value: 150,
     };
     const productRepository = productRepositoryMock({ getManyByIds: [] });
 
@@ -94,5 +117,22 @@ describe('test simulator service', () => {
       expect(error.statusCode).toBe(HttpStatuses.NOT_FOUND);
       expect(error.code).toBe('PRODUCT_NOT_FOUND');
     }
+  });
+  it('should return empty amount product', async () => {
+    const product = productEntityFactory({ customDuty: 12, vat: 20 });
+    const shoppingProduct = {
+      id: product.id,
+      value: 150,
+    };
+    const productRepository = productRepositoryMock({ getManyByIds: [product] });
+
+    const result = await service({
+      border: false,
+      age: 18,
+      shoppingProducts: [shoppingProduct],
+      productRepository,
+      country: 'US',
+    });
+    expect(result.amountProducts).toEqual([]);
   });
 });

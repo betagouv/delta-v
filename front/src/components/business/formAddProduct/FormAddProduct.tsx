@@ -10,7 +10,7 @@ interface FormAddProductProps {
 }
 
 export interface FormSimulatorData {
-  price?: number;
+  value?: number;
   devise?: string;
 }
 
@@ -34,9 +34,9 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
         placeholder="Montant"
         type="number"
         fullWidth={false}
-        name="price"
+        name="value"
         options={selectOptions}
-        register={register('price', { required: true })}
+        register={register('value', { required: true })}
         control={control}
       />
       <InputGroup

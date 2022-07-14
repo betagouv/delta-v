@@ -17,7 +17,7 @@ export interface ShoppingProduct {
   product?: Product;
   name: string;
   amount: number;
-  price: number;
+  value: number;
 }
 
 export interface DetailedProduct {
@@ -38,7 +38,7 @@ export interface BasketProduct {
 }
 
 export interface SimulatorResponse {
-  products?: DetailedProduct[];
+  valueProducts?: DetailedProduct[];
   total: number;
   totalCustomDuty: number;
   totalVat: number;

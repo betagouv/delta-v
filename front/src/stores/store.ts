@@ -43,10 +43,10 @@ export const useStore = create<StoreState>(
     {
       name: 'app-storage',
       getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
-      version: 2,
+      version: 3,
       migrate(persistedState: StoreState, version) {
         const newPersistedState = { ...persistedState };
-        if (version !== 2) {
+        if (version !== 3) {
           newPersistedState.simulator.appState.simulatorRequest.age =
             newPersistedState.simulator.appState.simulatorRequest.age ?? 0;
           newPersistedState.simulator.appState.simulatorRequest.meanOfTransport =
@@ -57,6 +57,7 @@ export const useStore = create<StoreState>(
           newPersistedState.simulator.appState.simulatorRequest.border =
             newPersistedState.simulator.appState.simulatorRequest.border ?? false;
           newPersistedState.simulator.appState.simulatorRequest.shoppingProducts = [];
+          newPersistedState.simulator.appState.simulatorResponse = undefined;
         }
 
         return newPersistedState;

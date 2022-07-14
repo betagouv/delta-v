@@ -26,7 +26,7 @@ const simulatorResponse: SimulatorResponse = {
   totalTaxes: 30,
   totalCustomDuty: 10,
   totalVat: 20,
-  products: [
+  valueProducts: [
     {
       id: 'test',
       name: 'Vètements Adulte',

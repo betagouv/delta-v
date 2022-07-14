@@ -4,7 +4,7 @@ import {
   ProductTaxes,
   ProductTaxesInterface,
   UNIQUE_CUSTOM_DUTY,
-} from '../../../entities/productTaxes.entity';
+} from '../../../../entities/productTaxes.entity';
 import { manageFreeProducts } from './freeProduct.service';
 
 const getTotalProductsTaxes = (productsTaxes: ProductTaxesInterface[]): number => {

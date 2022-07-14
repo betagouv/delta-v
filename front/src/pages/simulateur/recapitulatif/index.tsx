@@ -13,7 +13,7 @@ import { Main } from '@/templates/Main';
 
 export interface FormUpdateShoppingProduct {
   name?: string;
-  price: number;
+  value: number;
   devise: string;
 }
 

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { CompleteShoppingProduct } from '../../src/api/simulator/services';
 import {
+  CompleteShoppingProduct,
   ProductTaxes,
   ProductTaxesConstructorOptions,
 } from '../../src/entities/productTaxes.entity';
@@ -52,7 +52,7 @@ describe('ProductTaxes entity', () => {
     it('should update an object with setFromCompleteShoppingProduct', () => {
       const completeShoppingProduct: CompleteShoppingProduct = {
         id: faker.datatype.uuid(),
-        price: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
+        value: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
         name: faker.datatype.string(),
         product: productEntityFactory({
           customDuty: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
@@ -63,7 +63,7 @@ describe('ProductTaxes entity', () => {
       productTaxes.setFromCompleteShoppingProduct(completeShoppingProduct);
       expect(productTaxes.id).toEqual(completeShoppingProduct.product.id);
       expect(productTaxes.customName).toEqual(completeShoppingProduct.name);
-      expect(productTaxes.unitPrice).toEqual(completeShoppingProduct.price);
+      expect(productTaxes.unitPrice).toEqual(completeShoppingProduct.value);
       expect(productTaxes.name).toEqual(completeShoppingProduct.product.name);
       expect(productTaxes.customDuty).toEqual(completeShoppingProduct.product.customDuty);
       expect(productTaxes.vat).toEqual(completeShoppingProduct.product.vat);

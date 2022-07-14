@@ -17,7 +17,7 @@ import { Product, ProductDisplayTypes } from '@/model/product';
 export interface OnAddProductOptions {
   product: Product;
   name: string;
-  price: string;
+  value: string;
   devise: string;
 }
 
@@ -46,7 +46,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   const { handleSubmit, register, control, reset } = useForm<FormSelectProductData>({
     defaultValues: {
-      price: undefined,
+      value: undefined,
       devise: 'eur',
       ...getDefaultValues(steps),
     },
@@ -57,7 +57,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   useEffect(() => {
     reset({
       name: undefined,
-      price: undefined,
+      value: undefined,
       devise: 'eur',
       ...getDefaultValues(steps),
     });
@@ -69,7 +69,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       onAddProduct({
         name: (data.name as string) ?? '',
         product,
-        price: (data.price as string) ?? '1',
+        value: (data.value as string) ?? '1',
         devise: (data.devise as string) ?? 'eur',
       });
     }

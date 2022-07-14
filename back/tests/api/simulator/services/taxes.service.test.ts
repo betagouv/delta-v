@@ -1,8 +1,8 @@
+import { manageProductTaxesDetails } from '../../../../src/api/simulator/services';
 import {
   CompleteShoppingProduct,
-  manageProductTaxesDetails,
-} from '../../../../src/api/simulator/services';
-import { ProductTaxes } from '../../../../src/entities/productTaxes.entity';
+  ProductTaxes,
+} from '../../../../src/entities/productTaxes.entity';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 import { productTaxesEntityFactory } from '../../../helpers/factories/productTaxes.factory';
 describe('taxes service', () => {
@@ -35,13 +35,13 @@ describe('taxes service', () => {
     const completeShoppingProduct1: CompleteShoppingProduct = {
       id: highCustomDutyProduct.id,
       name: 'Hello',
-      price: 50,
+      value: 50,
       product: highCustomDutyProduct,
     };
     const completeShoppingProduct2: CompleteShoppingProduct = {
       id: lowCustomDutyProduct.id,
       name: 'Hello 2',
-      price: 50,
+      value: 50,
       product: lowCustomDutyProduct,
     };
     it('should be return products taxes - low taxes', () => {

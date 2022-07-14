@@ -94,7 +94,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
         <Typography color="light-gray">Droits et taxes</Typography>
       </div>
       <div>
-        {simulatorResponse?.products?.map((product, index) => (
+        {simulatorResponse?.valueProducts?.map((product, index) => (
           <div key={index} className="mt-2 mb-4">
             <Typography color="secondary" weight="bold">
               {product.name}

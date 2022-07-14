@@ -17,7 +17,7 @@ import { Main } from '@/templates/Main';
 interface AddNewProductForm {
   productName?: string;
   category?: string;
-  price?: number;
+  value?: number;
   devise?: string;
 }
 
@@ -46,7 +46,7 @@ const AddNewProduct = () => {
     defaultValues: {
       productName,
       category: defaultCategory.id,
-      price: undefined,
+      value: undefined,
       devise: 'eur',
     },
   });
@@ -64,7 +64,7 @@ const AddNewProduct = () => {
 
   const onSubmit = (data: AddNewProductForm) => {
     setSubmitted(true);
-    addProduct({ amount: 1, id: uuidv4(), name: data.productName ?? '', price: data.price ?? 0 });
+    addProduct({ amount: 1, id: uuidv4(), name: data.productName ?? '', value: data.value ?? 0 });
     setTimeout(() => {
       setOpenModal(true);
     }, 250);
@@ -110,11 +110,11 @@ const AddNewProduct = () => {
               control={control}
             />
             <InputGroup
-              name="price"
+              name="value"
               type="number"
               label="Saisissez le montant"
               placeholder="Montant"
-              register={register('price', { required: true })}
+              register={register('value', { required: true })}
             />
             <InputGroup
               label="Choisissez la devise"

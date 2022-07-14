@@ -1,6 +1,16 @@
 import currency from 'currency.js';
 import { v4 as uuid } from 'uuid';
-import { CompleteShoppingProduct } from '../api/simulator/services';
+import { Product } from './product.entity';
+
+export interface ShoppingProduct {
+  id: string;
+  name?: string;
+  value: number;
+}
+
+export interface CompleteShoppingProduct extends ShoppingProduct {
+  product: Product;
+}
 
 export interface ProductTaxesInterface {
   id: string;
@@ -74,14 +84,14 @@ export class ProductTaxes implements ProductTaxesInterface {
   ): ProductTaxesInterface => {
     const {
       name: customName,
-      price,
+      value,
       product: { customDuty, vat, id, name },
     } = completeShoppingProduct;
 
     this._id = id;
     this._name = name;
     this._customName = customName;
-    this._unitPrice = price;
+    this._unitPrice = value;
     this._customDuty = customDuty ?? 0;
     this._vat = vat ?? 0;
 

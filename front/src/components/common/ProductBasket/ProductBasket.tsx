@@ -47,7 +47,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
             )}
           </div>
           <Typography weight="extrabold" color="secondary" size="text-lg" lineHeight="leading-none">
-            {shoppingProduct.price} €
+            {shoppingProduct.value} €
           </Typography>
         </div>
         <Typography weight="light" color="light-gray" size="text-base">
@@ -79,11 +79,11 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="flex flex-row leading-none">
                       <Typography color="secondary" size="text-base">
-                        {shoppingProduct.price} x 1 =
+                        {shoppingProduct.value} x 1 =
                       </Typography>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
-                          {shoppingProduct.price} €
+                          {shoppingProduct.value} €
                         </Typography>
                       </div>
                     </div>
@@ -116,7 +116,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                         </div>
                         <div className="flex flex-row">
                           <Typography color="primary" size="text-base">
-                            {detailedProduct?.unitPrice ?? shoppingProduct.price}
+                            {detailedProduct?.unitPrice ?? shoppingProduct.value}
                           </Typography>
                           <div className="ml-1">
                             <Typography color="secondary" size="text-base">
@@ -141,7 +141,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="ml-5 content-end">
                       <Typography color="primary" size="text-xl">
-                        {detailedProduct ? `${shoppingProduct.price}€` : 'non renseigné'}
+                        {detailedProduct ? `${shoppingProduct.value}€` : 'non renseigné'}
                       </Typography>
                     </div>
                   </div>
@@ -157,7 +157,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                         </Typography>
                       </div>
                       <Typography weight="normal" color="primary" size="text-lg">
-                        {shoppingProduct.price} €
+                        {shoppingProduct.value} €
                       </Typography>
                       <div className="mt-[2px] ml-3">
                         <Icon size="xl" name="chevron-thin-down" />

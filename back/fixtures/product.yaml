@@ -237,8 +237,8 @@ items:
     vat: 20
   accessory:
     id: 'c2ca6be7-6b86-42b5-b839-51ba2cc7958c'
-    name: 'Accesoires'
-    info: 'Accesoires'
+    name: 'Accessoires'
+    info: 'Accessoires'
     icon: 'categoryAccessory'
     parentProduct: '@fashion'
     productDisplayTypes: 'category'

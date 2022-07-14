@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Alpha2Code } from 'i18n-iso-countries';
-import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
-import { getFranchiseAmount } from '../../../../src/api/simulator/services/franchise.service';
+import { MeansOfTransport } from '../../../../../src/api/common/enums/meansOfTransport.enum';
+import { getFranchiseAmount } from '../../../../../src/api/simulator/services/valueProducts/franchise.service';
 
 const meansOfTransportCases = [
   [MeansOfTransport.PLANE, 430],
@@ -11,7 +11,7 @@ const meansOfTransportCases = [
   [MeansOfTransport.OTHER, 300],
 ];
 
-const euCountries = [
+export const euCountries = [
   'BE',
   'BG',
   'CZ',
