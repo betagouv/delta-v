@@ -1,22 +1,30 @@
 import { Column, Entity, PrimaryColumn, Tree, TreeChildren, TreeParent } from 'typeorm';
+import { AmountProduct } from '../api/simulator/services/amountProducts/globalAmount.service';
 
 export interface Product {
   id: string;
-  parentProductId?: string;
   name: string;
   positionRank: string;
   icon?: string;
+  info?: string;
+  nomenclatures?: string[];
+  relatedWords: string[];
+
+  parentProductId?: string;
+  subProducts?: ProductEntity[];
+  parentProduct?: ProductEntity;
+
+  productType: ProductType;
+  amountProduct?: AmountProduct;
+  countries: string[];
+
   finalProduct: boolean;
   productDisplayTypes: ProductDisplayTypes;
   radioValue?: string;
-  info?: string;
   childrenQuestion?: string;
-  nomenclatures?: string[];
+
   customDuty?: number;
   vat?: number;
-  subProducts?: ProductEntity[];
-  parentProduct?: ProductEntity;
-  relatedWords: string[];
 }
 
 export enum ProductDisplayTypes {
@@ -27,12 +35,16 @@ export enum ProductDisplayTypes {
   radioCard = 'radio-card',
 }
 
+export enum ProductType {
+  amount = 'amount',
+  value = 'value',
+}
+
 @Entity('product')
 @Tree('closure-table')
 export class ProductEntity implements Product {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
-
   @Column({ type: 'uuid', nullable: true })
   parentProductId?: string;
 
@@ -44,6 +56,12 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'varchar', nullable: true })
   icon?: string;
+
+  @Column({ type: 'enum', nullable: false, default: ProductType.value, enum: ProductType })
+  productType: ProductType;
+
+  @Column({ type: 'varchar', nullable: true })
+  amountProduct?: AmountProduct;
 
   @Column({ type: 'boolean', default: false })
   finalProduct: boolean;
@@ -71,6 +89,9 @@ export class ProductEntity implements Product {
 
   @Column({ type: 'simple-array', default: '' })
   relatedWords: string[];
+
+  @Column({ type: 'simple-array', default: '' })
+  countries: string[];
 
   @TreeChildren()
   subProducts?: Product[];

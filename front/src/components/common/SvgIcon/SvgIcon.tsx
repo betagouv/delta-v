@@ -21,7 +21,9 @@ import CategoryCarRadio from '@/assets/icons/categories/Car-Radio.svg';
 import CategoryCar from '@/assets/icons/categories/Car.svg';
 import CategoryCD from '@/assets/icons/categories/CD.svg';
 import CategoryChildrenClothes from '@/assets/icons/categories/Children-Clothes.svg';
-import CategoryCigarettes from '@/assets/icons/categories/Cigarettes.svg';
+import CategoryCigar from '@/assets/icons/categories/Cigar.svg';
+import CategoryCigarette from '@/assets/icons/categories/Cigarette.svg';
+import CategoryCigarillos from '@/assets/icons/categories/Cigarillos.svg';
 import CategoryClothes from '@/assets/icons/categories/Clothes.svg';
 import CategoryCologne from '@/assets/icons/categories/Cologne.svg';
 import CategoryCopper from '@/assets/icons/categories/Copper.svg';
@@ -79,6 +81,7 @@ import CategoryTennis from '@/assets/icons/categories/Tennis.svg';
 import CategoryTextile from '@/assets/icons/categories/Textile.svg';
 import CategoryTie from '@/assets/icons/categories/Tie.svg';
 import CategoryTire from '@/assets/icons/categories/Tire.svg';
+import CategoryTobacco from '@/assets/icons/categories/Tobacco.svg';
 import CategoryVarious from '@/assets/icons/categories/Various.svg';
 import CategoryVideoGame from '@/assets/icons/categories/VideoGame.svg';
 import CategoryViolins from '@/assets/icons/categories/Violins.svg';
@@ -135,7 +138,9 @@ export type SvgNames =
   | 'categoryCar'
   | 'categoryCD'
   | 'categoryChildrenClothes'
-  | 'categoryCigarettes'
+  | 'categoryCigarette'
+  | 'categoryCigarillos'
+  | 'categoryCigar'
   | 'categoryClothes'
   | 'categoryCologne'
   | 'categoryCopper'
@@ -189,6 +194,7 @@ export type SvgNames =
   | 'categorySports'
   | 'categorySunglasses'
   | 'categorySynthesizer'
+  | 'categoryTobacco'
   | 'categoryTablet'
   | 'categoryTelevision'
   | 'categoryTennis'
@@ -282,8 +288,12 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryCD;
     case 'categoryChildrenClothes':
       return CategoryChildrenClothes;
-    case 'categoryCigarettes':
-      return CategoryCigarettes;
+    case 'categoryCigarette':
+      return CategoryCigarette;
+    case 'categoryCigarillos':
+      return CategoryCigarillos;
+    case 'categoryCigar':
+      return CategoryCigar;
     case 'categoryCopper':
       return CategoryCopper;
     case 'categoryCotton':
@@ -382,6 +392,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategorySunglasses;
     case 'categorySynthesizer':
       return CategorySynthesizer;
+    case 'categoryTobacco':
+      return CategoryTobacco;
     case 'categoryTablet':
       return CategoryTablet;
     case 'categoryTextile':

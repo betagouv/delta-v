@@ -1,10 +1,22 @@
 import currency from 'currency.js';
 import { v4 as uuid } from 'uuid';
-import { CompleteShoppingProduct } from '../api/simulator/services';
+import { Product } from './product.entity';
+
+export interface ShoppingProduct {
+  id: string;
+  customId: string;
+  customName?: string;
+  value: number;
+}
+
+export interface CompleteShoppingProduct extends ShoppingProduct {
+  product: Product;
+}
 
 export interface ProductTaxesInterface {
   id: string;
   name: string;
+  customId: string;
   customName?: string;
   unitPrice: number;
   customDuty: number;
@@ -23,6 +35,7 @@ export interface ProductTaxesConstructorOptions {
   id?: string;
   name?: string;
   customName?: string;
+  customId?: string;
   amount?: number;
   unitPrice?: number;
   customDuty?: number;
@@ -35,6 +48,7 @@ export const UNIQUE_CUSTOM_DUTY = 2.5;
 export class ProductTaxes implements ProductTaxesInterface {
   private _id: string;
   private _name: string;
+  private _customId: string;
   private _customName?: string;
   private _unitPrice: number;
   private _vat: number;
@@ -44,12 +58,14 @@ export class ProductTaxes implements ProductTaxesInterface {
     id,
     name,
     customName,
+    customId,
     unitPrice,
     customDuty,
     vat,
   }: ProductTaxesConstructorOptions) {
     this._id = id ?? uuid();
     this._name = name ?? '';
+    this._customId = customId ?? uuid();
     this._customName = customName;
     this._unitPrice = unitPrice ?? 0;
     this._customDuty = customDuty ?? 0;
@@ -62,6 +78,7 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._id = productTaxes.id;
     this._name = productTaxes.name;
     this._customName = productTaxes.customName;
+    this._customId = productTaxes.customId;
     this._unitPrice = productTaxes.unitPrice;
     this._customDuty = productTaxes.customDuty;
     this._vat = productTaxes.vat;
@@ -73,15 +90,17 @@ export class ProductTaxes implements ProductTaxesInterface {
     completeShoppingProduct: CompleteShoppingProduct,
   ): ProductTaxesInterface => {
     const {
-      name: customName,
-      price,
+      customName,
+      customId,
+      value,
       product: { customDuty, vat, id, name },
     } = completeShoppingProduct;
 
     this._id = id;
     this._name = name;
     this._customName = customName;
-    this._unitPrice = price;
+    this._customId = customId;
+    this._unitPrice = value;
     this._customDuty = customDuty ?? 0;
     this._vat = vat ?? 0;
 
@@ -98,6 +117,10 @@ export class ProductTaxes implements ProductTaxesInterface {
 
   get customName(): string | undefined {
     return this._customName;
+  }
+
+  get customId(): string {
+    return this._customId;
   }
 
   get unitPrice(): number {

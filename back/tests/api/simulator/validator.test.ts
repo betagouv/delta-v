@@ -9,13 +9,14 @@ const defaultValidBody = {
   shoppingProducts: [
     {
       id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
-      price: 85,
+      customName: faker.commerce.productName(),
+      customId: faker.datatype.uuid(),
+      value: 85,
     },
     {
       id: faker.datatype.uuid(),
-      name: faker.commerce.productName(),
-      price: 40,
+      customId: faker.datatype.uuid(),
+      value: 40,
     },
   ],
   border: true,
@@ -39,7 +40,7 @@ describe('test simulator validator', () => {
         shoppingProducts: [
           {
             id: faker.datatype.string(),
-            price: 85,
+            value: 85,
           },
         ],
       },
@@ -52,7 +53,7 @@ describe('test simulator validator', () => {
         ...defaultValidBody,
         shoppingProducts: [
           {
-            price: 85,
+            value: 85,
           },
         ],
       },
@@ -66,7 +67,7 @@ describe('test simulator validator', () => {
         shoppingProducts: [
           {
             id: faker.datatype.uuid(),
-            price: 0,
+            value: 0,
           },
         ],
       },

@@ -13,6 +13,20 @@
       "deploy_url": "https://push-n2-par-clevercloud-customers.services.clever-cloud.com/app_7154d387-9008-4e6a-be66-dfc20d47ea66.git",
       "name": "delta-v-front-prod",
       "alias": "delta-v-front-prod"
+    },
+    {
+      "app_id": "app_59580bc3-b39b-4d7a-908b-66e5e85f9724",
+      "org_id": "orga_3ae301fd-07e2-4712-a19c-c572d8f42009",
+      "deploy_url": "https://push-n2-par-clevercloud-customers.services.clever-cloud.com/app_59580bc3-b39b-4d7a-908b-66e5e85f9724.git",
+      "name": "delta-v-back-stage",
+      "alias": "delta-v-back-stage"
+    },
+    {
+      "app_id": "app_6754b1ef-7690-4317-9709-345f49b2c123",
+      "org_id": "orga_3ae301fd-07e2-4712-a19c-c572d8f42009",
+      "deploy_url": "https://push-n2-par-clevercloud-customers.services.clever-cloud.com/app_6754b1ef-7690-4317-9709-345f49b2c123.git",
+      "name": "delta-v-front-stage",
+      "alias": "delta-v-front-stage"
     }
   ]
 }

@@ -1,6 +1,6 @@
 import { Alpha2Code } from 'i18n-iso-countries';
-import { euCountries } from '../../common/enums/countries.enum';
-import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
+import { CountryType, getCountryType } from '../../../../utils/country.util';
+import { MeansOfTransport } from '../../../common/enums/meansOfTransport.enum';
 
 interface GetFranchiseAmountOptions {
   border: boolean;
@@ -26,23 +26,7 @@ const getFranchiseForAdultNotBorder = (meanOfTransport: MeansOfTransport): numbe
   }
 };
 
-enum CountryType {
-  EU,
-  NON_EU,
-  ANDORRE,
-}
-
-const getCountryType = (country: Alpha2Code): CountryType => {
-  if (euCountries.includes(country)) {
-    return CountryType.EU;
-  }
-  if (country === 'AD') {
-    return CountryType.ANDORRE;
-  }
-  return CountryType.NON_EU;
-};
-
-const isAddult = (age: number): boolean => {
+const isAdult = (age: number): boolean => {
   return age >= ADULT_AGE;
 };
 
@@ -53,12 +37,12 @@ export const getFranchiseAmount = ({
   meanOfTransport = MeansOfTransport.OTHER,
 }: GetFranchiseAmountOptions): number => {
   const countryType = getCountryType(country);
-  const adult = isAddult(age);
+  const adult = isAdult(age);
   if (countryType === CountryType.EU) {
     return Infinity;
   }
 
-  if (countryType === CountryType.ANDORRE) {
+  if (countryType === CountryType.ANDORRA) {
     if (adult) {
       return 900;
     }

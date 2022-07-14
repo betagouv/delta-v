@@ -49,6 +49,21 @@ jobs:
       - run: yarn lint
       - run: yarn test
 
+  deploy-back-staging:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    needs: test-back
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
+      - uses: 47ng/actions-clever-cloud@v1.1
+        with:
+          timeout: 1800
+          alias: delta-v-back-stage
+        env:
+          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
+
   deploy-back-production:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.job == 'prod-deploy'}}

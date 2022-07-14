@@ -9,13 +9,13 @@ export default {
 } as Meta;
 
 export interface FormSimulatorData {
-  price?: number;
+  value?: number;
   devise?: string;
 }
 
 const { register, control } = useForm<FormSimulatorData>({
   defaultValues: {
-    price: undefined,
+    value: undefined,
     devise: 'eur',
   },
 });

@@ -16,7 +16,8 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { shoppingProducts, border, age, country, meanOfTransport } = req.body;
-    const { products, franchiseAmount } = await service({
+
+    const { valueProducts, amountProducts, franchiseAmount } = await service({
       shoppingProducts,
       border,
       age,
@@ -25,7 +26,7 @@ export default async (
       productRepository: getCustomRepository(ProductRepository),
     });
 
-    const response = serializeSimulator({ products, franchiseAmount });
+    const response = serializeSimulator({ valueProducts, franchiseAmount, amountProducts });
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {

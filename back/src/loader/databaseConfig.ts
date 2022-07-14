@@ -49,6 +49,7 @@ function parseNumber(val: string): number {
 }
 
 const requiredVariables: string[][] = [
+  ['DB_HOST', 'POSTGRESQL_ADDON_HOST'],
   ['DB_USERNAME', 'POSTGRESQL_ADDON_USER'],
   ['DB_PASSWORD', 'POSTGRESQL_ADDON_PASSWORD'],
   ['DB_DATABASE', 'POSTGRESQL_ADDON_DB'],
