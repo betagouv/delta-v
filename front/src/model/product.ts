@@ -7,6 +7,8 @@ export interface Product {
   info: string;
   icon?: SvgNames;
   finalProduct: boolean;
+  productType: ProductType;
+  amountProduct?: AmountProduct;
   productDisplayTypes: ProductDisplayTypes;
   childrenQuestion: string | null;
   nomenclatures?: string[] | null;
@@ -15,6 +17,18 @@ export interface Product {
   subProducts: Product[];
   relatedWords: string[];
   related?: string;
+}
+
+export enum AmountProduct {
+  cigarette = 'cigarette',
+  cigarillos = 'cigarillos',
+  cigar = 'cigar',
+  tobacco = 'tobacco',
+}
+
+export enum ProductType {
+  amount = 'amount',
+  value = 'value',
 }
 
 export enum ProductDisplayTypes {

@@ -81,7 +81,11 @@ const UpdateProductBasket = () => {
                 control={control}
                 register={register('name', { required: false })}
               />
-              <FormAddProduct control={control} register={register} />
+              <FormAddProduct
+                product={currentProduct.product}
+                control={control}
+                register={register}
+              />
             </div>
           </form>
         </div>
