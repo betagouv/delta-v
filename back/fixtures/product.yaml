@@ -50,9 +50,9 @@ items:
   tobacco:
     id: '4aaebf4c-e817-47f4-8207-7e1b7ce523e0'
     icon: 'categoryTobacco'
-    name: 'Tabac'
+    name: 'Tabac à fumer'
     info: 'Tabac'
-    relatedWords: 'cabac'
+    relatedWords: 'tabac à fumer'
     finalProduct: true
     parentProduct: '@tobaccoCategory'
     productDisplayTypes: 'addable'

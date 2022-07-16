@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
-import { AmountProduct, Product, ProductType } from '@/model/product';
+import { getUnit } from '@/model/amount';
+import { Product, ProductType } from '@/model/product';
 
 interface FormAddProductProps {
   register: any;
@@ -22,19 +23,6 @@ const selectOptions = [
     id: 'eur',
   },
 ];
-
-const getUnit = (amountProduct?: AmountProduct): string | undefined => {
-  switch (amountProduct) {
-    case AmountProduct.cigarette:
-    case AmountProduct.cigarillos:
-    case AmountProduct.cigar:
-      return 'unités';
-    case AmountProduct.tobacco:
-      return 'gramse';
-    default:
-      return undefined;
-  }
-};
 
 export const FormAddProduct: React.FC<FormAddProductProps> = ({
   register,

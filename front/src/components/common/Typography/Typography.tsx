@@ -6,6 +6,7 @@ import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
 import { Color, getColor, getFontWeight, Weight } from './style/typography.style';
 
 type TextSize =
+  | 'text-2xs'
   | 'text-xs'
   | 'text-sm'
   | 'text-base'

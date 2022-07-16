@@ -9,6 +9,9 @@ module.exports = {
   content: [path.join(__dirname, './src/**/*.(js|jsx|ts|tsx)')],
   theme: {
     extend: {
+      fontSize: {
+        '2xs': '.625rem',
+      },
       colors: {
         primary: {
           100: '#ecf1fa',
