@@ -1,6 +1,6 @@
 import currency from 'currency.js';
 import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
-import { AmountGroup } from './services/amountProducts/globalAmount.service';
+import { AmountGroup, AmountProduct } from './services/amountProducts/globalAmount.service';
 
 interface SerializedValueProduct {
   id: string;
@@ -20,6 +20,7 @@ interface SerializedAmountProduct {
   products: {
     id: string;
     name: string;
+    amountProduct?: AmountProduct;
     customName?: string;
     customId: string;
     amount: number;
@@ -61,6 +62,7 @@ const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProdu
   isOverMaximum: amountGroup.isOverMaximum,
   products: amountGroup.completeShoppingProducts.map((completeShoppingProduct) => ({
     amount: completeShoppingProduct.value,
+    amountProduct: completeShoppingProduct.product.amountProduct,
     customName: completeShoppingProduct.customName,
     customId: completeShoppingProduct.customId,
     name: completeShoppingProduct.product.name,
