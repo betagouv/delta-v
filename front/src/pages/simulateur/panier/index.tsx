@@ -5,23 +5,29 @@ import shallow from 'zustand/shallow';
 
 import { OnActionModal } from '@/components/autonomous/OnActionModal';
 import { Button } from '@/components/common/Button';
+import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { ProductBasket } from '@/components/common/ProductBasket';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
+import { getAmountCategoryName, getUnit } from '@/model/amount';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Panier = () => {
   const router = useRouter();
 
-  const { shoppingProducts, removeProduct, getBasketProduct } = useStore(
+  const {
+    valueProducts: detailedProducts,
+    amountProducts,
+    removeProduct,
+  } = useStore(
     (state) => ({
-      shoppingProducts: state.simulator.appState.simulatorRequest.shoppingProducts,
+      valueProducts: state.simulator.appState.simulatorResponse?.valueProducts ?? [],
+      amountProducts: state.simulator.appState.simulatorResponse?.amountProducts ?? [],
       removeProduct: state.removeProduct,
-      getBasketProduct: state.getBasketProduct,
     }),
     shallow,
   );
@@ -49,18 +55,57 @@ const Panier = () => {
     >
       <div className="flex flex-1 flex-col">
         <div className="flex flex-col gap-3">
-          {shoppingProducts?.map((shoppingProduct) => (
-            <div key={shoppingProduct.id}>
+          {detailedProducts.map((detailedProduct) => (
+            <div key={detailedProduct.customId}>
               <ProductBasket
-                basketProduct={getBasketProduct(shoppingProduct.id) ?? { shoppingProduct }}
+                dataBasket={{ unit: '€', value: detailedProduct.unitPrice, ...detailedProduct }}
+                detailedProduct={detailedProduct}
                 onDeleteProduct={() => {
-                  idToDelete.current = shoppingProduct.id;
+                  idToDelete.current = detailedProduct.customId;
                   setOpenActionModal(true);
                 }}
                 onUpdateProduct={() => {
-                  router.push(`/simulateur/panier/modifier/${shoppingProduct.id}`);
+                  router.push(`/simulateur/panier/modifier/${detailedProduct.customId}`);
                 }}
               />
+            </div>
+          ))}
+
+          {amountProducts.map((amountProduct) => (
+            <div key={amountProduct.group} className="flex flex-col gap-3">
+              <div className="mt-2">
+                <Typography color="light-gray">
+                  {getAmountCategoryName(amountProduct.group)}
+                </Typography>
+              </div>
+              {amountProduct.products.map((product) => (
+                <ProductBasket
+                  containError={amountProduct.isOverMaximum}
+                  dataBasket={{
+                    unit: getUnit(product.amountProduct) ?? '',
+                    value: product.amount,
+                    ...product,
+                  }}
+                  onDeleteProduct={() => {
+                    idToDelete.current = product.customId;
+                    setOpenActionModal(true);
+                  }}
+                  onUpdateProduct={() => {
+                    router.push(`/simulateur/panier/modifier/${product.customId}`);
+                  }}
+                />
+              ))}
+              {amountProduct.isOverMaximum && (
+                <div className="flex flex-row gap-1 text-red-700">
+                  <div className="h-4 w-4">
+                    <Icon name="error" />
+                  </div>
+                  <p className="flex-1">
+                    Vous dépassez la limite légale d'unités de tabac. Pour connaître les quantités
+                    maximales autorisées cliquez sur l'encart rouge ci-dessus
+                  </p>
+                </div>
+              )}
             </div>
           ))}
         </div>

@@ -1,34 +1,48 @@
 import React from 'react';
 
 import { Disclosure } from '@headlessui/react';
+import classnames from 'classnames';
 import dayjs from 'dayjs';
 
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
-import { BasketProduct } from '@/stores/simulator/appState.store';
+import { ContentValueProduct } from './ContentValueProduct';
+import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 interface ProductBasketProps {
-  basketProduct: BasketProduct;
+  containError?: boolean;
+  detailedProduct?: DetailedProduct;
+  dataBasket: {
+    value: number;
+    unit: string;
+    name: string;
+    customName?: string;
+  };
   onUpdateProduct: () => void;
   onDeleteProduct: () => void;
 }
 
 export const ProductBasket: React.FC<ProductBasketProps> = ({
-  basketProduct,
+  containError = false,
+  dataBasket: { value, unit, name, customName },
+  detailedProduct,
   onUpdateProduct,
   onDeleteProduct,
 }: ProductBasketProps) => {
-  const { shoppingProduct, detailedProduct } = basketProduct;
-
   return (
-    <div className="w-full divide-y-2 divide-dashed rounded-xl border">
+    <div
+      className={classnames({
+        'w-full divide-y-2 divide-dashed rounded-xl border': true,
+        'border-red-700': containError,
+      })}
+    >
       <div className="p-3 leading-tight">
         <div className="flex">
           <div className="flex-1 leading-none">
-            {shoppingProduct.product?.name ? (
+            {name ? (
               <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
-                {shoppingProduct.product?.name}
+                {name}
               </Typography>
             ) : (
               <div className="flex flex-row items-center">
@@ -47,11 +61,11 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
             )}
           </div>
           <Typography weight="extrabold" color="secondary" size="text-lg" lineHeight="leading-none">
-            {shoppingProduct.price} €
+            {value} {unit}
           </Typography>
         </div>
         <Typography weight="light" color="light-gray" size="text-base">
-          {shoppingProduct.name}
+          {customName}
         </Typography>
       </div>
       <div>
@@ -79,57 +93,16 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="flex flex-row leading-none">
                       <Typography color="secondary" size="text-base">
-                        {shoppingProduct.price} x 1 =
+                        {value} x 1 =
                       </Typography>
                       <div className="ml-1">
                         <Typography color="primary" size="text-base">
-                          {shoppingProduct.price} €
+                          {value} {unit}
                         </Typography>
                       </div>
                     </div>
                     {detailedProduct && (
-                      <>
-                        <div className="mt-2">
-                          <Typography color="primary" size="text-base">
-                            Calcul de la TVA
-                          </Typography>
-                        </div>
-                        <div className="flex flex-row">
-                          <Typography color="primary" size="text-base">
-                            {detailedProduct.unitPrice}
-                          </Typography>
-                          <div className="ml-1">
-                            <Typography color="secondary" size="text-base">
-                              x {detailedProduct.vat}% =
-                            </Typography>
-                          </div>
-                          <div className="ml-1">
-                            <Typography color="primary" size="text-base">
-                              {detailedProduct?.unitVat} €
-                            </Typography>
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <Typography color="primary" size="text-base">
-                            Calcul des droits de douanes
-                          </Typography>
-                        </div>
-                        <div className="flex flex-row">
-                          <Typography color="primary" size="text-base">
-                            {detailedProduct?.unitPrice ?? shoppingProduct.price}
-                          </Typography>
-                          <div className="ml-1">
-                            <Typography color="secondary" size="text-base">
-                              x {detailedProduct?.customDuty}% =
-                            </Typography>
-                          </div>
-                          <div className="ml-1">
-                            <Typography color="primary" size="text-base">
-                              {detailedProduct?.unitCustomDuty} €
-                            </Typography>
-                          </div>
-                        </div>
-                      </>
+                      <ContentValueProduct detailedCalculation={detailedProduct} />
                     )}
                   </div>
                   <div className="flex items-end">
@@ -141,7 +114,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                     </div>
                     <div className="ml-5 content-end">
                       <Typography color="primary" size="text-xl">
-                        {detailedProduct ? `${shoppingProduct.price}€` : 'non renseigné'}
+                        {detailedProduct ? `${detailedProduct.unitPrice}€` : 'non renseigné'}
                       </Typography>
                     </div>
                   </div>
@@ -156,9 +129,11 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                           Conversion en €
                         </Typography>
                       </div>
-                      <Typography weight="normal" color="primary" size="text-lg">
-                        {shoppingProduct.price} €
-                      </Typography>
+                      {detailedProduct && (
+                        <Typography weight="normal" color="primary" size="text-lg">
+                          {value} {unit}
+                        </Typography>
+                      )}
                       <div className="mt-[2px] ml-3">
                         <Icon size="xl" name="chevron-thin-down" />
                       </div>

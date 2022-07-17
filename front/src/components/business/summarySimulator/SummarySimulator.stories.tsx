@@ -26,11 +26,12 @@ const simulatorResponse: SimulatorResponse = {
   totalTaxes: 30,
   totalCustomDuty: 10,
   totalVat: 20,
-  products: [
+  valueProducts: [
     {
       id: 'test',
       name: 'Vètements Adulte',
       customName: 'Jean Levis',
+      customId: '12',
       customDuty: 0.05,
       vat: 0.1,
       unitPrice: 400,
@@ -42,6 +43,7 @@ const simulatorResponse: SimulatorResponse = {
       id: 'test2',
       name: 'Smartphone',
       customName: 'Iphone 11',
+      customId: '13',
       customDuty: 0.05,
       vat: 0.1,
       unitPrice: 200,

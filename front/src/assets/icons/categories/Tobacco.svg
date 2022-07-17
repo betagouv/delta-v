@@ -1,0 +1,15 @@
+<svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="20" height="13" fill="#EBE2C4"/>
+<path d="M10.4421 5.80617C10.7825 5.61937 11.2002 5.64651 11.5136 5.8758L16.0302 9.1804C16.8106 9.75141 16.4067 10.9874 15.4397 10.9874L12.0126 10.9874L4.90104 10.9875C3.86639 10.9875 3.5129 9.60858 4.41995 9.11083L10.4421 5.80617Z" fill="#604B38"/>
+<rect y="8" width="20" height="5" fill="#8B846B"/>
+<line y1="3.75" x2="20" y2="3.75" stroke="#D2CAAE" stroke-width="0.5"/>
+<line x1="8" y1="6.875" x2="9" y2="6.875" stroke="#604B38" stroke-width="0.25"/>
+<line x1="10" y1="5.875" x2="11" y2="5.875" stroke="#604B38" stroke-width="0.25"/>
+<line x1="13" y1="6.6333" x2="12" y2="6.6333" stroke="#604B38" stroke-width="0.25"/>
+<line x1="11" y1="6.12476" x2="10" y2="6.12476" stroke="#604B38" stroke-width="0.25"/>
+<line x1="6" y1="7.875" x2="7" y2="7.875" stroke="#604B38" stroke-width="0.25"/>
+<line x1="7.06353" y1="6.89235" x2="7.92476" y2="7.40055" stroke="#604B38" stroke-width="0.25"/>
+<line x1="9.06353" y1="5.89235" x2="9.92476" y2="6.40055" stroke="#604B38" stroke-width="0.25"/>
+<line x1="13.9365" y1="6.61596" x2="13.0752" y2="6.10775" stroke="#604B38" stroke-width="0.25"/>
+<line y1="-0.125" x2="1.3196" y2="-0.125" transform="matrix(-0.652646 -0.757663 0.287298 -0.957841 12 5.99976)" stroke="#604B38" stroke-width="0.25"/>
+</svg>

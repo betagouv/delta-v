@@ -21,16 +21,18 @@ const prepareContext = async (customDutyProduct1 = 10): Promise<Product[]> => {
 
 export interface ShoppingProduct {
   id: string;
-  name?: string;
-  price: number;
+  customId: string;
+  customName?: string;
+  value: number;
 }
 
-const prepareProductPrice = async (price = 500): Promise<ShoppingProduct[]> => {
+const prepareProductPrice = async (value = 500): Promise<ShoppingProduct[]> => {
   const products = await prepareContext();
   const shoppingProducts: ShoppingProduct[] = [
     {
       id: products[0].id,
-      price,
+      customId: faker.datatype.uuid(),
+      value,
     },
   ];
 
@@ -82,12 +84,12 @@ const simulateEndpoint = async ({
 
   const productTaxesDetails = shoppingProducts.map(
     (shoppingProduct, index: number): ProductTaxesDetails => {
-      const unitCustomDuty = (shoppingProduct.price * (products[index].customDuty ?? 0)) / 100;
-      const unitVat = (shoppingProduct.price * (products[index].vat ?? 0)) / 100;
+      const unitCustomDuty = (shoppingProduct.value * (products[index].customDuty ?? 0)) / 100;
+      const unitVat = (shoppingProduct.value * (products[index].vat ?? 0)) / 100;
       return {
         id: products[index].id,
         name: products[index].name,
-        unitPrice: shoppingProduct.price,
+        unitPrice: shoppingProduct.value,
         customDuty: products[index].customDuty ?? 0,
         vat: products[index].vat ?? 0,
         unitCustomDuty,
@@ -117,18 +119,21 @@ describe('test simulator API', () => {
     const shoppingProducts: ShoppingProduct[] = [
       {
         id: products[0].id,
-        name: 'product1',
-        price: 50,
+        customName: 'product1',
+        customId: faker.datatype.uuid(),
+        value: 50,
       },
       {
         id: products[1].id,
-        name: 'product2',
-        price: 300,
+        customName: 'product2',
+        customId: faker.datatype.uuid(),
+        value: 300,
       },
       {
         id: products[1].id,
-        name: 'product3',
-        price: 500,
+        customName: 'product3',
+        customId: faker.datatype.uuid(),
+        value: 500,
       },
     ];
 
@@ -138,7 +143,7 @@ describe('test simulator API', () => {
     });
     expect(status).toBe(200);
 
-    expect(body.products.length).toBe(3);
+    expect(body.valueProducts.length).toBe(3);
 
     expect(body).toMatchObject({
       total: 850,
@@ -158,7 +163,8 @@ describe('test simulator API', () => {
       const shoppingProducts: ShoppingProduct[] = [
         {
           id: products[0].id,
-          price: totalProducts,
+          customId: faker.datatype.uuid(),
+          value: totalProducts,
         },
       ];
 

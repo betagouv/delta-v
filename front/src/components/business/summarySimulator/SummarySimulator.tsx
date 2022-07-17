@@ -5,6 +5,7 @@ import { QRCodeSVG } from 'qrcode.react';
 
 import { Typography } from '@/components/common/Typography';
 import { Color } from '@/components/common/Typography/style/typography.style';
+import { getAmountCategoryName, getUnit } from '@/model/amount';
 import { SimulatorRequest, SimulatorResponse } from '@/stores/simulator/appState.store';
 import { getMeanOfTransport } from '@/utils/country.config';
 
@@ -88,31 +89,70 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
         </Typography>
       </div>
       <div className="-mx-4 my-4 border-b-2 border-dashed" />
-      <div className="mt-4 flex flex-row">
-        <Typography color="light-gray">Marchandises</Typography>
-        <div className="flex-1" />
-        <Typography color="light-gray">Droits et taxes</Typography>
-      </div>
-      <div>
-        {simulatorResponse?.products?.map((product, index) => (
-          <div key={index} className="mt-2 mb-4">
-            <Typography color="secondary" weight="bold">
-              {product.name}
-            </Typography>
-            <Typography color="secondary" italic>
-              {product.customName}
-            </Typography>
-            <div className="mt-1 flex flex-row">
-              <Typography color="secondary">{product.unitPrice} €</Typography>
-              <div className="flex-1" />
-              <Typography color={product.unitTaxes === 0 ? 'success' : 'primary'}>
-                {product.unitTaxes} €
+      {simulatorResponse?.amountProducts && (
+        <>
+          {simulatorResponse.amountProducts.map((groupedAmount) => (
+            <div key={groupedAmount.group}>
+              <Typography color="light-gray" size="text-2xs">
+                {getAmountCategoryName(groupedAmount.group)}
               </Typography>
+              {groupedAmount.products.map((product) => (
+                <div className="mt-1 mb-4 flex flex-row">
+                  <div>
+                    <Typography color="secondary" weight="bold">
+                      {product.name}
+                    </Typography>
+                    <Typography color="secondary" italic>
+                      {product.customName}
+                    </Typography>
+                  </div>
+                  <div className="flex-1" />
+                  <div>
+                    <Typography color="secondary">
+                      {product.amount} {getUnit(product.amountProduct)}
+                    </Typography>
+                  </div>
+                </div>
+              ))}
             </div>
+          ))}
+          <div className="-mx-4 my-4 border-b-2 border-dashed" />
+        </>
+      )}
+      {simulatorResponse?.valueProducts && (
+        <>
+          <div className="mt-4 flex flex-row">
+            <Typography color="light-gray" size="text-2xs">
+              Marchandises
+            </Typography>
+            <div className="flex-1" />
+            <Typography color="light-gray" size="text-2xs">
+              Droits et taxes
+            </Typography>
           </div>
-        ))}
-      </div>
-      <div className="-mx-4 my-4 border-b-2 border-dashed" />
+          <div>
+            {simulatorResponse.valueProducts.map((product, index) => (
+              <div key={index} className="mt-2 mb-4">
+                <Typography color="secondary" weight="bold">
+                  {product.name}
+                </Typography>
+                <Typography color="secondary" italic>
+                  {product.customName}
+                </Typography>
+                <div className="mt-1 flex flex-row">
+                  <Typography color="secondary">{product.unitPrice} €</Typography>
+                  <div className="flex-1" />
+                  <Typography color={product.unitTaxes === 0 ? 'success' : 'primary'}>
+                    {product.unitTaxes} €
+                  </Typography>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="-mx-4 my-4 border-b-2 border-dashed" />
+        </>
+      )}
+
       <div className="mt-4 flex flex-row">
         <div className="flex-1" />
         <Typography color="secondary">Total (en €)</Typography>

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { LexoRank } from 'lexorank';
 import { buildFactory } from '../../../src/core/testHelpers';
-import { Product, ProductDisplayTypes } from '../../../src/entities/product.entity';
+import { Product, ProductDisplayTypes, ProductType } from '../../../src/entities/product.entity';
 
 const buildSchema = (): Product => {
   return {
@@ -19,6 +19,8 @@ const buildSchema = (): Product => {
     ]),
     relatedWords: [],
     positionRank: LexoRank.middle().toString(),
+    countries: [],
+    productType: ProductType.value,
   };
 };
 

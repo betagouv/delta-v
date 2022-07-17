@@ -1,4 +1,4 @@
-import { ProductTaxesInterface } from '../../../entities/productTaxes.entity';
+import { ProductTaxesInterface } from '../../../../entities/productTaxes.entity';
 
 interface SeparateFreeAndPaidProductsOptions {
   franchiseAmount: number;

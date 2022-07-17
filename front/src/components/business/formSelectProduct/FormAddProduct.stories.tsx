@@ -10,7 +10,7 @@ export default {
 } as Meta;
 
 export interface FormSimulatorData {
-  price?: number;
+  value?: number;
   devise?: string;
 }
 

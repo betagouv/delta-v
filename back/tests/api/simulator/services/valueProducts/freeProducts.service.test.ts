@@ -1,5 +1,5 @@
-import { separateFreeAndPaidProducts } from '../../../../src/api/simulator/services/freeProduct.service';
-import { productTaxesEntityFactory } from '../../../helpers/factories/productTaxes.factory';
+import { separateFreeAndPaidProducts } from '../../../../../src/api/simulator/services/valueProducts/freeProduct.service';
+import { productTaxesEntityFactory } from '../../../../helpers/factories/productTaxes.factory';
 
 describe('separateFreeAndPaidProducts', () => {
   it('should get only free products - total under franchise', () => {

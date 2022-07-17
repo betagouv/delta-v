@@ -1,9 +1,11 @@
 import currency from 'currency.js';
 import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
+import { AmountGroup, AmountProduct } from './services/amountProducts/globalAmount.service';
 
-interface ProductSerializer {
+interface SerializedValueProduct {
   id: string;
   name: string;
+  customId: string;
   customName?: string;
   customDuty: number;
   vat: number;
@@ -13,13 +15,28 @@ interface ProductSerializer {
   unitTaxes: number;
 }
 
+interface SerializedAmountProduct {
+  group: string;
+  products: {
+    id: string;
+    name: string;
+    amountProduct?: AmountProduct;
+    customName?: string;
+    customId: string;
+    amount: number;
+  }[];
+  isOverMaximum: boolean;
+}
+
 interface SerializedSimulatorOptions {
-  products: ProductTaxesInterface[];
+  valueProducts: ProductTaxesInterface[];
+  amountProducts: AmountGroup[];
   franchiseAmount: number;
 }
 
 interface SerializedSimulatorResponse {
-  products?: ProductSerializer[];
+  valueProducts?: SerializedValueProduct[];
+  amountProducts?: SerializedAmountProduct[];
   total: number;
   totalCustomDuty: number;
   totalVat: number;
@@ -27,9 +44,10 @@ interface SerializedSimulatorResponse {
   franchiseAmount: number | string;
 }
 
-const serializeProduct = (productTaxes: ProductTaxesInterface): ProductSerializer => ({
+const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedValueProduct => ({
   id: productTaxes.id,
   name: productTaxes.name,
+  customId: productTaxes.customId,
   customName: productTaxes.customName,
   unitPrice: productTaxes.unitPrice,
   customDuty: productTaxes.customDuty,
@@ -39,21 +57,36 @@ const serializeProduct = (productTaxes: ProductTaxesInterface): ProductSerialize
   unitTaxes: productTaxes.getUnitTaxes(),
 });
 
+const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProduct => ({
+  group: amountGroup.group,
+  isOverMaximum: amountGroup.isOverMaximum,
+  products: amountGroup.completeShoppingProducts.map((completeShoppingProduct) => ({
+    amount: completeShoppingProduct.value,
+    amountProduct: completeShoppingProduct.product.amountProduct,
+    customName: completeShoppingProduct.customName,
+    customId: completeShoppingProduct.customId,
+    name: completeShoppingProduct.product.name,
+    id: completeShoppingProduct.id,
+  })),
+});
+
 export const serializeSimulator = ({
-  products,
+  valueProducts,
+  amountProducts,
   franchiseAmount,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
-  const totalCustomDuty = products.reduce(
+  const totalCustomDuty = valueProducts.reduce(
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitCustomDuty()).value,
     0,
   );
-  const totalVat = products.reduce(
+  const totalVat = valueProducts.reduce(
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVat()).value,
     0,
   );
   return {
-    products: products.map(serializeProduct),
-    total: products.reduce(
+    valueProducts: valueProducts.map(serializeValueProduct),
+    amountProducts: amountProducts.map(serializeAmountProduct),
+    total: valueProducts.reduce(
       (total, productTaxes) => currency(total).add(productTaxes.unitPrice).value,
       0,
     ),

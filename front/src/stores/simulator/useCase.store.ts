@@ -4,8 +4,6 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { StoreSlice } from '../store';
 // eslint-disable-next-line import/no-cycle
 import {
-  BasketProduct,
-  DetailedProduct,
   MeansOfTransport,
   ShoppingProduct,
   SimulatorResponse,
@@ -23,7 +21,6 @@ export interface SimulatorUseCaseSlice {
   addProduct: (shoppingProduct: ShoppingProduct) => void;
   removeProduct: (id: string) => void;
   getNbProductsInCart: () => number;
-  getBasketProduct: (id: string) => BasketProduct | undefined;
   findShoppingProduct: (id: string) => ShoppingProduct | undefined;
   updateShoppingProduct: (options: UpdateShoppingProductOptions) => void;
   simulate: () => void;
@@ -32,7 +29,7 @@ export interface SimulatorUseCaseSlice {
 interface UpdateShoppingProductOptions {
   id: string;
   name: string;
-  price: number;
+  value: number;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
@@ -133,29 +130,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       ) ?? undefined
     );
   },
-  getBasketProduct: (id: string): BasketProduct | undefined => {
-    const shoppingProduct =
-      get().simulator?.appState?.simulatorRequest.shoppingProducts?.find(
-        (product: ShoppingProduct) => product.id === id,
-      ) ?? undefined;
-
-    if (!shoppingProduct) {
-      return undefined;
-    }
-
-    const detailedProduct = get().simulator?.appState?.simulatorResponse?.products?.find(
-      (product: DetailedProduct) =>
-        product.id === shoppingProduct.product?.id &&
-        product.customName === shoppingProduct.name &&
-        product.unitPrice === shoppingProduct.price,
-    );
-
-    return {
-      shoppingProduct,
-      detailedProduct,
-    };
-  },
-  updateShoppingProduct: ({ id, name, price }: UpdateShoppingProductOptions): void => {
+  updateShoppingProduct: ({ id, name, value }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
       const currentShoppingProduct =
@@ -170,7 +145,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       newState.simulator.appState.simulatorRequest.shoppingProducts.push({
         ...currentShoppingProduct,
         name,
-        price,
+        value,
       });
 
       return newState;
@@ -189,8 +164,9 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
           .filter((shoppingProduct) => shoppingProduct.product)
           .map((product: ShoppingProduct) => ({
             id: product.product?.id,
-            name: product.name,
-            price: product.price,
+            customName: product.name,
+            customId: product.id,
+            value: product.value,
           })),
       };
       const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;
