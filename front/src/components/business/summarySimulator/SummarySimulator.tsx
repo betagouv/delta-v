@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { getName } from 'i18n-iso-countries';
 import { QRCodeSVG } from 'qrcode.react';
 
+import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Color } from '@/components/common/Typography/style/typography.style';
-import { getAmountCategoryName, getUnit } from '@/model/amount';
+import { getAmountCategoryName, getMessageOverMaximumAmount, getUnit } from '@/model/amount';
 import { SimulatorRequest, SimulatorResponse } from '@/stores/simulator/appState.store';
 import { getMeanOfTransport } from '@/utils/country.config';
 
@@ -97,21 +98,41 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
                 {getAmountCategoryName(groupedAmount.group)}
               </Typography>
               {groupedAmount.products.map((product) => (
-                <div className="mt-1 mb-4 flex flex-row">
-                  <div>
-                    <Typography color="secondary" weight="bold">
-                      {product.name}
-                    </Typography>
-                    <Typography color="secondary" italic>
-                      {product.customName}
-                    </Typography>
+                <div className="mt-1 mb-4 ">
+                  <div className="flex flex-row">
+                    <div>
+                      <Typography
+                        color={groupedAmount.isOverMaximum ? 'error' : 'light-gray'}
+                        weight="bold"
+                      >
+                        {product.name}
+                      </Typography>
+                      <Typography
+                        color={groupedAmount.isOverMaximum ? 'error' : 'light-gray'}
+                        italic
+                      >
+                        {product.customName}
+                      </Typography>
+                    </div>
+                    <div className="flex-1" />
+                    <div className="flex min-w-[75px] flex-row-reverse">
+                      <Typography color={groupedAmount.isOverMaximum ? 'error' : 'light-gray'}>
+                        {product.amount} {getUnit(product.amountProduct)}
+                      </Typography>
+                    </div>
                   </div>
-                  <div className="flex-1" />
-                  <div>
-                    <Typography color="secondary">
-                      {product.amount} {getUnit(product.amountProduct)}
-                    </Typography>
-                  </div>
+                  {groupedAmount.isOverMaximum && (
+                    <div className="mt-2 flex flex-row gap-1 text-red-700">
+                      <div className="h-4 w-4">
+                        <Icon name="error" />
+                      </div>
+                      <p className="flex-1 text-2xs">
+                        Vous dépassez la limite légale d'unités{' '}
+                        {getMessageOverMaximumAmount(groupedAmount.group)}. Pour connaître les
+                        quantités maximales autorisées cliquez ici
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -119,7 +140,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
           <div className="-mx-4 my-4 border-b-2 border-dashed" />
         </>
       )}
-      {simulatorResponse?.valueProducts && (
+      {simulatorResponse?.valueProducts && simulatorResponse.valueProducts.length > 0 && (
         <>
           <div className="mt-4 flex flex-row">
             <Typography color="light-gray" size="text-2xs">

@@ -7,7 +7,6 @@ items:
     icon: 'categoryCigarette'
     name: 'Tabac'
     info: 'Tabac'
-    relatedWords: 'Tabac'
     productDisplayTypes: 'category'
     productType: 'amount'
     position: 1
@@ -59,6 +58,152 @@ items:
     amountProduct: 'tobacco'
     productType: 'amount'
     position: 4
+
+  # Alcohol Category
+  alcoholCategory:
+    id: '471e30cc-6910-4b61-ab11-be5f4a6e5a54'
+    icon: 'categoryAlcohol'
+    name: 'Alcool'
+    info: 'Alcool'
+    productDisplayTypes: 'category'
+    productType: 'amount'
+    position: 2
+  strongAlcohol:
+    id: '31d572eb-d44d-419b-bac4-4eb3b24b3965'
+    icon: 'categoryStrongAlcohol'
+    name: 'Alcool + 22°'
+    info: 'Alcool + 22°'
+    relatedWords: 'Alcool + 22°'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'strongAlcohol'
+    productType: 'amount'
+    countries: >
+      AF,AL,DZ,AS,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AZ,BS,BH,BD,BB,BY,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CO,KM,CG,CD,CK,CR,CI,CU,DJ,
+      DM,DO,EC,EG,SV,GQ,ER,ET,FK,FO,FJ,GF,PF,TF,GA,GM,GE,GH,GI,GL,GD,GP,GU,GT,GN,GW,GY,HT,HM,VA,HN,HK,IS,IN,ID,IR,IQ,IL,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LB,LS,LR,
+      LY,LI,MO,MK,MG,MW,MY,MV,ML,MH,MQ,MR,MU,YT,MX,FM,MD,MC,MN,MS,MA,MZ,MM,NA,NR,NP,NC,NZ,NI,NE,NG,NU,NF,MP,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PR,QA,RE,RU,RW,SH,KN,
+      LC,PM,VC,WS,SM,ST,SA,SN,SC,SL,SG,SB,SO,ZA,GS,LK,SD,SR,SJ,SZ,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,US,UM,UY,UZ,VU,VE,VN,VG,VI,WF,EH,YE,
+      ZM,ZW,AX,BQ,CW,GG,IM,JE,ME,BL,MF,RS,SX,SS,XK
+    position: 1
+  softAlcohol:
+    id: 'bdd304cd-dfc3-405b-9f19-353cac375597'
+    icon: 'categorySoftAlcohol'
+    name: 'Alcool - 22°'
+    info: 'Alcool - 22°'
+    relatedWords: 'Alcool - 22°'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'softAlcohol'
+    productType: 'amount'
+    countries: >
+      AF,AL,DZ,AS,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AZ,BS,BH,BD,BB,BY,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CO,KM,CG,CD,CK,CR,CI,CU,DJ,
+      DM,DO,EC,EG,SV,GQ,ER,ET,FK,FO,FJ,GF,PF,TF,GA,GM,GE,GH,GI,GL,GD,GP,GU,GT,GN,GW,GY,HT,HM,VA,HN,HK,IS,IN,ID,IR,IQ,IL,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LB,LS,LR,
+      LY,LI,MO,MK,MG,MW,MY,MV,ML,MH,MQ,MR,MU,YT,MX,FM,MD,MC,MN,MS,MA,MZ,MM,NA,NR,NP,NC,NZ,NI,NE,NG,NU,NF,MP,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PR,QA,RE,RU,RW,SH,KN,
+      LC,PM,VC,WS,SM,ST,SA,SN,SC,SL,SG,SB,SO,ZA,GS,LK,SD,SR,SJ,SZ,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,US,UM,UY,UZ,VU,VE,VN,VG,VI,WF,EH,YE,
+      ZM,ZW,AX,BQ,CW,GG,IM,JE,ME,BL,MF,RS,SX,SS,XK
+    position: 2
+  beer:
+    id: '45d9b769-3ce9-4c71-8a17-d873785c09a3'
+    icon: 'categoryBeer'
+    name: 'Bière'
+    info: 'Bière'
+    relatedWords: 'Bière'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'beer'
+    productType: 'amount'
+    position: 3
+  wine:
+    id: 'c3d7ea27-1c6d-448f-b220-4df444c8de0f'
+    icon: 'categoryWine'
+    name: 'Vin tranquille (non mousseux)'
+    info: 'Vin tranquille (non mousseux)'
+    relatedWords: 'Vin'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'wine'
+    countries: >
+      AF,AL,DZ,AS,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AZ,BS,BH,BD,BB,BY,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CO,KM,CG,CD,CK,CR,CI,CU,DJ,
+      DM,DO,EC,EG,SV,GQ,ER,ET,FK,FO,FJ,GF,PF,TF,GA,GM,GE,GH,GI,GL,GD,GP,GU,GT,GN,GW,GY,HT,HM,VA,HN,HK,IS,IN,ID,IR,IQ,IL,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LB,LS,LR,
+      LY,LI,MO,MK,MG,MW,MY,MV,ML,MH,MQ,MR,MU,YT,MX,FM,MD,MC,MN,MS,MA,MZ,MM,NA,NR,NP,NC,NZ,NI,NE,NG,NU,NF,MP,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PR,QA,RE,RU,RW,SH,KN,
+      LC,PM,VC,WS,SM,ST,SA,SN,SC,SL,SG,SB,SO,ZA,GS,LK,SD,SR,SJ,SZ,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,US,UM,UY,UZ,VU,VE,VN,VG,VI,WF,EH,YE,
+      ZM,ZW,AX,BQ,CW,GG,IM,JE,ME,BL,MF,RS,SX,SS,XK
+    productType: 'amount'
+    position: 4
+
+  spiritDrink:
+    id: 'ff720641-f61e-4447-b6b7-3e173a7ab641'
+    icon: 'categorySpiritDrink'
+    name: 'Boissons spiritueuses (whisky, gin, vodka, etc.)'
+    info: 'Boissons spiritueuses (whisky, gin, vodka, etc.)'
+    relatedWords: 'Boissons spiritueuses,whisky,gin,vodka'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'spiritDrink'
+    productType: 'amount'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    position: 1
+  alcoholIntermediate:
+    id: '63d495fb-da7c-4e5a-a1ed-6684f99b8908'
+    icon: 'categoryAlcoholIntermediate'
+    name: 'Produits intermédiaires (vermouth, porto, madère, etc.)'
+    info: 'Produits intermédiaires (vermouth, porto, madère, etc.)'
+    relatedWords: 'Alcool intermédiaires,vermouth,porto,madère'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'addable'
+    amountProduct: 'alcoholIntermediate'
+    productType: 'amount'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    position: 2
+  categoryWine:
+    id: '424e9b8f-012e-4e2a-a84f-006228b8e27d'
+    icon: 'categoryWine'
+    name: 'Vin'
+    info: 'Vin'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'radio'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    productType: 'amount'
+    childrenQuestion: "S'agit-il d'un vin mousseux ?"
+    position: 4
+  wineWithBubble:
+    id: 'c22913d7-f38c-4669-9501-ab9a4ef65ca4'
+    name: 'Vin mousseux'
+    info: 'Vin mousseux'
+    radioValue: Oui
+    relatedWords: 'Vin mousseux, champagne'
+    finalProduct: true
+    parentProduct: '@categoryWine'
+    productDisplayTypes: 'addable'
+    amountProduct: 'sparklingWine'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    productType: 'amount'
+    position: 1
+  wineWithoutBubble:
+    id: 'acda9518-488e-4cad-b838-d4bb235ba30a'
+    name: 'Vin tranquille (non mousseux)'
+    info: 'Vin tranquille (non mousseux)'
+    radioValue: Non
+    relatedWords: 'Vin'
+    finalProduct: true
+    parentProduct: '@categoryWine'
+    productDisplayTypes: 'addable'
+    amountProduct: 'wine'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    productType: 'amount'
+    position: 2
 
   # Beauty products
   beautyProducts:

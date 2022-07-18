@@ -1,6 +1,6 @@
 import { serializeSimulator } from '../../../src/api/simulator/serializer';
 import { AmountGroup } from '../../../src/api/simulator/services/amountProducts/globalAmount.service';
-import { GroupedTobacco } from '../../../src/api/simulator/services/amountProducts/tobacco.service';
+import { GroupedTobacco } from '../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
 import { productEntityFactory } from '../../helpers/factories/product.factory';
 import { productTaxesEntityFactory } from '../../helpers/factories/productTaxes.factory';
 

@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { Alpha2Code } from 'i18n-iso-countries';
 import { AmountProduct } from '../../../../../src/api/simulator/services/amountProducts/globalAmount.service';
-import { TobaccoGroup } from '../../../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
+import { AlcoholGroup } from '../../../../../src/api/simulator/services/amountProducts/alcohol/alcohol.service';
 import { productEntityFactory } from '../../../../helpers/factories/product.factory';
 
-describe('TobaccoGroup', () => {
+describe('AlcoholGroup', () => {
   describe('getSimulationGrouped for non EU and Andorra', () => {
     it.each([
       [
@@ -12,9 +12,8 @@ describe('TobaccoGroup', () => {
         'US',
         'under',
         [
-          { name: 'cigarette', value: 50 },
-          { name: 'cigarillos', value: 25 },
-          { name: 'tobacco', value: 62 },
+          { name: 'softAlcohol', value: 1 },
+          { name: 'strongAlcohol', value: 0.5 },
         ],
       ],
       [
@@ -22,10 +21,8 @@ describe('TobaccoGroup', () => {
         'US',
         'over',
         [
-          { name: 'cigarette', value: 60 },
-          { name: 'cigarillos', value: 25 },
-          { name: 'cigar', value: 12 },
-          { name: 'tobacco', value: 62 },
+          { name: 'softAlcohol', value: 1 },
+          { name: 'strongAlcohol', value: 0.6 },
         ],
       ],
       [
@@ -33,9 +30,8 @@ describe('TobaccoGroup', () => {
         'AD',
         'under',
         [
-          { name: 'cigarette', value: 60 },
-          { name: 'cigar', value: 12 },
-          { name: 'tobacco', value: 62 },
+          { name: 'softAlcohol', value: 1.5 },
+          { name: 'strongAlcohol', value: 0.75 },
         ],
       ],
       [
@@ -43,10 +39,8 @@ describe('TobaccoGroup', () => {
         'AD',
         'over',
         [
-          { name: 'cigarette', value: 60 },
-          { name: 'cigarillos', value: 75 },
-          { name: 'cigar', value: 12 },
-          { name: 'tobacco', value: 62 },
+          { name: 'softAlcohol', value: 1.6 },
+          { name: 'strongAlcohol', value: 0.75 },
         ],
       ],
     ])(
@@ -60,15 +54,15 @@ describe('TobaccoGroup', () => {
           customName: faker.random.word(),
         }));
 
-        const tobaccoGroup = new TobaccoGroup({
+        const alcoholGroup = new AlcoholGroup({
           country: country as Alpha2Code,
           completeShoppingProducts,
         });
 
-        const results = tobaccoGroup.getSimulationGrouped();
+        const results = alcoholGroup.getSimulationGrouped();
 
         expect(results[0].isOverMaximum).toEqual(expectedResult);
-        expect(results[0].group).toEqual('allTobaccoProducts');
+        expect(results[0].group).toEqual('groupedAlcohol');
         expect(results[0].completeShoppingProducts.length).toEqual(dataProducts.length);
         expect(results.length).toEqual(1);
       },
@@ -78,31 +72,38 @@ describe('TobaccoGroup', () => {
     it.each([
       [
         'BE',
-        'cigarette and cigar',
+        'beer',
         [
-          { name: 'cigarette', value: 900, isOver: true },
-          { name: 'cigarillos', value: 400, isOver: false },
-          { name: 'cigar', value: 201, isOver: true },
-          { name: 'tobacco', value: 1000, isOver: false },
+          { name: 'beer', value: 120, isOver: true },
+          { name: 'wine', value: 90, isOver: false },
+          { name: 'spiritDrink', value: 11, isOver: true },
+          { name: 'alcoholIntermediate', value: 19, isOver: false },
+        ],
+      ],
+      [
+        'BE',
+        'beer',
+        [
+          { name: 'beer', value: 100, isOver: false },
+          { name: 'wine', value: 95, isOver: true },
+          { name: 'spiritDrink', value: 9, isOver: false },
+          { name: 'alcoholIntermediate', value: 21, isOver: true },
         ],
       ],
       [
         'IT',
-        'cigarillos and tobacco',
+        'wine',
         [
-          { name: 'cigarette', value: 800, isOver: false },
-          { name: 'cigarillos', value: 430, isOver: true },
-          { name: 'tobacco', value: 1001, isOver: true },
+          { name: 'wine', value: 35, isOver: true },
+          { name: 'sparklingWine', value: 60, isOver: false },
         ],
       ],
       [
         'PL',
         'no one',
         [
-          { name: 'cigarette', value: 600, isOver: false },
-          { name: 'cigarillos', value: 350, isOver: false },
-          { name: 'cigar', value: 198, isOver: false },
-          { name: 'tobacco', value: 900, isOver: false },
+          { name: 'wine', value: 25, isOver: false },
+          { name: 'sparklingWine', value: 65, isOver: true },
         ],
       ],
     ])(
@@ -116,12 +117,12 @@ describe('TobaccoGroup', () => {
           customName: faker.random.word(),
         }));
 
-        const tobaccoGroup = new TobaccoGroup({
+        const alcoholGroup = new AlcoholGroup({
           country: country as Alpha2Code,
           completeShoppingProducts,
         });
 
-        const results = tobaccoGroup.getSimulationGrouped();
+        const results = alcoholGroup.getSimulationGrouped();
         dataProducts.map((dataProduct) => {
           const matchingResult = results.find((result) => result.group === dataProduct.name);
           expect(matchingResult?.isOverMaximum).toEqual(dataProduct.isOver);

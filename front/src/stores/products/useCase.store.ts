@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import dayjs from 'dayjs';
+import { Alpha2Code } from 'i18n-iso-countries';
 
 import { StoreSlice } from '../store';
 import axios from '@/config/axios';
@@ -32,6 +33,26 @@ const getFlattenProducts = (products: Product[]): Product[] => {
     });
 };
 
+const setupProductsToDisplay = (
+  products: Product[],
+  age: number,
+  country: Alpha2Code,
+): Product[] => {
+  return products
+    .filter((product) => {
+      if (product.countries.length === 0) {
+        return true;
+      }
+
+      return product.countries.includes(country);
+    })
+    .map((product) => {
+      const newProduct = { ...product };
+      newProduct.subProducts = setupProductsToDisplay(product.subProducts, age, country);
+      return newProduct;
+    });
+};
+
 const findProduct = (products: Product[], id: string): Product | undefined => {
   let existingProduct;
   products.forEach((product) => {
@@ -58,6 +79,7 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
   },
   getProductsResponse: async () => {
     const { updateDate } = get().products.appState;
+    const { age, country } = get().simulator.appState.simulatorRequest;
     const difference = updateDate ? dayjs().diff(updateDate, 'seconds') : Infinity;
 
     if (get().products.appState.products.length > 0 && difference < 20) {
@@ -67,8 +89,16 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
 
     set((state: any) => {
       const newState = { ...state };
-      newState.products.appState.products = response.data.products;
-      newState.products.appState.flattenProducts = getFlattenProducts(response.data.products);
+      newState.products.appState.allProducts = response.data.products;
+      newState.products.appState.products = setupProductsToDisplay(
+        response.data.products,
+        age as number,
+        country as Alpha2Code,
+      );
+
+      newState.products.appState.flattenProducts = getFlattenProducts(
+        newState.products.appState.products,
+      );
       newState.products.appState.updateDate = new Date();
       return newState;
     });

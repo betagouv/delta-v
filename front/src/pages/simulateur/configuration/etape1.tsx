@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/common/Button';
@@ -49,7 +49,7 @@ const Configuration = () => {
     <ConfigurationSteps
       fromProgression={12}
       toProgression={25}
-      handleSubmit={handleSubmit}
+      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={onSubmit}
     >
       <InputGroup

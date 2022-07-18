@@ -1,4 +1,4 @@
-export type Color = 'primary' | 'secondary' | 'light-gray' | 'link' | 'success';
+export type Color = 'primary' | 'secondary' | 'light-gray' | 'link' | 'success' | 'error';
 export type Weight = 'thin' | 'light' | 'normal' | 'medium' | 'bold' | 'extrabold';
 
 export const getFontWeight = (weight: Weight): string => {
@@ -32,6 +32,8 @@ export const getColor = (color: Color): string => {
       return 'text-link';
     case 'success':
       return 'text-success';
+    case 'error':
+      return 'text-[#CE0500]';
     default:
       return 'text-primary-700';
   }

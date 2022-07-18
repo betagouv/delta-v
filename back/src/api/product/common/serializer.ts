@@ -11,6 +11,7 @@ export interface SerializedProduct {
   finalProduct: boolean;
   productType: ProductType;
   amountProduct?: AmountProduct;
+  countries: string[];
   productDisplayTypes: ProductDisplayTypes;
   childrenQuestion?: string;
   customDuty?: number;
@@ -29,6 +30,7 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   amountProduct: product.amountProduct,
   productType: product.productType,
   productDisplayTypes: product.productDisplayTypes,
+  countries: product.countries,
   info: product.info,
   childrenQuestion: product.childrenQuestion,
   customDuty: product.customDuty,
