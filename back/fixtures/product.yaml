@@ -126,6 +126,12 @@ items:
     parentProduct: '@alcoholCategory'
     productDisplayTypes: 'addable'
     amountProduct: 'wine'
+    countries: >
+      AF,AL,DZ,AS,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AZ,BS,BH,BD,BB,BY,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CO,KM,CG,CD,CK,CR,CI,CU,DJ,
+      DM,DO,EC,EG,SV,GQ,ER,ET,FK,FO,FJ,GF,PF,TF,GA,GM,GE,GH,GI,GL,GD,GP,GU,GT,GN,GW,GY,HT,HM,VA,HN,HK,IS,IN,ID,IR,IQ,IL,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LB,LS,LR,
+      LY,LI,MO,MK,MG,MW,MY,MV,ML,MH,MQ,MR,MU,YT,MX,FM,MD,MC,MN,MS,MA,MZ,MM,NA,NR,NP,NC,NZ,NI,NE,NG,NU,NF,MP,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PR,QA,RE,RU,RW,SH,KN,
+      LC,PM,VC,WS,SM,ST,SA,SN,SC,SL,SG,SB,SO,ZA,GS,LK,SD,SR,SJ,SZ,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,US,UM,UY,UZ,VU,VE,VN,VG,VI,WF,EH,YE,
+      ZM,ZW,AX,BQ,CW,GG,IM,JE,ME,BL,MF,RS,SX,SS,XK
     productType: 'amount'
     position: 4
 
@@ -156,6 +162,47 @@ items:
     productType: 'amount'
     countries: >
       AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    position: 2
+  categoryWine:
+    id: '424e9b8f-012e-4e2a-a84f-006228b8e27d'
+    icon: 'categoryWine'
+    name: 'Vin'
+    info: 'Vin'
+    finalProduct: true
+    parentProduct: '@alcoholCategory'
+    productDisplayTypes: 'radio'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    productType: 'amount'
+    childrenQuestion: "S'agit-il d'un vin mousseux ?"
+    position: 4
+  wineWithBubble:
+    id: 'c22913d7-f38c-4669-9501-ab9a4ef65ca4'
+    name: 'Vin mousseux'
+    info: 'Vin mousseux'
+    radioValue: Oui
+    relatedWords: 'Vin mousseux, champagne'
+    finalProduct: true
+    parentProduct: '@categoryWine'
+    productDisplayTypes: 'addable'
+    amountProduct: 'sparklingWine'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    productType: 'amount'
+    position: 1
+  wineWithoutBubble:
+    id: 'acda9518-488e-4cad-b838-d4bb235ba30a'
+    name: 'Vin tranquille (non mousseux)'
+    info: 'Vin tranquille (non mousseux)'
+    radioValue: Non
+    relatedWords: 'Vin'
+    finalProduct: true
+    parentProduct: '@categoryWine'
+    productDisplayTypes: 'addable'
+    amountProduct: 'wine'
+    countries: >
+      AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE
+    productType: 'amount'
     position: 2
 
   # Beauty products

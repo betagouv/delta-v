@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { InputGroup } from '@/components/input/InputGroup';
@@ -72,7 +72,7 @@ const Configuration = () => {
     <ConfigurationSteps
       fromProgression={50}
       toProgression={75}
-      handleSubmit={handleSubmit}
+      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={onSubmit}
     >
       <InputGroup

@@ -12,7 +12,7 @@ import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
-import { getAmountCategoryName, getUnit } from '@/model/amount';
+import { getAmountCategoryName, getMessageOverMaximumAmount, getUnit } from '@/model/amount';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
@@ -101,7 +101,8 @@ const Panier = () => {
                     <Icon name="error" />
                   </div>
                   <p className="flex-1">
-                    Vous dépassez la limite légale d'unités de tabac. Pour connaître les quantités
+                    Vous dépassez la limite légale d'unités{' '}
+                    {getMessageOverMaximumAmount(amountProduct.group)}. Pour connaître les quantités
                     maximales autorisées cliquez sur l'encart rouge ci-dessus
                   </p>
                 </div>

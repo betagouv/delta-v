@@ -19,6 +19,7 @@ const buildSchema = (): Product => {
     ]),
     relatedWords: [],
     subProducts: [],
+    countries: [],
     productType: ProductType.value,
   };
 };

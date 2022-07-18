@@ -27,6 +27,13 @@ export enum AmountProduct {
   cigarillos = 'cigarillos',
   cigar = 'cigar',
   tobacco = 'tobacco',
+  strongAlcohol = 'strongAlcohol',
+  softAlcohol = 'softAlcohol',
+  beer = 'beer',
+  wine = 'wine',
+  sparklingWine = 'sparklingWine',
+  spiritDrink = 'spiritDrink',
+  alcoholIntermediate = 'alcoholIntermediate',
 }
 
 export enum ProductType {

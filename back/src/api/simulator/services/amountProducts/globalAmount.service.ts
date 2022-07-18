@@ -1,14 +1,25 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 import { CompleteShoppingProduct } from '../shoppingProducts';
-import { AmountTobaccoGroup, AmountTobaccoProduct, TobaccoGroup } from './tobacco.service';
+import { AlcoholGroup, AmountAlcoholGroup, AmountAlcoholProduct } from './alcohol/alcohol.service';
+import { AmountTobaccoGroup, AmountTobaccoProduct, TobaccoGroup } from './tobacco/tobacco.service';
 
-export type AmountProductGroup = AmountTobaccoGroup;
-export type AmountProduct = AmountTobaccoProduct;
+export type AmountProductGroup = AmountTobaccoGroup | AmountAlcoholGroup;
+export type AmountProduct = AmountTobaccoProduct | AmountAlcoholProduct;
 
 export interface AmountGroup {
   group: AmountProductGroup;
   completeShoppingProducts: CompleteShoppingProduct[];
   isOverMaximum: boolean;
+}
+
+export interface ProductMaximum {
+  maximum: number;
+  groupName: AmountProductGroup;
+  products: {
+    productType: AmountProduct;
+    ratio: number;
+    maximum?: number;
+  }[];
 }
 
 export const checkAmountProducts = (
@@ -21,6 +32,14 @@ export const checkAmountProducts = (
   const tobaccoGroupResult = tobaccoGroup.getSimulationGrouped();
   if (tobaccoGroupResult.length > 0) {
     amountResult.push(...tobaccoGroupResult);
+  }
+
+  const alcoholGroup = new AlcoholGroup({ completeShoppingProducts, country });
+  const alcoholGroupResult = alcoholGroup.getSimulationGrouped();
+  console.log(alcoholGroupResult);
+
+  if (alcoholGroupResult.length > 0) {
+    amountResult.push(...alcoholGroupResult);
   }
   return amountResult;
 };
