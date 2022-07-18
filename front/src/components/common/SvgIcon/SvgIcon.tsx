@@ -10,11 +10,13 @@ import CategoryAccessory from '@/assets/icons/categories/Accessory.svg';
 import CategoryAccordions from '@/assets/icons/categories/Accordions.svg';
 import CategoryAdultClothes from '@/assets/icons/categories/Adult-Clothes.svg';
 import CategoryAlcohol from '@/assets/icons/categories/Alcohol.svg';
+import CategoryAlcoholIntermediate from '@/assets/icons/categories/AlcoholIntermediate.svg';
 import CategoryArt from '@/assets/icons/categories/Art.svg';
 import CategoryBamboo from '@/assets/icons/categories/Bamboo.svg';
 import CategoryMackUp from '@/assets/icons/categories/Beauty-Mackup.svg';
 import CategoryBeautyProducts from '@/assets/icons/categories/Beauty-Products.svg';
 import CategoryBedding from '@/assets/icons/categories/Bedding.svg';
+import CategoryBeer from '@/assets/icons/categories/Beer.svg';
 import CategoryBinoculars from '@/assets/icons/categories/Binoculars.svg';
 import CategoryBooks from '@/assets/icons/categories/Books.svg';
 import CategoryCarRadio from '@/assets/icons/categories/Car-Radio.svg';
@@ -72,7 +74,10 @@ import CategorySilk from '@/assets/icons/categories/Silk.svg';
 import CategorySki from '@/assets/icons/categories/Ski.svg';
 import CategorySmartphone from '@/assets/icons/categories/Smartphone.svg';
 import CategorySocks from '@/assets/icons/categories/Socks.svg';
+import CategorySoftAlcohol from '@/assets/icons/categories/SoftAlcohol.svg';
+import CategorySpiritDrink from '@/assets/icons/categories/SpiritDrink.svg';
 import CategorySports from '@/assets/icons/categories/Sports.svg';
+import CategoryStrongAlcohol from '@/assets/icons/categories/StrongAlcohol.svg';
 import CategorySunglasses from '@/assets/icons/categories/Sunglasses.svg';
 import CategorySynthesizer from '@/assets/icons/categories/Synthesizer.svg';
 import CategoryTablet from '@/assets/icons/categories/Tablet.svg';
@@ -88,6 +93,7 @@ import CategoryViolins from '@/assets/icons/categories/Violins.svg';
 import CategoryWatches from '@/assets/icons/categories/Watches.svg';
 import CategoryWig from '@/assets/icons/categories/Wig.svg';
 import CategoryWindsurf from '@/assets/icons/categories/Windsurf.svg';
+import CategoryWine from '@/assets/icons/categories/Wine.svg';
 import CategoryWood from '@/assets/icons/categories/Wood.svg';
 import CategoryWoodenFloor from '@/assets/icons/categories/Wooden-Floor.svg';
 import AinIcon from '@/assets/icons/City-Ain.svg';
@@ -128,9 +134,11 @@ export type SvgNames =
   | 'categoryAccordions'
   | 'categoryAdultClothes'
   | 'categoryAlcohol'
+  | 'categoryAlcoholIntermediate'
   | 'categoryArt'
   | 'categoryBamboo'
   | 'categoryBeautyProducts'
+  | 'categoryBeer'
   | 'categoryBedding'
   | 'categoryBinoculars'
   | 'categoryBooks'
@@ -190,8 +198,10 @@ export type SvgNames =
   | 'categorySki'
   | 'categorySmartphone'
   | 'categorySocks'
-  | 'categorySocks'
+  | 'categorySoftAlcohol'
+  | 'categorySpiritDrink'
   | 'categorySports'
+  | 'categoryStrongAlcohol'
   | 'categorySunglasses'
   | 'categorySynthesizer'
   | 'categoryTobacco'
@@ -207,6 +217,7 @@ export type SvgNames =
   | 'categoryWatches'
   | 'categoryWig'
   | 'categoryWindsurf'
+  | 'categoryWine'
   | 'categoryWood'
   | 'categoryWoodenFloor';
 
@@ -262,6 +273,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryAdultClothes;
     case 'categoryAlcohol':
       return CategoryAlcohol;
+    case 'categoryAlcoholIntermediate':
+      return CategoryAlcoholIntermediate;
     case 'categoryArt':
       return CategoryArt;
     case 'categoryBamboo':
@@ -276,6 +289,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryBeautyProducts;
     case 'categoryBedding':
       return CategoryBedding;
+    case 'categoryBeer':
+      return CategoryBeer;
     case 'categoryBinoculars':
       return CategoryBinoculars;
     case 'categoryBooks':
@@ -386,8 +401,14 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategorySki;
     case 'categorySocks':
       return CategorySocks;
+    case 'categorySoftAlcohol':
+      return CategorySoftAlcohol;
+    case 'categorySpiritDrink':
+      return CategorySpiritDrink;
     case 'categorySports':
       return CategorySports;
+    case 'categoryStrongAlcohol':
+      return CategoryStrongAlcohol;
     case 'categorySunglasses':
       return CategorySunglasses;
     case 'categorySynthesizer':
@@ -418,6 +439,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryWig;
     case 'categoryWindsurf':
       return CategoryWindsurf;
+    case 'categoryWine':
+      return CategoryWine;
     case 'categoryWood':
       return CategoryWood;
     case 'categoryWoodenFloor':

@@ -25,10 +25,10 @@ export const CategoryList: React.FC<CategoryListProps> = ({ items, title }: Cate
         <>
           <li
             key={index}
-            className="flex cursor-pointer flex-row gap-2 py-3"
+            className="flex cursor-pointer flex-row items-center gap-2 py-3"
             onClick={() => router.push(item.to)}
           >
-            <div className="h-6 w-6">
+            <div className="flex h-6 w-6 items-center">
               <SvgIcon name={item.svgNames} />
             </div>
             <div className="ml-2 flex-1 text-base">{item.title}</div>
