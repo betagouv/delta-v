@@ -49,6 +49,26 @@ export const getMessageOverMaximumAmount = (key: string): string => {
   }
 };
 
+export const getAmountProductType = (amountProduct: AmountProduct): 'alcohol' | 'tobacco' => {
+  switch (amountProduct) {
+    case AmountProduct.cigarette:
+    case AmountProduct.cigarillos:
+    case AmountProduct.cigar:
+    case AmountProduct.tobacco:
+      return 'tobacco';
+    case AmountProduct.softAlcohol:
+    case AmountProduct.alcoholIntermediate:
+    case AmountProduct.strongAlcohol:
+    case AmountProduct.spiritDrink:
+    case AmountProduct.beer:
+    case AmountProduct.wine:
+    case AmountProduct.sparklingWine:
+      return 'alcohol';
+    default:
+      return 'alcohol';
+  }
+};
+
 export const getUnit = (amountProduct?: AmountProduct): string | undefined => {
   switch (amountProduct) {
     case AmountProduct.cigarette:

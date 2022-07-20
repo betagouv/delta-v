@@ -11,6 +11,7 @@ export enum Routing {
 }
 
 export const disabledCountries: Alpha2Code[] = [
+  'FR',
   'BL',
   'GF',
   'PF',

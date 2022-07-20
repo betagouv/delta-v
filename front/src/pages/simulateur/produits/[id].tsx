@@ -15,7 +15,7 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const ProductSearch = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { findProduct, getProductsResponse, addProduct } = useStore(
     (state) => ({
       findProduct: state.findProduct,
@@ -46,7 +46,7 @@ const ProductSearch = () => {
       amount: 1,
     };
     addProduct(shoppingProduct);
-    setOpenModal(true);
+    setOpenModalAddProduct(true);
   };
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const ProductSearch = () => {
           <CategoryList items={displayedProducts} title="Catégories" />
         )}
       </div>
-      <ModalAddProduct open={openModal} onClose={() => setOpenModal(false)} />
+      <ModalAddProduct open={openModalAddProduct} onClose={() => setOpenModalAddProduct(false)} />
     </Main>
   );
 };
