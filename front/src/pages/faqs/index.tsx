@@ -13,6 +13,7 @@ const FaqPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const router = useRouter();
   const linkId = router.query.id as string | undefined;
+
   return (
     <Main
       meta={

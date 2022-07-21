@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { scroller } from 'react-scroll';
 
 import { Typography } from '../Typography';
 import { Faq } from './Faq';
@@ -20,6 +22,18 @@ export interface FaqsProps {
 
 export const Faqs: React.FC<FaqsProps> = ({ items, linkId }: FaqsProps) => {
   const [currentOpenId, setCurrentOpenId] = useState(linkId);
+
+  useEffect(() => {
+    if (linkId) {
+      setCurrentOpenId(linkId);
+
+      scroller.scrollTo(linkId, {
+        duration: 800,
+        delay: 0,
+        smooth: 'easeInOutQuart',
+      });
+    }
+  }, [linkId]);
   return (
     <div className="mx-auto max-w-3xl">
       <h2 className="text-lg sm:text-4xl">
