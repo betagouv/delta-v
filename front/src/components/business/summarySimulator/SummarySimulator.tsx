@@ -102,13 +102,13 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
                   <div className="flex flex-row">
                     <div>
                       <Typography
-                        color={groupedAmount.isOverMaximum ? 'error' : 'light-gray'}
+                        color={groupedAmount.isOverMaximum ? 'error' : 'secondary'}
                         weight="bold"
                       >
                         {product.name}
                       </Typography>
                       <Typography
-                        color={groupedAmount.isOverMaximum ? 'error' : 'light-gray'}
+                        color={groupedAmount.isOverMaximum ? 'error' : 'secondary'}
                         italic
                       >
                         {product.customName}
@@ -116,7 +116,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
                     </div>
                     <div className="flex-1" />
                     <div className="flex min-w-[75px] flex-row-reverse">
-                      <Typography color={groupedAmount.isOverMaximum ? 'error' : 'light-gray'}>
+                      <Typography color={groupedAmount.isOverMaximum ? 'error' : 'secondary'}>
                         {product.amount} {getUnit(product.amountProduct)}
                       </Typography>
                     </div>
