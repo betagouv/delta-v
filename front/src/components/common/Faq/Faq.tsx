@@ -21,7 +21,7 @@ export const Faq: React.FC<FaqProps> = ({
 }: FaqProps) => {
   return (
     <>
-      <div className="py-3">
+      <div className="py-3" id={id}>
         <button
           className="flex w-full flex-row items-start justify-between gap-4 text-left text-lg"
           onClick={() => {
