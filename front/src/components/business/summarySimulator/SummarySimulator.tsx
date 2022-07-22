@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getName } from 'i18n-iso-countries';
 import { QRCodeSVG } from 'qrcode.react';
 
+import { SummaryValueProduct } from './SummaryValueProduct';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Color } from '@/components/common/Typography/style/typography.style';
@@ -98,7 +99,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
                 {getAmountCategoryName(groupedAmount.group)}
               </Typography>
               {groupedAmount.products.map((product) => (
-                <div className="mt-1 mb-4 ">
+                <div key={product.customId} className="mt-1 mb-4 ">
                   <div className="flex flex-row">
                     <div>
                       <Typography
@@ -153,20 +154,8 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
           </div>
           <div>
             {simulatorResponse.valueProducts.map((product, index) => (
-              <div key={index} className="mt-2 mb-4">
-                <Typography color="secondary" weight="bold">
-                  {product.name}
-                </Typography>
-                <Typography color="secondary" italic>
-                  {product.customName}
-                </Typography>
-                <div className="mt-1 flex flex-row">
-                  <Typography color="secondary">{product.unitPrice} €</Typography>
-                  <div className="flex-1" />
-                  <Typography color={product.unitTaxes === 0 ? 'success' : 'primary'}>
-                    {product.unitTaxes} €
-                  </Typography>
-                </div>
+              <div key={index}>
+                <SummaryValueProduct product={product} />
               </div>
             ))}
           </div>
