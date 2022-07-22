@@ -113,7 +113,7 @@ const Summary = () => {
           </Link>
         </div>
         <Link to={Routing.faq}>
-          <Typography weight="bold" color="link">
+          <Typography tag="div" weight="bold" color="link">
             <div className="flex flex-row">
               En savoir plus
               <div className="ml-1 h-3.5 w-3.5">
