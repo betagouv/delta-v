@@ -9,6 +9,7 @@ items:
     info: 'Tabac'
     productDisplayTypes: 'category'
     productType: 'amount'
+    amountProduct: 'tobaccoCategory'
     position: 1
   cigarette:
     id: 'cf9f2f7a-5732-4792-90eb-3fcb444b84eb'
@@ -67,6 +68,7 @@ items:
     info: 'Alcool'
     productDisplayTypes: 'category'
     productType: 'amount'
+    amountProduct: 'alcoholCategory'
     position: 2
   strongAlcohol:
     id: '31d572eb-d44d-419b-bac4-4eb3b24b3965'

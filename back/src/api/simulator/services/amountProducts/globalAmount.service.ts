@@ -36,7 +36,6 @@ export const checkAmountProducts = (
 
   const alcoholGroup = new AlcoholGroup({ completeShoppingProducts, country });
   const alcoholGroupResult = alcoholGroup.getSimulationGrouped();
-  console.log(alcoholGroupResult);
 
   if (alcoholGroupResult.length > 0) {
     amountResult.push(...alcoholGroupResult);

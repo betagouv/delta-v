@@ -23,6 +23,8 @@ export interface Product {
 }
 
 export enum AmountProduct {
+  tobaccoCategory = 'tobaccoCategory',
+  alcoholCategory = 'alcoholCategory',
   cigarette = 'cigarette',
   cigarillos = 'cigarillos',
   cigar = 'cigar',
