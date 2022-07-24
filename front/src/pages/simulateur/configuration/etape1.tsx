@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
@@ -11,10 +11,20 @@ import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
 
 export interface FormSimulatorData {
-  age?: number;
+  adult?: boolean;
+  notAdultAge?: number;
+}
+interface EventChangeRadio {
+  type: string;
+  target: {
+    name: string;
+    value: string;
+  };
 }
 
 const Configuration = () => {
+  const [age, setAge] = useState<number>();
+  const [displayNotAdult, setDisplayNotAdult] = useState(false);
   const { resetSteps, validateStep1 } = useStore(
     (state) => ({
       resetSteps: state.resetSteps,
@@ -30,18 +40,53 @@ const Configuration = () => {
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors },
   } = useForm<FormSimulatorData>({
     defaultValues: {
-      age: undefined,
+      adult: undefined,
+      notAdultAge: undefined,
     },
   });
 
-  const onSubmit = (data: FormSimulatorData) => {
-    if (!data.age) {
+  register('adult', {
+    onChange: ({ type, target: { name, value } }: EventChangeRadio) => {
+      const notResetSteps = !name || type !== 'change';
+      if (notResetSteps) {
+        return;
+      }
+      if (typeof value === 'string') {
+        const isAdult = value === 'true';
+        if (isAdult) {
+          setAge(18);
+          setDisplayNotAdult(false);
+        } else {
+          setDisplayNotAdult(true);
+          setAge(undefined);
+        }
+      }
+    },
+  });
+
+  register('notAdultAge', {
+    onChange: ({ type, target: { name, value } }: EventChangeRadio) => {
+      const notResetSteps = !name || type !== 'change';
+      if (notResetSteps) {
+        return;
+      }
+      if (typeof value === 'number') {
+        setAge(value);
+      } else {
+        setAge(undefined);
+      }
+    },
+  });
+
+  const onSubmit = () => {
+    if (!age) {
       return;
     }
-    validateStep1(data.age);
+    validateStep1(age);
     router.push(`/simulateur/configuration/etape2`);
   };
 
@@ -53,19 +98,44 @@ const Configuration = () => {
       onSubmit={onSubmit}
     >
       <InputGroup
-        label="Quel âge avez-vous ?"
-        type="number"
-        name="age"
+        label="Avez-vous plus de 18 ans ?"
+        type="radio"
+        name="adult"
         fullWidth={false}
         placeholder="Âge"
-        trailingAddons="ans"
-        register={register('age', { required: true })}
-        error={errors?.age?.message}
+        register={register('adult')}
+        error={errors?.adult?.message}
+        radioValues={[
+          { id: 'true', value: 'Oui' },
+          { id: 'false', value: 'Non' },
+        ]}
       />
+      {displayNotAdult && (
+        <div className="mt-4">
+          <InputGroup
+            label="Sélectionnez votre âge"
+            type="select"
+            name="notAdultAge"
+            fullWidth={false}
+            placeholder="Âge"
+            register={register('notAdultAge')}
+            control={control}
+            error={errors?.notAdultAge?.message}
+            options={[
+              { id: 'none', value: 'Âge' },
+              { id: 14, value: 'Moins de 15 ans' },
+              { id: 15, value: '15 ans' },
+              { id: 16, value: '16 ans' },
+              { id: 17, value: '17 ans' },
+            ]}
+          />
+        </div>
+      )}
+
       <div className="mb-8 flex-1" />
       <div>
-        {errors?.age && <div className="text-red-500">{errors.age.message}</div>}
-        <Button fullWidth={true} type="submit">
+        {errors?.adult && <div className="text-red-500">{errors.adult.message}</div>}
+        <Button fullWidth={true} type="submit" disabled={!age}>
           Valider
         </Button>
       </div>
