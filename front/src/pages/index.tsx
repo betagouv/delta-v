@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { useRouter } from 'next/router';
+
+import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { Search } from '@/components/business/search';
 import { Card } from '@/components/common/Card';
@@ -7,11 +10,26 @@ import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
+import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
+import { getLevelWithData } from '@/utils/simulator';
 
 const Index = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModalUnderConstruction, setOpenModalUnderConstruction] = useState<boolean>(false);
+  const [openModalResumeSimulator, setOpenModalResumeSimulator] = useState<boolean>(false);
+  const router = useRouter();
+
+  const { simulatorRequest } = useStore((state) => ({
+    simulatorRequest: state.simulator.appState.simulatorRequest,
+  }));
+
+  const openSimulator = () => {
+    if (getLevelWithData(simulatorRequest) === 1) {
+      router.push(Routing.simulator);
+    }
+    setOpenModalResumeSimulator(true);
+  };
   return (
     <Main
       meta={
@@ -45,7 +63,7 @@ const Index = () => {
           </Typography>
         </div>
 
-        <div onClick={() => setOpenModal(true)}>
+        <div onClick={() => setOpenModalUnderConstruction(true)}>
           <Search onSearch={() => []} withSearchIcon searchType="faq" disabled />
         </div>
 
@@ -60,15 +78,14 @@ const Index = () => {
             />
           </Link>
 
-          <Link to={Routing.simulator}>
-            <Card
-              title="Simuler mes achats"
-              description="Calculez les droits de douanes de vos achats en quelques clics"
-              svgName="calculator"
-              rounded="lg"
-              fullWidth
-            />
-          </Link>
+          <Card
+            title="Simuler mes achats"
+            description="Calculez les droits de douanes de vos achats en quelques clics"
+            svgName="calculator"
+            rounded="lg"
+            fullWidth
+            onClick={() => openSimulator()}
+          />
 
           <Link to={Routing.faq}>
             <Card
@@ -152,7 +169,15 @@ const Index = () => {
           />
         </Link>
       </div>
-      <ModalUnderConstruction open={openModal} onClose={() => setOpenModal(false)} />
+      <ModalResumeSimulator
+        open={openModalResumeSimulator}
+        onClose={() => setOpenModalResumeSimulator(false)}
+        simulatorRequest={simulatorRequest}
+      />
+      <ModalUnderConstruction
+        open={openModalUnderConstruction}
+        onClose={() => setOpenModalUnderConstruction(false)}
+      />
     </Main>
   );
 };

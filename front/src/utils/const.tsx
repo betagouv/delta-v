@@ -50,6 +50,7 @@ export const MENU_ITEMS: TabItem[] = [
         mes achats
       </>
     ),
+    simulator: true,
     path: Routing.simulator,
   },
   {
