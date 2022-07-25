@@ -1,4 +1,6 @@
-import { UnderConstruction } from '@/components/business/underConstruction';
+import { About } from '@/components/business/About';
+import { LegalMentions } from '@/components/business/About/AboutData/LegalMentions';
+import { PersonalData } from '@/components/business/About/AboutData/PersonalData';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 
@@ -11,9 +13,11 @@ const index = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      titleValue="A propos"
       withHeader
+      withTitle
     >
-      <UnderConstruction />
+      <About items={[...LegalMentions, ...PersonalData]} />
     </Main>
   );
 };

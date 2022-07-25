@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
+import { Faqs } from '@/components/business/Faq';
 import { Search } from '@/components/business/search';
-import { Faqs } from '@/components/common/Faq';
 import { Meta } from '@/layout/Meta';
 import { FAQS_STORE } from '@/stores/faqs.store';
 import { Main } from '@/templates/Main';

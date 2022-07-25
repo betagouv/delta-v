@@ -32,7 +32,7 @@ const Main = ({
   linkSearch,
   withTitle = false,
   titleValue,
-  titleIcon = 'calculator',
+  titleIcon,
 }: IMainProps) => {
   const [openModalResumeSimulator, setOpenModalResumeSimulator] = useState<boolean>(false);
   const router = useRouter();
