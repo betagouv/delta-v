@@ -33,11 +33,9 @@ const SearchProduct = () => {
       withTitle
       titleValue={
         <>
-          Quels achats
+          Simuler
           <br />
-          souhaitez-vous
-          <br />
-          déclarer ?
+          mes achats
         </>
       }
       titleIcon="calculator"

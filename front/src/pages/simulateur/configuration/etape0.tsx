@@ -52,13 +52,10 @@ const Configuration = () => {
     >
       <div className="flex flex-col gap-4 text-base">
         <p>
-          Le <span className="font-bold">simulateur DéclareDouane</span> vous permet d’
+          Avec seulement quelques informations et en quelques clics, le{' '}
+          <span className="font-bold">simulateur DéclareDouane</span> vous permet d’
           <span className="font-bold">estimer les éventuels droits et taxes</span> que vous auriez à
-          payer si vous rameniez avec vous un produit de l’étranger.
-        </p>
-        <p>
-          Avec seulement quelques infos et en quelques clics vous pourrez calculer vos éventuels
-          droits et taxes.
+          payer si vous rameniez avec vous des produits de l’étranger.
         </p>
         <p>
           <span className="font-bold">Facilitez votre passage frontière avec ce simulateur</span>,

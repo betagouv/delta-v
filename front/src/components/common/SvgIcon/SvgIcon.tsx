@@ -9,6 +9,7 @@ import Car from '@/assets/icons/Car.svg';
 import CategoryAccessory from '@/assets/icons/categories/Accessory.svg';
 import CategoryAccordions from '@/assets/icons/categories/Accordions.svg';
 import CategoryAdultClothes from '@/assets/icons/categories/Adult-Clothes.svg';
+import CategoryAdvertisingCatalog from '@/assets/icons/categories/Advertising-Catalog.svg';
 import CategoryAlcohol from '@/assets/icons/categories/Alcohol.svg';
 import CategoryAlcoholIntermediate from '@/assets/icons/categories/AlcoholIntermediate.svg';
 import CategoryArt from '@/assets/icons/categories/Art.svg';
@@ -133,6 +134,7 @@ export type SvgNames =
   | 'categoryAccessory'
   | 'categoryAccordions'
   | 'categoryAdultClothes'
+  | 'categoryAdvertisingCatalog'
   | 'categoryAlcohol'
   | 'categoryAlcoholIntermediate'
   | 'categoryArt'
@@ -271,6 +273,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryAccordions;
     case 'categoryAdultClothes':
       return CategoryAdultClothes;
+    case 'categoryAdvertisingCatalog':
+      return CategoryAdvertisingCatalog;
     case 'categoryAlcohol':
       return CategoryAlcohol;
     case 'categoryAlcoholIntermediate':

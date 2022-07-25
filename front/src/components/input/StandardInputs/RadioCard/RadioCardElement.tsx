@@ -34,8 +34,8 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
         onClick();
       }}
     >
-      <div className="flex flex-col">
-        <div className="h-8">
+      <div className="flex flex-col items-center">
+        <div className="h-8 w-8">
           <SvgIcon name={svgIcon} />
         </div>
         <label className="text-center">{value}</label>

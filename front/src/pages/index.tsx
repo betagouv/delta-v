@@ -79,8 +79,8 @@ const Index = () => {
           </Link>
 
           <Card
-            title="Simuler mes achats"
-            description="Calculez les droits de douanes de vos achats en quelques clics"
+            title="Simulateur de droits et taxes"
+            description="Calculez les taxes sur les produits que vous ramenez de l'étranger"
             svgName="calculator"
             rounded="lg"
             fullWidth
@@ -110,7 +110,7 @@ const Index = () => {
           lineHeight="leading-4"
         >
           Pour vous permettre d’être facilement en règle si vous avez acheté des produits à
-          l’étranger et de vous assurer un passage rapide et fluide lors de votre retour en France.
+          l’étranger et vous assurer un passage rapide et fluide lors de votre retour en France.
         </Typography>
         <Link to={Routing.faq}>
           <div className="flex flex-row items-center">

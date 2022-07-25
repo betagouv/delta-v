@@ -5,6 +5,7 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/common/Button';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { useStore } from '@/stores/store';
@@ -110,6 +111,12 @@ const Configuration = () => {
           { id: 'false', value: 'Non' },
         ]}
       />
+      <div className="mt-2">
+        <Typography italic color="light-gray">
+          Cette information permet de calculer au plus juste les éventuels droits et taxes à payer
+          sur les produits que vous ramenez avec vous de l'étranger.
+        </Typography>
+      </div>
       {displayNotAdult && (
         <div className="mt-4">
           <InputGroup

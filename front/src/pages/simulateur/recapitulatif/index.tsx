@@ -63,14 +63,12 @@ const Summary = () => {
           </Typography>
           <div className="mt-4">
             <div>
-              Pour procéder à votre déclaration
-              <br />
-              rapprochez-vous{' '}
+              Si vous ramenez ces produits en France, vous devrez vous rapprocher des{' '}
               <span
                 onClick={() => router.push(`${Routing.faq}?id=16`)}
                 className="cursor-pointer text-link underline"
               >
-                des agents douaniers lors de votre passage de la frontière.
+                services douaniers présents à votre arrivée pour les déclarer.
               </span>
             </div>
           </div>
@@ -101,7 +99,7 @@ const Summary = () => {
               Pourquoi dois-je payer des droits et taxes ?
             </Typography>
           </Link>
-          <Link to={`${Routing.faq}?id=7`}>
+          <Link to={`${Routing.faq}?id=19.1`}>
             <Typography underline color="link">
               Comment payer ce que je dois ?
             </Typography>

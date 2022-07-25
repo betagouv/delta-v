@@ -31,6 +31,7 @@ const categoryIcon: SvgNames[] = [
   'categoryAccessory',
   'categoryAccordions',
   'categoryAdultClothes',
+  'categoryAdvertisingCatalog',
   'categoryAlcohol',
   'categoryAlcoholIntermediate',
   'categoryArt',
