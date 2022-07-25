@@ -35,13 +35,13 @@ const getValues = (
 
   let subTitle = '';
   if (countryType === CountryType.EU) {
-    subTitle = 'Vous venez d’un pays membre de l’Union Européenne :';
+    subTitle = 'Vous arrivez d’un pays membre de l’Union Européenne :';
   }
   if (countryType === CountryType.NON_EU) {
-    subTitle = 'Vous venez d’un pays non membre de l’Union Européenne :';
+    subTitle = 'Vous arrivez d’un pays non membre de l’Union Européenne :';
   }
   if (countryType === CountryType.ANDORRA) {
-    subTitle = "Vous venez d'Andorre :";
+    subTitle = "Vous arrivez d'Andorre :";
   }
 
   let content = <></>;

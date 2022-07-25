@@ -44,11 +44,9 @@ const Index = () => {
       withTitle
       titleValue={
         <>
-          Quels achats
+          Simuler
           <br />
-          souhaitez-vous
-          <br />
-          déclarer ?
+          mes achats
         </>
       }
       titleIcon="calculator"
@@ -58,7 +56,7 @@ const Index = () => {
           name="search"
           type="text"
           fullWidth
-          placeholder="Recherchez votre achat"
+          placeholder="Recherchez un produit"
           trailingIcon="search"
           onClick={() => router.push('/simulateur/produits/recherche')}
         />

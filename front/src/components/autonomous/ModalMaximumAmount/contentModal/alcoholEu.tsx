@@ -52,7 +52,7 @@ export const AlcoholEu: React.FC = () => (
           litres au
           <br />
           maximum de <br />
-          vins non <br />
+          vin non <br />
           mousseux)
         </p>
       </div>
@@ -66,7 +66,7 @@ export const AlcoholEu: React.FC = () => (
           <SvgIcon name="categoryBeer" />
         </div>
         <span className="font-bold">110 litres</span>
-        <p className="leading-tight">bières</p>
+        <p className="leading-tight">bière</p>
       </div>
     </div>
   </div>

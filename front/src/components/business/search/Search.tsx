@@ -49,7 +49,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
   useEffect(() => {
     switch (searchType) {
       case 'product':
-        setPlaceholder('Recherchez votre achat');
+        setPlaceholder('Recherchez un produit');
         break;
       case 'faq':
         setPlaceholder('Saisissez votre recherche');

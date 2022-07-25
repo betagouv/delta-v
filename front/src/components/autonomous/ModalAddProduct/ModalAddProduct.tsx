@@ -29,22 +29,22 @@ export const ModalAddProduct: React.FC<ModalAddProductProps> = ({ onClose, open 
       <Modal
         title={
           <>
-            Voulez-vous poursuivre
+            Voulez-vous ajouter
             <br />
-            votre déclaration ou aller
+            d'autres produits ou
             <br />
-            dans votre panier ?
+            terminer votre simulation ?
           </>
         }
         open={open}
         onClose={onRedirectProducts}
       >
         <div className="flex flex-col gap-4">
-          <Button size="lg" fullWidth variant="outlined" onClick={onRedirectBasket}>
-            Aller dans mon panier
+          <Button size="lg" fullWidth variant="outlined" onClick={onRedirectProducts}>
+            Ajouter un produit
           </Button>
-          <Button size="lg" fullWidth onClick={onRedirectProducts}>
-            Poursuivre
+          <Button size="lg" fullWidth onClick={onRedirectBasket}>
+            Terminer ma simulation
           </Button>
         </div>
       </Modal>

@@ -76,7 +76,7 @@ const Configuration = () => {
       onSubmit={onSubmit}
     >
       <InputGroup
-        label="Quel est le pays d’où vous arrivez ?"
+        label="De quel pays arrivez-vous ?"
         type="comboboxes"
         fullWidth={true}
         name="country"

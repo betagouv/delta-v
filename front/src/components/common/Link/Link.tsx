@@ -1,5 +1,6 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -32,7 +33,10 @@ export const Link: React.FC<LinkProps> = ({
   return (
     <>
       {(to || back) && (
-        <div onClick={handleClick} className="cursor-pointer underline">
+        <div
+          onClick={handleClick}
+          className={classNames({ 'cursor-pointer': true, underline: false })}
+        >
           {children}
         </div>
       )}

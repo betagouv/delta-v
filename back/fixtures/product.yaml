@@ -14,9 +14,9 @@ items:
   cigarette:
     id: 'cf9f2f7a-5732-4792-90eb-3fcb444b84eb'
     icon: 'categoryCigarette'
-    name: 'Cigarette'
-    info: 'Cigarette'
-    relatedWords: 'Cigarette'
+    name: 'Cigarettes'
+    info: 'Cigarettes'
+    relatedWords: 'cigarettes'
     finalProduct: true
     parentProduct: '@tobaccoCategory'
     productDisplayTypes: 'addable'
@@ -38,9 +38,9 @@ items:
   cigar:
     id: '8380ff8c-1456-47c8-9352-eac3fa5322a4'
     icon: 'categoryCigar'
-    name: 'Cigare'
-    info: 'Cigare'
-    relatedWords: 'cigare'
+    name: 'Cigares'
+    info: 'Cigares'
+    relatedWords: 'cigares'
     finalProduct: true
     parentProduct: '@tobaccoCategory'
     productDisplayTypes: 'addable'
@@ -257,9 +257,9 @@ items:
       - '33030010'
   cologne:
     id: 'c18d59dc-140f-409c-b7cd-502b85fbfef0'
-    name: 'Eaux de toilettes'
+    name: 'Eaux de toilette'
     icon: 'categoryCologne'
-    info: 'Eaux de toilettes'
+    info: 'Eaux de toilette'
     relatedWords: >
       chanel n°5,one million,bleu,yves saint laurent libre,le mâle,jean paul gauthier,yves saint laurent,chanel,armani,armani my way,lancôme,lancôme la nuit trésor,
       paco rabanne,paco rabanne,one million,scandal,kenzo,flower by kenzo,mugler,mugler alien,ck one,calvin klein,calvin klein ck one,dior,dior sauvage,bleu de chanel,
@@ -279,7 +279,7 @@ items:
       - '33030090'
   wig:
     id: '8f29a374-089a-4ac3-823a-a4be307de7eb'
-    name: 'Perruque et autre article en cheveux'
+    name: 'Perruques et autres articles en cheveux'
     icon: 'categoryWig'
     info: 'Perruques et autres articles en cheveux (synthétique, cheveux et autres)'
     relatedWords: 'perruque,extensions,tresses,nattes,cheveux,rajouts,volumateur'
@@ -324,7 +324,7 @@ items:
       - '7113'
   watches:
     id: 'd97c1392-01f1-423b-afd6-982fe79856df'
-    name: 'Montre'
+    name: 'Montres'
     info: 'Les montres'
     icon: 'categoryWatches'
     relatedWords: 'montre,rolex,iwc,swatch,nixon,cluse,louis pion,daniel wellington,lip,lacoste,tissot,casio,michel herbelin,seiko,michael kors,fossil,cartier,zadig et voltaire,diesel,flik flak,hamilton,festina,g shock,tommy hilfiger,olivia burton,lotus,skagen,omega,tag heuer,longiness,tudor,breitling,patek,richard mille,o carat,piaget,aerowatch,alpina,hermès,versace,boucheron,breguet,bremont,breitling,chanel,gucci,hublot,jaeger-lecoutre,bulgari,montblanc,chopard,chronoswiss,citizen,tiffany,van cleef and arpels,ulysse nardin,hyt,armin strom,bovet,piaget,zenith,blancpain,beaume & mercier,tudor,maurice lacroix,oris,alpina'
@@ -383,8 +383,8 @@ items:
     position: 1
   adultClothes:
     id: 'b47dab76-acca-4d78-ba3b-7323b17dcb8b'
-    name: 'Vêtement pour adulte'
-    info: 'Vêtement pour adulte.'
+    name: 'Vêtements pour adulte'
+    info: 'Vêtements pour adulte.'
     icon: 'categoryAdultClothes'
     childrenQuestion: 'Est-il en cuir ?'
     parentProduct: '@clothes'
@@ -519,7 +519,7 @@ items:
       - '6115'
   tie:
     id: '7847b3cb-69e9-4c17-bd75-3d1573084d18'
-    name: 'Cravate, noeud papillons...'
+    name: 'Cravates, nœuds papillon...'
     info: 'Cravates, nœuds papillon, etc.'
     icon: 'categoryTie'
     relatedWords: 'cravate,noeud papillons,bretelles'
@@ -533,29 +533,29 @@ items:
       - '6215'
   scarf:
     id: '9e3362d5-9e9f-4302-afcf-53ceed1f0832'
-    name: 'Echarpe, cache-col, châle, foulard, cache-nez...'
-    info: 'Echarpe, cache-col, châle, foulard, cache-nez...'
+    name: 'Echarpes, cache-cols, châles, foulards, cache-nez...'
+    info: 'Echarpes, cache-cols, châles, foulard, cache-nez...'
     icon: 'categoryScarf'
-    relatedWords: 'echarpe,cache-col,châle,foulard,cache-nez'
+    relatedWords: 'echarpes,cache-cols,châles,foulards,cache-nez'
     parentProduct: '@textileAccessory'
     productDisplayTypes: 'not-managed'
     finalProduct: true
     position: 3
   fabricGloves:
     id: '62a95383-369e-438a-a67c-a152494f50a3'
-    name: 'Gants en tissus'
-    info: 'Gants en tissus'
+    name: 'Gants en tissu'
+    info: 'Gants en tissu'
     icon: 'categoryFabricGloves'
-    relatedWords: 'gants en tissus'
+    relatedWords: 'gants en tissu'
     parentProduct: '@textileAccessory'
     productDisplayTypes: 'not-managed'
     finalProduct: true
     position: 4
   childrenClothes:
     id: '47a31843-233e-4b45-b7e6-26c262e1047d'
-    name: 'Vêtement pour enfant'
+    name: 'Vêtements pour enfant'
     info: 'Les vêtements pour enfant ont un tarif particulier. Veuillez vous référer au douanier directement.'
-    relatedWords: 'vêtement pour enfant'
+    relatedWords: 'vêtements pour enfant'
     icon: 'categoryChildrenClothes'
     parentProduct: '@clothes'
     productDisplayTypes: 'not-managed'
@@ -563,7 +563,7 @@ items:
     position: 2
   shoes:
     id: 'f17e401f-bd89-41ea-8b90-2999d1aff7a1'
-    name: 'Chaussure'
+    name: 'Chaussures'
     info: 'Les chaussures ont un tarif particulier. Veuillez vous référer au douanier directement.'
     relatedWords: 'ballerines,sneakers,bottes,baskets,bottines,sandales,chaussons,pantoufles,mocassins,claquettes,cuissardes,tropéziennes,charentaises,derby,escarpin,babouches,espadrilles,mules,rangers,richelieu,salomé,santiags,souliers,sabots,tongs,talons,talons aiguilles,hugg,chaussures de ville,méduses,converse,veja,adidas,nike,reebok,asics,doc martins,timberland,jordan,crocs,azzaro,stan smimth,air force one,ben simon,birkenstock,puma,buffalo,geox,bugatti,camper,clarks,kickers,esprit,guess,jb martin,karl lagarfeld,le coq sportif,superstars,mephisto,new balance,no name,palladium,pataugas,pierre cardin,ralph lauren,redskins,skechers,superga,tbs,timberland,vans'
     icon: 'categoryShoes'
@@ -578,7 +578,7 @@ items:
     relatedWords: 'sac à main,sac,sacoche,besace,panier,lacoste,cabas,cartable,portefeuille,porte-monnaie,pochette,porte-carte'
     icon: 'categoryLeatherGoods'
     parentProduct: '@fashion'
-    childrenQuestion: 'Sélectionnez la matière de votre sac'
+    childrenQuestion: 'Sélectionnez la matière de votre produit'
     finalProduct: true
     productDisplayTypes: 'radio-card'
     position: 3
@@ -653,7 +653,7 @@ items:
       - '5801'
   particularFabrics:
     id: '7a33a05b-4966-4ba3-bc0d-ecbd77ef36ea'
-    name: 'Tissus en soie / Laine'
+    name: 'Tissus en soie ou en laine'
     icon: 'categorySilk'
     relatedWords: 'tissus,soie,laine'
     info: 'Les produits en soie ou en laine ont un tarif particulier. Veuillez vous référer au douanier directement.'
@@ -747,8 +747,8 @@ items:
       - '95063100'
   fishingRod:
     id: '07a36ba5-1763-41bd-a78d-8e33ae4bc0f3'
-    name: 'Canne à pêche'
-    info: 'Canne à pêche'
+    name: 'Cannes à pêche'
+    info: 'Cannes à pêche'
     icon: 'categoryFishing'
     relatedWords: 'cannes à pêche'
     parentProduct: '@sports'
@@ -761,8 +761,8 @@ items:
       - '95071000'
   tennisRacket:
     id: '860f29d6-9059-4349-a283-a44b6f86c2ee'
-    name: 'Raquette de tennis (même non cordées)'
-    info: 'Raquette de tennis (même non cordées)'
+    name: 'Raquettes de tennis (même non cordées)'
+    info: 'Raquettes de tennis (même non cordées)'
     icon: 'categoryTennis'
     relatedWords: 'raquettes de tennis,raquettes'
     parentProduct: '@sports'
@@ -805,10 +805,11 @@ items:
       - '4901'
   advertisingCatalog:
     id: '3ce08fcb-328d-4ed5-ac3f-7557467e5eda'
-    name: 'Catalogue publicitaire'
+    name: 'Catalogues publicitaires'
     radioValue: 'Oui'
-    info: 'Catalogue publicitaire'
-    relatedWords: 'catalogues publicitaire'
+    info: 'Catalogues publicitaires'
+    icon: 'categoryAdvertisingCatalog'
+    relatedWords: 'catalogues publicitaires'
     productDisplayTypes: 'addable'
     finalProduct: true
     position: 2
@@ -831,10 +832,10 @@ items:
       - '92'
   classicPiano:
     id: 'bdc204f1-1de8-493c-9ebb-484e954a6124'
-    name: 'Piano droit, à queue'
-    info: 'Piano droit, à queue'
+    name: 'Pianos droits, à queue'
+    info: 'Pianos droits, à queue'
     icon: 'categoryPiano'
-    relatedWords: 'piano droit,piano à queue'
+    relatedWords: 'pianos droits,pianos à queue'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
@@ -888,10 +889,10 @@ items:
       - '92029030'
   electricGuitar:
     id: '1e79551b-0ca2-49af-bc24-5f208fe85e37'
-    name: 'Guitare électrique'
-    info: 'Guitare électrique'
+    name: 'Guitares électriques'
+    info: 'Guitares électriques'
     icon: 'categoryElectricGuitar'
-    relatedWords: 'guitare électrique'
+    relatedWords: 'guitares électriques'
     parentProduct: '@musicInstrument'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -929,8 +930,8 @@ items:
       - '920190'
   copper:
     id: '43cb7fbd-d048-43e7-907a-41e6f43557b3'
-    name: 'Cuivre'
-    info: 'Cuivre'
+    name: 'Cuivres'
+    info: 'Cuivres'
     icon: 'categoryCopper'
     relatedWords: 'trombette,saxophone,baryton,bugle,clairon,cor,cornet à piston,tuba,trombone'
     parentProduct: '@musicInstrument'
@@ -957,10 +958,10 @@ items:
       - '92059010'
   musicBox:
     id: 'f9039f41-21d6-4d99-bc4a-a337a45a6d02'
-    name: 'Boite à musique'
-    info: 'Boite à musique'
+    name: 'Boîtes  à musique'
+    info: 'Boîtes à musique'
     icon: 'categoryMusicBox'
-    relatedWords: 'boite à musique'
+    relatedWords: 'boîtes à musique'
     parentProduct: '@musicInstrument'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -1000,8 +1001,8 @@ items:
       - '90'
   smartphone:
     id: '5be67a29-594f-4107-a749-b4903e16aeae'
-    name: 'Smartphone'
-    info: 'Smartphone.'
+    name: 'Smartphones'
+    info: 'Smartphones'
     icon: 'categorySmartphone'
     relatedWords: >
       iPhone,portable,téléphone,Android,Samsung,Pixel,Google,Google Pixel,Huawei,Xiaomi,One Plus,Nokia,Apple,BlackBerry,Sony,LG,Motorola,Alcatel,Oppo,Realme,
@@ -1016,8 +1017,8 @@ items:
       - '85171300'
   laptop:
     id: '987bbd1d-a691-4e22-842b-03665f37b8cb'
-    name: 'Ordinateur portable'
-    info: 'Ordinateur portable.'
+    name: 'Ordinateurs portables'
+    info: 'Ordinateurs portables'
     icon: 'categoryLaptop'
     relatedWords: >
       PC,MacBook,Ordinateur,ordinateur portable,portable,laptop,Lenovo,asus,Apple,MSI,Acer,HP,Dell,Fujitsu,Toshiba,Compaq,Roccat,Razer,Dynabook,Huawei,
@@ -1032,8 +1033,8 @@ items:
       - '84713000'
   tablet:
     id: '18628a0b-b3c9-45d9-b7c0-49962af4fc42'
-    name: 'Tablette numérique'
-    info: 'Tablette numérique'
+    name: 'Tablettes numériques'
+    info: 'Tablettes numériques'
     icon: 'categoryTablet'
     relatedWords: >
       iPad,Apple,Samsung,Huawei,Galaxy, Samsung Galaxy,Lenovo,tablette
@@ -1045,8 +1046,8 @@ items:
     vat: 20
   camera:
     id: '7b2988e3-a84e-494e-b746-abd1ec0ddae7'
-    name: 'Appareil photo numérique / Caméscope'
-    info: 'Appareil photo numérique / Caméscope'
+    name: 'Appareils photo numériques / caméscopes'
+    info: 'Appareils photo numériques / caméscopes'
     icon: 'categoryTablet'
     relatedWords: >
       appareil photo,appareil numérique,reflex,nikon,canon,sony,lumix,appareil photo numérique,pentax,camescope,caméra,gopro
@@ -1090,8 +1091,8 @@ items:
       - '85219000'
   mp3Player:
     id: 'fc068504-2934-409d-b2a0-d4f23a319afa'
-    name: 'Baladeur MP3'
-    info: 'Baladeur MP3'
+    name: 'Baladeurs MP3'
+    info: 'Baladeurs MP3'
     icon: 'categoryMP3'
     relatedWords: >
       iPod,baladeur,MP3,baladeur MP3
@@ -1120,8 +1121,8 @@ items:
       - '85234910'
   compactDisc:
     id: '7efa75b6-5667-4fe4-a866-88d9e243c0bd'
-    name: 'Compact disc'
-    info: 'Compact disc'
+    name: 'Compact Discs (CD)'
+    info: 'Compact Discs (CD)'
     icon: 'categoryCD'
     relatedWords: >
       Compact disc,CD
@@ -1135,8 +1136,8 @@ items:
       - '852341'
   gameConsole:
     id: '39e8e0d3-9b25-4b4f-a318-d29d9e28dbce'
-    name: 'Consoles et machine de jeux vidéos'
-    info: 'Consoles et machine de jeux vidéos'
+    name: 'Consoles et machines de jeux vidéos'
+    info: 'Consoles et machines de jeux vidéos'
     icon: 'categoryGameConsole'
     relatedWords: >
       console,Nintendo,Playstation,Xbox,Switch,Nintendo Switch,Gamecube,N64,Wii,Gameboy,Attari 2600,Nintendo DS,PSP,PS4,PS5,Xbox360,
@@ -1339,8 +1340,8 @@ items:
       - '4409'
   mirror:
     id: '3dd401cd-3a12-4f33-a50c-058e8c174396'
-    name: 'Miroir'
-    info: 'Miroir'
+    name: 'Miroirs'
+    info: 'Miroirs'
     icon: 'categoryMirror'
     relatedWords: >
       miroir
@@ -1354,8 +1355,8 @@ items:
       - '7009'
   lamp:
     id: '9e1c9e85-6ac9-4e6b-a91e-307840e5bb80'
-    name: 'Luminaire'
-    info: 'Luminaire'
+    name: 'Luminaires'
+    info: 'Luminaires'
     icon: 'categoryLamp'
     relatedWords: >
       lustre,plafonnier,applique,spot,luminaire,suspension,borne,lampes,lampes de chevet,lampe de bureau,lampe de tables
@@ -1497,10 +1498,12 @@ items:
 
   art:
     id: '0791fbf5-7a0a-46cd-b7ca-6d3532ec6a8f'
-    name: 'Objet d’art et de collection'
-    info: 'Objet d’art et de collection'
+    name: 'Objets d’art et de collection'
+    info: 'Objets d’art et de collection'
     icon: 'categoryArt'
     finalProduct: true
+    relatedWords: >
+      objets d’art,objets de collection,tableaux,sculpture,peintures,oeuvres d'art
     productDisplayTypes: 'addable'
     position: 5
     customDuty: 0
@@ -1513,15 +1516,15 @@ items:
   # Voiture et accessoires
   carAccessory:
     id: 'e62a2f29-8dbc-4ffa-983b-7abfb63b2ac8'
-    name: 'Voiture et accessoires'
-    info: 'Voiture et accessoires'
+    name: 'Voiture et ses accessoires'
+    info: 'Voiture et ses accessoires'
     productDisplayTypes: 'category'
     icon: 'categoryCar'
     position: 9
   carRadio:
     id: '19ae6573-be49-4943-a6c6-6d3e824c9e92'
-    name: 'Autoradio lecteur CD'
-    info: 'Autoradio lecteur CD'
+    name: 'Autoradios / lecteur CD'
+    info: 'Autoradios / lecteur CD'
     icon: 'categoryCarRadio'
     relatedWords: >
       autoradio,lecteur CD
@@ -1564,11 +1567,11 @@ items:
       - '87087050'
   tire:
     id: '280a7975-3323-4a0b-aaa6-15d6c36f0859'
-    name: 'Pneu'
-    info: 'Pneu'
+    name: 'Pneus'
+    info: 'Pneus'
     icon: 'categoryTire'
     relatedWords: >
-      pneu
+      pneus
     productDisplayTypes: 'addable'
     finalProduct: true
     position: 4

@@ -10,7 +10,7 @@ export const AlcoholNonEu: React.FC = () => (
         </div>
         <span className="font-bold">1 litre</span>
         <p className="leading-tight">
-          d’Alcool <br />
+          d’alcool <br />
           de <span className="font-bold"> +22°</span>
         </p>
       </div>
@@ -25,7 +25,7 @@ export const AlcoholNonEu: React.FC = () => (
         </div>
         <span className="font-bold">2 litres</span>
         <p className="leading-tight">
-          d’Alcool <br />
+          d’alcool <br />
           de <span className="font-bold"> -22°</span>
         </p>
       </div>
@@ -48,7 +48,7 @@ export const AlcoholNonEu: React.FC = () => (
         <div className="ml-6">
           <span className="font-bold">4 litres</span>
           <p className="leading-tight">
-            vins non <br />
+            vin non <br />
             mousseux
           </p>
         </div>
@@ -67,7 +67,7 @@ export const AlcoholNonEu: React.FC = () => (
         </div>
         <div className="ml-7">
           <span className="font-bold">16 litres</span>
-          <p className="leading-tight">bières</p>
+          <p className="leading-tight">bière</p>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export const TobaccoAndorra: React.FC = () => (
           <SvgIcon name="categoryCigarette" />
         </div>
         <span className="font-bold">300 unités</span>
-        <p className="leading-tight">de cigarette</p>
+        <p className="leading-tight">de cigarettes</p>
       </div>
       <div className="flex-1"></div>
       <div className="flex flex-col items-center text-center">

@@ -91,9 +91,9 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
         </Typography>
       </div>
       <div className="-mx-4 my-4 border-b-2 border-dashed" />
-      {simulatorResponse?.amountProducts && (
+      {(simulatorResponse?.amountProducts?.length ?? 0) > 0 && (
         <>
-          {simulatorResponse.amountProducts.map((groupedAmount) => (
+          {simulatorResponse?.amountProducts?.map((groupedAmount) => (
             <div key={groupedAmount.group}>
               <Typography color="light-gray" size="text-2xs">
                 {getAmountCategoryName(groupedAmount.group)}
@@ -141,7 +141,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
           <div className="-mx-4 my-4 border-b-2 border-dashed" />
         </>
       )}
-      {simulatorResponse?.valueProducts && simulatorResponse.valueProducts.length > 0 && (
+      {(simulatorResponse?.valueProducts?.length ?? 0) > 0 && (
         <>
           <div className="mt-4 flex flex-row">
             <Typography color="light-gray" size="text-2xs">
@@ -153,7 +153,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
             </Typography>
           </div>
           <div>
-            {simulatorResponse.valueProducts.map((product, index) => (
+            {simulatorResponse?.valueProducts?.map((product, index) => (
               <div key={index}>
                 <SummaryValueProduct product={product} />
               </div>
