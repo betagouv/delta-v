@@ -3,7 +3,7 @@ import { AccordionData } from '@/components/common/Accordion/Accordion';
 export const PersonalData: AccordionData[] = [
   {
     id: '2',
-    question: 'Personal Data',
+    question: 'Données personnelles',
     answer: (
       <div className="flex flex-col gap-4">
         <p>
