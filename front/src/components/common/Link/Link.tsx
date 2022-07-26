@@ -9,7 +9,9 @@ interface LinkProps {
   to?: string;
   href?: string;
   external?: boolean;
+  underline?: boolean;
   children: React.ReactNode;
+  tag?: 'div' | 'span';
 }
 
 export const Link: React.FC<LinkProps> = ({
@@ -17,7 +19,9 @@ export const Link: React.FC<LinkProps> = ({
   to,
   href,
   external = false,
+  underline = false,
   children,
+  tag,
 }: LinkProps) => {
   const router = useRouter();
 
@@ -29,16 +33,17 @@ export const Link: React.FC<LinkProps> = ({
       router.push(to);
     }
   };
+  const CustomTag = tag ?? 'div';
 
   return (
     <>
       {(to || back) && (
-        <div
+        <CustomTag
           onClick={handleClick}
-          className={classNames({ 'cursor-pointer': true, underline: false })}
+          className={classNames({ 'cursor-pointer': true, underline })}
         >
           {children}
-        </div>
+        </CustomTag>
       )}
       {href && (
         <NextLink href={href}>

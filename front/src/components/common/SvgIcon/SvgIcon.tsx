@@ -110,8 +110,14 @@ import Plane from '@/assets/icons/Plane.svg';
 import Question from '@/assets/icons/Question.svg';
 import Search from '@/assets/icons/Search.svg';
 import Train from '@/assets/icons/Train.svg';
+import LogoFrenchDouane from '@/assets/images/Logo-French-Douane.svg';
+import LogoFrenchRepublic from '@/assets/images/Logo-French-Republic.svg';
+import Logo from '@/assets/images/Logo.svg';
 
 export type SvgNames =
+  | 'logo'
+  | 'logoFrenchRepublic'
+  | 'logoFrenchDouane'
   | 'add'
   | 'home'
   | 'info'
@@ -229,6 +235,12 @@ export interface ISvgIconProps {
 
 const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
+    case 'logo':
+      return Logo;
+    case 'logoFrenchRepublic':
+      return LogoFrenchRepublic;
+    case 'logoFrenchDouane':
+      return LogoFrenchDouane;
     case 'add':
       return Add;
     case 'home':

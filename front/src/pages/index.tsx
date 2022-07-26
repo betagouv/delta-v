@@ -8,6 +8,7 @@ import { Search } from '@/components/business/search';
 import { Card } from '@/components/common/Card';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
+import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
@@ -39,7 +40,12 @@ const Index = () => {
         />
       }
     >
-      <div className="mb-8 flex flex-col gap-6">
+      <div className="-mt-2 -mb-3 flex flex-col items-center">
+        <div className="h-6 ">
+          <SvgIcon name="logo" />
+        </div>
+      </div>
+      <div className="mb-4 flex flex-col gap-6">
         <div>
           <Typography
             weight="bold"
@@ -168,6 +174,102 @@ const Index = () => {
             fullWidth
           />
         </Link>
+      </div>
+      <div className="flex flex-col gap-4">
+        <div className="-mx-4 border-t-2 border-primary-700" />
+        <div className="flex flex-row">
+          <div className="h-32">
+            <SvgIcon name="logoFrenchRepublic" />
+          </div>
+          <div className="h-14">
+            <SvgIcon name="logoFrenchDouane" />
+          </div>
+        </div>
+        <Typography color="secondary" lineHeight="leading-normal">
+          Pour plus d'informations vous pouvez consulter les sites suivants :
+        </Typography>
+        <div className="flex flex-row">
+          <div className="flex flex-1 flex-col gap-4">
+            <Link href="https://www.legifrance.gouv.fr/" external>
+              <div className="flex flex-row gap-1">
+                <Typography color="secondary" weight="bold" tag="div">
+                  legifrance.gouv.fr{' '}
+                </Typography>
+                <span className="flex items-center text-black">
+                  <Icon name="link" size="sm" />
+                </span>
+              </div>
+            </Link>
+            <Link href="https://www.service-public.fr/" external>
+              <div className="flex flex-row gap-1">
+                <Typography color="secondary" weight="bold" tag="div">
+                  service-public.fr{' '}
+                </Typography>
+                <span className="flex items-center text-black">
+                  <Icon name="link" size="sm" />
+                </span>
+              </div>
+            </Link>
+          </div>
+          <div className="flex flex-1 flex-col gap-4">
+            <Link href="https://www.gouvernement.fr/" external>
+              <div className="flex flex-row gap-1">
+                <Typography color="secondary" weight="bold" tag="div">
+                  gouvernement.fr{' '}
+                </Typography>
+                <span className="flex items-center text-black">
+                  <Icon name="link" size="sm" />
+                </span>
+              </div>
+            </Link>
+            <Link href="https://www.data.gouv.fr/" external>
+              <div className="flex flex-row gap-1">
+                <Typography color="secondary" weight="bold" tag="div">
+                  data.gouv.fr{' '}
+                </Typography>
+                <span className="flex items-center text-black">
+                  <Icon name="link" size="sm" />
+                </span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="border-b border-gray-200" />
+      <Typography color="middle-gray" lineHeight="leading-10" size="text-xs" tag="div">
+        <span>Plan du site</span>
+        <span className="mx-2 text-gray-200">|</span>
+        <span>Accessibilité</span>
+        <span className="mx-2 text-gray-200">|</span>
+        <Link to={`${Routing.about}?id=1`} tag="span">
+          Mentions légales
+        </Link>
+        <span className="mx-2 text-gray-200">|</span>
+
+        <Link to={`${Routing.about}?id=2`} tag="span">
+          Données personnelles
+        </Link>
+        <span className="mx-2 text-gray-200">|</span>
+        <Link to={`${Routing.about}?id=2`} tag="span">
+          Gestion des cookies
+        </Link>
+        <span className="mx-2 text-gray-200">|</span>
+        <Link to={Routing.about} tag="span">
+          <span>A propos</span>
+        </Link>
+      </Typography>
+      <div>
+        <Typography color="middle-gray" tag="div" size="text-xs" lineHeight="leading-6">
+          Sauf mention contraire, tous les contenus de ce site sont sous{' '}
+          <Link href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" external>
+            <div className="inline-flex flex-row gap-1">
+              <span className="underline">licence etalab-2.0</span>
+              <span className="flex items-center">
+                <Icon name="link" size="sm" />
+              </span>
+            </div>
+          </Link>
+        </Typography>
       </div>
       <ModalResumeSimulator
         open={openModalResumeSimulator}

@@ -11,6 +11,9 @@ export default {
 } as Meta;
 
 const iconNames: SvgNames[] = [
+  'logo',
+  'logoFrenchRepublic',
+  'logoFrenchDouane',
   'add',
   'arrowRight',
   'boat',
