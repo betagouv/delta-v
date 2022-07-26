@@ -2,20 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import { scroller } from 'react-scroll';
 
-import { Typography } from '../Typography';
-import { Faq } from './Faq';
-
-export interface FaqEntity {
-  id: string;
-  question: string;
-  answer: string;
-  images?: string[];
-}
+import { Accordions } from '@/components/common/Accordion';
+import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { Typography } from '@/components/common/Typography';
 
 export interface FaqsProps {
   items: {
     title: string;
-    faqs: FaqEntity[];
+    faqs: AccordionData[];
   }[];
   linkId?: string;
 }
@@ -47,17 +41,12 @@ export const Faqs: React.FC<FaqsProps> = ({ items, linkId }: FaqsProps) => {
                 {item.title}
               </Typography>
             </div>
-            <div className="border border-secondary-100" />
-            {item.faqs.map((faq) => (
-              <Faq
-                key={faq.id}
-                id={faq.id}
-                answer={faq.answer}
-                question={faq.question}
-                open={currentOpenId === faq.id}
-                setOpenId={(id: string) => setCurrentOpenId(id)}
-              />
-            ))}
+
+            <Accordions
+              items={item.faqs}
+              currentOpenId={currentOpenId}
+              setOpenId={(id: string) => setCurrentOpenId(id)}
+            />
           </dl>
         </div>
       ))}

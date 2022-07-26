@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { Faqs } from './Faqs';
 
 export default {
-  title: 'Components/Common/Faqs',
+  title: 'Components/Business/Faqs',
   component: Faqs,
 } as Meta;
 

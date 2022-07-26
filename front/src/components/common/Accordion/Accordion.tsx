@@ -4,21 +4,24 @@ import classNames from 'classnames';
 
 import { Icon } from '../Icon';
 
-export interface FaqProps {
-  id: any;
+export interface AccordionData {
+  id: string;
   question: string;
-  answer: string;
+  answer: React.ReactNode;
+}
+
+export interface AccordionProps extends AccordionData {
   open?: boolean;
   setOpenId: (id: any) => void;
 }
 
-export const Faq: React.FC<FaqProps> = ({
+export const Accordion: React.FC<AccordionProps> = ({
   id,
   question,
   answer,
   open = false,
   setOpenId,
-}: FaqProps) => {
+}: AccordionProps) => {
   return (
     <>
       <div className="py-3" id={id}>
@@ -44,7 +47,7 @@ export const Faq: React.FC<FaqProps> = ({
           className={classNames({
             'mt-2 pr-12 overflow-hidden transition-[max-height] ease-in-out duration-300': true,
             'max-h-0': !open,
-            'max-h-[1000px]': open,
+            'max-h-[3000px]': open,
           })}
         >
           <p>{answer}</p>
