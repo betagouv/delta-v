@@ -66,7 +66,7 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div className={className} onClick={onClick}>
-      <div className="h-[50px] w-[50px]">
+      <div className="flex h-auto w-[50px] flex-col items-center">
         <SvgIcon name={svgName} />
       </div>
       <div className="flex flex-1 flex-col">

@@ -32,7 +32,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
         onClick={() => (simulator ? openSimulator() : router.push(path ?? '/'))}
         key={path}
       >
-        <div className="mb-2 h-6 w-6">
+        <div className="mb-2 h-6 w-auto">
           <SvgIcon name={icon} />
         </div>
         <p className="text-center text-[10px] leading-none md:text-[12px]">{title}</p>
