@@ -93,14 +93,15 @@ describe('ProductTaxes entity', () => {
   describe('getUnitVat', () => {
     test.each([
       [3, 50, 6],
-      [6, 100, 6],
-      [14, 70, 20],
+      [6.01, 100, 6],
+      [14.01, 70, 20],
       [0, 200, 0],
     ])('should return %i, with unit price %i and vat %i', (unitVat, unitPrice, vat) => {
       const options: ProductTaxesConstructorOptions = {
         ...defaultOptions,
         unitPrice,
         vat,
+        customDuty: 0.1,
       };
       const productTaxes = new ProductTaxes(options);
       const result = productTaxes.getUnitVat();
@@ -109,9 +110,9 @@ describe('ProductTaxes entity', () => {
   });
   describe('getUnitTaxes', () => {
     test.each([
-      [4.5, 50, 6, 3],
-      [8, 100, 6, 2],
-      [24.5, 70, 20, 15],
+      [4.59, 50, 6, 3],
+      [8.12, 100, 6, 2],
+      [26.6, 70, 20, 15],
       [4, 200, 0, 2],
     ])(
       'should return %i, with unit price %i and vat %i and customDuty %i',
