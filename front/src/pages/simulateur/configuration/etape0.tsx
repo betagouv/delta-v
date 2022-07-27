@@ -15,10 +15,11 @@ export interface FormSimulatorData {
 }
 
 const Configuration = () => {
-  const { resetSteps, validateStep0 } = useStore(
+  const { resetSteps, validateStep0, hideInfoSimulator } = useStore(
     (state) => ({
       resetSteps: state.resetSteps,
       validateStep0: state.validateStep0,
+      hideInfoSimulator: state.hideInfoSimulator,
     }),
     shallow,
   );
@@ -40,6 +41,10 @@ const Configuration = () => {
   const onSubmit = (data: FormSimulatorData) => {
     const shouldDisplayInfoNextTime = !data.notDisplayAnymore;
     validateStep0(shouldDisplayInfoNextTime);
+
+    if (data.notDisplayAnymore) {
+      hideInfoSimulator();
+    }
     router.push(`/simulateur/configuration/etape1`);
   };
 

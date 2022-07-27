@@ -36,11 +36,11 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
         disabled={disabled}
         className={`${
           specificClassName ??
-          `border-secondary-300 border focus:outline-none focus:ring-1  ${
+          `border border-secondary-300 focus:outline-none focus:ring-1  ${
             error
-              ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
-              : 'focus:ring-primary-600 focus:border-primary-600'
-          } block w-full text-base rounded-md p-2`
+              ? 'border-red-300 text-red-900 placeholder:text-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500'
+              : 'focus:border-primary-600 focus:ring-primary-600'
+          } block w-full rounded-md p-2 text-base`
         }`}
         {...register}
         name={name}

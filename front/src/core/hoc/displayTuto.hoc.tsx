@@ -3,21 +3,22 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useStore } from '@/stores/store';
+import { Routing } from '@/utils/const';
 
-export const displayInfoSimulator = (Component: React.FC) => {
-  const CheckSimulator = (props: any) => {
+export const DisplayTuto = (Component: React.FC) => {
+  const CheckTuto = (props: any) => {
     const router = useRouter();
 
-    const displayInfo = useStore((state) => state.global.appState.displayInfoSimulator);
+    const displayTuto = useStore((state) => state.global.appState.displayTuto);
     const defaultComponent = <Component {...props} />;
 
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-      if (displayInfo) {
+      if (!displayTuto) {
         setLoading(false);
         return;
       }
-      router.replace('/simulateur/configuration/etape1');
+      router.replace(Routing.tuto);
     }, []);
 
     if (loading) {
@@ -26,5 +27,5 @@ export const displayInfoSimulator = (Component: React.FC) => {
     return defaultComponent;
   };
 
-  return CheckSimulator;
+  return CheckTuto;
 };

@@ -8,6 +8,7 @@ export enum Routing {
   faq = '/faqs',
   prepareMyTrip = '/preparer-mon-voyage',
   about = '/a-propos',
+  tuto = '/tuto',
 }
 
 export const disabledCountries: Alpha2Code[] = [
