@@ -10,6 +10,7 @@ import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
+import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
@@ -120,7 +121,7 @@ const Index = () => {
         </Typography>
         <Link to={Routing.faq}>
           <div className="flex flex-row items-center">
-            <Typography weight="bold" variant="body1" tag="p" color="link">
+            <Typography weight="bold" variant="body1" tag="div" color="link">
               <div className="flex flex-row">
                 En savoir plus
                 <div className="ml-1 h-3.5 w-3.5">
@@ -284,4 +285,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default DisplayTuto(Index);
