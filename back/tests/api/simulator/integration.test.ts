@@ -148,7 +148,8 @@ describe('test simulator API', () => {
     expect(body).toMatchObject({
       total: 850,
       totalCustomDuty: 65,
-      totalVat: 110,
+      totalVat: 123,
+      totalTaxes: 188,
       franchiseAmount: 300,
     });
   });

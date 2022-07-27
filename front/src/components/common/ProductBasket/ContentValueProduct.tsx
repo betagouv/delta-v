@@ -23,20 +23,6 @@ export const ContentValueProduct: React.FC<ContentValueProductProps> = ({
     <>
       <div className="mt-2">
         <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
-          Calcul de la TVA
-        </Typography>
-      </div>
-      <p
-        className={classNames({
-          'w-full text-primary-700': true,
-          'text-base': !displaySmall,
-          'text-sm': displaySmall,
-        })}
-      >
-        {unitPrice} <span className="text-secondary-900">x {vat}% =</span> {unitVat} €
-      </p>
-      <div className="mt-2">
-        <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
           Calcul des droits de douanes
         </Typography>
       </div>
@@ -48,6 +34,21 @@ export const ContentValueProduct: React.FC<ContentValueProductProps> = ({
         })}
       >
         {unitPrice} <span className="text-secondary-900">x {customDuty}% =</span> {unitCustomDuty} €
+      </p>
+      <div className="mt-2">
+        <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
+          Calcul de la TVA
+        </Typography>
+      </div>
+      <p
+        className={classNames({
+          'w-full text-primary-700': true,
+          'text-base': !displaySmall,
+          'text-sm': displaySmall,
+        })}
+      >
+        ({unitPrice} + {unitCustomDuty}) <span className="text-secondary-900">x {vat}% =</span>{' '}
+        {unitVat} €
       </p>
     </>
   );

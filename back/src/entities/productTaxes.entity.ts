@@ -140,7 +140,8 @@ export class ProductTaxes implements ProductTaxesInterface {
   };
 
   getUnitVat = (): number => {
-    return currency(this.unitPrice).multiply(this.vat).divide(100).value;
+    return currency(this.unitPrice).add(this.getUnitCustomDuty()).multiply(this.vat).divide(100)
+      .value;
   };
 
   getUnitTaxes = (): number => {
