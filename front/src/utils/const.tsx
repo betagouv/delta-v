@@ -52,7 +52,6 @@ export const MENU_ITEMS: TabItem[] = [
       </>
     ),
     simulator: true,
-    path: Routing.simulator,
   },
   {
     icon: 'question',
