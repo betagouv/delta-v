@@ -14,6 +14,7 @@ const iconNames: SvgNames[] = [
   'logo',
   'logoFrenchRepublic',
   'logoFrenchDouane',
+  'logoDouane',
   'add',
   'arrowRight',
   'boat',

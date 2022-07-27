@@ -37,6 +37,7 @@ module.exports = withBundleAnalyzer({
     return config;
   },
   reactStrictMode: true,
+  optimizeFonts: false,
   async redirects() {
     return [
       {

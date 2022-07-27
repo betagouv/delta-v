@@ -22,6 +22,16 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
 
   const renderTabBarItem = ({ icon, title, path, simulator }: TabItem) => {
     const activeTab = splitPath[1] === path?.split('/')[1];
+
+    const onClickMenu = () => {
+      if (simulator) {
+        openSimulator();
+      }
+
+      if (path) {
+        router.push(path);
+      }
+    };
     return (
       <div
         className={classNames({
@@ -29,7 +39,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
           'font-bold': activeTab,
           'opacity-40': !activeTab,
         })}
-        onClick={() => (simulator ? openSimulator() : router.push(path ?? '/'))}
+        onClick={onClickMenu}
         key={path}
       >
         <div className="mb-2 h-6 w-auto">
@@ -41,7 +51,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
   };
 
   return (
-    <div className="sticky bottom-0 z-50 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
+    <div className="sticky bottom-0 z-30 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
       {items.map((item) => renderTabBarItem(item))}
     </div>
   );
