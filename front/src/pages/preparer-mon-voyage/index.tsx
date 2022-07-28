@@ -12,6 +12,9 @@ const index = () => {
         />
       }
       withHeader
+      withTitle
+      titleIcon="luggages"
+      titleValue="Préparer mon voyage"
     >
       <UnderConstruction />
     </Main>

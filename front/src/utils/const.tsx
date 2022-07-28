@@ -7,6 +7,7 @@ export enum Routing {
   simulator = '/simulateur/configuration/etape0',
   faq = '/faqs',
   prepareMyTrip = '/preparer-mon-voyage',
+  prepareMyTripConfig = '/preparer-mon-voyage/configuration',
   about = '/a-propos',
   tuto = '/tuto',
 }
