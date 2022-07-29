@@ -41,6 +41,7 @@ export interface ITypographyProps {
   weight?: Weight;
   italic?: boolean;
   underline?: boolean;
+  textPosition?: 'text-left' | 'text-center' | 'text-right';
   onClick?: () => void;
 }
 
@@ -54,6 +55,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   weight = 'normal',
   italic = false,
   underline = false,
+  textPosition,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -69,6 +71,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     [lineHeight]: true,
     italic,
     underline,
+    [`${textPosition}`]: true,
   });
   const CustomTag = tag ?? 'p';
 

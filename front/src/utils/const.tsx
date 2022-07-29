@@ -42,7 +42,7 @@ export const MENU_ITEMS: TabItem[] = [
       </>
     ),
     icon: 'luggages',
-    path: Routing.prepareMyTrip,
+    path: Routing.prepareMyTripConfig,
   },
   {
     icon: 'calculator',

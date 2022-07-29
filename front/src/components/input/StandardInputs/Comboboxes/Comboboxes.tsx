@@ -96,7 +96,9 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
                   const newSelectedOption = wasAlreadyChecked ? { id: null, value: '' } : option;
                   setSelectedOption(newSelectedOption);
                   field.onChange(option.id);
-                  setFilteredOptions([]);
+                  setTimeout(() => {
+                    setFilteredOptions([]);
+                  }, 250);
                 }}
               >
                 <span

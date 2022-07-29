@@ -29,8 +29,9 @@ const Index = () => {
   const openSimulator = () => {
     if (getLevelWithData(simulatorRequest) === 1) {
       router.push(Routing.simulator);
+    } else {
+      setOpenModalResumeSimulator(true);
     }
-    setOpenModalResumeSimulator(true);
   };
   return (
     <Main

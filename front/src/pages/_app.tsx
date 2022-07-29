@@ -8,8 +8,10 @@ import '../config/i18n';
 import { SvgIcon } from '@/components/common/SvgIcon';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [loading, setLoading] = useState(true);
-  const [hideLoading, setHideLoading] = useState(false);
+  const shouldLoad = process.env.NODE_ENV === 'production';
+
+  const [loading, setLoading] = useState(shouldLoad);
+  const [hideLoading, setHideLoading] = useState(shouldLoad);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setTimeout(() => {

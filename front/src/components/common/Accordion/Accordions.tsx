@@ -14,20 +14,16 @@ export const Accordions: React.FC<AccordionsProps> = ({
   setOpenId,
 }: AccordionsProps) => {
   return (
-    <div className="mx-auto max-w-3xl">
-      <dl className="mt-6">
-        <div className="border border-secondary-100" />
-        {items.map((item) => (
-          <Accordion
-            key={item.id}
-            id={item.id}
-            answer={item.answer}
-            question={item.question}
-            open={currentOpenId === item.id}
-            setOpenId={(id: string) => setOpenId?.(id)}
-          />
-        ))}
-      </dl>
-    </div>
+    <dl>
+      <div className="border border-secondary-100" />
+      {items.map((item) => (
+        <Accordion
+          key={item.id}
+          {...item}
+          open={currentOpenId === item.id}
+          setOpenId={(id: string) => setOpenId?.(id)}
+        />
+      ))}
+    </dl>
   );
 };

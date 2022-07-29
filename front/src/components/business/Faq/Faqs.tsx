@@ -36,7 +36,7 @@ export const Faqs: React.FC<FaqsProps> = ({ items, linkId }: FaqsProps) => {
       {items.map((item) => (
         <div key={item.title}>
           <dl className="mt-6">
-            <div className="mt-10 mb-3.5">
+            <div className="mt-10 mb-4">
               <Typography color="light-gray" size="text-base">
                 {item.title}
               </Typography>

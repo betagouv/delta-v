@@ -93,12 +93,6 @@ const index = () => {
     { id: 'false', value: 'Non' },
   ];
 
-  const checkKeyDown = (e: any) => {
-    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      e.preventDefault();
-    }
-  };
-
   return (
     <Main
       meta={
@@ -115,32 +109,30 @@ const index = () => {
       <Typography size="text-lg" color="secondary" lineHeight="leading-7">
         Vous arrivez en France, dans quel pays avez-vous effectuez vos achats ?
       </Typography>
-      <form className="flex flex-1 flex-col" onKeyDown={(e) => checkKeyDown(e)}>
-        <InputGroup
-          label="Le pays d’où vous arrivez"
-          type="comboboxes"
-          fullWidth={true}
-          name="country"
-          placeholder="Pays"
-          trailingIcon="search"
-          options={countriesOptions}
-          register={register('country', { required: true })}
-          control={control}
-          error={errors?.country?.message}
-        />
-        {displayBorder && (
-          <div className="mt-4">
-            <InputGroup
-              label="Êtes-vous dans le cadre d’un déplacement de résident frontalier ?"
-              type="radio"
-              name="border"
-              radioValues={radioValues}
-              register={register('border', { required: true })}
-              error={errors?.border?.message}
-            />
-          </div>
-        )}
-      </form>
+      <InputGroup
+        label="Le pays d’où vous arrivez"
+        type="comboboxes"
+        fullWidth={true}
+        name="country"
+        placeholder="Pays"
+        trailingIcon="search"
+        options={countriesOptions}
+        register={register('country', { required: true })}
+        control={control}
+        error={errors?.country?.message}
+      />
+      {displayBorder && (
+        <div className="mt-4">
+          <InputGroup
+            label="Êtes-vous dans le cadre d’un déplacement de résident frontalier ?"
+            type="radio"
+            name="border"
+            radioValues={radioValues}
+            register={register('border', { required: true })}
+            error={errors?.border?.message}
+          />
+        </div>
+      )}
     </Main>
   );
 };
