@@ -2,6 +2,7 @@ import { Meta } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 
 import { FormAddProduct } from './FormAddProduct';
+import { productFactory } from '@/tests/factories/Product.factory';
 
 export default {
   title: 'Components/Business/FormAddProduct',
@@ -20,10 +21,12 @@ const { register, control } = useForm<FormSimulatorData>({
   },
 });
 
+const product = productFactory({});
+
 export const base = (): JSX.Element => (
   <div className="p-3">
     <br />
-    <FormAddProduct register={register} control={control} />
+    <FormAddProduct product={product} register={register} control={control} />
     <br />
   </div>
 );

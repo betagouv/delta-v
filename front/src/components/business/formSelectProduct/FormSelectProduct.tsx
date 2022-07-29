@@ -128,7 +128,12 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       {multiForm.map((form, index) => {
         return <div key={index}>{form}</div>;
       })}
-      <FormAddProduct disabled={!isAddAble} control={control} register={register} />
+      <FormAddProduct
+        product={currentProduct}
+        disabled={!isAddAble}
+        control={control}
+        register={register}
+      />
     </form>
   ) : (
     <ProductNotManaged />

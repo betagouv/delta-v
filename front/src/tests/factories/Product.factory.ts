@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import { buildFactory } from './buildFactory';
-import { Product, ProductDisplayTypes } from '@/model/product';
+import { Product, ProductDisplayTypes, ProductType } from '@/model/product';
 
 const buildSchema = (): Product => {
   return {
@@ -19,6 +19,8 @@ const buildSchema = (): Product => {
     ]),
     relatedWords: [],
     subProducts: [],
+    countries: [],
+    productType: ProductType.value,
   };
 };
 

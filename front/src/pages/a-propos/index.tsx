@@ -1,8 +1,14 @@
-import { UnderConstruction } from '@/components/business/underConstruction';
+import { useRouter } from 'next/router';
+
+import { About } from '@/components/business/About';
+import { LegalMentions } from '@/components/business/About/AboutData/LegalMentions';
+import { PersonalData } from '@/components/business/About/AboutData/PersonalData';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 
 const index = () => {
+  const router = useRouter();
+  const linkId = router.query.id as string | undefined;
   return (
     <Main
       meta={
@@ -11,9 +17,13 @@ const index = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      titleValue="À propos"
       withHeader
+      withTitle
     >
-      <UnderConstruction />
+      <div className="mt-5">
+        <About items={[...LegalMentions, ...PersonalData]} linkId={linkId} />
+      </div>
     </Main>
   );
 };

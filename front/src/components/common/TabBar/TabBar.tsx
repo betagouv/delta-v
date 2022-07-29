@@ -7,19 +7,31 @@ export interface TabItem {
   title: React.ReactNode;
   icon: SvgNames;
   path?: string;
+  simulator?: boolean;
 }
 
 interface TabBarProps {
   items: TabItem[];
+  openSimulator: () => void;
 }
 
-export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
+export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarProps) => {
   const router = useRouter();
   const { pathname } = router;
   const splitPath = pathname.split('/');
 
-  const renderTabBarItem = (title: React.ReactNode, icon: SvgNames, path?: string) => {
+  const renderTabBarItem = ({ icon, title, path, simulator }: TabItem, index: number) => {
     const activeTab = splitPath[1] === path?.split('/')[1];
+
+    const onClickMenu = () => {
+      if (simulator) {
+        openSimulator();
+      }
+
+      if (path) {
+        router.push(path);
+      }
+    };
     return (
       <div
         className={classNames({
@@ -27,10 +39,10 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
           'font-bold': activeTab,
           'opacity-40': !activeTab,
         })}
-        onClick={() => router.push(path ?? '/')}
-        key={path}
+        onClick={onClickMenu}
+        key={index}
       >
-        <div className="mb-2 h-6 w-6">
+        <div className="mb-2 h-6 w-auto">
           <SvgIcon name={icon} />
         </div>
         <p className="text-center text-[10px] leading-none md:text-[12px]">{title}</p>
@@ -39,8 +51,8 @@ export const TabBar: React.FC<TabBarProps> = ({ items }: TabBarProps) => {
   };
 
   return (
-    <div className="sticky bottom-0 z-50 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
-      {items.map((item) => renderTabBarItem(item.title, item.icon, item.path))}
+    <div className="sticky bottom-0 z-30 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
+      {items.map((item, index) => renderTabBarItem(item, index))}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
 import { Color, getColor, getFontWeight, Weight } from './style/typography.style';
 
 type TextSize =
+  | 'text-2xs'
   | 'text-xs'
   | 'text-sm'
   | 'text-base'
@@ -15,9 +16,16 @@ type TextSize =
   | 'text-3xl';
 
 type LineHeight =
+  | 'leading-3'
+  | 'leading-4'
+  | 'leading-5'
+  | 'leading-6'
+  | 'leading-7'
+  | 'leading-8'
+  | 'leading-9'
+  | 'leading-10'
   | 'leading-none'
   | 'leading-tight'
-  | 'leading-4'
   | 'leading-snug'
   | 'leading-normal'
   | 'leading-relaxed'
@@ -33,6 +41,7 @@ export interface ITypographyProps {
   weight?: Weight;
   italic?: boolean;
   underline?: boolean;
+  textPosition?: 'text-left' | 'text-center' | 'text-right';
   onClick?: () => void;
 }
 
@@ -46,6 +55,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   weight = 'normal',
   italic = false,
   underline = false,
+  textPosition,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -61,6 +71,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     [lineHeight]: true,
     italic,
     underline,
+    [`${textPosition}`]: true,
   });
   const CustomTag = tag ?? 'p';
 

@@ -5,6 +5,7 @@ import { Product } from '@/model/product';
 export interface ProductsAppStateSlice {
   products: {
     appState: {
+      allProducts: Product[];
       products: Product[];
       flattenProducts: Product[];
       updateDate?: Date;
@@ -13,6 +14,7 @@ export interface ProductsAppStateSlice {
 }
 
 export const PRODUCT_EMPTY_STATE = {
+  allProducts: [],
   products: [],
   flattenProducts: [],
   updateDate: undefined,

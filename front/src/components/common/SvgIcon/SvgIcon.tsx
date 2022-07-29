@@ -2,19 +2,24 @@ import React from 'react';
 
 import Add from '@/assets/icons/Add.svg';
 import ArrowRight from '@/assets/icons/Arrow-Right.svg';
+import BasketColor from '@/assets/icons/Basket-Color.svg';
 import Basket from '@/assets/icons/Basket.svg';
+import BigArrowRight from '@/assets/icons/Big-Arrow-Right.svg';
 import Boat from '@/assets/icons/Boat.svg';
 import Calculator from '@/assets/icons/Calculator.svg';
 import Car from '@/assets/icons/Car.svg';
 import CategoryAccessory from '@/assets/icons/categories/Accessory.svg';
 import CategoryAccordions from '@/assets/icons/categories/Accordions.svg';
 import CategoryAdultClothes from '@/assets/icons/categories/Adult-Clothes.svg';
+import CategoryAdvertisingCatalog from '@/assets/icons/categories/Advertising-Catalog.svg';
 import CategoryAlcohol from '@/assets/icons/categories/Alcohol.svg';
+import CategoryAlcoholIntermediate from '@/assets/icons/categories/AlcoholIntermediate.svg';
 import CategoryArt from '@/assets/icons/categories/Art.svg';
 import CategoryBamboo from '@/assets/icons/categories/Bamboo.svg';
 import CategoryMackUp from '@/assets/icons/categories/Beauty-Mackup.svg';
 import CategoryBeautyProducts from '@/assets/icons/categories/Beauty-Products.svg';
 import CategoryBedding from '@/assets/icons/categories/Bedding.svg';
+import CategoryBeer from '@/assets/icons/categories/Beer.svg';
 import CategoryBinoculars from '@/assets/icons/categories/Binoculars.svg';
 import CategoryBooks from '@/assets/icons/categories/Books.svg';
 import CategoryCarRadio from '@/assets/icons/categories/Car-Radio.svg';
@@ -72,7 +77,10 @@ import CategorySilk from '@/assets/icons/categories/Silk.svg';
 import CategorySki from '@/assets/icons/categories/Ski.svg';
 import CategorySmartphone from '@/assets/icons/categories/Smartphone.svg';
 import CategorySocks from '@/assets/icons/categories/Socks.svg';
+import CategorySoftAlcohol from '@/assets/icons/categories/SoftAlcohol.svg';
+import CategorySpiritDrink from '@/assets/icons/categories/SpiritDrink.svg';
 import CategorySports from '@/assets/icons/categories/Sports.svg';
+import CategoryStrongAlcohol from '@/assets/icons/categories/StrongAlcohol.svg';
 import CategorySunglasses from '@/assets/icons/categories/Sunglasses.svg';
 import CategorySynthesizer from '@/assets/icons/categories/Synthesizer.svg';
 import CategoryTablet from '@/assets/icons/categories/Tablet.svg';
@@ -88,49 +96,95 @@ import CategoryViolins from '@/assets/icons/categories/Violins.svg';
 import CategoryWatches from '@/assets/icons/categories/Watches.svg';
 import CategoryWig from '@/assets/icons/categories/Wig.svg';
 import CategoryWindsurf from '@/assets/icons/categories/Windsurf.svg';
+import CategoryWine from '@/assets/icons/categories/Wine.svg';
 import CategoryWood from '@/assets/icons/categories/Wood.svg';
 import CategoryWoodenFloor from '@/assets/icons/categories/Wooden-Floor.svg';
 import AinIcon from '@/assets/icons/City-Ain.svg';
 import HauteSavoieIcon from '@/assets/icons/City-Haute-Savoie.svg';
+import Coffee from '@/assets/icons/Coffee.svg';
+import CompleteBasket from '@/assets/icons/Complete-Basket.svg';
+import Dairy from '@/assets/icons/Dairy.svg';
+import Folder from '@/assets/icons/Folder.svg';
+import Forbidden from '@/assets/icons/Forbidden.svg';
 import Home from '@/assets/icons/Home.svg';
 import Info from '@/assets/icons/Info.svg';
 import LiteSearch from '@/assets/icons/Lite-Search.svg';
 import Luggages from '@/assets/icons/Luggages.svg';
 import Mail from '@/assets/icons/Mail.svg';
+import Meat from '@/assets/icons/Meat.svg';
+import Medication from '@/assets/icons/Medication.svg';
+import Milk from '@/assets/icons/Milk.svg';
+import Money from '@/assets/icons/Money.svg';
+import OfficerCap from '@/assets/icons/Officer-Cap.svg';
 import Other from '@/assets/icons/Other.svg';
+import Pet from '@/assets/icons/Pet.svg';
 import Phone from '@/assets/icons/Phone.svg';
 import Plane from '@/assets/icons/Plane.svg';
+import Plants from '@/assets/icons/Plants.svg';
 import Question from '@/assets/icons/Question.svg';
 import Search from '@/assets/icons/Search.svg';
+import Sweets from '@/assets/icons/Sweets.svg';
+import Tea from '@/assets/icons/Tea.svg';
 import Train from '@/assets/icons/Train.svg';
+import Traveler from '@/assets/icons/Traveler.svg';
+import Watch from '@/assets/icons/Watch.svg';
+import LogoDouane from '@/assets/images/Logo-Douane.svg';
+import LogoFrenchDouane from '@/assets/images/Logo-French-Douane.svg';
+import LogoFrenchRepublic from '@/assets/images/Logo-French-Republic.svg';
+import Logo from '@/assets/images/Logo.svg';
 
 export type SvgNames =
+  | 'logo'
+  | 'logoFrenchRepublic'
+  | 'logoFrenchDouane'
+  | 'logoDouane'
   | 'add'
   | 'home'
   | 'info'
   | 'arrowRight'
+  | 'basketColor'
   | 'boat'
   | 'car'
   | 'plane'
+  | 'plants'
   | 'train'
+  | 'traveler'
   | 'other'
+  | 'pet'
   | 'liteSearch'
   | 'luggages'
   | 'calculator'
   | 'phone'
   | 'mail'
+  | 'meat'
+  | 'medication'
+  | 'milk'
+  | 'money'
+  | 'officerCap'
   | 'question'
   | 'search'
+  | 'sweets'
+  | 'tea'
   | 'basket'
+  | 'bigArrowRight'
   | 'ain'
   | 'hauteSavoie'
+  | 'coffee'
+  | 'completeBasket'
+  | 'dairy'
+  | 'folder'
+  | 'forbidden'
+  | 'watch'
   | 'categoryAccessory'
   | 'categoryAccordions'
   | 'categoryAdultClothes'
+  | 'categoryAdvertisingCatalog'
   | 'categoryAlcohol'
+  | 'categoryAlcoholIntermediate'
   | 'categoryArt'
   | 'categoryBamboo'
   | 'categoryBeautyProducts'
+  | 'categoryBeer'
   | 'categoryBedding'
   | 'categoryBinoculars'
   | 'categoryBooks'
@@ -190,8 +244,10 @@ export type SvgNames =
   | 'categorySki'
   | 'categorySmartphone'
   | 'categorySocks'
-  | 'categorySocks'
+  | 'categorySoftAlcohol'
+  | 'categorySpiritDrink'
   | 'categorySports'
+  | 'categoryStrongAlcohol'
   | 'categorySunglasses'
   | 'categorySynthesizer'
   | 'categoryTobacco'
@@ -207,6 +263,7 @@ export type SvgNames =
   | 'categoryWatches'
   | 'categoryWig'
   | 'categoryWindsurf'
+  | 'categoryWine'
   | 'categoryWood'
   | 'categoryWoodenFloor';
 
@@ -216,6 +273,14 @@ export interface ISvgIconProps {
 
 const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
+    case 'logo':
+      return Logo;
+    case 'logoFrenchRepublic':
+      return LogoFrenchRepublic;
+    case 'logoFrenchDouane':
+      return LogoFrenchDouane;
+    case 'logoDouane':
+      return LogoDouane;
     case 'add':
       return Add;
     case 'home':
@@ -224,16 +289,24 @@ const getSvgFromName = (name: SvgNames): any => {
       return Info;
     case 'arrowRight':
       return ArrowRight;
+    case 'basketColor':
+      return BasketColor;
     case 'boat':
       return Boat;
     case 'car':
       return Car;
     case 'other':
       return Other;
+    case 'pet':
+      return Pet;
     case 'plane':
       return Plane;
+    case 'plants':
+      return Plants;
     case 'train':
       return Train;
+    case 'traveler':
+      return Traveler;
     case 'liteSearch':
       return LiteSearch;
     case 'luggages':
@@ -244,24 +317,56 @@ const getSvgFromName = (name: SvgNames): any => {
       return Phone;
     case 'mail':
       return Mail;
+    case 'meat':
+      return Meat;
+    case 'medication':
+      return Medication;
+    case 'milk':
+      return Milk;
+    case 'money':
+      return Money;
+    case 'officerCap':
+      return OfficerCap;
     case 'question':
       return Question;
     case 'search':
       return Search;
+    case 'sweets':
+      return Sweets;
+    case 'tea':
+      return Tea;
     case 'basket':
       return Basket;
+    case 'bigArrowRight':
+      return BigArrowRight;
     case 'ain':
       return AinIcon;
     case 'hauteSavoie':
       return HauteSavoieIcon;
+    case 'coffee':
+      return Coffee;
+    case 'completeBasket':
+      return CompleteBasket;
+    case 'dairy':
+      return Dairy;
+    case 'folder':
+      return Folder;
+    case 'forbidden':
+      return Forbidden;
+    case 'watch':
+      return Watch;
     case 'categoryAccessory':
       return CategoryAccessory;
     case 'categoryAccordions':
       return CategoryAccordions;
     case 'categoryAdultClothes':
       return CategoryAdultClothes;
+    case 'categoryAdvertisingCatalog':
+      return CategoryAdvertisingCatalog;
     case 'categoryAlcohol':
       return CategoryAlcohol;
+    case 'categoryAlcoholIntermediate':
+      return CategoryAlcoholIntermediate;
     case 'categoryArt':
       return CategoryArt;
     case 'categoryBamboo':
@@ -276,6 +381,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryBeautyProducts;
     case 'categoryBedding':
       return CategoryBedding;
+    case 'categoryBeer':
+      return CategoryBeer;
     case 'categoryBinoculars':
       return CategoryBinoculars;
     case 'categoryBooks':
@@ -386,8 +493,14 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategorySki;
     case 'categorySocks':
       return CategorySocks;
+    case 'categorySoftAlcohol':
+      return CategorySoftAlcohol;
+    case 'categorySpiritDrink':
+      return CategorySpiritDrink;
     case 'categorySports':
       return CategorySports;
+    case 'categoryStrongAlcohol':
+      return CategoryStrongAlcohol;
     case 'categorySunglasses':
       return CategorySunglasses;
     case 'categorySynthesizer':
@@ -418,6 +531,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryWig;
     case 'categoryWindsurf':
       return CategoryWindsurf;
+    case 'categoryWine':
+      return CategoryWine;
     case 'categoryWood':
       return CategoryWood;
     case 'categoryWoodenFloor':

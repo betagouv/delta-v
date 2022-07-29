@@ -1,3 +1,5 @@
+import { Alpha2Code } from 'i18n-iso-countries';
+
 import { SvgNames } from '@/components/common/SvgIcon';
 
 export interface Product {
@@ -7,7 +9,10 @@ export interface Product {
   info: string;
   icon?: SvgNames;
   finalProduct: boolean;
+  productType: ProductType;
+  amountProduct?: AmountProduct;
   productDisplayTypes: ProductDisplayTypes;
+  countries: Alpha2Code[];
   childrenQuestion: string | null;
   nomenclatures?: string[] | null;
   customDuty?: number | null;
@@ -15,6 +20,27 @@ export interface Product {
   subProducts: Product[];
   relatedWords: string[];
   related?: string;
+}
+
+export enum AmountProduct {
+  tobaccoCategory = 'tobaccoCategory',
+  alcoholCategory = 'alcoholCategory',
+  cigarette = 'cigarette',
+  cigarillos = 'cigarillos',
+  cigar = 'cigar',
+  tobacco = 'tobacco',
+  strongAlcohol = 'strongAlcohol',
+  softAlcohol = 'softAlcohol',
+  beer = 'beer',
+  wine = 'wine',
+  sparklingWine = 'sparklingWine',
+  spiritDrink = 'spiritDrink',
+  alcoholIntermediate = 'alcoholIntermediate',
+}
+
+export enum ProductType {
+  amount = 'amount',
+  value = 'value',
 }
 
 export enum ProductDisplayTypes {

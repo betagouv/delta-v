@@ -7,10 +7,13 @@ export enum Routing {
   simulator = '/simulateur/configuration/etape0',
   faq = '/faqs',
   prepareMyTrip = '/preparer-mon-voyage',
+  prepareMyTripConfig = '/preparer-mon-voyage/configuration',
   about = '/a-propos',
+  tuto = '/tuto',
 }
 
 export const disabledCountries: Alpha2Code[] = [
+  'FR',
   'BL',
   'GF',
   'PF',
@@ -39,7 +42,7 @@ export const MENU_ITEMS: TabItem[] = [
       </>
     ),
     icon: 'luggages',
-    path: Routing.prepareMyTrip,
+    path: Routing.prepareMyTripConfig,
   },
   {
     icon: 'calculator',
@@ -49,7 +52,7 @@ export const MENU_ITEMS: TabItem[] = [
         mes achats
       </>
     ),
-    path: Routing.simulator,
+    simulator: true,
   },
   {
     icon: 'question',

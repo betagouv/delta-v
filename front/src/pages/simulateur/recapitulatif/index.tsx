@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 
+import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { SummarySimulator } from '@/components/business/summarySimulator';
+import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
@@ -10,6 +12,7 @@ import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 export interface FormUpdateShoppingProduct {
   name?: string;
@@ -18,6 +21,7 @@ export interface FormUpdateShoppingProduct {
 }
 
 const Summary = () => {
+  const router = useRouter();
   const { simulate, simulatorRequest, simulatorResponse } = useStore(
     (state) => ({
       simulate: state.simulate,
@@ -48,33 +52,66 @@ const Summary = () => {
           simulatorRequest={simulatorRequest}
           simulatorResponse={simulatorResponse}
         />
+        <div>
+          <Typography weight="bold" color="secondary" lineHeight="leading-loose">
+            Merci d’avoir utilisé le simulateur !
+          </Typography>
+          <Typography color="secondary">
+            Les informations sont fournies par
+            <br />
+            le simulateur à titre indicatif.
+          </Typography>
+          <div className="mt-4">
+            <div>
+              Si vous ramenez ces produits en France, vous devrez vous rapprocher des{' '}
+              <span
+                onClick={() => router.push(`${Routing.faq}?id=16`)}
+                className="cursor-pointer text-link underline"
+              >
+                services douaniers présents à votre arrivée pour les déclarer.
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="mt-2">
+          <Link to={Routing.home}>
+            <Button fullWidth>Revenir à l’accueil</Button>
+          </Link>
+        </div>
+        <div className="mb-2">
+          <Link to={Routing.simulator}>
+            <Button variant="outlined" fullWidth>
+              Nouvelle simulation
+            </Button>
+          </Link>
+        </div>
         <Typography weight="bold" color="secondary">
           Des questions ?
         </Typography>
         <div className="flex flex-col gap-2">
-          <Link to="/">
+          <Link to={`${Routing.faq}?id=17`}>
             <Typography underline color="link">
               Pourquoi n’ai-je rien à payer ?
             </Typography>
           </Link>
-          <Link to="/">
+          <Link to={`${Routing.faq}?id=3`}>
             <Typography underline color="link">
               Pourquoi dois-je payer des droits et taxes ?
             </Typography>
           </Link>
-          <Link to="/">
+          <Link to={`${Routing.faq}?id=19.1`}>
             <Typography underline color="link">
               Comment payer ce que je dois ?
             </Typography>
           </Link>
-          <Link to="/">
+          <Link to={`${Routing.faq}?id=3`}>
             <Typography underline color="link">
               Pourquoi dois-je passer au guichet Douane ?
             </Typography>
           </Link>
         </div>
-        <Link to="/">
-          <Typography weight="bold" color="link">
+        <Link to={Routing.faq}>
+          <Typography tag="div" weight="bold" color="link">
             <div className="flex flex-row">
               En savoir plus
               <div className="ml-1 h-3.5 w-3.5">

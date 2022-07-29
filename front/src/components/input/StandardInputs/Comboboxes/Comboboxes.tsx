@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
@@ -35,6 +35,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
   trailingIcon,
 }) => {
   const [query, setQuery] = useState('');
+  const [filteredOptions, setFilteredOptions] = useState<Options[]>([]);
   const [selectedOption, setSelectedOption] = useState<Options>({ id: null, value: '' });
   const { field } = useController({
     control,
@@ -42,12 +43,17 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
     rules,
   });
 
-  const filteredOptions =
-    query === ''
-      ? options
-      : options.filter((option) => {
+  useEffect(() => {
+    if (query === '') {
+      setFilteredOptions(options);
+    } else {
+      setFilteredOptions(
+        options.filter((option) => {
           return option.value.toLowerCase().includes(query.toLowerCase());
-        });
+        }),
+      );
+    }
+  }, [query]);
 
   const className = classNames(fullWidth ? 'w-full' : 'max-w-fit');
   let classNameCombobox =
@@ -69,7 +75,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
           value={query}
         />
         {trailingIcon && (
-          <div className="absolute inset-y-0 right-0 z-50 flex h-full w-9 items-center pr-4">
+          <div className="absolute inset-y-0 right-0 z-10 flex h-full w-9 items-center pr-4">
             {query.length === 0 ? (
               <Icon name={trailingIcon} />
             ) : (
@@ -80,7 +86,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
           </div>
         )}
         {filteredOptions.length > 0 && query.length > 0 && (
-          <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md p-0 py-1 text-base">
+          <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-0 py-1 text-base">
             {filteredOptions.map((option) => (
               <div
                 key={option.id}
@@ -90,6 +96,9 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
                   const newSelectedOption = wasAlreadyChecked ? { id: null, value: '' } : option;
                   setSelectedOption(newSelectedOption);
                   field.onChange(option.id);
+                  setTimeout(() => {
+                    setFilteredOptions([]);
+                  }, 250);
                 }}
               >
                 <span

@@ -1,5 +1,6 @@
-import { Product, ProductDisplayTypes } from '../../../entities/product.entity';
+import { Product, ProductDisplayTypes, ProductType } from '../../../entities/product.entity';
 import { sortProducts } from '../../../utils/product.util';
+import { AmountProduct } from '../../simulator/services/amountProducts/globalAmount.service';
 
 export interface SerializedProduct {
   id: string;
@@ -8,6 +9,9 @@ export interface SerializedProduct {
   info?: string;
   radioValue?: string;
   finalProduct: boolean;
+  productType: ProductType;
+  amountProduct?: AmountProduct;
+  countries: string[];
   productDisplayTypes: ProductDisplayTypes;
   childrenQuestion?: string;
   customDuty?: number;
@@ -23,7 +27,10 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   icon: product.icon,
   radioValue: product.radioValue,
   finalProduct: product.finalProduct,
+  amountProduct: product.amountProduct,
+  productType: product.productType,
   productDisplayTypes: product.productDisplayTypes,
+  countries: product.countries,
   info: product.info,
   childrenQuestion: product.childrenQuestion,
   customDuty: product.customDuty,

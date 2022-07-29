@@ -1,6 +1,6 @@
 import { serializeSimulator } from '../../../src/api/simulator/serializer';
 import { AmountGroup } from '../../../src/api/simulator/services/amountProducts/globalAmount.service';
-import { GroupedTobacco } from '../../../src/api/simulator/services/amountProducts/tobacco.service';
+import { GroupedTobacco } from '../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
 import { productEntityFactory } from '../../helpers/factories/product.factory';
 import { productTaxesEntityFactory } from '../../helpers/factories/productTaxes.factory';
 
@@ -46,8 +46,8 @@ describe('test serializer', () => {
           customDuty: 12,
           vat: 20,
           unitCustomDuty: 10.2,
-          unitVat: 17,
-          unitTaxes: 27.2,
+          unitVat: 19.04,
+          unitTaxes: 29.24,
         },
         {
           customName: 'product2',
@@ -56,8 +56,8 @@ describe('test serializer', () => {
           customDuty: 5,
           vat: 20,
           unitCustomDuty: 5,
-          unitVat: 20,
-          unitTaxes: 25,
+          unitVat: 21,
+          unitTaxes: 26,
         },
       ],
       amountProducts: [
@@ -76,8 +76,8 @@ describe('test serializer', () => {
       ],
       total: 185,
       totalCustomDuty: 15.2,
-      totalVat: 37,
-      totalTaxes: 52.2,
+      totalVat: 40.04,
+      totalTaxes: 55.24,
       franchiseAmount: 500,
     });
   });

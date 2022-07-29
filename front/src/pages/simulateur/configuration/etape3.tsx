@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { InputGroup } from '@/components/input/InputGroup';
@@ -16,11 +16,10 @@ export interface FormSimulatorData {
 }
 
 const Configuration = () => {
-  const { resetSteps, validateStep3, meanOfTransport } = useStore(
+  const { resetSteps, validateStep3 } = useStore(
     (state) => ({
       resetSteps: state.resetSteps,
       validateStep3: state.validateStep3,
-      meanOfTransport: state.simulator.appState.simulatorRequest.meanOfTransport,
     }),
     shallow,
   );
@@ -46,7 +45,7 @@ const Configuration = () => {
     }
     validateStep3(data.country);
 
-    if (meanOfTransport === 'car' && data.country === 'CH') {
+    if (data.country === 'CH') {
       router.push(`/simulateur/configuration/etape4`);
     } else {
       router.push(`/simulateur/produits`);
@@ -72,11 +71,11 @@ const Configuration = () => {
     <ConfigurationSteps
       fromProgression={50}
       toProgression={75}
-      handleSubmit={handleSubmit}
+      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={onSubmit}
     >
       <InputGroup
-        label="Quel est le pays d’où vous arrivez ?"
+        label="De quel pays arrivez-vous ?"
         type="comboboxes"
         fullWidth={true}
         name="country"

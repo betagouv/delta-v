@@ -91,7 +91,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
         <>
           <label
             htmlFor={name}
-            className={`block text-base font-bold mb-4`}
+            className={`mb-4 block text-base font-bold`}
             data-testid="label-element"
           >
             {label}

@@ -4,7 +4,7 @@ import { service } from '../../../src/api/simulator/service';
 import {
   AmountTobaccoProduct,
   GroupedTobacco,
-} from '../../../src/api/simulator/services/amountProducts/tobacco.service';
+} from '../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
 import { HttpStatuses } from '../../../src/core/httpStatuses';
 import { ProductType } from '../../../src/entities/product.entity';
 import { productEntityFactory } from '../../helpers/factories/product.factory';

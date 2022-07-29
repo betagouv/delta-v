@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Alpha2Code } from 'i18n-iso-countries';
 import { AmountProduct } from '../../../../../src/api/simulator/services/amountProducts/globalAmount.service';
-import { TobaccoGroup } from '../../../../../src/api/simulator/services/amountProducts/tobacco.service';
+import { TobaccoGroup } from '../../../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
 import { productEntityFactory } from '../../../../helpers/factories/product.factory';
 
 describe('TobaccoGroup', () => {

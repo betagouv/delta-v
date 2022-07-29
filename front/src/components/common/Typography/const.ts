@@ -20,6 +20,7 @@ export const variantStringList = [
   'label',
   'labelStrong',
   'small',
+  'div',
 ] as const;
 
 export const tagStringList = [
@@ -49,6 +50,7 @@ export enum HTMLTagToVariantMapping {
   h6 = 'h6',
   p = 'body1',
   a = 'body1',
+  div = 'div',
   blockquote = 'quote1',
   caption = 'body1',
   label = 'label',

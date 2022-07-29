@@ -2,6 +2,8 @@
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { createGlobalAppStateSlice, GlobalAppStateSlice } from './global/appState.store';
+import { createUseCaseGlobalSlice, GlobalUseCaseSlice } from './global/useCase.store';
 import { createProductsAppStateSlice, ProductsAppStateSlice } from './products/appState.store';
 import { createUseCaseProductSlice, ProductsUseCaseSlice } from './products/useCase.store';
 import {
@@ -14,7 +16,9 @@ import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/
 export type StoreState = SimulatorUseCaseSlice &
   SimulatorAppStateSlice &
   ProductsUseCaseSlice &
-  ProductsAppStateSlice;
+  ProductsAppStateSlice &
+  GlobalUseCaseSlice &
+  GlobalAppStateSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -39,6 +43,8 @@ export const useStore = create<StoreState>(
       ...createUseCaseSimulatorSlice(set, get, api),
       ...createUseCaseProductSlice(set, get, api),
       ...createProductsAppStateSlice(set, get, api),
+      ...createGlobalAppStateSlice(set, get, api),
+      ...createUseCaseGlobalSlice(set, get, api),
     }),
     {
       name: 'app-storage',

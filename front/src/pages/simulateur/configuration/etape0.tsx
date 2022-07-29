@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/common/Button';
@@ -15,10 +15,11 @@ export interface FormSimulatorData {
 }
 
 const Configuration = () => {
-  const { resetSteps, validateStep0 } = useStore(
+  const { resetSteps, validateStep0, hideInfoSimulator } = useStore(
     (state) => ({
       resetSteps: state.resetSteps,
       validateStep0: state.validateStep0,
+      hideInfoSimulator: state.hideInfoSimulator,
     }),
     shallow,
   );
@@ -40,6 +41,10 @@ const Configuration = () => {
   const onSubmit = (data: FormSimulatorData) => {
     const shouldDisplayInfoNextTime = !data.notDisplayAnymore;
     validateStep0(shouldDisplayInfoNextTime);
+
+    if (data.notDisplayAnymore) {
+      hideInfoSimulator();
+    }
     router.push(`/simulateur/configuration/etape1`);
   };
 
@@ -47,18 +52,15 @@ const Configuration = () => {
     <ConfigurationSteps
       fromProgression={0}
       toProgression={12}
-      handleSubmit={handleSubmit}
+      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={onSubmit}
     >
       <div className="flex flex-col gap-4 text-base">
         <p>
-          Le <span className="font-bold">simulateur DéclareDouane</span> vous permet d’
+          Avec seulement quelques informations et en quelques clics, le{' '}
+          <span className="font-bold">simulateur DéclareDouane</span> vous permet d’
           <span className="font-bold">estimer les éventuels droits et taxes</span> que vous auriez à
-          payer si vous rameniez avec vous un produit de l’étranger.
-        </p>
-        <p>
-          Avec seulement quelques infos et en quelques clics vous pourrez calculer vos éventuels
-          droits et taxes.
+          payer si vous rameniez avec vous des produits de l’étranger.
         </p>
         <p>
           <span className="font-bold">Facilitez votre passage frontière avec ce simulateur</span>,

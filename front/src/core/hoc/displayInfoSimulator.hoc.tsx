@@ -8,7 +8,7 @@ export const displayInfoSimulator = (Component: React.FC) => {
   const CheckSimulator = (props: any) => {
     const router = useRouter();
 
-    const displayInfo = useStore((state) => state.simulator.appState.displayInfo);
+    const displayInfo = useStore((state) => state.global.appState.displayInfoSimulator);
     const defaultComponent = <Component {...props} />;
 
     const [loading, setLoading] = useState(true);

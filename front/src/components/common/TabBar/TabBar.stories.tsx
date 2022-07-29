@@ -22,7 +22,7 @@ const items: TabItem[] = [
 
 export const base = (): JSX.Element => (
   <div className="p-3">
-    <TabBar items={items} />
+    <TabBar items={items} openSimulator={() => {}} />
     <br />
   </div>
 );

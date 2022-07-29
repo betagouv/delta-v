@@ -31,7 +31,10 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
           onClick={() => onClickProduct(resultElement.id)}
         >
           <div className="flex flex-col">
-            <Typography color="secondary" size="text-lg" lineHeight="leading-none">
+            <Typography color="light-gray" size="text-sm" lineHeight="leading-normal" italic>
+              {resultElement.name}
+            </Typography>
+            <Typography color="secondary" size="text-lg" lineHeight="leading-tight">
               {resultElement.rankedValue}
             </Typography>
           </div>
@@ -42,7 +45,7 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
             name="candidates"
             type="checkbox"
             checked={resultElement.id === productChecked}
-            className="flex h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600 focus:ring-transparent"
+            className="mt-3 flex h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600 focus:ring-transparent"
           />
         </li>
       ))}

@@ -12,25 +12,9 @@ import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
+import { getAmountCategoryName, getMessageOverMaximumAmount, getUnit } from '@/model/amount';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
-
-const getAmountCategoryName = (key: string): string => {
-  switch (key) {
-    case 'allTobaccoProducts':
-      return 'Tabac';
-    case 'cigarette':
-      return 'Cigarettes';
-    case 'cigarillos':
-      return 'Cigarillos';
-    case 'cigar':
-      return 'Cigare';
-    case 'tobacco':
-      return 'Tabac à fumer';
-    default:
-      return '';
-  }
-};
 
 const Panier = () => {
   const router = useRouter();
@@ -97,7 +81,11 @@ const Panier = () => {
               {amountProduct.products.map((product) => (
                 <ProductBasket
                   containError={amountProduct.isOverMaximum}
-                  dataBasket={{ unit: 'unités', value: product.amount, ...product }}
+                  dataBasket={{
+                    unit: getUnit(product.amountProduct) ?? '',
+                    value: product.amount,
+                    ...product,
+                  }}
                   onDeleteProduct={() => {
                     idToDelete.current = product.customId;
                     setOpenActionModal(true);
@@ -113,7 +101,8 @@ const Panier = () => {
                     <Icon name="error" />
                   </div>
                   <p className="flex-1">
-                    Vous dépassez la limite légale d'unités de tabac. Pour connaître les quantités
+                    Vous dépassez la limite légale d'unités{' '}
+                    {getMessageOverMaximumAmount(amountProduct.group)}. Pour connaître les quantités
                     maximales autorisées cliquez sur l'encart rouge ci-dessus
                   </p>
                 </div>

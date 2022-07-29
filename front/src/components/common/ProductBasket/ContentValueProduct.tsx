@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import { Typography } from '../Typography';
 
 interface DetailedCalculation {
@@ -10,53 +12,44 @@ interface DetailedCalculation {
 
 interface ContentValueProductProps {
   detailedCalculation: DetailedCalculation;
+  displaySmall?: boolean;
 }
 
 export const ContentValueProduct: React.FC<ContentValueProductProps> = ({
   detailedCalculation: { customDuty, vat, unitCustomDuty, unitPrice, unitVat },
+  displaySmall = false,
 }: ContentValueProductProps) => {
   return (
     <>
       <div className="mt-2">
-        <Typography color="primary" size="text-base">
+        <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
+          Calcul des droits de douane
+        </Typography>
+      </div>
+      <p
+        className={classNames({
+          'w-full text-primary-700': true,
+          'text-base': !displaySmall,
+          'text-sm': displaySmall,
+        })}
+      >
+        {unitPrice} <span className="text-secondary-900">x {customDuty}% =</span> {unitCustomDuty} €
+      </p>
+      <div className="mt-2">
+        <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
           Calcul de la TVA
         </Typography>
       </div>
-      <div className="flex flex-row">
-        <Typography color="primary" size="text-base">
-          {unitPrice}
-        </Typography>
-        <div className="ml-1">
-          <Typography color="secondary" size="text-base">
-            x {vat}% =
-          </Typography>
-        </div>
-        <div className="ml-1">
-          <Typography color="primary" size="text-base">
-            {unitVat} €
-          </Typography>
-        </div>
-      </div>
-      <div className="mt-2">
-        <Typography color="primary" size="text-base">
-          Calcul des droits de douanes
-        </Typography>
-      </div>
-      <div className="flex flex-row">
-        <Typography color="primary" size="text-base">
-          {unitPrice}
-        </Typography>
-        <div className="ml-1">
-          <Typography color="secondary" size="text-base">
-            x {customDuty}% =
-          </Typography>
-        </div>
-        <div className="ml-1">
-          <Typography color="primary" size="text-base">
-            {unitCustomDuty} €
-          </Typography>
-        </div>
-      </div>
+      <p
+        className={classNames({
+          'w-full text-primary-700': true,
+          'text-base': !displaySmall,
+          'text-sm': displaySmall,
+        })}
+      >
+        ({unitPrice} + {unitCustomDuty}) <span className="text-secondary-900">x {vat}% =</span>{' '}
+        {unitVat} €
+      </p>
     </>
   );
 };
