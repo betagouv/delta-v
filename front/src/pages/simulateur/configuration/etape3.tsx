@@ -16,11 +16,10 @@ export interface FormSimulatorData {
 }
 
 const Configuration = () => {
-  const { resetSteps, validateStep3, meanOfTransport } = useStore(
+  const { resetSteps, validateStep3 } = useStore(
     (state) => ({
       resetSteps: state.resetSteps,
       validateStep3: state.validateStep3,
-      meanOfTransport: state.simulator.appState.simulatorRequest.meanOfTransport,
     }),
     shallow,
   );
@@ -46,7 +45,7 @@ const Configuration = () => {
     }
     validateStep3(data.country);
 
-    if (meanOfTransport === 'car' && data.country === 'CH') {
+    if (data.country === 'CH') {
       router.push(`/simulateur/configuration/etape4`);
     } else {
       router.push(`/simulateur/produits`);

@@ -21,7 +21,9 @@ const index = () => {
       withHeader
       withTitle
     >
-      <About items={[...LegalMentions, ...PersonalData]} linkId={linkId} />
+      <div className="mt-5">
+        <About items={[...LegalMentions, ...PersonalData]} linkId={linkId} />
+      </div>
     </Main>
   );
 };

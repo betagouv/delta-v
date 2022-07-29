@@ -29,8 +29,9 @@ const Index = () => {
   const openSimulator = () => {
     if (getLevelWithData(simulatorRequest) === 1) {
       router.push(Routing.simulator);
+    } else {
+      setOpenModalResumeSimulator(true);
     }
-    setOpenModalResumeSimulator(true);
   };
   return (
     <Main
@@ -75,7 +76,7 @@ const Index = () => {
         </div>
 
         <div className="flex flex-col gap-4">
-          <Link to={Routing.prepareMyTrip}>
+          <Link to={Routing.prepareMyTripConfig}>
             <Card
               title="Préparer mon voyage"
               description="Les documents à prévoir avant votre voyage, les conseils..."

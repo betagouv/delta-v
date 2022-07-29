@@ -23,7 +23,7 @@ export const ContentValueProduct: React.FC<ContentValueProductProps> = ({
     <>
       <div className="mt-2">
         <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
-          Calcul des droits de douanes
+          Calcul des droits de douane
         </Typography>
       </div>
       <p

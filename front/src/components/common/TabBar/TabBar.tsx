@@ -20,7 +20,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
   const { pathname } = router;
   const splitPath = pathname.split('/');
 
-  const renderTabBarItem = ({ icon, title, path, simulator }: TabItem) => {
+  const renderTabBarItem = ({ icon, title, path, simulator }: TabItem, index: number) => {
     const activeTab = splitPath[1] === path?.split('/')[1];
 
     const onClickMenu = () => {
@@ -40,7 +40,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
           'opacity-40': !activeTab,
         })}
         onClick={onClickMenu}
-        key={path}
+        key={index}
       >
         <div className="mb-2 h-6 w-auto">
           <SvgIcon name={icon} />
@@ -52,7 +52,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
 
   return (
     <div className="sticky bottom-0 z-30 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
-      {items.map((item) => renderTabBarItem(item))}
+      {items.map((item, index) => renderTabBarItem(item, index))}
     </div>
   );
 };

@@ -17,6 +17,7 @@ export interface SimulatorUseCaseSlice {
   validateStep2: (meanOfTransport: MeansOfTransport) => void;
   validateStep3: (country: Alpha2Code) => void;
   validateStep4: (border: boolean) => void;
+  isSimulatorAlreadyStarted: () => boolean;
   resetSteps: (step: number) => void;
   addProduct: (shoppingProduct: ShoppingProduct) => void;
   removeProduct: (id: string) => void;
@@ -74,6 +75,9 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       newState.simulator.appState.simulatorRequest.border = border;
       return newState;
     });
+  },
+  isSimulatorAlreadyStarted: (): boolean => {
+    return get().simulator.appState.simulatorRequest.age !== undefined;
   },
   resetSteps: (step: number): void => {
     set((state: any) => {

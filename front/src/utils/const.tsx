@@ -7,6 +7,7 @@ export enum Routing {
   simulator = '/simulateur/configuration/etape0',
   faq = '/faqs',
   prepareMyTrip = '/preparer-mon-voyage',
+  prepareMyTripConfig = '/preparer-mon-voyage/configuration',
   about = '/a-propos',
   tuto = '/tuto',
 }
@@ -41,7 +42,7 @@ export const MENU_ITEMS: TabItem[] = [
       </>
     ),
     icon: 'luggages',
-    path: Routing.prepareMyTrip,
+    path: Routing.prepareMyTripConfig,
   },
   {
     icon: 'calculator',
