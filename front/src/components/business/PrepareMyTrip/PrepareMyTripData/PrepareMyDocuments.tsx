@@ -19,7 +19,7 @@ export const PrepareMyDocuments: AccordionData[] = [
           <img src={Identification.src} />
         </div>
         <Typography weight="bold" color="secondary" textPosition="text-center">
-          Votre carte National d’identité ou votre passeport... et votre situation.
+          Votre carte nationale d’identité ou votre passeport selon votre situation.
         </Typography>
         <div>
           Pour toute question relative aux documents d’identité, aux visas ou aux autorisation de
@@ -36,21 +36,21 @@ export const PrepareMyDocuments: AccordionData[] = [
               ministère de l’Europe et des affaires étrangères
             </span>
           </Link>
+          .
         </div>
         <Typography weight="bold" color="secondary">
           Vous ramenez avec vous des marchandises depuis l’étranger et revenez en France.
         </Typography>
         <Typography color="secondary">
-          Vous devez déclarer à la douane ces produits que vous transportez. Pour faciliter votre
-          arrivée en France, préparez tous les documents :
+          Vous devez déclarer à la douane ces produits que vous transportez avec vous. Pour
+          faciliter votre arrivée en France, préparez tous les documents suivants :
         </Typography>
         <div className="flex w-full items-center">
           <img src={Declaration.src} />
         </div>
         <div>
-          Votre <span className="text-link underline">déclaration de marchandises</span> et/ou{' '}
-          <span className="text-link underline">de capitaux</span> si effectif, factures permettant
-          de prouver l’achat et la valeur de ces produits.
+          Votre déclaration de capitaux si vous en avez et les éventuels factures permettant de
+          prouver l’achat et la valeur de ces produits.
         </div>
       </div>
     ),

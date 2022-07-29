@@ -85,7 +85,7 @@ export const Buying = (props: BuyingProps): AccordionData[] => {
   return [
     {
       id: '3',
-      question: 'Avez-vous fait des achats ?',
+      question: "Ramenez-vous des produits de l'étranger ?",
       iconName: 'basketColor',
       answer: <ContentBuying {...props} />,
     },

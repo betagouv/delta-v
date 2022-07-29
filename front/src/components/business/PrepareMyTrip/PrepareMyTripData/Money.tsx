@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 
 import { AccordionData } from '@/components/common/Accordion/Accordion';
 import { Link } from '@/components/common/Link';
-import { InputGroup } from '@/components/input/InputGroup';
+import { Typography } from '@/components/common/Typography';
+import { Radio } from '@/components/input/StandardInputs/Radio';
 
 export interface FormData {
   moreThan10k?: boolean;
@@ -39,12 +40,12 @@ const ContentMoney: React.FC = () => {
 
   return (
     <div className="mt-4 flex w-full flex-col items-center gap-4">
-      <div className="mb-2">
-        <InputGroup
-          label="de plus de 10 000 € ?"
-          type="radio"
-          name="adult"
-          fullWidth={false}
+      <div className="mb-2 flex flex-col items-center gap-4">
+        <Typography weight="bold" color="secondary" size="text-base">
+          Pour un total de plus de 10 000 € ?
+        </Typography>
+        <Radio
+          name="moreThan10k"
           register={register('moreThan10k')}
           radioValues={[
             { id: 'true', value: 'Oui' },
@@ -56,7 +57,7 @@ const ContentMoney: React.FC = () => {
       {moreThan10k === true && (
         <>
           <div>
-            Vous pouvez d’ores et deja déclarez vos capitaux sur{' '}
+            Vous pouvez d’ores et déjà déclarer vos sommes et liquidités sur{' '}
             <Link href="https://www.douane.gouv.fr/dalia/Dalia.jsp" external>
               <span className="text-link underline">Dalia</span>
             </Link>
@@ -64,8 +65,8 @@ const ContentMoney: React.FC = () => {
           </div>
 
           <p>
-            Cette obligation de déclaration concerne toute forme de capitaux et quelque soit votre
-            nationalité ainsi que le voyage que vous effectuez.
+            Cette obligation de déclaration concerne toute forme de capitaux et quelle que soit
+            votre nationalité ainsi que le motif ou la destination de votre voyage.
           </p>
           <p>
             Le seuil de 10 000 € s’applique également aux personnes entre lesquelles il existe une
@@ -81,7 +82,7 @@ const ContentMoney: React.FC = () => {
 export const Money: AccordionData[] = [
   {
     id: '6',
-    question: 'Avez-vous des capitaux ? ',
+    question: "Transportez-vous de l'argent en espèce ? ",
     iconName: 'money',
     answer: <ContentMoney />,
   },

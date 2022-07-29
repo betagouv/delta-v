@@ -27,7 +27,7 @@ export const NonEuBorder: React.FC = () => {
   return (
     <>
       <Typography size="text-lg" weight="bold" color="secondary" textPosition="text-center">
-        Franchise en valeur
+        Produits normaux
       </Typography>
       <div className="-mt-3">
         <Typography
@@ -37,7 +37,8 @@ export const NonEuBorder: React.FC = () => {
           textPosition="text-center"
           weight="light"
         >
-          Si vous êtes en dessous de ce montant, vous n'aurez rien à payer.
+          Selon votre âge, la limite à partir de laquelle vous devrez payer des droits et taxes
+          varie
         </Typography>
       </div>
       <div className="flex flex-col gap-5 px-8">
@@ -66,7 +67,7 @@ export const NonEuBorder: React.FC = () => {
                 </div>
               </div>
               <div className="w-20 text-center leading-4">
-                Franchise de <span className="font-bold">40 €</span>
+                Seuil de <span className="font-bold">40 €</span>
               </div>
             </div>
           </div>
@@ -97,7 +98,7 @@ export const NonEuBorder: React.FC = () => {
                 </div>
               </div>
               <div className="w-20 text-center leading-4">
-                Franchise de <span className="font-bold">75 €</span>
+                Seuil de <span className="font-bold">75 €</span>
               </div>
             </div>
           </div>
@@ -106,7 +107,7 @@ export const NonEuBorder: React.FC = () => {
       </div>
       <div className="mt-6">
         <Typography size="text-lg" weight="bold" color="secondary" textPosition="text-center">
-          Franchise en volume
+          Produits spécifiques
         </Typography>
       </div>
       <div className="-mt-3">
@@ -117,7 +118,7 @@ export const NonEuBorder: React.FC = () => {
           textPosition="text-center"
           weight="light"
         >
-          Vous ne pourrez pas rammener une quantité de marchandise supérieur à la franchise.
+          Les produits suivants sont soumis à une réglementation particulière.
         </Typography>
       </div>
       <div className="mt-2 flex w-full flex-col items-center">
@@ -174,7 +175,7 @@ export const NonEuBorder: React.FC = () => {
         onClick={openSimulator}
         className="my-2 inline-flex w-fit flex-row-reverse place-content-center items-center rounded-full border border-primary-600 bg-white px-4 py-2.5 text-sm font-normal text-primary-600 shadow-sm focus:outline-none active:border-primary-500 active:bg-gray-300 active:text-primary-500 disabled:bg-white disabled:text-primary-600"
       >
-        Simuler vos achats dès maintenant
+        Utilisez notre simulateur
         <div className="mr-2 flex h-6 items-center">
           <SvgIcon name="calculator" />
         </div>

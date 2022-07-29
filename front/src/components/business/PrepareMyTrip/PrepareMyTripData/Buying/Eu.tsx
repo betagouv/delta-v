@@ -26,10 +26,10 @@ export const Eu: React.FC = () => {
   return (
     <>
       <Typography size="text-lg" weight="bold" color="secondary" textPosition="text-center">
-        Franchise en valeur
+        Produits normaux
       </Typography>
       <Typography size="text-sm" italic color="secondary" textPosition="text-center">
-        Si vous êtes en dessous de ce montant, vous n'aurez rien à payer.
+        La plupart des produits achetés dans l'UE ne sont pas taxés.
       </Typography>
       <div className="mt-6 flex flex-row">
         <div className="flex flex-col items-center gap-2">
@@ -57,11 +57,11 @@ export const Eu: React.FC = () => {
       </Typography>
       <div className="mt-6">
         <Typography size="text-lg" weight="bold" color="secondary" textPosition="text-center">
-          Franchise en volume
+          Produits spécifiques
         </Typography>
       </div>
       <Typography size="text-sm" italic color="secondary" textPosition="text-center">
-        Vous ne pourrez pas rammener une quantité de marchandise supérieur à la franchise.
+        Les produits suivants sont soumis à une réglementation particulière.
       </Typography>
 
       <div className="mt-2 flex w-full flex-col items-center">
@@ -98,7 +98,7 @@ export const Eu: React.FC = () => {
         onClick={openSimulator}
         className="inline-flex w-fit flex-row-reverse place-content-center items-center rounded-full border border-primary-600 bg-white px-4 py-2.5 text-sm font-normal text-primary-600 shadow-sm focus:outline-none active:border-primary-500 active:bg-gray-300 active:text-primary-500 disabled:bg-white disabled:text-primary-600"
       >
-        Simuler vos achats dès maintenant
+        Utilisez notre simulateur
         <div className="mr-2 flex h-6 items-center">
           <SvgIcon name="calculator" />
         </div>

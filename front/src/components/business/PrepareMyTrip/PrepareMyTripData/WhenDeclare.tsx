@@ -11,7 +11,7 @@ export const WhenDeclare: AccordionData[] = [
       <div className="mt-2 flex w-full flex-col gap-8">
         <p>
           Pour déclarer un (ou des) produit(s) que vous avez acheté(s) à l’étranger et que vous
-          ramenez avec vous en France au moment de votre arrivée en France, adressez-vous aux
+          ramenez avec vous au moment de votre arrivée en France métropolitaine, adressez-vous aux
           services douaniers présent à votre arrivée sur le territoire français :
         </p>
         <div className="flex w-full flex-col items-center gap-14">
@@ -48,14 +48,14 @@ export const WhenDeclare: AccordionData[] = [
           </div>
         </div>
         <div>
-          Si je ne croise pas de douaniers à l’occasion de mon retour, je peux également me
-          rapprocher des{' '}
+          Si vous ne croisez pas de douaniers à l’occasion de votre retour, vous pouvez également
+          vous rapprocher des{' '}
           <Link
             href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
             external
           >
             <span className="text-link underline">
-              services douaniers les plus proches de chez moi
+              services douaniers les plus proches de chez vous
             </span>
           </Link>
           .

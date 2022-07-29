@@ -34,7 +34,7 @@ const index = () => {
     if (finalCountryType === CountryType.EU) {
       return (
         <>
-          d'un <span className="text-link">Pays UE</span>.
+          d'un <span className="text-link">pays de l'Union européenne (UE)</span>.
         </>
       );
     }
@@ -55,7 +55,7 @@ const index = () => {
     }
     return (
       <>
-        d'un <span className="text-link">Pays Non UE</span>.
+        d'un <span className="text-link">pays hors Union européenne (UE)</span>.
       </>
     );
   };
