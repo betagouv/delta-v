@@ -34,7 +34,7 @@ const Summary = () => {
     <Main
       meta={
         <Meta
-          title="Simulateur Déclaration Douanes"
+          title="Simulateur Déclare Douanes"
           description="Simuler la déclaration de douane en quelques clics"
         />
       }

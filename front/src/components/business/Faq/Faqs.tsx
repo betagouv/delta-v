@@ -2,20 +2,26 @@ import React, { useEffect, useState } from 'react';
 
 import { scroller } from 'react-scroll';
 
+import { Border } from './FaqData/Border';
+import { Declaration } from './FaqData/Declaration';
+import { Legal } from './FaqData/Legal';
+import { Payment } from './FaqData/Payment';
 import { Accordions } from '@/components/common/Accordion';
-import { AccordionData } from '@/components/common/Accordion/Accordion';
 import { Typography } from '@/components/common/Typography';
 
 export interface FaqsProps {
-  items: {
-    title: string;
-    faqs: AccordionData[];
-  }[];
   linkId?: string;
 }
 
-export const Faqs: React.FC<FaqsProps> = ({ items, linkId }: FaqsProps) => {
+export const Faqs: React.FC<FaqsProps> = ({ linkId }: FaqsProps) => {
   const [currentOpenId, setCurrentOpenId] = useState(linkId);
+
+  const FaqData = [
+    { title: 'Déclaration', faqs: Declaration },
+    { title: 'Passage frontière', faqs: Border },
+    { title: 'Paiement', faqs: Payment },
+    { title: 'Légal', faqs: Legal },
+  ];
 
   useEffect(() => {
     if (linkId) {
@@ -33,7 +39,7 @@ export const Faqs: React.FC<FaqsProps> = ({ items, linkId }: FaqsProps) => {
       <h2 className="text-lg sm:text-4xl">
         Vous trouverez ci-dessous les réponses aux questions les plus fréquentes
       </h2>
-      {items.map((item) => (
+      {FaqData.map((item) => (
         <div key={item.title}>
           <dl className="mt-6">
             <div className="mt-10 mb-4">

@@ -66,7 +66,7 @@ export const Modal: React.FC<IModalProps> = ({
               {title && (
                 <div className="text-center">
                   <Dialog.Title>
-                    <Typography size="text-lg" color="primary" weight="bold">
+                    <Typography size="text-lg" color="primary" weight="bold" lineHeight="leading-4">
                       {title}
                     </Typography>
                   </Dialog.Title>
@@ -74,7 +74,7 @@ export const Modal: React.FC<IModalProps> = ({
               )}
               {subtitle && (
                 <div className="mt-2 text-center">
-                  <Typography size="text-sm" color="secondary">
+                  <Typography size="text-sm" color="secondary" lineHeight="leading-4">
                     {subtitle}
                   </Typography>
                 </div>

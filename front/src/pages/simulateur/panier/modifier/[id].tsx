@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { FormAddProduct } from '@/components/business/formAddProduct';
-import { InputGroup } from '@/components/input/InputGroup';
+import { Input } from '@/components/input/StandardInputs/Input';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
@@ -58,7 +58,7 @@ const UpdateProductBasket = () => {
     <Main
       meta={
         <Meta
-          title="Simulateur Déclaration Douanes"
+          title="Simulateur Déclare Douanes"
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
@@ -72,15 +72,23 @@ const UpdateProductBasket = () => {
         <div>
           <form onSubmit={handleSubmit(onUpdateShoppingProduct)}>
             <div className="flex flex-col gap-6">
-              <InputGroup
-                fullWidth
-                name="name"
-                type="text"
-                label="Nommez votre achat"
-                placeholder="Exemple : Jeans, pantalon noir, slim..."
-                control={control}
-                register={register('name', { required: false })}
-              />
+              <div>
+                <label
+                  htmlFor="name"
+                  className={`mb-4 block text-base font-bold`}
+                  data-testid="label-element"
+                >
+                  Nommez votre achat{' '}
+                  <span className="ml-1 font-normal italic text-gray-400">(facultatif)</span>
+                </label>
+                <Input
+                  fullWidth
+                  name="name"
+                  type="text"
+                  placeholder="Exemple : Jeans, pantalon noir, slim..."
+                  register={register('name', { required: false })}
+                />
+              </div>
               <FormAddProduct
                 product={currentProduct.product}
                 control={control}

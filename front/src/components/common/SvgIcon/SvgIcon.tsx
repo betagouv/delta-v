@@ -25,18 +25,22 @@ import CategoryBooks from '@/assets/icons/categories/Books.svg';
 import CategoryCarRadio from '@/assets/icons/categories/Car-Radio.svg';
 import CategoryCar from '@/assets/icons/categories/Car.svg';
 import CategoryCD from '@/assets/icons/categories/CD.svg';
+import CategoryCeramic from '@/assets/icons/categories/Ceramic.svg';
 import CategoryChildrenClothes from '@/assets/icons/categories/Children-Clothes.svg';
 import CategoryCigar from '@/assets/icons/categories/Cigar.svg';
 import CategoryCigarette from '@/assets/icons/categories/Cigarette.svg';
 import CategoryCigarillos from '@/assets/icons/categories/Cigarillos.svg';
 import CategoryClothes from '@/assets/icons/categories/Clothes.svg';
 import CategoryCologne from '@/assets/icons/categories/Cologne.svg';
+import CategoryCommonGround from '@/assets/icons/categories/Common-Ground.svg';
 import CategoryCopper from '@/assets/icons/categories/Copper.svg';
 import CategoryCotton from '@/assets/icons/categories/Cotton.svg';
+import CategoryCrystal from '@/assets/icons/categories/Crystal.svg';
 import CategoryDecoration from '@/assets/icons/categories/Decoration.svg';
 import CategoryDishes from '@/assets/icons/categories/Dishes.svg';
 import CategoryDVDPlayer from '@/assets/icons/categories/DVD-Player.svg';
 import CategoryDVD from '@/assets/icons/categories/DVD.svg';
+import CategoryEarthenware from '@/assets/icons/categories/Earthenware.svg';
 import CategoryElectricGuitar from '@/assets/icons/categories/Electric-Guitar.svg';
 import CategoryElectronicCigarettes from '@/assets/icons/categories/Electronic-Cigarettes.svg';
 import CategoryFabricGloves from '@/assets/icons/categories/Fabric-Gloves.svg';
@@ -66,11 +70,15 @@ import CategoryMusicBox from '@/assets/icons/categories/Music-Box.svg';
 import CategoryMusic from '@/assets/icons/categories/Music.svg';
 import CategoryNumericPiano from '@/assets/icons/categories/Numeric-Piano.svg';
 import CategoryOther from '@/assets/icons/categories/Other.svg';
+import CategoryPercussionInstrument from '@/assets/icons/categories/Percussion-Instrument.svg';
 import CategoryPerfume from '@/assets/icons/categories/Perfume.svg';
+import CategoryPhoto from '@/assets/icons/categories/Photo.svg';
 import CategoryPiano from '@/assets/icons/categories/Piano.svg';
 import CategoryPlastic from '@/assets/icons/categories/Plastic.svg';
+import CategoryPorcelain from '@/assets/icons/categories/Porcelain.svg';
 import CategoryRattan from '@/assets/icons/categories/Rattan.svg';
 import CategoryRims from '@/assets/icons/categories/Rims.svg';
+import CategorySandstone from '@/assets/icons/categories/Sandstone.svg';
 import CategoryScarf from '@/assets/icons/categories/Scarf.svg';
 import CategoryShoes from '@/assets/icons/categories/Shoes.svg';
 import CategorySilk from '@/assets/icons/categories/Silk.svg';
@@ -191,18 +199,22 @@ export type SvgNames =
   | 'categoryCarRadio'
   | 'categoryCar'
   | 'categoryCD'
+  | 'categoryCeramic'
   | 'categoryChildrenClothes'
   | 'categoryCigarette'
   | 'categoryCigarillos'
   | 'categoryCigar'
   | 'categoryClothes'
   | 'categoryCologne'
+  | 'categoryCommonGround'
   | 'categoryCopper'
   | 'categoryCotton'
+  | 'categoryCrystal'
   | 'categoryDecoration'
   | 'categoryDishes'
   | 'categoryDVDPlayer'
   | 'categoryDVD'
+  | 'categoryEarthenware'
   | 'categoryElectricGuitar'
   | 'categoryElectronicCigarettes'
   | 'categoryFabricGloves'
@@ -234,11 +246,15 @@ export type SvgNames =
   | 'categoryMusic'
   | 'categoryNumericPiano'
   | 'categoryOther'
+  | 'categoryPercussionInstrument'
   | 'categoryPerfume'
+  | 'categoryPhoto'
   | 'categoryPiano'
   | 'categoryPlastic'
+  | 'categoryPorcelain'
   | 'categoryRattan'
   | 'categoryRims'
+  | 'categorySandstone'
   | 'categoryScarf'
   | 'categorySilk'
   | 'categorySki'
@@ -375,6 +391,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryClothes;
     case 'categoryCologne':
       return CategoryCologne;
+    case 'categoryCommonGround':
+      return CategoryCommonGround;
     case 'categoryShoes':
       return CategoryShoes;
     case 'categoryBeautyProducts':
@@ -393,6 +411,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryCar;
     case 'categoryCD':
       return CategoryCD;
+    case 'categoryCeramic':
+      return CategoryCeramic;
     case 'categoryChildrenClothes':
       return CategoryChildrenClothes;
     case 'categoryCigarette':
@@ -405,6 +425,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryCopper;
     case 'categoryCotton':
       return CategoryCotton;
+    case 'categoryCrystal':
+      return CategoryCrystal;
     case 'categoryDecoration':
       return CategoryDecoration;
     case 'categoryDishes':
@@ -413,6 +435,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryDVDPlayer;
     case 'categoryDVD':
       return CategoryDVD;
+    case 'categoryEarthenware':
+      return CategoryEarthenware;
     case 'categoryElectricGuitar':
       return CategoryElectricGuitar;
     case 'categoryElectronicCigarettes':
@@ -473,16 +497,24 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryNumericPiano;
     case 'categoryOther':
       return CategoryOther;
+    case 'categoryPercussionInstrument':
+      return CategoryPercussionInstrument;
     case 'categoryPerfume':
       return CategoryPerfume;
+    case 'categoryPhoto':
+      return CategoryPhoto;
     case 'categoryPiano':
       return CategoryPiano;
     case 'categoryPlastic':
       return CategoryPlastic;
+    case 'categoryPorcelain':
+      return CategoryPorcelain;
     case 'categoryRattan':
       return CategoryRattan;
     case 'categoryRims':
       return CategoryRims;
+    case 'categorySandstone':
+      return CategorySandstone;
     case 'categoryScarf':
       return CategoryScarf;
     case 'categorySilk':

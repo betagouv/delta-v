@@ -4,10 +4,17 @@ import { getName } from 'i18n-iso-countries';
 import { QRCodeSVG } from 'qrcode.react';
 
 import { SummaryValueProduct } from './SummaryValueProduct';
+import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Color } from '@/components/common/Typography/style/typography.style';
-import { getAmountCategoryName, getMessageOverMaximumAmount, getUnit } from '@/model/amount';
+import {
+  getAmountCategoryName,
+  getAmountProductType,
+  getMessageOverMaximumAmount,
+  getUnit,
+} from '@/model/amount';
+import { AmountProduct } from '@/model/product';
 import { SimulatorRequest, SimulatorResponse } from '@/stores/simulator/appState.store';
 import { getMeanOfTransport } from '@/utils/country.config';
 
@@ -32,6 +39,17 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
       setColor('primary');
     }
   }, [simulatorResponse]);
+
+  const [productType, setProductType] = useState<
+    'alcohol' | 'tobacco' | 'valueProduct' | undefined
+  >();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const openModalProductType = (amountProduct?: AmountProduct) => {
+    setProductType(amountProduct ? getAmountProductType(amountProduct) : 'valueProduct');
+    setTimeout(() => {
+      setOpenModal(true);
+    }, 150);
+  };
 
   return (
     <div className="rounded-xl border border-secondary-600 p-4">
@@ -130,7 +148,15 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
                       <p className="flex-1 text-2xs">
                         Vous dépassez la limite légale d'unités{' '}
                         {getMessageOverMaximumAmount(groupedAmount.group)}. Pour connaître les
-                        quantités maximales autorisées cliquez ici
+                        quantités maximales autorisées{' '}
+                        <span
+                          className="text-link"
+                          onClick={() => {
+                            openModalProductType(groupedAmount.products[0]?.amountProduct);
+                          }}
+                        >
+                          cliquez ici
+                        </span>
                       </p>
                     </div>
                   )}
@@ -173,6 +199,14 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
           {totalTaxes} €
         </Typography>
       </div>
+      {(productType === 'alcohol' || productType === 'tobacco') && (
+        <ModalMaximumAmount
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          productType={productType}
+          country={simulatorRequest.country}
+        />
+      )}
     </div>
   );
 };

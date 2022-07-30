@@ -15,3 +15,5 @@ build/
 # Optional vscode info
 .vscode/*
 !.vscode/settings.json
+
+.env

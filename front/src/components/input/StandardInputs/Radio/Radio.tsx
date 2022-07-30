@@ -27,7 +27,7 @@ export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) 
             id={index.toString()}
             value={radioValue.id}
             type="radio"
-            className="h-6 w-6 border-black text-primary-600 focus:ring-transparent disabled:text-disabled-text"
+            className="form-radio h-6 w-6 border-black text-primary-600 focus:ring-transparent disabled:text-disabled-text"
             {...register}
           />
           <label

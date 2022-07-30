@@ -49,7 +49,7 @@ export const PrepareMyDocuments: AccordionData[] = [
           <img src={Declaration.src} />
         </div>
         <div>
-          Votre déclaration de capitaux si vous en avez et les éventuels factures permettant de
+          Votre déclaration de capitaux si vous en avez et les éventuelles factures permettant de
           prouver l’achat et la valeur de ces produits.
         </div>
       </div>

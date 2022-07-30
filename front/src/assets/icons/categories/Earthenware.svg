@@ -1,0 +1,17 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15C0 6.71573 6.71573 0 15 0C23.2843 0 30 6.71573 30 15Z" fill="#E1F1FF"/>
+<mask id="mask0_857_16514" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
+<path d="M30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15C0 6.71573 6.71573 0 15 0C23.2843 0 30 6.71573 30 15Z" fill="#FEF0CB"/>
+</mask>
+<g mask="url(#mask0_857_16514)">
+<rect x="-3" y="-2" width="11" height="11" fill="#6C7FE6"/>
+<rect x="-3" y="10" width="11" height="11" fill="#5060B7"/>
+<rect x="-3" y="22" width="11" height="11" fill="#2D44C3"/>
+<rect x="10" y="-2" width="10" height="11" fill="#2D44C4"/>
+<rect x="10" y="10" width="10" height="11" fill="#6C7FE5"/>
+<rect x="10" y="22" width="10" height="11" fill="#AFBAF4"/>
+<rect x="22" y="-2" width="11" height="11" fill="#6C7FE5"/>
+<rect x="22" y="10" width="11" height="11" fill="#1638EE"/>
+<rect x="22" y="22" width="11" height="11" fill="#5060B7"/>
+</g>
+</svg>

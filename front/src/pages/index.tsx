@@ -37,8 +37,8 @@ const Index = () => {
     <Main
       meta={
         <Meta
-          title="Déclaration Douane"
-          description="Déclaration Douane est un outil pour les particuliers qui permet de déclarer..."
+          title="Déclare Douane "
+          description="Déclare Douane est un outil pour les particuliers qui permet de déclarer..."
         />
       }
     >
@@ -47,7 +47,7 @@ const Index = () => {
           <SvgIcon name="logo" />
         </div>
       </div>
-      <div className="mb-4 flex flex-col gap-6">
+      <div className="mb-1 flex flex-col gap-6">
         <div>
           <Typography
             weight="bold"
@@ -86,14 +86,16 @@ const Index = () => {
             />
           </Link>
 
-          <Card
-            title="Simulateur de droits et taxes"
-            description="Calculez les taxes sur les produits que vous ramenez de l'étranger"
-            svgName="calculator"
-            rounded="lg"
-            fullWidth
-            onClick={() => openSimulator()}
-          />
+          <div className="cursor-pointer">
+            <Card
+              title="Simulateur de droits et taxes"
+              description="Calculez les taxes sur les produits que vous ramenez de l'étranger"
+              svgName="calculator"
+              rounded="lg"
+              fullWidth
+              onClick={() => openSimulator()}
+            />
+          </div>
 
           <Link to={Routing.faq}>
             <Card
@@ -106,7 +108,7 @@ const Index = () => {
           </Link>
         </div>
       </div>
-      <div className="-mx-4 flex flex-col gap-6 bg-primary-100 px-4 py-7">
+      <div className="-mx-4 flex flex-col gap-6 bg-primary-100 p-4">
         <Typography weight="bold" size="text-2xl" color="secondary">
           Pourquoi déclarer mes achats effectués à l’étranger ?
         </Typography>
@@ -133,7 +135,7 @@ const Index = () => {
           </div>
         </Link>
       </div>
-      <div className="flex flex-col gap-6 py-7">
+      <div className="flex flex-col gap-6">
         <Typography weight="bold" size="text-2xl" color="secondary">
           Besoin d’aide ?
         </Typography>

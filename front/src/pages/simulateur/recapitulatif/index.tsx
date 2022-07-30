@@ -41,7 +41,7 @@ const Summary = () => {
     <Main
       meta={
         <Meta
-          title="Simulateur Déclaration Douanes"
+          title="Simulateur Déclare Douanes"
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
@@ -89,22 +89,22 @@ const Summary = () => {
           Des questions ?
         </Typography>
         <div className="flex flex-col gap-2">
-          <Link to={`${Routing.faq}?id=17`}>
+          <Link to={`${Routing.faq}?id=payment-1`}>
             <Typography underline color="link">
               Pourquoi n’ai-je rien à payer ?
             </Typography>
           </Link>
-          <Link to={`${Routing.faq}?id=3`}>
+          <Link to={`${Routing.faq}?id=declaration-3`}>
             <Typography underline color="link">
               Pourquoi dois-je payer des droits et taxes ?
             </Typography>
           </Link>
-          <Link to={`${Routing.faq}?id=19.1`}>
+          <Link to={`${Routing.faq}?id=payment-4`}>
             <Typography underline color="link">
               Comment payer ce que je dois ?
             </Typography>
           </Link>
-          <Link to={`${Routing.faq}?id=3`}>
+          <Link to={`${Routing.faq}?id=declaration-3`}>
             <Typography underline color="link">
               Pourquoi dois-je passer au guichet Douane ?
             </Typography>
