@@ -48,6 +48,7 @@ describe('checkAmountProducts', () => {
     const result = checkAmountProducts(
       [completeProduct1, completeProduct2, completeProduct3, completeProduct4],
       'US',
+      false,
     );
 
     expect(result[0]).toMatchObject({

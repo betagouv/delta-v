@@ -38,6 +38,43 @@ export const getProductMaximumNonEU = (): ProductMaximum[] => [
   },
 ];
 
+export const getProductMaximumBorder = (): ProductMaximum[] => [
+  {
+    maximum: 0.5,
+    groupName: GroupedAlcohol.groupedAlcohol,
+    products: [
+      {
+        productType: AmountAlcoholProduct.softAlcohol,
+        ratio: 1,
+      },
+      {
+        productType: AmountAlcoholProduct.strongAlcohol,
+        ratio: 2,
+      },
+    ],
+  },
+  {
+    maximum: 4,
+    groupName: AmountAlcoholProduct.beer,
+    products: [
+      {
+        productType: AmountAlcoholProduct.beer,
+        ratio: 1,
+      },
+    ],
+  },
+  {
+    maximum: 0.5,
+    groupName: AmountAlcoholProduct.wine,
+    products: [
+      {
+        productType: AmountAlcoholProduct.wine,
+        ratio: 1,
+      },
+    ],
+  },
+];
+
 export const getProductMaximumAndorra = (): ProductMaximum[] => [
   {
     maximum: 3,

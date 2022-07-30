@@ -5,7 +5,7 @@ import { AlcoholGroup } from '../../../../../src/api/simulator/services/amountPr
 import { productEntityFactory } from '../../../../helpers/factories/product.factory';
 
 describe('AlcoholGroup', () => {
-  describe('getSimulationGrouped for non EU and Andorra', () => {
+  describe('getSimulationGrouped for non EU and Andorra and Border Swiss', () => {
     it.each([
       [
         false,
@@ -43,9 +43,29 @@ describe('AlcoholGroup', () => {
           { name: 'strongAlcohol', value: 0.75 },
         ],
       ],
+      [
+        false,
+        'CH',
+        'under',
+        [
+          { name: 'softAlcohol', value: 0.2 },
+          { name: 'strongAlcohol', value: 0.1 },
+        ],
+        true,
+      ],
+      [
+        true,
+        'CH',
+        'over',
+        [
+          { name: 'softAlcohol', value: 0.3 },
+          { name: 'strongAlcohol', value: 0.25 },
+        ],
+        true,
+      ],
     ])(
       'should return %p if the maximum is exceeded - in %p when total is %p maximum',
-      (expectedResult, country, value, dataProducts) => {
+      (expectedResult, country, value, dataProducts, border = false) => {
         const completeShoppingProducts = dataProducts.map((dataProduct) => ({
           product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
           value: dataProduct.value,
@@ -57,6 +77,7 @@ describe('AlcoholGroup', () => {
         const alcoholGroup = new AlcoholGroup({
           country: country as Alpha2Code,
           completeShoppingProducts,
+          border,
         });
 
         const results = alcoholGroup.getSimulationGrouped();
@@ -120,6 +141,7 @@ describe('AlcoholGroup', () => {
         const alcoholGroup = new AlcoholGroup({
           country: country as Alpha2Code,
           completeShoppingProducts,
+          border: false,
         });
 
         const results = alcoholGroup.getSimulationGrouped();
