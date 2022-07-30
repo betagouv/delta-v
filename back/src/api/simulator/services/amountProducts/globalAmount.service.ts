@@ -25,16 +25,17 @@ export interface ProductMaximum {
 export const checkAmountProducts = (
   completeShoppingProducts: CompleteShoppingProduct[],
   country: Alpha2Code,
+  border: boolean,
 ): AmountGroup[] => {
   const amountResult: AmountGroup[] = [];
 
-  const tobaccoGroup = new TobaccoGroup({ completeShoppingProducts, country });
+  const tobaccoGroup = new TobaccoGroup({ completeShoppingProducts, country, border });
   const tobaccoGroupResult = tobaccoGroup.getSimulationGrouped();
   if (tobaccoGroupResult.length > 0) {
     amountResult.push(...tobaccoGroupResult);
   }
 
-  const alcoholGroup = new AlcoholGroup({ completeShoppingProducts, country });
+  const alcoholGroup = new AlcoholGroup({ completeShoppingProducts, country, border });
   const alcoholGroupResult = alcoholGroup.getSimulationGrouped();
 
   if (alcoholGroupResult.length > 0) {

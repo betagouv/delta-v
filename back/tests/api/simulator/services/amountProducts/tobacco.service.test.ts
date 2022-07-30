@@ -5,7 +5,7 @@ import { TobaccoGroup } from '../../../../../src/api/simulator/services/amountPr
 import { productEntityFactory } from '../../../../helpers/factories/product.factory';
 
 describe('TobaccoGroup', () => {
-  describe('getSimulationGrouped for non EU and Andorra', () => {
+  describe('getSimulationGrouped for non EU and Andorra and Border Swiss', () => {
     it.each([
       [
         false,
@@ -49,9 +49,33 @@ describe('TobaccoGroup', () => {
           { name: 'tobacco', value: 62 },
         ],
       ],
+      [
+        false,
+        'CH',
+        'under',
+        [
+          { name: 'cigarette', value: 10 },
+          { name: 'cigar', value: 5 },
+          { name: 'tobacco', value: 2 },
+          { name: 'tobacco', value: 10 },
+        ],
+        true,
+      ],
+      [
+        true,
+        'CH',
+        'over',
+        [
+          { name: 'cigarette', value: 12 },
+          { name: 'cigarillos', value: 6 },
+          { name: 'cigar', value: 3 },
+          { name: 'tobacco', value: 13 },
+        ],
+        true,
+      ],
     ])(
       'should return %p if the maximum is exceeded - in %p when total is %p maximum',
-      (expectedResult, country, value, dataProducts) => {
+      (expectedResult, country, value, dataProducts, border = false) => {
         const completeShoppingProducts = dataProducts.map((dataProduct) => ({
           product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
           value: dataProduct.value,
@@ -63,6 +87,7 @@ describe('TobaccoGroup', () => {
         const tobaccoGroup = new TobaccoGroup({
           country: country as Alpha2Code,
           completeShoppingProducts,
+          border,
         });
 
         const results = tobaccoGroup.getSimulationGrouped();
@@ -119,6 +144,7 @@ describe('TobaccoGroup', () => {
         const tobaccoGroup = new TobaccoGroup({
           country: country as Alpha2Code,
           completeShoppingProducts,
+          border: false,
         });
 
         const results = tobaccoGroup.getSimulationGrouped();

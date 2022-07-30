@@ -6,6 +6,7 @@ import {
   getProductMaximumNonEU,
   getProductMaximumAndorra,
   getProductMaximumEU,
+  getProductMaximumBorder,
 } from './maximum.services';
 
 export const MAXIMUM_WINE_EU = 90;
@@ -29,15 +30,18 @@ export type AmountAlcoholGroup = AmountAlcoholProduct | GroupedAlcohol;
 
 interface AlcoholGroupConstructor {
   country: Alpha2Code;
+  border: boolean;
   completeShoppingProducts: CompleteShoppingProduct[];
 }
 
 export class AlcoholGroup {
   private countryType: CountryType;
+  private border: boolean;
   private completeAlcoholShoppingProducts: CompleteShoppingProduct[];
 
-  constructor({ country, completeShoppingProducts }: AlcoholGroupConstructor) {
+  constructor({ country, completeShoppingProducts, border }: AlcoholGroupConstructor) {
     this.countryType = getCountryType(country);
+    this.border = border;
     this.completeAlcoholShoppingProducts = completeShoppingProducts.filter(
       (completeShoppingProducts) => {
         const alcoholValues = Object.values(AmountAlcoholProduct);
@@ -65,6 +69,9 @@ export class AlcoholGroup {
   public getSimulationGrouped = (): AmountGroup[] => {
     switch (this.countryType) {
       case CountryType.NON_EU:
+        if (this.border) {
+          return this.getSimulationGroupedWithCountry(getProductMaximumBorder());
+        }
         return this.getSimulationGroupedWithCountry(getProductMaximumNonEU());
       case CountryType.ANDORRA:
         return this.getSimulationGroupedWithCountry(getProductMaximumAndorra());

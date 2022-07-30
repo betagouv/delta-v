@@ -46,7 +46,7 @@ export const service = async ({
   const completeAmountShoppingProducts = completeShoppingProducts.filter(
     (completeShoppingProduct) => completeShoppingProduct.product.productType === ProductType.amount,
   );
-  const amountProducts = checkAmountProducts(completeAmountShoppingProducts, country);
+  const amountProducts = checkAmountProducts(completeAmountShoppingProducts, country, border);
 
   const franchiseAmount = getFranchiseAmount({ border, age, country, meanOfTransport });
   const total = getTotalProducts(shoppingProducts);
