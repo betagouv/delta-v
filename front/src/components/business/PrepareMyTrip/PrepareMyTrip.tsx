@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import { Buying } from './PrepareMyTripData/Buying';
 import { ForbiddenGoods } from './PrepareMyTripData/ForbiddenGoods';
@@ -16,17 +18,33 @@ export interface PrepareMyTripProps {
 
 export const PrepareMyTrip: React.FC<PrepareMyTripProps> = (props: PrepareMyTripProps) => {
   const [currentOpenId, setCurrentOpenId] = useState<string | undefined>();
+  const { trackEvent } = useMatomo();
 
+  const prepareMyTripData = [
+    ...PrepareMyDocuments,
+    ...WhenDeclare,
+    ...Buying(props),
+    ...ParticularGoods,
+    ...ForbiddenGoods,
+    ...Money,
+  ];
+
+  useEffect(() => {
+    if (currentOpenId) {
+      prepareMyTripData.forEach((data) => {
+        if (data.id === currentOpenId) {
+          trackEvent({
+            category: 'user-action',
+            action: 'open-prepare-my-trip',
+            name: data.question,
+          });
+        }
+      });
+    }
+  }, [currentOpenId]);
   return (
     <Accordions
-      items={[
-        ...PrepareMyDocuments,
-        ...WhenDeclare,
-        ...Buying(props),
-        ...ParticularGoods,
-        ...ForbiddenGoods,
-        ...Money,
-      ]}
+      items={prepareMyTripData}
       currentOpenId={currentOpenId}
       setOpenId={(id: string) => setCurrentOpenId(id)}
     />
