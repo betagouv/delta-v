@@ -205,6 +205,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
           onClose={() => setOpenModal(false)}
           productType={productType}
           country={simulatorRequest.country}
+          border={simulatorRequest.border}
         />
       )}
     </div>

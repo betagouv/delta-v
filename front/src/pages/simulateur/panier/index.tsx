@@ -27,13 +27,13 @@ const Panier = () => {
   const router = useRouter();
 
   const {
-    country,
+    simulatorRequest,
     valueProducts: detailedProducts,
     amountProducts,
     removeProduct,
   } = useStore(
     (state) => ({
-      country: state.simulator.appState.simulatorRequest.country,
+      simulatorRequest: state.simulator.appState.simulatorRequest,
       valueProducts: state.simulator.appState.simulatorResponse?.valueProducts ?? [],
       amountProducts: state.simulator.appState.simulatorResponse?.amountProducts ?? [],
       removeProduct: state.removeProduct,
@@ -168,7 +168,8 @@ const Panier = () => {
           open={openModal}
           onClose={() => setOpenModal(false)}
           productType={productType}
-          country={country}
+          country={simulatorRequest.country}
+          border={simulatorRequest.border}
         />
       )}
     </Main>

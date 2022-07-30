@@ -34,8 +34,8 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   disabled = false,
   product,
 }: FormAddProductProps) => {
-  const { country } = useStore((state) => ({
-    country: state.simulator.appState.simulatorRequest.country,
+  const { simulatorRequest } = useStore((state) => ({
+    simulatorRequest: state.simulator.appState.simulatorRequest,
   }));
   const productType = product?.amountProduct
     ? getAmountProductType(product.amountProduct)
@@ -110,7 +110,8 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           open={openModalInfoProduct}
           onClose={() => setOpenModalInfoProduct(false)}
           productType={productType}
-          country={country}
+          country={simulatorRequest.country}
+          border={simulatorRequest.border}
         />
       )}
     </>
