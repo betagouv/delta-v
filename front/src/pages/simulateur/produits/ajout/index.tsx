@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
@@ -31,6 +32,7 @@ const selectOptions = [
 const AddNewProduct = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const router = useRouter();
+  const { trackEvent } = useMatomo();
   const { searchValue } = router.query;
   const productName = typeof searchValue === 'string' ? searchValue : undefined;
   const defaultCategory = { id: '', value: 'Catégorie' };
@@ -57,6 +59,12 @@ const AddNewProduct = () => {
     const options = products.map((product) => ({ id: product.id, value: product.name }));
     setCategoryOptions([defaultCategory, ...options]);
   }, [products]);
+
+  useEffect(() => {
+    if (productName) {
+      trackEvent({ category: 'user-action', action: 'add-new-product', name: productName });
+    }
+  }, [productName]);
 
   useEffect(() => {
     getProductsResponse();

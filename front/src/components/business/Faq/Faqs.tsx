@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { scroller } from 'react-scroll';
 
 import { Border } from './FaqData/Border';
@@ -15,6 +16,7 @@ export interface FaqsProps {
 
 export const Faqs: React.FC<FaqsProps> = ({ linkId }: FaqsProps) => {
   const [currentOpenId, setCurrentOpenId] = useState(linkId);
+  const { trackEvent } = useMatomo();
 
   const FaqData = [
     { title: 'Déclaration', faqs: Declaration },
@@ -34,6 +36,18 @@ export const Faqs: React.FC<FaqsProps> = ({ linkId }: FaqsProps) => {
       });
     }
   }, [linkId]);
+
+  useEffect(() => {
+    if (currentOpenId) {
+      FaqData.forEach((data) => {
+        data.faqs.forEach((faq) => {
+          if (faq.id === currentOpenId) {
+            trackEvent({ category: 'user-action', action: 'open-faq', name: faq.question });
+          }
+        });
+      });
+    }
+  }, [currentOpenId]);
   return (
     <div className="mx-auto max-w-3xl">
       <h2 className="text-lg sm:text-4xl">

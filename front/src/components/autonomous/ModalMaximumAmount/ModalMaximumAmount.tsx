@@ -42,8 +42,6 @@ const getValues = (
     subTitle = 'Vous arrivez d’un pays membre de l’Union Européenne :';
   }
   if (countryType === CountryType.NON_EU) {
-    console.log(border);
-
     if (border) {
       subTitle = 'Vous arrivez de Suisse (Frontalier).';
     } else {

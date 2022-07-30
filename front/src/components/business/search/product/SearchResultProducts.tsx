@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { useRouter } from 'next/router';
 
 import { Typography } from '@/components/common/Typography';
@@ -14,11 +15,18 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
   resultSearch,
 }: SearchResultProductsProps) => {
   const router = useRouter();
+  const { trackEvent } = useMatomo();
   const [productChecked, setProductChecked] = useState<string | undefined>();
-  const onClickProduct = (id: string) => {
-    setProductChecked(id);
+  const onClickProduct = (searchproduct: SearchType<Product>) => {
+    setProductChecked(searchproduct.id);
+
+    trackEvent({
+      category: 'user-action',
+      action: 'click-result-search',
+      name: `${searchproduct.name} - ${searchproduct.rankedValue}`,
+    });
     setTimeout(() => {
-      router.push(`/simulateur/produits/${id}`);
+      router.push(`/simulateur/produits/${searchproduct.id}`);
     }, 250);
   };
   return (
@@ -28,7 +36,7 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
           key={resultElement.id}
           className="flex cursor-default select-none items-center py-2 px-3"
           data-testid="result-product-search-element"
-          onClick={() => onClickProduct(resultElement.id)}
+          onClick={() => onClickProduct(resultElement)}
         >
           <div className="flex flex-col">
             <Typography color="light-gray" size="text-sm" lineHeight="leading-normal" italic>
