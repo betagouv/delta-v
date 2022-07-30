@@ -216,7 +216,7 @@ items:
     relatedWords: 'Produits de beauté'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
-    position: 3
+    position: 5
     nomenclatures:
       - '33'
   mackup:
@@ -303,7 +303,7 @@ items:
     info: 'Cela compose les bijoux'
     childrenQuestion: 'Quel type de produits ?'
     productDisplayTypes: 'category'
-    position: 4
+    position: 6
     nomenclatures:
       - '71'
       - '91'
@@ -371,7 +371,7 @@ items:
     info: 'Mode'
     icon: 'categoryFashion'
     productDisplayTypes: 'category'
-    position: 5
+    position: 3
   clothes:
     id: 'e9186bbf-3c3c-4e12-85e1-6bcbc5e8a046'
     name: 'Vêtements'
@@ -689,7 +689,7 @@ items:
     info: 'Produit de loisirs'
     icon: 'categoryHobbies'
     productDisplayTypes: 'category'
-    position: 6
+    position: 8
   sports:
     id: '358018bd-2dec-4a75-b5df-677c37094a8a'
     name: 'Sports'
@@ -915,19 +915,6 @@ items:
     vat: 20
     nomenclatures:
       - '92021010'
-  otherStringInstruments:
-    id: '38a848fd-3afe-4583-a329-52a78fc16535'
-    name: 'Autres instruments à cordes'
-    info: 'Autres instruments à cordes'
-    icon: 'categoryOther'
-    parentProduct: '@musicInstrument'
-    productDisplayTypes: 'addable'
-    finalProduct: true
-    position: 7
-    customDuty: 0
-    vat: 20
-    nomenclatures:
-      - '920190'
   copper:
     id: '43cb7fbd-d048-43e7-907a-41e6f43557b3'
     name: 'Cuivres'
@@ -937,7 +924,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
-    position: 8
+    position: 7
     customDuty: 3.2
     vat: 20
     nomenclatures:
@@ -951,7 +938,7 @@ items:
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
-    position: 9
+    position: 8
     customDuty: 3.7
     vat: 20
     nomenclatures:
@@ -965,7 +952,7 @@ items:
     parentProduct: '@musicInstrument'
     finalProduct: true
     productDisplayTypes: 'addable'
-    position: 10
+    position: 9
     customDuty: 2.7
     vat: 20
     nomenclatures:
@@ -974,16 +961,29 @@ items:
     id: '0191a97d-2ca4-45aa-9cf7-ef592ea1a022'
     name: 'Instruments à percussion'
     info: 'Instruments à percussion'
-    icon: 'categoryOther'
+    icon: 'categoryPercussionInstrument'
     relatedWords: 'tambour,batterie,caisse claire,bongo,carillon,castagnettes,charleston,cymbale,djembé,tam tam,triangle,maracas,tambourin,timbale'
     parentProduct: '@musicInstrument'
     productDisplayTypes: 'addable'
     finalProduct: true
-    position: 11
+    position: 10
     customDuty: 3.2
     vat: 20
     nomenclatures:
       - '92060000'
+  otherStringInstruments:
+    id: '38a848fd-3afe-4583-a329-52a78fc16535'
+    name: 'Autres instruments à cordes'
+    info: 'Autres instruments à cordes'
+    icon: 'categoryOther'
+    parentProduct: '@musicInstrument'
+    productDisplayTypes: 'addable'
+    finalProduct: true
+    position: 11
+    customDuty: 0
+    vat: 20
+    nomenclatures:
+      - '920190'
 
   # Hightech Products
   hightech:
@@ -1048,7 +1048,7 @@ items:
     id: '7b2988e3-a84e-494e-b746-abd1ec0ddae7'
     name: 'Appareils photo numériques / caméscopes'
     info: 'Appareils photo numériques / caméscopes'
-    icon: 'categoryTablet'
+    icon: 'categoryPhoto'
     relatedWords: >
       appareil photo,appareil numérique,reflex,nikon,canon,sony,lumix,appareil photo numérique,pentax,camescope,caméra,gopro
     parentProduct: '@hightech'
@@ -1188,7 +1188,7 @@ items:
     info: 'Produits de la maison'
     icon: 'categoryHouse'
     productDisplayTypes: 'category'
-    position: 8
+    position: 9
   furniture:
     id: '29b7fc70-1976-4c87-87a7-62e8582d1e98'
     name: 'Meubles'
@@ -1382,6 +1382,7 @@ items:
   ceramicLamp:
     id: 'b8a1e105-6ebd-4805-b6f6-a71a1c9d2f41'
     name: 'Luminaire en céramique'
+    icon: 'categoryCeramic'
     radioValue: 'Céramique'
     info: 'Luminaire en céramique'
     productDisplayTypes: 'addable'
@@ -1433,6 +1434,7 @@ items:
   porcelainDishes:
     id: 'eb1951b0-addd-433c-b920-68faa0df8d94'
     name: 'Porcelaine'
+    icon: 'categoryPorcelain'
     info: 'Vaisselle en porcelaine'
     productDisplayTypes: 'addable'
     customDuty: 12
@@ -1444,6 +1446,7 @@ items:
   crystalDishes:
     id: '8ac5c806-652b-426a-a606-b43e1de995db'
     name: 'Cristal'
+    icon: 'categoryCrystal'
     info: 'Vaisselle en cristal'
     productDisplayTypes: 'addable'
     customDuty: 11
@@ -1454,6 +1457,7 @@ items:
   commonGroundDishes:
     id: 'd29b054e-dbb1-4ad0-ad59-bd786be1cdef'
     name: 'Terre commune'
+    icon: 'categoryCommonGround'
     info: 'Vaisselle en terre commune'
     productDisplayTypes: 'addable'
     customDuty: 5
@@ -1465,6 +1469,7 @@ items:
   sandstoneDishes:
     id: '10070436-b6d9-4291-a6d6-a46ba652ae93'
     name: 'Grès'
+    icon: 'categorySandstone'
     info: 'Vaisselle en grès'
     productDisplayTypes: 'addable'
     customDuty: 5.5
@@ -1476,6 +1481,7 @@ items:
   earthenwareDishes:
     id: '24f98895-f100-4434-b764-3c89b66f8a47'
     name: 'Faïence'
+    icon: 'categoryEarthenware'
     info: 'Vaisselle en faïence'
     productDisplayTypes: 'addable'
     customDuty: 9
@@ -1520,7 +1526,7 @@ items:
     info: 'Voiture et ses accessoires'
     productDisplayTypes: 'category'
     icon: 'categoryCar'
-    position: 9
+    position: 10
   carRadio:
     id: '19ae6573-be49-4943-a6c6-6d3e824c9e92'
     name: 'Autoradios / lecteur CD'
@@ -1553,6 +1559,7 @@ items:
       - '852691'
   rims:
     id: 'b432c1ae-5df2-4bf5-9eec-d86a564accf5'
+    icon: 'categoryRims'
     name: 'Jantes'
     info: 'Jantes alu'
     relatedWords: >
@@ -1587,7 +1594,7 @@ items:
     name: 'Divers'
     info: 'Divers'
     icon: 'categoryVarious'
-    position: 10
+    position: 11
     relatedWords: >
       cigarette électronique,vapoteuse
     productDisplayTypes: 'category'
@@ -1630,4 +1637,4 @@ items:
     icon: 'categoryFood'
     productDisplayTypes: 'not-managed'
     finalProduct: true
-    position: 11
+    position: 4

@@ -35,7 +35,7 @@ export const Accordion: React.FC<AccordionProps> = ({
           }}
         >
           {iconName && (
-            <div className="flex h-6 w-6 flex-row items-center">
+            <div className="mr-2 flex h-6 w-6 flex-row items-center">
               <div className="h-auto w-auto">
                 <SvgIcon name={iconName} />
               </div>
@@ -43,13 +43,13 @@ export const Accordion: React.FC<AccordionProps> = ({
           )}
           <div
             className={classNames({
-              'text-secondary-800 text-base flex-1 flex flex-row ml-2': true,
+              'text-secondary-800 text-base flex-1 flex flex-row': true,
               'font-bold': open,
             })}
           >
             <span>{question}</span>
           </div>
-          <div className="h-4 w-4">
+          <div className="ml-4 h-4 w-4">
             {open ? <Icon name="chevron-up" /> : <Icon name="chevron-down" />}
           </div>
         </button>

@@ -11,7 +11,7 @@ import {
   getRadioProductForm,
   getSteps,
 } from './utils';
-import { InputGroup } from '@/components/input/InputGroup';
+import { Input } from '@/components/input/StandardInputs/Input';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
 export interface OnAddProductOptions {
@@ -116,15 +116,23 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   return currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
-      <InputGroup
-        fullWidth
-        name="name"
-        type="text"
-        label="Nommez votre achat"
-        placeholder="Exemple : Jeans, pantalon noir, slim..."
-        control={control}
-        register={register('name', { required: false })}
-      />
+      <div>
+        <label
+          htmlFor="name"
+          className={`mb-4 block text-base font-bold`}
+          data-testid="label-element"
+        >
+          Nommez votre achat{' '}
+          <span className="ml-1 font-normal italic text-gray-400">(facultatif)</span>
+        </label>
+        <Input
+          fullWidth
+          name="name"
+          type="text"
+          placeholder="Exemple : Jeans, pantalon noir, slim..."
+          register={register('name', { required: false })}
+        />
+      </div>
       {multiForm.map((form, index) => {
         return <div key={index}>{form}</div>;
       })}
