@@ -247,12 +247,39 @@ items:
       lady million paco rabanne,libre yves saint laurent,l'homme hyves saint laurent,si passione armani,scandal pour homme jean paul gauthier,chrome azzaro,
       flowerbomb viktor&rolf,only the brave diesel,allure homme chanel,miss dior rose n' roses dior,yes i am cacharel,dior homme original,flora gorgious gardenia gucci,
       invictus legende paco rabanne
+    countries: >
+      AF,AL,DZ,AS,AO,AI,AQ,AG,AR,AM,AW,AU,AT,AZ,BS,BH,BD,BB,BY,BE,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BG,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CO,KM,CG,CD,CK,CR,CI,HR,
+      CU,CY,CZ,DK,DJ,DM,DO,EC,EG,SV,GQ,ER,EE,ET,FK,FO,FJ,FI,FR,GF,PF,TF,GA,GM,GE,DE,GH,GI,GR,GL,GD,GP,GU,GT,GN,GW,GY,HT,HM,VA,HN,HK,HU,IS,IN,ID,IR,IQ,IE,IL,IT,JM,JP,
+      JO,KZ,KE,KI,KP,KR,KW,KG,LA,LV,LB,LS,LR,LY,LI,LT,LU,MO,MK,MG,MW,MY,MV,ML,MT,MH,MQ,MR,MU,YT,MX,FM,MD,MC,MN,MS,MA,MZ,MM,NA,NR,NP,NL,NC,NZ,NI,NE,NG,NU,NF,MP,NO,OM,
+      PK,PW,PS,PA,PG,PY,PE,PH,PN,PL,PT,PR,QA,RE,RO,RU,RW,SH,KN,LC,PM,VC,WS,SM,ST,SA,SN,SC,SL,SG,SK,SI,SB,SO,ZA,GS,ES,LK,SD,SR,SJ,SZ,SE,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,
+      TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,US,UM,UY,UZ,VU,VE,VN,VG,VI,WF,EH,YE,ZM,ZW,AX,BQ,CW,GG,IM,JE,ME,BL,MF,RS,SX,SS,XK
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
     position: 2
     customDuty: 0
     vat: 20
+    nomenclatures:
+      - '33030010'
+  perfumeAndorra:
+    id: 'ca81bb9a-0146-4692-81fe-a0624efdeeac'
+    name: 'Parfums'
+    icon: 'categoryPerfume'
+    info: 'Parfums'
+    relatedWords: >
+      chanel n°5,one million,bleu,yves saint laurent libre,le mâle,jean paul gauthier,yves saint laurent,chanel,armani,armani my way,lancôme,lancôme la nuit trésor,
+      paco rabanne,paco rabanne,one million,scandal,kenzo,flower by kenzo,mugler,mugler alien,ck one,calvin klein,calvin klein ck one,dior,dior sauvage,bleu de chanel,
+      lancôme la vie est belle,coco mademoiselle,coco maemoiselle de chanel,black opium,black opium yves saint laurent,phantom paco rabanne,j'adore dior,
+      good girl carolina herrera,l'interdit givenchy,miss dior,boss bottled hugo boss,terre d'hermès hermès,hermès,hugo boss,dior homme intense,boss,chance eau tendre chanel,
+      si armani,armani,chloé,la petite robe noire guerlain,guerlain,chanel numéro 5,idole lancôme,irresistible givenchy,angel nova mugler,nina ricci,mon guerlain,
+      lady million paco rabanne,libre yves saint laurent,l'homme hyves saint laurent,si passione armani,scandal pour homme jean paul gauthier,chrome azzaro,
+      flowerbomb viktor&rolf,only the brave diesel,allure homme chanel,miss dior rose n' roses dior,yes i am cacharel,dior homme original,flora gorgious gardenia gucci,
+      invictus legende paco rabanne
+    countries: 'AD'
+    parentProduct: '@beautyProducts'
+    finalProduct: true
+    productDisplayTypes: 'not-managed'
+    position: 2
     nomenclatures:
       - '33030010'
   cologne:
@@ -269,12 +296,39 @@ items:
       lady million paco rabanne,libre yves saint laurent,l'homme hyves saint laurent,si passione armani,scandal pour homme jean paul gauthier,chrome azzaro,
       flowerbomb viktor&rolf,only the brave diesel,allure homme chanel,miss dior rose n' roses dior,yes i am cacharel,dior homme original,flora gorgious gardenia gucci,
       invictus legende paco rabanne
+    countries: >
+      AF,AL,DZ,AS,AO,AI,AQ,AG,AR,AM,AW,AU,AT,AZ,BS,BH,BD,BB,BY,BE,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BG,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CO,KM,CG,CD,CK,CR,CI,HR,
+      CU,CY,CZ,DK,DJ,DM,DO,EC,EG,SV,GQ,ER,EE,ET,FK,FO,FJ,FI,FR,GF,PF,TF,GA,GM,GE,DE,GH,GI,GR,GL,GD,GP,GU,GT,GN,GW,GY,HT,HM,VA,HN,HK,HU,IS,IN,ID,IR,IQ,IE,IL,IT,JM,JP,
+      JO,KZ,KE,KI,KP,KR,KW,KG,LA,LV,LB,LS,LR,LY,LI,LT,LU,MO,MK,MG,MW,MY,MV,ML,MT,MH,MQ,MR,MU,YT,MX,FM,MD,MC,MN,MS,MA,MZ,MM,NA,NR,NP,NL,NC,NZ,NI,NE,NG,NU,NF,MP,NO,OM,
+      PK,PW,PS,PA,PG,PY,PE,PH,PN,PL,PT,PR,QA,RE,RO,RU,RW,SH,KN,LC,PM,VC,WS,SM,ST,SA,SN,SC,SL,SG,SK,SI,SB,SO,ZA,GS,ES,LK,SD,SR,SJ,SZ,SE,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,
+      TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,US,UM,UY,UZ,VU,VE,VN,VG,VI,WF,EH,YE,ZM,ZW,AX,BQ,CW,GG,IM,JE,ME,BL,MF,RS,SX,SS,XK
     parentProduct: '@beautyProducts'
     finalProduct: true
     productDisplayTypes: 'addable'
     position: 3
     customDuty: 0
     vat: 20
+    nomenclatures:
+      - '33030090'
+  cologneAndorra:
+    id: '90019ee4-01bf-4038-bee5-b31021727810'
+    name: 'Eaux de toilette'
+    icon: 'categoryCologne'
+    info: 'Eaux de toilette'
+    relatedWords: >
+      chanel n°5,one million,bleu,yves saint laurent libre,le mâle,jean paul gauthier,yves saint laurent,chanel,armani,armani my way,lancôme,lancôme la nuit trésor,
+      paco rabanne,paco rabanne,one million,scandal,kenzo,flower by kenzo,mugler,mugler alien,ck one,calvin klein,calvin klein ck one,dior,dior sauvage,bleu de chanel,
+      lancôme la vie est belle,coco mademoiselle,coco maemoiselle de chanel,black opium,black opium yves saint laurent,phantom paco rabanne,j'adore dior,
+      good girl carolina herrera,l'interdit givenchy,miss dior,boss bottled hugo boss,terre d'hermès hermès,hermès,hugo boss,dior homme intense,boss,chance eau tendre chanel,
+      si armani,armani,chloé,la petite robe noire guerlain,guerlain,chanel numéro 5,idole lancôme,irresistible givenchy,angel nova mugler,nina ricci,mon guerlain,
+      lady million paco rabanne,libre yves saint laurent,l'homme hyves saint laurent,si passione armani,scandal pour homme jean paul gauthier,chrome azzaro,
+      flowerbomb viktor&rolf,only the brave diesel,allure homme chanel,miss dior rose n' roses dior,yes i am cacharel,dior homme original,flora gorgious gardenia gucci,
+      invictus legende paco rabanne
+    countries: 'AD'
+    parentProduct: '@beautyProducts'
+    finalProduct: true
+    productDisplayTypes: 'not-managed'
+    position: 3
     nomenclatures:
       - '33030090'
   wig:
