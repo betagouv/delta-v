@@ -12,7 +12,7 @@ import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
 
 export interface FormSimulatorData {
-  border?: boolean;
+  border?: string;
 }
 
 const Configuration = () => {
@@ -42,7 +42,7 @@ const Configuration = () => {
     if (!data.border) {
       return;
     }
-    validateStep4(data.border);
+    validateStep4(data.border === 'true');
     router.push(`/simulateur/produits`);
   };
 

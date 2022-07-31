@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +17,7 @@ import { Main } from '@/templates/Main';
 
 const ProductSearch = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
+  const { trackEvent } = useMatomo();
   const { findProduct, getProductsResponse, addProduct } = useStore(
     (state) => ({
       findProduct: state.findProduct,
@@ -46,6 +48,7 @@ const ProductSearch = () => {
       amount: 1,
     };
     addProduct(shoppingProduct);
+    trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
     setOpenModalAddProduct(true);
   };
 
@@ -61,7 +64,7 @@ const ProductSearch = () => {
     <Main
       meta={
         <Meta
-          title="Simulateur Déclaration Douanes"
+          title="Simulateur Déclare Douanes"
           description="Simuler la déclaration de douane en quelques clics"
         />
       }

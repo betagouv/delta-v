@@ -1,6 +1,31 @@
 import { ProductMaximum } from '../globalAmount.service';
 import { AmountTobaccoProduct, GroupedTobacco } from './tobacco.service';
 
+export const getProductMaximumBorder = (): ProductMaximum[] => [
+  {
+    maximum: 40,
+    groupName: GroupedTobacco.allTobaccoProducts,
+    products: [
+      {
+        productType: AmountTobaccoProduct.cigarette,
+        ratio: 1,
+      },
+      {
+        productType: AmountTobaccoProduct.cigarillos,
+        ratio: 2,
+      },
+      {
+        productType: AmountTobaccoProduct.cigar,
+        ratio: 4,
+      },
+      {
+        productType: AmountTobaccoProduct.tobacco,
+        ratio: 0.8,
+      },
+    ],
+  },
+];
+
 export const getProductMaximumNonEU = (): ProductMaximum[] => [
   {
     maximum: 200,

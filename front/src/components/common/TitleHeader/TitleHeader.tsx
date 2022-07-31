@@ -27,7 +27,7 @@ export const TitleHeader: React.FC<TitleHeaderProps> = ({ title, icon }: TitleHe
         </div>
       )}
 
-      <div className="flex-1">
+      <div className="mt-[-2px] flex-1">
         <Typography
           weight="bold"
           variant="h1"

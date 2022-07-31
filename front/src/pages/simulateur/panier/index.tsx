@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
+import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { OnActionModal } from '@/components/autonomous/OnActionModal';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
@@ -12,7 +13,13 @@ import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
-import { getAmountCategoryName, getMessageOverMaximumAmount, getUnit } from '@/model/amount';
+import {
+  getAmountCategoryName,
+  getAmountProductType,
+  getMessageOverMaximumAmount,
+  getUnit,
+} from '@/model/amount';
+import { AmountProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
@@ -20,11 +27,13 @@ const Panier = () => {
   const router = useRouter();
 
   const {
+    simulatorRequest,
     valueProducts: detailedProducts,
     amountProducts,
     removeProduct,
   } = useStore(
     (state) => ({
+      simulatorRequest: state.simulator.appState.simulatorRequest,
       valueProducts: state.simulator.appState.simulatorResponse?.valueProducts ?? [],
       amountProducts: state.simulator.appState.simulatorResponse?.amountProducts ?? [],
       removeProduct: state.removeProduct,
@@ -39,11 +48,23 @@ const Panier = () => {
     setOpenActionModal(false);
   };
 
+  const [productType, setProductType] = useState<
+    'alcohol' | 'tobacco' | 'valueProduct' | undefined
+  >();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const openModalProductType = (amountProduct?: AmountProduct) => {
+    setProductType(amountProduct ? getAmountProductType(amountProduct) : 'valueProduct');
+
+    setTimeout(() => {
+      setOpenModal(true);
+    }, 150);
+  };
+
   return (
     <Main
       meta={
         <Meta
-          title="Simulateur Déclaration Douanes"
+          title="Simulateur Déclare Douanes"
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
@@ -100,10 +121,18 @@ const Panier = () => {
                   <div className="h-4 w-4">
                     <Icon name="error" />
                   </div>
-                  <p className="flex-1">
+                  <p className="flex-1 text-xs">
                     Vous dépassez la limite légale d'unités{' '}
                     {getMessageOverMaximumAmount(amountProduct.group)}. Pour connaître les quantités
-                    maximales autorisées cliquez sur l'encart rouge ci-dessus
+                    maximales autorisées{' '}
+                    <span
+                      className="text-link"
+                      onClick={() => {
+                        openModalProductType(amountProduct.products[0]?.amountProduct);
+                      }}
+                    >
+                      cliquez ici
+                    </span>
                   </p>
                 </div>
               )}
@@ -134,6 +163,15 @@ const Panier = () => {
         onSuccess={onDelete}
         onReject={() => setOpenActionModal(false)}
       />
+      {(productType === 'alcohol' || productType === 'tobacco') && (
+        <ModalMaximumAmount
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          productType={productType}
+          country={simulatorRequest.country}
+          border={simulatorRequest.border}
+        />
+      )}
     </Main>
   );
 };

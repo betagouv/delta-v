@@ -6,7 +6,6 @@ import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstr
 import { Faqs } from '@/components/business/Faq';
 import { Search } from '@/components/business/search';
 import { Meta } from '@/layout/Meta';
-import { FAQS_STORE } from '@/stores/faqs.store';
 import { Main } from '@/templates/Main';
 
 const FaqPage = () => {
@@ -18,7 +17,7 @@ const FaqPage = () => {
     <Main
       meta={
         <Meta
-          title="Simulateur Déclaration Douanes"
+          title="Simulateur Déclare Douanes"
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
@@ -31,7 +30,7 @@ const FaqPage = () => {
         <div onClick={() => setOpenModal(true)}>
           <Search onSearch={() => []} withSearchIcon searchType="faq" disabled />
         </div>
-        <Faqs items={FAQS_STORE} linkId={linkId} />
+        <Faqs linkId={linkId} />
       </div>
 
       <ModalUnderConstruction open={openModal} onClose={() => setOpenModal(false)} />
