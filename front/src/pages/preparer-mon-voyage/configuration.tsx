@@ -107,7 +107,7 @@ const index = () => {
       titleValue="Préparer mon voyage"
     >
       <Typography size="text-lg" color="secondary" lineHeight="leading-7">
-        Vous arrivez en France, dans quel pays avez-vous effectuez vos achats ?
+        Vous arrivez en France, dans quel pays avez-vous effectué vos achats ?
       </Typography>
       <InputGroup
         label="Le pays d’où vous arrivez"

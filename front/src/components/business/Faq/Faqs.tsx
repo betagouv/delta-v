@@ -3,12 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { scroller } from 'react-scroll';
 
-import { Border } from './FaqData/Border';
-import { Declaration } from './FaqData/Declaration';
-import { Legal } from './FaqData/Legal';
-import { Payment } from './FaqData/Payment';
 import { Accordions } from '@/components/common/Accordion';
 import { Typography } from '@/components/common/Typography';
+import { Border, Declaration, Legal, Payment } from '@/staticData/Faq';
 
 export interface FaqsProps {
   linkId?: string;
