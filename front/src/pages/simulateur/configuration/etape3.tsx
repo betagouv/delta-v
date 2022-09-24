@@ -60,11 +60,37 @@ const Configuration = () => {
     },
   });
 
+  const countriesAlternatives = [
+    {
+      id: 'CH',
+      alternatives: ['Suisse', 'Switzerland', 'Schweiz'],
+    },
+    {
+      id: 'US',
+      alternatives: ['USA', 'United States', 'Etats-Unis'],
+    },
+    {
+      id: 'GB',
+      alternatives: ['Royaume-Uni', 'United Kingdom', 'Angleterre', 'UK'],
+    },
+    {
+      id: 'DE',
+      alternatives: ['Allemagne', 'Germany', 'Deutschland'],
+    },
+  ];
+
   const countriesOptions = useMemo(() => {
     const countries = getNames('fr', { select: 'official' });
     const keys = Object.keys(countries) as Alpha2Code[];
     const enabledKeys = keys.filter((key) => !disabledCountries.includes(key));
-    return enabledKeys.map((key) => ({ value: countries[key] ?? '', id: key }));
+    return enabledKeys.map((key) => {
+      const countryAlternative = countriesAlternatives.find((country) => country.id === key);
+      return {
+        value: countries[key] ?? '',
+        id: key,
+        alternatives: countryAlternative?.alternatives ?? [],
+      };
+    });
   }, []);
 
   return (
