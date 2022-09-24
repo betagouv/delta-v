@@ -54,9 +54,11 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="mt-1 mr-1  h-7 w-7 ">
               <SvgIcon name="basket" />
             </div>
-            <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
-              {nbCartItems}
-            </div>
+            {nbCartItems > 0 && (
+              <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
+                {nbCartItems}
+              </div>
+            )}
           </div>
         )}
       </div>
