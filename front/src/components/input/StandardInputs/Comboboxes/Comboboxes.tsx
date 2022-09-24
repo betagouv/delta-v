@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
+import Fuse from 'fuse.js';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
 import { Icon } from '@/components/common/Icon';
@@ -8,6 +9,7 @@ import { Icon } from '@/components/common/Icon';
 export interface Options {
   id: number | string | null;
   value: string;
+  alternatives?: string[];
 }
 
 export interface ComboboxesOptions {
@@ -47,11 +49,15 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
     if (query === '') {
       setFilteredOptions(options);
     } else {
-      setFilteredOptions(
-        options.filter((option) => {
-          return option.value.toLowerCase().includes(query.toLowerCase());
-        }),
-      );
+      const fuse = new Fuse(options, {
+        includeScore: true,
+        minMatchCharLength: 2,
+        threshold: 0.5,
+        keys: ['value', 'alternatives'],
+      });
+      const result = fuse.search(query);
+
+      setFilteredOptions(result.map((item) => item.item));
     }
   }, [query]);
 
