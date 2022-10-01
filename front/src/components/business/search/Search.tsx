@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+import { SearchResultFaq } from './faq/SearchResultFaq';
 import { SearchResultProducts } from './product/SearchResultProducts';
 import { UnknownProduct } from './product/UnknownProduct';
 import { Icon } from '@/components/common/Icon';
 import { Product } from '@/model/product';
+import { SearchData } from '@/services/search.service';
 import { SearchType } from '@/utils/search';
 
 type SearchDisplayType = 'product' | 'faq';
@@ -21,6 +23,8 @@ const getSearchResult = <T extends unknown>(
   resultSearch: SearchType<T>[],
 ) => {
   switch (searchType) {
+    case 'faq':
+      return <SearchResultFaq resultSearch={resultSearch as unknown as SearchType<SearchData>[]} />;
     case 'product':
     default:
       return (

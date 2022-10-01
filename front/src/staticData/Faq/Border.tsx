@@ -1,7 +1,7 @@
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 import { Link } from '@/components/common/Link';
 
-export const Border: AccordionData[] = [
+export const Border: DataElement[] = [
   {
     id: 'border-1',
     question: 'J’ai oublié de déclarer une marchandise',

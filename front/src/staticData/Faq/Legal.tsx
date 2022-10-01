@@ -1,6 +1,6 @@
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 
-export const Legal: AccordionData[] = [
+export const Legal: DataElement[] = [
   {
     id: 'legal-1',
     question: 'Pourquoi les contrefaçons sont-elles interdites ?',
