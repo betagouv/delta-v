@@ -5,22 +5,16 @@ import { scroller } from 'react-scroll';
 
 import { Accordions } from '@/components/common/Accordion';
 import { Typography } from '@/components/common/Typography';
-import { Border, Declaration, Legal, Payment } from '@/staticData/Faq';
+import { BlocElements } from '@/staticData';
 
 export interface FaqsProps {
+  faqData: BlocElements[];
   linkId?: string;
 }
 
-export const Faqs: React.FC<FaqsProps> = ({ linkId }: FaqsProps) => {
+export const Faqs: React.FC<FaqsProps> = ({ linkId, faqData }: FaqsProps) => {
   const [currentOpenId, setCurrentOpenId] = useState(linkId);
   const { trackEvent } = useMatomo();
-
-  const FaqData = [
-    { title: 'Déclaration', faqs: Declaration },
-    { title: 'Passage frontière', faqs: Border },
-    { title: 'Paiement', faqs: Payment },
-    { title: 'Légal', faqs: Legal },
-  ];
 
   useEffect(() => {
     if (linkId) {
@@ -36,10 +30,10 @@ export const Faqs: React.FC<FaqsProps> = ({ linkId }: FaqsProps) => {
 
   useEffect(() => {
     if (currentOpenId) {
-      FaqData.forEach((data) => {
-        data.faqs.forEach((faq) => {
-          if (faq.id === currentOpenId) {
-            trackEvent({ category: 'user-action', action: 'open-faq', name: faq.question });
+      faqData.forEach((bloc) => {
+        bloc.elements.forEach((element) => {
+          if (element.id === currentOpenId) {
+            trackEvent({ category: 'user-action', action: 'open-faq', name: element.question });
           }
         });
       });
@@ -50,17 +44,17 @@ export const Faqs: React.FC<FaqsProps> = ({ linkId }: FaqsProps) => {
       <h2 className="text-lg sm:text-4xl">
         Vous trouverez ci-dessous les réponses aux questions les plus fréquentes
       </h2>
-      {FaqData.map((item) => (
-        <div key={item.title}>
+      {faqData.map((bloc) => (
+        <div key={bloc.title}>
           <dl className="mt-6">
             <div className="mt-10 mb-4">
               <Typography color="light-gray" size="text-base">
-                {item.title}
+                {bloc.title}
               </Typography>
             </div>
 
             <Accordions
-              items={item.faqs}
+              items={bloc.elements}
               currentOpenId={currentOpenId}
               setOpenId={(id: string) => setCurrentOpenId(id)}
             />

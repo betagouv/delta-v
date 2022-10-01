@@ -4,11 +4,17 @@ import { useRouter } from 'next/router';
 
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { Faqs } from '@/components/business/Faq';
-import { Search } from '@/components/business/search';
+import { Input } from '@/components/input/StandardInputs/Input';
 import { Meta } from '@/layout/Meta';
+import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const FaqPage = () => {
+  const { getFaqData } = useStore((state) => ({
+    getFaqData: state.getFaqData,
+  }));
+
   const [openModal, setOpenModal] = useState<boolean>(false);
   const router = useRouter();
   const linkId = router.query.id as string | undefined;
@@ -27,10 +33,15 @@ const FaqPage = () => {
       withHeader
     >
       <div className="flex flex-col gap-6">
-        <div onClick={() => setOpenModal(true)}>
-          <Search onSearch={() => []} withSearchIcon searchType="faq" disabled />
-        </div>
-        <Faqs linkId={linkId} />
+        <Input
+          name="search"
+          type="text"
+          fullWidth
+          placeholder="Rechercher dans la FAQ"
+          trailingIcon="search"
+          onClick={() => router.push(`${Routing.faq}/recherche`)}
+        />
+        <Faqs linkId={linkId} faqData={getFaqData()} />
       </div>
 
       <ModalUnderConstruction open={openModal} onClose={() => setOpenModal(false)} />

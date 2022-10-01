@@ -13,6 +13,7 @@ interface AdvancedSearchOptions<T> {
 export type SearchType<T> = T & {
   rank: number;
   rankedValue: string;
+  rankedPosition?: [number, number];
 };
 
 export const advancedSearch = <T>({

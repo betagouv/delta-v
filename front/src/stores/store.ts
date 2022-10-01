@@ -2,6 +2,8 @@
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { createFaqAppStateSlice, FaqAppStateSlice } from './faq/appState.store';
+import { createUseCaseFaqSlice, FaqUseCaseSlice } from './faq/useCase.store';
 import { createGlobalAppStateSlice, GlobalAppStateSlice } from './global/appState.store';
 import { createUseCaseGlobalSlice, GlobalUseCaseSlice } from './global/useCase.store';
 import { createProductsAppStateSlice, ProductsAppStateSlice } from './products/appState.store';
@@ -18,7 +20,9 @@ export type StoreState = SimulatorUseCaseSlice &
   ProductsUseCaseSlice &
   ProductsAppStateSlice &
   GlobalUseCaseSlice &
-  GlobalAppStateSlice;
+  GlobalAppStateSlice &
+  FaqAppStateSlice &
+  FaqUseCaseSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -45,11 +49,19 @@ export const useStore = create<StoreState>(
       ...createProductsAppStateSlice(set, get, api),
       ...createGlobalAppStateSlice(set, get, api),
       ...createUseCaseGlobalSlice(set, get, api),
+      ...createFaqAppStateSlice(set, get, api),
+      ...createUseCaseFaqSlice(set, get, api),
     }),
+
     {
       name: 'app-storage',
       getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
       version: 3,
+      partialize: (state) => ({
+        simulator: state.simulator,
+        products: state.products,
+        global: state.global,
+      }),
       migrate(persistedState: StoreState, version) {
         const newPersistedState = { ...persistedState };
         if (version !== 3) {

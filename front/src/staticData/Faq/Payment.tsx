@@ -1,7 +1,7 @@
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 import { Link } from '@/components/common/Link';
 
-export const Payment: AccordionData[] = [
+export const Payment: DataElement[] = [
   {
     id: 'payment-1',
     question: 'Pourquoi n’ai-je rien à payer ?',

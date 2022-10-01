@@ -1,7 +1,7 @@
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 import { Link } from '@/components/common/Link';
 
-export const Declaration: AccordionData[] = [
+export const Declaration: DataElement[] = [
   {
     id: 'declaration-1',
     question: 'Qu’est ce qu’une déclaration ?',
