@@ -23,7 +23,10 @@ export const createUseCaseFaqSlice: StoreSlice<FaqUseCaseSlice> = (_set, get) =>
       pageDescription:
         'Pour connaître la règlementation concernant cette marchandise rendez dans la rubrique FAQ.',
     }));
-    return fuzzySearch(query, searchData, ['search']);
+
+    const normalizeQuery = query.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    return fuzzySearch(normalizeQuery, searchData, ['search']);
   },
   getFaqData: () => get().faq.appState.blocks,
 });

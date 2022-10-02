@@ -30,9 +30,8 @@ const extractMatchedData = (
     return;
   }
 
-  const position = (usedIndex[1] + usedIndex[0]) / 2;
-  const wordValue = getWord(matchedData.value, position);
-  const { value, worldPosition } = shorten(matchedData.value, position, 30);
+  const wordValue = getWord(matchedData.value, usedIndex);
+  const { value, worldPosition } = shorten(matchedData.value, usedIndex, 30);
   console.log('wordValue', wordValue);
 
   // eslint-disable-next-line consistent-return
@@ -60,7 +59,7 @@ export const fuzzySearch = (
     includeScore: true,
     includeMatches: true,
     minMatchCharLength: 2,
-    distance: 1000,
+    distance: 10000,
     threshold: 0.2,
     keys,
   });

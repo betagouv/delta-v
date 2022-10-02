@@ -21,29 +21,23 @@ const prepareData = (): BlocElements[] => {
     { title: 'Légal', elements: Legal },
   ];
 
-  return rawBlocks.map((block) => ({
+  const test = rawBlocks.map((block) => ({
     title: block.title,
     elements: block.elements.map((item) => ({
       ...item,
       search: [
         item.question,
-        ReactDOMServer.renderToStaticMarkup(item.answer).replace(/<[^>]*>?/gm, ''),
+        ReactDOMServer.renderToStaticMarkup(item.answer)
+          .replace(/<[^>]*>?/gm, ' ')
+          .replace(/ +(?= )/g, '')
+          .replace(/&#x27;/g, "'")
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, ''),
       ],
     })),
   }));
-};
 
-export const FAQ_DEFAULT_STATE = {
-  blocks: Border.map((item) => ({
-    ...item,
-    search: [
-      item.question,
-      ReactDOMServer.renderToStaticMarkup(item.answer).replace(/<[^>]*>?/gm, ''),
-    ],
-  })),
-  declaration: Declaration,
-  legal: Legal,
-  payment: Payment,
+  return test;
 };
 
 export const createFaqAppStateSlice: StoreSlice<FaqAppStateSlice> = () => ({
