@@ -24,8 +24,8 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
       className={classNames(
         'text-sm',
         disabled ? 'opacity-50 cursor-not-allowed' : '',
-        checked ? 'font-bold border-2' : 'font-normal border hover:bg-gray-50',
-        'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
+        checked ? 'font-bold border-4 p-[15px]' : 'font-normal border',
+        'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1 hover:bg-gray-50 hover:p-[15px] hover:border-4',
       )}
       onClick={() => {
         if (disabled) {
