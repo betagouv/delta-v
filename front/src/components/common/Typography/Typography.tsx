@@ -3,7 +3,7 @@ import React from 'react';
 import cn from 'classnames';
 
 import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
-import { Color, getColor, getFontWeight, Weight } from './style/typography.style';
+import { Color, getActiveColor, getColor, getFontWeight, Weight } from './style/typography.style';
 
 type TextSize =
   | 'text-2xs'
@@ -41,6 +41,7 @@ export interface ITypographyProps {
   weight?: Weight;
   italic?: boolean;
   underline?: boolean;
+  activeColor?: Color;
   textPosition?: 'text-left' | 'text-center' | 'text-right';
   onClick?: () => void;
 }
@@ -55,6 +56,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   weight = 'normal',
   italic = false,
   underline = false,
+  activeColor,
   textPosition,
   onClick,
 }) => {
@@ -67,6 +69,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     // [`${usedVariant}`]: true,
     [getFontWeight(weight)]: true,
     [getColor(color)]: true,
+    [getActiveColor(activeColor)]: activeColor,
     [size]: true,
     [lineHeight]: true,
     italic,

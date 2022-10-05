@@ -5,8 +5,8 @@ import shallow from 'zustand/shallow';
 
 import { SummarySimulator } from '@/components/business/summarySimulator';
 import { Button } from '@/components/common/Button';
-import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
+import { TextLink } from '@/components/common/TextLink';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -89,37 +89,22 @@ const Summary = () => {
           Des questions ?
         </Typography>
         <div className="flex flex-col gap-2">
-          <Link to={`${Routing.faq}?id=payment-1`}>
-            <Typography underline color="link">
-              Pourquoi n’ai-je rien à payer ?
-            </Typography>
-          </Link>
-          <Link to={`${Routing.faq}?id=declaration-3`}>
-            <Typography underline color="link">
-              Pourquoi dois-je payer des droits et taxes ?
-            </Typography>
-          </Link>
-          <Link to={`${Routing.faq}?id=payment-4`}>
-            <Typography underline color="link">
-              Comment payer ce que je dois ?
-            </Typography>
-          </Link>
-          <Link to={`${Routing.faq}?id=declaration-3`}>
-            <Typography underline color="link">
-              Pourquoi dois-je passer au guichet Douane ?
-            </Typography>
-          </Link>
+          <TextLink underline to={`${Routing.faq}?id=payment-1`}>
+            Pourquoi n’ai-je rien à payer ?
+          </TextLink>
+          <TextLink underline to={`${Routing.faq}?id=declaration-3`}>
+            Pourquoi dois-je payer des droits et taxes ?
+          </TextLink>
+          <TextLink underline to={`${Routing.faq}?id=payment-4`}>
+            Comment payer ce que je dois ?
+          </TextLink>
+          <TextLink underline to={`${Routing.faq}?id=declaration-3`}>
+            Pourquoi dois-je passer au guichet Douane ?
+          </TextLink>
         </div>
-        <Link to={Routing.faq}>
-          <Typography tag="div" weight="bold" color="link">
-            <div className="flex flex-row">
-              En savoir plus
-              <div className="ml-1 h-3.5 w-3.5">
-                <Icon name="arrow-right" />
-              </div>
-            </div>
-          </Typography>
-        </Link>
+        <TextLink bold withArrow to={Routing.faq}>
+          En savoir plus
+        </TextLink>
       </div>
     </Main>
   );

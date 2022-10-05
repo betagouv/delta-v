@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
-import { Typography } from '@/components/common/Typography';
+import { TextLink } from '@/components/common/TextLink';
 import { InputGroup } from '@/components/input/InputGroup';
 import { getAmountProductType, getUnit } from '@/model/amount';
 import { Product } from '@/model/product';
@@ -64,14 +64,9 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               <br /> quantités que vous pouvez <br />
               <div className="flex flex-row gap-1">
                 <p>ramener</p>
-                <Typography
-                  color="link"
-                  underline
-                  onClick={() => setOpenModalInfoProduct(true)}
-                  lineHeight="leading-tight"
-                >
+                <TextLink underline onClick={() => setOpenModalInfoProduct(true)}>
                   cliquez ici
-                </Typography>
+                </TextLink>
               </div>
             </div>
           </Info>

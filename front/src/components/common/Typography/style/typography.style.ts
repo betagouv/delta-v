@@ -1,6 +1,7 @@
 export type Color =
   | 'primary'
   | 'secondary'
+  | 'white'
   | 'middle-gray'
   | 'light-gray'
   | 'link'
@@ -33,6 +34,8 @@ export const getColor = (color: Color): string => {
       return 'text-primary-600';
     case 'secondary':
       return 'text-secondary-800';
+    case 'white':
+      return 'text-white';
     case 'light-gray':
       return 'text-gray-400';
     case 'middle-gray':
@@ -45,5 +48,28 @@ export const getColor = (color: Color): string => {
       return 'text-[#CE0500]';
     default:
       return 'text-primary-700';
+  }
+};
+
+export const getActiveColor = (color?: Color): string => {
+  switch (color) {
+    case 'primary':
+      return 'active:text-primary-600';
+    case 'secondary':
+      return 'active:text-secondary-800';
+    case 'white':
+      return 'active:text-white';
+    case 'light-gray':
+      return 'active:text-gray-400';
+    case 'middle-gray':
+      return 'active:text-gray-500';
+    case 'link':
+      return 'active:text-link';
+    case 'success':
+      return 'active:text-success';
+    case 'error':
+      return 'active:text-[#CE0500]';
+    default:
+      return '';
   }
 };
