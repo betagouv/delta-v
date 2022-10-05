@@ -28,7 +28,8 @@ export const Card: React.FC<CardProps> = ({
   description,
   onClick,
 }: CardProps) => {
-  let className = 'flex h-auto border border-gray-300 bg-white p-3 flex-1 gap-4 active:bg-gray-100';
+  let className =
+    'flex h-auto border border-gray-300 bg-white p-3 flex-1 gap-4 active:bg-gray-100 active:border-4 active:p-[9px]';
   if (variant === 'vertical') {
     className += ' flex-col text-center items-center';
   } else if (variant === 'horizontal' && !subtitle) {

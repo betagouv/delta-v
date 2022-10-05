@@ -8,16 +8,39 @@ interface LinkProps {
   back?: boolean;
   to?: string;
   href?: string;
+  onClick?: () => any;
   external?: boolean;
   underline?: boolean;
   children: React.ReactNode;
   tag?: 'div' | 'span';
 }
 
+enum LinkType {
+  to,
+  href,
+  onClick,
+  default,
+}
+
+const getLinkType = (to?: string, back?: boolean, href?: string, onClick?: () => any): LinkType => {
+  if (to || back) {
+    return LinkType.to;
+  }
+  if (href) {
+    return LinkType.href;
+  }
+  if (onClick) {
+    return LinkType.onClick;
+  }
+
+  return LinkType.default;
+};
+
 export const Link: React.FC<LinkProps> = ({
   back,
   to,
   href,
+  onClick,
   external = false,
   underline = false,
   children,
@@ -35,9 +58,11 @@ export const Link: React.FC<LinkProps> = ({
   };
   const CustomTag = tag ?? 'div';
 
+  const linkType = getLinkType(to, back, href, onClick);
+
   return (
-    <>
-      {(to || back) && (
+    <div>
+      {linkType === LinkType.to && (to || back) && (
         <CustomTag
           onClick={handleClick}
           className={classNames({ 'cursor-pointer': true, underline })}
@@ -45,11 +70,12 @@ export const Link: React.FC<LinkProps> = ({
           {children}
         </CustomTag>
       )}
-      {href && (
+      {linkType === LinkType.href && href && (
         <NextLink href={href}>
           <a target={external ? '_blank' : '_self'}>{children}</a>
         </NextLink>
       )}
-    </>
+      {linkType === LinkType.onClick && onClick && <div onClick={onClick}>{children}</div>}
+    </div>
   );
 };

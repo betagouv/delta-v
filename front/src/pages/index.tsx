@@ -9,6 +9,7 @@ import { Card } from '@/components/common/Card';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
+import { TextLink } from '@/components/common/TextLink';
 import { Typography } from '@/components/common/Typography';
 import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
@@ -108,7 +109,7 @@ const Index = () => {
           </Link>
         </div>
       </div>
-      <div className="-mx-4 flex flex-col gap-6 bg-primary-100 p-4">
+      <div className="-mx-4 flex flex-col gap-6 bg-primary-100 p-4 pb-6">
         <Typography weight="bold" size="text-2xl" color="secondary">
           Pourquoi déclarer mes achats effectués à l’étranger ?
         </Typography>
@@ -122,18 +123,9 @@ const Index = () => {
           Pour vous permettre d’être facilement en règle si vous avez acheté des produits à
           l’étranger et vous assurer un passage rapide et fluide lors de votre retour en France.
         </Typography>
-        <Link to={Routing.faq}>
-          <div className="flex flex-row items-center">
-            <Typography weight="bold" variant="body1" tag="div" color="link">
-              <div className="flex flex-row">
-                En savoir plus
-                <div className="ml-1 h-3.5 w-3.5">
-                  <Icon name="arrow-right" />
-                </div>
-              </div>
-            </Typography>
-          </div>
-        </Link>
+        <TextLink to={Routing.faq} bold withArrow>
+          En savoir plus
+        </TextLink>
       </div>
       <div className="flex flex-col gap-6">
         <Typography weight="bold" size="text-2xl" color="secondary">
