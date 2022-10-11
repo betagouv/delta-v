@@ -5,12 +5,18 @@ import { IRadioType } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
-export interface FormSelectProductData {
+export interface FormStepsProductData {
   [key: string]: boolean | number | string | undefined;
 }
 
-export const getDefaultValues = (steps: Product[]): FormSelectProductData => {
-  const defaultValues: FormSelectProductData = {};
+export interface FormSelectProductData extends FormStepsProductData {
+  name?: string;
+  value?: number;
+  devise: string;
+}
+
+export const getDefaultValues = (steps: Product[]): FormStepsProductData => {
+  const defaultValues: FormStepsProductData = {};
   steps.forEach((step) => {
     if (
       step.productDisplayTypes === ProductDisplayTypes.radio ||

@@ -1,16 +1,13 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
 import { FormAddProduct } from '../formAddProduct';
+import { StepsFormProduct } from '../stepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
-import {
-  FormSelectProductData,
-  getDefaultValues,
-  getRadioCardProductForm,
-  getRadioProductForm,
-  getSteps,
-} from './utils';
+import { schema } from './schema';
+import { FormSelectProductData, getDefaultValues } from './utils';
 import { Input } from '@/components/input/StandardInputs/Input';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
@@ -40,19 +37,14 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     }
   }, [currentProduct]);
 
-  const onSelectStep = (idSelectedStep: string): void => {
-    setSteps(getSteps({ currentProduct, lastId: idSelectedStep }));
-  };
-
-  const { handleSubmit, register, control, reset } = useForm<FormSelectProductData>({
+  const { handleSubmit, register, control, reset } = useForm<any>({
     defaultValues: {
       value: undefined,
       devise: 'eur',
       ...getDefaultValues(steps),
+      resolver: schema ? yupResolver(schema) : undefined,
     },
   });
-
-  const [idSelectedStep, setIdSelectedStep] = useState<string | undefined>();
 
   useEffect(() => {
     reset({
@@ -69,47 +61,11 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       onAddProduct({
         name: (data.name as string) ?? '',
         product,
-        value: (data.value as string) ?? '1',
+        value: data.value?.toString() ?? '1',
         devise: (data.devise as string) ?? 'eur',
       });
     }
   };
-
-  interface EventChangeRadio {
-    type: string;
-    target: {
-      name: string;
-      value: string;
-    };
-  }
-  const onChangeRadio = ({ type, target: { name, value } }: EventChangeRadio) => {
-    const notResetSteps = !name || type !== 'change';
-    if (notResetSteps) {
-      return;
-    }
-    if (typeof value === 'string' && value !== idSelectedStep) {
-      setIdSelectedStep(value);
-      onSelectStep(value);
-    }
-  };
-
-  const multiForm = steps
-    .map((step): ReactNode | undefined => {
-      const fieldRegister = register(step.id, {
-        onChange: (e) => {
-          onChangeRadio(e);
-        },
-      });
-      if (step.productDisplayTypes === ProductDisplayTypes.radio) {
-        return getRadioProductForm(step, fieldRegister);
-      }
-
-      if (step.productDisplayTypes === ProductDisplayTypes.radioCard) {
-        return getRadioCardProductForm(step, fieldRegister, control);
-      }
-      return undefined;
-    })
-    .filter((formElement) => formElement !== undefined);
 
   const isAddAble =
     steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
@@ -133,9 +89,13 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           register={register('name', { required: false })}
         />
       </div>
-      {multiForm.map((form, index) => {
-        return <div key={index}>{form}</div>;
-      })}
+      <StepsFormProduct
+        control={control}
+        currentProduct={currentProduct}
+        register={register}
+        setSteps={setSteps}
+        steps={steps}
+      />
       <FormAddProduct
         product={currentProduct}
         disabled={!isAddAble}

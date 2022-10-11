@@ -43,7 +43,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   const [openModalInfoProduct, setOpenModalInfoProduct] = useState<boolean>(false);
 
   return (
-    <>
+    <div className="flex flex-1 flex-col gap-6">
       {productType !== 'valueProduct' ? (
         <>
           <InputGroup
@@ -54,7 +54,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             fullWidth={false}
             name="value"
             options={selectOptions}
-            register={register('value', { required: true })}
+            register={register('value', { required: false })}
             control={control}
             trailingAddons={getUnit(product?.amountProduct)}
           />
@@ -81,7 +81,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             fullWidth={false}
             name="value"
             options={selectOptions}
-            register={register('value', { required: true })}
+            register={register('value', { required: false })}
             control={control}
           />
           <InputGroup
@@ -91,7 +91,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             fullWidth={false}
             name="devise"
             options={selectOptions}
-            register={register('devise', { required: true })}
+            register={register('devise', { required: false })}
             control={control}
           />
         </>
@@ -109,6 +109,6 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           border={simulatorRequest.border}
         />
       )}
-    </>
+    </div>
   );
 };
