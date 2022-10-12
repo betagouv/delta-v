@@ -82,19 +82,38 @@ export const Input: React.FC<IInputOptions> = ({
           {leadingAddons}
         </div>
       )}
-      <input
-        data-testid="input-element"
-        id={id ?? name}
-        name={name}
-        placeholder={placeholder}
-        type={type}
-        disabled={disabled}
-        value={value}
-        className={className}
-        step={0.01}
-        {...register}
-        autoFocus={autoFocus}
-      />
+      {type === 'number' && (
+        <input
+          data-testid="input-element"
+          id={id ?? name}
+          name={name}
+          placeholder={placeholder}
+          type="text"
+          inputMode="numeric"
+          disabled={disabled}
+          value={value}
+          className={className}
+          step={0.01}
+          {...register}
+          autoFocus={autoFocus}
+        />
+      )}
+      {type !== 'number' && (
+        <input
+          data-testid="input-element"
+          id={id ?? name}
+          name={name}
+          placeholder={placeholder}
+          type={type}
+          disabled={disabled}
+          value={value}
+          className={className}
+          step={0.01}
+          {...register}
+          autoFocus={autoFocus}
+        />
+      )}
+
       {trailingIcon && (
         <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
           <Icon name={trailingIcon} />

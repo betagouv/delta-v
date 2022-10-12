@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { FormAddProduct } from '../formAddProduct';
 import { StepsFormProduct } from '../stepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
-import { schema } from './schema';
+import { getSchema } from './schema';
 import { FormSelectProductData, getDefaultValues } from './utils';
-import { Input } from '@/components/input/StandardInputs/Input';
+import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
 export interface OnAddProductOptions {
@@ -37,19 +37,26 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     }
   }, [currentProduct]);
 
-  const { handleSubmit, register, control, reset } = useForm<any>({
+  const {
+    handleSubmit,
+    register,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<any>({
     defaultValues: {
-      value: undefined,
+      name: undefined,
+      value: null,
       devise: 'eur',
       ...getDefaultValues(steps),
-      resolver: schema ? yupResolver(schema) : undefined,
     },
+    resolver: yupResolver(getSchema(!!currentProduct.amountProduct)),
   });
 
   useEffect(() => {
     reset({
       name: undefined,
-      value: undefined,
+      value: null,
       devise: 'eur',
       ...getDefaultValues(steps),
     });
@@ -81,12 +88,13 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           Nommez votre achat{' '}
           <span className="ml-1 font-normal italic text-gray-400">(facultatif)</span>
         </label>
-        <Input
+        <InputGroup
+          type="text"
           fullWidth
           name="name"
-          type="text"
           placeholder="Exemple : Jeans, pantalon noir, slim..."
           register={register('name', { required: false })}
+          error={errors.name?.message as string | undefined}
         />
       </div>
       <StepsFormProduct
@@ -101,6 +109,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         disabled={!isAddAble}
         control={control}
         register={register}
+        errors={errors}
       />
     </form>
   ) : (

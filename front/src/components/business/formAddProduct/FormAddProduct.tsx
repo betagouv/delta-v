@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { FieldErrors } from 'react-hook-form';
+
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
@@ -14,6 +16,7 @@ interface FormAddProductProps {
   control: any;
   disabled?: boolean;
   product?: Product;
+  errors: FieldErrors;
 }
 
 export interface FormSimulatorData {
@@ -33,6 +36,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   control,
   disabled = false,
   product,
+  errors,
 }: FormAddProductProps) => {
   const { simulatorRequest } = useStore((state) => ({
     simulatorRequest: state.simulator.appState.simulatorRequest,
@@ -57,6 +61,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             register={register('value', { required: false })}
             control={control}
             trailingAddons={getUnit(product?.amountProduct)}
+            error={errors.value?.message as string | undefined}
           />
           <Info>
             <div className="leading-tight">
@@ -80,9 +85,9 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             type="number"
             fullWidth={false}
             name="value"
-            options={selectOptions}
             register={register('value', { required: false })}
             control={control}
+            error={errors.value?.message as string | undefined}
           />
           <InputGroup
             disabled={disabled}
@@ -93,6 +98,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             options={selectOptions}
             register={register('devise', { required: false })}
             control={control}
+            error={errors.devise?.message as string | undefined}
           />
         </>
       )}
