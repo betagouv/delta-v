@@ -17,7 +17,11 @@ export interface FormSimulatorData {
 const product = productFactory({});
 
 export const base = (): JSX.Element => {
-  const { register, control } = useForm<FormSimulatorData>({
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useForm<any>({
     defaultValues: {
       value: undefined,
       devise: 'eur',
@@ -26,7 +30,7 @@ export const base = (): JSX.Element => {
   return (
     <div className="p-3">
       <br />
-      <FormAddProduct product={product} register={register} control={control} />
+      <FormAddProduct product={product} register={register} control={control} errors={errors} />
       <br />
     </div>
   );
