@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import Error from 'next/error';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { FormAddProduct } from '@/components/business/formAddProduct';
@@ -30,7 +30,13 @@ const UpdateProductBasket = () => {
   const { id } = router.query;
   const currentProduct = findShoppingProduct(id as string);
 
-  const { handleSubmit, register, control, setValue } = useForm<FormUpdateShoppingProduct>({
+  const {
+    handleSubmit,
+    register,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm<FormUpdateShoppingProduct>({
     defaultValues: {
       name: undefined,
       value: undefined,
@@ -93,6 +99,7 @@ const UpdateProductBasket = () => {
                 product={currentProduct.product}
                 control={control}
                 register={register}
+                errors={errors as FieldErrors}
               />
             </div>
           </form>

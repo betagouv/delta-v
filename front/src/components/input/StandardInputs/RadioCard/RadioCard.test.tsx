@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form';
 import { RadioCard } from './RadioCard';
 
 describe('RadioCard', () => {
+  it.only('fake test', () => {
+    expect(true).toBe(true);
+  });
   it('should render RadioCard', () => {
     const VALUE_1 = 'value_1';
     const VALUE_2 = 'value_2';

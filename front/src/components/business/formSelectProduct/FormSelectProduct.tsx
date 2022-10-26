@@ -1,17 +1,14 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
 import { FormAddProduct } from '../formAddProduct';
+import { StepsFormProduct } from '../stepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
-import {
-  FormSelectProductData,
-  getDefaultValues,
-  getRadioCardProductForm,
-  getRadioProductForm,
-  getSteps,
-} from './utils';
-import { Input } from '@/components/input/StandardInputs/Input';
+import { getSchema } from './schema';
+import { FormSelectProductData, getDefaultValues } from './utils';
+import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
 export interface OnAddProductOptions {
@@ -40,24 +37,26 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     }
   }, [currentProduct]);
 
-  const onSelectStep = (idSelectedStep: string): void => {
-    setSteps(getSteps({ currentProduct, lastId: idSelectedStep }));
-  };
-
-  const { handleSubmit, register, control, reset } = useForm<FormSelectProductData>({
+  const {
+    handleSubmit,
+    register,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<any>({
     defaultValues: {
-      value: undefined,
+      name: undefined,
+      value: null,
       devise: 'eur',
       ...getDefaultValues(steps),
     },
+    resolver: yupResolver(getSchema(!!currentProduct.amountProduct)),
   });
-
-  const [idSelectedStep, setIdSelectedStep] = useState<string | undefined>();
 
   useEffect(() => {
     reset({
       name: undefined,
-      value: undefined,
+      value: null,
       devise: 'eur',
       ...getDefaultValues(steps),
     });
@@ -69,47 +68,11 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       onAddProduct({
         name: (data.name as string) ?? '',
         product,
-        value: (data.value as string) ?? '1',
+        value: data.value?.toString() ?? '1',
         devise: (data.devise as string) ?? 'eur',
       });
     }
   };
-
-  interface EventChangeRadio {
-    type: string;
-    target: {
-      name: string;
-      value: string;
-    };
-  }
-  const onChangeRadio = ({ type, target: { name, value } }: EventChangeRadio) => {
-    const notResetSteps = !name || type !== 'change';
-    if (notResetSteps) {
-      return;
-    }
-    if (typeof value === 'string' && value !== idSelectedStep) {
-      setIdSelectedStep(value);
-      onSelectStep(value);
-    }
-  };
-
-  const multiForm = steps
-    .map((step): ReactNode | undefined => {
-      const fieldRegister = register(step.id, {
-        onChange: (e) => {
-          onChangeRadio(e);
-        },
-      });
-      if (step.productDisplayTypes === ProductDisplayTypes.radio) {
-        return getRadioProductForm(step, fieldRegister);
-      }
-
-      if (step.productDisplayTypes === ProductDisplayTypes.radioCard) {
-        return getRadioCardProductForm(step, fieldRegister, control);
-      }
-      return undefined;
-    })
-    .filter((formElement) => formElement !== undefined);
 
   const isAddAble =
     steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
@@ -125,22 +88,28 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           Nommez votre achat{' '}
           <span className="ml-1 font-normal italic text-gray-400">(facultatif)</span>
         </label>
-        <Input
+        <InputGroup
+          type="text"
           fullWidth
           name="name"
-          type="text"
           placeholder="Exemple : Jeans, pantalon noir, slim..."
           register={register('name', { required: false })}
+          error={errors.name?.message as string | undefined}
         />
       </div>
-      {multiForm.map((form, index) => {
-        return <div key={index}>{form}</div>;
-      })}
+      <StepsFormProduct
+        control={control}
+        currentProduct={currentProduct}
+        register={register}
+        setSteps={setSteps}
+        steps={steps}
+      />
       <FormAddProduct
         product={currentProduct}
         disabled={!isAddAble}
         control={control}
         register={register}
+        errors={errors}
       />
     </form>
   ) : (

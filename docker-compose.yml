@@ -17,7 +17,7 @@ x-e2e-test-envs: &common-e2e-test-envs
 
 services:
   backend-api: &backend_default
-    image: node:14
+    image: node:16
     restart: unless-stopped
     volumes:
       - ./back/:/usr/app:delegated
@@ -95,7 +95,7 @@ services:
     
   frontend-web-delta-v:
     container_name: frontend-web-delta-v
-    image: node:14
+    image: node:16
     restart: unless-stopped
     ports:
       - 3000:3000
@@ -109,7 +109,7 @@ services:
 
   storybook-delta-v:
     container_name: storybook-delta-v
-    image: node:14
+    image: node:16
     ports:
       - 9009:9009
     volumes:
