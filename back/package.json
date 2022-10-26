@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "src/index.ts",
   "engines": {
-    "node": "^14.19.0"
+    "node": "^16"
   },
   "scripts": {
     "dev": "nodemon",
