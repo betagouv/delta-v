@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 
 import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
-import { Search } from '@/components/business/search';
 import { Card } from '@/components/common/Card';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { TextLink } from '@/components/common/TextLink';
 import { Typography } from '@/components/common/Typography';
+import { Input } from '@/components/input/StandardInputs/Input';
 import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
@@ -73,7 +73,14 @@ const Index = () => {
         </div>
 
         <div onClick={() => setOpenModalUnderConstruction(true)}>
-          <Search onSearch={() => []} withSearchIcon searchType="faq" disabled />
+          <Input
+            name="search"
+            type="text"
+            fullWidth
+            placeholder="Que recherchez-vous ?"
+            trailingIcon="search"
+            onClick={() => router.push(`/recherche`)}
+          />
         </div>
 
         <div className="flex flex-col gap-4">

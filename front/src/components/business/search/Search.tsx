@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { SearchResultFaq } from './faq/SearchResultFaq';
+import { SearchResultGlobal } from './global/SearchResultGlobal';
+import { UnknownSearch } from './global/UnknownSearch';
 import { SearchResultProducts } from './product/SearchResultProducts';
 import { UnknownProduct } from './product/UnknownProduct';
 import { Icon } from '@/components/common/Icon';
@@ -8,7 +9,7 @@ import { Product } from '@/model/product';
 import { SearchData } from '@/services/search.service';
 import { SearchType } from '@/utils/search';
 
-type SearchDisplayType = 'product' | 'faq';
+type SearchDisplayType = 'product' | 'global';
 interface SearchProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
@@ -23,13 +24,25 @@ const getSearchResult = <T extends unknown>(
   resultSearch: SearchType<T>[],
 ) => {
   switch (searchType) {
-    case 'faq':
-      return <SearchResultFaq resultSearch={resultSearch as unknown as SearchType<SearchData>[]} />;
+    case 'global':
+      return (
+        <SearchResultGlobal resultSearch={resultSearch as unknown as SearchType<SearchData>[]} />
+      );
     case 'product':
     default:
       return (
         <SearchResultProducts resultSearch={resultSearch as unknown as SearchType<Product>[]} />
       );
+  }
+};
+
+const getSearchUnknown = (searchType: SearchDisplayType, searchValue: string) => {
+  switch (searchType) {
+    case 'global':
+      return <UnknownSearch />;
+    case 'product':
+    default:
+      return <UnknownProduct searchValue={searchValue} />;
   }
 };
 
@@ -55,7 +68,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
       case 'product':
         setPlaceholder('Recherchez un produit');
         break;
-      case 'faq':
+      case 'global':
         setPlaceholder('Saisissez votre recherche');
         break;
       default:
@@ -98,9 +111,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
       {searchValue.length === 0 ? (
         <></>
       ) : (
-        <>
-          {resultSearch.length === 0 ? <UnknownProduct searchValue={searchValue} /> : SearchResult}
-        </>
+        <>{resultSearch.length === 0 ? getSearchUnknown(searchType, searchValue) : SearchResult}</>
       )}
     </div>
   );

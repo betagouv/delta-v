@@ -4,7 +4,7 @@ import { SearchData } from '@/services/search.service';
 import { Routing } from '@/utils/const';
 import { SearchType } from '@/utils/search';
 
-interface SearchResultProductsProps {
+interface SearchResultGlobalProps {
   resultSearch: SearchType<SearchData>[];
 }
 
@@ -21,9 +21,9 @@ const BoldedText = (value: string, position: [number, number]) => {
   );
 };
 
-export const SearchResultFaq: React.FC<SearchResultProductsProps> = ({
+export const SearchResultGlobal: React.FC<SearchResultGlobalProps> = ({
   resultSearch,
-}: SearchResultProductsProps) => {
+}: SearchResultGlobalProps) => {
   return (
     <ul className="w-full text-base">
       {resultSearch.map((resultElement) => (
