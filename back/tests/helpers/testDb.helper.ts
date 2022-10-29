@@ -13,7 +13,7 @@ export interface ITestDbManager {
   clear: () => Promise<void>;
 }
 
-const ENTITIES = [ProductEntity];
+const ENTITIES = [ProductEntity, CurrencyEntity];
 
 export const testDbManager = (): ITestDbManager => {
   let connection: Connection;
