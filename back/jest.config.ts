@@ -6,5 +6,4 @@ export default {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
-  setupFiles: ['./setupJest.js'],
 };

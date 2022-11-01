@@ -1,12 +1,12 @@
-import fetchMock from 'jest-fetch-mock';
+import axios from 'axios';
 import { service } from '../../../src/scripts/syncCurrency/service';
 import { RawCurrency } from '../../../src/scripts/syncCurrency/services/currencySerializer.service';
 import { currencyRepositoryMock } from '../../mocks/currency.repository.mock';
 
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
 describe('syncCurrencyService', () => {
-  beforeEach(() => {
-    fetchMock.resetMocks();
-  });
   test('it should sync currency', async () => {
     const response: RawCurrency[] = [
       {
@@ -27,13 +27,14 @@ describe('syncCurrencyService', () => {
       },
     ];
 
-    fetchMock.mockResponseOnce(JSON.stringify(response));
+    mockedAxios.get.mockResolvedValueOnce({ data: response });
 
     const currencyRepository = currencyRepositoryMock();
 
     await service(currencyRepository);
 
-    expect(fetchMock.call.length).toEqual(1);
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    expect(mockedAxios.get).toBeCalled();
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(currencyRepository.saveAll).toBeCalledWith([
       {
@@ -54,13 +55,14 @@ describe('syncCurrencyService', () => {
   test('it should not sync currency - empty array', async () => {
     const response: RawCurrency[] = [];
 
-    fetchMock.mockResponseOnce(JSON.stringify(response));
+    mockedAxios.get.mockResolvedValueOnce({ data: response });
 
     const currencyRepository = currencyRepositoryMock();
 
     await service(currencyRepository);
 
-    expect(fetchMock.call.length).toEqual(1);
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    expect(mockedAxios.get).toBeCalled();
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(currencyRepository.saveAll).not.toBeCalled();
   });

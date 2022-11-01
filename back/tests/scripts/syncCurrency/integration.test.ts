@@ -1,9 +1,11 @@
-import fetchMock from 'jest-fetch-mock';
+import axios from 'axios';
 import { syncCurrency } from '../../../src/scripts/syncCurrency/script';
 import { RawCurrency } from '../../../src/scripts/syncCurrency/services/currencySerializer.service';
 import { testDbManager } from '../../helpers/testDb.helper';
 
 const testDb = testDbManager();
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('test get all product API', () => {
   beforeAll(async () => {
@@ -11,7 +13,6 @@ describe('test get all product API', () => {
   });
 
   beforeEach(async () => {
-    fetchMock.resetMocks();
     await testDb.clear();
   });
 
@@ -37,7 +38,7 @@ describe('test get all product API', () => {
         comment: 'Euro: Egalement valable pour Andorre (AD).',
       },
     ];
-    fetchMock.mockResponseOnce(JSON.stringify(response));
+    mockedAxios.get.mockResolvedValueOnce({ data: response });
 
     await syncCurrency();
 

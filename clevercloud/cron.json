@@ -1,1 +1,1 @@
-["*/5 * * * * cd $ROOT && yarn cron:syncCurrencies"]
+["*/5 * * * * $ROOT/crons/syncCurrencies.sh"]
