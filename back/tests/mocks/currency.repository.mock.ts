@@ -1,9 +1,17 @@
+import { CurrencyEntity } from '../../src/entities/currency.entity';
 import CurrencyRepository, {
   CurrencyRepositoryInterface,
 } from '../../src/repositories/currency.repository';
 
-export const currencyRepositoryMock = (): CurrencyRepositoryInterface => {
+interface CurrencyRepositoryMockOptions {
+  getAll?: CurrencyEntity[];
+}
+
+export const currencyRepositoryMock = (
+  options: CurrencyRepositoryMockOptions,
+): CurrencyRepositoryInterface => {
   const currencyRepository = new CurrencyRepository();
   currencyRepository.saveAll = jest.fn().mockResolvedValue(undefined);
+  currencyRepository.getAll = jest.fn().mockResolvedValue(options.getAll ?? []);
   return currencyRepository;
 };

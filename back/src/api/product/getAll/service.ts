@@ -5,6 +5,5 @@ interface GetAllProductService {
   productRepository: ProductRepositoryInterface;
 }
 
-export const service = async ({ productRepository }: GetAllProductService): Promise<Product[]> => {
-  return productRepository.getAll();
-};
+export const service = async ({ productRepository }: GetAllProductService): Promise<Product[]> =>
+  productRepository.getAll();

@@ -4,7 +4,7 @@ import { Currency } from '../../../src/entities/currency.entity';
 
 const buildSchema = (): Currency => {
   return {
-    id: faker.datatype.uuid(),
+    id: faker.datatype.string(3),
     name: faker.commerce.productName(),
     value: faker.datatype.number(),
     comment: faker.lorem.sentence(),

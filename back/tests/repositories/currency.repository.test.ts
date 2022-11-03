@@ -23,7 +23,7 @@ describe('test currency repository', () => {
     await testDb.disconnect();
   });
   describe('test saveAll', () => {
-    it('should return all products', async () => {
+    it('should return save currencies', async () => {
       await testDb.persistCurrency(currencyEntityFactory({ id: 'GBP', value: 0.89485 }));
       await testDb.persistCurrency(currencyEntityFactory({ id: 'EUR' }));
       await testDb.persistCurrency(currencyEntityFactory({ id: 'USD' }));
@@ -40,6 +40,27 @@ describe('test currency repository', () => {
       expect(currencies.find((currency) => currency.id === 'EUR')).toBeDefined();
       expect(currencies.find((currency) => currency.id === 'USD')).toBeDefined();
       expect(currencies.find((currency) => currency.id === 'RUB')).toBeDefined();
+    });
+  });
+  describe('test getAll', () => {
+    it('should return all currencies', async () => {
+      const currencies = await Promise.all([
+        testDb.persistCurrency(currencyEntityFactory()),
+        testDb.persistCurrency(currencyEntityFactory()),
+        testDb.persistCurrency(currencyEntityFactory()),
+      ]);
+
+      const dbCurrencies = await repository.getAll();
+
+      expect(dbCurrencies).toHaveLength(3);
+      expect(currencies.find((currency) => currency.id === currencies[0].id)).toBeDefined();
+      expect(currencies.find((currency) => currency.id === currencies[1].id)).toBeDefined();
+      expect(currencies.find((currency) => currency.id === currencies[2].id)).toBeDefined();
+    });
+    it('should return empty array', async () => {
+      const dbCurrencies = await repository.getAll();
+
+      expect(dbCurrencies).toHaveLength(0);
     });
   });
 });
