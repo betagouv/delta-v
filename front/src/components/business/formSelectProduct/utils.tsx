@@ -12,7 +12,7 @@ export interface FormStepsProductData {
 export interface FormSelectProductData extends FormStepsProductData {
   name?: string;
   value?: number;
-  devise: string;
+  currency?: string;
 }
 
 export const getDefaultValues = (steps: Product[]): FormStepsProductData => {

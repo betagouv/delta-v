@@ -41,15 +41,15 @@ export const SummaryValueProduct: React.FC<SummarySimulatorProps> = ({
               'max-h-[1000px]': open,
             })}
           >
-            <Typography size="text-sm">{`Calcul de la convertion € > €`}</Typography>
+            <Typography size="text-sm">{`Calcul de la convertion ${product.originalCurrency} > EUR`}</Typography>
             <div className="mt-1 leading-none">
               <Typography color="light-gray" size="text-sm">
-                Taux 1 au {dayjs().format('DD/MM/YYYY')}
+                Taux {product.rateCurrency} au {dayjs().format('DD/MM/YYYY')}
               </Typography>
             </div>
             <div className="flex flex-row leading-none">
               <p className="w-full text-sm">
-                {product.unitPrice} x 1 ={' '}
+                {product.originalPrice} / {product.rateCurrency} ={' '}
                 <span className="text-primary-700">{product.unitPrice} €</span>
               </p>
               <div className="ml-1"></div>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FieldErrors } from 'react-hook-form';
+import shallow from 'zustand/shallow';
 
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
@@ -21,15 +22,8 @@ interface FormAddProductProps {
 
 export interface FormSimulatorData {
   value?: number;
-  devise?: string;
+  currency?: string;
 }
-
-const selectOptions = [
-  {
-    value: 'EURO',
-    id: 'eur',
-  },
-];
 
 export const FormAddProduct: React.FC<FormAddProductProps> = ({
   register,
@@ -38,14 +32,26 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   product,
   errors,
 }: FormAddProductProps) => {
-  const { simulatorRequest } = useStore((state) => ({
-    simulatorRequest: state.simulator.appState.simulatorRequest,
+  const { currencies, simulatorRequest, getCurrenciesResponse } = useStore(
+    (state) => ({
+      currencies: state.currencies.appState.currencies,
+      simulatorRequest: state.simulator.appState.simulatorRequest,
+      getCurrenciesResponse: state.getCurrenciesResponse,
+    }),
+    shallow,
+  );
+  const selectOptions = currencies.map((currency) => ({
+    value: currency.name,
+    id: currency.id,
   }));
   const productType = product?.amountProduct
     ? getAmountProductType(product.amountProduct)
     : 'valueProduct';
   const [openModalInfoProduct, setOpenModalInfoProduct] = useState<boolean>(false);
 
+  useEffect(() => {
+    getCurrenciesResponse();
+  }, [getCurrenciesResponse]);
   return (
     <div className="flex flex-1 flex-col gap-6">
       {productType !== 'valueProduct' ? (
@@ -94,11 +100,11 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             label="Choisissez la devise"
             type="simple-select"
             fullWidth={false}
-            name="devise"
+            name="currency"
             options={selectOptions}
-            register={register('devise', { required: false })}
+            register={register('currency', { required: true })}
             control={control}
-            error={errors.devise?.message as string | undefined}
+            error={errors.currency?.message as string | undefined}
           />
         </>
       )}

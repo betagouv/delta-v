@@ -1,7 +1,7 @@
 import currency from 'currency.js';
-import { ShoppingProduct } from '../shoppingProducts';
+import { CompleteShoppingProduct } from '../shoppingProducts';
 
-export const getTotalProducts = (shoppingProducts: ShoppingProduct[]): number => {
+export const getTotalProducts = (shoppingProducts: CompleteShoppingProduct[]): number => {
   return shoppingProducts.reduce((total, shoppingProduct) => {
     return currency(shoppingProduct.value).add(total).value;
   }, 0);

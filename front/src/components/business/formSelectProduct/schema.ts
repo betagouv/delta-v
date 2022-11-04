@@ -28,8 +28,8 @@ const getValue = (amountProduct: boolean): any => {
     .required('Vous devez renseigner la valeur du produit.');
 };
 
-const getDevise = (amountProduct: boolean): any => {
-  if (amountProduct) {
+const getCurrency = (currency: boolean): any => {
+  if (currency) {
     return undefined;
   }
   return string().required('Veuillez séléctoinner la devise.');
@@ -39,6 +39,6 @@ export const getSchema = (amountProduct = false) => {
   return object({
     name: string().optional(),
     value: getValue(amountProduct),
-    devise: getDevise(amountProduct),
+    currency: getCurrency(amountProduct),
   }).required();
 };

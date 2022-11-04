@@ -10,6 +10,9 @@ interface SerializedValueProduct {
   customDuty: number;
   vat: number;
   unitPrice: number;
+  originalPrice: number;
+  originalCurrency: string;
+  rateCurrency: number;
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
@@ -50,6 +53,9 @@ const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedV
   customId: productTaxes.customId,
   customName: productTaxes.customName,
   unitPrice: productTaxes.unitPrice,
+  originalPrice: productTaxes.originalPrice,
+  originalCurrency: productTaxes.originalCurrency,
+  rateCurrency: productTaxes.rateCurrency,
   customDuty: productTaxes.customDuty,
   vat: productTaxes.vat,
   unitCustomDuty: productTaxes.getUnitCustomDuty(),

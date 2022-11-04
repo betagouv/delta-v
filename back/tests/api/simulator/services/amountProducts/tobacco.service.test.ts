@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Alpha2Code } from 'i18n-iso-countries';
 import { AmountProduct } from '../../../../../src/api/simulator/services/amountProducts/globalAmount.service';
 import { TobaccoGroup } from '../../../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
+import { CompleteShoppingProduct } from '../../../../../src/api/simulator/services/shoppingProducts';
 import { productEntityFactory } from '../../../../helpers/factories/product.factory';
 
 describe('TobaccoGroup', () => {
@@ -76,13 +77,17 @@ describe('TobaccoGroup', () => {
     ])(
       'should return %p if the maximum is exceeded - in %p when total is %p maximum',
       (expectedResult, country, value, dataProducts, border = false) => {
-        const completeShoppingProducts = dataProducts.map((dataProduct) => ({
-          product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
-          value: dataProduct.value,
-          id: faker.datatype.uuid(),
-          customId: faker.datatype.uuid(),
-          customName: faker.random.word(),
-        }));
+        const completeShoppingProducts: CompleteShoppingProduct[] = dataProducts.map(
+          (dataProduct): CompleteShoppingProduct => ({
+            product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
+            value: dataProduct.value,
+            originalValue: dataProduct.value,
+            id: faker.datatype.uuid(),
+            customId: faker.datatype.uuid(),
+            customName: faker.random.word(),
+            currency: 'EUR',
+          }),
+        );
 
         const tobaccoGroup = new TobaccoGroup({
           country: country as Alpha2Code,
@@ -133,13 +138,17 @@ describe('TobaccoGroup', () => {
     ])(
       'should get mixed result for country %p - %p are over the maximum',
       (country, value, dataProducts) => {
-        const completeShoppingProducts = dataProducts.map((dataProduct) => ({
-          product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
-          value: dataProduct.value,
-          id: faker.datatype.uuid(),
-          customId: faker.datatype.uuid(),
-          customName: faker.random.word(),
-        }));
+        const completeShoppingProducts: CompleteShoppingProduct[] = dataProducts.map(
+          (dataProduct): CompleteShoppingProduct => ({
+            product: productEntityFactory({ amountProduct: dataProduct.name as AmountProduct }),
+            value: dataProduct.value,
+            originalValue: dataProduct.value,
+            id: faker.datatype.uuid(),
+            customId: faker.datatype.uuid(),
+            customName: faker.random.word(),
+            currency: 'EUR',
+          }),
+        );
 
         const tobaccoGroup = new TobaccoGroup({
           country: country as Alpha2Code,

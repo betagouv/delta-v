@@ -170,7 +170,8 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
             id: product.product?.id,
             customName: product.name,
             customId: product.id,
-            value: product.value,
+            originalValue: product.value,
+            currency: product.currency,
           })),
       };
       const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;

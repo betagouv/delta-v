@@ -15,7 +15,7 @@ export interface OnAddProductOptions {
   product: Product;
   name: string;
   value: string;
-  devise: string;
+  currency: string;
 }
 
 type OnAddProduct = (options: OnAddProductOptions) => void;
@@ -47,7 +47,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     defaultValues: {
       name: undefined,
       value: null,
-      devise: 'eur',
+      currency: 'eur',
       ...getDefaultValues(steps),
     },
     resolver: yupResolver(getSchema(!!currentProduct.amountProduct)),
@@ -57,7 +57,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     reset({
       name: undefined,
       value: null,
-      devise: 'eur',
+      currency: 'EUR',
       ...getDefaultValues(steps),
     });
   }, [steps]);
@@ -69,7 +69,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         name: (data.name as string) ?? '',
         product,
         value: data.value?.toString() ?? '1',
-        devise: (data.devise as string) ?? 'eur',
+        currency: (data.currency as string) ?? 'EUR',
       });
     }
   };

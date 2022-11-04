@@ -63,4 +63,28 @@ describe('test currency repository', () => {
       expect(dbCurrencies).toHaveLength(0);
     });
   });
+  describe('test getCurrencies', () => {
+    it('should return list of currencies', async () => {
+      const currencies = await Promise.all([
+        testDb.persistCurrency(currencyEntityFactory()),
+        testDb.persistCurrency(currencyEntityFactory()),
+        testDb.persistCurrency(currencyEntityFactory()),
+      ]);
+
+      const dbCurrencies = await repository.getManyByIds([
+        currencies[0].id,
+        currencies[2].id,
+        'AAAA',
+      ]);
+
+      expect(dbCurrencies).toHaveLength(2);
+      expect(currencies.find((currency) => currency.id === currencies[0].id)).toBeDefined();
+      expect(currencies.find((currency) => currency.id === currencies[2].id)).toBeDefined();
+    });
+    it('should return empty array', async () => {
+      const dbCurrencies = await repository.getManyByIds(['AAAA']);
+
+      expect(dbCurrencies).toHaveLength(0);
+    });
+  });
 });

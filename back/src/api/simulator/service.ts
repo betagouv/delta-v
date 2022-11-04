@@ -1,6 +1,7 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 import { ProductType } from '../../entities/product.entity';
 import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes.entity';
+import { CurrencyRepositoryInterface } from '../../repositories/currency.repository';
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
 import { getTotalProducts, manageProductTaxesDetails } from './services';
@@ -10,6 +11,7 @@ import { getFranchiseAmount } from './services/valueProducts/franchise.service';
 
 interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
+  currencyRepository: CurrencyRepositoryInterface;
   border: boolean;
   age: number;
   country: Alpha2Code;
@@ -25,6 +27,7 @@ interface SimulateServiceResponse {
 
 export const service = async ({
   productRepository,
+  currencyRepository,
   border,
   age,
   country,
@@ -34,6 +37,7 @@ export const service = async ({
   const completeShoppingProducts = await getCompleteProducts({
     shoppingProducts,
     productRepository,
+    currencyRepository,
   });
 
   const completeValueShoppingProducts = completeShoppingProducts.filter(
@@ -49,7 +53,7 @@ export const service = async ({
   const amountProducts = checkAmountProducts(completeAmountShoppingProducts, country, border);
 
   const franchiseAmount = getFranchiseAmount({ border, age, country, meanOfTransport });
-  const total = getTotalProducts(shoppingProducts);
+  const total = getTotalProducts(completeShoppingProducts);
   const productDetailed = manageProductTaxesDetails({
     franchiseAmount,
     total,

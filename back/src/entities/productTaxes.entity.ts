@@ -6,11 +6,15 @@ export interface ShoppingProduct {
   id: string;
   customId: string;
   customName?: string;
-  value: number;
+  originalValue: number;
+  currency: string;
 }
 
 export interface CompleteShoppingProduct extends ShoppingProduct {
   product: Product;
+  value: number;
+  valueCurrency?: number;
+  rateCurrency?: number;
 }
 
 export interface ProductTaxesInterface {
@@ -19,6 +23,9 @@ export interface ProductTaxesInterface {
   customId: string;
   customName?: string;
   unitPrice: number;
+  originalPrice: number;
+  originalCurrency: string;
+  rateCurrency: number;
   customDuty: number;
   vat: number;
   setFromProductTaxes(productTaxes: ProductTaxesInterface): ProductTaxesInterface;
@@ -39,6 +46,9 @@ export interface ProductTaxesConstructorOptions {
   amount?: number;
   unitPrice?: number;
   customDuty?: number;
+  originalPrice?: number;
+  originalCurrency?: string;
+  rateCurrency?: number;
   vat?: number;
 }
 
@@ -51,6 +61,9 @@ export class ProductTaxes implements ProductTaxesInterface {
   private _customId: string;
   private _customName?: string;
   private _unitPrice: number;
+  private _originalPrice: number;
+  private _originalCurrency: string;
+  private _rateCurrency: number;
   private _vat: number;
   private _customDuty: number;
 
@@ -61,6 +74,9 @@ export class ProductTaxes implements ProductTaxesInterface {
     customId,
     unitPrice,
     customDuty,
+    originalPrice,
+    originalCurrency,
+    rateCurrency,
     vat,
   }: ProductTaxesConstructorOptions) {
     this._id = id ?? uuid();
@@ -69,6 +85,9 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._customName = customName;
     this._unitPrice = unitPrice ?? 0;
     this._customDuty = customDuty ?? 0;
+    this._originalPrice = originalPrice ?? 0;
+    this._originalCurrency = originalCurrency ?? 'EUR';
+    this._rateCurrency = rateCurrency ?? 1;
     this._vat = vat ?? 0;
 
     return this;
@@ -80,6 +99,9 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._customName = productTaxes.customName;
     this._customId = productTaxes.customId;
     this._unitPrice = productTaxes.unitPrice;
+    this._originalPrice = productTaxes.originalPrice;
+    this._originalCurrency = productTaxes.originalCurrency;
+    this._rateCurrency = productTaxes.rateCurrency;
     this._customDuty = productTaxes.customDuty;
     this._vat = productTaxes.vat;
 
@@ -101,6 +123,9 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._customName = customName;
     this._customId = customId;
     this._unitPrice = value;
+    this._originalPrice = completeShoppingProduct.originalValue;
+    this._originalCurrency = completeShoppingProduct.currency;
+    this._rateCurrency = completeShoppingProduct.rateCurrency ?? 1;
     this._customDuty = customDuty ?? 0;
     this._vat = vat ?? 0;
 
@@ -125,6 +150,18 @@ export class ProductTaxes implements ProductTaxesInterface {
 
   get unitPrice(): number {
     return this._unitPrice;
+  }
+
+  get originalPrice(): number {
+    return this._originalPrice;
+  }
+
+  get originalCurrency(): string {
+    return this._originalCurrency;
+  }
+
+  get rateCurrency(): number {
+    return this._rateCurrency;
   }
 
   get customDuty(): number {

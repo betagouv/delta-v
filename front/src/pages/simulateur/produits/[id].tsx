@@ -39,13 +39,14 @@ const ProductSearch = () => {
       };
     }) ?? [];
 
-  const onAddProduct = ({ product, value, name }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, name, currency }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       product,
       name,
       value: parseFloat(value),
       amount: 1,
+      currency,
     };
     addProduct(shoppingProduct);
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
@@ -54,7 +55,7 @@ const ProductSearch = () => {
 
   useEffect(() => {
     getProductsResponse();
-  }, []);
+  }, [getProductsResponse]);
 
   if (!currentProduct) {
     return <Error statusCode={404} />;

@@ -8,7 +8,6 @@ export interface ProductsAppStateSlice {
       allProducts: Product[];
       products: Product[];
       flattenProducts: Product[];
-      updateDate?: Date;
     };
   };
 }
@@ -17,7 +16,6 @@ export const PRODUCT_EMPTY_STATE = {
   allProducts: [],
   products: [],
   flattenProducts: [],
-  updateDate: undefined,
 };
 
 export const createProductsAppStateSlice: StoreSlice<ProductsAppStateSlice> = () => ({

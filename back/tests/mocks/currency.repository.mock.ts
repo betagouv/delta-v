@@ -5,6 +5,7 @@ import CurrencyRepository, {
 
 interface CurrencyRepositoryMockOptions {
   getAll?: CurrencyEntity[];
+  getManyByIds?: CurrencyEntity[];
 }
 
 export const currencyRepositoryMock = (
@@ -13,5 +14,6 @@ export const currencyRepositoryMock = (
   const currencyRepository = new CurrencyRepository();
   currencyRepository.saveAll = jest.fn().mockResolvedValue(undefined);
   currencyRepository.getAll = jest.fn().mockResolvedValue(options.getAll ?? []);
+  currencyRepository.getManyByIds = jest.fn().mockResolvedValue(options.getManyByIds ?? []);
   return currencyRepository;
 };
