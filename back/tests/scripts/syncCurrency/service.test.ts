@@ -29,7 +29,7 @@ describe('syncCurrencyService', () => {
 
     mockedAxios.get.mockResolvedValueOnce({ data: response });
 
-    const currencyRepository = currencyRepositoryMock();
+    const currencyRepository = currencyRepositoryMock({});
 
     await service(currencyRepository);
 
@@ -57,7 +57,7 @@ describe('syncCurrencyService', () => {
 
     mockedAxios.get.mockResolvedValueOnce({ data: response });
 
-    const currencyRepository = currencyRepositoryMock();
+    const currencyRepository = currencyRepositoryMock({});
 
     await service(currencyRepository);
 

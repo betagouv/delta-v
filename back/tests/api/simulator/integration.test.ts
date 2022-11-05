@@ -4,6 +4,7 @@ import request from 'supertest';
 import api from '../../../src/api';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 import { Product } from '../../../src/entities/product.entity';
+import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
 import buildTestApp from '../../helpers/testApp.helper';
 import { testDbManager } from '../../helpers/testDb.helper';
 import { prepareContextProduct } from '../../utils/prepareContext/product';
@@ -16,6 +17,9 @@ const prepareContext = async (customDutyProduct1 = 10): Promise<Product[]> => {
   const product2 = await prepareContextProduct({ testDb, vat: 20, customDuty: 12 });
   const product3 = await prepareContextProduct({ testDb, vat: 20, customDuty: 12 });
 
+  await testDb.persistCurrency(currencyEntityFactory({ id: 'EUR', name: 'Euro', value: 1 }));
+  await testDb.persistCurrency(currencyEntityFactory({ id: 'USD', name: 'Dollar', value: 1.2 }));
+
   return [product1, product2, product3];
 };
 
@@ -23,7 +27,8 @@ export interface ShoppingProduct {
   id: string;
   customId: string;
   customName?: string;
-  value: number;
+  originalValue: number;
+  currency: string;
 }
 
 const prepareProductPrice = async (value = 500): Promise<ShoppingProduct[]> => {
@@ -32,7 +37,8 @@ const prepareProductPrice = async (value = 500): Promise<ShoppingProduct[]> => {
     {
       id: products[0].id,
       customId: faker.datatype.uuid(),
-      value,
+      originalValue: value,
+      currency: 'EUR',
     },
   ];
 
@@ -84,12 +90,13 @@ const simulateEndpoint = async ({
 
   const productTaxesDetails = shoppingProducts.map(
     (shoppingProduct, index: number): ProductTaxesDetails => {
-      const unitCustomDuty = (shoppingProduct.value * (products[index].customDuty ?? 0)) / 100;
-      const unitVat = (shoppingProduct.value * (products[index].vat ?? 0)) / 100;
+      const unitCustomDuty =
+        (shoppingProduct.originalValue * (products[index].customDuty ?? 0)) / 100;
+      const unitVat = (shoppingProduct.originalValue * (products[index].vat ?? 0)) / 100;
       return {
         id: products[index].id,
         name: products[index].name,
-        unitPrice: shoppingProduct.value,
+        unitPrice: shoppingProduct.originalValue,
         customDuty: products[index].customDuty ?? 0,
         vat: products[index].vat ?? 0,
         unitCustomDuty,
@@ -121,19 +128,22 @@ describe('test simulator API', () => {
         id: products[0].id,
         customName: 'product1',
         customId: faker.datatype.uuid(),
-        value: 50,
+        originalValue: 50,
+        currency: 'USD',
       },
       {
         id: products[1].id,
         customName: 'product2',
         customId: faker.datatype.uuid(),
-        value: 300,
+        originalValue: 300,
+        currency: 'EUR',
       },
       {
         id: products[1].id,
         customName: 'product3',
         customId: faker.datatype.uuid(),
-        value: 500,
+        originalValue: 500,
+        currency: 'EUR',
       },
     ];
 
@@ -146,11 +156,23 @@ describe('test simulator API', () => {
     expect(body.valueProducts.length).toBe(3);
 
     expect(body).toMatchObject({
-      total: 850,
-      totalCustomDuty: 65,
-      totalVat: 123,
-      totalTaxes: 188,
+      total: 841.67,
+      totalCustomDuty: 64.17,
+      totalVat: 121.17,
+      totalTaxes: 185.34,
       franchiseAmount: 300,
+    });
+
+    expect(body.valueProducts[1]).toMatchObject({
+      unitPrice: 41.67,
+      originalPrice: 50,
+      originalCurrency: 'USD',
+      rateCurrency: 1.2,
+      customDuty: 10,
+      vat: 20,
+      unitCustomDuty: 4.17,
+      unitVat: 9.17,
+      unitTaxes: 13.34,
     });
   });
   test.each([
@@ -165,7 +187,8 @@ describe('test simulator API', () => {
         {
           id: products[0].id,
           customId: faker.datatype.uuid(),
-          value: totalProducts,
+          originalValue: totalProducts,
+          currency: 'EUR',
         },
       ];
 

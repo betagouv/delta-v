@@ -38,14 +38,18 @@ describe('taxes service', () => {
       customId: faker.datatype.uuid(),
       customName: 'Hello',
       value: 50,
+      originalValue: 50,
       product: highCustomDutyProduct,
+      currency: 'EUR',
     };
     const completeShoppingProduct2: CompleteShoppingProduct = {
       id: lowCustomDutyProduct.id,
       customId: faker.datatype.uuid(),
       customName: 'Hello 2',
       value: 50,
+      originalValue: 50,
       product: lowCustomDutyProduct,
+      currency: 'EUR',
     };
     it('should be return products taxes - low taxes', () => {
       const productTaxes = new ProductTaxes({});

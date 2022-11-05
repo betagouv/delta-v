@@ -23,7 +23,8 @@ export const simulateValidator: IRequestValidatorSchema = {
           id: validator.string().uuid().required(),
           customName: validator.string().allow(''),
           customId: validator.string().uuid().required(),
-          value: validator.number().min(0).invalid(0).required(),
+          originalValue: validator.number().min(0).invalid(0).required(),
+          currency: validator.string().length(3).default('EUR'),
         }),
       )
       .required(),

@@ -18,6 +18,7 @@ export interface ShoppingProduct {
   name: string;
   amount: number;
   value: number;
+  currency: string;
 }
 
 export interface DetailedProduct {
@@ -26,6 +27,9 @@ export interface DetailedProduct {
   customId: string;
   customName?: string;
   unitPrice: number;
+  originalPrice: number;
+  originalCurrency: string;
+  rateCurrency: number;
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;

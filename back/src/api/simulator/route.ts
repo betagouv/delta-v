@@ -2,6 +2,7 @@ import { Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { HttpStatuses } from '../../core/httpStatuses';
 import { ValidatedRequest } from '../../core/utils/validatedExpressRequest';
+import CurrencyRepository from '../../repositories/currency.repository';
 import ProductRepository from '../../repositories/product.repository';
 import { serializeSimulator } from './serializer';
 import { service } from './service';
@@ -24,6 +25,7 @@ export default async (
       country,
       meanOfTransport,
       productRepository: getCustomRepository(ProductRepository),
+      currencyRepository: getCustomRepository(CurrencyRepository),
     });
 
     const response = serializeSimulator({ valueProducts, franchiseAmount, amountProducts });

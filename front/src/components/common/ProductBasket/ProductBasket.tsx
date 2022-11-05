@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import classnames from 'classnames';
+import getSymbolFromCurrency from 'currency-symbol-map';
 import dayjs from 'dayjs';
 
 import { Button } from '../Button';
@@ -30,6 +31,13 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
   onDeleteProduct,
 }: ProductBasketProps) => {
   const [open, setOpen] = useState(false);
+  const [originalCurrencySymbol, setOriginalCurrencySymbol] = useState('€');
+
+  useEffect(() => {
+    if (detailedProduct?.originalCurrency) {
+      setOriginalCurrencySymbol(getSymbolFromCurrency(detailedProduct?.originalCurrency) ?? '€');
+    }
+  }, [detailedProduct]);
   return (
     <div
       className={classnames({
@@ -40,7 +48,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
     >
       <div className="p-3 leading-tight">
         <div className="flex">
-          <div className="flex-1 leading-none">
+          <div className="mr-2 flex-1 leading-none">
             {name ? (
               <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
                 {name}
@@ -62,7 +70,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
             )}
           </div>
           <Typography weight="extrabold" color="secondary" size="text-lg" lineHeight="leading-none">
-            {value} {unit}
+            {detailedProduct?.originalPrice} {originalCurrencySymbol}
           </Typography>
         </div>
         <Typography weight="light" color="light-gray" size="text-base">
@@ -89,15 +97,15 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
               </div>
             </div>
             <div className="p-6 text-left">
-              <Typography size="text-base">{`Calcul de la convertion € > €`}</Typography>
+              <Typography size="text-base">{`Calcul de la convertion ${detailedProduct?.originalCurrency} > EUR`}</Typography>
               <div className="mt-2 leading-none">
                 <Typography color="light-gray" size="text-base">
-                  Taux 1 au {dayjs().format('DD/MM/YYYY')}
+                  Taux {detailedProduct?.rateCurrency ?? '1'} au {dayjs().format('DD/MM/YYYY')}
                 </Typography>
               </div>
               <div className="flex flex-row leading-none">
                 <Typography color="secondary" size="text-base">
-                  {value} x 1 =
+                  {detailedProduct?.originalPrice} / {detailedProduct?.rateCurrency ?? '1'} =
                 </Typography>
                 <div className="ml-1">
                   <Typography color="primary" size="text-base">

@@ -53,12 +53,14 @@ describe('ProductTaxes entity', () => {
       const completeShoppingProduct: CompleteShoppingProduct = {
         id: faker.datatype.uuid(),
         value: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
+        originalValue: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
         customName: faker.datatype.string(),
         customId: faker.datatype.uuid(),
         product: productEntityFactory({
           customDuty: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
           vat: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
         }),
+        currency: 'EUR',
       };
       const productTaxes = new ProductTaxes({});
       productTaxes.setFromCompleteShoppingProduct(completeShoppingProduct);
