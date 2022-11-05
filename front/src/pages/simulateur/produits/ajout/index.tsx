@@ -72,7 +72,13 @@ const AddNewProduct = () => {
 
   const onSubmit = (data: AddNewProductForm) => {
     setSubmitted(true);
-    addProduct({ amount: 1, id: uuidv4(), name: data.productName ?? '', value: data.value ?? 0 });
+    addProduct({
+      amount: 1,
+      id: uuidv4(),
+      name: data.productName ?? '',
+      value: data.value ?? 0,
+      currency: data.devise ?? 'EUR',
+    });
     setTimeout(() => {
       setOpenModal(true);
     }, 250);
