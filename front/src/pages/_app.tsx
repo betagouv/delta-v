@@ -10,6 +10,8 @@ import shallow from 'zustand/shallow';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { useStore } from '@/stores/store';
 
+const ONE_DAY = 86400000;
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const instance = createInstance({
     urlBase: 'https://declare-douane.matomo.cloud/',
@@ -36,12 +38,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   useEffect(() => {
-    getProductsResponse();
-  }, [getProductsResponse]);
+    const intervalId = setInterval(() => {
+      getProductsResponse();
+      getCurrenciesResponse();
+    }, ONE_DAY);
 
-  useEffect(() => {
-    getCurrenciesResponse();
-  }, [getCurrenciesResponse]);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
   return (
     <>
       <MatomoProvider value={instance}>

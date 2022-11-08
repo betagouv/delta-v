@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
-
 import { useRouter } from 'next/router';
-import shallow from 'zustand/shallow';
 
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import { Input } from '@/components/input/StandardInputs/Input';
@@ -11,13 +8,9 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const { products, getProductsResponse } = useStore(
-    (state) => ({
-      products: state.products.appState.products,
-      getProductsResponse: state.getProductsResponse,
-    }),
-    shallow,
-  );
+  const { products } = useStore((state) => ({
+    products: state.products.appState.products,
+  }));
   const router = useRouter();
 
   const displayedProducts = products?.map((product): Item => {
@@ -28,9 +21,6 @@ const Index = () => {
     };
   });
 
-  useEffect(() => {
-    getProductsResponse();
-  }, [getProductsResponse]);
   return (
     <Main
       meta={

@@ -1,3 +1,4 @@
+import { countries } from 'countries-list';
 import { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
@@ -59,6 +60,8 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     set((state: any) => {
       const newState = { ...state };
       newState.simulator.appState.simulatorRequest.country = country;
+      newState.simulator.appState.simulatorRequest.defaultCurrency =
+        countries[country ?? 'FR'].currency;
 
       if (
         country !== 'CH' ||

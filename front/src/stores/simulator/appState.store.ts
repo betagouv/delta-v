@@ -69,6 +69,7 @@ export interface SimulatorRequest {
   age?: number;
   meanOfTransport?: MeansOfTransport;
   country?: Alpha2Code;
+  defaultCurrency?: string;
   border?: boolean;
   shoppingProducts: ShoppingProduct[];
 }
@@ -91,6 +92,7 @@ export const SIMULATOR_EMPTY_STATE = {
     age: undefined,
     meanOfTransport: undefined,
     country: undefined,
+    defaultCurrency: 'EUR',
     border: undefined,
     shoppingProducts: [],
   },
