@@ -38,14 +38,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   useEffect(() => {
+    getProductsResponse();
+    getCurrenciesResponse();
+
     const intervalId = setInterval(() => {
       getProductsResponse();
       getCurrenciesResponse();
     }, ONE_DAY);
 
-    return () => {
-      clearInterval(intervalId);
-    };
+    return () => clearInterval(intervalId);
   }, []);
   return (
     <>
