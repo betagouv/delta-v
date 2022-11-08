@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
-import { Button } from '@/components/common/Button';
-import { Typography } from '@/components/common/Typography';
+import { FormAddProduct } from '@/components/business/formAddProduct';
+import { getSchema } from '@/components/business/formSelectProduct/schema';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IOptions } from '@/components/input/StandardInputs/Select';
 import { Meta } from '@/layout/Meta';
@@ -19,15 +20,8 @@ interface AddNewProductForm {
   productName?: string;
   category?: string;
   value?: number;
-  devise?: string;
+  currency?: string;
 }
-
-const selectOptions = [
-  {
-    value: 'EURO',
-    id: 'eur',
-  },
-];
 
 const AddNewProduct = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -36,21 +30,27 @@ const AddNewProduct = () => {
   const { searchValue } = router.query;
   const productName = typeof searchValue === 'string' ? searchValue : undefined;
   const defaultCategory = { id: '', value: 'Catégorie' };
-  const { products, getProductsResponse, addProduct } = useStore(
+  const { products, defaultCurrency, addProduct } = useStore(
     (state) => ({
       products: state.products.appState.products,
-      getProductsResponse: state.getProductsResponse,
+      defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
       addProduct: state.addProduct,
     }),
     shallow,
   );
-  const { register, handleSubmit, control } = useForm<AddNewProductForm>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<AddNewProductForm>({
     defaultValues: {
       productName,
       category: defaultCategory.id,
       value: undefined,
-      devise: 'eur',
+      currency: defaultCurrency ?? 'EUR',
     },
+    resolver: yupResolver(getSchema(false, true)),
   });
 
   const [categoryOptions, setCategoryOptions] = useState<IOptions[]>([]);
@@ -66,10 +66,6 @@ const AddNewProduct = () => {
     }
   }, [productName]);
 
-  useEffect(() => {
-    getProductsResponse();
-  }, []);
-
   const onSubmit = (data: AddNewProductForm) => {
     setSubmitted(true);
     addProduct({
@@ -77,7 +73,7 @@ const AddNewProduct = () => {
       id: uuidv4(),
       name: data.productName ?? '',
       value: data.value ?? 0,
-      currency: data.devise ?? 'EUR',
+      currency: data.currency ?? 'EUR',
     });
     setTimeout(() => {
       setOpenModal(true);
@@ -123,34 +119,13 @@ const AddNewProduct = () => {
               register={register('category', { required: true })}
               control={control}
             />
-            <InputGroup
-              name="value"
-              type="number"
-              label="Saisissez le montant"
-              placeholder="Montant"
-              register={register('value', { required: true })}
-            />
-            <InputGroup
-              label="Choisissez la devise"
-              type="simple-select"
-              fullWidth={false}
-              name="devise"
-              options={selectOptions}
-              register={register('devise', { required: true })}
+            <FormAddProduct
+              control={control}
+              register={register}
+              errors={errors as FieldErrors}
+              submitted={submitted}
             />
           </div>
-          <div className="mb-8 flex flex-1" />
-          {submitted ? (
-            <div className="flex justify-center">
-              <Typography color="link" size="text-xl" weight="bold">
-                Merci !
-              </Typography>
-            </div>
-          ) : (
-            <Button fullWidth type="submit">
-              Valider
-            </Button>
-          )}
         </form>
       </div>
       <ModalAddProduct open={openModal} onClose={() => setOpenModal(false)} />

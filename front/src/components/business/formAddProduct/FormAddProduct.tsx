@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
@@ -7,6 +7,7 @@ import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
 import { TextLink } from '@/components/common/TextLink';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { getAmountProductType, getUnit } from '@/model/amount';
 import { Product } from '@/model/product';
@@ -17,6 +18,7 @@ interface FormAddProductProps {
   control: any;
   disabled?: boolean;
   product?: Product;
+  submitted?: boolean;
   errors: FieldErrors;
 }
 
@@ -29,14 +31,14 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   register,
   control,
   disabled = false,
+  submitted = false,
   product,
   errors,
 }: FormAddProductProps) => {
-  const { currencies, simulatorRequest, getCurrenciesResponse } = useStore(
+  const { currencies, simulatorRequest } = useStore(
     (state) => ({
       currencies: state.currencies.appState.currencies,
       simulatorRequest: state.simulator.appState.simulatorRequest,
-      getCurrenciesResponse: state.getCurrenciesResponse,
     }),
     shallow,
   );
@@ -49,9 +51,6 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
     : 'valueProduct';
   const [openModalInfoProduct, setOpenModalInfoProduct] = useState<boolean>(false);
 
-  useEffect(() => {
-    getCurrenciesResponse();
-  }, [getCurrenciesResponse]);
   return (
     <div className="flex flex-1 flex-col gap-6">
       {productType !== 'valueProduct' ? (
@@ -109,9 +108,17 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
         </>
       )}
       <div className="flex-1" />
-      <Button disabled={disabled} fullWidth={true} type="submit">
-        Valider
-      </Button>
+      {submitted ? (
+        <div className="flex justify-center">
+          <Typography color="link" size="text-xl" weight="bold">
+            Merci !
+          </Typography>
+        </div>
+      ) : (
+        <Button disabled={disabled} fullWidth={true} type="submit">
+          Valider
+        </Button>
+      )}
       {productType !== 'valueProduct' && (
         <ModalMaximumAmount
           open={openModalInfoProduct}

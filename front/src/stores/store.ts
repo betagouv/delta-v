@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { countries } from 'countries-list';
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -65,15 +66,16 @@ export const useStore = create<StoreState>(
     {
       name: 'app-storage',
       getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
-      version: 3,
+      version: 4,
       partialize: (state) => ({
         simulator: state.simulator,
         products: state.products,
+        currencies: state.currencies,
         global: state.global,
       }),
       migrate(persistedState: StoreState, version) {
         const newPersistedState = { ...persistedState };
-        if (version !== 3) {
+        if (version < 3) {
           newPersistedState.simulator.appState.simulatorRequest.age =
             newPersistedState.simulator.appState.simulatorRequest.age ?? 0;
           newPersistedState.simulator.appState.simulatorRequest.meanOfTransport =
@@ -85,6 +87,13 @@ export const useStore = create<StoreState>(
             newPersistedState.simulator.appState.simulatorRequest.border ?? false;
           newPersistedState.simulator.appState.simulatorRequest.shoppingProducts = [];
           newPersistedState.simulator.appState.simulatorResponse = undefined;
+        }
+
+        if (version < 4) {
+          newPersistedState.simulator.appState.simulatorRequest.defaultCurrency =
+            countries[
+              newPersistedState.simulator.appState.simulatorRequest.country ?? 'FR'
+            ].currency;
         }
 
         return newPersistedState;

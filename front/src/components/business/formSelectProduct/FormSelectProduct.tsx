@@ -10,6 +10,7 @@ import { getSchema } from './schema';
 import { FormSelectProductData, getDefaultValues } from './utils';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
+import { useStore } from '@/stores/store';
 
 export interface OnAddProductOptions {
   product: Product;
@@ -30,6 +31,9 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   onAddProduct,
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
+  const { defaultCurrency } = useStore((state) => ({
+    defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
+  }));
 
   useEffect(() => {
     if (currentProduct) {
@@ -47,7 +51,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     defaultValues: {
       name: undefined,
       value: null,
-      currency: 'eur',
+      currency: defaultCurrency ?? 'EUR',
       ...getDefaultValues(steps),
     },
     resolver: yupResolver(getSchema(!!currentProduct.amountProduct)),
@@ -56,8 +60,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   useEffect(() => {
     reset({
       name: undefined,
-      value: null,
-      currency: 'EUR',
       ...getDefaultValues(steps),
     });
   }, [steps]);
