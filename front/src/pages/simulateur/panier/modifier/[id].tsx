@@ -54,8 +54,8 @@ const UpdateProductBasket = () => {
     }
   }, [currentProduct]);
 
-  const onUpdateShoppingProduct = ({ value, name }: FormUpdateShoppingProduct) => {
-    updateShoppingProduct({ id: id as string, value, name: name ?? '' });
+  const onUpdateShoppingProduct = ({ value, name, currency }: FormUpdateShoppingProduct) => {
+    updateShoppingProduct({ id: id as string, value, name: name ?? '', currency });
     router.push('/simulateur/panier');
   };
 

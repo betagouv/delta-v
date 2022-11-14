@@ -52,6 +52,7 @@ interface GroupedAmountProduct {
 
 export interface BasketProduct {
   shoppingProduct: ShoppingProduct;
+  customShoppingProducts: ShoppingProduct;
   detailedProduct?: DetailedProduct;
 }
 
@@ -95,6 +96,7 @@ export const SIMULATOR_EMPTY_STATE = {
     defaultCurrency: 'EUR',
     border: undefined,
     shoppingProducts: [],
+    customShoppingProducts: [],
   },
   simulatorResponse: undefined,
   displayInfo: true,

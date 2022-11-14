@@ -3,6 +3,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import request from 'supertest';
 import api from '../../../src/api';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
+import { CustomShoppingProduct } from '../../../src/api/simulator/services/shoppingProducts';
 import { Product } from '../../../src/entities/product.entity';
 import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
 import buildTestApp from '../../helpers/testApp.helper';
@@ -48,6 +49,7 @@ const prepareProductPrice = async (value = 500): Promise<ShoppingProduct[]> => {
 interface SimulateEndpointOptions {
   products?: Product[];
   shoppingProducts: ShoppingProduct[];
+  customShoppingProducts?: CustomShoppingProduct[];
   border?: boolean;
   age?: number;
   country?: Alpha2Code;
@@ -75,6 +77,7 @@ interface SimulateEndpointResponse {
 const simulateEndpoint = async ({
   products,
   shoppingProducts,
+  customShoppingProducts,
   border = false,
   age = faker.datatype.number({ precision: 1, min: 15 }),
   meanOfTransport = MeansOfTransport.CAR,
@@ -82,7 +85,7 @@ const simulateEndpoint = async ({
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
   const { status, body } = await request(testApp)
     .post('/api/simulator')
-    .send({ shoppingProducts, border, age, country, meanOfTransport });
+    .send({ shoppingProducts, customShoppingProducts, border, age, country, meanOfTransport });
 
   if (!products) {
     return { status, body };
@@ -146,14 +149,36 @@ describe('test simulator API', () => {
         currency: 'EUR',
       },
     ];
+    const customShoppingProducts: CustomShoppingProduct[] = [
+      {
+        customName: 'cproduct1',
+        customId: faker.datatype.uuid(),
+        originalValue: 10,
+        currency: 'USD',
+      },
+      {
+        customName: 'cproduct2',
+        customId: faker.datatype.uuid(),
+        originalValue: 20,
+        currency: 'EUR',
+      },
+      {
+        customName: 'cproduct3',
+        customId: faker.datatype.uuid(),
+        originalValue: 30,
+        currency: 'EUR',
+      },
+    ];
 
     const { body, status } = await simulateEndpoint({
       products,
       shoppingProducts,
+      customShoppingProducts,
     });
     expect(status).toBe(200);
 
     expect(body.valueProducts.length).toBe(3);
+    expect(body.customProducts.length).toBe(3);
 
     expect(body).toMatchObject({
       total: 841.67,
@@ -173,6 +198,18 @@ describe('test simulator API', () => {
       unitCustomDuty: 4.17,
       unitVat: 9.17,
       unitTaxes: 13.34,
+    });
+
+    expect(body.customProducts[0]).toMatchObject({
+      unitPrice: 8.33,
+      originalPrice: 10,
+      originalCurrency: 'USD',
+      rateCurrency: 1.2,
+      customDuty: 0,
+      vat: 0,
+      unitCustomDuty: 0,
+      unitVat: 0,
+      unitTaxes: 0,
     });
   });
   test.each([

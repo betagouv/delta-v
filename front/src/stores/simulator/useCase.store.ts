@@ -32,6 +32,7 @@ interface UpdateShoppingProductOptions {
   id: string;
   name: string;
   value: number;
+  currency: string;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
@@ -137,7 +138,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       ) ?? undefined
     );
   },
-  updateShoppingProduct: ({ id, name, value }: UpdateShoppingProductOptions): void => {
+  updateShoppingProduct: ({ id, name, value, currency }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
       const currentShoppingProduct =
@@ -153,6 +154,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         ...currentShoppingProduct,
         name,
         value,
+        currency,
       });
 
       return newState;
@@ -171,6 +173,14 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
           .filter((shoppingProduct) => shoppingProduct.product)
           .map((product: ShoppingProduct) => ({
             id: product.product?.id,
+            customName: product.name,
+            customId: product.id,
+            originalValue: product.value,
+            currency: product.currency,
+          })),
+        customShoppingProducts: simulatorData.simulatorRequest.shoppingProducts
+          .filter((shoppingProduct) => !shoppingProduct.product)
+          .map((product: ShoppingProduct) => ({
             customName: product.name,
             customId: product.id,
             originalValue: product.value,
