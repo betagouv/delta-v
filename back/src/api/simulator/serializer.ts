@@ -33,12 +33,14 @@ interface SerializedAmountProduct {
 
 interface SerializedSimulatorOptions {
   valueProducts: ProductTaxesInterface[];
+  customProducts: ProductTaxesInterface[];
   amountProducts: AmountGroup[];
   franchiseAmount: number;
 }
 
 interface SerializedSimulatorResponse {
   valueProducts?: SerializedValueProduct[];
+  customProducts?: SerializedValueProduct[];
   amountProducts?: SerializedAmountProduct[];
   total: number;
   totalCustomDuty: number;
@@ -78,6 +80,7 @@ const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProdu
 
 export const serializeSimulator = ({
   valueProducts,
+  customProducts,
   amountProducts,
   franchiseAmount,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
@@ -91,6 +94,7 @@ export const serializeSimulator = ({
   );
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
+    customProducts: customProducts.map(serializeValueProduct),
     amountProducts: amountProducts.map(serializeAmountProduct),
     total: valueProducts.reduce(
       (total, productTaxes) => currency(total).add(productTaxes.unitPrice).value,

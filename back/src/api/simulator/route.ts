@@ -16,10 +16,12 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { shoppingProducts, border, age, country, meanOfTransport } = req.body;
+    const { shoppingProducts, customShoppingProducts, border, age, country, meanOfTransport } =
+      req.body;
 
-    const { valueProducts, amountProducts, franchiseAmount } = await service({
+    const { valueProducts, customProducts, amountProducts, franchiseAmount } = await service({
       shoppingProducts,
+      customShoppingProducts,
       border,
       age,
       country,
@@ -28,7 +30,12 @@ export default async (
       currencyRepository: getCustomRepository(CurrencyRepository),
     });
 
-    const response = serializeSimulator({ valueProducts, franchiseAmount, amountProducts });
+    const response = serializeSimulator({
+      valueProducts,
+      franchiseAmount,
+      amountProducts,
+      customProducts,
+    });
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {

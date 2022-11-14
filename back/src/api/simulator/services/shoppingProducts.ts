@@ -14,29 +14,59 @@ export interface ShoppingProduct {
   currency: string;
 }
 
+export interface CustomShoppingProduct {
+  customId: string;
+  customName: string;
+  originalValue: number;
+  currency: string;
+}
+
 export interface CompleteShoppingProduct extends ShoppingProduct {
   product: Product;
   value: number;
   rateCurrency?: number;
 }
 
+export interface CompleteCustomShoppingProduct extends CustomShoppingProduct {
+  value: number;
+  rateCurrency?: number;
+}
+
 interface GetAllProductsOptions {
   shoppingProducts: ShoppingProduct[];
+  customShoppingProducts: CustomShoppingProduct[];
   productRepository: ProductRepositoryInterface;
   currencyRepository: CurrencyRepositoryInterface;
 }
 
+interface GetAllProductsResponse {
+  completeShoppingProducts: CompleteShoppingProduct[];
+  completeCustomShoppingProducts: CompleteCustomShoppingProduct[];
+}
+
 export const getCompleteProducts = async ({
   shoppingProducts,
+  customShoppingProducts,
   productRepository,
   currencyRepository,
-}: GetAllProductsOptions): Promise<CompleteShoppingProduct[]> => {
+}: GetAllProductsOptions): Promise<GetAllProductsResponse> => {
   const productIds = shoppingProducts.map(({ id }) => id);
   const products = await productRepository.getManyByIds(productIds);
   const usedCurrencies = shoppingProducts.map((shoppingProduct) => shoppingProduct.currency);
   const currencies = await currencyRepository.getManyByIds(usedCurrencies);
 
-  return getCompleteShoppingProducts(shoppingProducts, products, currencies);
+  const completeShoppingProducts = shoppingProducts.map((shoppingProduct) =>
+    getCompleteShoppingProduct(shoppingProduct, products, currencies),
+  );
+
+  const completeCustomShoppingProducts = customShoppingProducts.map((shoppingProduct) =>
+    getCompleteCustomShoppingProduct(shoppingProduct, currencies),
+  );
+
+  return {
+    completeShoppingProducts,
+    completeCustomShoppingProducts,
+  };
 };
 
 export const getCompleteShoppingProduct = (
@@ -60,6 +90,24 @@ export const getCompleteShoppingProduct = (
     value: currency(shoppingProduct.originalValue).divide(currentCurrency.value).value,
     rateCurrency: currentCurrency.value,
     product: currentProduct,
+  };
+};
+
+export const getCompleteCustomShoppingProduct = (
+  CustomShoppingProduct: CustomShoppingProduct,
+  currencies: Currency[],
+): CompleteCustomShoppingProduct => {
+  const currentCurrency = currencies.find(
+    (currency) => currency.id === CustomShoppingProduct.currency,
+  );
+  if (!currentCurrency) {
+    throw currencyNotFoundError();
+  }
+
+  return {
+    ...CustomShoppingProduct,
+    value: currency(CustomShoppingProduct.originalValue).divide(currentCurrency.value).value,
+    rateCurrency: currentCurrency.value,
   };
 };
 

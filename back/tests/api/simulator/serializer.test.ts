@@ -36,6 +36,7 @@ describe('test serializer', () => {
     const serializedData = serializeSimulator({
       franchiseAmount: 500,
       valueProducts: [product1, product2],
+      customProducts: [],
       amountProducts: [group3],
     });
 

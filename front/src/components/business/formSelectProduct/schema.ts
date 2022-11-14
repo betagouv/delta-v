@@ -32,7 +32,7 @@ const getCurrency = (currency: boolean): any => {
   if (currency) {
     return undefined;
   }
-  return string().required('Veuillez séléctoinner la devise.');
+  return string().required('Veuillez séléctionner la devise.');
 };
 
 export const getSchema = (amountProduct = false, withName = false) => {

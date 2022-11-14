@@ -1,5 +1,6 @@
 import currency from 'currency.js';
 import { v4 as uuid } from 'uuid';
+import { CompleteCustomShoppingProduct } from '../api/simulator/services/shoppingProducts';
 import { Product } from './product.entity';
 
 export interface ShoppingProduct {
@@ -31,6 +32,9 @@ export interface ProductTaxesInterface {
   setFromProductTaxes(productTaxes: ProductTaxesInterface): ProductTaxesInterface;
   setFromCompleteShoppingProduct(
     completeShoppingProduct: CompleteShoppingProduct,
+  ): ProductTaxesInterface;
+  setFromCompleteCustomShoppingProduct(
+    completeCustomShoppingProduct: CompleteCustomShoppingProduct,
   ): ProductTaxesInterface;
   getUnitCustomDuty(): number;
   getUnitVat(): number;
@@ -128,6 +132,25 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._rateCurrency = completeShoppingProduct.rateCurrency ?? 1;
     this._customDuty = customDuty ?? 0;
     this._vat = vat ?? 0;
+
+    return this;
+  };
+
+  setFromCompleteCustomShoppingProduct = (
+    completeCustomShoppingProducts: CompleteCustomShoppingProduct,
+  ): ProductTaxesInterface => {
+    const { customName, customId, value } = completeCustomShoppingProducts;
+
+    this._id = customId;
+    this._name = customName;
+    this._customName = customName;
+    this._customId = customId;
+    this._unitPrice = value;
+    this._originalPrice = completeCustomShoppingProducts.originalValue;
+    this._originalCurrency = completeCustomShoppingProducts.currency;
+    this._rateCurrency = completeCustomShoppingProducts.rateCurrency ?? 1;
+    this._customDuty = 0;
+    this._vat = 0;
 
     return this;
   };

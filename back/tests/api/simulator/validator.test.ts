@@ -21,6 +21,14 @@ const defaultValidBody = {
       currency: 'EUR',
     },
   ],
+  customShoppingProducts: [
+    {
+      customName: faker.commerce.productName(),
+      customId: faker.datatype.uuid(),
+      originalValue: 85,
+      currency: 'USD',
+    },
+  ],
   border: true,
   age: 20,
   country: faker.address.countryCode('alpha-2'),
@@ -31,6 +39,24 @@ describe('test simulator validator', () => {
     const data = {
       body: {
         ...defaultValidBody,
+      },
+    };
+    expect(isValid(data)).toBe(true);
+  });
+  it('should validate data - customShoppingProducts empty', () => {
+    const data = {
+      body: {
+        ...defaultValidBody,
+        customShoppingProducts: [],
+      },
+    };
+    expect(isValid(data)).toBe(true);
+  });
+  it('should validate data - customShoppingProducts undefined', () => {
+    const data = {
+      body: {
+        ...defaultValidBody,
+        customShoppingProducts: undefined,
       },
     };
     expect(isValid(data)).toBe(true);

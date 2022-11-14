@@ -5,6 +5,7 @@ import {
   ProductTaxesInterface,
   UNIQUE_CUSTOM_DUTY,
 } from '../../../../entities/productTaxes.entity';
+import { CompleteCustomShoppingProduct } from '../shoppingProducts';
 import { manageFreeProducts } from './freeProduct.service';
 
 const getTotalProductsTaxes = (productsTaxes: ProductTaxesInterface[]): number => {
@@ -70,4 +71,13 @@ export const manageProductTaxesDetails = ({
   }
 
   return defaultTaxesProducts;
+};
+
+export const manageCustomProductTaxesDetails = (
+  shoppingProducts: CompleteCustomShoppingProduct[],
+): ProductTaxesInterface[] => {
+  return shoppingProducts.map((shoppingProduct) => {
+    const productTaxes = new ProductTaxes({}).setFromCompleteCustomShoppingProduct(shoppingProduct);
+    return productTaxes;
+  });
 };

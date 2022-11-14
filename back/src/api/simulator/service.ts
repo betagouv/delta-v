@@ -4,9 +4,17 @@ import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes
 import { CurrencyRepositoryInterface } from '../../repositories/currency.repository';
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
-import { getTotalProducts, manageProductTaxesDetails } from './services';
+import {
+  getTotalProducts,
+  manageCustomProductTaxesDetails,
+  manageProductTaxesDetails,
+} from './services';
 import { AmountGroup, checkAmountProducts } from './services/amountProducts/globalAmount.service';
-import { getCompleteProducts, ShoppingProduct } from './services/shoppingProducts';
+import {
+  CustomShoppingProduct,
+  getCompleteProducts,
+  ShoppingProduct,
+} from './services/shoppingProducts';
 import { getFranchiseAmount } from './services/valueProducts/franchise.service';
 
 interface SimulateServiceOptions {
@@ -17,10 +25,12 @@ interface SimulateServiceOptions {
   country: Alpha2Code;
   meanOfTransport?: MeansOfTransport;
   shoppingProducts: ShoppingProduct[];
+  customShoppingProducts: CustomShoppingProduct[];
 }
 
 interface SimulateServiceResponse {
   valueProducts: ProductTaxesInterface[];
+  customProducts: ProductTaxesInterface[];
   amountProducts: AmountGroup[];
   franchiseAmount: number;
 }
@@ -33,9 +43,11 @@ export const service = async ({
   country,
   meanOfTransport,
   shoppingProducts,
+  customShoppingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
-  const completeShoppingProducts = await getCompleteProducts({
+  const { completeShoppingProducts, completeCustomShoppingProducts } = await getCompleteProducts({
     shoppingProducts,
+    customShoppingProducts,
     productRepository,
     currencyRepository,
   });
@@ -59,9 +71,11 @@ export const service = async ({
     total,
     productsTaxes,
   });
+  const customProductDetailed = manageCustomProductTaxesDetails(completeCustomShoppingProducts);
 
   return {
     valueProducts: productDetailed,
+    customProducts: customProductDetailed,
     amountProducts,
     franchiseAmount,
   };
