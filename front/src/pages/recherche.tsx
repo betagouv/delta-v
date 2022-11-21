@@ -7,12 +7,14 @@ import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 import { SearchType } from '@/utils/search';
 
 const SearchFaq = () => {
-  const { searchFaq, searchProducts } = useStore(
+  const { searchFaq, searchPrepareMyTrip, searchProducts } = useStore(
     (state) => ({
       searchFaq: state.searchFaq,
+      searchPrepareMyTrip: state.searchPrepareMyTrip,
       searchProducts: state.searchProducts,
     }),
     shallow,
@@ -20,12 +22,24 @@ const SearchFaq = () => {
 
   const onSearch = (value: string): SearchType<any>[] => {
     const resultFaq = searchFaq(value);
-    const resultProducts = searchProducts(value);
+    const resultPrepareMyTrip = searchPrepareMyTrip(value);
+    const resultProducts = searchProducts(value).map((product) => ({
+      ...product,
+      path: Routing.simulator,
+      pageTitle: 'Simuler mes achats',
+      pageDescription: 'Vous pouvez simuler vos achats ici Simuler mes achats',
+      question: product.rankedValue,
+      rankedValue: (
+        <span>
+          Vous pouvez simuler vos achats ici{' '}
+          <Typography color="link" tag="span">
+            Simuler mes achats
+          </Typography>
+        </span>
+      ),
+    }));
 
-    console.log({ resultFaq });
-    console.log({ resultProducts });
-
-    return [...resultFaq, ...resultProducts];
+    return [...resultFaq, ...resultPrepareMyTrip, ...resultProducts];
   };
 
   return (
@@ -36,6 +50,7 @@ const SearchFaq = () => {
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
+      withHeader
     >
       <div className="-mt-2 -mb-3 flex flex-col items-center">
         <div className="h-6 ">

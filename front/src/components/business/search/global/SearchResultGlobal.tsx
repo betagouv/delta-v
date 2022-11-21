@@ -1,7 +1,6 @@
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { SearchData } from '@/services/search.service';
-import { Routing } from '@/utils/const';
 import { SearchType } from '@/utils/search';
 
 interface SearchResultGlobalProps {
@@ -15,7 +14,7 @@ const BoldedText = (value: string, position: [number, number]) => {
   return (
     <span>
       {strBefore}
-      <strong>{boldValue}</strong>
+      <span className="font-bold">{boldValue}</span>
       {strAfter}
     </span>
   );
@@ -27,17 +26,35 @@ export const SearchResultGlobal: React.FC<SearchResultGlobalProps> = ({
   return (
     <ul className="w-full text-base">
       {resultSearch.map((resultElement) => (
-        <Link to={`${Routing.faq}?id=${resultElement.id}`}>
+        <Link to={resultElement.path}>
           <li
             key={resultElement.id}
             className="flex cursor-default select-none items-center py-2 px-3"
             data-testid="result-product-search-element"
           >
             <div className="flex flex-col">
-              <Typography color="secondary" size="text-sm" lineHeight="leading-normal" italic>
+              <Typography
+                color="light-gray"
+                size="text-sm"
+                lineHeight="leading-normal"
+                weight="light"
+              >
+                {resultElement.pageTitle}
+              </Typography>
+              <Typography
+                color="secondary"
+                size="text-base"
+                lineHeight="leading-normal"
+                weight="medium"
+              >
                 {resultElement.question}
               </Typography>
-              <Typography color="light-gray" size="text-xs" lineHeight="leading-tight">
+              <Typography
+                color="secondary"
+                size="text-sm"
+                lineHeight="leading-tight"
+                weight="light"
+              >
                 {resultElement.rankedPosition
                   ? BoldedText(resultElement.rankedValue, resultElement.rankedPosition)
                   : resultElement.rankedValue}

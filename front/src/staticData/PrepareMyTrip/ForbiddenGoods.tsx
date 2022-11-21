@@ -1,6 +1,6 @@
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 
-export const ForbiddenGoods: AccordionData[] = [
+export const ForbiddenGoods: DataElement[] = [
   {
     id: '5',
     question: 'Les marchandises interdites',

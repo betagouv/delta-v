@@ -72,7 +72,7 @@ const Index = () => {
           </Typography>
         </div>
 
-        <div onClick={() => setOpenModalUnderConstruction(true)}>
+        <div>
           <Input
             name="search"
             type="text"
@@ -264,7 +264,11 @@ const Index = () => {
       <div>
         <Typography color="middle-gray" tag="div" size="text-xs" lineHeight="leading-6">
           Sauf mention contraire, tous les contenus de ce site sont sous{' '}
-          <Link href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" external>
+          <Link
+            href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
+            tag="span"
+            external
+          >
             <div className="inline-flex flex-row gap-1">
               <span className="underline">licence etalab-2.0</span>
               <span className="flex items-center">
