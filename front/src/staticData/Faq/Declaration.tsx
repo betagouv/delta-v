@@ -24,6 +24,7 @@ export const Declaration: DataElement[] = [
         passage de la frontière, vous pouvez également vous rapprocher des{' '}
         <Link
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
+          tag="span"
           external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
@@ -54,6 +55,7 @@ export const Declaration: DataElement[] = [
         à l’occasion de mon retour, je peux également me rapprocher des{' '}
         <Link
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
+          tag="span"
           external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
@@ -72,6 +74,7 @@ export const Declaration: DataElement[] = [
         frontière, je peux également me rapprocher des{' '}
         <Link
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
+          tag="span"
           external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
@@ -95,6 +98,7 @@ export const Declaration: DataElement[] = [
           également vous rapprocher des{' '}
           <Link
             href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
+            tag="span"
             external
           >
             <span className="text-link">services douaniers les plus proches de chez vous</span>

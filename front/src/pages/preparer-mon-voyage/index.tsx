@@ -9,7 +9,7 @@ import { CountryType } from '@/utils/country.util';
 
 const index = () => {
   const router = useRouter();
-  const { countryType, border } = router.query;
+  const { countryType, border, id } = router.query;
   if (countryType === undefined || typeof countryType !== 'string') {
     return <Error statusCode={404} />;
   }
@@ -29,6 +29,7 @@ const index = () => {
 
   const finalCountryType = parseInt(countryType, 10) as CountryType;
   const finalBorder = border === 'true';
+  const linkId = id as string;
 
   const getOriginTravel = (): React.ReactNode => {
     if (finalCountryType === CountryType.EU) {
@@ -78,7 +79,7 @@ const index = () => {
           Vous arrivez en France et vous venez {getOriginTravel()}
         </Typography>
       </div>
-      <PrepareMyTrip countryType={finalCountryType} border={finalBorder} />
+      <PrepareMyTrip countryType={finalCountryType} border={finalBorder} linkId={linkId} />
     </Main>
   );
 };

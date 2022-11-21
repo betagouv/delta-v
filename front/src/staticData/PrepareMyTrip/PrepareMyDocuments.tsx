@@ -1,10 +1,10 @@
+import { DataElement } from '..';
 import Declaration from '@/assets/images/Declaration.jpg';
 import Identification from '@/assets/images/Identification.jpg';
-import { AccordionData } from '@/components/common/Accordion/Accordion';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 
-export const PrepareMyDocuments: AccordionData[] = [
+export const PrepareMyDocuments: DataElement[] = [
   {
     id: '1',
     question: 'Préparer vos documents de voyage',
@@ -30,6 +30,7 @@ export const PrepareMyDocuments: AccordionData[] = [
           et celui du{' '}
           <Link
             href="https://www.gouvernement.fr/ministere-de-l-europe-et-des-affaires-etrangeres"
+            tag="span"
             external
           >
             <span className="text-link underline">

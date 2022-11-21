@@ -4,11 +4,9 @@ import { useRouter } from 'next/router';
 
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { Faqs } from '@/components/business/Faq';
-import { Input } from '@/components/input/StandardInputs/Input';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
-import { Routing } from '@/utils/const';
 
 const FaqPage = () => {
   const { getFaqData } = useStore((state) => ({
@@ -33,14 +31,6 @@ const FaqPage = () => {
       withHeader
     >
       <div className="flex flex-col gap-6">
-        <Input
-          name="search"
-          type="text"
-          fullWidth
-          placeholder="Rechercher dans la FAQ"
-          trailingIcon="search"
-          onClick={() => router.push(`${Routing.faq}/recherche`)}
-        />
         <Faqs linkId={linkId} faqData={getFaqData()} />
       </div>
 

@@ -1,8 +1,8 @@
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
 
-export const WhenDeclare: AccordionData[] = [
+export const WhenDeclare: DataElement[] = [
   {
     id: '2',
     question: 'Quand déclarer ?',
@@ -52,6 +52,7 @@ export const WhenDeclare: AccordionData[] = [
           vous rapprocher des{' '}
           <Link
             href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
+            tag="span"
             external
           >
             <span className="text-link underline">

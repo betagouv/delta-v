@@ -12,6 +12,14 @@ import { createFaqAppStateSlice, FaqAppStateSlice } from './faq/appState.store';
 import { createUseCaseFaqSlice, FaqUseCaseSlice } from './faq/useCase.store';
 import { createGlobalAppStateSlice, GlobalAppStateSlice } from './global/appState.store';
 import { createUseCaseGlobalSlice, GlobalUseCaseSlice } from './global/useCase.store';
+import {
+  createPrepareMyTripAppStateSlice,
+  PrepareMyTripAppStateSlice,
+} from './prepareMyTrip/appState.store';
+import {
+  createUseCasePrepareMyTripSlice,
+  PrepareMyTripUseCaseSlice,
+} from './prepareMyTrip/useCase.store';
 import { createProductsAppStateSlice, ProductsAppStateSlice } from './products/appState.store';
 import { createUseCaseProductSlice, ProductsUseCaseSlice } from './products/useCase.store';
 import {
@@ -30,7 +38,9 @@ export type StoreState = SimulatorUseCaseSlice &
   GlobalUseCaseSlice &
   GlobalAppStateSlice &
   FaqAppStateSlice &
-  FaqUseCaseSlice;
+  FaqUseCaseSlice &
+  PrepareMyTripAppStateSlice &
+  PrepareMyTripUseCaseSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -61,6 +71,8 @@ export const useStore = create<StoreState>(
       ...createUseCaseGlobalSlice(set, get, api),
       ...createFaqAppStateSlice(set, get, api),
       ...createUseCaseFaqSlice(set, get, api),
+      ...createPrepareMyTripAppStateSlice(set, get, api),
+      ...createUseCasePrepareMyTripSlice(set, get, api),
     }),
 
     {
