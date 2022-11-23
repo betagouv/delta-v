@@ -3,6 +3,7 @@
 import { StoreSlice } from '../store';
 import { fuzzySearch, SearchData } from '@/services/search.service';
 import { BlocElements, DataElement } from '@/staticData';
+import { Routing } from '@/utils/const';
 import { SearchType } from '@/utils/search';
 
 export interface FaqUseCaseSlice {
@@ -18,7 +19,7 @@ export const createUseCaseFaqSlice: StoreSlice<FaqUseCaseSlice> = (_set, get) =>
     }, []);
     const searchData = faqData.map((item) => ({
       ...item,
-      path: '/faqs',
+      path: `${Routing.faq}?id=${item.id}`,
       pageTitle: 'FAQ',
       pageDescription:
         'Pour connaître la règlementation concernant cette marchandise rendez dans la rubrique FAQ.',

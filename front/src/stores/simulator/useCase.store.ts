@@ -11,6 +11,7 @@ import {
   SIMULATOR_EMPTY_STATE,
 } from './appState.store';
 import axios from '@/config/axios';
+import { Currencies } from '@/model/currencies';
 
 export interface SimulatorUseCaseSlice {
   validateStep0: (displayInfo: boolean) => void;
@@ -61,8 +62,13 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     set((state: any) => {
       const newState = { ...state };
       newState.simulator.appState.simulatorRequest.country = country;
-      newState.simulator.appState.simulatorRequest.defaultCurrency =
-        countries[country ?? 'FR'].currency;
+      const rawCurrencies = countries[country ?? 'FR'].currency;
+      const mainCurrency = rawCurrencies.split(',')[0];
+      const defaultCurrency = newState.currencies.appState.currencies.find(
+        (currency: Currencies) => currency.id === mainCurrency,
+      );
+
+      newState.simulator.appState.simulatorRequest.defaultCurrency = defaultCurrency.id ?? 'EUR';
 
       if (
         country !== 'CH' ||
