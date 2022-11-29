@@ -15,6 +15,7 @@ type IMainProps = {
   meta: ReactNode;
   children: ReactNode;
   withHeader?: boolean;
+  withPrint?: boolean;
   withCart?: boolean;
   withSearch?: boolean;
   linkSearch?: string;
@@ -27,6 +28,7 @@ const Main = ({
   children,
   meta,
   withHeader = false,
+  withPrint = false,
   withCart = false,
   withSearch = false,
   linkSearch,
@@ -54,7 +56,12 @@ const Main = ({
 
       <div className="flex min-h-[calc(100%-74px)] flex-col gap-6 p-4">
         {withHeader && (
-          <Header withCart={withCart} withSearch={withSearch} linkSearch={linkSearch} />
+          <Header
+            withCart={withCart}
+            withSearch={withSearch}
+            linkSearch={linkSearch}
+            withPrint={withPrint}
+          />
         )}
         {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}
         {children}

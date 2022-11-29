@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
+import shallow from 'zustand/shallow';
 
+import { SummaryExport } from '../summaryExport';
 import { BackButton } from '@/components/common/BackButton';
 import { Link } from '@/components/common/Link';
 import Modal from '@/components/common/Modal';
@@ -11,16 +13,23 @@ import { useStore } from '@/stores/store';
 interface HeaderProps {
   withCart?: boolean;
   withSearch?: boolean;
+  withPrint?: boolean;
   linkSearch?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   withCart = false,
   withSearch = false,
+  withPrint = false,
   linkSearch = '/simulateur/produits/recherche',
 }: HeaderProps) => {
-  const shoppingProducts = useStore(
-    (state) => state.simulator.appState.simulatorRequest.shoppingProducts,
+  const { shoppingProducts, simulatorRequest, simulatorResponse } = useStore(
+    (state) => ({
+      shoppingProducts: state.simulator.appState.simulatorRequest.shoppingProducts,
+      simulatorRequest: state.simulator.appState.simulatorRequest,
+      simulatorResponse: state.simulator.appState.simulatorResponse,
+    }),
+    shallow,
   );
   const [nbCartItems, setNbCartItems] = useState(0);
   const [openBasketModal, setOpenBasketModal] = useState(false);
@@ -60,6 +69,12 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             )}
           </div>
+        )}
+        {withPrint && (
+          <SummaryExport
+            simulatorRequest={simulatorRequest}
+            simulatorResponse={simulatorResponse}
+          />
         )}
       </div>
       <Modal
