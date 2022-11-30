@@ -35,6 +35,7 @@ const iconNames: SvgNames[] = [
   'coffee',
   'completeBasket',
   'dairy',
+  'download',
   'phone',
   'mail',
   'meat',
