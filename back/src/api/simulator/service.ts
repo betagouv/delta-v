@@ -45,6 +45,14 @@ export const service = async ({
   shoppingProducts,
   customShoppingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
+  if (shoppingProducts.length === 0 && customShoppingProducts.length === 0) {
+    return {
+      valueProducts: [],
+      customProducts: [],
+      amountProducts: [],
+      franchiseAmount: 0,
+    };
+  }
   const { completeShoppingProducts, completeCustomShoppingProducts } = await getCompleteProducts({
     shoppingProducts,
     customShoppingProducts,

@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
-import { SummaryExport } from '../summaryExport';
+import { SummaryExport } from '../../business/summaryExport';
 import { BackButton } from '@/components/common/BackButton';
+import { Header } from '@/components/common/Header';
 import { Link } from '@/components/common/Link';
 import Modal from '@/components/common/Modal';
 import { SvgIcon } from '@/components/common/SvgIcon';
@@ -17,7 +18,7 @@ interface HeaderProps {
   linkSearch?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({
+export const CustomHeader: React.FC<HeaderProps> = ({
   withCart = false,
   withSearch = false,
   withPrint = false,
@@ -46,42 +47,47 @@ export const Header: React.FC<HeaderProps> = ({
     }
     setOpenBasketModal(true);
   };
+
+  const leftButtons = (
+    <>
+      <BackButton />
+    </>
+  );
+
+  const rightButtons = (
+    <>
+      {withSearch && (
+        <Link to={linkSearch}>
+          <div className="mx-4 mt-1 h-7 w-7">
+            <SvgIcon name="liteSearch" />
+          </div>
+        </Link>
+      )}
+      {withCart && (
+        <div className="flex flex-row" onClick={onClickBasket}>
+          <div className="mt-1 mr-1  h-7 w-7 ">
+            <SvgIcon name="basket" />
+          </div>
+          {nbCartItems > 0 && (
+            <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
+              {nbCartItems}
+            </div>
+          )}
+          <Modal
+            title="Votre panier est vide"
+            open={openBasketModal}
+            onClose={() => setOpenBasketModal(false)}
+          />
+        </div>
+      )}
+      {withPrint && (
+        <SummaryExport simulatorRequest={simulatorRequest} simulatorResponse={simulatorResponse} />
+      )}
+    </>
+  );
   return (
     <>
-      <div className="flex flex-row">
-        <BackButton />
-        <div className="flex-1" />
-        {withSearch && (
-          <Link to={linkSearch}>
-            <div className="mx-4 mt-1 h-7 w-7">
-              <SvgIcon name="liteSearch" />
-            </div>
-          </Link>
-        )}
-        {withCart && (
-          <div className="flex flex-row" onClick={onClickBasket}>
-            <div className="mt-1 mr-1  h-7 w-7 ">
-              <SvgIcon name="basket" />
-            </div>
-            {nbCartItems > 0 && (
-              <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
-                {nbCartItems}
-              </div>
-            )}
-          </div>
-        )}
-        {withPrint && (
-          <SummaryExport
-            simulatorRequest={simulatorRequest}
-            simulatorResponse={simulatorResponse}
-          />
-        )}
-      </div>
-      <Modal
-        title="Votre panier est vide"
-        open={openBasketModal}
-        onClose={() => setOpenBasketModal(false)}
-      />
+      <Header leftButtons={leftButtons} rightButtons={rightButtons} />
     </>
   );
 };
