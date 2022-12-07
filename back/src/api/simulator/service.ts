@@ -4,7 +4,6 @@ import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes
 import { CurrencyRepositoryInterface } from '../../repositories/currency.repository';
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
-import noProductToSimulateError from '../common/errors/noProductToSimulate.error';
 import {
   getTotalProducts,
   manageCustomProductTaxesDetails,
