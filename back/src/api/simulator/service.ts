@@ -4,6 +4,7 @@ import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes
 import { CurrencyRepositoryInterface } from '../../repositories/currency.repository';
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
+import noProductToSimulateError from '../common/errors/noProductToSimulate.error';
 import {
   getTotalProducts,
   manageCustomProductTaxesDetails,
@@ -45,6 +46,14 @@ export const service = async ({
   shoppingProducts,
   customShoppingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
+  if (shoppingProducts.length === 0 && customShoppingProducts.length === 0) {
+    return {
+      valueProducts: [],
+      customProducts: [],
+      amountProducts: [],
+      franchiseAmount: 0,
+    };
+  }
   const { completeShoppingProducts, completeCustomShoppingProducts } = await getCompleteProducts({
     shoppingProducts,
     customShoppingProducts,

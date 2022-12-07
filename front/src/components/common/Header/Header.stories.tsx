@@ -11,11 +11,11 @@ export const base = (): JSX.Element => (
   <div className="p-3">
     <p>Simple Header :</p>
     <br />
-    <Header />
+    <Header leftButtons={<></>} rightButtons={<></>} />
     <br />
     <p>With cart :</p>
     <br />
-    <Header withCart />
+    <Header leftButtons={<></>} rightButtons={<></>} />
     <br />
   </div>
 );
