@@ -2,7 +2,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
-import { AmountProduct, Product } from '@/model/product';
+import { AmountProduct } from '@/model/product';
 
 export enum MeansOfTransport {
   PLANE = 'plane',
@@ -14,7 +14,8 @@ export enum MeansOfTransport {
 
 export interface ShoppingProduct {
   id: string;
-  product?: Product;
+  productId?: string;
+  productName?: string;
   name: string;
   amount: number;
   value: number;
@@ -50,14 +51,9 @@ interface GroupedAmountProduct {
   isOverMaximum: boolean;
 }
 
-export interface BasketProduct {
-  shoppingProduct: ShoppingProduct;
-  customShoppingProducts: ShoppingProduct;
-  detailedProduct?: DetailedProduct;
-}
-
 export interface SimulatorResponse {
   valueProducts?: DetailedProduct[];
+  customProducts?: DetailedProduct[];
   amountProducts?: GroupedAmountProduct[];
   total: number;
   totalCustomDuty: number;

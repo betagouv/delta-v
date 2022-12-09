@@ -10,26 +10,19 @@ import { Typography } from '../Typography';
 import { ContentValueProduct } from './ContentValueProduct';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
-interface ProductBasketProps {
+interface ValueProductBasketProps {
   containError?: boolean;
   detailedProduct?: DetailedProduct;
-  dataBasket: {
-    value: number;
-    unit: string;
-    name: string;
-    customName?: string;
-  };
   onUpdateProduct: () => void;
   onDeleteProduct: () => void;
 }
 
-export const ProductBasket: React.FC<ProductBasketProps> = ({
+export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
   containError = false,
-  dataBasket: { value, unit, name, customName },
   detailedProduct,
   onUpdateProduct,
   onDeleteProduct,
-}: ProductBasketProps) => {
+}: ValueProductBasketProps) => {
   const [open, setOpen] = useState(false);
   const [originalCurrencySymbol, setOriginalCurrencySymbol] = useState('€');
 
@@ -49,9 +42,9 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
       <div className="p-3 leading-tight">
         <div className="flex">
           <div className="mr-2 flex-1 leading-none">
-            {name ? (
+            {detailedProduct?.name ? (
               <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
-                {name}
+                {detailedProduct?.name}
               </Typography>
             ) : (
               <div className="flex flex-row items-center">
@@ -74,7 +67,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
           </Typography>
         </div>
         <Typography weight="light" color="light-gray" size="text-base">
-          {customName}
+          {detailedProduct?.customName}
         </Typography>
       </div>
       <div className={classnames({ 'divide-y-2 divide-dashed': open })}>
@@ -109,7 +102,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
                 </Typography>
                 <div className="ml-1">
                   <Typography color="primary" size="text-base">
-                    {value} {unit}
+                    {detailedProduct?.unitPrice} €
                   </Typography>
                 </div>
               </div>
@@ -140,7 +133,7 @@ export const ProductBasket: React.FC<ProductBasketProps> = ({
               </div>
               {detailedProduct && (
                 <Typography weight="normal" color="primary" size="text-lg">
-                  {value} {unit}
+                  {detailedProduct?.unitPrice} €
                 </Typography>
               )}
               <div className="mt-[2px] ml-3">

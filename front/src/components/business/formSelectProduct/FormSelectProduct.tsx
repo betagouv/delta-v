@@ -107,7 +107,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         steps={steps}
       />
       <FormAddProduct
-        product={currentProduct}
+        productId={currentProduct.id}
         disabled={!isAddAble}
         control={control}
         register={register}
