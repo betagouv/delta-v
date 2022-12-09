@@ -68,7 +68,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         (currency: Currencies) => currency.id === mainCurrency,
       );
 
-      newState.simulator.appState.simulatorRequest.defaultCurrency = defaultCurrency.id ?? 'EUR';
+      newState.simulator.appState.simulatorRequest.defaultCurrency = defaultCurrency?.id ?? 'EUR';
 
       if (
         country !== 'CH' ||
@@ -176,16 +176,16 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         country: simulatorData.simulatorRequest.country,
         border: simulatorData.simulatorRequest.border,
         shoppingProducts: simulatorData.simulatorRequest.shoppingProducts
-          .filter((shoppingProduct) => shoppingProduct.product)
+          .filter((shoppingProduct) => shoppingProduct.productId)
           .map((product: ShoppingProduct) => ({
-            id: product.product?.id,
+            id: product.productId,
             customName: product.name,
             customId: product.id,
             originalValue: product.value,
             currency: product.currency,
           })),
         customShoppingProducts: simulatorData.simulatorRequest.shoppingProducts
-          .filter((shoppingProduct) => !shoppingProduct.product)
+          .filter((shoppingProduct) => !shoppingProduct.productId)
           .map((product: ShoppingProduct) => ({
             customName: product.name,
             customId: product.id,

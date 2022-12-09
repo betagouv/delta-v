@@ -46,6 +46,7 @@ export const SummaryExport: React.FC<SummarySimulatorProps> = ({
             simulatorRequest={simulatorRequest}
             simulatorResponse={simulatorResponse}
             qrCodeVersion={qrCodeVersion}
+            hideDetails
           />
         </div>
       </div>

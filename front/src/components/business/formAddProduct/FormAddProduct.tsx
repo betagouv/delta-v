@@ -10,14 +10,13 @@ import { TextLink } from '@/components/common/TextLink';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { getAmountProductType, getUnit } from '@/model/amount';
-import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 
 interface FormAddProductProps {
   register: any;
   control: any;
   disabled?: boolean;
-  product?: Product;
+  productId?: string;
   submitted?: boolean;
   errors: FieldErrors;
 }
@@ -32,16 +31,20 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   control,
   disabled = false,
   submitted = false,
-  product,
+  productId,
   errors,
 }: FormAddProductProps) => {
-  const { currencies, simulatorRequest } = useStore(
+  const { currencies, simulatorRequest, findProduct } = useStore(
     (state) => ({
       currencies: state.currencies.appState.currencies,
       simulatorRequest: state.simulator.appState.simulatorRequest,
+      findProduct: state.findProduct,
     }),
     shallow,
   );
+
+  const product = productId ? findProduct(productId) : undefined;
+
   const selectOptions = currencies.map((currency) => ({
     value: currency.name,
     id: currency.id,

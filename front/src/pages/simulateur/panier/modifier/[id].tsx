@@ -74,7 +74,7 @@ const UpdateProductBasket = () => {
       withHeader
       withCart
       withTitle
-      titleValue={currentProduct?.product?.name}
+      titleValue={currentProduct?.productName}
       titleIcon="calculator"
     >
       <div className="flex flex-col gap-6">
@@ -99,7 +99,7 @@ const UpdateProductBasket = () => {
                 />
               </div>
               <FormAddProduct
-                product={currentProduct.product}
+                productId={currentProduct.productId}
                 control={control}
                 register={register}
                 errors={errors as FieldErrors}

@@ -1,10 +1,10 @@
 import { Meta } from '@storybook/react';
 
-import { ProductBasket } from './ProductBasket';
+import { ValueProductBasket } from './ValueProductBasket';
 
 export default {
   title: 'Components/Common/ProductBasket',
-  component: ProductBasket,
+  component: ValueProductBasket,
 } as Meta;
 
 const detailedProduct = {
@@ -27,8 +27,7 @@ export const withVariant = (): JSX.Element => (
   <div className="p-3">
     <p>Product basket :</p>
     <br />
-    <ProductBasket
-      dataBasket={{ unit: '€', value: detailedProduct.unitPrice, ...detailedProduct }}
+    <ValueProductBasket
       detailedProduct={detailedProduct}
       // eslint-disable-next-line no-alert
       onUpdateProduct={() => alert('On Update')}

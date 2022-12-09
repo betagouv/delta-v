@@ -22,12 +22,14 @@ interface SummarySimulatorProps {
   simulatorRequest: SimulatorRequest;
   simulatorResponse?: SimulatorResponse;
   qrCodeVersion?: boolean;
+  hideDetails?: boolean;
 }
 
 export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
   simulatorRequest,
   simulatorResponse,
   qrCodeVersion = false,
+  hideDetails = false,
 }: SummarySimulatorProps) => {
   const totalTaxes = simulatorResponse?.totalTaxes ?? 0;
   const [color, setColor] = useState<Color>('primary');
@@ -181,7 +183,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
           <div>
             {simulatorResponse?.valueProducts?.map((product, index) => (
               <div key={index}>
-                <SummaryValueProduct product={product} />
+                <SummaryValueProduct product={product} hideDetails={hideDetails} />
               </div>
             ))}
           </div>

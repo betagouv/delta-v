@@ -5,12 +5,13 @@ import shallow from 'zustand/shallow';
 
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { OnActionModal } from '@/components/autonomous/OnActionModal';
+import { AmountProductBasket } from '@/components/common/AmountProductBasket';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
-import { ProductBasket } from '@/components/common/ProductBasket';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
+import { ValueProductBasket } from '@/components/common/ValueProductBasket';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import {
@@ -29,6 +30,7 @@ const Panier = () => {
   const {
     simulatorRequest,
     valueProducts: detailedProducts,
+    customProducts,
     amountProducts,
     removeProduct,
   } = useStore(
@@ -36,6 +38,7 @@ const Panier = () => {
       simulatorRequest: state.simulator.appState.simulatorRequest,
       valueProducts: state.simulator.appState.simulatorResponse?.valueProducts ?? [],
       amountProducts: state.simulator.appState.simulatorResponse?.amountProducts ?? [],
+      customProducts: state.simulator.appState.simulatorResponse?.customProducts ?? [],
       removeProduct: state.removeProduct,
     }),
     shallow,
@@ -78,8 +81,21 @@ const Panier = () => {
         <div className="flex flex-col gap-3">
           {detailedProducts.map((detailedProduct) => (
             <div key={detailedProduct.customId}>
-              <ProductBasket
-                dataBasket={{ unit: '€', value: detailedProduct.unitPrice, ...detailedProduct }}
+              <ValueProductBasket
+                detailedProduct={detailedProduct}
+                onDeleteProduct={() => {
+                  idToDelete.current = detailedProduct.customId;
+                  setOpenActionModal(true);
+                }}
+                onUpdateProduct={() => {
+                  router.push(`/simulateur/panier/modifier/${detailedProduct.customId}`);
+                }}
+              />
+            </div>
+          ))}
+          {customProducts.map((detailedProduct) => (
+            <div key={detailedProduct.customId}>
+              <ValueProductBasket
                 detailedProduct={detailedProduct}
                 onDeleteProduct={() => {
                   idToDelete.current = detailedProduct.customId;
@@ -100,12 +116,13 @@ const Panier = () => {
                 </Typography>
               </div>
               {amountProduct.products.map((product) => (
-                <ProductBasket
+                <AmountProductBasket
                   containError={amountProduct.isOverMaximum}
                   dataBasket={{
                     unit: getUnit(product.amountProduct) ?? '',
-                    value: product.amount,
-                    ...product,
+                    amount: product.amount,
+                    customName: product.customName,
+                    name: product.name,
                   }}
                   onDeleteProduct={() => {
                     idToDelete.current = product.customId;

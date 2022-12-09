@@ -30,7 +30,12 @@ export const base = (): JSX.Element => {
   return (
     <div className="p-3">
       <br />
-      <FormAddProduct product={product} register={register} control={control} errors={errors} />
+      <FormAddProduct
+        productId={product.id}
+        register={register}
+        control={control}
+        errors={errors}
+      />
       <br />
     </div>
   );

@@ -41,7 +41,7 @@ const ProductSearch = () => {
   const onAddProduct = ({ product, value, name, currency }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
-      product,
+      productId: product.id,
       name,
       value: parseFloat(value),
       amount: 1,
