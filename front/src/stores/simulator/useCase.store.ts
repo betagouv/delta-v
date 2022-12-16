@@ -175,23 +175,15 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         meanOfTransport: simulatorData.simulatorRequest.meanOfTransport,
         country: simulatorData.simulatorRequest.country,
         border: simulatorData.simulatorRequest.border,
-        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts
-          .filter((shoppingProduct) => shoppingProduct.productId)
-          .map((product: ShoppingProduct) => ({
-            id: product.productId,
-            customName: product.name,
-            customId: product.id,
-            originalValue: product.value,
-            currency: product.currency,
-          })),
-        customShoppingProducts: simulatorData.simulatorRequest.shoppingProducts
-          .filter((shoppingProduct) => !shoppingProduct.productId)
-          .map((product: ShoppingProduct) => ({
-            customName: product.name,
-            customId: product.id,
-            originalValue: product.value,
-            currency: product.currency,
-          })),
+        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts.map(
+          (shoppingProduct: ShoppingProduct) => ({
+            id: shoppingProduct.productId,
+            customName: shoppingProduct.name,
+            customId: shoppingProduct.id,
+            originalValue: shoppingProduct.value,
+            currency: shoppingProduct.currency,
+          }),
+        ),
       };
       const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;
       set((state: any) => {

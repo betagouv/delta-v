@@ -20,8 +20,6 @@ const defaultValidBody = {
       originalValue: 40,
       currency: 'EUR',
     },
-  ],
-  customShoppingProducts: [
     {
       customName: faker.commerce.productName(),
       customId: faker.datatype.uuid(),
@@ -39,24 +37,6 @@ describe('test simulator validator', () => {
     const data = {
       body: {
         ...defaultValidBody,
-      },
-    };
-    expect(isValid(data)).toBe(true);
-  });
-  it('should validate data - customShoppingProducts empty', () => {
-    const data = {
-      body: {
-        ...defaultValidBody,
-        customShoppingProducts: [],
-      },
-    };
-    expect(isValid(data)).toBe(true);
-  });
-  it('should validate data - customShoppingProducts undefined', () => {
-    const data = {
-      body: {
-        ...defaultValidBody,
-        customShoppingProducts: undefined,
       },
     };
     expect(isValid(data)).toBe(true);

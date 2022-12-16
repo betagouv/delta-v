@@ -1,21 +1,11 @@
 import { Alpha2Code } from 'i18n-iso-countries';
-import { ProductType } from '../../entities/product.entity';
-import { ProductTaxes, ProductTaxesInterface } from '../../entities/productTaxes.entity';
+import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
 import { CurrencyRepositoryInterface } from '../../repositories/currency.repository';
 import { ProductRepositoryInterface } from '../../repositories/product.repository';
 import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
-import {
-  getTotalProducts,
-  manageCustomProductTaxesDetails,
-  manageProductTaxesDetails,
-} from './services';
-import { AmountGroup, checkAmountProducts } from './services/amountProducts/globalAmount.service';
-import {
-  CustomShoppingProduct,
-  getCompleteProducts,
-  ShoppingProduct,
-} from './services/shoppingProducts';
-import { getFranchiseAmount } from './services/valueProducts/franchise.service';
+import { AmountGroup } from '../common/services/amountProducts/globalAmount.service';
+import { generateDeclaration } from '../common/services/declaration';
+import { ShoppingProduct } from '../common/services/shoppingProducts';
 
 interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
@@ -25,7 +15,6 @@ interface SimulateServiceOptions {
   country: Alpha2Code;
   meanOfTransport?: MeansOfTransport;
   shoppingProducts: ShoppingProduct[];
-  customShoppingProducts: CustomShoppingProduct[];
 }
 
 interface SimulateServiceResponse {
@@ -43,48 +32,20 @@ export const service = async ({
   country,
   meanOfTransport,
   shoppingProducts,
-  customShoppingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
-  if (shoppingProducts.length === 0 && customShoppingProducts.length === 0) {
-    return {
-      valueProducts: [],
-      customProducts: [],
-      amountProducts: [],
-      franchiseAmount: 0,
-    };
-  }
-  const { completeShoppingProducts, completeCustomShoppingProducts } = await getCompleteProducts({
+  const declaration = await generateDeclaration({
     shoppingProducts,
-    customShoppingProducts,
     productRepository,
     currencyRepository,
+    border,
+    age,
+    country,
+    meanOfTransport,
   });
-
-  const completeValueShoppingProducts = completeShoppingProducts.filter(
-    (completeShoppingProduct) => completeShoppingProduct.product.productType === ProductType.value,
-  );
-  const productsTaxes = completeValueShoppingProducts.map((product) =>
-    new ProductTaxes({}).setFromCompleteShoppingProduct(product),
-  );
-
-  const completeAmountShoppingProducts = completeShoppingProducts.filter(
-    (completeShoppingProduct) => completeShoppingProduct.product.productType === ProductType.amount,
-  );
-  const amountProducts = checkAmountProducts(completeAmountShoppingProducts, country, border);
-
-  const franchiseAmount = getFranchiseAmount({ border, age, country, meanOfTransport });
-  const total = getTotalProducts(completeShoppingProducts);
-  const productDetailed = manageProductTaxesDetails({
-    franchiseAmount,
-    total,
-    productsTaxes,
-  });
-  const customProductDetailed = manageCustomProductTaxesDetails(completeCustomShoppingProducts);
-
   return {
-    valueProducts: productDetailed,
-    customProducts: customProductDetailed,
-    amountProducts,
-    franchiseAmount,
+    valueProducts: declaration.getRealProductsTaxes(),
+    customProducts: declaration.uncompletedRealProductsTaxes,
+    amountProducts: declaration.getAmountProductsGrouped(),
+    franchiseAmount: declaration.franchiseAmount,
   };
 };

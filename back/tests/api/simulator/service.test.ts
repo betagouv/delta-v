@@ -1,11 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
-import { service } from '../../../src/api/simulator/service';
 import {
   AmountTobaccoProduct,
   GroupedTobacco,
-} from '../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
-import { HttpStatuses } from '../../../src/core/httpStatuses';
+} from '../../../src/api/common/services/amountProducts/tobacco/tobacco.service';
+import { service } from '../../../src/api/simulator/service';
 import { ProductType } from '../../../src/entities/product.entity';
 import { ShoppingProduct } from '../../../src/entities/productTaxes.entity';
 import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
@@ -59,7 +58,6 @@ describe('test simulator service', () => {
       border: false,
       age: 18,
       shoppingProducts: [shoppingProduct1, shoppingProduct2, shoppingProduct3],
-      customShoppingProducts: [],
       meanOfTransport: MeansOfTransport.TRAIN,
       productRepository,
       currencyRepository,
@@ -93,12 +91,14 @@ describe('test simulator service', () => {
         {
           group: GroupedTobacco.allTobaccoProducts,
           isOverMaximum: true,
-          completeShoppingProducts: [
+          detailedShoppingProducts: [
             {
-              id: product3.id,
-              customName: 'product 3',
-              customId: shoppingProduct3.customId,
-              value: 300,
+              shoppingProduct: {
+                id: product3.id,
+                customName: 'product 3',
+                customId: shoppingProduct3.customId,
+                originalValue: 300,
+              },
               product: {
                 id: product3.id,
               },
@@ -133,7 +133,6 @@ describe('test simulator service', () => {
         border: false,
         age: 18,
         shoppingProducts: [shoppingProduct1],
-        customShoppingProducts: [],
         productRepository,
         currencyRepository,
         country: 'US',
@@ -145,7 +144,7 @@ describe('test simulator service', () => {
       expect(totalCustomDuty).toEqual(totalCustomDutyExpected);
     },
   );
-  it('should throw error - product not found', async () => {
+  it('should not throw error - product not found', async () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
     const shoppingProduct: ShoppingProduct = {
       id: product.id,
@@ -159,22 +158,16 @@ describe('test simulator service', () => {
       getManyByIds: [currencyEntityFactory({ id: 'EUR', value: 1 })],
     });
 
-    expect.assertions(2);
-    try {
-      await service({
-        border: false,
-        age: 18,
-        shoppingProducts: [shoppingProduct],
-        customShoppingProducts: [],
-        productRepository,
-        currencyRepository,
-        country: 'US',
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      expect(error.statusCode).toBe(HttpStatuses.NOT_FOUND);
-      expect(error.code).toBe('PRODUCT_NOT_FOUND');
-    }
+    const result = await service({
+      border: false,
+      age: 18,
+      shoppingProducts: [shoppingProduct],
+      productRepository,
+      currencyRepository,
+      country: 'US',
+    });
+
+    expect(result.customProducts[0].getUnitTaxes()).toEqual(0);
   });
   it('should return empty amount product', async () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
@@ -193,7 +186,6 @@ describe('test simulator service', () => {
       border: false,
       age: 18,
       shoppingProducts: [shoppingProduct],
-      customShoppingProducts: [],
       productRepository,
       currencyRepository,
       country: 'US',

@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker';
+import { DetailedShoppingProduct } from '../../src/api/common/services/detailedShoppingProduct';
 import {
-  CompleteShoppingProduct,
   ProductTaxes,
   ProductTaxesConstructorOptions,
 } from '../../src/entities/productTaxes.entity';
+import { currencyEntityFactory } from '../helpers/factories/currency.factory';
 import { productEntityFactory } from '../helpers/factories/product.factory';
 
 describe('ProductTaxes entity', () => {
@@ -49,27 +50,30 @@ describe('ProductTaxes entity', () => {
     });
   });
   describe('setFromCompleteShoppingProduct', () => {
-    it('should update an object with setFromCompleteShoppingProduct', () => {
-      const completeShoppingProduct: CompleteShoppingProduct = {
+    it('should update an object with setFromDetailedShoppingProduct', () => {
+      const detailedShoppingProduct = new DetailedShoppingProduct();
+      detailedShoppingProduct.shoppingProduct = {
         id: faker.datatype.uuid(),
-        value: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
         originalValue: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
         customName: faker.datatype.string(),
         customId: faker.datatype.uuid(),
-        product: productEntityFactory({
-          customDuty: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
-          vat: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
-        }),
         currency: 'EUR',
       };
+      detailedShoppingProduct.product = productEntityFactory({
+        customDuty: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
+        vat: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
+      });
+      detailedShoppingProduct.currency = currencyEntityFactory({
+        value: 1,
+      });
       const productTaxes = new ProductTaxes({});
-      productTaxes.setFromCompleteShoppingProduct(completeShoppingProduct);
-      expect(productTaxes.id).toEqual(completeShoppingProduct.product.id);
-      expect(productTaxes.customName).toEqual(completeShoppingProduct.customName);
-      expect(productTaxes.unitPrice).toEqual(completeShoppingProduct.value);
-      expect(productTaxes.name).toEqual(completeShoppingProduct.product.name);
-      expect(productTaxes.customDuty).toEqual(completeShoppingProduct.product.customDuty);
-      expect(productTaxes.vat).toEqual(completeShoppingProduct.product.vat);
+      productTaxes.setFromDetailedShoppingProduct(detailedShoppingProduct);
+      expect(productTaxes.id).toEqual(detailedShoppingProduct.product.id);
+      expect(productTaxes.customName).toEqual(detailedShoppingProduct.shoppingProduct.customName);
+      expect(productTaxes.unitPrice).toEqual(detailedShoppingProduct.getDefaultCurrencyValue());
+      expect(productTaxes.name).toEqual(detailedShoppingProduct.product.name);
+      expect(productTaxes.customDuty).toEqual(detailedShoppingProduct.product.customDuty);
+      expect(productTaxes.vat).toEqual(detailedShoppingProduct.product.vat);
     });
   });
   describe('getUnitCustomDuty', () => {
