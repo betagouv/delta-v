@@ -3,7 +3,6 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import request from 'supertest';
 import api from '../../../src/api';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
-import { CustomShoppingProduct } from '../../../src/api/simulator/services/shoppingProducts';
 import { Product } from '../../../src/entities/product.entity';
 import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
 import buildTestApp from '../../helpers/testApp.helper';
@@ -25,7 +24,7 @@ const prepareContext = async (customDutyProduct1 = 10): Promise<Product[]> => {
 };
 
 export interface ShoppingProduct {
-  id: string;
+  id?: string;
   customId: string;
   customName?: string;
   originalValue: number;
@@ -49,7 +48,6 @@ const prepareProductPrice = async (value = 500): Promise<ShoppingProduct[]> => {
 interface SimulateEndpointOptions {
   products?: Product[];
   shoppingProducts: ShoppingProduct[];
-  customShoppingProducts?: CustomShoppingProduct[];
   border?: boolean;
   age?: number;
   country?: Alpha2Code;
@@ -77,7 +75,6 @@ interface SimulateEndpointResponse {
 const simulateEndpoint = async ({
   products,
   shoppingProducts,
-  customShoppingProducts,
   border = false,
   age = faker.datatype.number({ precision: 1, min: 15 }),
   meanOfTransport = MeansOfTransport.CAR,
@@ -85,7 +82,7 @@ const simulateEndpoint = async ({
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
   const { status, body } = await request(testApp)
     .post('/api/simulator')
-    .send({ shoppingProducts, customShoppingProducts, border, age, country, meanOfTransport });
+    .send({ shoppingProducts, border, age, country, meanOfTransport });
 
   if (!products) {
     return { status, body };
@@ -94,14 +91,14 @@ const simulateEndpoint = async ({
   const productTaxesDetails = shoppingProducts.map(
     (shoppingProduct, index: number): ProductTaxesDetails => {
       const unitCustomDuty =
-        (shoppingProduct.originalValue * (products[index].customDuty ?? 0)) / 100;
-      const unitVat = (shoppingProduct.originalValue * (products[index].vat ?? 0)) / 100;
+        (shoppingProduct.originalValue * (products[index]?.customDuty ?? 0)) / 100;
+      const unitVat = (shoppingProduct.originalValue * (products[index]?.vat ?? 0)) / 100;
       return {
-        id: products[index].id,
-        name: products[index].name,
+        id: products[index]?.id,
+        name: products[index]?.name,
         unitPrice: shoppingProduct.originalValue,
-        customDuty: products[index].customDuty ?? 0,
-        vat: products[index].vat ?? 0,
+        customDuty: products[index]?.customDuty ?? 0,
+        vat: products[index]?.vat ?? 0,
         unitCustomDuty,
         unitVat,
         unitTaxes: unitCustomDuty + unitVat,
@@ -148,8 +145,6 @@ describe('test simulator API', () => {
         originalValue: 500,
         currency: 'EUR',
       },
-    ];
-    const customShoppingProducts: CustomShoppingProduct[] = [
       {
         customName: 'cproduct1',
         customId: faker.datatype.uuid(),
@@ -173,7 +168,6 @@ describe('test simulator API', () => {
     const { body, status } = await simulateEndpoint({
       products,
       shoppingProducts,
-      customShoppingProducts,
     });
     expect(status).toBe(200);
 

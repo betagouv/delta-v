@@ -1,6 +1,6 @@
 import currency from 'currency.js';
 import { v4 as uuid } from 'uuid';
-import { CompleteCustomShoppingProduct } from '../api/simulator/services/shoppingProducts';
+import { DetailedShoppingProduct } from '../api/common/services/detailedShoppingProduct';
 import { Product } from './product.entity';
 
 export interface ShoppingProduct {
@@ -19,22 +19,19 @@ export interface CompleteShoppingProduct extends ShoppingProduct {
 }
 
 export interface ProductTaxesInterface {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   customId: string;
   customName?: string;
   unitPrice: number;
   originalPrice: number;
-  originalCurrency: string;
+  originalCurrency?: string;
   rateCurrency: number;
   customDuty: number;
   vat: number;
   setFromProductTaxes(productTaxes: ProductTaxesInterface): ProductTaxesInterface;
-  setFromCompleteShoppingProduct(
-    completeShoppingProduct: CompleteShoppingProduct,
-  ): ProductTaxesInterface;
-  setFromCompleteCustomShoppingProduct(
-    completeCustomShoppingProduct: CompleteCustomShoppingProduct,
+  setFromDetailedShoppingProduct(
+    detailedShoppingProduct: DetailedShoppingProduct,
   ): ProductTaxesInterface;
   getUnitCustomDuty(): number;
   getUnitVat(): number;
@@ -60,13 +57,13 @@ export const LIMIT_UNIQUE_CUSTOM_DUTY = 700;
 export const UNIQUE_CUSTOM_DUTY = 2.5;
 
 export class ProductTaxes implements ProductTaxesInterface {
-  private _id: string;
-  private _name: string;
+  private _id?: string;
+  private _name?: string;
   private _customId: string;
   private _customName?: string;
   private _unitPrice: number;
   private _originalPrice: number;
-  private _originalCurrency: string;
+  private _originalCurrency?: string;
   private _rateCurrency: number;
   private _vat: number;
   private _customDuty: number;
@@ -112,54 +109,35 @@ export class ProductTaxes implements ProductTaxesInterface {
     return this;
   };
 
-  setFromCompleteShoppingProduct = (
-    completeShoppingProduct: CompleteShoppingProduct,
+  setFromDetailedShoppingProduct = (
+    detailedShoppingProduct: DetailedShoppingProduct,
   ): ProductTaxesInterface => {
     const {
-      customName,
-      customId,
-      value,
-      product: { customDuty, vat, id, name },
-    } = completeShoppingProduct;
+      shoppingProduct: { customName, customId },
+    } = detailedShoppingProduct;
+
+    const id = detailedShoppingProduct.product?.id;
+    const name = detailedShoppingProduct.product?.name;
 
     this._id = id;
     this._name = name;
     this._customName = customName;
     this._customId = customId;
-    this._unitPrice = value;
-    this._originalPrice = completeShoppingProduct.originalValue;
-    this._originalCurrency = completeShoppingProduct.currency;
-    this._rateCurrency = completeShoppingProduct.rateCurrency ?? 1;
-    this._customDuty = customDuty ?? 0;
-    this._vat = vat ?? 0;
+    this._unitPrice = detailedShoppingProduct.getDefaultCurrencyValue();
+    this._originalPrice = detailedShoppingProduct.shoppingProduct.originalValue;
+    this._originalCurrency = detailedShoppingProduct.shoppingProduct.currency;
+    this._rateCurrency = detailedShoppingProduct.currency?.value ?? 1;
+    this._customDuty = detailedShoppingProduct.product?.customDuty ?? 0;
+    this._vat = detailedShoppingProduct.product?.vat ?? 0;
 
     return this;
   };
 
-  setFromCompleteCustomShoppingProduct = (
-    completeCustomShoppingProducts: CompleteCustomShoppingProduct,
-  ): ProductTaxesInterface => {
-    const { customName, customId, value } = completeCustomShoppingProducts;
-
-    this._id = customId;
-    this._name = customName;
-    this._customName = customName;
-    this._customId = customId;
-    this._unitPrice = value;
-    this._originalPrice = completeCustomShoppingProducts.originalValue;
-    this._originalCurrency = completeCustomShoppingProducts.currency;
-    this._rateCurrency = completeCustomShoppingProducts.rateCurrency ?? 1;
-    this._customDuty = 0;
-    this._vat = 0;
-
-    return this;
-  };
-
-  get id(): string {
+  get id(): string | undefined {
     return this._id;
   }
 
-  get name(): string {
+  get name(): string | undefined {
     return this._name;
   }
 
@@ -179,7 +157,7 @@ export class ProductTaxes implements ProductTaxesInterface {
     return this._originalPrice;
   }
 
-  get originalCurrency(): string {
+  get originalCurrency(): string | undefined {
     return this._originalCurrency;
   }
 
@@ -219,3 +197,20 @@ export class ProductTaxes implements ProductTaxesInterface {
     return this;
   };
 }
+
+export const getTotalProductsTaxes = (productsTaxes: ProductTaxesInterface[]): number => {
+  return currency(getTotalProductsVat(productsTaxes)).add(getTotalProductsCustomDuty(productsTaxes))
+    .value;
+};
+
+const getTotalProductsVat = (productsTaxes: ProductTaxesInterface[]): number => {
+  return productsTaxes.reduce((total, ProductTaxes) => {
+    return currency(total).add(ProductTaxes.getUnitVat()).value;
+  }, 0);
+};
+
+const getTotalProductsCustomDuty = (ProductsTaxesDetails: ProductTaxesInterface[]): number => {
+  return ProductsTaxesDetails.reduce((total, productTaxesDetails) => {
+    return currency(total).add(productTaxesDetails.getUnitCustomDuty()).value;
+  }, 0);
+};

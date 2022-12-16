@@ -1,17 +1,17 @@
 import currency from 'currency.js';
 import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
-import { AmountGroup, AmountProduct } from './services/amountProducts/globalAmount.service';
+import { AmountGroup, AmountProduct } from '../common/services/amountProducts/globalAmount.service';
 
 interface SerializedValueProduct {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   customId: string;
   customName?: string;
   customDuty: number;
   vat: number;
   unitPrice: number;
   originalPrice: number;
-  originalCurrency: string;
+  originalCurrency?: string;
   rateCurrency: number;
   unitCustomDuty: number;
   unitVat: number;
@@ -21,8 +21,8 @@ interface SerializedValueProduct {
 interface SerializedAmountProduct {
   group: string;
   products: {
-    id: string;
-    name: string;
+    id?: string;
+    name?: string;
     amountProduct?: AmountProduct;
     customName?: string;
     customId: string;
@@ -68,13 +68,13 @@ const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedV
 const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProduct => ({
   group: amountGroup.group,
   isOverMaximum: amountGroup.isOverMaximum,
-  products: amountGroup.completeShoppingProducts.map((completeShoppingProduct) => ({
-    amount: completeShoppingProduct.value,
-    amountProduct: completeShoppingProduct.product.amountProduct,
-    customName: completeShoppingProduct.customName,
-    customId: completeShoppingProduct.customId,
-    name: completeShoppingProduct.product.name,
-    id: completeShoppingProduct.id,
+  products: amountGroup.detailedShoppingProducts.map((detailedShoppingProduct) => ({
+    amount: detailedShoppingProduct.getDefaultCurrencyValue(),
+    amountProduct: detailedShoppingProduct.product?.amountProduct,
+    customName: detailedShoppingProduct.shoppingProduct.customName,
+    customId: detailedShoppingProduct.shoppingProduct.customId,
+    name: detailedShoppingProduct.product?.name,
+    id: detailedShoppingProduct.product?.id,
   })),
 });
 

@@ -16,12 +16,10 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { shoppingProducts, customShoppingProducts, border, age, country, meanOfTransport } =
-      req.body;
+    const { shoppingProducts, border, age, country, meanOfTransport } = req.body;
 
     const { valueProducts, customProducts, amountProducts, franchiseAmount } = await service({
       shoppingProducts,
-      customShoppingProducts,
       border,
       age,
       country,

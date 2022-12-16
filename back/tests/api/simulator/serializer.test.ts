@@ -1,6 +1,8 @@
+import { AmountGroup } from '../../../src/api/common/services/amountProducts/globalAmount.service';
+import { GroupedTobacco } from '../../../src/api/common/services/amountProducts/tobacco/tobacco.service';
+import { DetailedShoppingProduct } from '../../../src/api/common/services/detailedShoppingProduct';
 import { serializeSimulator } from '../../../src/api/simulator/serializer';
-import { AmountGroup } from '../../../src/api/simulator/services/amountProducts/globalAmount.service';
-import { GroupedTobacco } from '../../../src/api/simulator/services/amountProducts/tobacco/tobacco.service';
+import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
 import { productEntityFactory } from '../../helpers/factories/product.factory';
 import { productTaxesEntityFactory } from '../../helpers/factories/productTaxes.factory';
 
@@ -18,18 +20,19 @@ describe('test serializer', () => {
       customDuty: 5,
       vat: 20,
     });
+
+    const detailedShoppingProduct = new DetailedShoppingProduct();
+    detailedShoppingProduct.product = productEntityFactory({ id: '12', name: 'product3' });
+    detailedShoppingProduct.shoppingProduct = {
+      id: '12',
+      customId: '12',
+      customName: 'product3 custom',
+      originalValue: 200,
+      currency: 'EUR',
+    };
+    detailedShoppingProduct.currency = currencyEntityFactory({ value: 1 });
     const group3: AmountGroup = {
-      completeShoppingProducts: [
-        {
-          id: '12',
-          customId: '12',
-          customName: 'product3 custom',
-          product: productEntityFactory({ id: '12', name: 'product3' }),
-          originalValue: 200,
-          value: 200,
-          currency: 'EUR',
-        },
-      ],
+      detailedShoppingProducts: [detailedShoppingProduct],
       group: GroupedTobacco.allTobaccoProducts,
       isOverMaximum: true,
     };
