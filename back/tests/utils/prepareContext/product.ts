@@ -13,6 +13,7 @@ interface PrepareContextProductOptions {
   vat?: number;
   customDuty?: number;
   position?: number;
+  id?: string;
 }
 
 export const prepareContextProduct = async ({
@@ -24,8 +25,10 @@ export const prepareContextProduct = async ({
   vat,
   customDuty,
   position = 1,
+  id = faker.datatype.uuid(),
 }: PrepareContextProductOptions): Promise<Product> => {
   const product = productEntityFactory({
+    id,
     parentProduct,
     vat,
     customDuty,

@@ -100,8 +100,8 @@ describe('separateFreeAndPaidProducts', () => {
     expect(paidProducts.length).toEqual(2);
     expect(freeProducts.length).toEqual(4);
     expect(paidProducts).toMatchObject([
-      { id: '6', unitPrice: 100, vat: 20, customDuty: 0 },
       { id: '5', unitPrice: 100, vat: 20, customDuty: 5 },
+      { id: '6', unitPrice: 100, vat: 20, customDuty: 0 },
     ]);
     expect(freeProducts).toMatchObject([
       { id: '4', unitPrice: 100, vat: 0, customDuty: 0 },
@@ -130,8 +130,8 @@ describe('separateFreeAndPaidProducts', () => {
     expect(paidProducts.length).toEqual(2);
     expect(freeProducts.length).toEqual(7);
     expect(paidProducts).toMatchObject([
-      { id: '5', unitPrice: 200, vat: 10, customDuty: 0 },
       { id: '4', unitPrice: 30, vat: 2, customDuty: 2 },
+      { id: '5', unitPrice: 200, vat: 10, customDuty: 0 },
     ]);
     expect(freeProducts).toMatchObject([
       { id: '3', unitPrice: 16, vat: 0, customDuty: 0 },

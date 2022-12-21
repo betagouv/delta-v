@@ -22,10 +22,12 @@ const prepareContext = async (): Promise<PrepareContextResponse> => {
   const subChildrenProduct1 = await prepareContextProduct({
     testDb,
     parentProduct: childrenProduct1,
+    id: 'd8e068d3-5ea2-415e-a0ac-a5978b40dd0c',
   });
   const subChildrenProduct2 = await prepareContextProduct({
     testDb,
     parentProduct: childrenProduct1,
+    id: '48d9ca1c-947f-41f0-a246-4ecd4b1a27c6',
   });
 
   childrenProduct1.subProducts = [subChildrenProduct1, subChildrenProduct2];
