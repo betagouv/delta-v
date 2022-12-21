@@ -96,6 +96,7 @@ const Panier = () => {
           {customProducts.map((detailedProduct) => (
             <div key={detailedProduct.customId}>
               <ValueProductBasket
+                customProduct
                 detailedProduct={detailedProduct}
                 onDeleteProduct={() => {
                   idToDelete.current = detailedProduct.customId;

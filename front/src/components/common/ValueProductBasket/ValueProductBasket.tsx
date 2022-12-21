@@ -13,6 +13,7 @@ import { DetailedProduct } from '@/stores/simulator/appState.store';
 interface ValueProductBasketProps {
   containError?: boolean;
   detailedProduct?: DetailedProduct;
+  customProduct?: boolean;
   onUpdateProduct: () => void;
   onDeleteProduct: () => void;
 }
@@ -20,6 +21,7 @@ interface ValueProductBasketProps {
 export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
   containError = false,
   detailedProduct,
+  customProduct = false,
   onUpdateProduct,
   onDeleteProduct,
 }: ValueProductBasketProps) => {
@@ -106,7 +108,9 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
                   </Typography>
                 </div>
               </div>
-              {detailedProduct && <ContentValueProduct detailedCalculation={detailedProduct} />}
+              {detailedProduct && !customProduct && (
+                <ContentValueProduct detailedCalculation={detailedProduct} />
+              )}
             </div>
             <div className="flex items-end">
               <div className="flex-1" />
