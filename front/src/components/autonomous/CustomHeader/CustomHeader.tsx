@@ -34,6 +34,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
   );
   const [nbCartItems, setNbCartItems] = useState(0);
   const [openBasketModal, setOpenBasketModal] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -64,21 +65,23 @@ export const CustomHeader: React.FC<HeaderProps> = ({
         </Link>
       )}
       {withCart && (
-        <div className="flex flex-row" onClick={onClickBasket}>
-          <div className="mt-1 mr-1  h-7 w-7 ">
-            <SvgIcon name="basket" />
-          </div>
-          {nbCartItems > 0 && (
-            <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
-              {nbCartItems}
+        <>
+          <div className="flex flex-row" onClick={onClickBasket}>
+            <div className="mt-1 mr-1  h-7 w-7 ">
+              <SvgIcon name="basket" />
             </div>
-          )}
+            {nbCartItems > 0 && (
+              <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
+                {nbCartItems}
+              </div>
+            )}
+          </div>
           <Modal
             title="Votre panier est vide"
             open={openBasketModal}
             onClose={() => setOpenBasketModal(false)}
           />
-        </div>
+        </>
       )}
       {withPrint && (
         <SummaryExport simulatorRequest={simulatorRequest} simulatorResponse={simulatorResponse} />
