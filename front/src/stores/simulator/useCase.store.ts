@@ -1,3 +1,4 @@
+import { countries } from 'countries-list';
 import { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
@@ -10,6 +11,7 @@ import {
   SIMULATOR_EMPTY_STATE,
 } from './appState.store';
 import axios from '@/config/axios';
+import { Currencies } from '@/model/currencies';
 
 export interface SimulatorUseCaseSlice {
   validateStep0: (displayInfo: boolean) => void;
@@ -31,6 +33,7 @@ interface UpdateShoppingProductOptions {
   id: string;
   name: string;
   value: number;
+  currency: string;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
@@ -59,6 +62,13 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     set((state: any) => {
       const newState = { ...state };
       newState.simulator.appState.simulatorRequest.country = country;
+      const rawCurrencies = countries[country ?? 'FR'].currency;
+      const mainCurrency = rawCurrencies.split(',')[0];
+      const defaultCurrency = newState.currencies.appState.currencies.find(
+        (currency: Currencies) => currency.id === mainCurrency,
+      );
+
+      newState.simulator.appState.simulatorRequest.defaultCurrency = defaultCurrency?.id ?? 'EUR';
 
       if (
         country !== 'CH' ||
@@ -134,7 +144,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       ) ?? undefined
     );
   },
-  updateShoppingProduct: ({ id, name, value }: UpdateShoppingProductOptions): void => {
+  updateShoppingProduct: ({ id, name, value, currency }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
       const currentShoppingProduct =
@@ -150,6 +160,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         ...currentShoppingProduct,
         name,
         value,
+        currency,
       });
 
       return newState;
@@ -164,14 +175,15 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         meanOfTransport: simulatorData.simulatorRequest.meanOfTransport,
         country: simulatorData.simulatorRequest.country,
         border: simulatorData.simulatorRequest.border,
-        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts
-          .filter((shoppingProduct) => shoppingProduct.product)
-          .map((product: ShoppingProduct) => ({
-            id: product.product?.id,
-            customName: product.name,
-            customId: product.id,
-            value: product.value,
-          })),
+        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts.map(
+          (shoppingProduct: ShoppingProduct) => ({
+            id: shoppingProduct.productId,
+            customName: shoppingProduct.name,
+            customId: shoppingProduct.id,
+            originalValue: shoppingProduct.value,
+            currency: shoppingProduct.currency,
+          }),
+        ),
       };
       const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;
       set((state: any) => {

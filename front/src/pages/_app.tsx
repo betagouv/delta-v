@@ -3,10 +3,14 @@ import { useEffect, useState } from 'react';
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
 import { AppProps } from 'next/app';
-
 import '../styles/global.css';
 import '../config/i18n';
+import shallow from 'zustand/shallow';
+
 import { SvgIcon } from '@/components/common/SvgIcon';
+import { useStore } from '@/stores/store';
+
+const ONE_DAY = 86400000;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const instance = createInstance({
@@ -15,6 +19,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   });
   const [loading, setLoading] = useState(true);
   const [hideLoading, setHideLoading] = useState(false);
+  const { getCurrenciesResponse, getProductsResponse } = useStore(
+    (state) => ({
+      getCurrenciesResponse: state.getCurrenciesResponse,
+      getProductsResponse: state.getProductsResponse,
+    }),
+    shallow,
+  );
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setTimeout(() => {
@@ -24,6 +35,18 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         setHideLoading(true);
       }, 1500);
     }
+  }, []);
+
+  useEffect(() => {
+    getProductsResponse();
+    getCurrenciesResponse();
+
+    const intervalId = setInterval(() => {
+      getProductsResponse();
+      getCurrenciesResponse();
+    }, ONE_DAY);
+
+    return () => clearInterval(intervalId);
   }, []);
   return (
     <>

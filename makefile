@@ -68,6 +68,14 @@ build-front: ## build the frontend container
 .PHONY: start-build-front
 start-build-front: ## start the build the frontend container
 	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn start
+
+.PHONY: build-back
+build-back: ## build the back container
+	$(DOCKER_COMPOSE) run --rm $(BACK_CONTAINER) yarn build
+
+.PHONY: start-build-back
+start-build-back: ## start the build the frontend container
+	$(DOCKER_COMPOSE) run --rm $(BACK_CONTAINER) yarn start
 ##
 ## -- DEPENDENCIES --
 ##

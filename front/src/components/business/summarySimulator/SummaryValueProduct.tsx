@@ -4,16 +4,18 @@ import classNames from 'classnames';
 import dayjs from 'dayjs';
 
 import { Icon } from '@/components/common/Icon';
-import { ContentValueProduct } from '@/components/common/ProductBasket/ContentValueProduct';
 import { Typography } from '@/components/common/Typography';
+import { ContentValueProduct } from '@/components/common/ValueProductBasket/ContentValueProduct';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 interface SummarySimulatorProps {
   product: DetailedProduct;
+  hideDetails?: boolean;
 }
 
 export const SummaryValueProduct: React.FC<SummarySimulatorProps> = ({
   product,
+  hideDetails = false,
 }: SummarySimulatorProps) => {
   const [open, setOpen] = useState(false);
   return (
@@ -39,17 +41,18 @@ export const SummaryValueProduct: React.FC<SummarySimulatorProps> = ({
                 true,
               'max-h-0': !open,
               'max-h-[1000px]': open,
+              hidden: hideDetails,
             })}
           >
-            <Typography size="text-sm">{`Calcul de la convertion € > €`}</Typography>
+            <Typography size="text-sm">{`Calcul de la convertion ${product.originalCurrency} > EUR`}</Typography>
             <div className="mt-1 leading-none">
               <Typography color="light-gray" size="text-sm">
-                Taux 1 au {dayjs().format('DD/MM/YYYY')}
+                Taux {product.rateCurrency} au {dayjs().format('DD/MM/YYYY')}
               </Typography>
             </div>
             <div className="flex flex-row leading-none">
               <p className="w-full text-sm">
-                {product.unitPrice} x 1 ={' '}
+                {product.originalPrice} / {product.rateCurrency} ={' '}
                 <span className="text-primary-700">{product.unitPrice} €</span>
               </p>
               <div className="ml-1"></div>

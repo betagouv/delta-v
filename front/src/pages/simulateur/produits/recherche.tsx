@@ -1,7 +1,3 @@
-import { useEffect } from 'react';
-
-import shallow from 'zustand/shallow';
-
 import { Search } from '@/components/business/search';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -9,17 +5,10 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const SearchProduct = () => {
-  const { searchProducts, getProductsResponse } = useStore(
-    (state) => ({
-      searchProducts: state.searchProducts,
-      getProductsResponse: state.getProductsResponse,
-    }),
-    shallow,
-  );
+  const { searchProducts } = useStore((state) => ({
+    searchProducts: state.searchProducts,
+  }));
 
-  useEffect(() => {
-    getProductsResponse();
-  }, [getProductsResponse]);
   return (
     <Main
       meta={

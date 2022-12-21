@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import Error from 'next/error';
@@ -18,10 +18,9 @@ import { Main } from '@/templates/Main';
 const ProductSearch = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { findProduct, getProductsResponse, addProduct } = useStore(
+  const { findProduct, addProduct } = useStore(
     (state) => ({
       findProduct: state.findProduct,
-      getProductsResponse: state.getProductsResponse,
       addProduct: state.addProduct,
     }),
     shallow,
@@ -39,22 +38,19 @@ const ProductSearch = () => {
       };
     }) ?? [];
 
-  const onAddProduct = ({ product, value, name }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, name, currency }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
-      product,
+      productId: product.id,
       name,
       value: parseFloat(value),
       amount: 1,
+      currency,
     };
     addProduct(shoppingProduct);
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
     setOpenModalAddProduct(true);
   };
-
-  useEffect(() => {
-    getProductsResponse();
-  }, []);
 
   if (!currentProduct) {
     return <Error statusCode={404} />;

@@ -12,6 +12,7 @@ export const Border: DataElement[] = [
         France, rapprochez-vous des{' '}
         <Link
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
+          tag="span"
           external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>

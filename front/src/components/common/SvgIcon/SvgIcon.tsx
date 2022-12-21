@@ -112,6 +112,7 @@ import HauteSavoieIcon from '@/assets/icons/City-Haute-Savoie.svg';
 import Coffee from '@/assets/icons/Coffee.svg';
 import CompleteBasket from '@/assets/icons/Complete-Basket.svg';
 import Dairy from '@/assets/icons/Dairy.svg';
+import Download from '@/assets/icons/Download.svg';
 import Folder from '@/assets/icons/Folder.svg';
 import Forbidden from '@/assets/icons/Forbidden.svg';
 import Home from '@/assets/icons/Home.svg';
@@ -180,6 +181,7 @@ export type SvgNames =
   | 'coffee'
   | 'completeBasket'
   | 'dairy'
+  | 'download'
   | 'folder'
   | 'forbidden'
   | 'watch'
@@ -365,6 +367,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CompleteBasket;
     case 'dairy':
       return Dairy;
+    case 'download':
+      return Download;
     case 'folder':
       return Folder;
     case 'forbidden':

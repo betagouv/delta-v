@@ -6,8 +6,8 @@ import { Andorra } from './Andorra';
 import { Eu } from './Eu';
 import { NonEu } from './NonEu';
 import { NonEuBorder } from './NonEuBorder';
-import { AccordionData } from '@/components/common/Accordion/Accordion';
 import { Radio } from '@/components/input/StandardInputs/Radio';
+import { DataElement } from '@/staticData';
 import { CountryType } from '@/utils/country.util';
 
 export interface FormData {
@@ -25,6 +25,11 @@ interface EventChangeRadio {
     name: string;
     value?: 'true' | 'false';
   };
+}
+
+export interface BuyingData extends DataElement {
+  countryType?: CountryType;
+  border?: boolean;
 }
 
 const ContentBuying: React.FC<BuyingProps> = ({ border, countryType }: BuyingProps) => {
@@ -81,7 +86,7 @@ const ContentBuying: React.FC<BuyingProps> = ({ border, countryType }: BuyingPro
   );
 };
 
-export const Buying = (props: BuyingProps): AccordionData[] => {
+export const Buying = (props: BuyingProps): DataElement[] => {
   return [
     {
       id: '3',
@@ -90,4 +95,35 @@ export const Buying = (props: BuyingProps): AccordionData[] => {
       answer: <ContentBuying {...props} />,
     },
   ];
+};
+
+export const allBuying = (): BuyingData[] => {
+  const possibilities: BuyingProps[] = [
+    {
+      countryType: CountryType.EU,
+      border: false,
+    },
+    {
+      countryType: CountryType.ANDORRA,
+      border: false,
+    },
+    {
+      countryType: CountryType.NON_EU,
+      border: false,
+    },
+    {
+      countryType: CountryType.NON_EU,
+      border: true,
+    },
+  ];
+  return possibilities.map(
+    (possibility): BuyingData => ({
+      border: possibility.border,
+      countryType: possibility.countryType,
+      id: '3',
+      question: "Ramenez-vous des produits de l'étranger ?",
+      iconName: 'basketColor',
+      answer: <ContentBuying {...possibility} />,
+    }),
+  );
 };

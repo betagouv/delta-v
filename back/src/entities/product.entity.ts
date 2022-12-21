@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn, Tree, TreeChildren, TreeParent } from 'typeorm';
-import { AmountProduct } from '../api/simulator/services/amountProducts/globalAmount.service';
+import { AmountProduct } from '../api/common/services/amountProducts/globalAmount.service';
 
 export interface Product {
   id: string;

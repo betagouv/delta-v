@@ -11,12 +11,20 @@ const defaultValidBody = {
       id: faker.datatype.uuid(),
       customName: faker.commerce.productName(),
       customId: faker.datatype.uuid(),
-      value: 85,
+      originalValue: 85,
+      currency: 'EUR',
     },
     {
       id: faker.datatype.uuid(),
       customId: faker.datatype.uuid(),
-      value: 40,
+      originalValue: 40,
+      currency: 'EUR',
+    },
+    {
+      customName: faker.commerce.productName(),
+      customId: faker.datatype.uuid(),
+      originalValue: 85,
+      currency: 'USD',
     },
   ],
   border: true,
@@ -40,7 +48,8 @@ describe('test simulator validator', () => {
         shoppingProducts: [
           {
             id: faker.datatype.string(),
-            value: 85,
+            originalValue: 85,
+            currency: 'EUR',
           },
         ],
       },
@@ -53,7 +62,8 @@ describe('test simulator validator', () => {
         ...defaultValidBody,
         shoppingProducts: [
           {
-            value: 85,
+            originalValue: 85,
+            currency: 'EUR',
           },
         ],
       },
@@ -67,7 +77,8 @@ describe('test simulator validator', () => {
         shoppingProducts: [
           {
             id: faker.datatype.uuid(),
-            value: 0,
+            originalValue: 0,
+            currency: 'EUR',
           },
         ],
       },

@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 
 import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
-import { Search } from '@/components/business/search';
 import { Card } from '@/components/common/Card';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { TextLink } from '@/components/common/TextLink';
 import { Typography } from '@/components/common/Typography';
+import { Input } from '@/components/input/StandardInputs/Input';
 import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
@@ -72,8 +72,15 @@ const Index = () => {
           </Typography>
         </div>
 
-        <div onClick={() => setOpenModalUnderConstruction(true)}>
-          <Search onSearch={() => []} withSearchIcon searchType="faq" disabled />
+        <div>
+          <Input
+            name="search"
+            type="text"
+            fullWidth
+            placeholder="Que recherchez-vous ?"
+            trailingIcon="search"
+            onClick={() => router.push(`/recherche`)}
+          />
         </div>
 
         <div className="flex flex-col gap-4">
@@ -257,7 +264,11 @@ const Index = () => {
       <div>
         <Typography color="middle-gray" tag="div" size="text-xs" lineHeight="leading-6">
           Sauf mention contraire, tous les contenus de ce site sont sous{' '}
-          <Link href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" external>
+          <Link
+            href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
+            tag="span"
+            external
+          >
             <div className="inline-flex flex-row gap-1">
               <span className="underline">licence etalab-2.0</span>
               <span className="flex items-center">

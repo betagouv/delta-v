@@ -61,7 +61,7 @@ export const Link: React.FC<LinkProps> = ({
   const linkType = getLinkType(to, back, href, onClick);
 
   return (
-    <div>
+    <CustomTag>
       {linkType === LinkType.to && (to || back) && (
         <CustomTag
           onClick={handleClick}
@@ -76,6 +76,6 @@ export const Link: React.FC<LinkProps> = ({
         </NextLink>
       )}
       {linkType === LinkType.onClick && onClick && <div onClick={onClick}>{children}</div>}
-    </div>
+    </CustomTag>
   );
 };

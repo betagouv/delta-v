@@ -1,15 +1,18 @@
 import currency from 'currency.js';
 import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
-import { AmountGroup, AmountProduct } from './services/amountProducts/globalAmount.service';
+import { AmountGroup, AmountProduct } from '../common/services/amountProducts/globalAmount.service';
 
 interface SerializedValueProduct {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   customId: string;
   customName?: string;
   customDuty: number;
   vat: number;
   unitPrice: number;
+  originalPrice: number;
+  originalCurrency?: string;
+  rateCurrency: number;
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
@@ -18,8 +21,8 @@ interface SerializedValueProduct {
 interface SerializedAmountProduct {
   group: string;
   products: {
-    id: string;
-    name: string;
+    id?: string;
+    name?: string;
     amountProduct?: AmountProduct;
     customName?: string;
     customId: string;
@@ -30,12 +33,14 @@ interface SerializedAmountProduct {
 
 interface SerializedSimulatorOptions {
   valueProducts: ProductTaxesInterface[];
+  customProducts: ProductTaxesInterface[];
   amountProducts: AmountGroup[];
   franchiseAmount: number;
 }
 
 interface SerializedSimulatorResponse {
   valueProducts?: SerializedValueProduct[];
+  customProducts?: SerializedValueProduct[];
   amountProducts?: SerializedAmountProduct[];
   total: number;
   totalCustomDuty: number;
@@ -50,6 +55,9 @@ const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedV
   customId: productTaxes.customId,
   customName: productTaxes.customName,
   unitPrice: productTaxes.unitPrice,
+  originalPrice: productTaxes.originalPrice,
+  originalCurrency: productTaxes.originalCurrency,
+  rateCurrency: productTaxes.rateCurrency,
   customDuty: productTaxes.customDuty,
   vat: productTaxes.vat,
   unitCustomDuty: productTaxes.getUnitCustomDuty(),
@@ -60,18 +68,19 @@ const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedV
 const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProduct => ({
   group: amountGroup.group,
   isOverMaximum: amountGroup.isOverMaximum,
-  products: amountGroup.completeShoppingProducts.map((completeShoppingProduct) => ({
-    amount: completeShoppingProduct.value,
-    amountProduct: completeShoppingProduct.product.amountProduct,
-    customName: completeShoppingProduct.customName,
-    customId: completeShoppingProduct.customId,
-    name: completeShoppingProduct.product.name,
-    id: completeShoppingProduct.id,
+  products: amountGroup.detailedShoppingProducts.map((detailedShoppingProduct) => ({
+    amount: detailedShoppingProduct.getDefaultCurrencyValue(),
+    amountProduct: detailedShoppingProduct.product?.amountProduct,
+    customName: detailedShoppingProduct.shoppingProduct.customName,
+    customId: detailedShoppingProduct.shoppingProduct.customId,
+    name: detailedShoppingProduct.product?.name,
+    id: detailedShoppingProduct.product?.id,
   })),
 });
 
 export const serializeSimulator = ({
   valueProducts,
+  customProducts,
   amountProducts,
   franchiseAmount,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
@@ -85,6 +94,7 @@ export const serializeSimulator = ({
   );
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
+    customProducts: customProducts.map(serializeValueProduct),
     amountProducts: amountProducts.map(serializeAmountProduct),
     total: valueProducts.reduce(
       (total, productTaxes) => currency(total).add(productTaxes.unitPrice).value,

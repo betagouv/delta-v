@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { Radio } from '@/components/input/StandardInputs/Radio';
@@ -58,7 +58,7 @@ const ContentMoney: React.FC = () => {
         <>
           <div>
             Vous pouvez d’ores et déjà déclarer vos sommes et liquidités sur{' '}
-            <Link href="https://www.douane.gouv.fr/dalia/Dalia.jsp" external>
+            <Link href="https://www.douane.gouv.fr/dalia/Dalia.jsp" tag="span" external>
               <span className="text-link underline">Dalia</span>
             </Link>
             .
@@ -79,7 +79,7 @@ const ContentMoney: React.FC = () => {
   );
 };
 
-export const Money: AccordionData[] = [
+export const Money: DataElement[] = [
   {
     id: '6',
     question: "Transportez-vous de l'argent en espèce ? ",

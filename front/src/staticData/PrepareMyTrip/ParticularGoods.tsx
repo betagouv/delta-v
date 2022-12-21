@@ -1,7 +1,7 @@
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { DataElement } from '..';
 import { Link } from '@/components/common/Link';
 
-export const ParticularGoods: AccordionData[] = [
+export const ParticularGoods: DataElement[] = [
   {
     id: '4',
     question: 'Les marchandises soumises à une règlementation particulière',
@@ -16,6 +16,7 @@ export const ParticularGoods: AccordionData[] = [
           Certains de ces produits sont soumis à des{' '}
           <Link
             href="https://www.douane.gouv.fr/demarche/vous-rapportez-des-vegetaux-fruits-et-legumes-en-provenance-dun-pays-non-membre-de-lunion"
+            tag="span"
             external
           >
             <span className="text-link underline">formalités particulières</span>

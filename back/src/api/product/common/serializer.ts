@@ -1,6 +1,6 @@
 import { Product, ProductDisplayTypes, ProductType } from '../../../entities/product.entity';
 import { sortProducts } from '../../../utils/product.util';
-import { AmountProduct } from '../../simulator/services/amountProducts/globalAmount.service';
+import { AmountProduct } from '../../common/services/amountProducts/globalAmount.service';
 
 export interface SerializedProduct {
   id: string;

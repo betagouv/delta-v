@@ -1,45 +1,53 @@
 import React, { useState } from 'react';
 
 import { FieldErrors } from 'react-hook-form';
+import shallow from 'zustand/shallow';
 
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
 import { TextLink } from '@/components/common/TextLink';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { getAmountProductType, getUnit } from '@/model/amount';
-import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 
 interface FormAddProductProps {
   register: any;
   control: any;
   disabled?: boolean;
-  product?: Product;
+  productId?: string;
+  submitted?: boolean;
   errors: FieldErrors;
 }
 
 export interface FormSimulatorData {
   value?: number;
-  devise?: string;
+  currency?: string;
 }
-
-const selectOptions = [
-  {
-    value: 'EURO',
-    id: 'eur',
-  },
-];
 
 export const FormAddProduct: React.FC<FormAddProductProps> = ({
   register,
   control,
   disabled = false,
-  product,
+  submitted = false,
+  productId,
   errors,
 }: FormAddProductProps) => {
-  const { simulatorRequest } = useStore((state) => ({
-    simulatorRequest: state.simulator.appState.simulatorRequest,
+  const { currencies, simulatorRequest, findProduct } = useStore(
+    (state) => ({
+      currencies: state.currencies.appState.currencies,
+      simulatorRequest: state.simulator.appState.simulatorRequest,
+      findProduct: state.findProduct,
+    }),
+    shallow,
+  );
+
+  const product = productId ? findProduct(productId) : undefined;
+
+  const selectOptions = currencies.map((currency) => ({
+    value: currency.name,
+    id: currency.id,
   }));
   const productType = product?.amountProduct
     ? getAmountProductType(product.amountProduct)
@@ -94,18 +102,26 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             label="Choisissez la devise"
             type="simple-select"
             fullWidth={false}
-            name="devise"
+            name="currency"
             options={selectOptions}
-            register={register('devise', { required: false })}
+            register={register('currency', { required: true })}
             control={control}
-            error={errors.devise?.message as string | undefined}
+            error={errors.currency?.message as string | undefined}
           />
         </>
       )}
       <div className="flex-1" />
-      <Button disabled={disabled} fullWidth={true} type="submit">
-        Valider
-      </Button>
+      {submitted ? (
+        <div className="flex justify-center">
+          <Typography color="link" size="text-xl" weight="bold">
+            Merci !
+          </Typography>
+        </div>
+      ) : (
+        <Button disabled={disabled} fullWidth={true} type="submit">
+          Valider
+        </Button>
+      )}
       {productType !== 'valueProduct' && (
         <ModalMaximumAmount
           open={openModalInfoProduct}

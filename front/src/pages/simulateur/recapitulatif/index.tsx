@@ -46,6 +46,7 @@ const Summary = () => {
         />
       }
       withHeader
+      withPrint
     >
       <div className="flex flex-col gap-4 pb-4">
         <SummarySimulator

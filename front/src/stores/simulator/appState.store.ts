@@ -2,7 +2,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
-import { AmountProduct, Product } from '@/model/product';
+import { AmountProduct } from '@/model/product';
 
 export enum MeansOfTransport {
   PLANE = 'plane',
@@ -14,10 +14,12 @@ export enum MeansOfTransport {
 
 export interface ShoppingProduct {
   id: string;
-  product?: Product;
+  productId?: string;
+  productName?: string;
   name: string;
   amount: number;
   value: number;
+  currency: string;
 }
 
 export interface DetailedProduct {
@@ -26,6 +28,9 @@ export interface DetailedProduct {
   customId: string;
   customName?: string;
   unitPrice: number;
+  originalPrice: number;
+  originalCurrency: string;
+  rateCurrency: number;
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
@@ -46,13 +51,9 @@ interface GroupedAmountProduct {
   isOverMaximum: boolean;
 }
 
-export interface BasketProduct {
-  shoppingProduct: ShoppingProduct;
-  detailedProduct?: DetailedProduct;
-}
-
 export interface SimulatorResponse {
   valueProducts?: DetailedProduct[];
+  customProducts?: DetailedProduct[];
   amountProducts?: GroupedAmountProduct[];
   total: number;
   totalCustomDuty: number;
@@ -65,6 +66,7 @@ export interface SimulatorRequest {
   age?: number;
   meanOfTransport?: MeansOfTransport;
   country?: Alpha2Code;
+  defaultCurrency?: string;
   border?: boolean;
   shoppingProducts: ShoppingProduct[];
 }
@@ -87,8 +89,10 @@ export const SIMULATOR_EMPTY_STATE = {
     age: undefined,
     meanOfTransport: undefined,
     country: undefined,
+    defaultCurrency: 'EUR',
     border: undefined,
     shoppingProducts: [],
+    customShoppingProducts: [],
   },
   simulatorResponse: undefined,
   displayInfo: true,
