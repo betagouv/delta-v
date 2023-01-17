@@ -11,11 +11,11 @@ import { Routing } from '@/utils/const';
 import { SearchType } from '@/utils/search';
 
 const SearchFaq = () => {
-  const { searchFaq, searchPrepareMyTrip, searchProducts } = useStore(
+  const { searchFaq, searchPrepareMyTrip, searchAllProducts } = useStore(
     (state) => ({
       searchFaq: state.searchFaq,
       searchPrepareMyTrip: state.searchPrepareMyTrip,
-      searchProducts: state.searchProducts,
+      searchAllProducts: state.searchAllProducts,
     }),
     shallow,
   );
@@ -23,7 +23,7 @@ const SearchFaq = () => {
   const onSearch = (value: string): SearchType<any>[] => {
     const resultFaq = searchFaq(value);
     const resultPrepareMyTrip = searchPrepareMyTrip(value);
-    const resultProducts = searchProducts(value).map((product) => ({
+    const resultProducts = searchAllProducts(value).map((product) => ({
       ...product,
       path: Routing.simulator,
       pageTitle: 'Simuler mes achats',
