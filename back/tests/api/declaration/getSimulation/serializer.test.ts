@@ -1,10 +1,10 @@
-import { AmountGroup } from '../../../src/api/common/services/amountProducts/globalAmount.service';
-import { GroupedTobacco } from '../../../src/api/common/services/amountProducts/tobacco/tobacco.service';
-import { DetailedShoppingProduct } from '../../../src/api/common/services/detailedShoppingProduct';
-import { serializeSimulator } from '../../../src/api/simulator/serializer';
-import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
-import { productEntityFactory } from '../../helpers/factories/product.factory';
-import { productTaxesEntityFactory } from '../../helpers/factories/productTaxes.factory';
+import { AmountGroup } from '../../../../src/api/common/services/amountProducts/globalAmount.service';
+import { GroupedTobacco } from '../../../../src/api/common/services/amountProducts/tobacco/tobacco.service';
+import { DetailedShoppingProduct } from '../../../../src/api/common/services/detailedShoppingProduct';
+import { serializeSimulator } from '../../../../src/api/declaration/getSimulation/serializer';
+import { currencyEntityFactory } from '../../../helpers/factories/currency.factory';
+import { productEntityFactory } from '../../../helpers/factories/product.factory';
+import { productTaxesEntityFactory } from '../../../helpers/factories/productTaxes.factory';
 
 describe('test serializer', () => {
   it('should serialize data', () => {

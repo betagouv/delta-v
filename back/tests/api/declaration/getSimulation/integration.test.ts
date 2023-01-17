@@ -1,13 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { Alpha2Code } from 'i18n-iso-countries';
 import request from 'supertest';
-import api from '../../../src/api';
-import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
-import { Product } from '../../../src/entities/product.entity';
-import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
-import buildTestApp from '../../helpers/testApp.helper';
-import { testDbManager } from '../../helpers/testDb.helper';
-import { prepareContextProduct } from '../../utils/prepareContext/product';
+import api from '../../../../src/api';
+import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
+import { Product } from '../../../../src/entities/product.entity';
+import { currencyEntityFactory } from '../../../helpers/factories/currency.factory';
+import buildTestApp from '../../../helpers/testApp.helper';
+import { testDbManager } from '../../../helpers/testDb.helper';
+import { prepareContextProduct } from '../../../utils/prepareContext/product';
 
 const testApp = buildTestApp(api);
 const testDb = testDbManager();

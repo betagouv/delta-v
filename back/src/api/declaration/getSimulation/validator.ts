@@ -1,7 +1,7 @@
 import { Alpha2Code, getAlpha2Codes } from 'i18n-iso-countries';
-import { buildValidationMiddleware, IRequestValidatorSchema } from '../../core/middlewares';
-import { validator } from '../../core/validator';
-import { meansOfTransport, MeansOfTransport } from '../common/enums/meansOfTransport.enum';
+import { buildValidationMiddleware, IRequestValidatorSchema } from '../../../core/middlewares';
+import { validator } from '../../../core/validator';
+import { meansOfTransport, MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 
 export interface SimulateRequest {
   body: {
