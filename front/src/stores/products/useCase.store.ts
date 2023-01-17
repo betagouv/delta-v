@@ -10,7 +10,9 @@ import { advancedSearch, SearchType } from '@/utils/search';
 export interface ProductsUseCaseSlice {
   findProduct: (id: string) => Product | undefined;
   searchProducts: (searchValue: string) => SearchType<Product>[];
+  searchAllProducts: (searchValue: string) => SearchType<Product>[];
   getProductsResponse: () => Promise<void>;
+  setProductsToDisplay: () => void;
 }
 
 const getFlattenProducts = (products: Product[]): Product[] => {
@@ -95,18 +97,29 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
     return findProduct(get().products.appState.products, id);
   },
   getProductsResponse: async () => {
-    const { age, country } = get().simulator.appState.simulatorRequest;
     const response = await axios.get('/api/product');
 
     set((state: any) => {
       const newState = { ...state };
       newState.products.appState.allProducts = response.data.products;
-      newState.products.appState.products = setupProductsToDisplay(
-        response.data.products,
-        age as number,
-        country as Alpha2Code,
-      );
 
+      newState.products.appState.flattenAllProducts = getFlattenProducts(
+        newState.products.appState.allProducts,
+      );
+      return newState;
+    });
+  },
+  setProductsToDisplay: () => {
+    const { age, country } = get().simulator.appState.simulatorRequest;
+    const { allProducts } = get().products.appState;
+
+    if (!age || !country) {
+      return;
+    }
+
+    set((state: any) => {
+      const newState = { ...state };
+      newState.products.appState.products = setupProductsToDisplay(allProducts, age, country);
       newState.products.appState.flattenProducts = getFlattenProducts(
         newState.products.appState.products,
       );
@@ -115,6 +128,10 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
   },
   searchProducts: (searchValue: string) => {
     const products = get().products.appState.flattenProducts;
+    return advancedSearch({ searchValue, searchList: products, searchKey: ['relatedWords'] });
+  },
+  searchAllProducts: (searchValue: string) => {
+    const products = get().products.appState.flattenAllProducts;
     return advancedSearch({ searchValue, searchList: products, searchKey: ['relatedWords'] });
   },
 });

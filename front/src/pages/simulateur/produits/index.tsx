@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useRouter } from 'next/router';
 
 import { CategoryList, Item } from '@/components/common/CategoryList';
@@ -8,10 +10,15 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const { products } = useStore((state) => ({
+  const { products, setProductsToDisplay } = useStore((state) => ({
     products: state.products.appState.products,
+    setProductsToDisplay: state.setProductsToDisplay,
   }));
   const router = useRouter();
+
+  useEffect(() => {
+    setProductsToDisplay();
+  }, []);
 
   const displayedProducts = products?.map((product): Item => {
     return {

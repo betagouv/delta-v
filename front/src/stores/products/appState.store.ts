@@ -8,6 +8,7 @@ export interface ProductsAppStateSlice {
       allProducts: Product[];
       products: Product[];
       flattenProducts: Product[];
+      flattenAllProducts: Product[];
     };
   };
 }
@@ -16,6 +17,7 @@ export const PRODUCT_EMPTY_STATE = {
   allProducts: [],
   products: [],
   flattenProducts: [],
+  flattenAllProducts: [],
 };
 
 export const createProductsAppStateSlice: StoreSlice<ProductsAppStateSlice> = () => ({
