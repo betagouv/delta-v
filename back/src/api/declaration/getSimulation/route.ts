@@ -1,9 +1,9 @@
 import { Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { HttpStatuses } from '../../core/httpStatuses';
-import { ValidatedRequest } from '../../core/utils/validatedExpressRequest';
-import CurrencyRepository from '../../repositories/currency.repository';
-import ProductRepository from '../../repositories/product.repository';
+import { HttpStatuses } from '../../../core/httpStatuses';
+import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
+import CurrencyRepository from '../../../repositories/currency.repository';
+import ProductRepository from '../../../repositories/product.repository';
 import { serializeSimulator } from './serializer';
 import { service } from './service';
 import { SimulateRequest } from './validator';

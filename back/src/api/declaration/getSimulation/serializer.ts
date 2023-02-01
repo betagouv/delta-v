@@ -1,6 +1,9 @@
 import currency from 'currency.js';
-import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
-import { AmountGroup, AmountProduct } from '../common/services/amountProducts/globalAmount.service';
+import { ProductTaxesInterface } from '../../../entities/productTaxes.entity';
+import {
+  AmountGroup,
+  AmountProduct,
+} from '../../common/services/amountProducts/globalAmount.service';
 
 interface SerializedValueProduct {
   id?: string;

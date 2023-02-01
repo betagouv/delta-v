@@ -1,16 +1,16 @@
 import { faker } from '@faker-js/faker';
-import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
+import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
 import {
   AmountTobaccoProduct,
   GroupedTobacco,
-} from '../../../src/api/common/services/amountProducts/tobacco/tobacco.service';
-import { service } from '../../../src/api/simulator/service';
-import { ProductType } from '../../../src/entities/product.entity';
-import { ShoppingProduct } from '../../../src/entities/productTaxes.entity';
-import { currencyEntityFactory } from '../../helpers/factories/currency.factory';
-import { productEntityFactory } from '../../helpers/factories/product.factory';
-import { currencyRepositoryMock } from '../../mocks/currency.repository.mock';
-import { productRepositoryMock } from '../../mocks/product.repository.mock';
+} from '../../../../src/api/common/services/amountProducts/tobacco/tobacco.service';
+import { service } from '../../../../src/api/declaration/getSimulation/service';
+import { ProductType } from '../../../../src/entities/product.entity';
+import { ShoppingProduct } from '../../../../src/entities/productTaxes.entity';
+import { currencyEntityFactory } from '../../../helpers/factories/currency.factory';
+import { productEntityFactory } from '../../../helpers/factories/product.factory';
+import { currencyRepositoryMock } from '../../../mocks/currency.repository.mock';
+import { productRepositoryMock } from '../../../mocks/product.repository.mock';
 
 describe('test simulator service', () => {
   it('should simulate declaration', async () => {

@@ -1,11 +1,11 @@
 import { Alpha2Code } from 'i18n-iso-countries';
-import { ProductTaxesInterface } from '../../entities/productTaxes.entity';
-import { CurrencyRepositoryInterface } from '../../repositories/currency.repository';
-import { ProductRepositoryInterface } from '../../repositories/product.repository';
-import { MeansOfTransport } from '../common/enums/meansOfTransport.enum';
-import { AmountGroup } from '../common/services/amountProducts/globalAmount.service';
-import { generateDeclaration } from '../common/services/declaration';
-import { ShoppingProduct } from '../common/services/shoppingProducts';
+import { ProductTaxesInterface } from '../../../entities/productTaxes.entity';
+import { CurrencyRepositoryInterface } from '../../../repositories/currency.repository';
+import { ProductRepositoryInterface } from '../../../repositories/product.repository';
+import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
+import { AmountGroup } from '../../common/services/amountProducts/globalAmount.service';
+import { generateDeclaration } from '../../common/services/declaration';
+import { ShoppingProduct } from '../../common/services/shoppingProducts';
 
 interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;

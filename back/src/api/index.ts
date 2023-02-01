@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { productRouter } from './product';
 import { currencyRouter } from './currency';
-import { simulate } from './simulator';
+import declaration from './declaration';
 
-export default Router().use(productRouter).use(currencyRouter).use(simulate);
+export default Router().use(productRouter).use(currencyRouter).use(declaration);
