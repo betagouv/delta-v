@@ -94,12 +94,12 @@ y-i-front: ## Install dependencies for the frontend
 
 .PHONY: test-back
 test-back: ## Run the tests for the backend
-	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest tests/$(filter-out $@,$(MAKECMDGOALS)) --color
+	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest $(filter-out $@,$(MAKECMDGOALS)) --color
 	$(DOCKER_COMPOSE) stop $(TEST_DATABASE_CONTAINER)
 
 .PHONY: test-back-watch
 test-back-watch: ## Run the tests for the backend with watch
-	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest:watch tests/$(filter-out $@,$(MAKECMDGOALS)) --color
+	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest:watch $(filter-out $@,$(MAKECMDGOALS)) --color
 	$(DOCKER_COMPOSE) stop $(TEST_DATABASE_CONTAINER)
 
 .PHONY: test-front
