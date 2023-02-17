@@ -26,7 +26,7 @@ const splitDescription = (text: string) => {
   return text;
 };
 
-const options = { year: 'numeric', month: 'long', day: 'numeric' };
+const dateFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 export const ActualityCard = ({ title, creationDate, content }: ActualityCardProps) => {
   const splitContent = splitDescription(content);
@@ -35,11 +35,10 @@ export const ActualityCard = ({ title, creationDate, content }: ActualityCardPro
       <Typography weight="bold" size="text-xl" ellipsis>
         {title}
       </Typography>
-
       <Typography variant="paragraph" size="text-lg">
-        {creationDate.toLocaleDateString(undefined, options)}
+        {creationDate.toLocaleDateString(undefined, dateFormatOptions)}
       </Typography>
-      <span className="mt-3 overflow-hidden text-ellipsis">
+      <span className="mt-3">
         <Typography variant="paragraph" size="text-lg">
           {splitContent}
         </Typography>
