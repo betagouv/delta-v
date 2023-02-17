@@ -7,8 +7,11 @@ export const checkProductTree = (product: Product, expectedProduct?: Product): v
       fail('expectedProduct.subProducts is undefined');
     }
     expect(product.subProducts.length).toEqual(expectedProduct.subProducts.length);
-    product.subProducts.forEach((subProduct, index) => {
-      checkProductTree(subProduct, expectedProduct.subProducts?.[index]);
+    product.subProducts.forEach((subProduct) => {
+      checkProductTree(
+        subProduct,
+        expectedProduct.subProducts?.find((p) => p.id === subProduct.id),
+      );
     });
   }
 };
