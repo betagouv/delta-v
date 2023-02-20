@@ -12,6 +12,7 @@ interface LinkProps {
   external?: boolean;
   underline?: boolean;
   children: React.ReactNode;
+  className?: string;
   tag?: 'div' | 'span';
 }
 
@@ -44,6 +45,7 @@ export const Link: React.FC<LinkProps> = ({
   external = false,
   underline = false,
   children,
+  className,
   tag,
 }: LinkProps) => {
   const router = useRouter();
@@ -61,7 +63,7 @@ export const Link: React.FC<LinkProps> = ({
   const linkType = getLinkType(to, back, href, onClick);
 
   return (
-    <CustomTag>
+    <CustomTag className={className}>
       {linkType === LinkType.to && (to || back) && (
         <CustomTag
           onClick={handleClick}
