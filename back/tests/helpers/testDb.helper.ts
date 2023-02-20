@@ -1,5 +1,9 @@
 import { Connection } from 'typeorm';
 import { Currency, CurrencyEntity } from '../../src/entities/currency.entity';
+import {
+  DeclarationEntity,
+  DeclarationEntityInterface,
+} from '../../src/entities/declaration.entity';
 import { Product, ProductEntity } from '../../src/entities/product.entity';
 import { initDatabase } from '../../src/loader/database';
 
@@ -10,10 +14,11 @@ export interface ITestDbManager {
   persistProduct: (args: Product) => Promise<Product>;
   persistCurrency: (args: Currency) => Promise<Currency>;
   getCurrencies: () => Promise<Currency[]>;
+  getDeclarations: () => Promise<DeclarationEntityInterface[]>;
   clear: () => Promise<void>;
 }
 
-const ENTITIES = [ProductEntity, CurrencyEntity];
+const ENTITIES = [DeclarationEntity, ProductEntity, CurrencyEntity];
 
 export const testDbManager = (): ITestDbManager => {
   let connection: Connection;
@@ -31,6 +36,8 @@ export const testDbManager = (): ITestDbManager => {
     persistCurrency: async (args: Currency): Promise<Currency> =>
       connection.manager.save(CurrencyEntity, args),
     getCurrencies: async (): Promise<Currency[]> => connection.manager.find(CurrencyEntity),
+    getDeclarations: async (): Promise<DeclarationEntity[]> =>
+      connection.manager.find(DeclarationEntity),
     clear: async (): Promise<void> => {
       await Promise.all(
         ENTITIES.map(async (entity) => {

@@ -7,7 +7,6 @@ export const runScript = async (): Promise<void> => {
     await syncCurrency();
     await connection.close();
   } catch (error) {
-    console.log(error);
     process.exit(1);
   }
 };

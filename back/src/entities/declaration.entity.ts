@@ -1,16 +1,13 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { AuthorType } from '../api/common/enums/author.enum';
 import { MeansOfTransport } from '../api/common/enums/meansOfTransport.enum';
-
-export enum AuthorType {
-  user = 'user',
-  agent = 'agent',
-}
 
 export enum DeclarationStatus {
   draft = 'draft',
   submitted = 'submitted',
   validated = 'validated',
+  paid = 'paid',
   refused = 'refused',
 }
 
@@ -34,10 +31,12 @@ interface DeclarantData {
   declarantMeanOfTransport?: MeansOfTransport;
 }
 
-interface TaxesData {
+export interface TaxesData {
   totalVatAmount: number;
   totalCustomDutyAmount: number;
   totalTaxesAmount: number;
+  franchiseAmount: number;
+  totalAmount: number;
 }
 
 interface DeclarationVersion extends VersionData {
@@ -46,7 +45,7 @@ interface DeclarationVersion extends VersionData {
   taxesData: TaxesData;
 }
 
-interface ProductDeclaration {
+export interface ProductDeclaration {
   id?: string;
   customId: string;
   name?: string;
@@ -54,16 +53,20 @@ interface ProductDeclaration {
   originalValue: number;
   currency?: string;
   value: number;
+  customDuty: number;
+  vat: number;
+  calculatedCustomDuty: number;
+  calculatedVat: number;
 }
 
-interface Declaration extends VersionData, DeclarantData, TaxesData {
+export interface DeclarationEntityInterface extends VersionData, DeclarantData, TaxesData {
   id: string;
   products: ProductDeclaration[];
   history?: DeclarationVersion[];
 }
 
 @Entity('declaration')
-export class DeclarationEntity implements Declaration {
+export class DeclarationEntity implements DeclarationEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
 
@@ -134,4 +137,10 @@ export class DeclarationEntity implements Declaration {
 
   @Column({ type: 'float' })
   totalTaxesAmount: number;
+
+  @Column({ type: 'float' })
+  franchiseAmount: number;
+
+  @Column({ type: 'float' })
+  totalAmount: number;
 }
