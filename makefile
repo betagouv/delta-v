@@ -63,7 +63,7 @@ run-front: ## Run command in the frontend container
 
 .PHONY: build-front
 build-front: ## build the frontend container
-	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn build-prod
+	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn build
 
 .PHONY: start-build-front
 start-build-front: ## start the build the frontend container

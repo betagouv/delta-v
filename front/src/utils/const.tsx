@@ -12,6 +12,17 @@ export enum Routing {
   tuto = '/tuto',
 }
 
+export enum RoutingAgent {
+  home = '/agent/',
+  nomenclature = '/agent/nomenclature',
+  quittances = '/agent/quittances',
+  actualities = '/agent/actualites',
+  account = '/agent/mon-compte',
+  contactUs = '/agent/contact',
+  qrCodeManuel = '/agent/qr-code-manuel',
+  declaration = '/agent/declaration',
+}
+
 export const disabledCountries: Alpha2Code[] = [
   'FR',
   'BL',
@@ -63,5 +74,32 @@ export const MENU_ITEMS: TabItem[] = [
     icon: 'info',
     title: 'À propos',
     path: Routing.about,
+  },
+];
+
+export const MENU_AGENT_ITEMS = [
+  {
+    title: 'Accueil',
+    path: RoutingAgent.home,
+  },
+  {
+    title: 'Nomenclature',
+    path: RoutingAgent.nomenclature,
+  },
+  {
+    title: 'Quittance',
+    path: RoutingAgent.quittances,
+  },
+  {
+    title: 'Actualités',
+    path: RoutingAgent.actualities,
+  },
+  {
+    title: 'Mon compte',
+    path: RoutingAgent.account,
+  },
+  {
+    title: 'Nous contacter',
+    path: RoutingAgent.contactUs,
   },
 ];

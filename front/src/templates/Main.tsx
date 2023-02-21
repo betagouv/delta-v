@@ -20,6 +20,7 @@ type IMainProps = {
   withSearch?: boolean;
   linkSearch?: string;
   withTitle?: boolean;
+  withLogo?: boolean;
   titleValue?: React.ReactNode;
   titleIcon?: SvgNames;
 };
@@ -31,6 +32,7 @@ const Main = ({
   withPrint = false,
   withCart = false,
   withSearch = false,
+  withLogo = false,
   linkSearch,
   withTitle = false,
   titleValue,
@@ -61,6 +63,7 @@ const Main = ({
             withSearch={withSearch}
             linkSearch={linkSearch}
             withPrint={withPrint}
+            withLogo={withLogo}
           />
         )}
         {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}

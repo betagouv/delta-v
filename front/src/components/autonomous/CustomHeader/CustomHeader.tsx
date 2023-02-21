@@ -5,6 +5,7 @@ import shallow from 'zustand/shallow';
 
 import { SummaryExport } from '../../business/summaryExport';
 import { BackButton } from '@/components/common/BackButton';
+import { BackButtonWithTitle } from '@/components/common/BackButtonWithTitle';
 import { Header } from '@/components/common/Header';
 import { Link } from '@/components/common/Link';
 import Modal from '@/components/common/Modal';
@@ -15,6 +16,8 @@ interface HeaderProps {
   withCart?: boolean;
   withSearch?: boolean;
   withPrint?: boolean;
+  withLogo?: boolean;
+  title?: string;
   linkSearch?: string;
 }
 
@@ -22,6 +25,8 @@ export const CustomHeader: React.FC<HeaderProps> = ({
   withCart = false,
   withSearch = false,
   withPrint = false,
+  withLogo = false,
+  title,
   linkSearch = '/simulateur/produits/recherche',
 }: HeaderProps) => {
   const { shoppingProducts, simulatorRequest, simulatorResponse } = useStore(
@@ -49,11 +54,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
     setOpenBasketModal(true);
   };
 
-  const leftButtons = (
-    <>
-      <BackButton />
-    </>
-  );
+  const leftButtons = <>{title ? <BackButtonWithTitle title={title} /> : <BackButton />}</>;
 
   const rightButtons = (
     <>
@@ -85,6 +86,13 @@ export const CustomHeader: React.FC<HeaderProps> = ({
       )}
       {withPrint && (
         <SummaryExport simulatorRequest={simulatorRequest} simulatorResponse={simulatorResponse} />
+      )}
+      {withLogo && (
+        <Link to={linkSearch}>
+          <div className="h-6 ">
+            <SvgIcon name="logo" />
+          </div>
+        </Link>
       )}
     </>
   );
