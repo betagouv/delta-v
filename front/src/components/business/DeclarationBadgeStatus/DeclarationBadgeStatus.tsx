@@ -16,7 +16,7 @@ export enum DeclarationStatus {
   refused = 'refused',
 }
 
-export const declarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) => {
+export const DeclarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) => {
   return (
     <div
       className={cs('border rounded-lg px-4 py-2 w-fit', [
@@ -27,7 +27,7 @@ export const declarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) 
         status === 'refused' && 'bg-red-200',
       ])}
     >
-      <Typography size="text-xl">
+      <Typography size="text-xl" color="black">
         {[
           status === 'draft' && 'Brouillon',
           status === 'submitted' && 'Envoyé',
