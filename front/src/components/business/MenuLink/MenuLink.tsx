@@ -22,9 +22,10 @@ export const MenuLink = ({ title, to, badgeNumber, iconName }: MenuLinkProps) =>
           !badgeNumber && iconName && 'border-2 border-cyan-500',
         )}
       >
+        {/* justify-between */}
         <div className="flex-center flex-1 justify-center">
           <div className="flex">
-            <div className="w-[34px] flex-1">
+            <div className="max-w-[34px] flex-1">
               {!badgeNumber && iconName && <Icon name={iconName} size="lg" />}
               {badgeNumber && (
                 <div className="h-5 w-5 rounded-full bg-[#EFB45A] text-center align-middle text-xs leading-5">
@@ -35,7 +36,7 @@ export const MenuLink = ({ title, to, badgeNumber, iconName }: MenuLinkProps) =>
             <Typography>{title}</Typography>
           </div>
         </div>
-        <div className="flex-none">
+        <div>
           <Icon name="chevron-thin-right" size="base" />
         </div>
       </div>
