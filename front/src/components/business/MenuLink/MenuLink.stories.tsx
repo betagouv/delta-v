@@ -13,7 +13,7 @@ type Story = StoryObj<typeof MenuLink>;
 export const Playground: Story = {
   args: {
     title: 'Lorem ipsum dolor',
-    to: 'fdsqfds',
+    to: 'https://github.com/betagouv/delta-v',
     badgeNumber: '',
     iconName: '',
   },
@@ -21,25 +21,21 @@ export const Playground: Story = {
 
 const MENU_LINK_DATA = {
   title: 'Lorem ipsum dolor',
-  to: 'fdsqfds',
+  to: 'https://github.com/betagouv/delta-v',
   badgeNumber: 12,
   iconName: 'camera',
 };
 
 export const Base = () => (
   <div>
-    <MenuLink
-      title={MENU_LINK_DATA.title}
-      to={MENU_LINK_DATA.to}
-      iconName={MENU_LINK_DATA.iconName}
-    />
+    <MenuLink title="With icon" to={MENU_LINK_DATA.to} iconName={MENU_LINK_DATA.iconName} />
     <br />
     <MenuLink
-      title={MENU_LINK_DATA.title}
+      title="With badge number"
       to={MENU_LINK_DATA.to}
       badgeNumber={MENU_LINK_DATA.badgeNumber}
     />
     <br />
-    <MenuLink title={MENU_LINK_DATA.title} to={MENU_LINK_DATA.to} />
+    <MenuLink title="No icon / no number" to={MENU_LINK_DATA.to} />
   </div>
 );
