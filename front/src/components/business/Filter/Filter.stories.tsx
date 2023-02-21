@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react';
 
 import { FilterProps, Filter } from './Filter';
-import { FilterItem, FilterItemProps } from './FilterItem';
+import { FilterItem } from './FilterItem';
 
 export default {
   title: 'Components/Business/Filter',
@@ -12,21 +12,6 @@ const FILTER_DATA: FilterProps = {
   title: 'Statut de la quittance',
   filters: ['Payée', 'En attente de paiement', 'Annulée'],
 };
-
-const FILTER_ITEM_DATA: FilterItemProps[] = [
-  {
-    title: 'Payée',
-    isActive: true,
-  },
-  {
-    title: 'En attente de paiement',
-    isActive: true,
-  },
-  {
-    title: 'Annulée',
-    isActive: false,
-  },
-];
 
 export const Playground: Story = {
   args: {
@@ -43,8 +28,8 @@ export const FilterExample = (): JSX.Element => (
 
 export const FilterItemExample = (): JSX.Element => (
   <div>
-    {FILTER_ITEM_DATA.map((item, index) => (
-      <FilterItem key={index} title={item.title} isActive={item.isActive} />
-    ))}
+    <FilterItem title="Filtre actif" isActive />
+    <br />
+    <FilterItem title="Filtre inactif" />
   </div>
 );

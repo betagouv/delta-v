@@ -8,13 +8,14 @@ export type FilterItemProps = {
   onClick?: (isActive: boolean) => void;
 };
 
-export const FilterItem = ({ title, isActive }: FilterItemProps) => {
+export const FilterItem = ({ title, isActive, onClick }: FilterItemProps) => {
   return (
     <div
       className={cs(
-        'h-[40px] w-fit grid grid-cols-[40px_1fr] rounded-full items-center pl-[6px] pr-[12px]',
+        'h-[40px] w-fit grid grid-cols-[30px_1fr] rounded-full items-center pl-[6px] pr-[12px]',
         [isActive && 'bg-[#5A7BF0] text-white', !isActive && 'border-2 border-[#5A7BF0]'],
       )}
+      onClick={() => onClick && onClick(!isActive)}
     >
       <div
         className={cs(
