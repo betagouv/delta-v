@@ -33,11 +33,13 @@ export const Base = () => (
       to={MENU_LINK_DATA.to}
       iconName={MENU_LINK_DATA.iconName}
     />
+    <br />
     <MenuLink
       title={MENU_LINK_DATA.title}
       to={MENU_LINK_DATA.to}
       badgeNumber={MENU_LINK_DATA.badgeNumber}
     />
+    <br />
     <MenuLink title={MENU_LINK_DATA.title} to={MENU_LINK_DATA.to} />
   </div>
 );
