@@ -8,13 +8,13 @@ export type DataInfoItemProps = {
   isRequired?: boolean;
 };
 
-export const dataInfoItem = ({ label, value, isRequired }: DataInfoItemProps) => {
+export const DataInfoItem = ({ label, value, isRequired }: DataInfoItemProps) => {
   return (
     <div>
       <Typography weight="bold" color="light-gray">
         {label} {isRequired && ' *'}
       </Typography>
-      <Typography>{value}</Typography>
+      <Typography color="black">{value}</Typography>
     </div>
   );
 };
