@@ -35,10 +35,10 @@ const Index = () => {
       </button>
       {mode === 'tools' ? (
         <>
-          <Link className="rounded-md border border-black p-2" to={RoutingAgent.qrCodeManuel}>
+          <Link withBorder to={RoutingAgent.qrCodeManuel}>
             saisir manuellement
           </Link>
-          <Link className="rounded-md border border-black p-2" to={RoutingAgent.declaration}>
+          <Link withBorder to={RoutingAgent.declaration}>
             déclaration
           </Link>
         </>
@@ -55,7 +55,7 @@ const Index = () => {
             />
           </div>
           {MENU_AGENT_ITEMS.map((item) => (
-            <Link className="rounded-md border border-black p-2" to={item.path}>
+            <Link withBorder to={item.path}>
               {item.title}
             </Link>
           ))}

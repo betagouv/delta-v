@@ -12,7 +12,7 @@ interface LinkProps {
   external?: boolean;
   underline?: boolean;
   children: React.ReactNode;
-  className?: string;
+  withBorder?: boolean;
   tag?: 'div' | 'span';
 }
 
@@ -45,8 +45,8 @@ export const Link: React.FC<LinkProps> = ({
   external = false,
   underline = false,
   children,
-  className,
   tag,
+  withBorder = false,
 }: LinkProps) => {
   const router = useRouter();
 
@@ -63,7 +63,11 @@ export const Link: React.FC<LinkProps> = ({
   const linkType = getLinkType(to, back, href, onClick);
 
   return (
-    <CustomTag className={className}>
+    <CustomTag
+      className={classNames({
+        'rounded-md border border-black p-2': withBorder,
+      })}
+    >
       {linkType === LinkType.to && (to || back) && (
         <CustomTag
           onClick={handleClick}
