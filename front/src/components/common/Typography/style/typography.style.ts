@@ -6,7 +6,8 @@ export type Color =
   | 'light-gray'
   | 'link'
   | 'success'
-  | 'error';
+  | 'error'
+  | 'black';
 export type Weight = 'thin' | 'light' | 'normal' | 'medium' | 'bold' | 'extrabold';
 
 export const getFontWeight = (weight: Weight): string => {
@@ -46,6 +47,8 @@ export const getColor = (color: Color): string => {
       return 'text-success';
     case 'error':
       return 'text-[#CE0500]';
+    case 'black':
+      return 'text-black';
     default:
       return 'text-primary-700';
   }
