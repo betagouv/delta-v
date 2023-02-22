@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DeclarationBadgeStatus } from './DeclarationBadgeStatus';
+import { DeclarationBadgeStatus, DeclarationStatus } from './DeclarationBadgeStatus';
 
 const meta: Meta<typeof DeclarationBadgeStatus> = {
   title: 'Components/Business/DeclarationBadgeStatus',
@@ -11,7 +11,5 @@ export default meta;
 type Story = StoryObj<typeof DeclarationBadgeStatus>;
 
 export const Base: Story = {
-  args: {
-    status: 'draft',
-  },
+  args: { status: DeclarationStatus.DRAFT },
 };
