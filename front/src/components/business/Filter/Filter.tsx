@@ -12,9 +12,11 @@ export const Filter = ({ title, filters }: FilterProps) => {
   return (
     <div>
       <span className="text-[12px]">
-        <Typography>{title}</Typography>
+        <Typography color="black" size="text-xs">
+          {title}
+        </Typography>
       </span>
-      <div className="mt-[12px] flex flex-wrap gap-[8px]">
+      <div className="mt-[10px] flex flex-wrap gap-[8px]">
         {filters.map((item, index) => (
           <FilterItem key={index} title={item} />
         ))}
