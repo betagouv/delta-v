@@ -77,9 +77,9 @@ export const getActiveColor = (color?: Color): string => {
   }
 };
 
-export const getEllipsis = (ellipsis?: boolean): string => {
-  if (ellipsis) {
-    return 'overflow-hidden text-ellipsis whitespace-nowrap';
+export const getTruncate = (truncate?: boolean): string => {
+  if (truncate) {
+    return 'truncate';
   }
   return '';
 };

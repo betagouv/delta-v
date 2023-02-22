@@ -7,7 +7,7 @@ import {
   Color,
   getActiveColor,
   getColor,
-  getEllipsis,
+  getTruncate,
   getFontWeight,
   Weight,
 } from './style/typography.style';
@@ -50,7 +50,7 @@ export interface ITypographyProps {
   underline?: boolean;
   activeColor?: Color;
   textPosition?: 'text-left' | 'text-center' | 'text-right';
-  ellipsis?: boolean;
+  truncate?: boolean;
   onClick?: () => void;
 }
 
@@ -66,7 +66,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   underline = false,
   activeColor,
   textPosition,
-  ellipsis = false,
+  truncate = false,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -84,7 +84,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     italic,
     underline,
     [`${textPosition}`]: true,
-    [getEllipsis(ellipsis)]: ellipsis,
+    [getTruncate(truncate)]: truncate,
   });
   const CustomTag = tag ?? 'p';
 
