@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
+import { Filter, FilterProps } from '@/components/business/Filter';
 import { Card } from '@/components/common/Card';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
@@ -17,6 +18,11 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
 import { getLevelWithData } from '@/utils/simulator';
+
+const FILTER_DATA: FilterProps = {
+  title: 'Statut de la quittance',
+  filters: ['Payée', 'En attente de paiement', 'Annulée'],
+};
 
 const Index = () => {
   const [openModalUnderConstruction, setOpenModalUnderConstruction] = useState<boolean>(false);
@@ -71,7 +77,9 @@ const Index = () => {
             Bienvenue !
           </Typography>
         </div>
-
+        <div>
+          <Filter title={FILTER_DATA.title} filters={FILTER_DATA.filters} />
+        </div>
         <div>
           <Input
             name="search"

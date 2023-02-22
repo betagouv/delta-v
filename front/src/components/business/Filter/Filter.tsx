@@ -11,8 +11,10 @@ export type FilterProps = {
 export const Filter = ({ title, filters }: FilterProps) => {
   return (
     <div>
-      <Typography size="text-lg">{title}</Typography>
-      <div className="my-6 flex flex-row gap-3">
+      <span className="text-[12px]">
+        <Typography>{title}</Typography>
+      </span>
+      <div className="mt-[12px] flex flex-wrap gap-[8px]">
         {filters.map((item, index) => (
           <FilterItem key={index} title={item} />
         ))}
