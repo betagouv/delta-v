@@ -13,11 +13,13 @@ const FILTER_DATA: FilterProps = {
   filters: ['Payée', 'En attente de paiement', 'Annulée'],
 };
 
-export const Playground: Story = {
-  args: {
-    title: FILTER_DATA.title,
-    filters: FILTER_DATA.filters,
-  },
+export const Playground: Story<FilterProps> = (args) => (
+  <Filter title={args.title} filters={args.filters} />
+);
+
+Playground.args = {
+  title: FILTER_DATA.title,
+  filters: FILTER_DATA.filters,
 };
 
 export const FilterExample = (): JSX.Element => (
