@@ -29,7 +29,7 @@ export const Base = () => (
     <ActualityCard
       title="CreationDate < 5 jours"
       creationDate={new Date()}
-      content="Une ActualityCard récente (moins de 5 jours) le temps écoulé depuis la date de création. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet ut perspiciatis unde omnis iste natus."
+      content="Une ActualityCard récente (moins de 5 jours) affichera le temps écoulé depuis la date de création. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet ut perspiciatis unde omnis iste natus."
     />
     <br />
     <ActualityCard

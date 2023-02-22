@@ -1,10 +1,9 @@
 import React from 'react';
 
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { Typography } from '@/components/common/Typography';
-
-const relativeTime = require('dayjs/plugin/relativeTime');
 
 dayjs.extend(relativeTime);
 
