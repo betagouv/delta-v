@@ -15,7 +15,6 @@ export const Playground: Story = {
     title: 'Lorem ipsum dolor',
     to: 'https://github.com/betagouv/delta-v',
     badgeNumber: '',
-    iconName: '',
   },
 };
 
