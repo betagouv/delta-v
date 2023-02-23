@@ -36,13 +36,14 @@ export const DeclarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) 
   const label = setLabel();
   return (
     <div
-      className={cs('h-[30px] border rounded-md px-[10px] w-fit flex items-center', [
-        status === DeclarationStatus.DRAFT && 'bg-[#FFE9C8]',
-        status === DeclarationStatus.SUBMITTED && 'bg-green-200',
-        status === DeclarationStatus.VALIDATED && 'bg-green-200',
-        status === DeclarationStatus.PAID && 'bg-green-200',
-        status === DeclarationStatus.REFUSED && 'bg-red-200',
-      ])}
+      className={cs({
+        'h-[30px] border rounded-md px-[10px] w-fit flex items-center': true,
+        'bg-[#FFE9C8]': status === DeclarationStatus.DRAFT,
+        'bg-green-200': status === DeclarationStatus.SUBMITTED,
+        'bg-green-300': status === DeclarationStatus.VALIDATED,
+        'bg-green-400': status === DeclarationStatus.PAID,
+        'bg-red-200': status === DeclarationStatus.REFUSED,
+      })}
     >
       <Typography size="text-sm" color="black">
         {label}
