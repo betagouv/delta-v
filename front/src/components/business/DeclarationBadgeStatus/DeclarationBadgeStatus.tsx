@@ -37,7 +37,7 @@ export const DeclarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) 
   return (
     <div
       className={cs({
-        'h-[30px] border rounded-md px-[10px] w-fit flex items-center': true,
+        'h-8 border rounded-md px-2.5 w-fit flex items-center': true,
         'bg-[#FFE9C8]': status === DeclarationStatus.DRAFT,
         'bg-green-200': status === DeclarationStatus.SUBMITTED,
         'bg-green-300': status === DeclarationStatus.VALIDATED,
