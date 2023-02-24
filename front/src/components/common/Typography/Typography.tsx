@@ -3,7 +3,14 @@ import React from 'react';
 import cn from 'classnames';
 
 import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
-import { Color, getActiveColor, getColor, getFontWeight, Weight } from './style/typography.style';
+import {
+  Color,
+  getActiveColor,
+  getColor,
+  getTruncate,
+  getFontWeight,
+  Weight,
+} from './style/typography.style';
 
 type TextSize =
   | 'text-2xs'
@@ -43,6 +50,7 @@ export interface ITypographyProps {
   underline?: boolean;
   activeColor?: Color;
   textPosition?: 'text-left' | 'text-center' | 'text-right';
+  truncate?: boolean;
   onClick?: () => void;
 }
 
@@ -58,6 +66,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   underline = false,
   activeColor,
   textPosition,
+  truncate = false,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -75,6 +84,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     italic,
     underline,
     [`${textPosition}`]: true,
+    [getTruncate(truncate)]: truncate,
   });
   const CustomTag = tag ?? 'p';
 

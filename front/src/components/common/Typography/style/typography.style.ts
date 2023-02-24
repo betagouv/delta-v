@@ -76,3 +76,10 @@ export const getActiveColor = (color?: Color): string => {
       return '';
   }
 };
+
+export const getTruncate = (truncate?: boolean): string => {
+  if (truncate) {
+    return 'truncate';
+  }
+  return '';
+};
