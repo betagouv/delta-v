@@ -9,8 +9,18 @@ export default {
 } as Meta;
 
 const FILTER_DATA: FilterProps = {
-  title: 'Statut de la quittance',
-  filters: ['Payée', 'En attente de paiement', 'Annulée'],
+  title: 'Statut de la quittance :',
+  filters: [
+    {
+      title: 'Payée',
+    },
+    {
+      title: 'En attente de paiement',
+    },
+    {
+      title: 'Annulée',
+    },
+  ],
 };
 
 export const Playground: Story<FilterProps> = (args) => (
@@ -23,9 +33,7 @@ Playground.args = {
 };
 
 export const FilterExample = (): JSX.Element => (
-  <div>
-    <Filter title={FILTER_DATA.title} filters={FILTER_DATA.filters} />
-  </div>
+  <Filter title={FILTER_DATA.title} filters={FILTER_DATA.filters} />
 );
 
 export const FilterItemExample = (): JSX.Element => (

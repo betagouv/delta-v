@@ -19,35 +19,38 @@ export const FilterItem = ({
 
   const handleClick = () => {
     setIsActive(!isActive);
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    onClick && onClick(!isActive);
+    if (onClick) {
+      onClick(!isActive);
+    }
   };
 
   return (
-    <a
-      href="#"
-      className={cs(
-        'h-[22px] w-fit grid grid-cols-[14px_1fr] rounded-full items-center pl-[4px] pr-[7px] border border-[#5A7BF0]',
-        isActive && 'bg-[#5A7BF0] text-white',
-      )}
+    <div
+      className={cs({
+        'h-6 w-fit grid grid-cols-[14px_1fr] rounded-full items-center pl-1 pr-2 border border-[#5A7BF0] cursor-pointer':
+          true,
+        'bg-[#5A7BF0] text-white': isActive,
+      })}
       onClick={handleClick}
     >
       <div
-        className={cs(
-          'h-[14px] w-[14px] rounded-full z-10 flex justify-center items-center text-[30px]',
-          [isActive && 'text-[#5A7BF0] bg-white', !isActive && 'bg-[#5A7BF0] text-white'],
-        )}
+        className={cs({
+          'h-3.5 w-3.5 rounded-full z-10 flex justify-center items-center': true,
+          'text-[#5A7BF0] bg-white': isActive,
+          'bg-[#5A7BF0] text-white': !isActive,
+        })}
       >
         <Icon name="plus" size="xs" />
       </div>
       <span
-        className={cs('text-[10px] ml-[5px]', [
-          !isActive && 'text-[#233BBD]',
-          isActive && 'text-white',
-        ])}
+        className={cs({
+          'text-xs ml-1': true,
+          'text-[#233BBD]': !isActive,
+          'text-white': isActive,
+        })}
       >
         {title}
       </span>
-    </a>
+    </div>
   );
 };
