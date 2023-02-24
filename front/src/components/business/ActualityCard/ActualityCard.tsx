@@ -18,27 +18,21 @@ export type ActualityCardProps = {
 
 export const ActualityCard = ({ title, creationDate, content, tag }: ActualityCardProps) => {
   return (
-    <div
-      className={cs(
-        'grid rounded-xl bg-gray-100 p-[20px] grid-rows-[20px_35px_1fr] w-[288px] h-[187px]',
-      )}
-    >
+    <div className={cs('grid rounded-xl bg-gray-100 p-5 grid-rows-[20px_35px_1fr] w-72 h-48')}>
       <div className="grid h-full w-full grid-cols-2">
         <Typography color="middle-gray" size="text-xs">
           {tag}
         </Typography>
 
-        <span>
-          <Typography color="middle-gray" size="text-xs" textPosition="text-right">
-            {dayjs(creationDate).format('DD/MM/YYYY')}
-          </Typography>
-        </span>
+        <Typography color="middle-gray" size="text-xs" textPosition="text-right">
+          {dayjs(creationDate).format('DD/MM/YYYY')}
+        </Typography>
       </div>
       <Typography weight="bold" size="text-xl" color="black" truncate>
         {title}
       </Typography>
       <div className="line-clamp-4">
-        <Typography lineHeight="leading-tight" variant="paragraph" size="text-sm" color="black">
+        <Typography variant="paragraph" size="text-sm" color="black">
           {content}
         </Typography>
       </div>
