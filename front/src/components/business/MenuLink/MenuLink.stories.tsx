@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { MenuLink } from './MenuLink';
 
@@ -8,15 +8,6 @@ const meta: Meta<typeof MenuLink> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MenuLink>;
-
-export const Playground: Story = {
-  args: {
-    title: 'Lorem ipsum dolor',
-    to: 'https://github.com/betagouv/delta-v',
-    badgeNumber: '',
-  },
-};
 
 const MENU_LINK_DATA = {
   title: 'Lorem ipsum dolor',
