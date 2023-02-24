@@ -17,7 +17,7 @@ export const Filter = ({ title, filters }: FilterProps) => {
 
       <div className="mt-2.5 flex flex-wrap gap-2">
         {filters.map((item, index) => (
-          <FilterItem key={index} title={item.title} />
+          <FilterItem key={index} {...item} />
         ))}
       </div>
     </div>
