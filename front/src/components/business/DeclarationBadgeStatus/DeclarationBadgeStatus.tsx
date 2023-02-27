@@ -16,24 +16,25 @@ export enum DeclarationStatus {
   REFUSED = 'refused',
 }
 
+export const setDeclarationStatusLabel = (status: DeclarationStatus): string => {
+  switch (status) {
+    case DeclarationStatus.DRAFT:
+      return 'Brouillon';
+    case DeclarationStatus.SUBMITTED:
+      return 'Envoyé';
+    case DeclarationStatus.VALIDATED:
+      return 'Validé';
+    case DeclarationStatus.PAID:
+      return 'Payé';
+    case DeclarationStatus.REFUSED:
+      return 'Refusé';
+    default:
+      return '';
+  }
+};
+
 export const DeclarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) => {
-  const setLabel = () => {
-    switch (status) {
-      case DeclarationStatus.DRAFT:
-        return 'Brouillon';
-      case DeclarationStatus.SUBMITTED:
-        return 'Envoyé';
-      case DeclarationStatus.VALIDATED:
-        return 'Validé';
-      case DeclarationStatus.PAID:
-        return 'Payé';
-      case DeclarationStatus.REFUSED:
-        return 'Refusé';
-      default:
-        return '';
-    }
-  };
-  const label = setLabel();
+  const label = setDeclarationStatusLabel(status);
   return (
     <div
       className={cs({
