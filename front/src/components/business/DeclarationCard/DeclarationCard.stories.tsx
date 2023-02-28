@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DeclarationStatus } from '../DeclarationBadgeStatus';
 import { DeclarationCard, DeclarationCardProps } from './DeclarationCard';
 import { MeansOfTransport } from '@/stores/simulator/appState.store';
+import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 const meta: Meta<typeof DeclarationCard> = {
   title: 'Components/Business/DeclarationCard',

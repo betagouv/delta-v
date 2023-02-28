@@ -16,7 +16,7 @@ import {
 } from '@/model/amount';
 import { AmountProduct } from '@/model/product';
 import { SimulatorRequest, SimulatorResponse } from '@/stores/simulator/appState.store';
-import { getMeanOfTransport } from '@/utils/country.config';
+import { getMeanOfTransport } from '@/utils/meansOfTransport.util';
 
 interface SummarySimulatorProps {
   simulatorRequest: SimulatorRequest;
