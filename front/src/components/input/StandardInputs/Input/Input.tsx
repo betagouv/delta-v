@@ -32,6 +32,7 @@ export interface IInputOptions {
   register?: UseFormRegisterReturn;
   autoFocus?: boolean;
   onClick?: () => void;
+  onChange?: (value: string) => void;
 }
 
 export const Input: React.FC<IInputOptions> = ({
@@ -51,6 +52,7 @@ export const Input: React.FC<IInputOptions> = ({
   register,
   autoFocus = false,
   onClick = () => {},
+  onChange,
 }: IInputOptions) => {
   let parentClassName = 'mt-1 relative';
   if (fullWidth) {
@@ -70,6 +72,11 @@ export const Input: React.FC<IInputOptions> = ({
   if (leadingIcon || leadingAddons) {
     className += ' pl-11';
   }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(event.target.value);
+    }
+  };
   return (
     <div className={parentClassName} onClick={onClick}>
       {leadingIcon && (
@@ -96,6 +103,7 @@ export const Input: React.FC<IInputOptions> = ({
           step={0.01}
           {...register}
           autoFocus={autoFocus}
+          onChange={(event) => handleChange(event)}
         />
       )}
       {type !== 'number' && (

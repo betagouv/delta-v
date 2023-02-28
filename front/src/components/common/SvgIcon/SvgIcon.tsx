@@ -117,6 +117,7 @@ import Folder from '@/assets/icons/Folder.svg';
 import Forbidden from '@/assets/icons/Forbidden.svg';
 import Home from '@/assets/icons/Home.svg';
 import Info from '@/assets/icons/Info.svg';
+import Keyboard from '@/assets/icons/Keyboard.svg';
 import LiteSearch from '@/assets/icons/Lite-Search.svg';
 import Luggages from '@/assets/icons/Luggages.svg';
 import Mail from '@/assets/icons/Mail.svg';
@@ -184,6 +185,7 @@ export type SvgNames =
   | 'download'
   | 'folder'
   | 'forbidden'
+  | 'keyboard'
   | 'watch'
   | 'categoryAccessory'
   | 'categoryAccordions'
@@ -373,6 +375,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return Folder;
     case 'forbidden':
       return Forbidden;
+    case 'keyboard':
+      return Keyboard;
     case 'watch':
       return Watch;
     case 'categoryAccessory':
