@@ -18,7 +18,7 @@ export const Base = (): JSX.Element => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <PeriodInput register={register} />
+        <PeriodInput register={register} startDateInputId="startDate" endDateInputId="endDate" />
         <button type="submit">Submit</button>
       </form>
     </>

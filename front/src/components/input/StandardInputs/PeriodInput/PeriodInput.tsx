@@ -8,8 +8,8 @@ export interface IPeriodInputOptions {
 
 export const PeriodInput: React.FC<IPeriodInputOptions> = ({
   register,
-  startDateInputId,
-  endDateInputId,
+  startDateInputId = 'startDate',
+  endDateInputId = 'endDate',
 }: IPeriodInputOptions) => (
   <>
     <div className="flex flex-row overflow-hidden rounded-full">
