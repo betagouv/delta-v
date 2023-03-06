@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Input } from '@/components/input/StandardInputs/Input';
+import { PeriodInput } from '@/components/input/StandardInputs/PeriodInput';
 import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
@@ -13,6 +14,7 @@ import { MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
 const Index = () => {
   const router = useRouter();
   const [mode, setMode] = useState('tools');
+
   return (
     <MainAgent
       meta={
@@ -41,6 +43,7 @@ const Index = () => {
           <Link withBorder to={RoutingAgent.declaration}>
             déclaration
           </Link>
+          <PeriodInput register={register} />
         </>
       ) : (
         <div className="mb-1 flex flex-col gap-6">
