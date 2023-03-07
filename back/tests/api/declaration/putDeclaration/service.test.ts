@@ -75,7 +75,7 @@ describe('test put declaration service', () => {
       declarantFirstName: declarationData.declarantFirstName,
       declarantLastName: declarationData.declarantLastName,
       id: declarationData.declarationId,
-      status: DeclarationStatus.submitted,
+      status: DeclarationStatus.SUBMITTED,
       versionDate: expect.any(Date),
       history: [],
       declarantMeanOfTransport: declarationData.meanOfTransport,

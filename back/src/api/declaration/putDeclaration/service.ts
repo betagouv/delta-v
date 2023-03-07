@@ -69,7 +69,7 @@ export const service = async ({
     authorId,
     authorFullName,
     authorType,
-    status: DeclarationStatus.submitted,
+    status: DeclarationStatus.SUBMITTED,
     versionDate: new Date(),
     history: [],
     declarantMeanOfTransport: meanOfTransport,

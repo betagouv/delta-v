@@ -54,7 +54,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
   };
 
   return (
-    <div className="rounded-xl border border-secondary-600 p-4">
+    <div className="border-secondary-600 rounded-xl border p-4">
       <div>
         {qrCodeVersion ? (
           <div className="text-center">
@@ -147,7 +147,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
                       <div className="h-4 w-4">
                         <Icon name="error" />
                       </div>
-                      <p className="flex-1 text-2xs">
+                      <p className="text-2xs flex-1">
                         Vous dépassez la limite légale d'unités{' '}
                         {getMessageOverMaximumAmount(groupedAmount.group)}. Pour connaître les
                         quantités maximales autorisées{' '}

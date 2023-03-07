@@ -59,10 +59,6 @@ module.exports = withBundleAnalyzer({
         source: '/api/:path*',
         destination: 'http://backend-api-delta-v:8080/api/:path*',
       });
-      rewritesUrls.push({
-        source: '/api/:path*',
-        destination: 'http://backend-api-delta-v:8080/api/:path*',
-      });
     }
     return rewritesUrls;
   },

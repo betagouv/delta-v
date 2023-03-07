@@ -68,11 +68,11 @@ export const CustomHeader: React.FC<HeaderProps> = ({
       {withCart && (
         <>
           <div className="flex flex-row" onClick={onClickBasket}>
-            <div className="mt-1 mr-1  h-7 w-7 ">
+            <div className="mt-1 mr-1 h-7 w-7 ">
               <SvgIcon name="basket" />
             </div>
             {nbCartItems > 0 && (
-              <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
+              <div className="bg-primary-500 -ml-5 h-5 w-5 rounded-full text-center text-white">
                 {nbCartItems}
               </div>
             )}

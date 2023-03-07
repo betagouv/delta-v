@@ -4,11 +4,11 @@ import { AuthorType } from '../api/common/enums/author.enum';
 import { MeansOfTransport } from '../api/common/enums/meansOfTransport.enum';
 
 export enum DeclarationStatus {
-  draft = 'draft',
-  submitted = 'submitted',
-  validated = 'validated',
-  paid = 'paid',
-  refused = 'refused',
+  DRAFT = 'draft',
+  SUBMITTED = 'submitted',
+  VALIDATED = 'validated',
+  PAID = 'paid',
+  REFUSED = 'refused',
 }
 
 interface VersionData {
@@ -100,7 +100,7 @@ export class DeclarationEntity implements DeclarationEntityInterface {
   @Column({
     type: 'enum',
     nullable: false,
-    default: DeclarationStatus.draft,
+    default: DeclarationStatus.DRAFT,
     enum: DeclarationStatus,
   })
   status: DeclarationStatus;
