@@ -70,6 +70,7 @@ export const Input: React.FC<IInputOptions> = ({
   if (leadingIcon || leadingAddons) {
     className += ' pl-11';
   }
+
   return (
     <div className={parentClassName} onClick={onClick}>
       {leadingIcon && (

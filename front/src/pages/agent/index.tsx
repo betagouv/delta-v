@@ -4,15 +4,25 @@ import { useRouter } from 'next/router';
 
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
+import { Typography } from '@/components/common/Typography';
 import { Input } from '@/components/input/StandardInputs/Input';
+import { QrCodeScanner } from '@/components/input/StandardInputs/QrCodeScanner';
 import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
 
+const SCAN_HEIGHT = '268px';
+const SCAN_WIDTH = '357px';
+
 const Index = () => {
   const router = useRouter();
   const [mode, setMode] = useState('tools');
+
+  const getIdByQRCode = (qrCode: string) => {
+    console.log(qrCode);
+  };
+
   return (
     <MainAgent
       meta={
@@ -34,14 +44,22 @@ const Index = () => {
         {mode === 'tools' ? 'Déclaration' : 'Outils'}
       </button>
       {mode === 'tools' ? (
-        <>
-          <Link withBorder to={RoutingAgent.qrCodeManuel}>
-            saisir manuellement
-          </Link>
-          <Link withBorder to={RoutingAgent.declaration}>
-            déclaration
-          </Link>
-        </>
+        <div className="flex flex-col gap-3">
+          <p className="text-[26px] leading-7">Scanner le QR Code</p>
+          <QrCodeScanner onScan={getIdByQRCode} height={SCAN_HEIGHT} width={SCAN_WIDTH} />
+          <div className="inline-flex items-center justify-center">
+            <button
+              className="z-50 flex flex-row items-center justify-center gap-1 rounded-full border border-black bg-secondary-300 py-3 px-6"
+              onClick={() => router.push(RoutingAgent.qrCodeManuel)}
+              type="button"
+            >
+              <SvgIcon name="keyboard" />
+              <Typography size="text-sm" color="black">
+                saisir manuellement
+              </Typography>
+            </button>
+          </div>
+        </div>
       ) : (
         <div className="mb-1 flex flex-col gap-6">
           <div>
