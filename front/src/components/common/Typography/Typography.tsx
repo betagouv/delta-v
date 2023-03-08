@@ -12,7 +12,7 @@ import {
   Weight,
 } from './style/typography.style';
 
-type TextSize =
+export type TextSize =
   | 'text-2xs'
   | 'text-xs'
   | 'text-sm'

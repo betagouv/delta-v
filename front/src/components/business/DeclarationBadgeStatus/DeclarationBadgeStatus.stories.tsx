@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DeclarationBadgeStatus, DeclarationStatus } from './DeclarationBadgeStatus';
+import { DeclarationBadgeStatus } from './DeclarationBadgeStatus';
+import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 const meta: Meta<typeof DeclarationBadgeStatus> = {
   title: 'Components/Business/DeclarationBadgeStatus',

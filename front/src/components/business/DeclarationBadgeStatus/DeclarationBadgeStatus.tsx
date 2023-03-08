@@ -3,37 +3,14 @@ import React from 'react';
 import cs from 'classnames';
 
 import { Typography } from '@/components/common/Typography';
+import { DeclarationStatus, getDeclarationStatusLabel } from '@/utils/declarationStatus.util';
 
 export type DeclarationBadgeStatusProps = {
   status: DeclarationStatus;
 };
 
-export enum DeclarationStatus {
-  DRAFT = 'draft',
-  SUBMITTED = 'submitted',
-  VALIDATED = 'validated',
-  PAID = 'paid',
-  REFUSED = 'refused',
-}
-
 export const DeclarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) => {
-  const setLabel = () => {
-    switch (status) {
-      case DeclarationStatus.DRAFT:
-        return 'Brouillon';
-      case DeclarationStatus.SUBMITTED:
-        return 'Envoyé';
-      case DeclarationStatus.VALIDATED:
-        return 'Validé';
-      case DeclarationStatus.PAID:
-        return 'Payé';
-      case DeclarationStatus.REFUSED:
-        return 'Refusé';
-      default:
-        return '';
-    }
-  };
-  const label = setLabel();
+  const label = getDeclarationStatusLabel(status);
   return (
     <div
       className={cs({
