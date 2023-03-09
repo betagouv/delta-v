@@ -10,6 +10,8 @@ export type Color =
   | 'black';
 export type Weight = 'thin' | 'light' | 'normal' | 'medium' | 'bold' | 'extrabold';
 
+export type Transform = 'uppercase' | 'lowercase' | 'capitalize' | 'normal-case' | 'sentence-case';
+
 export const getFontWeight = (weight: Weight): string => {
   switch (weight) {
     case 'thin':
@@ -82,4 +84,21 @@ export const getTruncate = (truncate?: boolean): string => {
     return 'truncate';
   }
   return '';
+};
+
+export const getTextTransform = (transform?: Transform): string => {
+  switch (transform) {
+    case 'uppercase':
+      return 'uppercase';
+    case 'lowercase':
+      return 'lowercase';
+    case 'capitalize':
+      return 'capitalize';
+    case 'normal-case':
+      return 'normal-case';
+    case 'sentence-case':
+      return 'first-letter:uppercase';
+    default:
+      return '';
+  }
 };

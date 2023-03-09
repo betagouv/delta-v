@@ -48,7 +48,7 @@ export const NomenclatureCard = ({
             ))}
         </div>
         <div className="line-clamp-3">
-          <Typography color="black">{product.relatedWords.join(', ')}</Typography>
+          <Typography color="black" transform='sentence-case'>{product.relatedWords.join(', ')}</Typography>
         </div>
       </div>
       <div

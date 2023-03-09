@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { NomenclatureCard, NomenclatureCardProps } from './NomenclatureCard';
 import { AmountProduct, ProductDisplayTypes, ProductType } from '@/model/product';
@@ -7,6 +7,8 @@ const meta: Meta<typeof NomenclatureCard> = {
   title: 'Components/Business/NomenclatureCard',
   component: NomenclatureCard,
 };
+
+export default meta;
 
 const NOMENCLATURE_CARD_DATA: NomenclatureCardProps = {
   product: {
@@ -37,13 +39,6 @@ const NOMENCLATURE_CARD_DATA: NomenclatureCardProps = {
     subProducts: [],
     nomenclatures: ['3304', '3305', '3308'],
   },
-};
-
-export default meta;
-type Story = StoryObj<typeof NomenclatureCard>;
-
-export const Playground: Story = {
-  args: {},
 };
 
 export const Base = () => (
