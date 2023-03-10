@@ -13,6 +13,8 @@ TEST_DATABASE_CONTAINER =  e2e-test-database-delta-v
 
 DATABASE_CONTAINERS =  $(DATABASE_CONTAINER) $(ADMIN_DATABASE_CONTAINER)
 BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS)
+SCRIPT_TO_TEST_LOCALLY=./tests/test-locally.sh
+export FOLDER_TO_TEST=$(word 2,$(MAKECMDGOALS))
 
 ##
 ## -------------------------
@@ -36,6 +38,24 @@ start-front: ## Start the frontend containers
 .PHONY: start-storybook
 start-storybook: ## Start the storybook containers
 	$(DOCKER_COMPOSE) up --remove-orphans $(STORYBOOK_CONTAINER)
+
+.PHONY: start-back-locally
+#%% Create and start containers
+start-back-locally:
+	$(DOCKER_COMPOSE) up --remove-orphans -d $(DATABASE_CONTAINERS)
+	cd back && yarn dev
+
+.PHONY: start-front-locally
+#%% Create and start containers
+start-front-locally:
+	$(DOCKER_COMPOSE) up --remove-orphans -d $(DATABASE_CONTAINERS)
+	cd front && yarn start
+
+.PHONY: start-storybook-locally
+#%% Create and start containers
+start-storybook-locally:
+	$(DOCKER_COMPOSE) up --remove-orphans -d $(DATABASE_CONTAINERS)
+	cd front && yarn storybook
 
 	
 .PHONY: stop
@@ -91,6 +111,23 @@ y-i-front: ## Install dependencies for the frontend
 ##
 ## -- TESTS --
 ##
+
+.PHONY: test-back-locally-watch
+#%% run test for backend with watch
+test-back-locally-watch:
+	@echo "| Run test for backend service |"
+	$(DOCKER_COMPOSE) up --remove-orphans -d $(TEST_BACK_CONTAINER)
+	cd back && yarn jest:watch ./tests/api/$(filter-out $@,$(MAKECMDGOALS)) --color
+
+
+.PHONY: test-back-locally 
+#%% run test back locally
+test-back-locally:
+	@echo "| Run test back locally |"
+	$(DOCKER_COMPOSE) up --remove-orphans -d  $(TEST_BACK_CONTAINER)
+	eval '$(SCRIPT_TO_TEST_LOCALLY) $(FOLDER_TO_TEST)'
+	@echo "Sleeping for 20s waiting for previous actions to complete"
+	@sleep 20
 
 .PHONY: test-back
 test-back: ## Run the tests for the backend
@@ -148,6 +185,13 @@ db-fixtures-load: ## load fixtures
 .PHONY: db-fixtures-clear-load
 db-fixtures-clear-load: ## load fixtures
 	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) bash -c "yarn typeorm:drop && yarn migration:run && yarn fixtures:load"
+
+.PHONY: db-fixtures-load-locally
+#%% install dependencies for back
+db-fixtures-load-locally:  ## load fixtures locally
+	@echo "| Add Fixtures |"
+	cd back && yarn typeorm:drop && yarn migration:run && yarn fixtures:load
+	@echo "| Fixtures added |"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~ AUTO-DOCUMENTED HELP ~~~
