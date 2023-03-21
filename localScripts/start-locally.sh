@@ -11,4 +11,7 @@ readenv() {
 # Retrieves all variables from the .env.local file
 readenv
 
-yarn typeorm:drop && yarn migration:run && yarn fixtures:load
+# Variables
+command=$1
+
+cd back && yarn $command
