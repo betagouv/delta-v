@@ -87,18 +87,8 @@ export const getTruncate = (truncate?: boolean): string => {
 };
 
 export const getTextTransform = (transform?: Transform): string => {
-  switch (transform) {
-    case 'uppercase':
-      return 'uppercase';
-    case 'lowercase':
-      return 'lowercase';
-    case 'capitalize':
-      return 'capitalize';
-    case 'normal-case':
-      return 'normal-case';
-    case 'sentence-case':
-      return 'first-letter:uppercase';
-    default:
-      return '';
+  if (transform === 'sentence-case') {
+    return 'first-letter:uppercase';
   }
+  return transform || '';
 };
