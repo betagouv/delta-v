@@ -13,22 +13,13 @@ dayjs.locale('fr');
 
 export type NomenclatureCardProps = {
   product: Product;
-  isFavorite?: boolean;
-  onClick?: (isFavorite: boolean) => void;
 };
 
-export const NomenclatureCard = ({
-  product,
-  isFavorite: initialIsFavorite,
-  onClick,
-}: NomenclatureCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+export const NomenclatureCard = ({ product }: NomenclatureCardProps) => {
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
-    if (onClick) {
-      onClick(!isFavorite);
-    }
   };
 
   return (
@@ -49,7 +40,7 @@ export const NomenclatureCard = ({
         </div>
         <div className="line-clamp-3">
           <Typography color="black" transform="sentence-case">
-            {product.relatedWords.join(', ')}
+            {product.name}
           </Typography>
         </div>
       </div>
@@ -57,7 +48,11 @@ export const NomenclatureCard = ({
         className="absolute top-2 right-2 h-4 w-4 cursor-pointer text-[#5A7BF0]"
         onClick={handleClick}
       >
-        {isFavorite ? <Icon name="star-full" /> : <Icon name="star-empty" color="grey" />}
+        {isFavorite ? (
+          <Icon name="star-full" color="#5A7BF0" />
+        ) : (
+          <Icon name="star-empty" color="grey" />
+        )}
       </div>
     </div>
   );
