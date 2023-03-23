@@ -1,3 +1,3 @@
-import { Modal } from './DownModal';
+import { DownModal } from './DownModal';
 
-export default Modal;
+export default DownModal;
