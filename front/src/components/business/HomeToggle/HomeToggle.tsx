@@ -1,51 +1,44 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
+import { Switch } from '@headlessui/react';
 import cs from 'classnames';
 
 import { Typography } from '@/components/common/Typography';
 
 export type HomeToggleProps = {
-  value: boolean;
-  onClick?: (value: boolean) => void;
+  valueLeft: string;
+  valueRight: string;
 };
 
-export const HomeToggle = ({ value: initialValue = true, onClick }: HomeToggleProps) => {
-  const [value, setValue] = useState(initialValue);
+export const HomeToggle = ({ valueLeft, valueRight }: HomeToggleProps) => {
+  const [rightPosition, switchToggle] = useState(false);
 
   const handleClick = () => {
-    setValue(!value);
-    if (onClick) {
-      onClick(!value);
-    }
+    switchToggle(!rightPosition);
   };
-
   return (
-    <div
-      className="grid h-14 w-64 cursor-pointer grid-cols-2 items-center gap-2 rounded-full bg-gray-200 p-1"
+    <Switch
       onClick={handleClick}
+      className={cs(
+        'absolute bg-gray-200 items-center grid grid-cols-2 h-14 w-fit border-4 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500',
+      )}
     >
       <div
-        className={cs({
-          'h-full w-full rounded-full flex justify-center items-center transition ease-linear':
-            true,
-          'bg-white': value,
-        })}
-      >
-        <Typography color={value ? 'black' : 'light-gray'} size="text-xl">
-          Déclaration
+        className={cs(
+          rightPosition ? 'translate-x-full' : 'translate-x-0',
+          'absolute h-full w-1/2 bg-white rounded-full transition ease-in-out duration-200',
+        )}
+      />
+      <span className="relative px-2">
+        <Typography color={rightPosition ? 'light-gray' : 'black'} size="text-xl">
+          {valueLeft}
         </Typography>
-      </div>
-      <div
-        className={cs({
-          'h-full w-full rounded-full flex justify-center items-center transition ease-linear':
-            true,
-          'bg-white': !value,
-        })}
-      >
-        <Typography color={value ? 'light-gray' : 'black'} size="text-xl">
-          Outils
+      </span>
+      <span className="relative px-2">
+        <Typography color={!rightPosition ? 'light-gray' : 'black'} size="text-xl">
+          {valueRight}
         </Typography>
-      </div>
-    </div>
+      </span>
+    </Switch>
   );
 };
