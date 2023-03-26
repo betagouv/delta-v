@@ -7,7 +7,9 @@ cd front && yarn
 
 # If command is defined, use it
 if [ -n "$command" ] ; then
-  yarn $command
+  $command
 else 
   yarn dev
 fi
+
+cd ..

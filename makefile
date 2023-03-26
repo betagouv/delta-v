@@ -64,7 +64,9 @@ run-front-locally:
 #%% Create and start containers
 start-storybook-locally:
 	$(DOCKER_COMPOSE) up --remove-orphans -d $(DATABASE_CONTAINERS)
-	cd front && yarn storybook
+	eval '$(SCRIPT_TO_RUN_FRONT_LOCALLY) "yarn storybook"'
+	@echo "Sleeping for 20s waiting for previous actions to complete"
+	@sleep 20
 
 	
 .PHONY: stop
