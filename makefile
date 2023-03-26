@@ -13,7 +13,8 @@ TEST_DATABASE_CONTAINER =  e2e-test-database-delta-v
 
 DATABASE_CONTAINERS =  $(DATABASE_CONTAINER) $(ADMIN_DATABASE_CONTAINER)
 BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS)
-SCRIPT_TO_START_LOCALLY=./localScripts/run-locally.sh
+SCRIPT_TO_RUN_BACK_LOCALLY=./localScripts/run-back-locally.sh
+SCRIPT_TO_RUN_FRONT_LOCALLY=./localScripts/run-front-locally.sh
 SCRIPT_TO_TEST_LOCALLY=./localScripts/run-test-locally.sh
 export FOLDER_TO_TEST=$(word 2,$(MAKECMDGOALS))
 export YARN_COMMAND=$(word 2,$(MAKECMDGOALS))
@@ -41,20 +42,23 @@ start-front: ## Start the frontend containers
 start-storybook: ## Start the storybook containers
 	$(DOCKER_COMPOSE) up --remove-orphans $(STORYBOOK_CONTAINER)
 
-.PHONY: start-back-locally
+.PHONY: run-back-locally
 #%% Create and start containers
-start-back-locally:
+run-back-locally:
 	@echo "| Run start back locally |"
 	$(DOCKER_COMPOSE) up --remove-orphans -d $(DATABASE_CONTAINERS)
-	eval '$(SCRIPT_TO_START_LOCALLY) $()'
+	eval '$(SCRIPT_TO_RUN_BACK_LOCALLY) $(YARN_COMMAND)'
 	@echo "Sleeping for 20s waiting for previous actions to complete"
 	@sleep 20
 
-.PHONY: start-front-locally
+.PHONY: run-front-locally
 #%% Create and start containers
-start-front-locally:
+run-front-locally:
+	@echo "| Run front locally |"
 	$(DOCKER_COMPOSE) up --remove-orphans -d $(DATABASE_CONTAINERS)
-	cd front && yarn start
+	eval '$(SCRIPT_TO_RUN_FRONT_LOCALLY) $(YARN_COMMAND)'
+	@echo "Sleeping for 20s waiting for previous actions to complete"
+	@sleep 20
 
 .PHONY: start-storybook-locally
 #%% Create and start containers
@@ -188,7 +192,7 @@ db-fixtures-clear-load: ## load fixtures
 db-fixtures-load-locally:  ## load fixtures locally
 	@echo "| Add Fixtures |"
 	$(DOCKER_COMPOSE) up --remove-orphans -d  $(BACK_CONTAINER)
-	eval '$(SCRIPT_TO_LOAD_FIXTURES_LOCALLY)'
+	eval '$(SCRIPT_TO_RUN_BACK_LOCALLY) "yarn typeorm:drop && yarn migration:run && yarn fixtures:load"'
 	@echo "Sleeping for 20s waiting for previous actions to complete"
 	@echo "| Fixtures added |"
 

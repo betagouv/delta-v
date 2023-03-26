@@ -14,4 +14,12 @@ readenv
 # Variables
 command=$1
 
-cd back && yarn $command
+cd back
+
+
+# If command is defined, use it
+if [ -n "$command" ] ; then
+  $command
+else 
+  yarn dev
+fi
