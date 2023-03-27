@@ -90,5 +90,5 @@ export const getTextTransform = (transform?: Transform): string => {
   if (transform === 'sentence-case') {
     return 'first-letter:uppercase';
   }
-  return transform || '';
+  return transform ?? '';
 };
