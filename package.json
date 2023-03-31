@@ -1,0 +1,19 @@
+{
+  "name": "delta-v",
+  "version": "1.0.0",
+  "description": "Déclare douane est un projet qui a pour objectif de dématérialiser le dédouanement des marchandises pour les particuliers",
+  "repository": "git@github.com:betagouv/delta-v.git",
+  "author": "Sabalot <s.sabalot@gmail.com>",
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-push": "bash scripts/pre-push.sh"
+    }
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}
