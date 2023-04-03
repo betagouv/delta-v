@@ -23,6 +23,18 @@ BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS)
 ##
 ## -- DOCKER MANAGER --
 ##
+
+
+.PHONY: init
+init: pull y-i-back y-i-front db-fixtures-clear-load db-migrate-run-e2e ## init all project
+	
+.PHONY: pull
+pull: ## Download the latest version of the images
+	$(DOCKER_COMPOSE) pull
+	
+.PHONY: start
+start: ## Start the backend containers
+	$(DOCKER_COMPOSE) up --remove-orphans $(BACK_CONTAINERS) $(FRONT_CONTAINER)
 	
 .PHONY: start-back
 start-back: ## Start the backend containers
