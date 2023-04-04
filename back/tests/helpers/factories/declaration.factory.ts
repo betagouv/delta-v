@@ -1,9 +1,15 @@
 import { faker } from '@faker-js/faker';
+import { AuthorType } from '../../../src/api/common/enums/author.enum';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 import { Declaration } from '../../../src/api/common/services/declaration';
 import { DetailedShoppingProduct } from '../../../src/api/common/services/detailedShoppingProduct';
 import { ShoppingProduct } from '../../../src/api/common/services/shoppingProducts';
 import { TravelerData } from '../../../src/api/common/services/traveler';
+import { buildFactory } from '../../../src/core/testHelpers';
+import {
+  DeclarationEntityInterface,
+  DeclarationStatus,
+} from '../../../src/entities/declaration.entity';
 import { DetailedShoppingProductFactory } from './detailedShoppingProduct.factory';
 import { ShoppingProductFactory } from './shoppingProduct.factory';
 
@@ -31,3 +37,50 @@ export const DeclarationFactory = ({
     },
     detailedShoppingProducts: detailedShoppingProducts ?? [DetailedShoppingProductFactory({})],
   });
+
+const buildSchema = (): DeclarationEntityInterface => {
+  return {
+    id: faker.datatype.uuid(),
+    versionDate: faker.datatype.datetime(),
+    authorFullName: faker.name.findName(),
+    authorEmail: faker.internet.email(),
+    authorId: faker.datatype.uuid(),
+    status: DeclarationStatus.SUBMITTED,
+    declarantFirstName: faker.name.firstName(),
+    declarantLastName: faker.name.lastName(),
+    declarantAddress: faker.address.streetAddress(),
+    declarantEmail: faker.internet.email(),
+    declarantBorder: faker.datatype.boolean(),
+    declarantAge: faker.datatype.number({ min: 1, max: 100, precision: 1 }),
+    declarantCountry: 'ES',
+    declarantMeanOfTransport: MeansOfTransport.CAR,
+    totalVatAmount: faker.datatype.number({ precision: 0.01 }),
+    totalCustomDutyAmount: faker.datatype.number({ precision: 0.01 }),
+    totalTaxesAmount: faker.datatype.number({ precision: 0.01 }),
+    franchiseAmount: faker.datatype.number({ precision: 0.01 }),
+    totalAmount: faker.datatype.number({ precision: 0.01 }),
+    authorType: AuthorType.user,
+    products: [
+      {
+        id: faker.datatype.uuid(),
+        name: faker.commerce.product(),
+        customId: faker.datatype.uuid(),
+        customName: faker.commerce.product(),
+        originalValue: faker.datatype.number({ precision: 0.01 }),
+        currency: faker.finance.currencyCode(),
+        calculatedCustomDuty: faker.datatype.number({ precision: 0.01 }),
+        calculatedVat: faker.datatype.number({ precision: 0.01 }),
+        customDuty: faker.datatype.number({ precision: 0.01 }),
+        value: faker.datatype.number({ precision: 0.01 }),
+        vat: faker.datatype.number({ precision: 0.01 }),
+      },
+    ],
+  };
+};
+
+export const declarationEntityFactory = (
+  args?: Partial<DeclarationEntityInterface>,
+): DeclarationEntityInterface =>
+  buildFactory<DeclarationEntityInterface>({
+    ...buildSchema(),
+  })(args);

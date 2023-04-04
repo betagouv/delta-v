@@ -1,5 +1,14 @@
+import { Alpha2Code } from 'i18n-iso-countries';
+import {
+  DeclarationEntityInterface,
+  DeclarationStatus,
+  DeclarationVersion,
+  ProductDeclaration,
+} from '../../../entities/declaration.entity';
 import { Product, ProductDisplayTypes, ProductType } from '../../../entities/product.entity';
 import { sortProducts } from '../../../utils/product.util';
+import { AuthorType } from '../../common/enums/author.enum';
+import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 import { AmountProduct } from '../../common/services/amountProducts/globalAmount.service';
 
 export interface SerializedProduct {
@@ -38,4 +47,56 @@ export const productSerializer = (product: Product): SerializedProduct => ({
   nomenclatures: product.nomenclatures,
   relatedWords: product.relatedWords,
   subProducts: product.subProducts?.sort(sortProducts).map(productSerializer),
+});
+
+export interface SerializedDeclaration {
+  id: string;
+  products: ProductDeclaration[];
+  history?: DeclarationVersion[];
+  versionDate: Date;
+  authorType: AuthorType;
+  authorFullName: string;
+  authorEmail: string;
+  authorId?: string;
+  status: DeclarationStatus;
+  declarantFirstName: string;
+  declarantLastName: string;
+  declarantAddress: string;
+  declarantEmail: string;
+  declarantBorder: boolean;
+  declarantAge: number;
+  declarantCountry: Alpha2Code;
+  declarantMeanOfTransport?: MeansOfTransport;
+  totalVatAmount: number;
+  totalCustomDutyAmount: number;
+  totalTaxesAmount: number;
+  franchiseAmount: number;
+  totalAmount: number;
+}
+
+export const declarationSerializer = (
+  declaration: DeclarationEntityInterface,
+): SerializedDeclaration => ({
+  id: declaration.id,
+  products: declaration.products,
+  history: declaration.history,
+  versionDate: declaration.versionDate,
+  authorType: declaration.authorType,
+  authorFullName: declaration.authorFullName,
+  authorEmail: declaration.authorEmail,
+  authorId: declaration.authorId,
+  status: declaration.status,
+  declarantFirstName: declaration.declarantFirstName,
+  declarantLastName: declaration.declarantLastName,
+  declarantAddress: declaration.declarantAddress,
+  declarantEmail: declaration.declarantEmail,
+  declarantBorder: declaration.declarantBorder,
+  declarantAge: declaration.declarantAge,
+  declarantCountry: declaration.declarantCountry,
+  declarantMeanOfTransport: declaration.declarantMeanOfTransport,
+  totalVatAmount: declaration.totalVatAmount,
+  totalCustomDutyAmount: declaration.totalCustomDutyAmount,
+  totalTaxesAmount: declaration.totalTaxesAmount,
+  franchiseAmount: declaration.franchiseAmount,
+  totalAmount: declaration.totalAmount,
 });

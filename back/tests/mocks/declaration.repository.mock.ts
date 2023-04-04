@@ -9,6 +9,7 @@ import {
 } from '../../src/repositories/declaration.repository';
 
 interface DeclarationRepositoryMockOptions {
+  getOne?: DeclarationEntityInterface;
   createOne?: DeclarationEntityInterface;
   getManyByIds?: DeclarationEntity[];
 }
