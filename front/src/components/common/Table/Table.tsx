@@ -27,7 +27,7 @@ export const Table = <T extends TableData>({ data, render, headers }: ITableProp
                   <col span={1} style={{ width: '50%' }} />
                   <col span={1} style={{ width: '25%' }} />
                 </colgroup>
-                <thead className="items-center bg-white">
+                <thead className="items-center">
                   <tr className="last:justify-right">
                     {headers.map((header) => (
                       <th

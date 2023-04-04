@@ -8916,6 +8916,11 @@ jest@29.1.2:
     import-local "^3.0.2"
     jest-cli "^29.1.2"
 
+js-flipper@0.153.0:
+  version "0.153.0"
+  resolved "https://registry.yarnpkg.com/js-flipper/-/js-flipper-0.153.0.tgz#b57619ad306fe0df85c0ad2c05fb180e539f3d03"
+  integrity sha512-t7CaZK5yXqAM4hR/AToG+dt/bnuPi4x+cyAkGVRWn+VYf3VStluH+Wvcr40ImAgqc8vWyQL+p5wKIkqHH1gdyg==
+
 js-sha3@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"

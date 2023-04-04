@@ -3,14 +3,14 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 
 import { TaxTable } from './TaxTable';
-import { DetailedProduct } from '@/stores/simulator/appState.store';
+import { DetailedProduct, SimulatorResponse } from '@/stores/simulator/appState.store';
 
 export default {
   title: 'Components/Common/TaxTable',
   component: TaxTable,
 } as Meta;
 
-const detailedProduct: DetailedProduct[] = [
+const valueProducts: DetailedProduct[] = [
   {
     id: '1000',
     customId: '10',
@@ -43,8 +43,17 @@ const detailedProduct: DetailedProduct[] = [
   },
 ];
 
+const simulatorResponse: SimulatorResponse = {
+  valueProducts,
+  total: 500,
+  totalTaxes: 113,
+  totalCustomDuty: 25,
+  totalVat: 100,
+  franchiseAmount: 500,
+};
+
 export const withVariant = (): JSX.Element => (
   <div style={{ background: 'lightgrey' }}>
-    <TaxTable data={detailedProduct} />
+    <TaxTable simulatorResponse={simulatorResponse} />
   </div>
 );
