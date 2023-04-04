@@ -10,6 +10,8 @@ import {
   getTruncate,
   getFontWeight,
   Weight,
+  Transform,
+  getTextTransform,
 } from './style/typography.style';
 
 export type TextSize =
@@ -47,6 +49,7 @@ export interface ITypographyProps {
   color?: Color;
   weight?: Weight;
   italic?: boolean;
+  transform?: Transform;
   underline?: boolean;
   activeColor?: Color;
   textPosition?: 'text-left' | 'text-center' | 'text-right';
@@ -67,6 +70,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   activeColor,
   textPosition,
   truncate = false,
+  transform,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -85,6 +89,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     underline,
     [`${textPosition}`]: true,
     [getTruncate(truncate)]: truncate,
+    [getTextTransform(transform)]: transform,
   });
   const CustomTag = tag ?? 'p';
 

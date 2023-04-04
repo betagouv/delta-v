@@ -21,6 +21,11 @@ const buildSchema = (): Product => {
     subProducts: [],
     countries: [],
     productType: ProductType.value,
+    nomenclatures: [
+      faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+      faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+      faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+    ],
   };
 };
 
