@@ -22,6 +22,8 @@ const logMiddleware = (
     return next();
   }
 
+  logger.pinoLogger;
+
   return next(expressPino({ logger: logger.pinoLogger })(req, res));
 };
 
