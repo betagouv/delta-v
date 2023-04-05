@@ -20,7 +20,6 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ simulatorResponse, loading 
     },
   ];
 
-
   const renderLine = (detailedProduct: DetailedProduct) => {
     return (
       <>
@@ -61,7 +60,7 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ simulatorResponse, loading 
   return (
     <>
       {!loading ? (
-        <div className='pr-3'>
+        <div className="pr-3">
           <Table
             headers={headers}
             data={simulatorResponse.valueProducts ?? []}
