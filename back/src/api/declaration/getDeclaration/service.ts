@@ -1,8 +1,8 @@
-import { DeclarationEntity } from '../../../entities/declaration.entity';
+import { DeclarationEntityInterface } from '../../../entities/declaration.entity';
 import { DeclarationRepositoryInterface } from '../../../repositories/declaration.repository';
 import declarationNotFoundError from '../../common/errors/declarationNotFound.error';
 
-export interface IGetOneDeclarationForAgentServiceOptions {
+export interface IGetOneDeclarationServiceOptions {
   declarationId: string;
   declarationRepository: DeclarationRepositoryInterface;
 }
@@ -10,7 +10,7 @@ export interface IGetOneDeclarationForAgentServiceOptions {
 export default async ({
   declarationId,
   declarationRepository,
-}: IGetOneDeclarationForAgentServiceOptions): Promise<DeclarationEntity> => {
+}: IGetOneDeclarationServiceOptions): Promise<DeclarationEntityInterface> => {
   const declaration = await declarationRepository.getOne(declarationId);
   if (!declaration) {
     throw declarationNotFoundError();

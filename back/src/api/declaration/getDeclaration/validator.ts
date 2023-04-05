@@ -1,16 +1,16 @@
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { validator } from '../../../core/validator';
 
-export interface IGetOneDeclarationForAgentRequest {
+export interface IGetOneDeclaration {
   params: {
     declarationId: string;
   };
 }
 
-export const getOneDeclarationForAgentValidator = {
+export const getOneDeclarationValidator = {
   params: validator.object({
     declarationId: validator.string().required(),
   }),
 };
 
-export default buildValidationMiddleware(getOneDeclarationForAgentValidator);
+export default buildValidationMiddleware(getOneDeclarationValidator);

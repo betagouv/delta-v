@@ -6,12 +6,12 @@ import DeclarationRepository from '../../../repositories/declaration.repository'
 
 import serializer from './serializer';
 import service from './service';
-import { IGetOneDeclarationForAgentRequest } from './validator';
+import { IGetOneDeclaration } from './validator';
 
-type GetOneDeclarationForAgentRequest = ValidatedRequest<IGetOneDeclarationForAgentRequest>;
+type GetOneDeclaration = ValidatedRequest<IGetOneDeclaration>;
 
 export default async (
-  req: GetOneDeclarationForAgentRequest,
+  req: GetOneDeclaration,
   res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {

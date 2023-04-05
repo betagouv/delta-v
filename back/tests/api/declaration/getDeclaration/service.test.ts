@@ -19,9 +19,7 @@ describe('test getDeclaration service', () => {
     });
 
     expect(declaration).toMatchObject({
-      declaration: {
-        id: uuid,
-      },
+      id: uuid,
     });
   });
 
