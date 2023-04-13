@@ -1,15 +1,12 @@
 import { getEmojiFlag } from 'countries-list';
-import { Alpha2Code, getName } from 'i18n-iso-countries';
+import { getName } from 'i18n-iso-countries';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-export interface SelectableCountry {
-  id: number | string;
-  countryCode: Alpha2Code;
-}
+import { MemoizedCountry } from '@/utils/country.util';
 
 export interface SelectCountryProps {
   disabled?: boolean;
-  countries: SelectableCountry[];
+  countries: MemoizedCountry[];
   error?: string;
   register?: UseFormRegisterReturn;
   control?: any;
@@ -34,15 +31,23 @@ export const SelectCountry: React.FC<SelectCountryProps> = ({
   className += disabled ? ' text-disabled-text' : '';
 
   return (
-    <select name={selectName} {...register} className={className} disabled={disabled}>
-      {countries.map((country, index) => (
-        <option key={index} value={country.id}>
-          {`${getEmojiFlag(country.countryCode).toString()} - ${getName(
-            country.countryCode,
-            'fr',
-          )}`}
-        </option>
-      ))}
-    </select>
+    <>
+      <input
+        type="text"
+        name={selectName}
+        {...register}
+        className={className}
+        disabled={disabled}
+        list="input-list"
+      />
+      <datalist id="input-list">
+        {countries.map((country, index) => (
+          <option
+            key={index}
+            value={`${getEmojiFlag(country.id).toString()} - ${getName(country.id, 'fr')}`}
+          />
+        ))}
+      </datalist>
+    </>
   );
 };

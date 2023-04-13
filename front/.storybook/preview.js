@@ -1,5 +1,6 @@
 import { addParameters } from '@storybook/react';
 import '../src/styles/global.css';
+import '../src/config/i18n';
 
 addParameters({
   layout: 'fullscreen',

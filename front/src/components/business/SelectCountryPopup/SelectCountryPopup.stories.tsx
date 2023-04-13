@@ -16,11 +16,11 @@ export const Playground: Story<SelectCountryPopupProps> = (args) => (
 
 const SELECT_COUNTRY_DATA: SelectCountryProps = {
   countries: [
-    { id: 1, countryCode: faker.address.countryCode() as Alpha2Code },
-    { id: 2, countryCode: faker.address.countryCode() as Alpha2Code },
-    { id: 3, countryCode: faker.address.countryCode() as Alpha2Code },
-    { id: 4, countryCode: faker.address.countryCode() as Alpha2Code },
-    { id: 5, countryCode: faker.address.countryCode() as Alpha2Code },
+    { value: '1', id: faker.address.countryCode() as Alpha2Code, alternatives: [] },
+    { value: '2', id: faker.address.countryCode() as Alpha2Code, alternatives: [] },
+    { value: '3', id: faker.address.countryCode() as Alpha2Code, alternatives: [] },
+    { value: '4', id: faker.address.countryCode() as Alpha2Code, alternatives: [] },
+    { value: '5', id: faker.address.countryCode() as Alpha2Code, alternatives: [] },
   ],
   selectName: faker.word.noun(),
 };

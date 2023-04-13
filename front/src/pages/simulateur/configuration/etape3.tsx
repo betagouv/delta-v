@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
-import { Alpha2Code, getNames } from 'i18n-iso-countries';
+import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
@@ -9,7 +9,8 @@ import { InputGroup } from '@/components/input/InputGroup';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
-import { disabledCountries } from '@/utils/const';
+import { countriesAlternatives, disabledCountries } from '@/utils/const';
+import { memoizedCountriesOptions } from '@/utils/country.util';
 
 export interface FormSimulatorData {
   country?: Alpha2Code;
@@ -60,39 +61,6 @@ const Configuration = () => {
     },
   });
 
-  const countriesAlternatives = [
-    {
-      id: 'CH',
-      alternatives: ['Suisse', 'Switzerland', 'Schweiz'],
-    },
-    {
-      id: 'US',
-      alternatives: ['USA', 'United States', 'Etats-Unis'],
-    },
-    {
-      id: 'GB',
-      alternatives: ['Royaume-Uni', 'United Kingdom', 'Angleterre', 'UK'],
-    },
-    {
-      id: 'DE',
-      alternatives: ['Allemagne', 'Germany', 'Deutschland'],
-    },
-  ];
-
-  const countriesOptions = useMemo(() => {
-    const countries = getNames('fr', { select: 'official' });
-    const keys = Object.keys(countries) as Alpha2Code[];
-    const enabledKeys = keys.filter((key) => !disabledCountries.includes(key));
-    return enabledKeys.map((key) => {
-      const countryAlternative = countriesAlternatives.find((country) => country.id === key);
-      return {
-        value: countries[key] ?? '',
-        id: key,
-        alternatives: countryAlternative?.alternatives ?? [],
-      };
-    });
-  }, []);
-
   return (
     <ConfigurationSteps
       fromProgression={50}
@@ -107,7 +75,7 @@ const Configuration = () => {
         name="country"
         placeholder="Pays"
         trailingIcon="search"
-        options={countriesOptions}
+        options={memoizedCountriesOptions(countriesAlternatives, disabledCountries)}
         register={register('country', { required: true })}
         control={control}
         error={errors?.country?.message}
