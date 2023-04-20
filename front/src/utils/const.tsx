@@ -39,6 +39,25 @@ export const disabledCountries: Alpha2Code[] = [
   'NC',
 ];
 
+export const countriesAlternatives = [
+  {
+    id: 'CH',
+    alternatives: ['Suisse', 'Switzerland', 'Schweiz'],
+  },
+  {
+    id: 'US',
+    alternatives: ['USA', 'United States', 'Etats-Unis'],
+  },
+  {
+    id: 'GB',
+    alternatives: ['Royaume-Uni', 'United Kingdom', 'Angleterre', 'UK'],
+  },
+  {
+    id: 'DE',
+    alternatives: ['Allemagne', 'Germany', 'Deutschland'],
+  },
+];
+
 export const MENU_ITEMS: TabItem[] = [
   {
     icon: 'home',
