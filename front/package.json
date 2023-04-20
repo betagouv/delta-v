@@ -73,7 +73,7 @@
     "@testing-library/react": "12.1.5",
     "@types/jest": "29.1.2",
     "@types/match-sorter": "6.0.0",
-    "@types/node": "18.0.0",
+    "@types/node": "18.15.12",
     "@types/react": "17.0.2",
     "@types/react-scroll": "1.8.4",
     "@types/uuid": "8.3.4",
