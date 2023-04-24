@@ -9,24 +9,24 @@ export type SearchHistoryItemProps = {
   searchEnd?: number;
 };
 
+const splitString = (string: string, startPosition: number, endPosition: number) => {
+  const partOne = string.substring(0, startPosition);
+  const partTwo = string.substring(startPosition, endPosition);
+  const partThree = string.substring(endPosition);
+  const splittedString = {
+    partOne,
+    partTwo,
+    partThree,
+  };
+  return splittedString;
+};
+
 export const SearchHistoryItem = ({
   matchingValue,
   category,
   searchStart,
   searchEnd,
 }: SearchHistoryItemProps) => {
-  const splitString = (string: string, startPosition: number, endPosition: number) => {
-    const partOne = string.substring(0, startPosition);
-    const partTwo = string.substring(startPosition, endPosition);
-    const partThree = string.substring(endPosition);
-    const splittedString = {
-      partOne,
-      partTwo,
-      partThree,
-    };
-    return splittedString;
-  };
-
   const splittedString =
     searchStart && searchEnd && splitString(matchingValue, searchStart, searchEnd);
 
