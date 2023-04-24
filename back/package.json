@@ -44,7 +44,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "7.3.0",
+    "@faker-js/faker": "7.6.0",
     "@snowpact/eslint-config": "^1.3.2",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.13",
