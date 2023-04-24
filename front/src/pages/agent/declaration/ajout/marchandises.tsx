@@ -91,10 +91,11 @@ const Declaration = () => {
 
   return (
     <DeclarationSteps
-      toProgression={3}
+      currentStep={3}
       handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={onSubmit}
     >
+      <h1 className="text-xl font-bold">`Choix des marchandises (input fake)`</h1>
       <InputGroup
         label="De quel pays arrivez-vous ?"
         type="comboboxes"

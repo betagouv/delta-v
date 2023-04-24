@@ -13,7 +13,7 @@ export interface DeclarationUseCaseSlice {
   validateStep2: (meanOfTransport: MeansOfTransport) => void;
   validateStep3: (country: Alpha2Code) => void;
   validateStep4: (border: boolean) => void;
-  shouldRedirectToAnotherStep: () => [boolean, number | null];
+  getMaximumStepAvailable: () => number | null;
   resetSteps: (step: number) => void;
   declarate: () => void;
 }
@@ -103,20 +103,20 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       });
     }
   },
-  shouldRedirectToAnotherStep: (): [boolean, number | null] => {
+  getMaximumStepAvailable: (): number | null => {
     const declaration = get().declaration.appState.declarationRequest;
 
     if (!declaration.age) {
-      return [true, 1];
+      return 1;
     }
 
     if (!declaration.meanOfTransport) {
-      return [true, 2];
+      return 2;
     }
 
     if (!declaration.country) {
-      return [true, 3];
+      return 3;
     }
-    return [false, null];
+    return null;
   },
 });

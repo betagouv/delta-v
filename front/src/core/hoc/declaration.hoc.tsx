@@ -5,12 +5,8 @@ import { useRouter } from 'next/router';
 import { useStore } from '@/stores/store';
 import { getCurrentLevelPath, getLevelWithData } from '@/utils/declaration';
 
-const isExcludeRoute = (path: string): boolean => {
-  return path.startsWith('/simulateur/configuration/etape1');
-};
-
 const isDeclarationRoute = (path: string): boolean => {
-  return path.startsWith('/simulateur');
+  return path.startsWith('/agent/declaration/ajout/');
 };
 
 export const declaration = (Component: React.FC) => {
@@ -25,7 +21,7 @@ export const declaration = (Component: React.FC) => {
 
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-      if (isExcludeRoute(path) || !isDeclarationRoute(path)) {
+      if (!isDeclarationRoute(path)) {
         setLoading(false);
         return;
       }
@@ -34,7 +30,7 @@ export const declaration = (Component: React.FC) => {
       const currentLevel = getCurrentLevelPath(path);
 
       if (maxLevel < currentLevel) {
-        router.replace('/simulateur/configuration/etape0');
+        router.replace('/agent/declaration/ajout/coordonnees');
       } else {
         setLoading(false);
       }

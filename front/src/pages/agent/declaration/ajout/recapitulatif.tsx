@@ -43,7 +43,7 @@ const Declaration = () => {
 
   return (
     <DeclarationSteps
-      toProgression={4}
+      currentStep={4}
       handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={onSubmit}
     >

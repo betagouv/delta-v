@@ -3,14 +3,14 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 
 import { ProgressBarAgent } from '.';
-import { ProgressLinkType } from '@/templates/DeclarationSteps';
+import { ProgressBarAgentItemType } from '@/templates/DeclarationSteps';
 
 export default {
   title: 'Molecules/ProgressBarAgent',
   component: ProgressBarAgent,
 } as Meta;
 
-const links: ProgressLinkType[] = [
+const links: ProgressBarAgentItemType[] = [
   { name: 'Dashboard', to: '/', step: 1 },
   { name: 'ActivityReport', to: '/activity-report', step: 2 },
 ];
@@ -18,7 +18,7 @@ const links: ProgressLinkType[] = [
 export const open = (): JSX.Element => {
   return (
     <div className="flex flex-row justify-between">
-      <ProgressBarAgent links={links} stepNumber={1} />
+      <ProgressBarAgent links={links} currentStep={1} />
     </div>
   );
 };
