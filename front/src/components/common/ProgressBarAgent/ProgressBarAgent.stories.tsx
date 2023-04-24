@@ -1,24 +1,24 @@
-import { Meta } from '@storybook/react';
 import React from 'react';
 
-import { ProgressLinkType } from '@/components/templates/AppLayout';
+import { Meta } from '@storybook/react';
 
-import { ProgressBar } from '.';
+import { ProgressBarAgent } from '.';
+import { ProgressLinkType } from '@/templates/DeclarationSteps';
 
 export default {
-  title: 'Molecules/ProgressBar',
-  component: ProgressBar
+  title: 'Molecules/ProgressBarAgent',
+  component: ProgressBarAgent,
 } as Meta;
 
 const links: ProgressLinkType[] = [
-  { name: 'Dashboard', to: '/', icon: 'meter', step: 1 },
-  { name: 'ActivityReport', to: '/activity-report', icon: 'drawer', step: 2 }
+  { name: 'Dashboard', to: '/', step: 1 },
+  { name: 'ActivityReport', to: '/activity-report', step: 2 },
 ];
 
 export const open = (): JSX.Element => {
   return (
     <div className="flex flex-row justify-between">
-      <ProgressBar links={links} stepNumber={1} />
+      <ProgressBarAgent links={links} stepNumber={1} />
     </div>
   );
 };
