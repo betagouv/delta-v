@@ -10,7 +10,7 @@ import { Currencies } from '@/model/currencies';
 
 export interface DeclarationUseCaseSlice {
   validateStep1: (age: number) => void;
-  validateStep2: (meanOfTransport: string) => void;
+  validateStep2: (meanOfTransport: MeansOfTransport) => void;
   validateStep3: (country: Alpha2Code) => void;
   validateStep4: (border: boolean) => void;
   shouldRedirectToAnotherStep: () => [boolean, number | null];
