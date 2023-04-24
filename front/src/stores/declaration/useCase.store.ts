@@ -26,7 +26,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       return newState;
     });
   },
-  validateStep2: (meanOfTransport: string): void => {
+  validateStep2: (meanOfTransport: MeansOfTransport): void => {
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.meanOfTransport = meanOfTransport;
