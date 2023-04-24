@@ -35,10 +35,18 @@ const items: Item[] = [
   },
 ];
 
-export const withVariant = (): JSX.Element => (
+export const listDisplay = (): JSX.Element => (
   <div className="p-3">
     <br />
     <CategoryList items={items} title="Catégories" />
+    <br />
+  </div>
+);
+
+export const cardDisplay = (): JSX.Element => (
+  <div className="p-3">
+    <br />
+    <CategoryList items={items} title="Catégories" displayType="card" />
     <br />
   </div>
 );
