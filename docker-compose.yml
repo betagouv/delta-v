@@ -1,8 +1,8 @@
-version: '3.8'
+version: "3.8"
 
 x-envs: &common-envs
   PORT: 8080
-  DB_HOST: 'database-delta-v'
+  DB_HOST: "database-delta-v"
   DB_PORT: 5432
   DB_USERNAME: postgres
   DB_PASSWORD: pass
@@ -12,7 +12,7 @@ x-envs: &common-envs
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
-  DB_HOST: 'e2e-test-database-delta-v'
+  DB_HOST: "e2e-test-database-delta-v"
   LOG_LEVEL: fatal
 
 services:
@@ -91,8 +91,6 @@ services:
       ADMINER_AUTOLOGIN: 1
       ADMINER_NAME: Delta V - local
 
-
-    
   frontend-web-delta-v:
     container_name: frontend-web-delta-v
     image: node:16
@@ -118,7 +116,6 @@ services:
       - backend
     working_dir: /usr/app
     command: yarn storybook
-
 
 networks:
   backend:

@@ -1,6 +1,6 @@
-import { getCustomRepository } from 'typeorm';
 import { Product } from '../../src/entities/product.entity';
-import ProductRepository, {
+import {
+  ProductRepository,
   ProductRepositoryInterface,
 } from '../../src/repositories/product.repository';
 import { checkProductTree } from '../helpers/checkProductTree';
@@ -46,7 +46,7 @@ describe('test product repository', () => {
 
   beforeAll(async () => {
     await testDb.connect();
-    repository = getCustomRepository(ProductRepository);
+    repository = testDb.getConnection().manager.withRepository(ProductRepository);
   });
 
   beforeEach(async () => {

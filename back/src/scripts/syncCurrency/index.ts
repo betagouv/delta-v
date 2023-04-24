@@ -1,11 +1,11 @@
-import { initDatabase } from '../../loader/database';
+import { AppDataSource, initDatabase } from '../../loader/database';
 import { syncCurrency } from './script';
 
 export const runScript = async (): Promise<void> => {
   try {
-    const connection = await initDatabase();
+    await initDatabase();
     await syncCurrency();
-    await connection.close();
+    await AppDataSource.destroy();
   } catch (error) {
     process.exit(1);
   }

@@ -1,5 +1,7 @@
 import { Product } from '../../src/entities/product.entity';
-import ProductRepository, {
+import { AppDataSource } from '../../src/loader/database';
+import {
+  ProductRepository,
   ProductRepositoryInterface,
 } from '../../src/repositories/product.repository';
 
@@ -9,7 +11,7 @@ interface IProductMockOptions {
 }
 
 export const productRepositoryMock = (options: IProductMockOptions): ProductRepositoryInterface => {
-  const productRepository = new ProductRepository();
+  const productRepository = AppDataSource.manager.withRepository(ProductRepository);
   productRepository.getAll = jest.fn().mockResolvedValue(options.getAll);
   productRepository.getManyByIds = jest.fn().mockResolvedValue(options.getManyByIds);
   return productRepository;

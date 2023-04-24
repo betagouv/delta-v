@@ -1,7 +1,7 @@
 import { Response, NextFunction, Request } from 'express';
-import { getCustomRepository } from 'typeorm';
 import { HttpStatuses } from '../../../core/httpStatuses';
-import ProductRepository from '../../../repositories/product.repository';
+import { ProductRepository } from '../../../repositories/product.repository';
+import { AppDataSource } from '../../../loader/database';
 import { serializer } from './serializer';
 import { service } from './service';
 
@@ -11,7 +11,9 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const products = await service({ productRepository: getCustomRepository(ProductRepository) });
+    const products = await service({
+      productRepository: AppDataSource.manager.withRepository(ProductRepository),
+    });
 
     const response = serializer(products);
 

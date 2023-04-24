@@ -1,10 +1,10 @@
 import { Response, NextFunction } from 'express';
-import { getCustomRepository } from 'typeorm';
 import { HttpStatuses } from '../../../core/httpStatuses';
 import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
-import CurrencyRepository from '../../../repositories/currency.repository';
-import DeclarationRepository from '../../../repositories/declaration.repository';
-import ProductRepository from '../../../repositories/product.repository';
+import { CurrencyRepository } from '../../../repositories/currency.repository';
+import { DeclarationRepository } from '../../../repositories/declaration.repository';
+import { ProductRepository } from '../../../repositories/product.repository';
+import { AppDataSource } from '../../../loader/database';
 import { serializeSimulator } from './serializer';
 import { service } from './service';
 import { PutDeclarationRequest } from './validator';
@@ -41,9 +41,9 @@ export default async (
       age,
       country,
       meanOfTransport,
-      productRepository: getCustomRepository(ProductRepository),
-      currencyRepository: getCustomRepository(CurrencyRepository),
-      declarationRepository: getCustomRepository(DeclarationRepository),
+      productRepository: AppDataSource.manager.withRepository(ProductRepository),
+      currencyRepository: AppDataSource.manager.withRepository(CurrencyRepository),
+      declarationRepository: AppDataSource.manager.withRepository(DeclarationRepository),
       authorEmail,
       authorId,
       authorFullName,

@@ -1,16 +1,15 @@
-import { EntityRepository, TreeRepository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { DeclarationEntity, DeclarationEntityInterface } from '../entities/declaration.entity';
+import { AppDataSource } from '../loader/database';
 
-export interface DeclarationRepositoryInterface extends TreeRepository<DeclarationEntity> {
+export type DeclarationRepositoryInterface = {
   createOne(declaration: DeclarationEntityInterface): Promise<DeclarationEntityInterface>;
-}
+} & Repository<DeclarationEntity>;
 
-@EntityRepository(DeclarationEntity)
-export default class DeclarationRepository
-  extends TreeRepository<DeclarationEntity>
-  implements DeclarationRepositoryInterface
-{
+export const DeclarationRepository: DeclarationRepositoryInterface = AppDataSource.getRepository(
+  DeclarationEntity,
+).extend({
   createOne(declaration: DeclarationEntityInterface): Promise<DeclarationEntityInterface> {
     return this.save(declaration);
-  }
-}
+  },
+});

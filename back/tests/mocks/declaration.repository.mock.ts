@@ -2,7 +2,9 @@ import {
   DeclarationEntity,
   DeclarationEntityInterface,
 } from '../../src/entities/declaration.entity';
-import DeclarationRepository, {
+import { AppDataSource } from '../../src/loader/database';
+import {
+  DeclarationRepository,
   DeclarationRepositoryInterface,
 } from '../../src/repositories/declaration.repository';
 
@@ -14,7 +16,7 @@ interface DeclarationRepositoryMockOptions {
 export const declarationRepositoryMock = (
   options: DeclarationRepositoryMockOptions,
 ): DeclarationRepositoryInterface => {
-  const declarationRepository = new DeclarationRepository();
+  const declarationRepository = AppDataSource.manager.withRepository(DeclarationRepository);
   declarationRepository.createOne = jest.fn().mockResolvedValue(options.createOne);
   return declarationRepository;
 };

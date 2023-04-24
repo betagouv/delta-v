@@ -1,5 +1,5 @@
-import { getCustomRepository } from 'typeorm';
-import CurrencyRepository, {
+import {
+  CurrencyRepository,
   CurrencyRepositoryInterface,
 } from '../../src/repositories/currency.repository';
 import { currencyEntityFactory } from '../helpers/factories/currency.factory';
@@ -12,7 +12,7 @@ describe('test currency repository', () => {
 
   beforeAll(async () => {
     await testDb.connect();
-    repository = getCustomRepository(CurrencyRepository);
+    repository = testDb.getConnection().manager.withRepository(CurrencyRepository);
   });
 
   beforeEach(async () => {

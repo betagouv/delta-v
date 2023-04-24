@@ -1,14 +1,14 @@
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { Currency, CurrencyEntity } from '../../src/entities/currency.entity';
 import {
   DeclarationEntity,
   DeclarationEntityInterface,
 } from '../../src/entities/declaration.entity';
 import { Product, ProductEntity } from '../../src/entities/product.entity';
-import { initDatabase } from '../../src/loader/database';
+import { AppDataSource, initDatabase } from '../../src/loader/database';
 
 export interface ITestDbManager {
-  getConnection: () => Connection;
+  getConnection: () => DataSource;
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   persistProduct: (args: Product) => Promise<Product>;
@@ -21,15 +21,15 @@ export interface ITestDbManager {
 const ENTITIES = [DeclarationEntity, ProductEntity, CurrencyEntity];
 
 export const testDbManager = (): ITestDbManager => {
-  let connection: Connection;
+  const connection = AppDataSource;
 
   return {
-    getConnection: (): Connection => connection,
+    getConnection: (): DataSource => connection,
     connect: async (): Promise<void> => {
-      connection = await initDatabase();
+      await initDatabase();
     },
     disconnect: async (): Promise<void> => {
-      await connection.close();
+      await connection.destroy();
     },
     persistProduct: async (args: Product): Promise<Product> =>
       connection.manager.save(ProductEntity, args),
