@@ -144,7 +144,7 @@ db-drop-e2e: ## drop e2e database
 	
 .PHONY: db-generate-migration
 db-generate-migration: ## generate migration, put YOUR_NAME in this command to custom the migration name
-	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) yarn migration:generate -n $(filter-out $@,$(MAKECMDGOALS))
+	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) yarn migration:generate ./src/migrations/$(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: db-migrate-run
 db-migrate-run: ## run migrations for dev database
