@@ -21,7 +21,6 @@ Si vous voulez participer au développement de nouvelles fonctionnalités, vous 
 
 Il permet principalement de fournir une API REST pour les clients.
 
-
 **Le Front-End**
 
 - Langage : [Typescript](https://www.typescriptlang.org/)
@@ -30,6 +29,15 @@ Il permet principalement de fournir une API REST pour les clients.
 Il s'agit d'une interface web pour les clients.
 
 ### Démarrage
+
+#### Créez votre fichier `.env.local.declareDouane` dans le dossier parent avec le contenu suivant
+
+```env
+DB_HOST='database-delta-v'
+DB_USERNAME='postgres'
+DB_PASSWORD='pass'
+DB_DATABASE='postgres'
+```
 
 ```
 # Cloner le repo
@@ -74,7 +82,7 @@ make test-front
 
 ### CI/CD
 
--   Nous utilisons des [Github actions](https://github.com/features/actions) pour faire tourner les builds et
-    tests.
--   [Clever Cloud](https://clever-cloud.com/fr/) s'occupe de l’hébergement du site sur Internet.
--   [OVH](https://www.ovhcloud.com/fr/) pour le dns.
+- Nous utilisons des [Github actions](https://github.com/features/actions) pour faire tourner les builds et
+  tests.
+- [Clever Cloud](https://clever-cloud.com/fr/) s'occupe de l’hébergement du site sur Internet.
+- [OVH](https://www.ovhcloud.com/fr/) pour le dns.

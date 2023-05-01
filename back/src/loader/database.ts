@@ -25,5 +25,4 @@ export const AppDataSource = new DataSource(dbEnvConfig);
 
 export const initDatabase = async (): Promise<void> => {
   await AppDataSource.initialize();
-  console.log('Data Source has been initialized!');
 };

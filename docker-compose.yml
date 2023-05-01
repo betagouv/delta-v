@@ -2,13 +2,8 @@ version: "3.8"
 
 x-envs: &common-envs
   PORT: 8080
-  DB_HOST: "database-delta-v"
   DB_PORT: 5432
-  DB_USERNAME: postgres
-  DB_PASSWORD: pass
-  DB_DATABASE: postgres
   LOG_LEVEL: info
-  TEST: testos
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
@@ -24,6 +19,8 @@ services:
       - ./:/all-projects:delegated
     networks:
       - backend
+    env_file:
+      - ../.env.local.declareDouane
     environment:
       <<: *common-envs
     working_dir: /usr/app
@@ -55,9 +52,9 @@ services:
     networks:
       - backend
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: postgres
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_DATABASE}"
       PGDATA: /var/lib/postgresql/data/db-files/
 
   database-delta-v:
@@ -85,9 +82,9 @@ services:
     environment:
       ADMINER_DRIVER: pgsql
       ADMINER_SERVER: database-delta-v
-      ADMINER_DB: postgres
-      ADMINER_USERNAME: postgres
-      ADMINER_PASSWORD: pass
+      ADMINER_DB: "${DB_DATABASE}"
+      ADMINER_USERNAME: "${DB_USERNAME}"
+      ADMINER_PASSWORD: "${DB_PASSWORD}"
       ADMINER_AUTOLOGIN: 1
       ADMINER_NAME: Delta V - local
 
