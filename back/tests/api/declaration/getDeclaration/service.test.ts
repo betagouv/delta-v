@@ -3,7 +3,6 @@ import { faker } from '@faker-js/faker';
 import { declarationEntityFactory } from '../../../helpers/factories/declaration.factory';
 import service from '../../../../src/api/declaration/getDeclaration/service';
 import { declarationRepositoryMock } from '../../../mocks/declaration.repository.mock';
-import { IAppError } from '../../../../src/core/buildError';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 
 describe('test getDeclaration service', () => {
@@ -23,22 +22,19 @@ describe('test getDeclaration service', () => {
     });
   });
 
-  it("should fail when ticket doesn't exists", async () => {
+  it("should fail when ticket doesn't exist", async () => {
     const uuid = faker.datatype.uuid();
     const declarationRepository = declarationRepositoryMock({
       getOne: undefined,
     });
 
-    expect.assertions(1);
-
-    try {
-      await service({
+    await expect(
+      service({
         declarationId: uuid,
         declarationRepository,
-      });
-    } catch (error) {
-      const appError = error as IAppError;
-      expect(appError.code).toBe(ErrorCodes.DECLARATION_NOT_FOUND);
-    }
+      }),
+    ).rejects.toMatchObject({
+      code: ErrorCodes.DECLARATION_NOT_FOUND,
+    });
   });
 });

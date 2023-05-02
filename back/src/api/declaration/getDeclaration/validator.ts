@@ -9,7 +9,7 @@ export interface IGetOneDeclaration {
 
 export const getOneDeclarationValidator = {
   params: validator.object({
-    declarationId: validator.string().required(),
+    declarationId: validator.string().uuid().required(),
   }),
 };
 

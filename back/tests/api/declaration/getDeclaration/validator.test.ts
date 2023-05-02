@@ -23,4 +23,12 @@ describe('getOneDeclaration validator', () => {
 
     expect(isValid(validData)).toBe(false);
   });
+
+  it('should throw error - declarationId not UUID format', () => {
+    const validData = {
+      declarationId: faker.datatype.uuid() + 'ABC',
+    };
+
+    expect(isValid(validData)).toBe(false);
+  });
 });
