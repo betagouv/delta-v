@@ -85,6 +85,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   control,
   rules,
 }: IInputGroupProps) => {
+  console.log('🚀 ~ file: InputGroup.tsx:87 ~ error:', error);
   const inputDisabled = disabled || loading;
   return (
     <div>
