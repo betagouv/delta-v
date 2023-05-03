@@ -95,6 +95,7 @@ start-build-back: ## start the build the frontend container
 .PHONY: y-i-back
 y-i-back: ## Install dependencies for the backend
 	$(DOCKER_COMPOSE) run --rm --no-deps $(BACK_CONTAINER) yarn install --ignore-scripts
+	$(DOCKER_COMPOSE) run --rm --no-deps $(BACK_CONTAINER) npm rebuild bcrypt --build-from-source
 
 .PHONY: y-i-front
 y-i-front: ## Install dependencies for the frontend
