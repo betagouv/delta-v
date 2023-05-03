@@ -30,13 +30,15 @@ jobs:
       DB_USERNAME: postgres
       DB_PASSWORD: pass
       DB_DATABASE: postgres
+      ACCESS_TOKEN_SECRET: accessTokenSecretPipeline
+      REFRESH_TOKEN_SECRET: refreshTokenSecretPipeline
       LOG_LEVEL: fatal
 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "18"
       - name: Setup PostgreSQL
         uses: Harmon758/postgresql-action@v1
         with:
@@ -45,6 +47,7 @@ jobs:
           postgresql user: postgres
           postgresql password: pass
       - run: "yarn install --ignore-scripts"
+      - run: "npm rebuild bcrypt --build-from-source"
       - run: yarn migration:run
       - run: yarn lint
       - run: yarn test

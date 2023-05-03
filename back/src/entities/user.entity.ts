@@ -1,6 +1,6 @@
 import { Column, Entity, Index, PrimaryColumn, Unique } from 'typeorm';
 
-export interface IUserEntity {
+export interface User {
   id: string;
   email: string;
   password: string;
@@ -10,7 +10,7 @@ export interface IUserEntity {
 
 @Entity('user')
 @Unique(['email'])
-export default class UserEntity implements IUserEntity {
+export default class UserEntity implements User {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
 

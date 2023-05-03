@@ -37,6 +37,8 @@ DB_HOST='database-delta-v'
 DB_USERNAME='postgres'
 DB_PASSWORD='pass'
 DB_DATABASE='postgres'
+ACCESS_TOKEN_SECRET='accessTokenSecretLocalDev'
+REFRESH_TOKEN_SECRET='refreshTokenSecretLocalDev'
 ```
 
 ```

@@ -1,9 +1,13 @@
 export interface IAppConfig {
   NODE_ENV: string;
   PORT: number;
+  ACCESS_TOKEN_SECRET: string;
+  ACCESS_TOKEN_LIFE: string;
+  REFRESH_TOKEN_SECRET: string;
+  REFRESH_TOKEN_LIFE: string;
 }
 
-const REQUIRED_VARIABLES: string[] = [];
+const REQUIRED_VARIABLES: string[] = ['ACCESS_TOKEN_SECRET', 'REFRESH_TOKEN_SECRET'];
 
 function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
   REQUIRED_VARIABLES.forEach((key): void => {
@@ -18,6 +22,10 @@ function parseConfig(config: any): IAppConfig {
   return {
     NODE_ENV: config.NODE_ENV ?? 'development',
     PORT: config.PORT ?? 8080,
+    ACCESS_TOKEN_SECRET: config.ACCESS_TOKEN_SECRET,
+    ACCESS_TOKEN_LIFE: config.ACCESS_TOKEN_LIFE ?? '30m',
+    REFRESH_TOKEN_SECRET: config.REFRESH_TOKEN_SECRET,
+    REFRESH_TOKEN_LIFE: config.REFRESH_TOKEN_LIFE ?? '1h',
   };
 }
 
