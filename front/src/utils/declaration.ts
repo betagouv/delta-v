@@ -26,7 +26,7 @@ export const routes: RouteLevel[] = [
 ];
 
 export const getLevelWithData = (declarationRequest: DeclarationRequest): number => {
-  if (declarationRequest.age === undefined) {
+  if (declarationRequest.contactDetails === undefined) {
     return 1;
   }
   if (declarationRequest.meanOfTransport === undefined) {

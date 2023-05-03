@@ -15,16 +15,16 @@ export interface FormDeclarationData {
 
 const Declaration = () => {
   const declarationRequest = useStore((state) => state.declaration.appState.declarationRequest);
-  const { resetSteps, validateStep4 } = useStore(
+  const { resetDeclarationSteps, validateDeclarationStep4 } = useStore(
     (state) => ({
-      resetSteps: state.resetSteps,
-      validateStep4: state.validateStep4,
+      resetDeclarationSteps: state.resetDeclarationSteps,
+      validateDeclarationStep4: state.validateDeclarationStep4,
     }),
     shallow,
   );
   const router = useRouter();
   useEffect(() => {
-    resetSteps(4);
+    resetDeclarationSteps(4);
   }, []);
 
   const { handleSubmit } = useForm<FormDeclarationData>({
@@ -37,7 +37,7 @@ const Declaration = () => {
     if (!data.border) {
       return;
     }
-    validateStep4(data.border === 'true');
+    validateDeclarationStep4(data.border === 'true');
     router.push(`/declaration/produits`);
   };
 
@@ -58,7 +58,57 @@ const Declaration = () => {
             </Typography>
           </div>
           <Typography variant="paragraph" weight="bold">
-            {declarationRequest.age}
+            {declarationRequest.contactDetails.age}
+          </Typography>
+        </div>
+        <div className="flex w-full flex-col gap-4 border-b border-slate-200 p-6 text-center">
+          <div>
+            <Typography variant="h3" weight="bold" color="primary">
+              Nom
+            </Typography>
+          </div>
+          <Typography variant="paragraph" weight="bold">
+            {declarationRequest.contactDetails.lastName}
+          </Typography>
+        </div>
+        <div className="flex w-full flex-col gap-4 border-b border-slate-200 p-6 text-center">
+          <div>
+            <Typography variant="h3" weight="bold" color="primary">
+              Prénom
+            </Typography>
+          </div>
+          <Typography variant="paragraph" weight="bold">
+            {declarationRequest.contactDetails.firstName}
+          </Typography>
+        </div>
+        <div className="flex w-full flex-col gap-4 border-b border-slate-200 p-6 text-center">
+          <div>
+            <Typography variant="h3" weight="bold" color="primary">
+              Adresse
+            </Typography>
+          </div>
+          <Typography variant="paragraph" weight="bold">
+            {`${declarationRequest.contactDetails.address} ${declarationRequest.contactDetails.postalCode} ${declarationRequest.contactDetails.city}`}
+          </Typography>
+        </div>
+        <div className="flex w-full flex-col gap-4 border-b border-slate-200 p-6 text-center">
+          <div>
+            <Typography variant="h3" weight="bold" color="primary">
+              Numéro de téléphone
+            </Typography>
+          </div>
+          <Typography variant="paragraph" weight="bold">
+            {declarationRequest.contactDetails.phoneNumber}
+          </Typography>
+        </div>
+        <div className="flex w-full flex-col gap-4 border-b border-slate-200 p-6 text-center">
+          <div>
+            <Typography variant="h3" weight="bold" color="primary">
+              Adresse email
+            </Typography>
+          </div>
+          <Typography variant="paragraph" weight="bold">
+            {declarationRequest.contactDetails.email}
           </Typography>
         </div>
         <div className="flex w-full flex-col gap-4 border-b border-slate-200 p-6 text-center">

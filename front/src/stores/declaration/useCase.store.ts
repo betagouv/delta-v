@@ -4,36 +4,42 @@ import { Alpha2Code } from 'i18n-iso-countries';
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
 // eslint-disable-next-line import/no-cycle
-import { MeansOfTransport, DeclarationResponse, DECLARATION_EMPTY_STATE } from './appState.store';
+import {
+  MeansOfTransport,
+  DeclarationResponse,
+  DECLARATION_EMPTY_STATE,
+  ContactDetails,
+} from './appState.store';
 import axios from '@/config/axios';
 import { Currencies } from '@/model/currencies';
 
 export interface DeclarationUseCaseSlice {
-  validateStep1: (age: number) => void;
-  validateStep2: (meanOfTransport: MeansOfTransport) => void;
-  validateStep3: (country: Alpha2Code) => void;
-  validateStep4: (border: boolean) => void;
-  getMaximumStepAvailable: () => number | null;
-  resetSteps: (step: number) => void;
+  validateDeclarationStep1: (contactDetails: ContactDetails) => void;
+  validateDeclarationStep2: (meanOfTransport: MeansOfTransport) => void;
+  validateDeclarationStep3: (country: Alpha2Code) => void;
+  validateDeclarationStep4: (border: boolean) => void;
+  resetDeclarationSteps: (step: number) => void;
   declarate: () => void;
 }
 
 export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> = (set, get) => ({
-  validateStep1: (age: number): void => {
+  validateDeclarationStep1: (contactDetails: ContactDetails): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState.declarationRequest.age = age;
+      newState.declaration.appState.declarationRequest.contactDetails = {
+        ...contactDetails,
+      };
       return newState;
     });
   },
-  validateStep2: (meanOfTransport: MeansOfTransport): void => {
+  validateDeclarationStep2: (meanOfTransport: MeansOfTransport): void => {
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.meanOfTransport = meanOfTransport;
       return newState;
     });
   },
-  validateStep3: (country: Alpha2Code): void => {
+  validateDeclarationStep3: (country: Alpha2Code): void => {
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.country = country;
@@ -55,14 +61,14 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       return newState;
     });
   },
-  validateStep4: (border: boolean): void => {
+  validateDeclarationStep4: (border: boolean): void => {
     set((state: any) => {
       const newState = { ...state };
       newState.simulator.appState.simulatorRequest.border = border;
       return newState;
     });
   },
-  resetSteps: (step: number): void => {
+  resetDeclarationSteps: (step: number): void => {
     set((state: any) => {
       const newState = { ...state };
       if (step <= 2) {
@@ -70,8 +76,8 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
           DECLARATION_EMPTY_STATE.declarationRequest.meanOfTransport;
       }
       if (step <= 1) {
-        newState.declaration.appState.declarationRequest.age =
-          DECLARATION_EMPTY_STATE.declarationRequest.age;
+        newState.declaration.appState.declarationRequest.contactDetails =
+          DECLARATION_EMPTY_STATE.declarationRequest.contactDetails;
       }
       newState.declaration.appState.declarationRequest.shoppingProducts =
         DECLARATION_EMPTY_STATE.declarationRequest.shoppingProducts;
@@ -84,7 +90,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     try {
       const declarationData = get().declaration.appState;
       const data = {
-        age: declarationData.declarationRequest.age,
+        age: declarationData.declarationRequest.contactDetails,
         meanOfTransport: declarationData.declarationRequest.meanOfTransport,
         country: declarationData.declarationRequest.country,
         border: declarationData.declarationRequest.border,
@@ -102,21 +108,5 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
         return newState;
       });
     }
-  },
-  getMaximumStepAvailable: (): number | null => {
-    const declaration = get().declaration.appState.declarationRequest;
-
-    if (!declaration.age) {
-      return 1;
-    }
-
-    if (!declaration.meanOfTransport) {
-      return 2;
-    }
-
-    if (!declaration.country) {
-      return 3;
-    }
-    return null;
   },
 });

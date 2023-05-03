@@ -16,16 +16,16 @@ export interface FormDeclarationData {
 }
 
 const Declaration = () => {
-  const { resetSteps, validateStep3 } = useStore(
+  const { resetDeclarationSteps, validateDeclarationStep3 } = useStore(
     (state) => ({
-      resetSteps: state.resetSteps,
-      validateStep3: state.validateStep3,
+      resetDeclarationSteps: state.resetDeclarationSteps,
+      validateDeclarationStep3: state.validateDeclarationStep3,
     }),
     shallow,
   );
   const router = useRouter();
   useEffect(() => {
-    resetSteps(3);
+    resetDeclarationSteps(3);
   }, []);
 
   const {
@@ -43,7 +43,7 @@ const Declaration = () => {
     if (!data.country) {
       return;
     }
-    validateStep3(data.country);
+    validateDeclarationStep3(data.country);
 
     router.push(`/agent/declaration/ajout/recapitulatif`);
   };
