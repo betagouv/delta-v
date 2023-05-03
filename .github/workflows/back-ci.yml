@@ -35,8 +35,8 @@ jobs:
       LOG_LEVEL: fatal
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "18"
       - name: Setup PostgreSQL
@@ -57,7 +57,7 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     needs: test-back
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: git fetch --prune --unshallow
       - uses: 47ng/actions-clever-cloud@v1.1
         with:
@@ -73,7 +73,7 @@ jobs:
     # if: github.ref == 'refs/heads/master'
     needs: test-back
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: git fetch --prune --unshallow
       - uses: 47ng/actions-clever-cloud@v1
         with:
