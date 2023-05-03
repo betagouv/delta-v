@@ -1,4 +1,4 @@
-DOCKER_COMPOSE  = docker-compose
+DOCKER_COMPOSE  = docker-compose --env-file ../.env.local.declareDouane
 USER =  --user $$(id -u):$$(id -g)
 DOCKER_COMPOSE_RUN  = $(DOCKER_COMPOSE) run $(USER)
 
