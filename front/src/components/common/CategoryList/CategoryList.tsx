@@ -28,7 +28,13 @@ export const CategoryList: React.FC<CategoryListProps> = ({
   return (
     <ul role="list">
       {title && <li className="flex py-1 text-sm">{title}</li>}
-      <div className={cs('flex flex-row', displayType === 'card' ? 'flex-row gap-4' : 'flex-col')}>
+      <div
+        className={cs({
+          'flex flex-row': true,
+          'flex-row gap-4': displayType === 'card',
+          'flex-col': displayType === 'list',
+        })}
+      >
         {items.map((item, index) =>
           displayType === 'card' ? (
             <div>
