@@ -37,7 +37,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
       }}
     >
       <div className="flex flex-col items-center">
-        <div className="h-8 w-auto">
+        <div className="flex h-8 w-auto items-center justify-center">
           <SvgIcon name={svgIcon} />
         </div>
         <label className="text-center">{value}</label>
