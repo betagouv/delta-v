@@ -4,12 +4,13 @@ x-envs: &common-envs
   PORT: 8080
   DB_PORT: 5432
   LOG_LEVEL: info
-  DB_USERNAME: ${DB_USERNAME}
-  DB_PASSWORD: ${DB_PASSWORD}
-  DB_DATABASE: ${DB_DATABASE}
-  DB_HOST: ${DB_HOST}
-  ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
-  REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
+  DB_USERNAME: ${DB_USERNAME:-postges}
+  DB_PASSWORD: ${DB_PASSWORD:-pass}
+  DB_DATABASE: ${DB_DATABASE:-postgres}
+  DB_HOST: ${DB_HOST:-database-delta-v}
+  ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET:-accessTokenSecretLocalDev}
+  REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-refreshTokenSecretLocalDev}
+  VALIDATION_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-validationTokenSecretLocalDev}
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
@@ -56,9 +57,9 @@ services:
     networks:
       - backend
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME:-postges}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pass}
+      POSTGRES_DB: ${DB_DATABASE:-postgres}
       PGDATA: /var/lib/postgresql/data/db-files/
 
   database-delta-v:
@@ -87,10 +88,10 @@ services:
     volumes:
       - ./adminerPlugins/:/var/www/html/plugins-enabled:delegated
     environment:
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME:-postges}
+      DB_PASSWORD: ${DB_PASSWORD:-pass}
+      DB_DATABASE: ${DB_DATABASE:-postgres}
+      DB_HOST: ${DB_HOST:-database-delta-v}
       DB_HOST_E2E: e2e-test-database-delta-v
 
   frontend-web-delta-v:
