@@ -11,8 +11,8 @@ export default {
 } as Meta;
 
 const links: ProgressBarAgentItemType[] = [
-  { name: 'Dashboard', to: '/', step: 1 },
-  { name: 'ActivityReport', to: '/activity-report', step: 2 },
+  { name: 'Dashboard', to: '/', stepNumber: 1 },
+  { name: 'ActivityReport', to: '/activity-report', stepNumber: 2 },
 ];
 
 export const open = (): JSX.Element => {

@@ -11,21 +11,18 @@ export interface IProgressBarAgentProps {
 }
 
 export interface IProgressBarAgentItemProps {
-  link: ProgressBarAgentItemType;
-  isActive?: boolean;
-  isFutureStep?: boolean;
+  step: ProgressBarAgentItemType;
+  currentStep: number;
 }
 
-const RenderProgress = (
-  link: ProgressBarAgentItemType,
-  isActive: boolean,
-  isFutureStep: boolean,
-) => {
+const RenderProgress = (step: ProgressBarAgentItemType, currentStep: number) => {
+  const isFutureStep = step.stepNumber > currentStep;
+  const isActive = step.stepNumber === currentStep;
   return (
-    <Fragment key={link.name}>
-      {link.step > 1 && (
+    <Fragment key={step.name}>
+      {step.stepNumber > 1 && (
         <div
-          key={`progress-bar-${link.step}`}
+          key={`progress-bar-${step.stepNumber}`}
           className={cs({
             'float-left mt-[43px] h-[2px] w-[100%] flex-1 md:mt-[40px] lg:mt-[45px': true,
             'bg-gradient-to-l from-primary-100 to-green-100': isActive,
@@ -34,7 +31,7 @@ const RenderProgress = (
           })}
         />
       )}
-      <ProgressBarAgentItem link={link} isActive={isActive} isFutureStep={isFutureStep} />
+      <ProgressBarAgentItem link={step} isActive={isActive} isFutureStep={isFutureStep} />
     </Fragment>
   );
 };
@@ -46,9 +43,7 @@ export const ProgressBarAgent: React.FC<IProgressBarAgentProps> = ({
   return (
     <nav className="flex flex-row justify-between">
       {links.map((link) => {
-        const isFutureStep = link.step > currentStep;
-        const isActive = link.step === currentStep;
-        return RenderProgress(link, isActive, isFutureStep);
+        return RenderProgress(link, currentStep);
       })}
     </nav>
   );
