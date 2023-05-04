@@ -3,8 +3,7 @@ import { compare } from 'bcrypt';
 import { UserRepositoryInterface } from '../../../repositories/user.repository';
 import badCredentialsError from '../../common/errors/badCredentials.error';
 import { getAndCheckUserByEmail } from '../common/services/getAndCheckUser.service';
-import { generateAccessToken } from '../../../core/jwt/accessToken';
-import { generateRefreshToken } from '../../../core/jwt/refreshToken';
+import { generateAccessToken, generateRefreshToken } from '../../../core/jwt/generateToken';
 
 interface ILoginServiceOptions {
   email: string;

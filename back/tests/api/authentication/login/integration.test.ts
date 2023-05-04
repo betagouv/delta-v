@@ -7,8 +7,10 @@ import { login } from '../../../../src/api/authentication/login';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
-import { verifyRefreshToken } from '../../../../src/core/jwt/refreshToken';
-import { verifyAccessToken } from '../../../../src/core/jwt/accessToken';
+import {
+  buildAccessTokenObject,
+  buildRefreshTokenObject,
+} from '../../../../src/core/jwt/verifyToken';
 
 const testDb = testDbManager();
 
@@ -39,10 +41,10 @@ describe('login route', () => {
     expect(body.accessToken).toBeDefined();
     expect(body.refreshToken).toBeDefined();
 
-    const authObjectAccess = await verifyAccessToken(body.accessToken);
+    const authObjectAccess = await buildAccessTokenObject(body.accessToken);
     expect(authObjectAccess).toMatchObject({ userId: user.id, email: user.email });
 
-    const authObjectRefresh = await verifyRefreshToken(body.refreshToken);
+    const authObjectRefresh = await buildRefreshTokenObject(body.refreshToken);
     expect(authObjectRefresh).toMatchObject({ userId: user.id, email: user.email });
   });
 

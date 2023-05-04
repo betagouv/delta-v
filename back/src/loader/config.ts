@@ -5,11 +5,13 @@ export interface IAppConfig {
   ACCESS_TOKEN_LIFE: string;
   REFRESH_TOKEN_SECRET: string;
   REFRESH_TOKEN_LIFE: string;
+  VALIDATION_TOKEN_SECRET: string;
+  VALIDATION_TOKEN_LIFE: string;
 }
 
 const REQUIRED_VARIABLES: string[] = ['ACCESS_TOKEN_SECRET', 'REFRESH_TOKEN_SECRET'];
 
-function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
+export function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
   REQUIRED_VARIABLES.forEach((key): void => {
     if (!config[key] || config[key] === '') {
       throw new Error(`${key} env variable is required`);
@@ -26,6 +28,8 @@ function parseConfig(config: any): IAppConfig {
     ACCESS_TOKEN_LIFE: config.ACCESS_TOKEN_LIFE ?? '30m',
     REFRESH_TOKEN_SECRET: config.REFRESH_TOKEN_SECRET,
     REFRESH_TOKEN_LIFE: config.REFRESH_TOKEN_LIFE ?? '1h',
+    VALIDATION_TOKEN_SECRET: config.VALIDATION_TOKEN_SECRET,
+    VALIDATION_TOKEN_LIFE: config.VALIDATION_TOKEN_LIFE ?? '3j',
   };
 }
 

@@ -39,6 +39,7 @@ DB_PASSWORD='pass'
 DB_DATABASE='postgres'
 ACCESS_TOKEN_SECRET='accessTokenSecretLocalDev'
 REFRESH_TOKEN_SECRET='refreshTokenSecretLocalDev'
+VALIDATION_TOKEN_SECRET='validationTokenSecretLocalDev'
 ```
 
 ```
