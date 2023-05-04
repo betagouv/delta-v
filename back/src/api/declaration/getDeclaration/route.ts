@@ -1,9 +1,9 @@
 import { Response, NextFunction } from 'express';
-import { getCustomRepository } from 'typeorm';
 import { HttpStatuses } from '../../../core/httpStatuses';
 import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
-import DeclarationRepository from '../../../repositories/declaration.repository';
 
+import { DeclarationRepository } from '../../../repositories/declaration.repository';
+import { AppDataSource } from '../../../loader/database';
 import serializer from './serializer';
 import service from './service';
 import { IGetOneDeclaration } from './validator';
@@ -20,7 +20,7 @@ export default async (
 
     const declaration = await service({
       declarationId,
-      declarationRepository: getCustomRepository(DeclarationRepository),
+      declarationRepository: AppDataSource.manager.withRepository(DeclarationRepository),
     });
 
     const response = serializer(declaration);

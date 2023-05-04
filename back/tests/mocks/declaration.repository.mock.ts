@@ -19,5 +19,6 @@ export const declarationRepositoryMock = (
 ): DeclarationRepositoryInterface => {
   const declarationRepository = AppDataSource.manager.withRepository(DeclarationRepository);
   declarationRepository.createOne = jest.fn().mockResolvedValue(options.createOne);
+  declarationRepository.getOne = jest.fn().mockResolvedValue(options.getOne);
   return declarationRepository;
 };
