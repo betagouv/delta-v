@@ -10,4 +10,5 @@ export enum ErrorCodes {
   USER_NOT_ENABLED_UNAUTHORIZED = 'user-not-enabled-unauthorized',
   USER_ALREADY_ENABLED_UNAUTHORIZED = 'user-already-enabled-unauthorized',
   INVALID_TOKEN_UNAUTHORIZED = 'invalid-token-unauthorized',
+  INVALID_JWT_FORMAT = 'invalid-jwt-format',
 }
