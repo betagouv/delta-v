@@ -23,6 +23,13 @@ export enum RoutingAgent {
   declaration = '/agent/declaration',
 }
 
+export const DECLARATION_STEP_PAGE: Record<number, string> = {
+  1: '/agent/declaration/ajout/coordonnees',
+  2: '/agent/declaration/ajout/transports',
+  3: '/agent/declaration/ajout/marchandises',
+  4: '/agent/declaration/ajout/recapitulatif',
+};
+
 export const disabledCountries: Alpha2Code[] = [
   'FR',
   'BL',

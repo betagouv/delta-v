@@ -8,6 +8,14 @@ import {
   CurrenciesAppStateSlice,
 } from './currencies/appState.store';
 import { createUseCaseCurrencySlice, CurrenciesUseCaseSlice } from './currencies/useCase.store';
+import {
+  createDeclarationAppStateSlice,
+  DeclarationAppStateSlice,
+} from './declaration/appState.store';
+import {
+  createUseCaseDeclarationSlice,
+  DeclarationUseCaseSlice,
+} from './declaration/useCase.store';
 import { createFaqAppStateSlice, FaqAppStateSlice } from './faq/appState.store';
 import { createUseCaseFaqSlice, FaqUseCaseSlice } from './faq/useCase.store';
 import { createGlobalAppStateSlice, GlobalAppStateSlice } from './global/appState.store';
@@ -31,6 +39,8 @@ import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/
 
 export type StoreState = SimulatorUseCaseSlice &
   SimulatorAppStateSlice &
+  DeclarationAppStateSlice &
+  DeclarationUseCaseSlice &
   ProductsUseCaseSlice &
   ProductsAppStateSlice &
   CurrenciesUseCaseSlice &
@@ -63,6 +73,8 @@ export const useStore = create<StoreState>(
     (set, get, api) => ({
       ...createSimulatorAppStateSlice(set, get, api),
       ...createUseCaseSimulatorSlice(set, get, api),
+      ...createDeclarationAppStateSlice(set, get, api),
+      ...createUseCaseDeclarationSlice(set, get, api),
       ...createUseCaseProductSlice(set, get, api),
       ...createProductsAppStateSlice(set, get, api),
       ...createCurrenciesAppStateSlice(set, get, api),
