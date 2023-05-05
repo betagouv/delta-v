@@ -11,7 +11,7 @@ export enum DeclarationStatus {
   REFUSED = 'refused',
 }
 
-interface VersionData {
+export interface VersionData {
   versionDate: Date;
   authorType: AuthorType;
   authorFullName: string;
@@ -20,7 +20,7 @@ interface VersionData {
   status: DeclarationStatus;
 }
 
-interface DeclarantData {
+export interface DeclarantData {
   declarantFirstName: string;
   declarantLastName: string;
   declarantAddress: string;
@@ -39,7 +39,7 @@ export interface TaxesData {
   totalAmount: number;
 }
 
-interface DeclarationVersion extends VersionData {
+export interface DeclarationVersion extends VersionData {
   products: ProductDeclaration[];
   declarationData: DeclarantData;
   taxesData: TaxesData;
