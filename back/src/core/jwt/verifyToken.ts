@@ -55,7 +55,7 @@ export const buildTokenObject = async <T extends object>(
 
     return decoded;
   } catch {
-    throw invalidTokenError;
+    throw invalidTokenError();
   }
 };
 

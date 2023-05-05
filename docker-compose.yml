@@ -9,8 +9,11 @@ x-envs: &common-envs
   DB_DATABASE: ${DB_DATABASE:-postgres}
   DB_HOST: ${DB_HOST:-database-delta-v}
   ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET:-accessTokenSecretLocalDev}
+  ACCESS_TOKEN_LIFE: ${ACCESS_TOKEN_LIFE:-30m}
   REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-refreshTokenSecretLocalDev}
-  VALIDATION_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-validationTokenSecretLocalDev}
+  REFRESH_TOKEN_LIFE: ${REFRESH_TOKEN_LIFE:-1h}
+  VALIDATION_TOKEN_SECRET: ${VALIDATION_TOKEN_SECRET:-validationTokenSecretLocalDev}
+  VALIDATION_TOKEN_LIFE: ${VALIDATION_TOKEN_LIFE:-3d}
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
