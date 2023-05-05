@@ -17,6 +17,7 @@ export interface ITestDbManager {
   persistUser: (args: User) => Promise<User>;
   getCurrencies: () => Promise<Currency[]>;
   getDeclarations: () => Promise<DeclarationEntityInterface[]>;
+  getUser: (id: string) => Promise<User | null>;
   clear: () => Promise<void>;
 }
 
@@ -41,6 +42,8 @@ export const testDbManager = (): ITestDbManager => {
     getCurrencies: async (): Promise<Currency[]> => connection.manager.find(CurrencyEntity),
     getDeclarations: async (): Promise<DeclarationEntity[]> =>
       connection.manager.find(DeclarationEntity),
+    getUser: async (id: string): Promise<User | null> =>
+      connection.manager.findOne(UserEntity, { where: { id } }),
     clear: async (): Promise<void> => {
       await Promise.all(
         ENTITIES.map(async (entity) => {
