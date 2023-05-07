@@ -62,3 +62,13 @@ export const generateValidationToken = (
     secret: config.VALIDATION_TOKEN_SECRET,
     generateJwtOptions,
   });
+
+export const generateResetPasswordToken = (
+  generateJwtOptions: IAuthObject,
+  expiresIn?: number | string,
+): Promise<string> =>
+  generateToken<IAuthObject>({
+    expiresIn: expiresIn ?? config.RESET_PASSWORD_TOKEN_LIFE,
+    secret: config.RESET_PASSWORD_TOKEN_SECRET,
+    generateJwtOptions,
+  });
