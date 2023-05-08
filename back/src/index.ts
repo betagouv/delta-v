@@ -1,3 +1,4 @@
+import { IAuthObject } from './core/jwt/AuthObject';
 import { ILogger } from './core/logger';
 import bootstrap from './loader';
 
@@ -6,6 +7,7 @@ declare global {
   namespace Express {
     interface Request {
       logger: ILogger;
+      jwt: IAuthObject;
     }
   }
 }
