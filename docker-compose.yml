@@ -14,6 +14,11 @@ x-envs: &common-envs
   REFRESH_TOKEN_LIFE: ${REFRESH_TOKEN_LIFE:-1h}
   VALIDATION_TOKEN_SECRET: ${VALIDATION_TOKEN_SECRET:-validationTokenSecretLocalDev}
   VALIDATION_TOKEN_LIFE: ${VALIDATION_TOKEN_LIFE:-3d}
+  RESET_PASSWORD_TOKEN_SECRET: ${RESET_PASSWORD_TOKEN_SECRET:-resetPasswordTokenSecretLocalDev}
+  RESET_PASSWORD_TOKEN_LIFE: ${RESET_PASSWORD_TOKEN_LIFE:-3d}
+  URL_FRONTEND: http://localhost:3000
+  ROUTE_FRONTEND_VALIDATE_ACCOUNT: /validate-account
+  ROUTE_FRONTEND_RESET_PASSWORD: /reset-password
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs

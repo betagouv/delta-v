@@ -32,6 +32,11 @@ jobs:
       DB_DATABASE: postgres
       ACCESS_TOKEN_SECRET: accessTokenSecretPipeline
       REFRESH_TOKEN_SECRET: refreshTokenSecretPipeline
+      VALIDATION_TOKEN_SECRET: validationTokenSecretPipeline
+      RESET_PASSWORD_TOKEN_SECRET: resetPasswordTokenSecretPipeline
+      URL_FRONTEND: http://localhost:3000
+      ROUTE_FRONTEND_VALIDATE_ACCOUNT: /validate-account
+      ROUTE_FRONTEND_RESET_PASSWORD: /reset-password
       LOG_LEVEL: fatal
 
     steps:

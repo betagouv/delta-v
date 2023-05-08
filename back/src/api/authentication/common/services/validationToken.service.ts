@@ -2,6 +2,7 @@ import { ILogger } from '../../../../core/logger';
 import { MailerFunction } from '../../../../core/mailer';
 import { User } from '../../../../entities/user.entity';
 import { generateValidationToken } from '../../../../core/jwt/generateToken';
+import config from '../../../../loader/config';
 
 export interface SaveAndSendValidationEmailTokenOptions {
   user: User;
@@ -14,7 +15,8 @@ export const sendValidationEmailToken = async ({
   mailer,
   logger,
 }: SaveAndSendValidationEmailTokenOptions): Promise<void> => {
-  const urlValidationToken = await generateValidationToken({ userId: user.id, email: user.email });
+  const token = await generateValidationToken({ userId: user.id, email: user.email });
+  const urlValidationToken = `${config.URL_FRONTEND}${config.ROUTE_FRONTEND_VALIDATE_ACCOUNT}?token=${token}`;
 
   try {
     await mailer({
