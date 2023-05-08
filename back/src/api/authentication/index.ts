@@ -5,3 +5,4 @@ import { validateEmail } from './validateEmail';
 import { askEmailValidation } from './askEmailValidation';
 
 export default Router().use(login).use(register).use(validateEmail).use(askEmailValidation);
+
