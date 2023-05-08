@@ -60,7 +60,7 @@
     "@babel/core": "7.18.5",
     "@faker-js/faker": "7.3.0",
     "@storybook/addon-actions": "7.0.2",
-    "@storybook/addon-essentials": "6.5.9",
+    "@storybook/addon-essentials": "7.0.9",
     "@storybook/addon-interactions": "6.5.9",
     "@storybook/addon-links": "6.5.9",
     "@storybook/addon-postcss": "2.0.0",
