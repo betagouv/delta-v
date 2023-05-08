@@ -6,10 +6,7 @@ import { userEntityFactory } from '../factories/user.factory';
 import {
   generateAccessToken,
   generateRefreshToken,
-<<<<<<< HEAD
   generateResetPasswordToken,
-=======
->>>>>>> 7972cd9 (validate email endpoint)
   generateValidationToken,
 } from '../../../src/core/jwt/generateToken';
 
@@ -22,10 +19,6 @@ interface IPrepareContextUserOptions {
   userId?: string;
   expiredRefreshToken?: boolean;
   addRefreshToken?: boolean;
-<<<<<<< HEAD
-=======
-  addValidationToken?: boolean;
->>>>>>> 7972cd9 (validate email endpoint)
   addUpdateEmailToken?: boolean;
 }
 
@@ -35,10 +28,7 @@ interface IPrepareContextUserResponse {
   accessToken: string;
   refreshToken: string | null;
   validationToken: string | null;
-<<<<<<< HEAD
   resetPasswordToken: string | null;
-=======
->>>>>>> 7972cd9 (validate email endpoint)
 }
 
 export const prepareContextUser = async ({
@@ -80,10 +70,7 @@ export const prepareContextUser = async ({
     : null;
 
   const validationToken = await generateValidationToken({ email: user.email, userId });
-<<<<<<< HEAD
   const resetPasswordToken = await generateResetPasswordToken({ email: user.email, userId });
-=======
->>>>>>> 7972cd9 (validate email endpoint)
 
   return {
     user,
@@ -91,9 +78,6 @@ export const prepareContextUser = async ({
     accessToken,
     refreshToken,
     validationToken,
-<<<<<<< HEAD
     resetPasswordToken,
-=======
->>>>>>> 7972cd9 (validate email endpoint)
   };
 };
