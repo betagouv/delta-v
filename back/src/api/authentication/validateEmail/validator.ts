@@ -1,5 +1,6 @@
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { validator } from '../../../core/validator';
+import { jwtTokenRegex } from '../common/const/regex';
 
 export interface IValidateEmailRequest {
   body: {
@@ -9,7 +10,7 @@ export interface IValidateEmailRequest {
 
 export const ValidateEmailValidator = {
   body: validator.object({
-    token: validator.string().required(),
+    token: validator.string().regex(jwtTokenRegex).required(),
   }),
 };
 

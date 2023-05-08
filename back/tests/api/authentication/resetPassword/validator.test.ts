@@ -1,37 +1,49 @@
-import { registerValidator } from '../../../../src/api/authentication/register/validator';
+import { resetPasswordValidator } from '../../../../src/api/authentication/resetPassword/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
 
-describe('register validator', () => {
-  const validator = registerValidator;
+describe('reset password validator', () => {
+  const validator = resetPasswordValidator;
+  const { isValid } = validatorHelper(validator);
   const validData = {
     body: {
-      email: 'firstname.lastname@douane.finances.gouv.fr',
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
       password: 'Password95',
     },
   };
-  const { isValid } = validatorHelper(validator);
+
   it('should validate proper data', () => {
-    expect(isValid(validData)).toBeTruthy();
+    expect(isValid(validData)).toBe(true);
   });
-  it('should be invalid - email bad format', () => {
+  it('should be invalid - token bad format', () => {
     const data = {
       body: {
         ...validData.body,
-        email: 'u',
+        token: '710032dc',
       },
     };
 
     expect(isValid(data)).toBe(false);
   });
-  it('should be invalid - email not douane', () => {
+  it('should be invalid - token should be provided', () => {
     const data = {
       body: {
         ...validData.body,
-        email: 'email@gmail.com',
+        token: undefined,
       },
     };
 
-    expect(isValid(data)).toBeFalsy();
+    expect(isValid(data)).toBe(false);
+  });
+  it('should be invalid - password should be provided', () => {
+    const data = {
+      body: {
+        ...validData.body,
+        password: undefined,
+      },
+    };
+
+    expect(isValid(data)).toBe(false);
   });
   it('should be invalid - password bad format - less than 8 char', () => {
     const data = {
@@ -51,7 +63,7 @@ describe('register validator', () => {
       },
     };
 
-    expect(isValid(data)).toBeFalsy();
+    expect(isValid(data)).toBe(false);
   });
   it('should be invalid - password bad format - without uppercase', () => {
     const data = {
@@ -61,7 +73,7 @@ describe('register validator', () => {
       },
     };
 
-    expect(isValid(data)).toBeFalsy();
+    expect(isValid(data)).toBe(false);
   });
   it('should be invalid - password bad format - without lowercase', () => {
     const data = {
@@ -71,24 +83,6 @@ describe('register validator', () => {
       },
     };
 
-    expect(isValid(data)).toBeFalsy();
-  });
-  it('should be invalid - email should be provided', () => {
-    const data = {
-      body: {
-        password: 'PASSWORD95',
-      },
-    };
-
-    expect(isValid(data)).toBeFalsy();
-  });
-  it('should be invalid - password should be provided', () => {
-    const data = {
-      body: {
-        email: 'email@gmail.com',
-      },
-    };
-
-    expect(isValid(data)).toBeFalsy();
+    expect(isValid(data)).toBe(false);
   });
 });
