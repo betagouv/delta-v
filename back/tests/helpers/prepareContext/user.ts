@@ -6,6 +6,7 @@ import { userEntityFactory } from '../factories/user.factory';
 import {
   generateAccessToken,
   generateRefreshToken,
+  generateResetPasswordToken,
   generateValidationToken,
 } from '../../../src/core/jwt/generateToken';
 
@@ -18,9 +19,7 @@ interface IPrepareContextUserOptions {
   userId?: string;
   expiredRefreshToken?: boolean;
   addRefreshToken?: boolean;
-  addValidationToken?: boolean;
   addUpdateEmailToken?: boolean;
-  addResetPasswordToken?: boolean;
 }
 
 interface IPrepareContextUserResponse {
@@ -29,6 +28,7 @@ interface IPrepareContextUserResponse {
   accessToken: string;
   refreshToken: string | null;
   validationToken: string | null;
+  resetPasswordToken: string | null;
 }
 
 export const prepareContextUser = async ({
@@ -70,6 +70,7 @@ export const prepareContextUser = async ({
     : null;
 
   const validationToken = await generateValidationToken({ email: user.email, userId });
+  const resetPasswordToken = await generateResetPasswordToken({ email: user.email, userId });
 
   return {
     user,
@@ -77,5 +78,6 @@ export const prepareContextUser = async ({
     accessToken,
     refreshToken,
     validationToken,
+    resetPasswordToken,
   };
 };

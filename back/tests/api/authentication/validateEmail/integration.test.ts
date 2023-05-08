@@ -51,7 +51,8 @@ describe('validate email route', () => {
       enabled: false,
     });
 
-    const badToken = 'badToken';
+    const badToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtaWx5LmhpbGxzQGRvdWFuZS5maW5hbmNlcy5nb3V2LmZyIiwidXNlcklkIjoiOGUzMzljOGYtMjE4Ny00NmE5LThjMzAtYWExNWQzZWJjMzMwIiwiaWF0IjoxNjgzNTQ0MjYyLCJleHAiOjE2ODM4MDM0NjJ9.REqn_FKTQxPM3Co2brsthhLo9pgqYetnw89omqtaJ4I';
 
     const { status, body } = await request(testApp)
       .post('/api/email/validate')

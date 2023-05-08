@@ -67,3 +67,6 @@ export const buildRefreshTokenObject = (token: string): Promise<IAuthObject> =>
 
 export const buildValidationTokenObject = (token: string): Promise<IAuthObject> =>
   buildTokenObject<IAuthObject>(token, config.VALIDATION_TOKEN_SECRET);
+
+export const buildResetPasswordTokenObject = (token: string): Promise<IAuthObject> =>
+  buildTokenObject<IAuthObject>(token, config.RESET_PASSWORD_TOKEN_SECRET);
