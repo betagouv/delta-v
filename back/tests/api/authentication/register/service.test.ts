@@ -27,7 +27,6 @@ describe('register service', () => {
   });
   it('should register correctly', async () => {
     const user = userEntityFactory();
-    console.log(user);
 
     const userRepository = userRepositoryMock({ getOneByEmail: user });
 

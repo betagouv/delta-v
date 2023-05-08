@@ -9,7 +9,11 @@ export interface IAppConfig {
   VALIDATION_TOKEN_LIFE: string;
 }
 
-const REQUIRED_VARIABLES: string[] = ['ACCESS_TOKEN_SECRET', 'REFRESH_TOKEN_SECRET'];
+const REQUIRED_VARIABLES: string[] = [
+  'ACCESS_TOKEN_SECRET',
+  'REFRESH_TOKEN_SECRET',
+  'VALIDATION_TOKEN_SECRET',
+];
 
 export function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
   REQUIRED_VARIABLES.forEach((key): void => {
@@ -29,7 +33,7 @@ function parseConfig(config: any): IAppConfig {
     REFRESH_TOKEN_SECRET: config.REFRESH_TOKEN_SECRET,
     REFRESH_TOKEN_LIFE: config.REFRESH_TOKEN_LIFE ?? '1h',
     VALIDATION_TOKEN_SECRET: config.VALIDATION_TOKEN_SECRET,
-    VALIDATION_TOKEN_LIFE: config.VALIDATION_TOKEN_LIFE ?? '3j',
+    VALIDATION_TOKEN_LIFE: config.VALIDATION_TOKEN_LIFE ?? '3d',
   };
 }
 

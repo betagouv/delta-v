@@ -3,7 +3,11 @@ import { hashPassword } from '../../../src/api/authentication/common/services/pa
 import { User } from '../../../src/entities/user.entity';
 import { ITestDbManager } from '../testDb.helper';
 import { userEntityFactory } from '../factories/user.factory';
-import { generateAccessToken, generateRefreshToken } from '../../../src/core/jwt/generateToken';
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  generateValidationToken,
+} from '../../../src/core/jwt/generateToken';
 
 interface IPrepareContextUserOptions {
   testDb: ITestDbManager;
@@ -14,7 +18,7 @@ interface IPrepareContextUserOptions {
   userId?: string;
   expiredRefreshToken?: boolean;
   addRefreshToken?: boolean;
-  addEmailValidationToken?: boolean;
+  addValidationToken?: boolean;
   addUpdateEmailToken?: boolean;
   addResetPasswordToken?: boolean;
 }
@@ -24,6 +28,7 @@ interface IPrepareContextUserResponse {
   clearPassword: string;
   accessToken: string;
   refreshToken: string | null;
+  validationToken: string | null;
 }
 
 export const prepareContextUser = async ({
@@ -64,10 +69,13 @@ export const prepareContextUser = async ({
       )
     : null;
 
+  const validationToken = await generateValidationToken({ email: user.email, userId });
+
   return {
     user,
     clearPassword: password,
     accessToken,
     refreshToken,
+    validationToken,
   };
 };
