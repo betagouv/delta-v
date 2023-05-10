@@ -9,13 +9,14 @@ import {
   DeclarationResponse,
   DECLARATION_EMPTY_STATE,
   ContactDetails,
+  MeansOfTransportAndCountry,
 } from './appState.store';
 import axios from '@/config/axios';
 import { Currencies } from '@/model/currencies';
 
 export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
-  validateDeclarationStep2: (meanOfTransport: MeansOfTransport) => void;
+  validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
   validateDeclarationStep3: (country: Alpha2Code) => void;
   validateDeclarationStep4: (border: boolean) => void;
   resetDeclarationSteps: (step: number) => void;
@@ -32,10 +33,12 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       return newState;
     });
   },
-  validateDeclarationStep2: (meanOfTransport: MeansOfTransport): void => {
+  validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState.declarationRequest.meanOfTransport = meanOfTransport;
+      newState.declaration.appState.declarationRequest.meansOfTransportAndCountry = {
+        ...meansOfTransportAndCountry,
+      };
       return newState;
     });
   },
@@ -73,7 +76,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       const newState = { ...state };
       if (step <= 2) {
         newState.declaration.appState.declarationRequest.meanOfTransport =
-          DECLARATION_EMPTY_STATE.declarationRequest.meanOfTransport;
+          DECLARATION_EMPTY_STATE.declarationRequest.meansOfTransportAndCountry;
       }
       if (step <= 1) {
         newState.declaration.appState.declarationRequest.contactDetails =
@@ -91,8 +94,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       const declarationData = get().declaration.appState;
       const data = {
         age: declarationData.declarationRequest.contactDetails,
-        meanOfTransport: declarationData.declarationRequest.meanOfTransport,
-        country: declarationData.declarationRequest.country,
+        meanOfTransport: declarationData.declarationRequest.meansOfTransportAndCountry,
         border: declarationData.declarationRequest.border,
       };
       const response = (await axios.post('/api/declaration', data)).data as DeclarationResponse;

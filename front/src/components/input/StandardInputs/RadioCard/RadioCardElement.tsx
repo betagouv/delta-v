@@ -7,7 +7,7 @@ export interface IRadioCardElementOptions {
   disabled?: boolean;
   checked?: boolean;
   svgIcon: SvgNames;
-  onClick: () => void;
+  onClick: (transport?: string) => void;
 }
 
 export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
@@ -20,6 +20,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
   return (
     <button
       data-testid="radio-card-element"
+      type="button"
       disabled={disabled}
       className={classNames(
         'text-sm',
@@ -29,11 +30,11 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
         checked ? 'font-bold border-4 p-[15px]' : 'font-normal border',
         'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
       )}
-      onClick={() => {
+      onClick={(e) => {
         if (disabled) {
           return;
         }
-        onClick();
+        onClick(e.currentTarget.value);
       }}
     >
       <div className="flex flex-col items-center">

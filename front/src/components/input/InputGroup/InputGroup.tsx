@@ -23,6 +23,7 @@ export interface IInputGroupProps {
   placeholder?: string;
   name: string;
   options?: IOptions[];
+  value?: string;
   type:
     | 'text'
     | 'password'

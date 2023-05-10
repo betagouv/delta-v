@@ -26,14 +26,22 @@ export const routes: RouteLevel[] = [
 ];
 
 export const getLevelWithData = (declarationRequest: DeclarationRequest): number => {
-  if (declarationRequest.contactDetails === undefined) {
+  if (
+    declarationRequest.contactDetails.firstName === undefined ||
+    declarationRequest.contactDetails.lastName === undefined ||
+    declarationRequest.contactDetails.address === undefined ||
+    declarationRequest.contactDetails.city === undefined ||
+    declarationRequest.contactDetails.postalCode === undefined ||
+    declarationRequest.contactDetails.email === undefined ||
+    declarationRequest.contactDetails.phoneNumber === undefined
+  ) {
     return 1;
   }
-  if (declarationRequest.meanOfTransport === undefined) {
+  if (
+    declarationRequest.meansOfTransportAndCountry.meansOfTransport === undefined ||
+    declarationRequest.meansOfTransportAndCountry.country === undefined
+  ) {
     return 2;
-  }
-  if (declarationRequest.country === undefined) {
-    return 3;
   }
   if (declarationRequest.border === undefined) {
     return 4;
