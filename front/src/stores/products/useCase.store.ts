@@ -3,7 +3,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 
 import { StoreSlice } from '../store';
 import axios from '@/config/axios';
-import { AmountProduct, Product } from '@/model/product';
+import { AmountProduct, HistoryProduct, Product } from '@/model/product';
 import { CountryType, getCountryType } from '@/utils/country.util';
 import { advancedSearch, SearchType } from '@/utils/search';
 
@@ -11,6 +11,7 @@ export interface ProductsUseCaseSlice {
   findProduct: (id: string) => Product | undefined;
   searchProducts: (searchValue: string) => SearchType<Product>[];
   searchAllProducts: (searchValue: string) => SearchType<Product>[];
+  searchProductsHistory: (searchValue: string) => SearchType<Product>[];
   getProductsResponse: () => Promise<void>;
   setProductsToDisplay: () => void;
   setProductsDeclarationToDisplay: () => void;
@@ -156,6 +157,18 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
       searchList: products,
       searchKey: ['relatedWords'],
     });
+  },
+  searchProductsHistory: (searchValue: string) => {
+    const histories = get().products.appState.historyProducts;
+    return advancedSearch({ searchValue, searchList: histories, searchKey: ['relatedWords'] });
+  },
+  addHistoryProduct: (shoppingProduct: HistoryProduct): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.simulator.appState.simulatorRequest.historyProducts.push(shoppingProduct);
+      return newState;
+    });
+    get().simulate();
   },
   searchAllProducts: (searchValue: string) => {
     const products = get().products.appState.flattenAllProducts;
