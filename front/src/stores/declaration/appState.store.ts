@@ -20,11 +20,22 @@ export interface DeclarationResponse {
 }
 
 export interface DeclarationRequest {
-  age?: number;
+  contactDetails: ContactDetails;
   meanOfTransport?: string;
   country?: Alpha2Code;
   defaultCurrency?: string;
   border?: boolean;
+}
+
+export interface ContactDetails {
+  age: number;
+  lastName: string;
+  firstName: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  email: string;
+  phoneNumber: string;
 }
 
 export interface DeclarationData {
@@ -42,7 +53,16 @@ export interface DeclarationAppStateSlice {
 
 export const DECLARATION_EMPTY_STATE = {
   declarationRequest: {
-    age: undefined,
+    contactDetails: {
+      age: 0,
+      lastName: '',
+      firstName: '',
+      address: '',
+      city: '',
+      postalCode: '',
+      email: '',
+      phoneNumber: '',
+    },
     meanOfTransport: undefined,
     country: undefined,
     defaultCurrency: 'EUR',

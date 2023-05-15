@@ -44,16 +44,16 @@ const meanOfTransports: IRadioCardType[] = [
 ];
 
 const Declaration = () => {
-  const { resetSteps, validateStep2 } = useStore(
+  const { resetDeclarationSteps, validateDeclarationStep2 } = useStore(
     (state) => ({
-      resetSteps: state.resetSteps,
-      validateStep2: state.validateStep2,
+      resetDeclarationSteps: state.resetDeclarationSteps,
+      validateDeclarationStep2: state.validateDeclarationStep2,
     }),
     shallow,
   );
   const router = useRouter();
   useEffect(() => {
-    resetSteps(2);
+    resetDeclarationSteps(2);
   }, []);
 
   const {
@@ -71,7 +71,7 @@ const Declaration = () => {
     if (!data.meanOfTransport) {
       return;
     }
-    validateStep2(data.meanOfTransport);
+    validateDeclarationStep2(data.meanOfTransport);
     router.push(`/agent/declaration/ajout/marchandises`);
   };
 

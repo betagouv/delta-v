@@ -1,12 +1,10 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 
-import { useRouter } from 'next/router';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
-import { Main } from './Main';
+import { MainAgent } from './MainAgent';
 import { ProgressBarAgent } from '@/components/common/ProgressBarAgent';
 import { Meta } from '@/layout/Meta';
-import { useStore } from '@/stores/store';
 import { DECLARATION_STEP_PAGE } from '@/utils/const';
 
 type IMainProps = {
@@ -30,24 +28,10 @@ const links: ProgressBarAgentItemType[] = [
 ];
 
 const DeclarationSteps = ({ children, currentStep, handleSubmit, onSubmit }: IMainProps) => {
-  const getMaximumStepAvailable = useStore((store) => store.getMaximumStepAvailable);
-  const router = useRouter();
-
   const showProgressBar = currentStep <= 3 && currentStep >= 1;
 
-  useEffect(() => {
-    const maximumStepAvailable = getMaximumStepAvailable();
-
-    const shouldRedirect =
-      currentStep > 0 && maximumStepAvailable !== null && maximumStepAvailable < currentStep;
-
-    if (shouldRedirect) {
-      router.push(DECLARATION_STEP_PAGE[maximumStepAvailable] ?? '');
-    }
-  }, []);
-
   return (
-    <Main
+    <MainAgent
       meta={
         <Meta
           title="Simulateur Déclare Douanes"
@@ -56,21 +40,14 @@ const DeclarationSteps = ({ children, currentStep, handleSubmit, onSubmit }: IMa
       }
       withHeader
       withTitle
-      titleValue={
-        <>
-          Simuler
-          <br />
-          mes achats
-        </>
-      }
-      titleIcon="calculator"
+      titleHeader="Créer une déclaration"
     >
       <div>{showProgressBar && <ProgressBarAgent links={links} currentStep={currentStep} />}</div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col">
         {children}
       </form>
-    </Main>
+    </MainAgent>
   );
 };
 
