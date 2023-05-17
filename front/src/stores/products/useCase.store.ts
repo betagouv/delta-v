@@ -13,6 +13,7 @@ export interface ProductsUseCaseSlice {
   searchAllProducts: (searchValue: string) => SearchType<Product>[];
   getProductsResponse: () => Promise<void>;
   setProductsToDisplay: () => void;
+  setProductsDeclarationToDisplay: () => void;
 }
 
 const getFlattenProducts = (products: Product[]): Product[] => {
@@ -120,6 +121,28 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
     set((state: any) => {
       const newState = { ...state };
       newState.products.appState.products = setupProductsToDisplay(allProducts, age, country);
+      newState.products.appState.flattenProducts = getFlattenProducts(
+        newState.products.appState.products,
+      );
+      return newState;
+    });
+  },
+  setProductsDeclarationToDisplay: () => {
+    const { contactDetails, meansOfTransportAndCountry } =
+      get().declaration.appState.declarationRequest;
+    const { allProducts } = get().products.appState;
+
+    if (!contactDetails || !meansOfTransportAndCountry) {
+      return;
+    }
+
+    set((state: any) => {
+      const newState = { ...state };
+      newState.products.appState.products = setupProductsToDisplay(
+        allProducts,
+        contactDetails.age,
+        meansOfTransportAndCountry.country,
+      );
       newState.products.appState.flattenProducts = getFlattenProducts(
         newState.products.appState.products,
       );

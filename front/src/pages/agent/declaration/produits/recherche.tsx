@@ -7,15 +7,15 @@ import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
 
 const SearchProduct = () => {
-  const { searchProducts } = useStore((state) => ({
-    searchProducts: state.searchProducts,
+  const { searchAllProducts } = useStore((state) => ({
+    searchAllProducts: state.searchAllProducts,
   }));
 
   const router = useRouter();
 
   const { search } = router.query;
 
-  const productsThatMatch = searchProducts((search as string) ?? '');
+  const productsThatMatch = searchAllProducts((search as string) ?? '');
 
   return (
     <MainAgent

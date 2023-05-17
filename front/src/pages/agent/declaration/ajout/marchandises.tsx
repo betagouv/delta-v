@@ -17,16 +17,19 @@ export interface FormDeclarationData {
 }
 
 const Declaration = () => {
-  const { resetDeclarationSteps, validateDeclarationStep3 } = useStore(
-    (state) => ({
-      resetDeclarationSteps: state.resetDeclarationSteps,
-      validateDeclarationStep3: state.validateDeclarationStep3,
-    }),
-    shallow,
-  );
+  const { resetDeclarationSteps, validateDeclarationStep3, setProductsDeclarationToDisplay } =
+    useStore(
+      (state) => ({
+        resetDeclarationSteps: state.resetDeclarationSteps,
+        validateDeclarationStep3: state.validateDeclarationStep3,
+        setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
+      }),
+      shallow,
+    );
   const router = useRouter();
   useEffect(() => {
     resetDeclarationSteps(3);
+    setProductsDeclarationToDisplay();
   }, []);
 
   const [openDownModal, setOpenDownModal] = useState(false);
