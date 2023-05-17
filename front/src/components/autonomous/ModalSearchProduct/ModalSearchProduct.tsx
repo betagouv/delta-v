@@ -11,8 +11,8 @@ interface ModalSearchProductProps {
 }
 
 export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({ onClose, open }) => {
-  const { searchAllProducts } = useStore((state) => ({
-    searchAllProducts: state.searchAllProducts,
+  const { searchProducts } = useStore((state) => ({
+    searchProducts: state.searchProducts,
   }));
 
   return (
@@ -23,7 +23,7 @@ export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({ onClose,
             Recherche
           </Typography>
           <SearchProduct
-            onSearch={searchAllProducts}
+            onSearch={searchProducts}
             autoFocus
             withSearchIcon
             placeholder="Que recherchez-vous ?"
