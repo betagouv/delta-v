@@ -30,10 +30,10 @@ export const DownModal: React.FC<IDownModalProps> = ({
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed bottom-0 z-40 w-full justify-center"
+        className="fixed bottom-0 z-40 h-auto w-full justify-center"
         onClose={handleOnClose}
       >
-        <div className="flex w-full text-center">
+        <div className="flex h-auto w-full text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -43,7 +43,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black/60 transition-opacity" />
+            <Dialog.Overlay className="fixed inset-0 h-auto bg-black/60 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the Downmodal contents. */}
@@ -60,7 +60,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`inline-block h-auto w-full rounded-t-3xl ${bgColor} px-4 py-5 text-left shadow-xl transition-all sm:max-w-lg sm:align-middle lg:rounded-b-3xl`}
+              className={`inline-block h-full w-full rounded-t-3xl ${bgColor} px-4 py-5 text-left shadow-xl transition-all sm:max-w-lg sm:align-middle lg:rounded-b-3xl`}
             >
               <div className="absolute top-4 right-4 flex h-4 w-4 items-center">
                 <Icon name="clear" onClick={onClose} />

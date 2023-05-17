@@ -128,8 +128,13 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
     });
   },
   searchProducts: (searchValue: string) => {
-    const products = get().products.appState.flattenProducts;
-    return advancedSearch({ searchValue, searchList: products, searchKey: ['relatedWords'] });
+    const products = get().products.appState;
+    console.log('🚀 ~ file: useCase.store.ts:132 ~ products:', products);
+    return advancedSearch({
+      searchValue,
+      searchList: products.flattenAllProducts,
+      searchKey: ['relatedWords'],
+    });
   },
   searchProductsHistory: (searchValue: string) => {
     const histories = get().products.appState.historyProducts;

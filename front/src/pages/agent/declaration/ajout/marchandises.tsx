@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
+import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
@@ -27,6 +28,12 @@ const Declaration = () => {
   useEffect(() => {
     resetDeclarationSteps(3);
   }, []);
+
+  const [openDownModal, setOpenDownModal] = useState(false);
+
+  const handleCloseDownModal = () => {
+    setOpenDownModal(false);
+  };
 
   const {
     handleSubmit,
@@ -95,19 +102,19 @@ const Declaration = () => {
       handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={onSubmit}
     >
-      <h1 className="text-xl font-bold">`Choix des marchandises (input fake)`</h1>
-      <InputGroup
-        label="De quel pays arrivez-vous ?"
-        type="comboboxes"
-        fullWidth={true}
-        name="country"
-        placeholder="Pays"
-        trailingIcon="search"
-        options={countriesOptions}
-        register={register('country', { required: true })}
-        control={control}
-        error={errors?.country?.message}
-      />
+      <div className="mt-1" onClick={() => setOpenDownModal(true)}>
+        <InputGroup
+          type="text"
+          fullWidth={true}
+          name="country"
+          placeholder="Que recherchez-vous ?"
+          leadingIcon="search"
+          options={countriesOptions}
+          control={control}
+          error={errors?.country?.message}
+        />
+      </div>
+      <ModalSearchProduct open={openDownModal} onClose={handleCloseDownModal} />
     </DeclarationSteps>
   );
 };
