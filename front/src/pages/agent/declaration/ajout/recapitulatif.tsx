@@ -118,7 +118,9 @@ const Declaration = () => {
             </Typography>
           </div>
           <div className="rounded-md bg-gray-100 p-6">
-            <Typography variant="paragraph">{declarationRequest.meanOfTransport}</Typography>
+            <Typography variant="paragraph">
+              {declarationRequest.meansOfTransportAndCountry.meansOfTransport}
+            </Typography>
           </div>
         </div>
         <div className="w-full  p-6 text-center">
@@ -127,7 +129,9 @@ const Declaration = () => {
               Pays
             </Typography>
           </div>
-          <div className="text-gray-500">{declarationRequest.country}</div>
+          <div className="text-gray-500">
+            {declarationRequest.meansOfTransportAndCountry.country}
+          </div>
         </div>
       </div>
     </DeclarationSteps>

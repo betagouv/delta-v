@@ -21,8 +21,7 @@ export interface DeclarationResponse {
 
 export interface DeclarationRequest {
   contactDetails: ContactDetails;
-  meanOfTransport?: string;
-  country?: Alpha2Code;
+  meansOfTransportAndCountry: MeansOfTransportAndCountry;
   defaultCurrency?: string;
   border?: boolean;
 }
@@ -36,6 +35,12 @@ export interface ContactDetails {
   postalCode: string;
   email: string;
   phoneNumber: string;
+}
+
+export interface MeansOfTransportAndCountry {
+  meansOfTransport: MeansOfTransport;
+  country: Alpha2Code;
+  flightNumber?: string;
 }
 
 export interface DeclarationData {
@@ -63,8 +68,11 @@ export const DECLARATION_EMPTY_STATE = {
       email: '',
       phoneNumber: '',
     },
-    meanOfTransport: undefined,
-    country: undefined,
+    meansOfTransportAndCountry: {
+      meansOfTransport: MeansOfTransport.OTHER,
+      country: 'FR' as Alpha2Code,
+      flightNumber: undefined,
+    },
     defaultCurrency: 'EUR',
     border: undefined,
     shoppingProducts: [],

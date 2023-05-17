@@ -61,6 +61,8 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
     }
   }, [query]);
 
+  const [selectedValue, setSelectedValue] = useState<string | undefined>();
+
   const className = classNames(fullWidth ? 'w-full' : 'max-w-fit');
   let classNameCombobox =
     'w-full border py-2 pl-3 pr-10 focus:outline-none rounded-full placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
@@ -75,10 +77,13 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
         <input
           className={classNames(fullWidth ? 'w-full' : 'w-fit', classNameCombobox)}
           enterKeyHint="search"
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => {
+            setSelectedValue(undefined);
+            setQuery(event.target.value);
+          }}
           disabled={disabled}
           placeholder={placeholder}
-          value={query}
+          value={selectedValue}
         />
         {trailingIcon && (
           <div className="absolute inset-y-0 right-0 z-10 flex h-full w-9 items-center pr-4">
@@ -101,6 +106,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
                   const wasAlreadyChecked = option.id === selectedOption.id;
                   const newSelectedOption = wasAlreadyChecked ? { id: null, value: '' } : option;
                   setSelectedOption(newSelectedOption);
+                  setSelectedValue(newSelectedOption.value);
                   field.onChange(option.id);
                   setTimeout(() => {
                     setFilteredOptions([]);

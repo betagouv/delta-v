@@ -1,21 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
+import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
+import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
+import { disabledCountries } from '@/utils/const';
 
-export interface FormDeclarationData {
-  meanOfTransport?: MeansOfTransport;
+export interface MeansOfTransportAndCountryData {
+  meansOfTransport: MeansOfTransport;
+  country: Alpha2Code;
+  flightNumber?: string;
 }
 
-const meanOfTransports: IRadioCardType[] = [
+const meansOfTransports: IRadioCardType[] = [
   {
     id: 'car',
     value: 'Voiture',
@@ -56,30 +63,78 @@ const Declaration = () => {
     resetDeclarationSteps(2);
   }, []);
 
+  const [isPlane, setIsPlane] = useState(false);
+  const [transportChosen, setTransportChosen] = useState<string | undefined>();
+
+  const schema = yup.object({
+    meansOfTransport: yup.string().required('Champ obligatoire'),
+    flightNumber: yup.string().nullable(),
+    country: yup.string().required('Champ obligatoire'),
+  });
+
   const {
     handleSubmit,
     register,
     control,
-    formState: { errors },
-  } = useForm<FormDeclarationData>({
+    formState: { errors, isValid },
+  } = useForm<MeansOfTransportAndCountryData>({
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
     defaultValues: {
-      meanOfTransport: undefined,
+      meansOfTransport: undefined,
     },
   });
 
-  const onSubmit = (data: FormDeclarationData) => {
-    if (!data.meanOfTransport) {
+  const onSubmit = (data: MeansOfTransportAndCountryData) => {
+    if (!data.meansOfTransport) {
       return;
     }
-    validateDeclarationStep2(data.meanOfTransport);
+    validateDeclarationStep2({ ...data });
     router.push(`/agent/declaration/ajout/marchandises`);
   };
 
-  register('meanOfTransport', {
-    onChange: () => {
-      handleSubmit(onSubmit)();
+  register('meansOfTransport', {
+    onChange: (e) => {
+      setTransportChosen(e.target.value);
+      if (e.target.value === 'plane') {
+        setIsPlane(true);
+      } else {
+        setIsPlane(false);
+      }
     },
   });
+
+  const countriesAlternatives = [
+    {
+      id: 'CH',
+      alternatives: ['Suisse', 'Switzerland', 'Schweiz'],
+    },
+    {
+      id: 'US',
+      alternatives: ['USA', 'United States', 'Etats-Unis'],
+    },
+    {
+      id: 'GB',
+      alternatives: ['Royaume-Uni', 'United Kingdom', 'Angleterre', 'UK'],
+    },
+    {
+      id: 'DE',
+      alternatives: ['Allemagne', 'Germany', 'Deutschland'],
+    },
+  ];
+  const countriesOptions = useMemo(() => {
+    const countries = getNames('fr', { select: 'official' });
+    const keys = Object.keys(countries) as Alpha2Code[];
+    const enabledKeys = keys.filter((key) => !disabledCountries.includes(key));
+    return enabledKeys.map((key) => {
+      const countryAlternative = countriesAlternatives.find((country) => country.id === key);
+      return {
+        value: countries[key] ?? '',
+        id: key,
+        alternatives: countryAlternative?.alternatives ?? [],
+      };
+    });
+  }, []);
 
   return (
     <DeclarationSteps
@@ -90,17 +145,51 @@ const Declaration = () => {
       <InputGroup
         label="Quel est votre moyen de transport ?"
         type="radioCard"
-        name="meanOfTransport"
-        radioCardValues={meanOfTransports}
-        register={register('meanOfTransport', { required: true })}
+        name="meansOfTransport"
+        radioCardValues={meansOfTransports}
+        register={register('meansOfTransport', { required: true })}
         control={control}
-        error={errors?.meanOfTransport?.message}
+        error={errors?.meansOfTransport?.message}
       />
-      <div className="mb-8 flex-1" />
+      {transportChosen && (
+        <div className="mt-4">
+          <InputGroup
+            label="De quel pays arrivez-vous ?"
+            type="comboboxes"
+            fullWidth={true}
+            name="country"
+            placeholder="Pays"
+            trailingIcon="search"
+            options={countriesOptions}
+            register={register('country', { required: true })}
+            control={control}
+            error={errors?.country?.message}
+          />
+        </div>
+      )}
+      {isPlane && (
+        <div className="mt-4">
+          <InputGroup
+            type="text"
+            name="phone"
+            fullWidth={false}
+            placeholder="Numéro de vol"
+            register={register('flightNumber')}
+            control={control}
+            error={errors?.flightNumber?.message}
+            required
+          />
+        </div>
+      )}
       <div>
-        {errors?.meanOfTransport && (
-          <div className="text-red-500">{errors.meanOfTransport.message}</div>
+        {errors?.meansOfTransport && (
+          <div className="text-red-500">{errors.meansOfTransport.message}</div>
         )}
+      </div>
+      <div className="absolute bottom-8 w-40 self-center">
+        <Button fullWidth={true} type="submit" disabled={!isValid}>
+          Valider
+        </Button>
       </div>
     </DeclarationSteps>
   );
