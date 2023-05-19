@@ -25,12 +25,12 @@ export const NomenclatureCard = ({ product }: NomenclatureCardProps) => {
   return (
     <div
       className={cs(
-        'relative grid rounded-xl border border-gray-200 p-3 grid-cols-[40px_1fr] w-64 h-28',
+        'relative grid rounded-xl border border-gray-200 grid-cols-[40px_1fr] w-full h-28 p-3',
       )}
     >
       <div className="h-7 w-7 bg-gray-200" />
       <div className="grid-rows-[1fr_3fr]">
-        <div className="flex gap-3">
+        <div className="flex flex-row gap-6">
           {product.nomenclatures &&
             product.nomenclatures.map((item, index) => (
               <Typography key={index} color="middle-gray">
@@ -38,9 +38,12 @@ export const NomenclatureCard = ({ product }: NomenclatureCardProps) => {
               </Typography>
             ))}
         </div>
-        <div className="line-clamp-3">
-          <Typography color="black" transform="sentence-case">
+        <div className="flex flex-col line-clamp-3">
+          <Typography color="black" transform="sentence-case" size="text-xs">
             {product.name}
+          </Typography>
+          <Typography color="black" transform="sentence-case" size="text-base">
+            {product.relatedWords.map((item) => item).join(', ')}
           </Typography>
         </div>
       </div>
