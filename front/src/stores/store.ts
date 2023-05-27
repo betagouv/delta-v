@@ -36,6 +36,8 @@ import {
   SimulatorAppStateSlice,
 } from './simulator/appState.store';
 import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/useCase.store';
+import { createUserAppStateSlice, UserAppStateSlice } from './user/appState.store';
+import { createUseCaseUserSlice, UserUseCaseSlice } from './user/useCase.store';
 
 export type StoreState = SimulatorUseCaseSlice &
   SimulatorAppStateSlice &
@@ -50,7 +52,9 @@ export type StoreState = SimulatorUseCaseSlice &
   FaqAppStateSlice &
   FaqUseCaseSlice &
   PrepareMyTripAppStateSlice &
-  PrepareMyTripUseCaseSlice;
+  PrepareMyTripUseCaseSlice &
+  UserAppStateSlice &
+  UserUseCaseSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -85,18 +89,28 @@ export const useStore = create<StoreState>(
       ...createUseCaseFaqSlice(set, get, api),
       ...createPrepareMyTripAppStateSlice(set, get, api),
       ...createUseCasePrepareMyTripSlice(set, get, api),
+      ...createUserAppStateSlice(set, get, api),
+      ...createUseCaseUserSlice(set, get, api),
     }),
 
     {
       name: 'app-storage',
       getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
       version: 4,
-      partialize: (state) => ({
-        simulator: state.simulator,
-        products: state.products,
-        currencies: state.currencies,
-        global: state.global,
-      }),
+      partialize: (state) => {
+        return {
+          simulator: state.simulator,
+          products: state.products,
+          currencies: state.currencies,
+          global: state.global,
+          user: {
+            ...state.user,
+            appState: {
+              error: undefined,
+            },
+          },
+        };
+      },
       migrate(persistedState: StoreState, version) {
         const newPersistedState = { ...persistedState };
         if (version < 3) {
