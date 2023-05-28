@@ -23,6 +23,13 @@ export enum RoutingAgent {
   declaration = '/agent/declaration',
 }
 
+export enum RoutingAuthentication {
+  login = '/agent/authentification',
+  register = '/agent/authentification/inscription',
+  forgetPassword = '/agent/authentification/mot-de-passe-oublie',
+  resetPassword = '/agent/authentification/mot-de-passe-oublie/reset',
+}
+
 export const DECLARATION_STEP_PAGE: Record<number, string> = {
   1: '/agent/declaration/ajout/coordonnees',
   2: '/agent/declaration/ajout/transports',

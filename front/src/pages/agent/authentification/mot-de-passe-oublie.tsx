@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
@@ -12,14 +11,12 @@ import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
 
-export interface FormLoginData {
+export interface FormForgetPasswordData {
   email: string;
-  password: string;
 }
 
 const schema = yup.object({
   email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
-  password: yup.string().required('Le mot de passe est requis'),
 });
 
 const LoginPage = () => {
@@ -28,27 +25,24 @@ const LoginPage = () => {
     register,
     formState: { errors },
     formState: { isDirty, isValid },
-  } = useForm<FormLoginData>({
+  } = useForm<FormForgetPasswordData>({
     defaultValues: {
       email: undefined,
-      password: undefined,
     },
     resolver: yupResolver(schema),
   });
 
-  const { login, errorApi } = useStore(
+  const { askResetPassword, errorApi, successApi } = useStore(
     (state) => ({
-      login: state.login,
+      askResetPassword: state.askResetPassword,
       errorApi: state.user.appState.error,
+      successApi: state.user.appState.success,
     }),
     shallow,
   );
-  const router = useRouter();
 
-  const onSubmit = async (data: FormLoginData) => {
-    if (await login(data)) {
-      router.push('/agent');
-    }
+  const onSubmit = async (data: FormForgetPasswordData) => {
+    await askResetPassword(data);
   };
 
   return (
@@ -69,18 +63,10 @@ const LoginPage = () => {
           register={register('email')}
           error={errors?.email?.message}
         />
-        <InputGroup
-          type="password"
-          name="adult"
-          fullWidth={false}
-          placeholder="Mot de passe"
-          register={register('password')}
-          error={errors?.password?.message}
-        />
-
-        <TextLink underline to={RoutingAuthentication.forgetPassword}>
-          mot de passe oublié
+        <TextLink underline to={RoutingAuthentication.login}>
+          se connecter
         </TextLink>
+        {successApi && <div className="text-sm font-bold text-green-500">{successApi.message}</div>}
         {errorApi && <div className="text-sm font-bold text-red-500">{errorApi.message}</div>}
         <div>
           <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>

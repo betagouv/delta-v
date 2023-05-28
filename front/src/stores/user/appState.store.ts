@@ -6,6 +6,7 @@ export interface UserAppStateSlice {
     appState: {
       isAgent?: boolean;
       error?: any;
+      success?: any;
     };
   };
 }
@@ -13,6 +14,7 @@ export interface UserAppStateSlice {
 export const USER_EMPTY_STATE = {
   isAgent: undefined,
   error: undefined,
+  success: undefined,
 };
 
 export const createUserAppStateSlice: StoreSlice<UserAppStateSlice> = () => ({

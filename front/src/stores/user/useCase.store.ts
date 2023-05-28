@@ -7,6 +7,7 @@ import { setCookie } from '@/utils/cookie';
 
 export interface UserUseCaseSlice {
   login: (loginData: { email: string; password: string }) => Promise<boolean>;
+  askResetPassword: (askResetPasswordData: { email: string }) => Promise<boolean>;
 }
 
 export const createUseCaseUserSlice: StoreSlice<UserUseCaseSlice> = (set) => ({
@@ -19,6 +20,27 @@ export const createUseCaseUserSlice: StoreSlice<UserUseCaseSlice> = (set) => ({
 
       setCookie('accessToken', response.data.accessToken);
       setCookie('refreshToken', response.data.refreshToken);
+      return true;
+    } catch (error: any) {
+      set((state: any) => {
+        const newState = { ...state };
+        newState.user.appState.error = error?.response?.data;
+        return newState;
+      });
+      return false;
+    }
+  },
+  askResetPassword: async ({ email }) => {
+    try {
+      const response = await axios.post('/api/password/ask', {
+        email,
+      });
+      set((state: any) => {
+        const newState = { ...state };
+        newState.user.appState.success = response?.data;
+        return newState;
+      });
+
       return true;
     } catch (error: any) {
       set((state: any) => {

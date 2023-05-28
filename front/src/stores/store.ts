@@ -107,6 +107,7 @@ export const useStore = create<StoreState>(
             ...state.user,
             appState: {
               error: undefined,
+              success: undefined,
             },
           },
         };
