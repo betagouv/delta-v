@@ -1,6 +1,7 @@
+/* eslint-disable import/no-cycle */
 import { Alpha2Code } from 'i18n-iso-countries';
 
-// eslint-disable-next-line import/no-cycle
+import { ShoppingProduct } from '../simulator/appState.store';
 import { StoreSlice } from '../store';
 
 export enum MeansOfTransport {
@@ -23,6 +24,7 @@ export interface DeclarationRequest {
   contactDetails: ContactDetails;
   meansOfTransportAndCountry: MeansOfTransportAndCountry;
   defaultCurrency?: string;
+  shoppingProducts: ShoppingProduct[];
   border?: boolean;
 }
 

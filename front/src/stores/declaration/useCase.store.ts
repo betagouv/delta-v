@@ -1,9 +1,8 @@
-import { countries } from 'countries-list';
+/* eslint-disable import/no-cycle */
 import { Alpha2Code } from 'i18n-iso-countries';
 
-// eslint-disable-next-line import/no-cycle
+import { ShoppingProduct } from '../simulator/appState.store';
 import { StoreSlice } from '../store';
-// eslint-disable-next-line import/no-cycle
 import {
   MeansOfTransport,
   DeclarationResponse,
@@ -12,7 +11,6 @@ import {
   MeansOfTransportAndCountry,
 } from './appState.store';
 import axios from '@/config/axios';
-import { Currencies } from '@/model/currencies';
 
 export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
@@ -20,6 +18,9 @@ export interface DeclarationUseCaseSlice {
   validateDeclarationStep3: (country: Alpha2Code) => void;
   validateDeclarationStep4: (border: boolean) => void;
   resetDeclarationSteps: (step: number) => void;
+  addProductDeclaration: (shoppingProduct: ShoppingProduct) => void;
+  getAllShoppingProduct: () => ShoppingProduct[];
+  removeProductDeclaration: (id: string) => void;
   declarate: () => void;
 }
 
@@ -39,6 +40,22 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       newState.declaration.appState.declarationRequest.meansOfTransportAndCountry = {
         ...meansOfTransportAndCountry,
       };
+
+      // const rawCurrencies = countries[meansOfTransportAndCountry.country ?? 'FR'].currency;
+      // const mainCurrency = rawCurrencies.split(',')[0];
+      // const defaultCurrency = newState.currencies.appState.currencies.find(
+      //   (currency: Currencies) => currency.id === mainCurrency,
+      // );
+
+      // newState.declaration.appState.declarationRequest.defaultCurrency =
+      //   defaultCurrency?.id ?? 'EUR';
+
+      if (
+        meansOfTransportAndCountry.country !== 'CH' ||
+        state.declaration.appState.declarationRequest.meanOfTransport !== MeansOfTransport.CAR
+      ) {
+        newState.declaration.appState.declarationRequest.border = false;
+      }
       return newState;
     });
   },
@@ -46,14 +63,14 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.country = country;
-      const rawCurrencies = countries[country ?? 'FR'].currency;
-      const mainCurrency = rawCurrencies.split(',')[0];
-      const defaultCurrency = newState.currencies.appState.currencies.find(
-        (currency: Currencies) => currency.id === mainCurrency,
-      );
+      // const rawCurrencies = countries[country ?? 'FR'].currency;
+      // const mainCurrency = rawCurrencies.split(',')[0];
+      // const defaultCurrency = newState.currencies.appState.currencies.find(
+      //   (currency: Currencies) => currency.id === mainCurrency,
+      // );
 
-      newState.declaration.appState.declarationRequest.defaultCurrency =
-        defaultCurrency?.id ?? 'EUR';
+      // newState.declaration.appState.declarationRequest.defaultCurrency =
+      //   defaultCurrency?.id ?? 'EUR';
 
       if (
         country !== 'CH' ||
@@ -110,5 +127,28 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
         return newState;
       });
     }
+  },
+  addProductDeclaration: (shoppingProduct: ShoppingProduct): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);
+      return newState;
+    });
+    get().declarate();
+  },
+  getAllShoppingProduct: (): ShoppingProduct[] => {
+    return get().declaration.appState.declarationRequest.shoppingProducts;
+  },
+  removeProductDeclaration: (id: string): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      const newShoppingProducts =
+        newState.simulator.appState.simulatorRequest.shoppingProducts.filter(
+          (product: ShoppingProduct) => product.id !== id,
+        );
+      newState.simulator.appState.simulatorRequest.shoppingProducts = newShoppingProducts;
+      return newState;
+    });
+    get().declarate();
   },
 });
