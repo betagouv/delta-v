@@ -6,14 +6,14 @@ import invalidTokenError from '../../../../src/api/common/errors/invalidToken.er
 import userBlockedError from '../../../../src/api/common/errors/userBlocked.error';
 import userNotEnabledError from '../../../../src/api/common/errors/userNotEnabled.error';
 import userNotFoundError from '../../../../src/api/common/errors/userNotFound.error';
+import { generateResetPasswordToken } from '../../../../src/core/jwt/generateToken';
 
 describe('reset password service', () => {
   it('should reset password correctly', async () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtaWx5LmhpbGxzQGRvdWFuZS5maW5hbmNlcy5nb3V2LmZyIiwidXNlcklkIjoiOGUzMzljOGYtMjE4Ny00NmE5LThjMzAtYWExNWQzZWJjMzMwIiwiaWF0IjoxNjgzNTQ0MjYyLCJleHAiOjE2ODM4MDM0NjJ9.REqn_FKTQxPM3Co2brsthhLo9pgqYetnw89omqtaJ4I';
     const password = 'password';
     const user = userEntityFactory({ id: '8e339c8f-2187-46a9-8c30-aa15d3ebc330' });
     const userRepository = userRepositoryMock({ getOneById: user });
+    const token = await generateResetPasswordToken({ email: user.email, userId: user.id });
 
     await service({
       token,
@@ -42,11 +42,12 @@ describe('reset password service', () => {
     expect(userRepository.updateUser).not.toBeCalled();
   });
   it('should not reset password - user not found', async () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtaWx5LmhpbGxzQGRvdWFuZS5maW5hbmNlcy5nb3V2LmZyIiwidXNlcklkIjoiOGUzMzljOGYtMjE4Ny00NmE5LThjMzAtYWExNWQzZWJjMzMwIiwiaWF0IjoxNjgzNTQ0MjYyLCJleHAiOjE2ODM4MDM0NjJ9.REqn_FKTQxPM3Co2brsthhLo9pgqYetnw89omqtaJ4I';
-
     const password = 'password';
     const userRepository = userRepositoryMock({ getOneById: undefined });
+    const token = await generateResetPasswordToken({
+      email: 'test@test.fr',
+      userId: '14e30cd5-6867-4a79-b37a-895853e64214',
+    });
 
     await expect(
       service({
@@ -59,12 +60,10 @@ describe('reset password service', () => {
     expect(userRepository.updateUser).not.toBeCalled();
   });
   it('should not reset password - user blocked', async () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtaWx5LmhpbGxzQGRvdWFuZS5maW5hbmNlcy5nb3V2LmZyIiwidXNlcklkIjoiOGUzMzljOGYtMjE4Ny00NmE5LThjMzAtYWExNWQzZWJjMzMwIiwiaWF0IjoxNjgzNTQ0MjYyLCJleHAiOjE2ODM4MDM0NjJ9.REqn_FKTQxPM3Co2brsthhLo9pgqYetnw89omqtaJ4I';
-
     const password = 'password';
     const user = userEntityFactory({ blocked: true });
     const userRepository = userRepositoryMock({ getOneById: user });
+    const token = await generateResetPasswordToken({ email: user.email, userId: user.id });
 
     await expect(
       service({
@@ -77,12 +76,10 @@ describe('reset password service', () => {
     expect(userRepository.updateUser).not.toBeCalled();
   });
   it('should not reset password - user not enabled', async () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtaWx5LmhpbGxzQGRvdWFuZS5maW5hbmNlcy5nb3V2LmZyIiwidXNlcklkIjoiOGUzMzljOGYtMjE4Ny00NmE5LThjMzAtYWExNWQzZWJjMzMwIiwiaWF0IjoxNjgzNTQ0MjYyLCJleHAiOjE2ODM4MDM0NjJ9.REqn_FKTQxPM3Co2brsthhLo9pgqYetnw89omqtaJ4I';
-
     const password = 'password';
     const user = userEntityFactory({ enabled: false });
     const userRepository = userRepositoryMock({ getOneById: user });
+    const token = await generateResetPasswordToken({ email: user.email, userId: user.id });
 
     await expect(
       service({
