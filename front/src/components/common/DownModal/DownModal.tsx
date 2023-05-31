@@ -33,19 +33,8 @@ export const DownModal: React.FC<IDownModalProps> = ({
         className="fixed bottom-0 z-40 h-auto w-full justify-center"
         onClose={handleOnClose}
       >
+        <Dialog.Overlay className="fixed inset-0 z-0 h-auto bg-black/60 transition-opacity" />
         <div className="flex h-auto w-full text-center">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Dialog.Overlay className="fixed inset-0 h-auto bg-black/60 transition-opacity" />
-          </Transition.Child>
-
           {/* This element is to trick the browser into centering the Downmodal contents. */}
           <span className="hidden sm:inline-block sm:align-middle" aria-hidden="true">
             &#8203;
