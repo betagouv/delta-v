@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
@@ -12,14 +13,16 @@ import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
 
 export interface FormForgetPasswordData {
-  email: string;
+  password: string;
 }
 
 const schema = yup.object({
-  email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
+  password: yup.string().required('Le mot de passe esr requis'),
 });
 
-const LoginPage = () => {
+const ResetPasswordPage = () => {
+  const router = useRouter();
+  const { token } = router.query;
   const {
     handleSubmit,
     register,
@@ -27,14 +30,14 @@ const LoginPage = () => {
     formState: { isDirty, isValid },
   } = useForm<FormForgetPasswordData>({
     defaultValues: {
-      email: undefined,
+      password: undefined,
     },
     resolver: yupResolver(schema),
   });
 
-  const { askResetPassword, errorApi, successApi } = useStore(
+  const { resetPassword, errorApi, successApi } = useStore(
     (state) => ({
-      askResetPassword: state.askResetPassword,
+      resetPassword: state.resetPassword,
       errorApi: state.user.appState.error,
       successApi: state.user.appState.success,
     }),
@@ -42,7 +45,9 @@ const LoginPage = () => {
   );
 
   const onSubmit = async (data: FormForgetPasswordData) => {
-    await askResetPassword(data);
+    if (await resetPassword({ token: token as string, password: data.password })) {
+      router.push(RoutingAuthentication.login);
+    }
   };
 
   return (
@@ -56,12 +61,12 @@ const LoginPage = () => {
     >
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-6">
         <InputGroup
-          type="email"
-          name="adult"
+          type="password"
+          name="password"
           fullWidth={false}
-          placeholder="Email"
-          register={register('email')}
-          error={errors?.email?.message}
+          placeholder="Password"
+          register={register('password')}
+          error={errors?.password?.message}
         />
         <TextLink underline to={RoutingAuthentication.login}>
           se connecter
@@ -78,4 +83,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ResetPasswordPage;

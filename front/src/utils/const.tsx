@@ -27,7 +27,7 @@ export enum RoutingAuthentication {
   login = '/agent/authentification',
   register = '/agent/authentification/inscription',
   forgetPassword = '/agent/authentification/mot-de-passe-oublie',
-  resetPassword = '/agent/authentification/mot-de-passe-oublie/reset',
+  resetPassword = '/agent/authentification/mot-de-passe-oublie/reinitialiser',
 }
 
 export const DECLARATION_STEP_PAGE: Record<number, string> = {
