@@ -55,7 +55,7 @@
     "@types/express-pino-logger": "^4.0.3",
     "@types/jest": "^29.5.1",
     "@types/jsonwebtoken": "^9.0.2",
-    "@types/node": "^20.1.0",
+    "@types/node": "^20.2.5",
     "@types/nodemailer": "^6.4.7",
     "@types/pino": "^7.0.5",
     "@types/pino-http": "^5.8.1",
