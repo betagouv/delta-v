@@ -1,28 +1,23 @@
 import { v4 as uuid4 } from 'uuid';
-import { ILogger } from '../../../core/logger';
-import { MailerFunction } from '../../../core/mailer';
 import { User } from '../../../entities/user.entity';
 import { UserRepositoryInterface } from '../../../repositories/user.repository';
 import userAlreadyExistError from '../../common/errors/userAlreadyExist.error';
 import { hashPassword } from '../common/services/password.service';
 import { CustomEventEmitterInterface } from '../../../core/eventManager/eventManager';
+import { sendEventValidationEmailToken } from '../common/services/sendValidationEmail.service';
 
 interface ILoginServiceOptions {
   email: string;
   password: string;
   userRepository: UserRepositoryInterface;
-  mailer: MailerFunction;
   eventEmitter: CustomEventEmitterInterface;
-  logger: ILogger;
 }
 
 export default async ({
   email,
   password,
   userRepository,
-  mailer,
   eventEmitter,
-  logger,
 }: ILoginServiceOptions): Promise<void> => {
   const existingUser = await userRepository.getOneByEmail(email);
 
@@ -42,5 +37,5 @@ export default async ({
 
   await userRepository.createUser(user);
 
-  eventEmitter.emitSendEmailValidateAccount({ user, mailer, logger });
+  await sendEventValidationEmailToken({ user, eventEmitter });
 };

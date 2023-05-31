@@ -55,7 +55,7 @@ describe('register route', () => {
       expect(storedUser.enabled).toBeFalsy();
     }
 
-    expect(eventEmitterMock.emitSendEmailValidateAccount.mock.calls.length).toBe(1);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 
   test('should return error with code 400 - user already exist', async () => {
@@ -68,6 +68,6 @@ describe('register route', () => {
     expect(body.code).toEqual(ErrorCodes.EMAIL_ALREADY_EXIST_BAD_REQUEST);
     expect(status).toBe(HttpStatuses.BAD_REQUEST);
 
-    expect(eventEmitterMock.emitSendEmailValidateAccount.mock.calls.length).toBe(0);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
 });

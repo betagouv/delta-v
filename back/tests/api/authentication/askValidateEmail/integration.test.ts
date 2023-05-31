@@ -39,7 +39,7 @@ describe('askEmailValidationRouter route', () => {
     expect(status).toBe(HttpStatuses.OK);
     expect(body.code).toEqual(ResponseCodes.USER_ASK_EMAIL_VALIDATION);
 
-    expect(eventEmitterMock.emitSendEmailValidateAccount.mock.calls.length).toBe(1);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 
   test('should return error with code 404, user not found', async () => {
@@ -56,7 +56,7 @@ describe('askEmailValidationRouter route', () => {
     expect(status).toBe(HttpStatuses.NOT_FOUND);
     expect(body.code).toEqual(ErrorCodes.USER_NOT_FOUND);
 
-    expect(eventEmitterMock.emitSendEmailValidateAccount.mock.calls.length).toBe(0);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
 
   test('should return error with code 401, user blocked', async () => {
@@ -73,7 +73,7 @@ describe('askEmailValidationRouter route', () => {
     expect(status).toBe(HttpStatuses.UNAUTHORIZED);
     expect(body.code).toEqual(ErrorCodes.USER_BLOCKED_UNAUTHORIZED);
 
-    expect(eventEmitterMock.emitSendEmailValidateAccount.mock.calls.length).toBe(0);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
 
   test('should return error with code 401, user already enabled', async () => {
@@ -89,6 +89,6 @@ describe('askEmailValidationRouter route', () => {
     expect(status).toBe(HttpStatuses.UNAUTHORIZED);
     expect(body.code).toEqual(ErrorCodes.USER_ALREADY_ENABLED_UNAUTHORIZED);
 
-    expect(eventEmitterMock.emitSendEmailValidateAccount.mock.calls.length).toBe(0);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
 });

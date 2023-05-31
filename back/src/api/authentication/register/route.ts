@@ -4,7 +4,6 @@ import { HttpStatuses } from '../../../core/httpStatuses';
 import { UserRepository } from '../../../repositories/user.repository';
 import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
 import { AppDataSource } from '../../../loader/database';
-import { connectAndSendEmail } from '../../../core/mailer';
 import { eventEmitter } from '../../../core/eventManager/eventManager';
 import serializer from './serializer';
 import service from './service';
@@ -19,15 +18,12 @@ export default async (
 ): Promise<Response | void> => {
   try {
     const { email, password } = req.body;
-    const { logger } = req;
 
     await service({
       email,
       password,
       userRepository: AppDataSource.manager.withRepository(UserRepository),
-      mailer: connectAndSendEmail,
       eventEmitter,
-      logger,
     });
 
     const response = serializer();
