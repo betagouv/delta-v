@@ -22,7 +22,6 @@ interface ModalAddProductDeclarationProps {
 export const ModalAddProductDeclaration: React.FC<ModalAddProductDeclarationProps> = ({
   onClose,
   currentProduct,
-  // onAddProduct,
   open,
 }) => {
   const [steps, setSteps] = useState<Product[]>([]);
@@ -36,13 +35,7 @@ export const ModalAddProductDeclaration: React.FC<ModalAddProductDeclarationProp
     }
   }, [currentProduct]);
 
-  const {
-    // handleSubmit,
-    // register,
-    // control,
-    reset,
-    // formState: { errors },
-  } = useForm<any>({
+  const { reset } = useForm<any>({
     defaultValues: {
       name: undefined,
       value: null,
@@ -58,11 +51,6 @@ export const ModalAddProductDeclaration: React.FC<ModalAddProductDeclarationProp
       ...getDefaultValues(steps),
     });
   }, [steps]);
-
-  // const isAddAble =
-  //   steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
-
-  // const isClothes = currentProduct.name.toLocaleLowerCase().includes('vêtements');
 
   return (
     <>
