@@ -12,6 +12,8 @@ import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
 import { useStore } from '@/stores/store';
 
+export type Role = 'agent' | 'user';
+
 export interface OnAddProductOptions {
   product: Product;
   name: string;
@@ -24,15 +26,20 @@ type OnAddProduct = (options: OnAddProductOptions) => void;
 interface FormSelectProductProps {
   currentProduct: Product;
   onAddProduct: OnAddProduct;
+  role?: Role;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   currentProduct,
   onAddProduct,
+  role = 'user',
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
   const { defaultCurrency } = useStore((state) => ({
-    defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
+    defaultCurrency:
+      role === 'user'
+        ? state.simulator.appState.simulatorRequest.defaultCurrency
+        : state.declaration.appState.declarationRequest.defaultCurrency,
   }));
 
   useEffect(() => {
@@ -81,24 +88,26 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   return currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
-      <div>
-        <label
-          htmlFor="name"
-          className={`mb-4 block text-base font-bold`}
-          data-testid="label-element"
-        >
-          Nommez votre achat{' '}
-          <span className="ml-1 font-normal italic text-gray-400">(facultatif)</span>
-        </label>
-        <InputGroup
-          type="text"
-          fullWidth
-          name="name"
-          placeholder="Exemple : Jeans, pantalon noir, slim..."
-          register={register('name', { required: false })}
-          error={errors.name?.message as string | undefined}
-        />
-      </div>
+      {role === 'user' && (
+        <div>
+          <label
+            htmlFor="name"
+            className={`mb-4 block text-base font-bold`}
+            data-testid="label-element"
+          >
+            Nommez votre achat{' '}
+            <span className="ml-1 font-normal italic text-gray-400">(facultatif)</span>
+          </label>
+          <InputGroup
+            type="text"
+            fullWidth
+            name="name"
+            placeholder="Exemple : Jeans, pantalon noir, slim..."
+            register={register('name', { required: false })}
+            error={errors.name?.message as string | undefined}
+          />
+        </div>
+      )}
       <StepsFormProduct
         control={control}
         currentProduct={currentProduct}
@@ -106,13 +115,15 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         setSteps={setSteps}
         steps={steps}
       />
-      <FormAddProduct
-        productId={currentProduct.id}
-        disabled={!isAddAble}
-        control={control}
-        register={register}
-        errors={errors}
-      />
+      {(role === 'user' || isAddAble) && (
+        <FormAddProduct
+          productId={currentProduct.id}
+          disabled={!isAddAble}
+          control={control}
+          register={register}
+          errors={errors}
+        />
+      )}
     </form>
   ) : (
     <ProductNotManaged />

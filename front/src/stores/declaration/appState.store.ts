@@ -25,6 +25,7 @@ export interface DeclarationRequest {
   meansOfTransportAndCountry: MeansOfTransportAndCountry;
   defaultCurrency?: string;
   shoppingProducts: ShoppingProduct[];
+  validateProducts: ShoppingProduct[];
   border?: boolean;
 }
 
@@ -79,6 +80,7 @@ export const DECLARATION_EMPTY_STATE = {
     border: undefined,
     shoppingProducts: [],
     customShoppingProducts: [],
+    validateProducts: [],
   },
   declarationResponse: undefined,
   displayInfo: true,

@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
+import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { Typography } from '@/components/common/Typography';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
@@ -15,10 +16,9 @@ export interface FormDeclarationData {
 
 const Declaration = () => {
   const declarationRequest = useStore((state) => state.declaration.appState.declarationRequest);
-  const { resetDeclarationSteps, validateDeclarationStep4 } = useStore(
+  const { resetDeclarationSteps } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
-      validateDeclarationStep4: state.validateDeclarationStep4,
     }),
     shallow,
   );
@@ -26,6 +26,8 @@ const Declaration = () => {
   useEffect(() => {
     resetDeclarationSteps(4);
   }, []);
+
+  const [openDownModal, setOpenDownModal] = useState(true);
 
   const { handleSubmit } = useForm<FormDeclarationData>({
     defaultValues: {
@@ -37,7 +39,6 @@ const Declaration = () => {
     if (!data.border) {
       return;
     }
-    validateDeclarationStep4(data.border === 'true');
     router.push(`/declaration/produits`);
   };
 
@@ -134,6 +135,7 @@ const Declaration = () => {
           </div>
         </div>
       </div>
+      <ModalUnderConstruction open={openDownModal} onClose={() => setOpenDownModal(false)} />
     </DeclarationSteps>
   );
 };

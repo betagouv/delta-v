@@ -73,7 +73,11 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
         )}
       </div>
       <div className="min-w-40 absolute bottom-8 self-center">
-        <Button fullWidth={true} onClick={() => onSearchAll(searchValue)}>
+        <Button
+          fullWidth={true}
+          onClick={() => onSearchAll(searchValue)}
+          disabled={resultSearch.length === 0}
+        >
           {`Voir les ${resultSearch.length} résultats`}
         </Button>
       </div>

@@ -34,15 +34,15 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
       {resultSearch.map((resultElement) => (
         <li
           key={resultElement.id}
-          className="flex cursor-default select-none items-center py-2 px-3"
+          className="inline-flex cursor-default select-none items-center py-2 px-3"
           data-testid="result-product-search-element"
           onClick={() => onClickProduct(resultElement)}
         >
           <div className="flex flex-col">
-            <Typography color="light-gray" size="text-sm" lineHeight="leading-normal" italic>
+            <Typography color="light-gray" size="text-sm" italic>
               {resultElement.name}
             </Typography>
-            <Typography color="secondary" size="text-lg" lineHeight="leading-tight">
+            <Typography color="secondary" size="text-lg">
               {resultElement.rankedValue}
             </Typography>
           </div>

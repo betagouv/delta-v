@@ -6,9 +6,11 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
+import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Product } from '@/model/product';
+import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 import { disabledCountries } from '@/utils/const';
@@ -23,22 +25,32 @@ const Declaration = () => {
     validateDeclarationStep3,
     setProductsDeclarationToDisplay,
     getAllShoppingProduct,
+    removeProductDeclaration,
   } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
       validateDeclarationStep3: state.validateDeclarationStep3,
       setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
       getAllShoppingProduct: state.getAllShoppingProduct,
+      removeProductDeclaration: state.removeProductCartDeclaration,
     }),
     shallow,
   );
   const router = useRouter();
+
+  const [openDownModal, setOpenDownModal] = useState(false);
+  const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
+
   useEffect(() => {
     resetDeclarationSteps(3);
     setProductsDeclarationToDisplay();
+    setAllShoppingProducts(getAllShoppingProduct());
   }, []);
 
-  const [openDownModal, setOpenDownModal] = useState(false);
+  const onClickProductToRemove = (id: string) => {
+    removeProductDeclaration(id);
+    setAllShoppingProducts(getAllShoppingProduct());
+  };
 
   const handleCloseDownModal = () => {
     setOpenDownModal(false);
@@ -55,11 +67,8 @@ const Declaration = () => {
     },
   });
 
-  const onSubmit = (data: FormDeclarationData) => {
-    if (!data.country) {
-      return;
-    }
-    validateDeclarationStep3(data.country);
+  const onSubmit = () => {
+    validateDeclarationStep3(allShoppingProducts);
 
     router.push(`/agent/declaration/ajout/recapitulatif`);
   };
@@ -121,7 +130,6 @@ const Declaration = () => {
     });
   }, []);
 
-  const shoppingProducts = getAllShoppingProduct();
   return (
     <DeclarationSteps
       currentStep={3}
@@ -139,10 +147,27 @@ const Declaration = () => {
           control={control}
           error={errors?.country?.message}
         />
-        {shoppingProducts.map((product) => (
-          <div key={product.id}>{product.name}</div>
-        ))}
       </div>
+
+      {allShoppingProducts.map((product) => (
+        <button
+          key={product.id}
+          className="mt-1 w-full bg-red-500"
+          onClick={() => onClickProductToRemove(product.id)}
+        >
+          {product.name}
+        </button>
+      ))}
+
+      <Button
+        type="submit"
+        onClick={() => onSubmit}
+        disabled={!allShoppingProducts.length}
+        className={{ 'absolute bottom-6 self-center': true }}
+      >
+        Valider les marchandises
+      </Button>
+
       <ModalSearchProduct
         open={openDownModal}
         onClose={handleCloseDownModal}
