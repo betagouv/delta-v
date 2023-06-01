@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "proxy": "http://localhost:8080",
   "engines": {
-    "node": "^16"
+    "node": ">16.0.0"
   },
   "scripts": {
     "dev": "next dev",

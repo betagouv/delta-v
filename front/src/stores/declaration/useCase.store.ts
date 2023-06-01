@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { Alpha2Code } from 'i18n-iso-countries';
+import { countries } from 'countries-list';
 
 import { ShoppingProduct } from '../simulator/appState.store';
 import { StoreSlice } from '../store';
@@ -11,16 +11,16 @@ import {
   MeansOfTransportAndCountry,
 } from './appState.store';
 import axios from '@/config/axios';
+import { Currencies } from '@/model/currencies';
 
 export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
-  validateDeclarationStep3: (country: Alpha2Code) => void;
-  validateDeclarationStep4: (border: boolean) => void;
+  validateDeclarationStep3: (products: ShoppingProduct[]) => void;
   resetDeclarationSteps: (step: number) => void;
-  addProductDeclaration: (shoppingProduct: ShoppingProduct) => void;
+  addProductCartDeclaration: (shoppingProduct: ShoppingProduct) => void;
   getAllShoppingProduct: () => ShoppingProduct[];
-  removeProductDeclaration: (id: string) => void;
+  removeProductCartDeclaration: (id: string) => void;
   declarate: () => void;
 }
 
@@ -41,14 +41,14 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
         ...meansOfTransportAndCountry,
       };
 
-      // const rawCurrencies = countries[meansOfTransportAndCountry.country ?? 'FR'].currency;
-      // const mainCurrency = rawCurrencies.split(',')[0];
-      // const defaultCurrency = newState.currencies.appState.currencies.find(
-      //   (currency: Currencies) => currency.id === mainCurrency,
-      // );
+      const rawCurrencies = countries[meansOfTransportAndCountry.country ?? 'FR'].currency;
+      const mainCurrency = rawCurrencies.split(',')[0];
+      const defaultCurrency = newState.currencies.appState.currencies.find(
+        (currency: Currencies) => currency.id === mainCurrency,
+      );
 
-      // newState.declaration.appState.declarationRequest.defaultCurrency =
-      //   defaultCurrency?.id ?? 'EUR';
+      newState.declaration.appState.declarationRequest.defaultCurrency =
+        defaultCurrency?.id ?? 'EUR';
 
       if (
         meansOfTransportAndCountry.country !== 'CH' ||
@@ -59,32 +59,10 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       return newState;
     });
   },
-  validateDeclarationStep3: (country: Alpha2Code): void => {
+  validateDeclarationStep3: (products: ShoppingProduct[]): void => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState.declarationRequest.country = country;
-      // const rawCurrencies = countries[country ?? 'FR'].currency;
-      // const mainCurrency = rawCurrencies.split(',')[0];
-      // const defaultCurrency = newState.currencies.appState.currencies.find(
-      //   (currency: Currencies) => currency.id === mainCurrency,
-      // );
-
-      // newState.declaration.appState.declarationRequest.defaultCurrency =
-      //   defaultCurrency?.id ?? 'EUR';
-
-      if (
-        country !== 'CH' ||
-        state.declaration.appState.declarationRequest.meanOfTransport !== MeansOfTransport.CAR
-      ) {
-        newState.declaration.appState.declarationRequest.border = false;
-      }
-      return newState;
-    });
-  },
-  validateDeclarationStep4: (border: boolean): void => {
-    set((state: any) => {
-      const newState = { ...state };
-      newState.simulator.appState.simulatorRequest.border = border;
+      newState.declaration.appState.declarationRequest.validateProducts = products;
       return newState;
     });
   },
@@ -99,8 +77,9 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
         newState.declaration.appState.declarationRequest.contactDetails =
           DECLARATION_EMPTY_STATE.declarationRequest.contactDetails;
       }
-      newState.declaration.appState.declarationRequest.shoppingProducts =
-        DECLARATION_EMPTY_STATE.declarationRequest.shoppingProducts;
+      newState.declaration.appState.declarationRequest.validateProducts =
+        DECLARATION_EMPTY_STATE.declarationRequest.validateProducts;
+
       newState.declaration.appState.declarationResponse =
         DECLARATION_EMPTY_STATE.declarationResponse;
       return newState;
@@ -128,7 +107,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       });
     }
   },
-  addProductDeclaration: (shoppingProduct: ShoppingProduct): void => {
+  addProductCartDeclaration: (shoppingProduct: ShoppingProduct): void => {
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);
@@ -139,14 +118,14 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   getAllShoppingProduct: (): ShoppingProduct[] => {
     return get().declaration.appState.declarationRequest.shoppingProducts;
   },
-  removeProductDeclaration: (id: string): void => {
+  removeProductCartDeclaration: (id: string): void => {
     set((state: any) => {
       const newState = { ...state };
       const newShoppingProducts =
-        newState.simulator.appState.simulatorRequest.shoppingProducts.filter(
+        newState.declaration.appState.declarationRequest.shoppingProducts.filter(
           (product: ShoppingProduct) => product.id !== id,
         );
-      newState.simulator.appState.simulatorRequest.shoppingProducts = newShoppingProducts;
+      newState.declaration.appState.declarationRequest.shoppingProducts = newShoppingProducts;
       return newState;
     });
     get().declarate();

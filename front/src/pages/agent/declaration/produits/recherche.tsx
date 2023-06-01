@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { ModalAddProductDeclaration } from '@/components/autonomous/ModalAddProductDeclaration';
+import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
@@ -19,10 +19,10 @@ import { SearchType } from '@/utils/search';
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { addProductDeclaration, searchProducts, findProduct } = useStore(
+  const { addProductCartDeclaration, searchProducts, findProduct } = useStore(
     (state) => ({
       findProduct: state.findProduct,
-      addProductDeclaration: state.addProductDeclaration,
+      addProductCartDeclaration: state.addProductCartDeclaration,
       searchProducts: state.searchProducts,
     }),
     shallow,
@@ -37,17 +37,17 @@ const SearchProduct = () => {
     : searchProducts((search as string) ?? '');
   const [selectedProduct, setSelectedProduct] = useState<Product>();
 
-  const onAddProduct = ({ product, value, name, currency }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, currency }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
-      name,
+      name: product.name,
       value: parseFloat(value),
       amount: 1,
       currency: currency ?? 'EUR',
     };
 
-    addProductDeclaration(shoppingProduct);
+    addProductCartDeclaration(shoppingProduct);
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
     setOpenModalAddProduct(false);
     router.push(`/agent/declaration/ajout/marchandises`);
@@ -80,7 +80,7 @@ const SearchProduct = () => {
         )}
       </div>
       {selectedProduct && (
-        <ModalAddProductDeclaration
+        <ModalAddProductCartDeclaration
           open={openModalAddProduct}
           onClose={() => setOpenModalAddProduct(false)}
           onAddProduct={onAddProduct}

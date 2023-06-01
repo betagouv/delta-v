@@ -12,16 +12,14 @@ interface SearchResultProductsProps {
 
 export const renderMatchedWithSearch = (product: SearchType<Product>, search: string) => {
   if (!product.rankedValue.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
-    return <span className="text-black">{product.rankedValue}</span>;
+    return <span className="text-xs text-black">{product.rankedValue}</span>;
   }
 
-  const matchValue = product.rankedValue
-    .toLocaleLowerCase()
-    .replace(search.toLocaleLowerCase(), ',');
+  const matchValue = product.rankedValue.replace(new RegExp(`(${search})`, 'gi'), ',');
   const matchValues = matchValue.split(',');
 
   return (
-    <span className="text-black">
+    <span className="text-xs text-black">
       {matchValues[0]}
       <b>{search}</b>
       {matchValues[1]}
@@ -40,20 +38,20 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
         return (
           <li
             key={resultElement.id}
-            className="flex cursor-default select-none items-center py-2 px-3"
+            className="flex cursor-default select-none items-center px-3 pt-3 leading-3"
             data-testid="result-product-search-element"
             onClick={() => onClickProduct(resultElement)}
           >
-            <div className="flex h-5 gap-3">
-              <span className="text-blue-700">
+            <div className="flex items-center gap-3">
+              <span className="mb-1 h-5 text-blue-700">
                 <Icon name="search" />
               </span>
               <span>
                 {renderMatchedWithSearch(resultElement, search)}
                 {resultElement.name && (
                   <React.Fragment>
-                    <span className="text-gray-400"> dans </span>
-                    <span className="text-blue-700">{resultElement.name}</span>
+                    <span className="text-xs text-gray-400"> dans </span>
+                    <span className="text-xs text-blue-700">{resultElement.name}</span>
                   </React.Fragment>
                 )}
               </span>

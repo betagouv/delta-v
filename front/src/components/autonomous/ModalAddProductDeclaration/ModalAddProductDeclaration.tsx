@@ -22,10 +22,6 @@ interface ModalAddProductDeclarationProps {
 export const ModalAddProductDeclaration: React.FC<ModalAddProductDeclarationProps> = ({
   onClose,
   currentProduct,
-<<<<<<< HEAD
-=======
-  // onAddProduct,
->>>>>>> 3599b28 (feat(#542): add search modal on step marchandises)
   open,
 }) => {
   const [steps, setSteps] = useState<Product[]>([]);
@@ -39,17 +35,7 @@ export const ModalAddProductDeclaration: React.FC<ModalAddProductDeclarationProp
     }
   }, [currentProduct]);
 
-<<<<<<< HEAD
   const { reset } = useForm<any>({
-=======
-  const {
-    // handleSubmit,
-    // register,
-    // control,
-    reset,
-    // formState: { errors },
-  } = useForm<any>({
->>>>>>> 3599b28 (feat(#542): add search modal on step marchandises)
     defaultValues: {
       name: undefined,
       value: null,
@@ -66,14 +52,6 @@ export const ModalAddProductDeclaration: React.FC<ModalAddProductDeclarationProp
     });
   }, [steps]);
 
-<<<<<<< HEAD
-=======
-  // const isAddAble =
-  //   steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
-
-  // const isClothes = currentProduct.name.toLocaleLowerCase().includes('vêtements');
-
->>>>>>> 3599b28 (feat(#542): add search modal on step marchandises)
   return (
     <>
       <ModalUnderConstruction open={open} onClose={onClose} />

@@ -43,10 +43,10 @@ export const getLevelWithData = (declarationRequest: DeclarationRequest): number
   ) {
     return 2;
   }
-  if (declarationRequest.border === undefined) {
-    return 4;
+  if (declarationRequest.validateProducts.length === 0) {
+    return 3;
   }
-  return 5;
+  return 4;
 };
 
 export const getCurrentLevelPath = (path: string): number => {

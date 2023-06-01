@@ -7,12 +7,9 @@ import { FormAddProduct } from '../formAddProduct';
 import { StepsFormProduct } from '../stepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
 import { getSchema } from './schema';
-import { FormSelectProductData, getDefaultValues } from './utils';
-import { InputGroup } from '@/components/input/InputGroup';
+import { FormSelectProductAgentData, getDefaultValues } from './utils';
 import { Product, ProductDisplayTypes } from '@/model/product';
 import { useStore } from '@/stores/store';
-
-export type Role = 'agent' | 'user';
 
 export interface OnAddProductOptions {
   product: Product;
@@ -23,23 +20,18 @@ export interface OnAddProductOptions {
 
 type OnAddProduct = (options: OnAddProductOptions) => void;
 
-interface FormSelectProductProps {
+interface FormSelectProductAgentProps {
   currentProduct: Product;
   onAddProduct: OnAddProduct;
-  role?: Role;
 }
 
-export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
+export const FormSelectProductAgent: React.FC<FormSelectProductAgentProps> = ({
   currentProduct,
   onAddProduct,
-  role = 'user',
-}: FormSelectProductProps) => {
+}: FormSelectProductAgentProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
   const { defaultCurrency } = useStore((state) => ({
-    defaultCurrency:
-      role === 'user'
-        ? state.simulator.appState.simulatorRequest.defaultCurrency
-        : state.declaration.appState.declarationRequest.defaultCurrency,
+    defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
   }));
 
   useEffect(() => {
@@ -71,7 +63,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     });
   }, [steps]);
 
-  const onSubmit = (data: FormSelectProductData): void => {
+  const onSubmit = (data: FormSelectProductAgentData): void => {
     const product = steps.pop();
     if (product) {
       onAddProduct({
@@ -88,26 +80,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   return currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
-      {role === 'user' && (
-        <div>
-          <label
-            htmlFor="name"
-            className={`mb-4 block text-base font-bold`}
-            data-testid="label-element"
-          >
-            Nommez votre achat{' '}
-            <span className="ml-1 font-normal italic text-gray-400">(facultatif)</span>
-          </label>
-          <InputGroup
-            type="text"
-            fullWidth
-            name="name"
-            placeholder="Exemple : Jeans, pantalon noir, slim..."
-            register={register('name', { required: false })}
-            error={errors.name?.message as string | undefined}
-          />
-        </div>
-      )}
       <StepsFormProduct
         control={control}
         currentProduct={currentProduct}
@@ -115,7 +87,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         setSteps={setSteps}
         steps={steps}
       />
-      {(role === 'user' || isAddAble) && (
+      {isAddAble && (
         <FormAddProduct
           productId={currentProduct.id}
           disabled={!isAddAble}
