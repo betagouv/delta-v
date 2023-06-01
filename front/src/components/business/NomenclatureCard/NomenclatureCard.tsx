@@ -13,12 +13,13 @@ dayjs.locale('fr');
 
 export type NomenclatureCardProps = {
   product: Product;
+  onClick?: (product: Product) => void;
 };
 
-export const NomenclatureCard = ({ product }: NomenclatureCardProps) => {
+export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const handleClick = () => {
+  const onFavoriteClick = () => {
     setIsFavorite(!isFavorite);
   };
 
@@ -27,6 +28,7 @@ export const NomenclatureCard = ({ product }: NomenclatureCardProps) => {
       className={cs(
         'relative grid rounded-xl border border-gray-200 grid-cols-[40px_1fr] w-full h-28 p-3',
       )}
+      onClick={onClick ? () => onClick(product) : undefined}
     >
       <div className="h-7 w-7 bg-gray-200" />
       <div className="grid-rows-[1fr_3fr]">
@@ -49,7 +51,7 @@ export const NomenclatureCard = ({ product }: NomenclatureCardProps) => {
       </div>
       <div
         className="absolute top-2 right-2 h-4 w-4 cursor-pointer text-[#5A7BF0]"
-        onClick={handleClick}
+        onClick={onFavoriteClick}
       >
         {isFavorite ? (
           <Icon name="star-full" color="#5A7BF0" />

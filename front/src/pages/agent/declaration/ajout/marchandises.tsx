@@ -8,6 +8,7 @@ import shallow from 'zustand/shallow';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
+import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 import { disabledCountries } from '@/utils/const';
@@ -17,15 +18,20 @@ export interface FormDeclarationData {
 }
 
 const Declaration = () => {
-  const { resetDeclarationSteps, validateDeclarationStep3, setProductsDeclarationToDisplay } =
-    useStore(
-      (state) => ({
-        resetDeclarationSteps: state.resetDeclarationSteps,
-        validateDeclarationStep3: state.validateDeclarationStep3,
-        setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
-      }),
-      shallow,
-    );
+  const {
+    resetDeclarationSteps,
+    validateDeclarationStep3,
+    setProductsDeclarationToDisplay,
+    getAllShoppingProduct,
+  } = useStore(
+    (state) => ({
+      resetDeclarationSteps: state.resetDeclarationSteps,
+      validateDeclarationStep3: state.validateDeclarationStep3,
+      setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
+      getAllShoppingProduct: state.getAllShoppingProduct,
+    }),
+    shallow,
+  );
   const router = useRouter();
   useEffect(() => {
     resetDeclarationSteps(3);
@@ -85,6 +91,22 @@ const Declaration = () => {
     },
   ];
 
+  const onClickProduct = (product: Product) => {
+    setOpenDownModal(false);
+    router.push({
+      pathname: '/agent/declaration/produits/recherche',
+      query: { id: product.id },
+    });
+  };
+
+  const onSearchAll = (searchValue: string) => {
+    setOpenDownModal(false);
+    router.push({
+      pathname: '/agent/declaration/produits/recherche',
+      query: { search: searchValue },
+    });
+  };
+
   const countriesOptions = useMemo(() => {
     const countries = getNames('fr', { select: 'official' });
     const keys = Object.keys(countries) as Alpha2Code[];
@@ -99,6 +121,7 @@ const Declaration = () => {
     });
   }, []);
 
+  const shoppingProducts = getAllShoppingProduct();
   return (
     <DeclarationSteps
       currentStep={3}
@@ -116,8 +139,16 @@ const Declaration = () => {
           control={control}
           error={errors?.country?.message}
         />
+        {shoppingProducts.map((product) => (
+          <div key={product.id}>{product.name}</div>
+        ))}
       </div>
-      <ModalSearchProduct open={openDownModal} onClose={handleCloseDownModal} />
+      <ModalSearchProduct
+        open={openDownModal}
+        onClose={handleCloseDownModal}
+        onClickProduct={onClickProduct}
+        onSearchAll={onSearchAll}
+      />
     </DeclarationSteps>
   );
 };

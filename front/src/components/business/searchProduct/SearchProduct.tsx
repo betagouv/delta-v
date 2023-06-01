@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
+import { SearchResultProducts } from './product/SearchResultProducts';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
+import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
 type SearchDisplayType = 'product' | 'global';
 interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
+  onChange?: (displayResult: boolean) => void;
+  onSearchAll?: (search: string) => void;
+  onClickProduct?: (product: Product) => void;
   placeholder?: string;
   withSearchIcon?: boolean;
   autoFocus?: boolean;
@@ -18,18 +21,25 @@ interface SearchProductProps<T> {
 
 export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unknown>({
   onSearch,
+  onChange = () => {},
+  onSearchAll = () => {},
+  onClickProduct = () => {},
   autoFocus = false,
   disabled = false,
   placeholder = '',
 }: SearchProductProps<T>) => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
     const productsThatMatch = onSearch(searchValue);
     setResultSearch(productsThatMatch);
   }, [searchValue]);
+
+  useEffect(() => {
+    const displayResults = searchValue.length > 0;
+    onChange(displayResults);
+  }, [resultSearch]);
 
   return (
     <div
@@ -37,7 +47,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
       data-testid="search-element"
     >
       <div className="relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex h-full w-9 items-center pl-4">
+        <div className="pointer-events-none absolute inset-y-0 left-0 top-1 flex h-9 w-9 pl-4">
           <Icon name="search" />
         </div>
         <input
@@ -52,17 +62,18 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
           }}
           autoFocus={autoFocus}
         />
+        {searchValue.length === 0 ? (
+          <></>
+        ) : (
+          <SearchResultProducts
+            resultSearch={resultSearch as unknown as SearchType<Product>[]}
+            search={searchValue}
+            onClickProduct={onClickProduct}
+          />
+        )}
       </div>
       <div className="min-w-40 absolute bottom-8 self-center">
-        <Button
-          fullWidth={true}
-          onClick={() =>
-            router.push({
-              pathname: '/agent/declaration/produits/recherche',
-              query: { search: searchValue },
-            })
-          }
-        >
+        <Button fullWidth={true} onClick={() => onSearchAll(searchValue)}>
           {`Voir les ${resultSearch.length} résultats`}
         </Button>
       </div>
