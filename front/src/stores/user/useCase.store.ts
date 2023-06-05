@@ -6,16 +6,26 @@ import { SetState } from 'zustand';
 import { StoreSlice, StoreState } from '../store';
 import { setCookie } from '@/utils/cookie';
 
+export interface IApiCallResponse {
+  success: boolean;
+  response: AxiosResponse<any, any>;
+}
+
 export interface UserUseCaseSlice {
-  login: (loginData: { email: string; password: string }) => Promise<boolean>;
-  askResetPassword: (askResetPasswordData: { email: string }) => Promise<boolean>;
-  resetPassword: (resetPasswordData: { password: string; token: string }) => Promise<boolean>;
+  login: (loginData: { email: string; password: string }) => Promise<IApiCallResponse>;
+  register: (registerData: { email: string; password: string }) => Promise<IApiCallResponse>;
+  askResetPassword: (askResetPasswordData: { email: string }) => Promise<IApiCallResponse>;
+  resetPassword: (resetPasswordData: {
+    password: string;
+    token: string;
+  }) => Promise<IApiCallResponse>;
+  validateEmail: (validateEmailData: { token: string }) => Promise<IApiCallResponse>;
 }
 
 const manageApiCall = async (
   apiCall: Promise<AxiosResponse<any, any>>,
   set: SetState<StoreState>,
-): Promise<{ success: boolean; response: AxiosResponse<any, any> }> => {
+): Promise<IApiCallResponse> => {
   try {
     const response = await apiCall;
     set((state: any) => {
@@ -47,21 +57,32 @@ export const createUseCaseUserSlice: StoreSlice<UserUseCaseSlice> = (set) => ({
       setCookie('accessToken', response.data.accessToken);
       setCookie('refreshToken', response.data.refreshToken);
     }
-    return success;
+    return { success, response };
+  },
+  register: async ({ email, password }) => {
+    const apiCall = axios.post('/api/agent/register', {
+      email,
+      password,
+    });
+    return manageApiCall(apiCall, set);
   },
   askResetPassword: async ({ email }) => {
     const apiCall = axios.post('/api/password/ask', {
       email,
     });
-    const { success } = await manageApiCall(apiCall, set);
-    return success;
+    return manageApiCall(apiCall, set);
   },
   resetPassword: async ({ password, token }) => {
     const apiCall = axios.post('/api/password/reset', {
       password,
       token,
     });
-    const { success } = await manageApiCall(apiCall, set);
-    return success;
+    return manageApiCall(apiCall, set);
+  },
+  validateEmail: async ({ token }) => {
+    const apiCall = axios.post('/api/email/validate', {
+      token,
+    });
+    return manageApiCall(apiCall, set);
   },
 });

@@ -12,38 +12,42 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
+import { getErrorFields } from '@/utils/errorFields';
 
-export interface FormForgetPasswordData {
+export interface FormRegisterData {
   email: string;
+  password: string;
 }
 
 const schema = yup.object({
   email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
+  password: yup.string().required('Le mot de passe est requis'),
 });
 
-const AskResetPasswordPage = () => {
+const RegisterPage = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
     formState: { isDirty, isValid },
-  } = useForm<FormForgetPasswordData>({
+  } = useForm<FormRegisterData>({
     defaultValues: {
       email: undefined,
+      password: undefined,
     },
     resolver: yupResolver(schema),
   });
 
-  const { askResetPassword } = useStore((state) => ({
-    askResetPassword: state.askResetPassword,
+  const { registerAgent } = useStore((state) => ({
+    registerAgent: state.register,
   }));
   const [apiResponseSuccess, setApiResponseSuccess] = useState<AxiosResponse<any, any> | null>(
     null,
   );
   const [apiResponseError, setApiResponseError] = useState<AxiosResponse<any, any> | null>(null);
 
-  const onSubmit = async (data: FormForgetPasswordData) => {
-    const { success, response } = await askResetPassword(data);
+  const onSubmit = async (data: FormRegisterData) => {
+    const { success, response } = await registerAgent(data);
     if (success) {
       setApiResponseSuccess(response);
       setApiResponseError(null);
@@ -69,8 +73,17 @@ const AskResetPasswordPage = () => {
           fullWidth={false}
           placeholder="Email"
           register={register('email')}
-          error={errors?.email?.message}
+          error={errors?.email?.message ?? getErrorFields('email', apiResponseError)}
         />
+        <InputGroup
+          type="password"
+          name="adult"
+          fullWidth={false}
+          placeholder="Mot de passe"
+          register={register('password')}
+          error={errors?.password?.message ?? getErrorFields('password', apiResponseError)}
+        />
+
         <TextLink underline to={RoutingAuthentication.login}>
           se connecter
         </TextLink>
@@ -90,4 +103,4 @@ const AskResetPasswordPage = () => {
   );
 };
 
-export default AskResetPasswordPage;
+export default RegisterPage;

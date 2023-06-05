@@ -1,8 +1,10 @@
+import { useState } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/common/Button';
 import { TextLink } from '@/components/common/TextLink';
@@ -36,19 +38,19 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const { login, errorApi } = useStore(
-    (state) => ({
-      login: state.login,
-      errorApi: state.user.appState.error,
-    }),
-    shallow,
-  );
+  const { login } = useStore((state) => ({
+    login: state.login,
+  }));
   const router = useRouter();
+  const [apiResponseError, setApiResponseError] = useState<AxiosResponse<any, any> | null>(null);
 
   const onSubmit = async (data: FormLoginData) => {
-    if (await login(data)) {
+    const { success, response } = await login(data);
+    if (success) {
+      setApiResponseError(null);
       router.push('/agent');
     }
+    setApiResponseError(response);
   };
 
   return (
@@ -81,7 +83,13 @@ const LoginPage = () => {
         <TextLink underline to={RoutingAuthentication.forgetPassword}>
           mot de passe oublié
         </TextLink>
-        {errorApi && <div className="text-sm font-bold text-red-500">{errorApi.message}</div>}
+
+        <TextLink underline to={RoutingAuthentication.register}>
+          créer mon compte
+        </TextLink>
+        {apiResponseError?.data.message && (
+          <div className="text-sm font-bold text-red-500">{apiResponseError.data.message}</div>
+        )}
         <div>
           <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>
             Valider

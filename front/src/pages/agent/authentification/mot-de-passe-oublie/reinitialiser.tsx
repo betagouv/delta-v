@@ -1,8 +1,10 @@
+import { useState } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/common/Button';
 import { TextLink } from '@/components/common/TextLink';
@@ -11,6 +13,7 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
+import { getErrorFields } from '@/utils/errorFields';
 
 export interface FormForgetPasswordData {
   password: string;
@@ -35,18 +38,25 @@ const ResetPasswordPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const { resetPassword, errorApi, successApi } = useStore(
-    (state) => ({
-      resetPassword: state.resetPassword,
-      errorApi: state.user.appState.error,
-      successApi: state.user.appState.success,
-    }),
-    shallow,
+  const { resetPassword } = useStore((state) => ({
+    resetPassword: state.resetPassword,
+  }));
+  const [apiResponseSuccess, setApiResponseSuccess] = useState<AxiosResponse<any, any> | null>(
+    null,
   );
+  const [apiResponseError, setApiResponseError] = useState<AxiosResponse<any, any> | null>(null);
 
   const onSubmit = async (data: FormForgetPasswordData) => {
-    if (await resetPassword({ token: token as string, password: data.password })) {
-      router.push(RoutingAuthentication.login);
+    const { success, response } = await resetPassword({
+      token: token as string,
+      password: data.password,
+    });
+    if (success) {
+      setApiResponseSuccess(response);
+      setApiResponseError(null);
+    } else if (success === false) {
+      setApiResponseError(response);
+      setApiResponseSuccess(null);
     }
   };
 
@@ -66,13 +76,17 @@ const ResetPasswordPage = () => {
           fullWidth={false}
           placeholder="Password"
           register={register('password')}
-          error={errors?.password?.message}
+          error={errors?.password?.message ?? getErrorFields('password', apiResponseError)}
         />
         <TextLink underline to={RoutingAuthentication.login}>
           se connecter
         </TextLink>
-        {successApi && <div className="text-sm font-bold text-green-500">{successApi.message}</div>}
-        {errorApi && <div className="text-sm font-bold text-red-500">{errorApi.message}</div>}
+        {apiResponseError && (
+          <div className="text-sm font-bold text-red-500">{apiResponseError.data.message}</div>
+        )}
+        {apiResponseSuccess && (
+          <div className="text-sm font-bold text-green-500">{apiResponseSuccess.data.message}</div>
+        )}
         <div>
           <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>
             Valider
