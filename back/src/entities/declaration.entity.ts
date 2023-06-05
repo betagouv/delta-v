@@ -52,11 +52,13 @@ export interface ProductDeclaration {
   customName?: string;
   originalValue: number;
   currency?: string;
+  rateCurrency: number;
   value: number;
   customDuty: number;
   vat: number;
   calculatedCustomDuty: number;
   calculatedVat: number;
+  calculatedTaxes: number;
 }
 
 export interface DeclarationEntityInterface extends VersionData, DeclarantData, TaxesData {

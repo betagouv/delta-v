@@ -12,7 +12,22 @@ describe('getOneDeclaration serializer', () => {
 
     expect(result.declaration).toMatchObject({
       id: oneDeclaration.id,
-      products: oneDeclaration.products,
+      products: [
+        {
+          originalCurrency: oneDeclaration.products[0].currency,
+          rateCurrency: oneDeclaration.products[0].rateCurrency,
+          customId: oneDeclaration.products[0].customId,
+          customName: oneDeclaration.products[0].customName,
+          id: oneDeclaration.products[0].id,
+          originalPrice: oneDeclaration.products[0].originalValue,
+          unitPrice: oneDeclaration.products[0].value,
+          vat: oneDeclaration.products[0].vat,
+          customDuty: oneDeclaration.products[0].customDuty,
+          unitCustomDuty: oneDeclaration.products[0].calculatedCustomDuty,
+          unitVat: oneDeclaration.products[0].calculatedVat,
+          unitTaxes: oneDeclaration.products[0].calculatedTaxes,
+        },
+      ],
       history: oneDeclaration.history,
       versionDate: oneDeclaration.versionDate,
       authorType: oneDeclaration.authorType,

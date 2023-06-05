@@ -3,13 +3,16 @@ import {
   DeclarationEntityInterface,
   DeclarationStatus,
   DeclarationVersion,
-  ProductDeclaration,
 } from '../../../entities/declaration.entity';
 import { Product, ProductDisplayTypes, ProductType } from '../../../entities/product.entity';
 import { sortProducts } from '../../../utils/product.util';
 import { AuthorType } from '../../common/enums/author.enum';
 import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 import { AmountProduct } from '../../common/services/amountProducts/globalAmount.service';
+import {
+  SerializedValueProduct,
+  serializeValueProduct,
+} from '../../declaration/common/serializer/valueProductSerializer';
 
 export interface SerializedProduct {
   id: string;
@@ -51,7 +54,7 @@ export const productSerializer = (product: Product): SerializedProduct => ({
 
 export interface SerializedDeclaration {
   id: string;
-  products: ProductDeclaration[];
+  products: SerializedValueProduct[];
   history?: DeclarationVersion[];
   versionDate: Date;
   authorType: AuthorType;
@@ -78,7 +81,7 @@ export const declarationSerializer = (
   declaration: DeclarationEntityInterface,
 ): SerializedDeclaration => ({
   id: declaration.id,
-  products: declaration.products,
+  products: declaration.products.map(serializeValueProduct),
   history: declaration.history,
   versionDate: declaration.versionDate,
   authorType: declaration.authorType,

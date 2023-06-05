@@ -20,7 +20,7 @@ describe('register service', () => {
     expect(userRepository.getOneByEmail).toBeCalledWith(email);
     expect(userRepository.createUser).toBeCalled();
   });
-  it('should register correctly', async () => {
+  it('should not register correctly - user already exist', async () => {
     const user = userEntityFactory();
 
     const userRepository = userRepositoryMock({ getOneByEmail: user });

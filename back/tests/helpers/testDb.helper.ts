@@ -15,6 +15,7 @@ export interface ITestDbManager {
   persistProduct: (args: Product) => Promise<Product>;
   persistCurrency: (args: Currency) => Promise<Currency>;
   persistUser: (args: User) => Promise<User>;
+  persistDeclaration: (args: DeclarationEntityInterface) => Promise<DeclarationEntityInterface>;
   getCurrencies: () => Promise<Currency[]>;
   getDeclarations: () => Promise<DeclarationEntityInterface[]>;
   getUser: (id: string) => Promise<User | null>;
@@ -39,6 +40,9 @@ export const testDbManager = (): ITestDbManager => {
     persistCurrency: async (args: Currency): Promise<Currency> =>
       connection.manager.save(CurrencyEntity, args),
     persistUser: async (args: User): Promise<User> => connection.manager.save(UserEntity, args),
+    persistDeclaration: async (
+      args: DeclarationEntityInterface,
+    ): Promise<DeclarationEntityInterface> => connection.manager.save(DeclarationEntity, args),
     getCurrencies: async (): Promise<Currency[]> => connection.manager.find(CurrencyEntity),
     getDeclarations: async (): Promise<DeclarationEntity[]> =>
       connection.manager.find(DeclarationEntity),

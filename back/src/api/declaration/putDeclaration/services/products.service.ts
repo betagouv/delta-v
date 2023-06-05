@@ -12,9 +12,11 @@ const getProductDeclarationFromProductTaxes = (
   name: productTaxes.name,
   value: productTaxes.unitPrice,
   currency: productTaxes.originalCurrency,
+  rateCurrency: productTaxes.rateCurrency,
   originalValue: productTaxes.originalPrice,
   calculatedCustomDuty: productTaxes.getUnitCustomDuty(),
   calculatedVat: productTaxes.getUnitVat(),
+  calculatedTaxes: productTaxes.getUnitTaxes(),
   customName: productTaxes.customName,
   customDuty: productTaxes.customDuty,
   vat: productTaxes.vat,
@@ -31,8 +33,10 @@ const getProductsDeclarationFromDetailedShoppingProduct = (
   value: detailedShoppingProduct.shoppingProduct.originalValue,
   originalValue: detailedShoppingProduct.shoppingProduct.originalValue,
   currency: undefined,
+  rateCurrency: 1,
   calculatedCustomDuty: 0,
   calculatedVat: 0,
+  calculatedTaxes: 0,
   name: detailedShoppingProduct.product?.name,
 });
 
