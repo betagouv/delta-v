@@ -1,5 +1,5 @@
 import { Alpha2Code } from 'i18n-iso-countries';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn, Unique } from 'typeorm';
 import { AuthorType } from '../api/common/enums/author.enum';
 import { MeansOfTransport } from '../api/common/enums/meansOfTransport.enum';
 
@@ -23,8 +23,11 @@ export interface VersionData {
 export interface DeclarantData {
   declarantFirstName: string;
   declarantLastName: string;
-  declarantAddress: string;
+  declarantAddressStreet: string;
+  declarantAddressPostalCode: string;
+  declarantAddressCity: string;
   declarantEmail: string;
+  declarantPhoneNumber: string | null;
   declarantBorder: boolean;
   declarantAge: number;
   declarantCountry: Alpha2Code;
@@ -63,14 +66,19 @@ export interface ProductDeclaration {
 
 export interface DeclarationEntityInterface extends VersionData, DeclarantData, TaxesData {
   id: string;
+  publicId: string;
   products: ProductDeclaration[];
   history?: DeclarationVersion[];
 }
 
 @Entity('declaration')
+@Unique('publicId', ['publicId'])
 export class DeclarationEntity implements DeclarationEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
+
+  @Column({ type: 'char', length: 21, unique: true })
+  publicId: string;
 
   @Column({ type: 'jsonb', select: false })
   products: ProductDeclaration[];
@@ -114,10 +122,19 @@ export class DeclarationEntity implements DeclarationEntityInterface {
   declarantLastName: string;
 
   @Column({ type: 'varchar' })
-  declarantAddress: string;
+  declarantAddressStreet: string;
+
+  @Column({ type: 'varchar' })
+  declarantAddressPostalCode: string;
+
+  @Column({ type: 'varchar' })
+  declarantAddressCity: string;
 
   @Column({ type: 'varchar' })
   declarantEmail: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  declarantPhoneNumber: string | null;
 
   @Column({ type: 'boolean' })
   declarantBorder: boolean;

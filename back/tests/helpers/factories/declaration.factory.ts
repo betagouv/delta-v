@@ -41,6 +41,7 @@ export const DeclarationFactory = ({
 const buildSchema = (): DeclarationEntityInterface => {
   return {
     id: faker.datatype.uuid(),
+    publicId: faker.random.alphaNumeric(21),
     versionDate: faker.datatype.datetime(),
     authorFullName: faker.name.fullName(),
     authorEmail: faker.internet.email(),
@@ -48,8 +49,11 @@ const buildSchema = (): DeclarationEntityInterface => {
     status: DeclarationStatus.SUBMITTED,
     declarantFirstName: faker.name.firstName(),
     declarantLastName: faker.name.lastName(),
-    declarantAddress: faker.address.streetAddress(),
+    declarantAddressStreet: faker.address.streetAddress(),
+    declarantAddressPostalCode: faker.address.zipCode(),
+    declarantAddressCity: faker.address.city(),
     declarantEmail: faker.internet.email(),
+    declarantPhoneNumber: faker.phone.number(),
     declarantBorder: faker.datatype.boolean(),
     declarantAge: faker.datatype.number({ min: 1, max: 100, precision: 1 }),
     declarantCountry: 'ES',

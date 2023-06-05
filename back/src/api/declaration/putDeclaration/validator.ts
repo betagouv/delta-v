@@ -24,8 +24,11 @@ export interface PutDeclarationRequest {
     authorId?: string;
     authorFullName: string;
     authorType: AuthorType;
-    declarantAddress: string;
+    declarantAddressStreet: string;
+    declarantAddressPostalCode: string;
+    declarantAddressCity: string;
     declarantEmail: string;
+    declarantPhoneNumber: string | null;
     declarantFirstName: string;
     declarantLastName: string;
   };
@@ -71,8 +74,11 @@ export const putDeclarationValidator: IRequestValidatorSchema = {
       .string()
       .valid(...Object.values(AuthorType))
       .required(),
-    declarantAddress: validator.string().required(),
+    declarantAddressStreet: validator.string().required(),
+    declarantAddressPostalCode: validator.string().required(),
+    declarantAddressCity: validator.string().required(),
     declarantEmail: validator.string().email().required(),
+    declarantPhoneNumber: validator.string().default(null),
     declarantFirstName: validator.string().required(),
     declarantLastName: validator.string().required(),
   }),

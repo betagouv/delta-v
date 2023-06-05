@@ -13,8 +13,11 @@ export interface DeclarationData {
   authorFullName: string;
   authorId: string;
   authorType: AuthorType;
-  declarantAddress: string;
+  declarantAddressStreet: string;
+  declarantAddressPostalCode: string;
+  declarantAddressCity: string;
   declarantEmail: string;
+  declarantPhoneNumber: string;
   declarantFirstName: string;
   declarantLastName: string;
 }
@@ -34,8 +37,11 @@ export const prepareDeclarationData = (): DeclarationData => {
     authorFullName: `${faker.name.firstName()} ${faker.name.lastName()}`,
     authorId: faker.datatype.uuid(),
     authorType: faker.helpers.arrayElement(AuthorTypeList),
-    declarantAddress: faker.address.streetAddress(),
+    declarantAddressStreet: faker.address.streetAddress(),
+    declarantAddressPostalCode: faker.address.zipCode(),
+    declarantAddressCity: faker.address.city(),
     declarantEmail: faker.internet.email(),
+    declarantPhoneNumber: faker.phone.number(),
     declarantFirstName: faker.name.firstName(),
     declarantLastName: faker.name.lastName(),
   };

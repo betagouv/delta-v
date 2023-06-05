@@ -3,16 +3,13 @@ import {
   DeclarationEntityInterface,
   DeclarationStatus,
   DeclarationVersion,
-} from '../../../entities/declaration.entity';
-import { Product, ProductDisplayTypes, ProductType } from '../../../entities/product.entity';
-import { sortProducts } from '../../../utils/product.util';
-import { AuthorType } from '../../common/enums/author.enum';
-import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
-import { AmountProduct } from '../../common/services/amountProducts/globalAmount.service';
-import {
-  SerializedValueProduct,
-  serializeValueProduct,
-} from '../../declaration/common/serializer/valueProductSerializer';
+} from '../../../../entities/declaration.entity';
+import { Product, ProductDisplayTypes, ProductType } from '../../../../entities/product.entity';
+import { sortProducts } from '../../../../utils/product.util';
+import { AuthorType } from '../../../common/enums/author.enum';
+import { MeansOfTransport } from '../../../common/enums/meansOfTransport.enum';
+import { AmountProduct } from '../../../common/services/amountProducts/globalAmount.service';
+import { SerializedValueProduct, serializeValueProduct } from './valueProductSerializer';
 
 export interface SerializedProduct {
   id: string;
@@ -64,8 +61,11 @@ export interface SerializedDeclaration {
   status: DeclarationStatus;
   declarantFirstName: string;
   declarantLastName: string;
-  declarantAddress: string;
+  declarantAddressStreet: string;
+  declarantAddressPostalCode: string;
+  declarantAddressCity: string;
   declarantEmail: string;
+  declarantPhoneNumber: string | null;
   declarantBorder: boolean;
   declarantAge: number;
   declarantCountry: Alpha2Code;
@@ -91,8 +91,11 @@ export const declarationSerializer = (
   status: declaration.status,
   declarantFirstName: declaration.declarantFirstName,
   declarantLastName: declaration.declarantLastName,
-  declarantAddress: declaration.declarantAddress,
+  declarantAddressStreet: declaration.declarantAddressStreet,
+  declarantAddressPostalCode: declaration.declarantAddressPostalCode,
+  declarantAddressCity: declaration.declarantAddressCity,
   declarantEmail: declaration.declarantEmail,
+  declarantPhoneNumber: declaration.declarantPhoneNumber,
   declarantBorder: declaration.declarantBorder,
   declarantAge: declaration.declarantAge,
   declarantCountry: declaration.declarantCountry,

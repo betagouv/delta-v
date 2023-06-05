@@ -12,6 +12,7 @@ import { Declaration, generateDeclaration } from '../../common/services/declarat
 import { getTaxesDataFromDeclaration } from '../../common/services/declaration/getTaxesDataFromDeclaration.service';
 import { ShoppingProduct } from '../../common/services/shoppingProducts';
 import { getProductsDeclarationFromDeclaration } from './services/products.service';
+import { generatePublicId } from './services/publicId.service';
 
 interface DeclarationOptions {
   declarationId: string;
@@ -27,8 +28,11 @@ interface DeclarationOptions {
   authorId?: string;
   authorFullName: string;
   authorType: AuthorType;
-  declarantAddress: string;
+  declarantAddressStreet: string;
+  declarantAddressPostalCode: string;
+  declarantAddressCity: string;
   declarantEmail: string;
+  declarantPhoneNumber: string | null;
   declarantFirstName: string;
   declarantLastName: string;
 }
@@ -47,8 +51,11 @@ export const service = async ({
   authorId,
   authorFullName,
   authorType,
-  declarantAddress,
+  declarantAddressStreet,
+  declarantAddressPostalCode,
+  declarantAddressCity,
   declarantEmail,
+  declarantPhoneNumber,
   declarantFirstName,
   declarantLastName,
 }: DeclarationOptions): Promise<Declaration> => {
@@ -64,6 +71,7 @@ export const service = async ({
 
   const declarationEntity: DeclarationEntityInterface = {
     id: declarationId,
+    publicId: await generatePublicId(),
     products: getProductsDeclarationFromDeclaration(declaration),
     authorEmail,
     authorId,
@@ -76,8 +84,11 @@ export const service = async ({
     declarantCountry: country,
     declarantAge: age,
     declarantBorder: border,
-    declarantAddress,
+    declarantAddressStreet,
+    declarantAddressPostalCode,
+    declarantAddressCity,
     declarantEmail,
+    declarantPhoneNumber,
     declarantFirstName,
     declarantLastName,
     ...getTaxesDataFromDeclaration(declaration),
