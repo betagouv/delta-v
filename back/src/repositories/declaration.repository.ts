@@ -15,6 +15,7 @@ export const DeclarationRepository: DeclarationRepositoryInterface = AppDataSour
   },
   getOne(declarationId: string): Promise<DeclarationEntityInterface | null> {
     return this.createQueryBuilder('declaration')
+      .addSelect('declaration.products')
       .where('declaration.id = :declarationId', {
         declarationId,
       })
