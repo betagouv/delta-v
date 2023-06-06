@@ -10,7 +10,7 @@ describe('getOneDeclaration validator', () => {
   it('should validate proper data', () => {
     const validData = {
       params: {
-        declarationId: faker.datatype.uuid(),
+        declarationId: faker.string.uuid(),
       },
     };
     expect(isValid(validData)).toBe(true);
@@ -26,7 +26,7 @@ describe('getOneDeclaration validator', () => {
 
   it('should throw error - declarationId not UUID format', () => {
     const validData = {
-      declarationId: faker.datatype.uuid() + 'ABC',
+      declarationId: `${faker.string.uuid()}ABC`,
     };
 
     expect(isValid(validData)).toBe(false);

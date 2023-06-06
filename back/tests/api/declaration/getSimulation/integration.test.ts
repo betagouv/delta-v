@@ -36,7 +36,7 @@ const prepareProductPrice = async (value = 500): Promise<ShoppingProduct[]> => {
   const shoppingProducts: ShoppingProduct[] = [
     {
       id: products[0].id,
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       originalValue: value,
       currency: 'EUR',
     },
@@ -76,7 +76,7 @@ const simulateEndpoint = async ({
   products,
   shoppingProducts,
   border = false,
-  age = faker.datatype.number({ precision: 1, min: 15 }),
+  age = faker.number.int({ min: 15 }),
   meanOfTransport = MeansOfTransport.CAR,
   country = 'US',
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
@@ -127,39 +127,39 @@ describe('test simulator API', () => {
       {
         id: products[0].id,
         customName: 'product1',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 50,
         currency: 'USD',
       },
       {
         id: products[1].id,
         customName: 'product2',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 300,
         currency: 'EUR',
       },
       {
         id: products[1].id,
         customName: 'product3',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 500,
         currency: 'EUR',
       },
       {
         customName: 'cproduct1',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 10,
         currency: 'USD',
       },
       {
         customName: 'cproduct2',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 20,
         currency: 'EUR',
       },
       {
         customName: 'cproduct3',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 30,
         currency: 'EUR',
       },
@@ -217,7 +217,7 @@ describe('test simulator API', () => {
       const shoppingProducts: ShoppingProduct[] = [
         {
           id: products[0].id,
-          customId: faker.datatype.uuid(),
+          customId: faker.string.uuid(),
           originalValue: totalProducts,
           currency: 'EUR',
         },
@@ -241,7 +241,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shoppingProducts,
             border: true,
-            age: faker.datatype.number({ precision: 1, min: 15 }),
+            age: faker.number.int({ min: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toBeGreaterThan(0);
@@ -252,7 +252,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shoppingProducts,
             border: true,
-            age: faker.datatype.number({ precision: 1, min: 15 }),
+            age: faker.number.int({ min: 15 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toEqual(0);
@@ -265,7 +265,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shoppingProducts,
             border: true,
-            age: faker.datatype.number({ precision: 1, max: 14 }),
+            age: faker.number.int({ max: 14 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toBeGreaterThan(0);
@@ -276,7 +276,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shoppingProducts,
             border: true,
-            age: faker.datatype.number({ precision: 1, max: 14 }),
+            age: faker.number.int({ max: 14 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toEqual(0);
@@ -297,7 +297,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shoppingProducts,
             border: false,
-            age: faker.datatype.number({ precision: 1, min: 15 }),
+            age: faker.number.int({ min: 15 }),
             meanOfTransport,
           });
           expect(status).toBe(200);
@@ -317,7 +317,7 @@ describe('test simulator API', () => {
             const { body, status } = await simulateEndpoint({
               shoppingProducts,
               border: false,
-              age: faker.datatype.number({ precision: 1, min: 15 }),
+              age: faker.number.int({ min: 15 }),
               meanOfTransport,
             });
             expect(status).toBe(200);
@@ -332,7 +332,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shoppingProducts,
             border: false,
-            age: faker.datatype.number({ precision: 1, max: 14 }),
+            age: faker.number.int({ max: 14 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toBeGreaterThan(0);
@@ -343,7 +343,7 @@ describe('test simulator API', () => {
           const { body, status } = await simulateEndpoint({
             shoppingProducts,
             border: false,
-            age: faker.datatype.number({ precision: 1, max: 14 }),
+            age: faker.number.int({ max: 14 }),
           });
           expect(status).toBe(200);
           expect(body.totalCustomDuty).toEqual(0);

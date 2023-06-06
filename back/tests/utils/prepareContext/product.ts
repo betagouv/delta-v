@@ -25,7 +25,7 @@ export const prepareContextProduct = async ({
   vat,
   customDuty,
   position = 1,
-  id = faker.datatype.uuid(),
+  id = faker.string.uuid(),
 }: PrepareContextProductOptions): Promise<Product> => {
   const product = productEntityFactory({
     id,

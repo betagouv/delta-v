@@ -52,7 +52,7 @@ describe('Franchise Service', () => {
         (country, isEuCountry) => {
           const result = getFranchiseAmount({
             border: true,
-            age: faker.datatype.number({ precision: 1, min: 15 }),
+            age: faker.number.int({ min: 15 }),
             country: country as Alpha2Code,
           });
           if (isEuCountry) {
@@ -68,7 +68,7 @@ describe('Franchise Service', () => {
         it('should return 75', () => {
           const result = getFranchiseAmount({
             border: true,
-            age: faker.datatype.number({ precision: 1, min: 15 }),
+            age: faker.number.int({ min: 15 }),
             country: 'US',
           });
           expect(result).toBe(75);
@@ -78,7 +78,7 @@ describe('Franchise Service', () => {
         it('should return 40', () => {
           const result = getFranchiseAmount({
             border: true,
-            age: faker.datatype.number({ precision: 1, max: 14 }),
+            age: faker.number.int({ max: 14 }),
             country: 'US',
           });
           expect(result).toBe(40);
@@ -92,7 +92,7 @@ describe('Franchise Service', () => {
           (meanOfTransport, franchise) => {
             const result = getFranchiseAmount({
               border: false,
-              age: faker.datatype.number({ precision: 1, min: 15 }),
+              age: faker.number.int({ min: 15 }),
               meanOfTransport: meanOfTransport as MeansOfTransport,
               country: 'US',
             });
@@ -102,7 +102,7 @@ describe('Franchise Service', () => {
         it('should return 900 for Andorre travelers', () => {
           const result = getFranchiseAmount({
             border: false,
-            age: faker.datatype.number({ precision: 1, min: 15 }),
+            age: faker.number.int({ min: 15 }),
             meanOfTransport: MeansOfTransport.PLANE,
             country: 'AD',
           });
@@ -113,7 +113,7 @@ describe('Franchise Service', () => {
         it('should return 150', () => {
           const result = getFranchiseAmount({
             border: false,
-            age: faker.datatype.number({ precision: 1, max: 14 }),
+            age: faker.number.int({ max: 14 }),
             country: 'US',
           });
           expect(result).toBe(150);
@@ -121,7 +121,7 @@ describe('Franchise Service', () => {
         it('should return 450 for Andorre travelers', () => {
           const result = getFranchiseAmount({
             border: false,
-            age: faker.datatype.number({ precision: 1, max: 14 }),
+            age: faker.number.int({ max: 14 }),
             meanOfTransport: MeansOfTransport.PLANE,
             country: 'AD',
           });

@@ -5,7 +5,7 @@ import { Product, ProductDisplayTypes, ProductType } from '../../../src/entities
 
 const buildSchema = (): Product => {
   return {
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     name: faker.commerce.productName(),
     info: faker.lorem.paragraph(),
     childrenQuestion: faker.lorem.sentence(),

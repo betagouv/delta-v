@@ -8,28 +8,28 @@ const { isValid } = validatorHelper(simulateValidator);
 const defaultValidBody = {
   shoppingProducts: [
     {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       customName: faker.commerce.productName(),
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 85,
       currency: 'EUR',
     },
     {
-      id: faker.datatype.uuid(),
-      customId: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 40,
       currency: 'EUR',
     },
     {
       customName: faker.commerce.productName(),
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 85,
       currency: 'USD',
     },
   ],
   border: true,
   age: 20,
-  country: faker.address.countryCode('alpha-2'),
+  country: faker.location.countryCode('alpha-2'),
 };
 
 describe('test simulator validator', () => {
@@ -47,7 +47,7 @@ describe('test simulator validator', () => {
         ...defaultValidBody,
         shoppingProducts: [
           {
-            id: faker.datatype.string(),
+            id: faker.lorem.word(),
             originalValue: 85,
             currency: 'EUR',
           },
@@ -76,7 +76,7 @@ describe('test simulator validator', () => {
         ...defaultValidBody,
         shoppingProducts: [
           {
-            id: faker.datatype.uuid(),
+            id: faker.string.uuid(),
             originalValue: 0,
             currency: 'EUR',
           },

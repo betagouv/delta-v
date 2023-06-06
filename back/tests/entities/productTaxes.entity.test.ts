@@ -9,11 +9,11 @@ import { productEntityFactory } from '../helpers/factories/product.factory';
 
 describe('ProductTaxes entity', () => {
   const defaultOptions: ProductTaxesConstructorOptions = {
-    id: faker.datatype.uuid(),
-    name: faker.datatype.string(),
-    unitPrice: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
-    customDuty: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
-    vat: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
+    id: faker.string.uuid(),
+    name: faker.lorem.word(),
+    unitPrice: faker.number.float({ max: 1000, min: 0, precision: 0.01 }),
+    customDuty: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
+    vat: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
   };
   describe('constructor', () => {
     it('should creat an object with default values', () => {
@@ -53,15 +53,15 @@ describe('ProductTaxes entity', () => {
     it('should update an object with setFromDetailedShoppingProduct', () => {
       const detailedShoppingProduct = new DetailedShoppingProduct();
       detailedShoppingProduct.shoppingProduct = {
-        id: faker.datatype.uuid(),
-        originalValue: faker.datatype.number({ max: 1000, min: 0, precision: 0.01 }),
-        customName: faker.datatype.string(),
-        customId: faker.datatype.uuid(),
+        id: faker.string.uuid(),
+        originalValue: faker.number.float({ max: 1000, min: 0, precision: 0.01 }),
+        customName: faker.string.sample(),
+        customId: faker.string.uuid(),
         currency: 'EUR',
       };
       detailedShoppingProduct.product = productEntityFactory({
-        customDuty: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
-        vat: faker.datatype.number({ max: 100, min: 0, precision: 0.01 }),
+        customDuty: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
+        vat: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
       });
       detailedShoppingProduct.currency = currencyEntityFactory({
         value: 1,

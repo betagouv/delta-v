@@ -4,7 +4,7 @@ import { News } from '../../../src/entities/news.entity';
 
 const buildSchema = (): News => {
   return {
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     title: faker.lorem.word(),
     content: faker.lorem.paragraph(),
     creationDate: faker.date.past(),

@@ -61,11 +61,11 @@ interface SimulateEndpointResponse {
 }
 
 const simulateEndpoint = async ({
-  declarationId = faker.datatype.uuid(),
+  declarationId = faker.string.uuid(),
   products,
   shoppingProducts,
   border = false,
-  age = faker.datatype.number({ precision: 1, min: 15 }),
+  age = faker.number.int({ min: 15, max: 100 }),
   meanOfTransport = MeansOfTransport.CAR,
   country = 'US',
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
@@ -121,8 +121,8 @@ describe('test put declaration API', () => {
   });
   it('should simulate declaration', async () => {
     const products = await prepareContext();
-    const declarationId = faker.datatype.uuid();
-    const age = faker.datatype.number({ precision: 1, min: 15 });
+    const declarationId = faker.string.uuid();
+    const age = faker.number.int({ min: 15, max: 100 });
     const country = 'US';
     const meanOfTransport = MeansOfTransport.CAR;
     const border = false;
@@ -130,39 +130,39 @@ describe('test put declaration API', () => {
       {
         id: products[0].id,
         customName: 'product1',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 50,
         currency: 'USD',
       },
       {
         id: products[1].id,
         customName: 'product2',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 300,
         currency: 'EUR',
       },
       {
         id: products[1].id,
         customName: 'product3',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 500,
         currency: 'EUR',
       },
       {
         customName: 'cproduct1',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 10,
         currency: 'USD',
       },
       {
         customName: 'cproduct2',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 20,
         currency: 'EUR',
       },
       {
         customName: 'cproduct3',
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: 30,
         currency: 'EUR',
       },

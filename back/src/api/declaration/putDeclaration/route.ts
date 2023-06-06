@@ -64,6 +64,8 @@ export default async (
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {
+    console.log(error);
+
     return next(error);
   }
 };

@@ -24,21 +24,21 @@ const defaultValidBody: Partial<DeclarationData> & {
   ...declarationData,
   shoppingProducts: [
     {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       customName: faker.commerce.productName(),
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 85,
       currency: 'EUR',
     },
     {
-      id: faker.datatype.uuid(),
-      customId: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 40,
       currency: 'EUR',
     },
     {
       customName: faker.commerce.productName(),
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 85,
       currency: 'USD',
     },
@@ -62,7 +62,7 @@ describe('test simulator validator', () => {
         ...defaultValidBody,
         shoppingProducts: [
           {
-            id: faker.datatype.string(),
+            id: faker.string.sample(),
             originalValue: 85,
             currency: 'EUR',
           },
@@ -91,7 +91,7 @@ describe('test simulator validator', () => {
         ...defaultValidBody,
         shoppingProducts: [
           {
-            id: faker.datatype.uuid(),
+            id: faker.string.uuid(),
             originalValue: 0,
             currency: 'EUR',
           },

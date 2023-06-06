@@ -4,11 +4,11 @@ import { buildFactory } from '../../../src/core/testHelpers';
 
 const buildSchema = (): ShoppingProduct => {
   return {
-    id: faker.datatype.uuid(),
-    customId: faker.datatype.uuid(),
+    id: faker.string.uuid(),
+    customId: faker.string.uuid(),
     customName: faker.commerce.productName(),
-    currency: faker.datatype.string(3),
-    originalValue: faker.datatype.number(),
+    currency: faker.string.sample(3),
+    originalValue: faker.number.float(),
   };
 };
 

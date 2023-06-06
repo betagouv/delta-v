@@ -7,7 +7,7 @@ import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 
 describe('test getDeclaration service', () => {
   it('should return a valid declaration', async () => {
-    const uuid = faker.datatype.uuid();
+    const uuid = faker.string.uuid();
     const declarationRepository = declarationRepositoryMock({
       getOne: declarationEntityFactory({ id: uuid }),
     });
@@ -23,7 +23,7 @@ describe('test getDeclaration service', () => {
   });
 
   it("should fail when ticket doesn't exist", async () => {
-    const uuid = faker.datatype.uuid();
+    const uuid = faker.string.uuid();
     const declarationRepository = declarationRepositoryMock({
       getOne: undefined,
     });

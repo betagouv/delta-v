@@ -5,7 +5,7 @@ import { declarationEntityFactory } from '../../../helpers/factories/declaration
 describe('getOneDeclaration serializer', () => {
   it('should serialize data', () => {
     const oneDeclaration = declarationEntityFactory({
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
     });
 
     const result = serializer(oneDeclaration);

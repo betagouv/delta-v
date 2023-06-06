@@ -19,9 +19,9 @@ export const DetailedShoppingProductFactory = ({
 }: DeclarationFactoryOptions): DetailedShoppingProduct => {
   const detailedShoppingProduct = new DetailedShoppingProduct();
   detailedShoppingProduct.shoppingProduct = {
-    id: faker.datatype.uuid(),
-    customId: faker.datatype.uuid(),
-    originalValue: faker.datatype.number({ min: 1, max: 1000, precision: 1 }),
+    id: faker.string.uuid(),
+    customId: faker.string.uuid(),
+    originalValue: faker.number.int({ min: 1, max: 1000 }),
     currency: 'EUR',
     customName: faker.commerce.productName(),
     ...shoppingProduct,

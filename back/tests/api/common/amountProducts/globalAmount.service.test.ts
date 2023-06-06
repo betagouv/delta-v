@@ -15,8 +15,8 @@ describe('checkAmountProducts', () => {
     });
     detailedShoppingProduct1.currency = undefined;
     detailedShoppingProduct1.shoppingProduct = {
-      id: faker.datatype.uuid(),
-      customId: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 50,
       customName: 'marlboro',
       currency: 'EUR',
@@ -28,8 +28,8 @@ describe('checkAmountProducts', () => {
     });
     detailedShoppingProduct2.currency = undefined;
     detailedShoppingProduct2.shoppingProduct = {
-      id: faker.datatype.uuid(),
-      customId: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      customId: faker.string.uuid(),
       customName: 'cubain',
       currency: 'EUR',
       originalValue: 10,
@@ -41,8 +41,8 @@ describe('checkAmountProducts', () => {
     });
     detailedShoppingProduct3.currency = undefined;
     detailedShoppingProduct3.shoppingProduct = {
-      id: faker.datatype.uuid(),
-      customId: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      customId: faker.string.uuid(),
       customName: 'tabac Camel',
       currency: 'EUR',
       originalValue: 30,
@@ -54,8 +54,8 @@ describe('checkAmountProducts', () => {
     });
     detailedShoppingProduct4.currency = undefined;
     detailedShoppingProduct4.shoppingProduct = {
-      id: faker.datatype.uuid(),
-      customId: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      customId: faker.string.uuid(),
       customName: 'cigarette Camel',
       currency: 'EUR',
       originalValue: 10,

@@ -4,8 +4,8 @@ import { Feedback } from '../../../src/entities/feedback.entity';
 
 const buildSchema = (): Feedback => {
   return {
-    id: faker.datatype.uuid(),
-    userId: faker.datatype.uuid(),
+    id: faker.string.uuid(),
+    userId: faker.string.uuid(),
     comment: faker.lorem.sentence(),
     email: faker.internet.email(),
   };

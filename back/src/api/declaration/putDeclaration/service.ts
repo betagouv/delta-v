@@ -71,7 +71,7 @@ export const service = async ({
 
   const declarationEntity: DeclarationEntityInterface = {
     id: declarationId,
-    publicId: await generatePublicId(),
+    publicId: generatePublicId(),
     products: getProductsDeclarationFromDeclaration(declaration),
     authorEmail,
     authorId,

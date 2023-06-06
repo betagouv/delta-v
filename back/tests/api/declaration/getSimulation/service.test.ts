@@ -24,19 +24,19 @@ describe('test simulator service', () => {
     });
     const shoppingProduct1: ShoppingProduct = {
       id: product1.id,
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       customName: 'product 1',
       originalValue: 85,
       currency: 'EUR',
     };
     const shoppingProduct2: ShoppingProduct = {
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       id: product2.id,
       originalValue: 40,
       currency: 'USD',
     };
     const shoppingProduct3: ShoppingProduct = {
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       customName: 'product 3',
       id: product3.id,
       originalValue: 300,
@@ -119,7 +119,7 @@ describe('test simulator service', () => {
       const product1 = productEntityFactory({ customDuty, vat: 20 });
       const shoppingProduct1: ShoppingProduct = {
         id: product1.id,
-        customId: faker.datatype.uuid(),
+        customId: faker.string.uuid(),
         originalValue: totalProducts,
         currency: 'EUR',
       };
@@ -148,7 +148,7 @@ describe('test simulator service', () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
     const shoppingProduct: ShoppingProduct = {
       id: product.id,
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 150,
       currency: 'EUR',
     };
@@ -173,7 +173,7 @@ describe('test simulator service', () => {
     const product = productEntityFactory({ customDuty: 12, vat: 20 });
     const shoppingProduct: ShoppingProduct = {
       id: product.id,
-      customId: faker.datatype.uuid(),
+      customId: faker.string.uuid(),
       originalValue: 150,
       currency: 'EUR',
     };
