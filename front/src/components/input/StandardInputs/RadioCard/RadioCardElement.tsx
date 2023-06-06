@@ -28,7 +28,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
           ? 'opacity-50 cursor-not-allowed'
           : 'active:bg-gray-50 active:p-[15px] active:border-4',
         checked ? 'font-bold border-4 p-[15px]' : 'font-normal border',
-        'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
+        'border-gray-200 rounded-xl w-full h-32 flex items-center justify-center text-sm sm:flex-1',
       )}
       onClick={(e) => {
         if (disabled) {
@@ -38,10 +38,12 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
       }}
     >
       <div className="flex flex-col items-center">
-        <div className="flex h-8 w-auto items-center justify-center">
+        <div className="flex h-8 items-center justify-center">
           <SvgIcon name={svgIcon} />
         </div>
-        <label className="text-center">{value}</label>
+        <label className="text-center">
+          {value.length > 30 ? `${value.slice(0, 30)}...` : value}
+        </label>
       </div>
     </button>
   );

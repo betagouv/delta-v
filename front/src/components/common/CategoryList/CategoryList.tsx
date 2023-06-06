@@ -31,7 +31,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
       <div
         className={cs({
           'flex flex-row': true,
-          'flex-row gap-4': displayType === 'card',
+          'grid grid-cols-3 gap-2': displayType === 'card',
           'flex-col': displayType === 'list',
         })}
       >

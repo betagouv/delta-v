@@ -14,11 +14,11 @@ export enum MeansOfTransport {
 }
 
 export interface DeclarationRequest {
+  declarationId: string;
   contactDetails: ContactDetails;
   meansOfTransportAndCountry: MeansOfTransportAndCountry;
   defaultCurrency?: string;
   shoppingProducts: ShoppingProduct[];
-  validateProducts: ShoppingProduct[];
   border?: boolean;
 }
 
@@ -47,7 +47,6 @@ export interface ValidateStep3Options {
 export interface DeclarationData {
   declarationRequest: DeclarationRequest;
   declarationResponse?: SimulatorResponse;
-  validateDeclarationResponse?: DeclarationResponse;
   displayInfo: boolean;
   error?: any;
 }
@@ -87,6 +86,7 @@ export interface DeclarationResponse {
 
 export const DECLARATION_EMPTY_STATE = {
   declarationRequest: {
+    declarationId: '',
     contactDetails: {
       age: 0,
       lastName: '',
@@ -106,10 +106,8 @@ export const DECLARATION_EMPTY_STATE = {
     border: undefined,
     shoppingProducts: [],
     customShoppingProducts: [],
-    validateProducts: [],
   },
   declarationResponse: undefined,
-  validateDeclarationResponse: undefined,
   displayInfo: true,
   error: undefined,
 };
