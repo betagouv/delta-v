@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
 import { AppProps } from 'next/app';
 import '../styles/global.css';
 import '../config/i18n';
+import { ToastContainer } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
 import { SvgIcon } from '@/components/common/SvgIcon';
@@ -75,6 +77,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <span className="flex-1" />
         </div>
         <Component {...pageProps} />
+        <ToastContainer />
       </MatomoProvider>
     </>
   );

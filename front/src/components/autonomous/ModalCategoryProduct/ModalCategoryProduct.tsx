@@ -98,7 +98,11 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({ onCl
         <div className="flex h-[90vh] flex-1 flex-col gap-6">
           <div className="flex flex-1 flex-col gap-6">
             {currentProduct?.finalProduct ? (
-              <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
+              <FormSelectProduct
+                currentProduct={currentProduct}
+                onAddProduct={onAddProduct}
+                role="agent"
+              />
             ) : (
               <CategoryList
                 onSelectProduct={onSelectProduct}

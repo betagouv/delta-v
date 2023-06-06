@@ -12,6 +12,7 @@ describe('getOneDeclaration serializer', () => {
 
     expect(result.declaration).toMatchObject({
       id: oneDeclaration.id,
+      publicId: oneDeclaration.publicId,
       products: [
         {
           originalCurrency: oneDeclaration.products[0].currency,
