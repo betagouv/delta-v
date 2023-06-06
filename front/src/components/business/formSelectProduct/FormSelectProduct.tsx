@@ -21,11 +21,9 @@ export interface OnAddProductOptions {
   currency: string;
 }
 
-type OnAddProduct = (options: OnAddProductOptions) => void;
-
 interface FormSelectProductProps {
   currentProduct: Product;
-  onAddProduct: OnAddProduct;
+  onAddProduct: (options: OnAddProductOptions) => void;
   role?: Role;
 }
 

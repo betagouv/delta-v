@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
+import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -38,7 +39,8 @@ const Declaration = () => {
   );
   const router = useRouter();
 
-  const [openDownModal, setOpenDownModal] = useState(false);
+  const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
 
   useEffect(() => {
@@ -53,7 +55,8 @@ const Declaration = () => {
   };
 
   const handleCloseDownModal = () => {
-    setOpenDownModal(false);
+    setOpenSearchDownModal(false);
+    setOpenCategoryDownModal(false);
   };
 
   const {
@@ -101,7 +104,7 @@ const Declaration = () => {
   ];
 
   const onClickProduct = (product: Product) => {
-    setOpenDownModal(false);
+    setOpenSearchDownModal(false);
     router.push({
       pathname: '/agent/declaration/produits/recherche',
       query: { id: product.id },
@@ -109,7 +112,7 @@ const Declaration = () => {
   };
 
   const onSearchAll = (searchValue: string) => {
-    setOpenDownModal(false);
+    setOpenSearchDownModal(false);
     router.push({
       pathname: '/agent/declaration/produits/recherche',
       query: { search: searchValue },
@@ -131,50 +134,55 @@ const Declaration = () => {
   }, []);
 
   return (
-    <DeclarationSteps
-      currentStep={3}
-      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
-      onSubmit={onSubmit}
-    >
-      <div className="mt-1" onClick={() => setOpenDownModal(true)}>
-        <InputGroup
-          type="text"
-          fullWidth={true}
-          name="country"
-          placeholder="Que recherchez-vous ?"
-          leadingIcon="search"
-          options={countriesOptions}
-          control={control}
-          error={errors?.country?.message}
-        />
-      </div>
-
-      {allShoppingProducts.map((product) => (
-        <button
-          key={product.id}
-          className="mt-1 w-full bg-red-500"
-          onClick={() => onClickProductToRemove(product.id)}
-        >
-          {product.name}
-        </button>
-      ))}
-
-      <Button
-        type="submit"
-        onClick={() => onSubmit}
-        disabled={!allShoppingProducts.length}
-        className={{ 'absolute bottom-6 self-center': true }}
+    <>
+      <DeclarationSteps
+        currentStep={3}
+        handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
+        onSubmit={onSubmit}
       >
-        Valider les marchandises
-      </Button>
+        <div className="mt-1" onClick={() => setOpenSearchDownModal(true)}>
+          <InputGroup
+            type="text"
+            fullWidth={true}
+            name="country"
+            placeholder="Que recherchez-vous ?"
+            leadingIcon="search"
+            options={countriesOptions}
+            control={control}
+            error={errors?.country?.message}
+          />
+        </div>
+
+        <Button onClick={() => setOpenCategoryDownModal(true)}>Filtrer catégorie</Button>
+
+        {allShoppingProducts.map((product) => (
+          <button
+            key={product.id}
+            className="mt-1 w-full bg-red-500"
+            onClick={() => onClickProductToRemove(product.id)}
+          >
+            {product.name}
+          </button>
+        ))}
+
+        <Button
+          type="submit"
+          onClick={() => onSubmit}
+          disabled={!allShoppingProducts.length}
+          className={{ 'absolute bottom-6 self-center': true }}
+        >
+          Valider les marchandises
+        </Button>
+      </DeclarationSteps>
 
       <ModalSearchProduct
-        open={openDownModal}
+        open={openSearchDownModal}
         onClose={handleCloseDownModal}
         onClickProduct={onClickProduct}
         onSearchAll={onSearchAll}
       />
-    </DeclarationSteps>
+      <ModalCategoryProduct open={openCategoryDownModal} onClose={handleCloseDownModal} />
+    </>
   );
 };
 

@@ -1,5 +1,8 @@
 import { DeclarationEntity } from '../../../entities/declaration.entity';
-import { declarationSerializer, SerializedDeclaration } from '../common/serializer/declarationSerializer';
+import {
+  declarationSerializer,
+  SerializedDeclaration,
+} from '../common/serializer/declarationSerializer';
 
 export interface SerializedGetOneDeclaration {
   declaration: SerializedDeclaration;

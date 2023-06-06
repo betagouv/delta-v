@@ -28,11 +28,13 @@ const ProductSearch = () => {
   const router = useRouter();
   const { id } = router.query;
   const currentProduct = findProduct(id as string);
-  const selectedProduct = currentProduct;
+  const onRedirectProduct = (idRedirect: string) => {
+    router.push(`/simulateur/produits/${idRedirect}`);
+  };
   const displayedProducts =
     currentProduct?.subProducts.map((product) => {
       return {
-        to: `/simulateur/produits/${product.id}`,
+        id: product.id,
         svgNames: product.icon ?? 'categoryOther',
         title: product.name,
       };
@@ -73,10 +75,14 @@ const ProductSearch = () => {
       titleIcon="calculator"
     >
       <div className="flex flex-1 flex-col gap-6">
-        {selectedProduct?.finalProduct ? (
+        {currentProduct?.finalProduct ? (
           <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
         ) : (
-          <CategoryList items={displayedProducts} title="Catégories" />
+          <CategoryList
+            onSelectProduct={onRedirectProduct}
+            items={displayedProducts}
+            title="Catégories"
+          />
         )}
       </div>
       <ModalAddProduct open={openModalAddProduct} onClose={() => setOpenModalAddProduct(false)} />

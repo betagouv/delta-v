@@ -20,9 +20,13 @@ const Index = () => {
     setProductsToDisplay();
   }, []);
 
+  const onRedirectProduct = (idRedirect: string) => {
+    router.push(`/simulateur/produits/${idRedirect}`);
+  };
+
   const displayedProducts = products?.map((product): Item => {
     return {
-      to: `/simulateur/produits/${product.id}`,
+      id: product.id,
       svgNames: product.icon ?? 'categoryOther',
       title: product.name,
     };
@@ -57,7 +61,11 @@ const Index = () => {
           trailingIcon="search"
           onClick={() => router.push('/simulateur/produits/recherche')}
         />
-        <CategoryList items={displayedProducts} title="Catégories" />
+        <CategoryList
+          onSelectProduct={onRedirectProduct}
+          items={displayedProducts}
+          title="Catégories"
+        />
       </div>
     </Main>
   );
