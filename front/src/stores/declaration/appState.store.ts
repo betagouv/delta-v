@@ -1,8 +1,9 @@
 /* eslint-disable import/no-cycle */
 import { Alpha2Code } from 'i18n-iso-countries';
 
-import { ShoppingProduct } from '../simulator/appState.store';
+import { DetailedProduct, ShoppingProduct, SimulatorResponse } from '../simulator/appState.store';
 import { StoreSlice } from '../store';
+import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export enum MeansOfTransport {
   PLANE = 'plane',
@@ -10,14 +11,6 @@ export enum MeansOfTransport {
   TRAIN = 'train',
   CAR = 'car',
   OTHER = 'other',
-}
-
-export interface DeclarationResponse {
-  total: number;
-  totalCustomDuty: number;
-  totalVat: number;
-  totalTaxes: number;
-  franchiseAmount: number;
 }
 
 export interface DeclarationRequest {
@@ -46,9 +39,15 @@ export interface MeansOfTransportAndCountry {
   flightNumber?: string;
 }
 
+export interface ValidateStep3Options {
+  shoppingProducts: ShoppingProduct[];
+  declarationId: string;
+}
+
 export interface DeclarationData {
   declarationRequest: DeclarationRequest;
-  declarationResponse?: DeclarationResponse;
+  declarationResponse?: SimulatorResponse;
+  validateDeclarationResponse?: DeclarationResponse;
   displayInfo: boolean;
   error?: any;
 }
@@ -57,6 +56,33 @@ export interface DeclarationAppStateSlice {
   declaration: {
     appState: DeclarationData;
   };
+}
+
+export interface DeclarationResponse {
+  authorEmail: string;
+  authorFullName: string;
+  authorId: string;
+  declarantAddressStreet: string;
+  declarantAddressCity: string;
+  declarantAddressPostalCode: string;
+  declarantPhoneNumber: string;
+  declarantAge: number;
+  declarantBorder: boolean;
+  declarantCountry: Alpha2Code;
+  declarantEmail: string;
+  declarantFirstName: string;
+  declarantLastName: string;
+  declarantMeanOfTransport: MeansOfTransport;
+  franchiseAmount: number;
+  id: string;
+  publicId: string;
+  status: DeclarationStatus;
+  totalAmount: number;
+  totalCustomDutyAmount: number;
+  totalTaxesAmount: number;
+  totalVatAmount: number;
+  versionDate: Date;
+  products: DetailedProduct[];
 }
 
 export const DECLARATION_EMPTY_STATE = {
@@ -83,6 +109,7 @@ export const DECLARATION_EMPTY_STATE = {
     validateProducts: [],
   },
   declarationResponse: undefined,
+  validateDeclarationResponse: undefined,
   displayInfo: true,
   error: undefined,
 };

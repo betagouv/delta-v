@@ -1,13 +1,14 @@
 import { Table } from '@/components/common/Table';
 import { Typography } from '@/components/common/Typography';
-import { DetailedProduct, SimulatorResponse } from '@/stores/simulator/appState.store';
+import { DeclarationResponse } from '@/stores/declaration/appState.store';
+import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 export interface ITaxTableProps {
-  simulatorResponse: SimulatorResponse;
+  declarationResponse: DeclarationResponse;
   loading?: boolean;
 }
 
-export const TaxTable: React.FC<ITaxTableProps> = ({ simulatorResponse, loading }) => {
+export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loading }) => {
   const headers = [
     {
       title: 'Achats',
@@ -60,10 +61,10 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ simulatorResponse, loading 
   return (
     <>
       {!loading ? (
-        <div className="pr-3">
+        <div>
           <Table
             headers={headers}
-            data={simulatorResponse.valueProducts ?? []}
+            data={declarationResponse.products ?? []}
             render={(item: DetailedProduct) => renderLine(item)}
           />
           <div className="flex justify-end">
@@ -72,7 +73,7 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ simulatorResponse, loading 
                 TOTAL
               </Typography>
               <Typography color="black" size="text-lg" textPosition="text-right">
-                {`${simulatorResponse.totalTaxes}e`}
+                {`${declarationResponse.totalTaxesAmount}e`}
               </Typography>
             </div>
           </div>

@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
@@ -27,6 +29,7 @@ const Declaration = () => {
     setProductsDeclarationToDisplay,
     getAllShoppingProduct,
     removeProductDeclaration,
+    errorValidateDeclaration,
   } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
@@ -34,6 +37,7 @@ const Declaration = () => {
       setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
       getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
+      errorValidateDeclaration: state.declaration.appState.error,
     }),
     shallow,
   );
@@ -71,9 +75,16 @@ const Declaration = () => {
   });
 
   const onSubmit = () => {
-    validateDeclarationStep3(allShoppingProducts);
-
-    router.push(`/agent/declaration/ajout/recapitulatif`);
+    const declarationId = uuidv4();
+    validateDeclarationStep3({
+      shoppingProducts: allShoppingProducts,
+      declarationId,
+    });
+    if (errorValidateDeclaration) {
+      toast.error(errorValidateDeclaration);
+    } else {
+      router.push(`/agent/declaration/${declarationId}`);
+    }
   };
 
   register('country', {

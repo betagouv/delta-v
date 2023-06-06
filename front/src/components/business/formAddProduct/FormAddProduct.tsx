@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
+import { Role } from '../formSelectProduct/utils';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
@@ -10,6 +11,7 @@ import { TextLink } from '@/components/common/TextLink';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { getAmountProductType, getUnit } from '@/model/amount';
+import { Currencies } from '@/model/currencies';
 import { useStore } from '@/stores/store';
 
 interface FormAddProductProps {
@@ -19,6 +21,7 @@ interface FormAddProductProps {
   productId?: string;
   submitted?: boolean;
   errors: FieldErrors;
+  role?: Role;
 }
 
 export interface FormSimulatorData {
@@ -33,22 +36,39 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   submitted = false,
   productId,
   errors,
+  role,
 }: FormAddProductProps) => {
-  const { currencies, simulatorRequest, findProduct } = useStore(
+  const { currencies, simulatorRequest, findProduct, defaultCurrency } = useStore(
     (state) => ({
       currencies: state.currencies.appState.currencies,
       simulatorRequest: state.simulator.appState.simulatorRequest,
       findProduct: state.findProduct,
+      defaultCurrency:
+        role === 'user'
+          ? state.simulator.appState.simulatorRequest.defaultCurrency
+          : state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
   );
 
   const product = productId ? findProduct(productId) : undefined;
 
-  const selectOptions = currencies.map((currency) => ({
+  const selectedCurrency = currencies.find(
+    (currency: Currencies) => currency.id === defaultCurrency,
+  );
+
+  const defaultSelectOption = {
+    value: selectedCurrency?.name ?? 'Euro',
+    id: selectedCurrency?.id ?? 'EUR',
+  };
+
+  const otherOptions = currencies.map((currency) => ({
     value: currency.name,
     id: currency.id,
   }));
+
+  const selectOptions = [defaultSelectOption, ...otherOptions];
+
   const productType = product?.amountProduct
     ? getAmountProductType(product.amountProduct)
     : 'valueProduct';
@@ -65,7 +85,6 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             type="number"
             fullWidth={false}
             name="value"
-            options={selectOptions}
             register={register('value', { required: false })}
             control={control}
             trailingAddons={getUnit(product?.amountProduct)}

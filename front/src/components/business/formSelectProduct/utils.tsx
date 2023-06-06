@@ -5,6 +5,8 @@ import { IRadioType } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
+export type Role = 'agent' | 'user';
+
 export interface FormStepsProductData {
   [key: string]: boolean | number | string | undefined;
 }
