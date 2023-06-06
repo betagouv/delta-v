@@ -108,7 +108,6 @@ export const DECLARATION_EMPTY_STATE = {
     customShoppingProducts: [],
   },
   declarationResponse: undefined,
-  validateDeclarationResponse: undefined,
   displayInfo: true,
   error: undefined,
 };
