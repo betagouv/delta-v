@@ -44,7 +44,7 @@ export const SummaryValueProduct: React.FC<SummarySimulatorProps> = ({
               hidden: hideDetails,
             })}
           >
-            <Typography size="text-sm">{`Calcul de la convertion ${product.originalCurrency} > EUR`}</Typography>
+            <Typography size="text-sm">{`Calcul de la conversion ${product.originalCurrency} > EUR`}</Typography>
             <div className="mt-1 leading-none">
               <Typography color="light-gray" size="text-sm">
                 Taux {product.rateCurrency} au {dayjs().format('DD/MM/YYYY')}

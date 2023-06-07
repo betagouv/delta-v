@@ -5,7 +5,8 @@ import dayjs from 'dayjs';
 
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
-import { Product } from '@/model/product';
+import { DetailedValueCalculation } from '@/components/common/ValueProductBasket/DetailedValueCalculation';
+import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 require('dayjs/locale/fr');
 
@@ -22,41 +23,54 @@ const getCartProductCardColor = (color: CartProductCardColors): string => {
 };
 
 export type CartProductCardProps = {
-  product: Product;
+  product: DetailedProduct;
+  nomenclatures: string[];
+  relatedWords: string[];
   declaredPrice?: string;
   vatAmount?: string;
   detailsButton?: boolean;
   productDetails?: string;
-  checkbox?: boolean;
+  deletable?: boolean;
+  selected?: boolean;
   bgColor?: CartProductCardColors;
+  setSelectedId: (id: any) => void;
+  isChecked: boolean;
+  onCheckedChange: (id: string, checked: boolean) => void;
 };
 
 export const CartProductCard = ({
   product,
+  nomenclatures,
+  relatedWords,
   declaredPrice,
   vatAmount,
   detailsButton,
-  productDetails,
-  checkbox = false,
+  deletable = false,
   bgColor = 'base',
+  isChecked,
+  onCheckedChange,
 }: CartProductCardProps) => {
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const color = getCartProductCardColor(bgColor);
   return (
-    <div className={cs({ 'grid items-center gap-5': true, 'grid-cols-[28px_1fr]': checkbox })}>
-      {checkbox && (
+    <div className={cs({ 'grid items-center gap-5': true, 'grid-cols-[28px_1fr]': deletable })}>
+      {deletable && (
         <div
           className="flex h-7 w-7 cursor-pointer place-content-center items-center rounded-full border border-[#F63939] bg-[#FCF4F4]"
-          onClick={() => setChecked(!checked)}
+          onClick={() => {
+            const newChecked = !isChecked;
+            onCheckedChange(product.customId, newChecked);
+            setChecked(newChecked);
+          }}
         >
           {checked && <div className="h-4 w-4 rounded-full bg-[#F63939]" />}
         </div>
       )}
       <div className={cs('relative flex flex-col rounded w-full p-2', color)}>
         <div className="flex flex-row gap-6">
-          {product.nomenclatures &&
-            product.nomenclatures.map((item, index) => (
+          {nomenclatures &&
+            nomenclatures.map((item, index) => (
               <Typography key={index} color="black" size="text-2xs">
                 {item}
               </Typography>
@@ -67,7 +81,7 @@ export const CartProductCard = ({
             {product.name}
           </Typography>
           <Typography color="black" transform="sentence-case" size="text-base">
-            {product.relatedWords.map((item) => item).join(', ')}
+            {relatedWords.map((item) => item).join(', ')}
           </Typography>
         </div>
         {(declaredPrice || vatAmount) && (
@@ -85,7 +99,7 @@ export const CartProductCard = ({
             </Typography>
           </div>
         )}
-        {detailsButton && productDetails && (
+        {detailsButton && (
           <>
             <div
               className="flex w-fit cursor-pointer items-center gap-1"
@@ -98,12 +112,15 @@ export const CartProductCard = ({
             </div>
             <div
               className={cs({
-                'mt-2': true,
-                hidden: !open,
+                'overflow-hidden transition-[max-height] duration-300 ease-in-out': true,
+                'max-h-0': !open,
+                'max-h-[1000px]': open,
               })}
             >
               <Typography color="black" size="text-2xs">
-                {productDetails}
+                <div>
+                  <DetailedValueCalculation detailedProduct={product} />
+                </div>
               </Typography>
             </div>
           </>

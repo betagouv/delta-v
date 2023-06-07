@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import classnames from 'classnames';
 import getSymbolFromCurrency from 'currency-symbol-map';
-import dayjs from 'dayjs';
 
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
-import { ContentValueProduct } from './ContentValueProduct';
+import { DetailedValueCalculation } from './DetailedValueCalculation';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 interface ValueProductBasketProps {
@@ -91,27 +90,12 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
                 <Icon size="xl" name="chevron-thin-up" />
               </div>
             </div>
-            <div className="p-6 text-left">
-              <Typography size="text-base">{`Calcul de la convertion ${detailedProduct?.originalCurrency} > EUR`}</Typography>
-              <div className="mt-2 leading-none">
-                <Typography color="light-gray" size="text-base">
-                  Taux {detailedProduct?.rateCurrency ?? '1'} au {dayjs().format('DD/MM/YYYY')}
-                </Typography>
-              </div>
-              <div className="flex flex-row leading-none">
-                <Typography color="secondary" size="text-base">
-                  {detailedProduct?.originalPrice} / {detailedProduct?.rateCurrency ?? '1'} =
-                </Typography>
-                <div className="ml-1">
-                  <Typography color="primary" size="text-base">
-                    {detailedProduct?.unitPrice} €
-                  </Typography>
-                </div>
-              </div>
-              {detailedProduct && !customProduct && (
-                <ContentValueProduct detailedCalculation={detailedProduct} />
-              )}
-            </div>
+            {detailedProduct && (
+              <DetailedValueCalculation
+                detailedProduct={detailedProduct}
+                customProduct={customProduct}
+              />
+            )}
             <div className="flex items-end">
               <div className="flex-1" />
               <div className="mb-[2px]">
