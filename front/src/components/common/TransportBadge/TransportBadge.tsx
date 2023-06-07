@@ -18,7 +18,7 @@ export const TransportBadge: React.FC<TransportBadgeProps> = ({
       className="inline-flex h-10 w-10 p-1 items-center justify-center bg-black text-white rounded-full"
       onClick={onClick}
     >
-      <SvgIcon name={svgName} height={10} />
+      <SvgIcon name={svgName} />
     </Component>
   );
 };

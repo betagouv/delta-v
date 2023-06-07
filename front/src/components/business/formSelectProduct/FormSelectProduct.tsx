@@ -10,6 +10,7 @@ import { getSchema } from './schema';
 import { FormSelectProductData, Role, getDefaultValues } from './utils';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
+import { useStore } from '@/stores/store';
 
 export interface OnAddProductOptions {
   product: Product;
@@ -30,6 +31,13 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   role = 'user',
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
+
+  const { defaultCurrency } = useStore((state) => ({
+    defaultCurrency:
+      role === 'user'
+        ? state.simulator.appState.simulatorRequest.defaultCurrency
+        : state.declaration.appState.declarationRequest.defaultCurrency,
+  }));
 
   useEffect(() => {
     if (currentProduct) {
@@ -110,7 +118,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           control={control}
           register={register}
           errors={errors}
-          role={role}
+          defaultCurrency={defaultCurrency}
         />
       )}
     </form>

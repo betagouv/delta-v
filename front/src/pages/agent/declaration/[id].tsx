@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AddNote } from '@/components/business/AddNote';
 import { DeclarationContactDetails } from '@/components/business/DeclarationContactDetails';
-import { DeclarationJourneyDetails } from '@/components/business/DeclarationJourneyDetails';
 import { DeclarationStatusDetails } from '@/components/business/DeclarationStatusDetails';
+import { DeclarationTravelDetails } from '@/components/business/DeclarationTravelDetails';
 import { TaxTable } from '@/components/business/TaxTable';
 import { Button } from '@/components/common/Button';
 import { Meta } from '@/layout/Meta';
@@ -62,7 +62,7 @@ const DeclarationSearch = () => {
             />
           </div>
           <div className="flex w-full flex-col gap-4 border-b border-black py-6">
-            <DeclarationJourneyDetails
+            <DeclarationTravelDetails
               country={validateDeclarationResponse.declarantCountry}
               transport={validateDeclarationResponse.declarantMeanOfTransport}
             />

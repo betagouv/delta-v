@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import { Role } from '../formSelectProduct/utils';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
@@ -21,7 +20,7 @@ interface FormAddProductProps {
   productId?: string;
   submitted?: boolean;
   errors: FieldErrors;
-  role?: Role;
+  defaultCurrency?: string;
 }
 
 export interface FormSimulatorData {
@@ -36,17 +35,13 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   submitted = false,
   productId,
   errors,
-  role,
+  defaultCurrency = 'EUR',
 }: FormAddProductProps) => {
-  const { currencies, simulatorRequest, findProduct, defaultCurrency } = useStore(
+  const { currencies, simulatorRequest, findProduct } = useStore(
     (state) => ({
       currencies: state.currencies.appState.currencies,
       simulatorRequest: state.simulator.appState.simulatorRequest,
       findProduct: state.findProduct,
-      defaultCurrency:
-        role === 'user'
-          ? state.simulator.appState.simulatorRequest.defaultCurrency
-          : state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
   );

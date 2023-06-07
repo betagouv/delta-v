@@ -289,8 +289,6 @@ export type SvgNames =
 
 export interface ISvgIconProps {
   name: SvgNames;
-  height?: number;
-  width?: number;
 }
 
 const getSvgFromName = (name: SvgNames): any => {
@@ -584,7 +582,7 @@ const getSvgFromName = (name: SvgNames): any => {
   }
 };
 
-export const SvgIcon: React.FC<ISvgIconProps> = ({ name, height, width }: ISvgIconProps) => {
+export const SvgIcon: React.FC<ISvgIconProps> = ({ name }: ISvgIconProps) => {
   const Svg = getSvgFromName(name);
-  return <Svg data-testid="svg-element" height={height} width={width} />;
+  return <Svg data-testid="svg-element" />;
 };

@@ -9,17 +9,17 @@ require('dayjs/locale/fr');
 
 dayjs.locale('fr');
 
-export type DeclarationJourneyDetailsProps = {
+export type DeclarationTravelDetailsProps = {
   country: string;
   transport: MeansOfTransport;
   journeyId?: string;
 };
 
-export const DeclarationJourneyDetails = ({
+export const DeclarationTravelDetails = ({
   country,
   transport,
   journeyId,
-}: DeclarationJourneyDetailsProps) => {
+}: DeclarationTravelDetailsProps) => {
   return (
     <div className="grid h-full w-full grid-cols-2 gap-y-4">
       <DataInfoItem label="Pays" value={country} size="text-sm" isRequired />
