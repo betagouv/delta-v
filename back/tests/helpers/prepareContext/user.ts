@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { faker } from '@faker-js/faker';
 import { hashPassword } from '../../../src/api/authentication/common/services/password.service';
 import { User } from '../../../src/entities/user.entity';
@@ -49,9 +50,7 @@ export const prepareContextUser = async ({
     blocked,
     enabled,
     email: douaneEmail
-      ? `${faker.person.firstName().toLowerCase() as string}.${
-          faker.person.lastName().toLowerCase() as string
-        }@douane.finances.gouv.fr`
+      ? `${faker.person.firstName()}.${faker.person.lastName()}@douane.finances.gouv.fr`
       : faker.internet.email(),
   });
 
