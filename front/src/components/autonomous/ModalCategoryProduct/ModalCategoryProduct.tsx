@@ -113,7 +113,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
               <CategoryList
                 onSelectProduct={onSelectProduct}
                 items={displayedProducts}
-                title="Catégories"
+                title="Filter par catégories"
                 displayType="card"
               />
             )}

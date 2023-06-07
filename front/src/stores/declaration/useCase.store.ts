@@ -23,6 +23,7 @@ export interface DeclarationUseCaseSlice {
   removeProductCartDeclaration: (id: string) => void;
   declare: () => void;
   getDeclaration: (declarationId: string) => void;
+  resetDeclaration: () => void;
 }
 
 export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> = (set, get) => ({

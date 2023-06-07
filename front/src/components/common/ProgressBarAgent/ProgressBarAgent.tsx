@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 
-import cs from 'classnames';
-
+import { Icon } from '../Icon';
 import { ProgressBarAgentItem } from './ProgressBarAgentItem';
 import { ProgressBarAgentItemType } from '@/templates/DeclarationSteps';
 
@@ -20,17 +19,7 @@ const RenderProgress = (step: ProgressBarAgentItemType, currentStep: number) => 
   const isActive = step.stepNumber === currentStep;
   return (
     <Fragment key={step.name}>
-      {step.stepNumber > 1 && (
-        <div
-          key={`progress-bar-${step.stepNumber}`}
-          className={cs({
-            'float-left mt-[43px] h-[2px] w-[100%] flex-1 md:mt-[40px] lg:mt-[45px': true,
-            'bg-gradient-to-l from-primary-100 to-green-100': isActive,
-            'bg-gray-100': !isActive && isFutureStep,
-            'bg-green-100': !isActive && !isFutureStep,
-          })}
-        />
-      )}
+      {step.stepNumber > 1 && <Icon name="chevron-right" size="base" />}
       <ProgressBarAgentItem link={step} isActive={isActive} isFutureStep={isFutureStep} />
     </Fragment>
   );

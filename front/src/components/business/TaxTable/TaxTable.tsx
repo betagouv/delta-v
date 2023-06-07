@@ -1,4 +1,3 @@
-import { Table } from '@/components/common/Table';
 import { Typography } from '@/components/common/Typography';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
@@ -9,78 +8,55 @@ export interface ITaxTableProps {
 }
 
 export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loading }) => {
-  const headers = [
-    {
-      title: 'Achats',
-    },
-    {
-      title: '',
-    },
-    {
-      title: 'Droits et taxes',
-    },
-  ];
-
   const renderLine = (detailedProduct: DetailedProduct) => {
     return (
       <>
-        <td className="py-small">
-          <div className="flex flex-row items-center gap-1">
-            <Typography color="black" size="text-sm">
-              {detailedProduct.customId}
+        <div className="p-5 border border-secondary-100 bg-white rounded-xl flex flex-col justify-start gap-2">
+          <Typography color="black" size="text-xs" weight="bold">
+            {detailedProduct.name.replace('.', '')}
+          </Typography>
+          <Typography color="black" size="text-xs">
+            {detailedProduct.customId}
+          </Typography>
+          <div className="flex flex-row justify-between w-3/6">
+            <Typography color="black" size="text-xs">
+              Prix d'achat
             </Typography>
-            <Typography color="black" size="text-sm">
-              {detailedProduct.id}
+            <Typography color="black" size="text-xs">
+              {detailedProduct.unitPrice} €
             </Typography>
           </div>
-        </td>
-        <td className="py-small">
-          <div className="flex flex-col justify-center px-3">
-            <Typography color="black" size="text-sm">
-              {detailedProduct.name}
+          <div className="te flex flex-row justify-between w-full">
+            <Typography size="text-xs" weight="bold">
+              Taxes dues
             </Typography>
-            <Typography color="black" size="text-sm">
-              {detailedProduct.customName}
+            <Typography size="text-xs" weight="bold">
+              {detailedProduct.unitTaxes} €
             </Typography>
-            <Typography color="black" size="text-sm">{`${detailedProduct.unitPrice}e`}</Typography>
           </div>
-        </td>
-        <td className="py-small">
-          <div className="flex flex-col">
-            <Typography
-              color="black"
-              size="text-lg"
-              textPosition="text-right"
-            >{`${detailedProduct.unitTaxes}e`}</Typography>
-          </div>
-        </td>
+        </div>
       </>
     );
   };
 
-  return (
-    <>
-      {!loading ? (
-        <div>
-          <Table
-            headers={headers}
-            data={declarationResponse.products ?? []}
-            render={(item: DetailedProduct) => renderLine(item)}
-          />
-          <div className="flex justify-end">
-            <div className="flex flex-col">
-              <Typography color="black" size="text-sm" textPosition="text-right">
-                TOTAL
-              </Typography>
-              <Typography color="black" size="text-lg" textPosition="text-right">
-                {`${declarationResponse.totalTaxesAmount}e`}
-              </Typography>
-            </div>
-          </div>
+  return !loading ? (
+    <div className="flex flex-col px-4 gap-4">
+      <Typography size="text-base" weight="bold" color="black">
+        Marchandises
+      </Typography>
+      <div>
+        {declarationResponse.products.map((detailedProduct) => renderLine(detailedProduct))}
+        <div className="flex flex-row justify-between p-5">
+          <Typography size="text-base" weight="bold">
+            TOTAL
+          </Typography>
+          <Typography size="text-base" weight="bold">
+            {`${declarationResponse.totalTaxesAmount}e`}
+          </Typography>
         </div>
-      ) : (
-        <></>
-      )}
-    </>
+      </div>
+    </div>
+  ) : (
+    <></>
   );
 };

@@ -25,11 +25,8 @@ export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({
 
   return (
     <>
-      <DownModal bgColor="bg-white" open={open} onClose={onClose}>
+      <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
         <div className="flex h-[90vh] flex-1 flex-col gap-6">
-          <Typography tag="h2" color="black" size="text-2xl">
-            Recherche
-          </Typography>
           <SearchProduct
             onSearch={searchProducts}
             autoFocus

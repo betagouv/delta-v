@@ -43,8 +43,8 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
             onClick={() => onClickProduct(resultElement)}
           >
             <div className="flex items-center gap-3">
-              <span className="mb-1 h-5 text-blue-700">
-                <Icon name="search" />
+              <span className="mb-1 text-blue-700">
+                <Icon name="search" size="sm" />
               </span>
               <span>
                 {renderMatchedWithSearch(resultElement, search)}

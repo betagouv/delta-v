@@ -34,7 +34,7 @@ export const SelectCountryPopup: React.FC<SelectCountryPopupProps> = ({
       <div className="absolute bottom-0 flex h-2/5 w-full flex-col gap-7 rounded-t-3xl bg-white p-5">
         <div className="flex gap-5">
           <div className=" flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-slate-300">
-            <Icon name="chevron-thin-left" size="base" />
+            <Icon name="chevron-left" size="base" />
           </div>
           <Typography color="black" size="text-xl">
             {popupTitle}
