@@ -51,8 +51,8 @@ const Declaration = () => {
 
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
-  const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
+  const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
 
   useEffect(() => {
     resetDeclarationSteps(3);
