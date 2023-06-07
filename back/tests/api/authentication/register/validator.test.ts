@@ -76,7 +76,8 @@ describe('register validator', () => {
   it('should be invalid - email should be provided', () => {
     const data = {
       body: {
-        password: 'PASSWORD95',
+        ...validData.body,
+        email: undefined,
       },
     };
 
@@ -85,7 +86,8 @@ describe('register validator', () => {
   it('should be invalid - password should be provided', () => {
     const data = {
       body: {
-        email: 'email@gmail.com',
+        ...validData.body,
+        password: undefined,
       },
     };
 

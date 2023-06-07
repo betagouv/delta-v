@@ -34,7 +34,7 @@ describe('register route', () => {
 
   test('should return success with code 200', async () => {
     const { user, clearPassword } = await prepareContextUser({ testDb, douaneEmail: true });
-    const newUserEmail = `new.${user.email}`;
+    const newUserEmail = `new${user.email}`;
 
     await testDb.persistUser(user);
     const { status, body } = await request(testApp)

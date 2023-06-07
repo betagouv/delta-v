@@ -50,7 +50,9 @@ export const prepareContextUser = async ({
     blocked,
     enabled,
     email: douaneEmail
-      ? `${faker.person.firstName()}.${faker.person.lastName()}@douane.finances.gouv.fr`
+      ? `${faker.person.firstName().toLocaleLowerCase()}.${faker.person
+          .lastName()
+          .toLocaleLowerCase()}@douane.finances.gouv.fr`
       : faker.internet.email(),
   });
 
