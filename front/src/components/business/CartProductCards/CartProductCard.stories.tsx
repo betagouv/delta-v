@@ -48,39 +48,63 @@ const item1: CartProductCardProps = {
   product: product1,
   declaredPrice: faker.lorem.sentence(3),
   vatAmount: faker.lorem.sentence(3),
-  relatedWords: [],
+  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
   ],
   deletable: true,
-  bgColor: 'selectable',
   detailsButton: true,
-  setSelectedId: () => {},
-  isChecked: true,
-  onCheckedChange: () => {},
+  onClick: (id) => console.log(id),
 };
 
 const item2: CartProductCardProps = {
-  product: product2,
+  product: product1,
   declaredPrice: faker.lorem.sentence(3),
   vatAmount: faker.lorem.sentence(3),
-  relatedWords: [],
+  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
   ],
   deletable: true,
-  bgColor: 'selectable',
-  setSelectedId: () => {},
-  isChecked: false,
-  onCheckedChange: () => {},
+  detailsButton: false,
+  onClick: (id) => console.log(id),
+};
+
+const item3: CartProductCardProps = {
+  product: product1,
+  declaredPrice: faker.lorem.sentence(3),
+  vatAmount: faker.lorem.sentence(3),
+  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
+  nomenclatures: [
+    faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+    faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+    faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+  ],
+  deletable: false,
+  detailsButton: true,
+  onClick: (id) => console.log(id),
+};
+
+const item4: CartProductCardProps = {
+  product: product2,
+  declaredPrice: faker.lorem.sentence(3),
+  vatAmount: faker.lorem.sentence(3),
+  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
+  nomenclatures: [
+    faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+    faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+    faker.datatype.number({ min: 1000, max: 9999 }).toString(),
+  ],
+  deletable: false,
+  onClick: (id) => console.log(id),
 };
 
 const CART_PRODUCT_CARDS_DATA: CartProductCardsProps = {
-  items: [item1, item2],
+  items: [item1, item2, item3, item4],
 };
 
 export const Selectable = () => {
