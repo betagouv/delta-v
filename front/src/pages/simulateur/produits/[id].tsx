@@ -18,10 +18,11 @@ import { Main } from '@/templates/Main';
 const ProductSearch = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { findProduct, addProduct } = useStore(
+  const { findProduct, addProduct, defaultCurrency } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       addProduct: state.addProduct,
+      defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
     }),
     shallow,
   );
@@ -76,7 +77,11 @@ const ProductSearch = () => {
     >
       <div className="flex flex-1 flex-col gap-6">
         {currentProduct?.finalProduct ? (
-          <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
+          <FormSelectProduct
+            currentProduct={currentProduct}
+            onAddProduct={onAddProduct}
+            defaultCurrency={defaultCurrency}
+          />
         ) : (
           <CategoryList
             onSelectProduct={onRedirectProduct}

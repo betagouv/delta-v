@@ -30,6 +30,7 @@ const Declaration = () => {
     getAllShoppingProduct,
     removeProductDeclaration,
     errorValidateDeclaration,
+    defaultCurrency,
   } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
@@ -38,6 +39,7 @@ const Declaration = () => {
       getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
       errorValidateDeclaration: state.declaration.appState.error,
+      defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
   );
@@ -192,7 +194,11 @@ const Declaration = () => {
         onClickProduct={onClickProduct}
         onSearchAll={onSearchAll}
       />
-      <ModalCategoryProduct open={openCategoryDownModal} onClose={handleCloseDownModal} />
+      <ModalCategoryProduct
+        open={openCategoryDownModal}
+        onClose={handleCloseDownModal}
+        defaultCurrency={defaultCurrency}
+      />
     </>
   );
 };

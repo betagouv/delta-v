@@ -11,6 +11,7 @@ interface ModalAddProductCartDeclarationProps {
   onClose?: () => void;
   currentProduct: Product;
   onAddProduct: OnAddProduct;
+  defaultCurrency?: string;
 }
 
 export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclarationProps> = ({
@@ -18,6 +19,7 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
   currentProduct,
   onAddProduct,
   open,
+  defaultCurrency,
 }) => {
   return (
     <>
@@ -27,7 +29,8 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
             <FormSelectProduct
               currentProduct={currentProduct}
               onAddProduct={onAddProduct}
-              role="agent"
+              templateRole="agent"
+              defaultCurrency={defaultCurrency}
             />
           </div>
         </div>
