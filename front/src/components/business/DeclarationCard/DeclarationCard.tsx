@@ -4,8 +4,10 @@ import cs from 'classnames';
 import dayjs from 'dayjs';
 
 import { DataInfoItem } from '../DataInfoItem';
+import { DeclarationBadgeStatus } from '../DeclarationBadgeStatus';
+import { Button } from '@/components/common/Button';
 import { MeansOfTransport } from '@/stores/simulator/appState.store';
-import { DeclarationStatus, getDeclarationStatusLabel } from '@/utils/declarationStatus.util';
+import { DeclarationStatus } from '@/utils/declarationStatus.util';
 import { getMeanOfTransport } from '@/utils/meansOfTransport.util';
 
 require('dayjs/locale/fr');
@@ -19,6 +21,8 @@ export type DeclarationCardProps = {
   lastName: string;
   transport: MeansOfTransport;
   status: DeclarationStatus;
+  verificationButton?: boolean;
+  verificationLink?: string;
 };
 
 export const DeclarationCard = ({
@@ -28,26 +32,56 @@ export const DeclarationCard = ({
   lastName,
   transport,
   status,
+  verificationButton,
 }: DeclarationCardProps) => {
-  const statusLabel = getDeclarationStatusLabel(status);
   const transportLabel = getMeanOfTransport(transport);
   return (
-    <div className={cs('grid rounded-xl bg-gray-100 p-4 grid-rows-3 w-72 h-40')}>
-      <div className="grid h-full w-full grid-cols-2">
-        <DataInfoItem label="N° de quittance" value={id} size="text-xs" />
+    <div
+      className={cs({
+        'flex flex-col rounded-xl border border-gray-300 px-5 py-4 gap-1': true,
+      })}
+    >
+      {verificationButton && (
+        <span className="pb-1.5">
+          <Button variant="outlined" color="card" size="2xs">
+            Mes vérifications
+          </Button>
+        </span>
+      )}
+      <div className="grid w-full grid-cols-2">
         <DataInfoItem
-          label="Date de création"
+          label="Numéro de déclaration"
+          value={id}
+          labelSize="text-2xs"
+          valueSize="text-sm"
+        />
+        <DataInfoItem
+          label="Date de déclaration"
           value={dayjs(date).format('DD/MM/YYYY')}
-          size="text-xs"
+          labelSize="text-2xs"
+          valueSize="text-sm"
         />
       </div>
-      <div className="grid h-full w-full grid-cols-2">
-        <DataInfoItem label="NOM Prénom" value={`${lastName} ${firstName}`} size="text-xs" />
-        <DataInfoItem label="Moyen de transport" value={transportLabel} size="text-xs" />
+      <div className="grid w-full grid-cols-2">
+        <DataInfoItem
+          label="Nom Prénom"
+          value={`${firstName} ${lastName}`}
+          labelSize="text-2xs"
+          valueSize="text-sm"
+        />
+        <DataInfoItem
+          label="Moyen de transport"
+          value={transportLabel}
+          labelSize="text-2xs"
+          valueSize="text-sm"
+        />
       </div>
-      <div className="h-full w-full">
-        <DataInfoItem label="Statut" value={statusLabel} size="text-xs" />
-      </div>
+      <DataInfoItem
+        label="Statut"
+        value={<DeclarationBadgeStatus status={status} />}
+        labelSize="text-2xs"
+        valueSize="text-sm"
+      />
     </div>
   );
 };

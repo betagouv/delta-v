@@ -2,8 +2,14 @@ import React from 'react';
 
 import cs from 'classnames';
 
+import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
-import { DeclarationStatus, getDeclarationStatusLabel } from '@/utils/declarationStatus.util';
+import {
+  DeclarationStatus,
+  getDeclarationStatusColor,
+  getDeclarationStatusIcon,
+  getDeclarationStatusLabel,
+} from '@/utils/declarationStatus.util';
 
 export type DeclarationBadgeStatusProps = {
   status: DeclarationStatus;
@@ -11,18 +17,12 @@ export type DeclarationBadgeStatusProps = {
 
 export const DeclarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) => {
   const label = getDeclarationStatusLabel(status);
+  const color = getDeclarationStatusColor(status);
+  const icon = getDeclarationStatusIcon(status);
   return (
-    <div
-      className={cs({
-        'h-8 border rounded-md px-2.5 w-fit flex items-center': true,
-        'bg-[#FFE9C8]': status === DeclarationStatus.DRAFT,
-        'bg-green-200': status === DeclarationStatus.SUBMITTED,
-        'bg-green-300': status === DeclarationStatus.VALIDATED,
-        'bg-green-400': status === DeclarationStatus.PAID,
-        'bg-red-200': status === DeclarationStatus.REFUSED,
-      })}
-    >
-      <Typography size="text-sm" color="black">
+    <div className={cs('h-5 rounded-md px-3 py-1 w-fit flex items-center gap-1', color)}>
+      <Icon name={icon} size="xs" color="white" />
+      <Typography size="text-2xs" color="white">
         {label}
       </Typography>
     </div>

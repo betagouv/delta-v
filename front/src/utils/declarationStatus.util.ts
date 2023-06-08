@@ -1,23 +1,50 @@
 export enum DeclarationStatus {
-  DRAFT = 'draft',
-  SUBMITTED = 'submitted',
-  VALIDATED = 'validated',
+  PENDING = 'pending',
   PAID = 'paid',
-  REFUSED = 'refused',
+  ERROR = 'error',
+  LITIGATION = 'litigation',
 }
 
 export const getDeclarationStatusLabel = (status: DeclarationStatus): string => {
   switch (status) {
-    case DeclarationStatus.DRAFT:
-      return 'Brouillon';
-    case DeclarationStatus.SUBMITTED:
-      return 'Envoyé';
-    case DeclarationStatus.VALIDATED:
-      return 'Validé';
+    case DeclarationStatus.PENDING:
+      return 'En attente de validation';
     case DeclarationStatus.PAID:
-      return 'Payé';
-    case DeclarationStatus.REFUSED:
-      return 'Refusé';
+      return 'Payée';
+    case DeclarationStatus.ERROR:
+      return 'Non conforme pour erreur';
+    case DeclarationStatus.LITIGATION:
+      return 'Non conforme pour contentieux';
+    default:
+      return '';
+  }
+};
+
+export const getDeclarationStatusColor = (status: DeclarationStatus): string => {
+  switch (status) {
+    case DeclarationStatus.PENDING:
+      return 'bg-[#B45FFA]';
+    case DeclarationStatus.PAID:
+      return 'bg-[#5FB1FA]';
+    case DeclarationStatus.ERROR:
+      return 'bg-[#7A54DE]';
+    case DeclarationStatus.LITIGATION:
+      return 'bg-[#7A54DE]';
+    default:
+      return '';
+  }
+};
+
+export const getDeclarationStatusIcon = (status: DeclarationStatus): string => {
+  switch (status) {
+    case DeclarationStatus.PENDING:
+      return 'clock';
+    case DeclarationStatus.PAID:
+      return 'checkmark';
+    case DeclarationStatus.ERROR:
+      return 'loop2';
+    case DeclarationStatus.LITIGATION:
+      return 'cancel-circle';
     default:
       return '';
   }
