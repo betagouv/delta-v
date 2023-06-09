@@ -92,13 +92,15 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
     <div>
       <>
         <>
-          <label
-            htmlFor={name}
-            className={`mb-4 block text-base font-bold`}
-            data-testid="label-element"
-          >
-            {label}
-          </label>
+          {label && (
+            <label
+              htmlFor={name}
+              className={`mb-4 block text-base font-bold`}
+              data-testid="label-element"
+            >
+              {label}
+            </label>
+          )}
           {type === 'select' && (
             <Select
               name={name}

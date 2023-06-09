@@ -3,20 +3,21 @@ import React from 'react';
 import { Icon } from '../Icon';
 import { Link } from '../Link';
 import { TitleAgent } from '../TitleAgent';
+import classNames from 'classnames';
 
 export interface TitleHeaderProps {
-  title: string;
+  title?: string;
 }
 
 export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({ title }: TitleHeaderProps) => {
   return (
-    <div className="items-center w-full flex flex-row px-6 py-5">
+    <div className={classNames({'items-center w-full flex flex-row': true , 'px-5 py-6': title, 'px-4 py-5': !title})}>
       <Link back>
         <Icon name="chevron-left" size="base" />
       </Link>
-      <div className="flex justify-center w-full">
+      {title && <div className="flex justify-center w-full">
         <TitleAgent title={title} />
-      </div>
+      </div>}
     </div>
   );
 };

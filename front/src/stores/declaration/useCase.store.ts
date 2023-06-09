@@ -13,6 +13,7 @@ import {
   DeclarationResponse,
 } from './appState.store';
 import { Currencies } from '@/model/currencies';
+import { Product } from '@/model/product';
 
 export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
@@ -114,9 +115,11 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     }
   },
   addProductCartDeclaration: (shoppingProduct: ShoppingProduct): void => {
+    const product: Product | undefined = get().findProduct(shoppingProduct.productId ?? '');
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);
+      newState.declaration.appState.declarationRequest.products.push(product);
       return newState;
     });
     get().declare();
@@ -146,9 +149,13 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       const newState = { ...state };
       const newShoppingProducts =
         newState.declaration.appState.declarationRequest.shoppingProducts.filter(
-          (product: ShoppingProduct) => product.id !== id,
+          (shoppingProduct: ShoppingProduct) => shoppingProduct.productId !== id,
         );
       newState.declaration.appState.declarationRequest.shoppingProducts = newShoppingProducts;
+      const newProducts = newState.declaration.appState.declarationRequest.products.filter(
+        (product: Product) => product.id !== id,
+      );
+      newState.declaration.appState.declarationRequest.products = newProducts;
       return newState;
     });
     get().declare();
@@ -156,7 +163,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   resetDeclaration: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState = DECLARATION_EMPTY_STATE;
+      newState.declaration.appState.declarationRequest = undefined;
       return newState;
     });
   },

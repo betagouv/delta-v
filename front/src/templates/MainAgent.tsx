@@ -30,7 +30,7 @@ const MainAgent = ({
 
       <div className={withHeader || withTitle ? 'flex min-h-[calc(100%)] flex-col' : ''}>
         {withHeader && <CustomHeader withLogo={withLogo} title={titleHeader} />}
-        {withTitle && <TitleHeaderAgent title={titleHeader ?? ''} />}
+        {withTitle && <TitleHeaderAgent title={titleHeader} />}
         {children}
       </div>
     </div>

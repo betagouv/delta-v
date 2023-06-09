@@ -52,7 +52,7 @@ export const Input: React.FC<IInputOptions> = ({
   autoFocus = false,
   onClick = () => {},
 }: IInputOptions) => {
-  let parentClassName = 'mt-1 relative';
+  let parentClassName = 'relative';
   if (fullWidth) {
     parentClassName += ' w-full';
   } else {

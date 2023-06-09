@@ -11,6 +11,7 @@ import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProdu
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { CartProductCard } from '@/components/business/CartProductCard';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
@@ -41,6 +42,7 @@ const Declaration = () => {
       getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
+      products: state.declaration.appState.declarationRequest.products,
       declarationId: state.declaration.appState.declarationRequest.declarationId,
       declarationRequest: state.declaration.appState.declarationRequest,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
@@ -53,6 +55,7 @@ const Declaration = () => {
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
   const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
+  const [IsAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
 
   useEffect(() => {
     resetDeclarationSteps(3);
@@ -161,15 +164,33 @@ const Declaration = () => {
           </button>
         </div>
 
-        {allShoppingProducts.map((product) => (
-          <button
-            key={product.id}
-            className="mt-1 w-full bg-red-500"
-            onClick={() => onClickProductToRemove(product.id)}
-          >
-            {product.name}
-          </button>
-        ))}
+        <div className="w-full mt-5 flex flex-col gap-4">
+          <div className="w-full flex flex-row justify-between items-center mb-1">
+            <Typography color="black" size="text-xs">
+              Marchandises <b>{products.length}</b>
+            </Typography>
+            <Typography
+              color={IsAvailableToRemove ? 'black' : 'primary'}
+              colorGradient="400"
+              size="text-xs"
+              onClick={() => setIsAvailableToRemove(!IsAvailableToRemove)}
+            >
+              {IsAvailableToRemove ? 'Annuler' : 'Supprimer'}
+            </Typography>
+          </div>
+          {products.map((product) => (
+            <div
+              key={product.id}
+              onClick={IsAvailableToRemove ? () => onClickProductToRemove(product.id) : undefined}
+            >
+              <CartProductCard
+                product={product}
+                key={product.id}
+                bgColor={IsAvailableToRemove ? 'selectable' : 'base'}
+              />
+            </div>
+          ))}
+        </div>
 
         <Button
           type="submit"
