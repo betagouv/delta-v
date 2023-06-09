@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 import { Meta } from '@storybook/react';
 
 import { CartProductCard, CartProductCardProps } from './CartProductCard';
-import { CartProductCards, CartProductCardsProps } from './CartProductCards';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 const meta: Meta<typeof CartProductCard> = {
@@ -103,14 +102,13 @@ const item4: CartProductCardProps = {
   onClick: (id) => console.log(id),
 };
 
-const CART_PRODUCT_CARDS_DATA: CartProductCardsProps = {
-  items: [item1, item2, item3, item4],
-};
-
-export const Selectable = () => {
+export const Base = () => {
   return (
-    <div>
-      <CartProductCards {...CART_PRODUCT_CARDS_DATA} />
+    <div className="flex flex-col gap-8">
+      <CartProductCard {...item1} />
+      <CartProductCard {...item2} />
+      <CartProductCard {...item3} />
+      <CartProductCard {...item4} />
     </div>
   );
 };
