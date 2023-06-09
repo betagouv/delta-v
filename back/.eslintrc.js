@@ -2,6 +2,7 @@ module.exports = {
   extends: ['@snowpact/eslint-config/node-typescript'],
   rules: {
     '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unnecessary-type-assertion': 'off',
     'no-restricted-imports': [
       'error',
       {

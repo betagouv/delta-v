@@ -42,7 +42,7 @@ const DeclarationSteps = ({ children, currentStep, handleSubmit, onSubmit }: IMa
       withTitle
       titleHeader="Créer une déclaration"
     >
-      <div>{showProgressBar && <ProgressBarAgent links={links} currentStep={currentStep} />}</div>
+      {showProgressBar && <ProgressBarAgent links={links} currentStep={currentStep} />}
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col">
         {children}

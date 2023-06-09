@@ -19,11 +19,12 @@ import { SearchType } from '@/utils/search';
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { addProductCartDeclaration, searchProducts, findProduct } = useStore(
+  const { addProductCartDeclaration, searchProducts, findProduct, defaultCurrency } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       addProductCartDeclaration: state.addProductCartDeclaration,
       searchProducts: state.searchProducts,
+      defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
   );
@@ -85,6 +86,7 @@ const SearchProduct = () => {
           onClose={() => setOpenModalAddProduct(false)}
           onAddProduct={onAddProduct}
           currentProduct={selectedProduct}
+          defaultCurrency={defaultCurrency}
         />
       )}
     </MainAgent>

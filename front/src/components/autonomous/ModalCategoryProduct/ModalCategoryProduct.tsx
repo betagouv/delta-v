@@ -15,6 +15,7 @@ import { useStore } from '@/stores/store';
 interface ModalCategoryProductProps {
   open: boolean;
   onClose?: () => void;
+  defaultCurrency?: string;
 }
 
 interface DisplayedProduct {
@@ -23,7 +24,11 @@ interface DisplayedProduct {
   title: string;
 }
 
-export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({ onClose, open }) => {
+export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
+  onClose,
+  open,
+  defaultCurrency,
+}) => {
   const { findProduct, products, addProductCartDeclaration } = useStore(
     (state) => ({
       findProduct: state.findProduct,
@@ -98,7 +103,12 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({ onCl
         <div className="flex h-[90vh] flex-1 flex-col gap-6">
           <div className="flex flex-1 flex-col gap-6">
             {currentProduct?.finalProduct ? (
-              <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
+              <FormSelectProduct
+                currentProduct={currentProduct}
+                onAddProduct={onAddProduct}
+                templateRole="agent"
+                defaultCurrency={defaultCurrency}
+              />
             ) : (
               <CategoryList
                 onSelectProduct={onSelectProduct}

@@ -10,6 +10,7 @@ import {
   generateResetPasswordToken,
   generateValidationToken,
 } from '../../../src/core/jwt/generateToken';
+// @typescript-eslint/no-unnecessary-type-assertion
 
 interface IPrepareContextUserOptions {
   testDb: ITestDbManager;

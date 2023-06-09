@@ -7,12 +7,9 @@ import { FormAddProduct } from '../formAddProduct';
 import { StepsFormProduct } from '../stepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
 import { getSchema } from './schema';
-import { FormSelectProductData, getDefaultValues } from './utils';
+import { FormSelectProductData, Role, getDefaultValues } from './utils';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
-import { useStore } from '@/stores/store';
-
-export type Role = 'agent' | 'user';
 
 export interface OnAddProductOptions {
   product: Product;
@@ -24,21 +21,17 @@ export interface OnAddProductOptions {
 interface FormSelectProductProps {
   currentProduct: Product;
   onAddProduct: (options: OnAddProductOptions) => void;
-  role?: Role;
+  templateRole?: Role;
+  defaultCurrency?: string;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   currentProduct,
   onAddProduct,
-  role = 'user',
+  templateRole = 'user',
+  defaultCurrency = 'EUR',
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
-  const { defaultCurrency } = useStore((state) => ({
-    defaultCurrency:
-      role === 'user'
-        ? state.simulator.appState.simulatorRequest.defaultCurrency
-        : state.declaration.appState.declarationRequest.defaultCurrency,
-  }));
 
   useEffect(() => {
     if (currentProduct) {
@@ -56,7 +49,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     defaultValues: {
       name: undefined,
       value: null,
-      currency: defaultCurrency ?? 'EUR',
       ...getDefaultValues(steps),
     },
     resolver: yupResolver(getSchema(!!currentProduct.amountProduct)),
@@ -86,7 +78,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   return currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
-      {role === 'user' && (
+      {templateRole === 'user' && (
         <div>
           <label
             htmlFor="name"
@@ -113,13 +105,14 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         setSteps={setSteps}
         steps={steps}
       />
-      {(role === 'user' || isAddAble) && (
+      {isAddAble && (
         <FormAddProduct
           productId={currentProduct.id}
           disabled={!isAddAble}
           control={control}
           register={register}
           errors={errors}
+          defaultCurrency={defaultCurrency}
         />
       )}
     </form>

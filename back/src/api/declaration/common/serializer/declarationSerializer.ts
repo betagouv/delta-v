@@ -51,6 +51,7 @@ export const productSerializer = (product: Product): SerializedProduct => ({
 
 export interface SerializedDeclaration {
   id: string;
+  publicId: string;
   products: SerializedValueProduct[];
   history?: DeclarationVersion[];
   versionDate: Date;
@@ -81,6 +82,7 @@ export const declarationSerializer = (
   declaration: DeclarationEntityInterface,
 ): SerializedDeclaration => ({
   id: declaration.id,
+  publicId: declaration.publicId,
   products: declaration.products.map(serializeValueProduct),
   history: declaration.history,
   versionDate: declaration.versionDate,
