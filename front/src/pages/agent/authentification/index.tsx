@@ -1,16 +1,13 @@
-import { useState } from 'react';
-
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import { useLoginMutation } from '@/api/hooks/useAPIAuth';
 import { Button } from '@/components/common/Button';
 import { TextLink } from '@/components/common/TextLink';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
-import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
 
@@ -38,19 +35,15 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const { login } = useStore((state) => ({
-    login: state.login,
-  }));
   const router = useRouter();
-  const [apiResponseError, setApiResponseError] = useState<AxiosResponse<any, any> | null>(null);
+
+  const loginMutation = useLoginMutation({
+    onSuccess: () => router.replace('/agent'),
+  });
+  const error = loginMutation.error?.response.data;
 
   const onSubmit = async (data: FormLoginData) => {
-    const { success, response } = await login(data);
-    if (success) {
-      setApiResponseError(null);
-      router.push('/agent');
-    }
-    setApiResponseError(response);
+    loginMutation.mutate(data);
   };
 
   return (
@@ -87,9 +80,7 @@ const LoginPage = () => {
         <TextLink underline to={RoutingAuthentication.register}>
           créer mon compte
         </TextLink>
-        {apiResponseError?.data.message && (
-          <div className="text-sm font-bold text-red-500">{apiResponseError.data.message}</div>
-        )}
+        {error?.message && <div className="text-sm font-bold text-red-500">{error.message}</div>}
         <div>
           <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>
             Valider

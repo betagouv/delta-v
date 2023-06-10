@@ -1,17 +1,15 @@
-import { useState } from 'react';
-
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import { useAskResetPasswordMutation } from '@/api/hooks/useAPIAuth';
 import { Button } from '@/components/common/Button';
 import { TextLink } from '@/components/common/TextLink';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
-import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
+import { getErrorFields } from '@/utils/errorFields';
 
 export interface FormForgetPasswordData {
   email: string;
@@ -34,23 +32,12 @@ const AskResetPasswordPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const { askResetPassword } = useStore((state) => ({
-    askResetPassword: state.askResetPassword,
-  }));
-  const [apiResponseSuccess, setApiResponseSuccess] = useState<AxiosResponse<any, any> | null>(
-    null,
-  );
-  const [apiResponseError, setApiResponseError] = useState<AxiosResponse<any, any> | null>(null);
+  const askResetPasswordMutation = useAskResetPasswordMutation();
+  const apiError = askResetPasswordMutation.error?.response;
+  const { data: apiSuccess } = askResetPasswordMutation;
 
   const onSubmit = async (data: FormForgetPasswordData) => {
-    const { success, response } = await askResetPassword(data);
-    if (success) {
-      setApiResponseSuccess(response);
-      setApiResponseError(null);
-    } else if (success === false) {
-      setApiResponseError(response);
-      setApiResponseSuccess(null);
-    }
+    askResetPasswordMutation.mutate(data.email);
   };
 
   return (
@@ -69,17 +56,13 @@ const AskResetPasswordPage = () => {
           fullWidth={false}
           placeholder="Email"
           register={register('email')}
-          error={errors?.email?.message}
+          error={errors?.email?.message ?? getErrorFields('email', apiError)}
         />
         <TextLink underline to={RoutingAuthentication.login}>
           se connecter
         </TextLink>
-        {apiResponseError && (
-          <div className="text-sm font-bold text-red-500">{apiResponseError.data.message}</div>
-        )}
-        {apiResponseSuccess && (
-          <div className="text-sm font-bold text-green-500">{apiResponseSuccess.data.message}</div>
-        )}
+        {apiError && <div className="text-sm font-bold text-red-500">{apiError.data.message}</div>}
+        {apiSuccess && <div className="text-sm font-bold text-green-500">{apiSuccess.message}</div>}
         <div>
           <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>
             Valider

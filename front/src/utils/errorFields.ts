@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 
 export const getErrorFields = (
   fieldName: string,
-  apiError: AxiosResponse<any, any> | null,
+  apiError?: AxiosResponse<any, any>,
 ): string | undefined => {
   if (!apiError) {
     return undefined;

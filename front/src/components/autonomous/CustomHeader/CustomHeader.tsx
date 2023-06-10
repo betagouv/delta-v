@@ -72,7 +72,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
               <SvgIcon name="basket" />
             </div>
             {nbCartItems > 0 && (
-              <div className="bg-primary-500 -ml-5 h-5 w-5 rounded-full text-center text-white">
+              <div className="-ml-5 h-5 w-5 rounded-full bg-primary-500 text-center text-white">
                 {nbCartItems}
               </div>
             )}

@@ -2,7 +2,7 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 
 import { StoreSlice } from '../store';
-import axios from '@/config/axios';
+import { getAllProductRequest } from '@/api/lib/products';
 import { AmountProduct, Product } from '@/model/product';
 import { CountryType, getCountryType } from '@/utils/country.util';
 import { advancedSearch, SearchType } from '@/utils/search';
@@ -98,11 +98,11 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
     return findProduct(get().products.appState.products, id);
   },
   getProductsResponse: async () => {
-    const response = await axios.get('/api/product');
+    const allProducts = await getAllProductRequest();
 
     set((state: any) => {
       const newState = { ...state };
-      newState.products.appState.allProducts = response.data.products;
+      newState.products.appState.allProducts = allProducts;
 
       newState.products.appState.flattenAllProducts = getFlattenProducts(
         newState.products.appState.allProducts,

@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { AppProps } from 'next/app';
 import '../styles/global.css';
 import '../config/i18n';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
@@ -50,8 +51,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: undefined,
+    },
+  });
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <MatomoProvider value={instance}>
         <div
           className={classNames({
@@ -79,7 +86,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <Component {...pageProps} />
         <ToastContainer />
       </MatomoProvider>
-    </>
+    </QueryClientProvider>
   );
 };
 
