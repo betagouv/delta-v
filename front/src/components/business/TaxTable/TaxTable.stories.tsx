@@ -59,7 +59,7 @@ const simulatorResponse: DeclarationResponse = {
   publicId: '123',
   declarantMeanOfTransport: MeansOfTransport.CAR,
   id: '123',
-  status: DeclarationStatus.SUBMITTED,
+  status: DeclarationStatus.PAID,
   franchiseAmount: 0,
   totalAmount: 0,
   totalCustomDutyAmount: 0,

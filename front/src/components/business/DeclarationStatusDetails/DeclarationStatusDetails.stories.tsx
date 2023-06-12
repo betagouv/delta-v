@@ -15,7 +15,7 @@ export default meta;
 type Story = StoryObj<typeof DeclarationStatusDetails>;
 
 const DECLARATION_CARD_DATA: DeclarationStatusDetailsProps = {
-  status: DeclarationStatus.SUBMITTED,
+  status: DeclarationStatus.ERROR,
   date: new Date(),
   declarationId: '123',
 };
