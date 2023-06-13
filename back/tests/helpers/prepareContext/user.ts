@@ -20,7 +20,6 @@ interface IPrepareContextUserOptions {
   douaneEmail?: boolean;
   userId?: string;
   expiredRefreshToken?: boolean;
-  addRefreshToken?: boolean;
   addUpdateEmailToken?: boolean;
 }
 
@@ -41,7 +40,6 @@ export const prepareContextUser = async ({
   douaneEmail = true,
   userId = '8e339c8f-2187-46a9-8c30-aa15d3ebc330',
   expiredRefreshToken = false,
-  addRefreshToken = false,
 }: IPrepareContextUserOptions): Promise<IPrepareContextUserResponse> => {
   const password = 'Password95';
   const hashedPassword = await hashPassword(password);
@@ -62,16 +60,13 @@ export const prepareContextUser = async ({
     await testDb.persistUser(user);
   }
   const accessToken = await generateAccessToken({ email: user.email, userId });
-  const refreshToken = addRefreshToken
-    ? await generateRefreshToken(
-        {
-          email: user.email,
-          userId,
-        },
-        expiredRefreshToken ? '-1' : undefined,
-      )
-    : null;
-
+  const refreshToken = await generateRefreshToken(
+    {
+      email: user.email,
+      userId,
+    },
+    expiredRefreshToken ? '-1' : undefined,
+  );
   const validationToken = await generateValidationToken({ email: user.email, userId });
   const resetPasswordToken = await generateResetPasswordToken({ email: user.email, userId });
 

@@ -45,9 +45,10 @@ export const verifyToken = async <T extends object>({
 export const buildTokenObject = async <T extends object>(
   token: string,
   secret: string,
+  ignoreExpiration = false,
 ): Promise<T> => {
   try {
-    const decoded = await verifyToken<T>({ token, secret });
+    const decoded = await verifyToken<T>({ token, secret, ignoreExpiration });
 
     if (!decoded) {
       throw invalidTokenError;
@@ -59,8 +60,11 @@ export const buildTokenObject = async <T extends object>(
   }
 };
 
-export const buildAccessTokenObject = (token: string): Promise<IAuthObject> =>
-  buildTokenObject<IAuthObject>(token, config.ACCESS_TOKEN_SECRET);
+export const buildAccessTokenObject = (
+  token: string,
+  ignoreExpiration = false,
+): Promise<IAuthObject> =>
+  buildTokenObject<IAuthObject>(token, config.ACCESS_TOKEN_SECRET, ignoreExpiration);
 
 export const buildRefreshTokenObject = (token: string): Promise<IAuthObject> =>
   buildTokenObject<IAuthObject>(token, config.REFRESH_TOKEN_SECRET);
