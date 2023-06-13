@@ -1,6 +1,6 @@
-export type ButtonSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl';
+export type ButtonSize = '2xs' | 'xs' | 'sm' | 'base' | 'lg' | 'xl';
 export type ButtonVariant = 'normal' | 'outlined' | 'ghost';
-export type ButtonColor = 'primary' | 'secondary';
+export type ButtonColor = 'primary' | 'secondary' | 'card';
 export type IconPosition = 'left' | 'right';
 export type ButtonRounded = 'full' | 'lg' | 'md' | 'base' | 'none';
 
@@ -105,6 +105,13 @@ const styleManager: IButtonStyle = {
     classes: {
       'font-normal': true,
     },
+    '2xs': {
+      classes: {
+        'px-2': true,
+        'text-2xs': true,
+        'h-5': true,
+      },
+    },
     xs: {
       classes: {
         'px-2.5': true,
@@ -185,6 +192,15 @@ const styleManager: IButtonStyle = {
           'active:bg-gray-300': true,
           'active:border-secondary-500': true,
           'disabled:text-secondary-600': true,
+        },
+      },
+      card: {
+        classes: {
+          'text-black': true,
+          'border-gray-300': true,
+          'active:bg-gray-300': true,
+          'active:border-gray-500': true,
+          'disabled:text-gray-600': true,
         },
       },
     },

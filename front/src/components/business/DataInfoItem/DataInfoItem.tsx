@@ -6,7 +6,9 @@ import { TextSize, Typography } from '@/components/common/Typography';
 
 export type DataInfoItemProps = {
   label: string;
-  value: string;
+  labelSize?: TextSize;
+  value: string | React.ReactNode;
+  valueSize?: TextSize;
   isRequired?: boolean;
   size?: TextSize;
   svgName?: SvgNames;

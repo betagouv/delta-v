@@ -18,7 +18,9 @@ const DECLARATION_CARD_DATA: DeclarationCardProps = {
   lastName: 'DOE',
   firstName: 'John',
   transport: MeansOfTransport.PLANE,
-  status: DeclarationStatus.SUBMITTED,
+  status: DeclarationStatus.PAID,
+  verificationButton: true,
+  verificationLink: 'http://www.google.fr',
 };
 
 export const Playground: Story = {

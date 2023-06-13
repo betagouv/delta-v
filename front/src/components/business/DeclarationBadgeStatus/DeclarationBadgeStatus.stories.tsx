@@ -12,5 +12,7 @@ export default meta;
 type Story = StoryObj<typeof DeclarationBadgeStatus>;
 
 export const Base: Story = {
-  args: { status: DeclarationStatus.DRAFT },
+  args: {
+    status: DeclarationStatus.PAID,
+  },
 };
