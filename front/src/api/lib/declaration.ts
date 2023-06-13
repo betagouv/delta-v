@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { BaseAPIResponse, CreateDeclarationParams } from './types';
-import { fetch } from '@/config/queryClient';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import {
   ShoppingProduct,
@@ -91,12 +90,12 @@ export const createDeclarationRequest = async (
     declarantLastName: params.contactDetails.lastName,
   };
 
-  const { data } = await fetch(`/declaration/${params.declarationId}`, bodyParams, 'PUT');
+  const { data } = await axios.put(`/declaration/${params.declarationId}`, bodyParams);
 
   return data;
 };
 
 export const getDeclaration = async (id: string): Promise<DeclarationResponse | null> => {
-  const data = await fetch(`/declaration/${id}`, null, 'GET');
+  const { data } = await axios.get(`/declaration/${id}`);
   return data.declaration;
 };
