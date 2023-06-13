@@ -13,10 +13,12 @@ import { TaxTable } from '@/components/business/TaxTable';
 import { Button } from '@/components/common/Button';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
+import { isUUIDRegex } from '@/utils/formatTools';
 
 const DeclarationSearch = () => {
   const router = useRouter();
-  const { id } = router.query as { id: string };
+  const query = router.query as { id: string };
+  const id = isUUIDRegex(query.id) ? query.id : '';
 
   const { isLoading, data: validateDeclarationResponse } = useDeclaration(id);
 
