@@ -1,6 +1,5 @@
-import axios, { Method } from 'axios';
+import axios from 'axios';
 import { QueryClient } from 'react-query';
-import { toast } from 'react-toastify';
 
 const defaultQueryFn = async ({ queryKey }: { queryKey: any }) => {
   const data = await axios.get(queryKey[0], {
@@ -9,7 +8,6 @@ const defaultQueryFn = async ({ queryKey }: { queryKey: any }) => {
 
   return data.data;
 };
-
 
 const queryClient = new QueryClient({
   defaultOptions: {
