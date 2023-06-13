@@ -16,7 +16,7 @@ import { MainAgent } from '@/templates/MainAgent';
 
 const DeclarationSearch = () => {
   const router = useRouter();
-  const id = 'id' in router.query && typeof router.query.id === 'string' ? router.query.id : '';
+  const { id } = router.query as { id: string };
 
   const { isLoading, data: validateDeclarationResponse } = useDeclaration(id);
 
