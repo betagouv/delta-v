@@ -16,13 +16,9 @@ import { MainAgent } from '@/templates/MainAgent';
 
 const DeclarationSearch = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query as { id: string };
 
-  if (!id) {
-    return null;
-  }
-
-  const { isLoading, data: validateDeclarationResponse } = useDeclaration(id as string);
+  const { isLoading, data: validateDeclarationResponse } = useDeclaration(id);
 
   const [openDownModal, setOpenDownModal] = useState(false);
   return (

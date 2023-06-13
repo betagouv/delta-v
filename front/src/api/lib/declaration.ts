@@ -96,6 +96,6 @@ export const createDeclarationRequest = async (
 };
 
 export const getDeclaration = async (id: string): Promise<DeclarationResponse | null> => {
-  const { data } = await axios.get(`/declaration/${id}`);
+  const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}`);
   return data.declaration;
 };
