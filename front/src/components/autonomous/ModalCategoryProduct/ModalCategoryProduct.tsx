@@ -114,6 +114,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
                 onSelectProduct={onSelectProduct}
                 items={displayedProducts}
                 title="Catégories"
+                displayType="card"
               />
             )}
           </div>

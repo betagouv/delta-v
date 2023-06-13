@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useDeclaration } from '@/api/hooks/useAPIDeclaration';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { AddNote } from '@/components/business/AddNote';
@@ -11,25 +12,17 @@ import { DeclarationTravelDetails } from '@/components/business/DeclarationTrave
 import { TaxTable } from '@/components/business/TaxTable';
 import { Button } from '@/components/common/Button';
 import { Meta } from '@/layout/Meta';
-import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
+import { isUUIDRegex } from '@/utils/formatTools';
 
 const DeclarationSearch = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const query = router.query as { id: string };
+  const id = isUUIDRegex(query.id) ? query.id : '';
 
-  const { getDeclaration, validateDeclarationResponse } = useStore((state) => ({
-    getDeclaration: state.getDeclaration,
-    validateDeclarationResponse: state.declaration.appState.validateDeclarationResponse,
-  }));
+  const { isLoading, data: validateDeclarationResponse } = useDeclaration(id);
 
   const [openDownModal, setOpenDownModal] = useState(false);
-  useEffect(() => {
-    if (id) {
-      getDeclaration(id as string);
-    }
-  }, [id]);
-
   return (
     <AgentRoute>
       <MainAgent
@@ -42,7 +35,7 @@ const DeclarationSearch = () => {
         withHeader
         titleHeader="Déclaration"
       >
-        {validateDeclarationResponse && (
+        {!isLoading && validateDeclarationResponse && (
           <div className="flex flex-1 flex-col">
             <div className="flex w-full flex-col gap-4 border-b border-black py-6 pt-0">
               <DeclarationStatusDetails
@@ -72,10 +65,10 @@ const DeclarationSearch = () => {
             <div className="border-b border-black py-8">
               <TaxTable declarationResponse={validateDeclarationResponse} />
             </div>
-            <div className="w-full border-b border-black py-6">
+            <div className="border-b border-black py-6 w-full">
               <AddNote onClick={() => setOpenDownModal(true)} />
             </div>
-            <div className="flex w-3/6 flex-col gap-4 self-center pt-6">
+            <div className="w-3/6 flex flex-col gap-4 pt-6 self-center">
               <Button fullWidth>Valider la déclaration</Button>
               <Button fullWidth variant="outlined">
                 Annuler

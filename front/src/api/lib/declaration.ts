@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { BaseAPIResponse, CreateDeclarationParams } from './types';
+import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import {
   ShoppingProduct,
   SimulatorRequest,
@@ -52,4 +54,48 @@ export const checkSimulatorDataRequest = (
 export const simulateRequest = async (data: SimulatorDataRequest): Promise<SimulatorResponse> => {
   const response = await axios.post('/simulator/', data);
   return response.data;
+};
+
+export interface CreateDeclarationResponse extends BaseAPIResponse {
+  context: {
+    id: string;
+  };
+}
+
+export const createDeclarationRequest = async (
+  params: CreateDeclarationParams,
+): Promise<CreateDeclarationResponse> => {
+  const bodyParams = {
+    shoppingProducts: params.shoppingProducts.map((shoppingProduct: ShoppingProduct) => ({
+      id: shoppingProduct.productId,
+      customName: shoppingProduct.name,
+      customId: shoppingProduct.id,
+      originalValue: shoppingProduct.value,
+      currency: shoppingProduct.currency,
+    })),
+    border: params.border,
+    age: params.contactDetails.age,
+    country: params.meansOfTransportAndCountry.country,
+    meanOfTransport: params.meansOfTransportAndCountry.meansOfTransport,
+    authorEmail: params.contactDetails.email,
+    authorId: 'fc3aed41-e6f2-4937-aa09-7113c1641014',
+    authorFullName: `${params.contactDetails.firstName} ${params.contactDetails.lastName}`,
+    authorType: 'agent',
+    declarantAddressStreet: params.contactDetails.address,
+    declarantAddressCity: params.contactDetails.city,
+    declarantAddressPostalCode: params.contactDetails.postalCode,
+    declarantPhoneNumber: params.contactDetails.phoneNumber,
+    declarantEmail: params.contactDetails.email,
+    declarantFirstName: params.contactDetails.firstName,
+    declarantLastName: params.contactDetails.lastName,
+  };
+
+  const { data } = await axios.put(`/declaration/${params.declarationId}`, bodyParams);
+
+  return data;
+};
+
+export const getDeclaration = async (id: string): Promise<DeclarationResponse | null> => {
+  const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}`);
+  return data.declaration;
 };

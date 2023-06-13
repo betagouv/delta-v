@@ -24,7 +24,6 @@ const links: ProgressBarAgentItemType[] = [
   { name: 'Coordonnées', to: DECLARATION_STEP_PAGE[1] ?? '', stepNumber: 1 },
   { name: 'Transports', to: DECLARATION_STEP_PAGE[2] ?? '', stepNumber: 2 },
   { name: 'Marchandises', to: DECLARATION_STEP_PAGE[3] ?? '', stepNumber: 3 },
-  { name: 'Récapitulatif', to: DECLARATION_STEP_PAGE[4] ?? '', stepNumber: 4 },
 ];
 
 const DeclarationSteps = ({ children, currentStep, handleSubmit, onSubmit }: IMainProps) => {

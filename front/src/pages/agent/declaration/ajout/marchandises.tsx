@@ -4,9 +4,9 @@ import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -26,19 +26,22 @@ export interface FormDeclarationData {
 const Declaration = () => {
   const {
     resetDeclarationSteps,
-    validateDeclarationStep3,
     setProductsDeclarationToDisplay,
     getAllShoppingProduct,
     removeProductDeclaration,
-    errorValidateDeclaration,
+    resetDeclaration,
+    declarationId,
+    declarationRequest,
     defaultCurrency,
   } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
-      validateDeclarationStep3: state.validateDeclarationStep3,
       setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
       getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
+      resetDeclaration: state.resetDeclaration,
+      declarationId: state.declaration.appState.declarationRequest.declarationId,
+      declarationRequest: state.declaration.appState.declarationRequest,
       errorValidateDeclaration: state.declaration.appState.error,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
@@ -77,17 +80,24 @@ const Declaration = () => {
     },
   });
 
-  const onSubmit = () => {
-    const declarationId = uuidv4();
-    validateDeclarationStep3({
-      shoppingProducts: allShoppingProducts,
-      declarationId,
-    });
-    if (errorValidateDeclaration) {
-      toast.error(errorValidateDeclaration);
-    } else {
+  const createDeclarationMutation = useCreateDeclarationMutation({
+    onSuccess: () => {
       router.push(`/agent/declaration/${declarationId}`);
-    }
+      resetDeclaration();
+      toast.success(
+        "Votre signalement a bien été envoyé. Vous serez notifié dès qu'il sera traité.",
+      );
+    },
+  });
+
+  const onSubmit = () => {
+    createDeclarationMutation.mutate({
+      declarationId,
+      contactDetails: declarationRequest.contactDetails,
+      shoppingProducts: declarationRequest.shoppingProducts,
+      border: declarationRequest.border,
+      meansOfTransportAndCountry: declarationRequest.meansOfTransportAndCountry,
+    });
   };
 
   register('country', {

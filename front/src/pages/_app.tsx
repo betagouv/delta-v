@@ -92,31 +92,33 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <MatomoProvider value={instance}>
-        <div
-          className={classNames({
-            'fixed z-50 flex h-full w-full items-center bg-white transition-[opacity] ease-out duration-300':
-              true,
-            'opacity-100': loading,
-            'opacity-0': !loading,
-            hidden: hideLoading,
-          })}
-        >
-          <span className="flex-1" />
-          <div className="flex flex-row gap-1">
-            <div className="h-16 w-auto">
-              <SvgIcon name="logoDouane" />
-            </div>
-            <div
-              className="logo-animate bg-gradient-to-br from-[#ED1639] to-[#000091] bg-clip-text text-4xl font-bold leading-8 
+        <QueryClientProvider client={queryClient}>
+          <div
+            className={classNames({
+              'fixed z-50 flex h-full w-full items-center bg-white transition-[opacity] ease-out duration-300':
+                true,
+              'opacity-100': loading,
+              'opacity-0': !loading,
+              hidden: hideLoading,
+            })}
+          >
+            <span className="flex-1" />
+            <div className="flex flex-row gap-1">
+              <div className="h-16 w-auto">
+                <SvgIcon name="logoDouane" />
+              </div>
+              <div
+                className="logo-animate bg-gradient-to-br from-[#ED1639] to-[#000091] bg-clip-text text-4xl font-bold leading-8 
     text-transparent"
-            >
-              Déclare <br /> Douane
+              >
+                Déclare <br /> Douane
+              </div>
             </div>
+            <span className="flex-1" />
           </div>
-          <span className="flex-1" />
-        </div>
-        <Component {...pageProps} />
-        <ToastContainer />
+          <Component {...pageProps} />
+          <ToastContainer />
+        </QueryClientProvider>
       </MatomoProvider>
     </QueryClientProvider>
   );

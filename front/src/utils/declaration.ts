@@ -44,7 +44,7 @@ export const getLevelWithData = (declarationRequest: DeclarationRequest): number
   ) {
     return 2;
   }
-  if (declarationRequest.validateProducts.length === 0) {
+  if (declarationRequest.shoppingProducts.length === 0) {
     return 3;
   }
   return 4;
