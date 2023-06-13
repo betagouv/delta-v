@@ -91,12 +91,12 @@ export const createDeclarationRequest = async (
     declarantLastName: params.contactDetails.lastName,
   };
 
-  const { data } = await fetch(`/api/declaration/${params.declarationId}`, bodyParams, 'PUT');
+  const { data } = await fetch(`/declaration/${params.declarationId}`, bodyParams, 'PUT');
 
   return data;
 };
 
 export const getDeclaration = async (id: string): Promise<DeclarationResponse | null> => {
-  const data = await fetch(`/api/declaration/${id}`, null, 'GET');
+  const data = await fetch(`/declaration/${id}`, null, 'GET');
   return data.declaration;
 };
