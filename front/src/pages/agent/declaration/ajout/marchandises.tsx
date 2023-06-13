@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Alpha2Code, getNames } from 'i18n-iso-countries';
+import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -9,15 +9,16 @@ import shallow from 'zustand/shallow';
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
+import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
-import { InputGroup } from '@/components/input/InputGroup';
+import { Icon } from '@/components/common/Icon';
+import { Typography } from '@/components/common/Typography';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
-import { disabledCountries } from '@/utils/const';
 
 export interface FormDeclarationData {
   country?: Alpha2Code;
@@ -42,7 +43,6 @@ const Declaration = () => {
       resetDeclaration: state.resetDeclaration,
       declarationId: state.declaration.appState.declarationRequest.declarationId,
       declarationRequest: state.declaration.appState.declarationRequest,
-      errorValidateDeclaration: state.declaration.appState.error,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
@@ -52,6 +52,7 @@ const Declaration = () => {
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
+  const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
 
   useEffect(() => {
     resetDeclarationSteps(3);
@@ -69,16 +70,7 @@ const Declaration = () => {
     setOpenCategoryDownModal(false);
   };
 
-  const {
-    handleSubmit,
-    register,
-    control,
-    formState: { errors },
-  } = useForm<FormDeclarationData>({
-    defaultValues: {
-      country: undefined,
-    },
-  });
+  const { handleSubmit } = useForm();
 
   const createDeclarationMutation = useCreateDeclarationMutation({
     onSuccess: () => {
@@ -100,33 +92,6 @@ const Declaration = () => {
     });
   };
 
-  register('country', {
-    onChange: () => {
-      setTimeout(() => {
-        handleSubmit(onSubmit)();
-      }, 250);
-    },
-  });
-
-  const countriesAlternatives = [
-    {
-      id: 'CH',
-      alternatives: ['Suisse', 'Switzerland', 'Schweiz'],
-    },
-    {
-      id: 'US',
-      alternatives: ['USA', 'United States', 'Etats-Unis'],
-    },
-    {
-      id: 'GB',
-      alternatives: ['Royaume-Uni', 'United Kingdom', 'Angleterre', 'UK'],
-    },
-    {
-      id: 'DE',
-      alternatives: ['Allemagne', 'Germany', 'Deutschland'],
-    },
-  ];
-
   const onClickProduct = (product: Product) => {
     setOpenSearchDownModal(false);
     router.push({
@@ -143,41 +108,58 @@ const Declaration = () => {
     });
   };
 
-  const countriesOptions = useMemo(() => {
-    const countries = getNames('fr', { select: 'official' });
-    const keys = Object.keys(countries) as Alpha2Code[];
-    const enabledKeys = keys.filter((key) => !disabledCountries.includes(key));
-    return enabledKeys.map((key) => {
-      const countryAlternative = countriesAlternatives.find((country) => country.id === key);
-      return {
-        value: countries[key] ?? '',
-        id: key,
-        alternatives: countryAlternative?.alternatives ?? [],
-      };
-    });
-  }, []);
-
   return (
     <AgentRoute>
       <DeclarationSteps
         currentStep={3}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
+        simpleBg
       >
-        <div className="mt-1" onClick={() => setOpenSearchDownModal(true)}>
-          <InputGroup
-            type="text"
-            fullWidth={true}
-            name="country"
-            placeholder="Que recherchez-vous ?"
-            leadingIcon="search"
-            options={countriesOptions}
-            control={control}
-            error={errors?.country?.message}
-          />
+        <div className="p-5 bg-secondary-100 rounded-md">
+          <div className="mt-1" onClick={() => setOpenSearchDownModal(true)}>
+            <div className={`flex flex-col`}>
+              <div className="text-black flex flex-row items-center gap-2">
+                <Icon name="search" size="sm" />
+                <Typography color="black" size="text-base" weight="bold">
+                  Recherche
+                </Typography>
+              </div>
+              <div className="px-5 py-3 border border-secondary-100 bg-white rounded-full mt-[10px]">
+                <Typography color="light-gray" size="text-sm">
+                  Type de marchandises, marques...
+                </Typography>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <Button onClick={() => setOpenCategoryDownModal(true)}>Filtrer catégorie</Button>
+        <div className="flex flex-row justify-center gap-3 w-full mt-5">
+          <button
+            type="button"
+            onClick={() => setOpenFavoriteDownModal(true)}
+            className="gap-3 bg-primary-400 rounded-full px-5 py-2 text-white"
+          >
+            <div className="flex flex-row items-center gap-3">
+              <Typography color="white" size="text-xs">
+                Mes favoris
+              </Typography>
+              <Icon name="chevron-down" size="sm" />
+            </div>
+          </button>
+          <button
+            onClick={() => setOpenCategoryDownModal(true)}
+            type="button"
+            className="gap-3 bg-white border-2 border-secondary-200 rounded-full flex-1 flex justify-center items-center"
+          >
+            <div className="flex flex-row items-center gap-3">
+              <Typography color="black" size="text-xs">
+                Filtrer par catégories
+              </Typography>
+              <Icon name="chevron-down" size="sm" />
+            </div>
+          </button>
+        </div>
 
         {allShoppingProducts.map((product) => (
           <button
@@ -209,6 +191,10 @@ const Declaration = () => {
         open={openCategoryDownModal}
         onClose={handleCloseDownModal}
         defaultCurrency={defaultCurrency}
+      />
+      <ModalUnderConstruction
+        open={openFavoriteDownModal}
+        onClose={() => setOpenFavoriteDownModal(false)}
       />
     </AgentRoute>
   );

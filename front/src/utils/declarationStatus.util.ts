@@ -49,14 +49,3 @@ export const getDeclarationStatusIcon = (status: DeclarationStatus): string => {
       return '';
   }
 };
-
-export const getDeclarationStatusIcon = (status: DeclarationStatus): string => {
-  switch (status) {
-    case DeclarationStatus.PAID:
-      return 'checkmark1';
-    case DeclarationStatus.REFUSED:
-      return 'clear';
-    default:
-      return 'clock';
-  }
-};

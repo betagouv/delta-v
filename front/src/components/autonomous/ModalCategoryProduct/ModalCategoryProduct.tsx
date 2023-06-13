@@ -100,7 +100,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   return (
     <>
       <DownModal bgColor="bg-white" open={open} onClose={onClose}>
-        <div className="flex h-[90vh] flex-1 flex-col gap-6">
+        <div className="min-h-[50vh] flex h-auto flex-1 flex-col gap-6">
           <div className="flex flex-1 flex-col gap-6">
             {currentProduct?.finalProduct ? (
               <FormSelectProduct

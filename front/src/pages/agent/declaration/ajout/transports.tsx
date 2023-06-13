@@ -153,6 +153,7 @@ const Declaration = () => {
           register={register('meansOfTransport', { required: true })}
           control={control}
           error={errors?.meansOfTransport?.message}
+          littleCard
         />
         {transportChosen && (
           <div className="mt-4">

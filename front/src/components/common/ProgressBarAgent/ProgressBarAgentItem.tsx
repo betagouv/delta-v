@@ -21,11 +21,10 @@ export const ProgressBarAgentItem: React.FC<IProgressBarAgentItemProps> = ({
   isActive,
   isFutureStep,
 }) => {
-  const Component = isFutureStep ? 'div' : 'a';
   return (
     <div className="flex flex-col items-center">
       <>
-        <Component href={link.to}>
+        <div>
           <div
             className={classNames({
               'flex flex-row items-center justify-center': true,
@@ -47,7 +46,7 @@ export const ProgressBarAgentItem: React.FC<IProgressBarAgentItemProps> = ({
               {link.name}
             </p>
           </div>
-        </Component>
+        </div>
       </>
     </div>
   );
