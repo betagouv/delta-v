@@ -37,6 +37,11 @@ interface DeclarationOptions {
   declarantLastName: string;
 }
 
+interface DeclarationResponse {
+  declaration: Declaration;
+  publicId: string;
+}
+
 export const service = async ({
   declarationId,
   productRepository,
@@ -58,7 +63,8 @@ export const service = async ({
   declarantPhoneNumber,
   declarantFirstName,
   declarantLastName,
-}: DeclarationOptions): Promise<Declaration> => {
+}: DeclarationOptions): Promise<DeclarationResponse> => {
+  const publicId = generatePublicId();
   const declaration = await generateDeclaration({
     shoppingProducts,
     productRepository,
@@ -71,7 +77,7 @@ export const service = async ({
 
   const declarationEntity: DeclarationEntityInterface = {
     id: declarationId,
-    publicId: generatePublicId(),
+    publicId,
     products: getProductsDeclarationFromDeclaration(declaration),
     authorEmail,
     authorId,
@@ -96,5 +102,5 @@ export const service = async ({
 
   await declarationRepository.createOne(declarationEntity);
 
-  return declaration;
+  return { declaration, publicId };
 };

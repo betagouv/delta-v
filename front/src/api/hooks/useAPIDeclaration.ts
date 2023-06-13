@@ -4,8 +4,17 @@ import {
   createDeclarationRequest,
   CreateDeclarationResponse,
   getDeclaration,
+  getDeclarations,
+  getDeclarationWithPublicId,
 } from '../lib/declaration';
 import { CreateDeclarationParams, ErrorResponse } from '../lib/types';
+
+export type UseDeclarationParams = {
+  limit?: number;
+  offset?: number;
+  search: string | null;
+  searchPublicId: string | null;
+};
 
 export const useCreateDeclarationMutation = ({
   onSuccess,
@@ -13,7 +22,7 @@ export const useCreateDeclarationMutation = ({
   onSuccess?: (data: CreateDeclarationResponse) => void;
 }) => {
   return useMutation<CreateDeclarationResponse, ErrorResponse, CreateDeclarationParams>(
-    (params: CreateDeclarationParams) => createDeclarationRequest(params),
+    createDeclarationRequest,
     {
       onSuccess: (data: CreateDeclarationResponse) => {
         if (onSuccess) {
@@ -27,3 +36,21 @@ export const useCreateDeclarationMutation = ({
 // QUERY
 export const useDeclaration = (id: string) =>
   useQuery(['declaration', { id }], () => getDeclaration(id));
+
+export const useDeclarationWithPublicId = (publicId: string) =>
+  useQuery(['declaration', { publicId }], () => getDeclarationWithPublicId(publicId));
+
+export const useDeclarations = ({
+  limit,
+  offset,
+  search = null,
+  searchPublicId = null,
+}: UseDeclarationParams) => {
+  return useQuery(
+    ['declaration', limit, offset, search, searchPublicId],
+    () => getDeclarations({ limit, offset, search, searchPublicId }),
+    {
+      keepPreviousData: true,
+    },
+  );
+};

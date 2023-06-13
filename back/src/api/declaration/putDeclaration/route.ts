@@ -37,7 +37,7 @@ export default async (
       declarantLastName,
     } = req.body;
 
-    const declaration = await service({
+    const { declaration, publicId } = await service({
       declarationId,
       shoppingProducts,
       border,
@@ -60,7 +60,7 @@ export default async (
       declarantLastName,
     });
 
-    const response = serializeSimulator(declaration);
+    const response = serializeSimulator(declaration, publicId);
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {

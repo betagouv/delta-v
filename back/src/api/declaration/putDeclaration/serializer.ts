@@ -44,6 +44,7 @@ interface SerializedSimulatorResponse {
   totalVat: number;
   totalTaxes: number;
   franchiseAmount: number | string;
+  declarationPublicId: string;
 }
 
 const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedValueProduct => ({
@@ -75,7 +76,10 @@ const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProdu
   })),
 });
 
-export const serializeSimulator = (declaration: Declaration): SerializedSimulatorResponse => {
+export const serializeSimulator = (
+  declaration: Declaration,
+  publicId: string,
+): SerializedSimulatorResponse => {
   const taxesData = getTaxesDataFromDeclaration(declaration);
   return {
     valueProducts: declaration.getRealProductsTaxes().map(serializeValueProduct),
@@ -86,5 +90,6 @@ export const serializeSimulator = (declaration: Declaration): SerializedSimulato
     totalVat: taxesData.totalVatAmount,
     totalTaxes: taxesData.totalTaxesAmount,
     franchiseAmount: taxesData.franchiseAmount,
+    declarationPublicId: publicId,
   };
 };
