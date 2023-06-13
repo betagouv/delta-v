@@ -12,7 +12,7 @@ import {
   validateEmailRequest,
 } from '../lib/auth';
 import { ICommonResponse, MutationAxiosResponse, MutationSuccessCallback } from '../lib/types';
-import { setCookie } from '@/utils/cookie';
+import { setAccessToken, setRefreshToken } from '@/utils/auth';
 
 export const useLoginMutation = ({ onSuccess }: MutationSuccessCallback<LoginResponse>) => {
   const queryClient = useQueryClient();
@@ -21,8 +21,8 @@ export const useLoginMutation = ({ onSuccess }: MutationSuccessCallback<LoginRes
     onSuccess: (data: LoginResponse) => {
       queryClient.invalidateQueries();
       if (onSuccess) {
-        setCookie('accessToken', data.accessToken);
-        setCookie('refreshToken', data.refreshToken);
+        setAccessToken(data.accessToken);
+        setRefreshToken(data.refreshToken);
         onSuccess(data);
       }
     },

@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import axios from 'axios';
 import { countries } from 'countries-list';
 
 import { ShoppingProduct, SimulatorResponse } from '../simulator/appState.store';
@@ -11,7 +12,6 @@ import {
   ValidateStep3Options,
   DeclarationResponse,
 } from './appState.store';
-import axios from '@/config/axios';
 import { Currencies } from '@/model/currencies';
 
 export interface DeclarationUseCaseSlice {
@@ -107,7 +107,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
         meanOfTransport:
           declarationData.declarationRequest.meansOfTransportAndCountry.meansOfTransport,
       };
-      const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;
+      const response = (await axios.post('/simulator', data)).data as SimulatorResponse;
       set((state: any) => {
         const newState = { ...state };
         newState.declaration.appState.declarationResponse = response;

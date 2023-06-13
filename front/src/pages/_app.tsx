@@ -6,50 +6,82 @@ import classNames from 'classnames';
 import { AppProps } from 'next/app';
 import '../styles/global.css';
 import '../config/i18n';
+import { NextRouter, useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
+import { configureAxios } from '@/api/base';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { useStore } from '@/stores/store';
+import { RoutingAuthentication } from '@/utils/const';
 
 const ONE_DAY = 86400000;
+
+const initAxios = (
+  clearUser: () => void,
+  setUserFromToken: (accessToken: string, refreshToken: string) => void,
+  router: NextRouter,
+) => {
+  configureAxios({
+    onRefreshTokenError: () => {
+      clearUser();
+      router.push(RoutingAuthentication.login);
+    },
+    onRefreshTokenSuccess: (accessToken, refreshToken) => {
+      setUserFromToken(accessToken, refreshToken);
+    },
+  });
+};
+
+const initSplashScreen = (
+  setLoading: (loading: boolean) => void,
+  setHideLoading: (hideLoading: boolean) => void,
+) => {
+  if (typeof window !== 'undefined') {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+    setTimeout(() => {
+      setHideLoading(true);
+    }, 1500);
+  }
+};
+
+const initLoadingData = (getProductsResponse: () => void, getCurrenciesResponse: () => void) => {
+  getProductsResponse();
+  getCurrenciesResponse();
+
+  const intervalId = setInterval(() => {
+    getProductsResponse();
+    getCurrenciesResponse();
+  }, ONE_DAY);
+
+  return () => clearInterval(intervalId);
+};
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const instance = createInstance({
     urlBase: 'https://declare-douane.matomo.cloud/',
     siteId: 1,
   });
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [hideLoading, setHideLoading] = useState(false);
-  const { getCurrenciesResponse, getProductsResponse } = useStore(
+  const { getCurrenciesResponse, getProductsResponse, clearUser, setUserFromToken } = useStore(
     (state) => ({
       getCurrenciesResponse: state.getCurrenciesResponse,
       getProductsResponse: state.getProductsResponse,
+      clearUser: state.clearUser,
+      setUserFromToken: state.setUserFromToken,
     }),
     shallow,
   );
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1200);
-      setTimeout(() => {
-        setHideLoading(true);
-      }, 1500);
-    }
-  }, []);
 
   useEffect(() => {
-    getProductsResponse();
-    getCurrenciesResponse();
-
-    const intervalId = setInterval(() => {
-      getProductsResponse();
-      getCurrenciesResponse();
-    }, ONE_DAY);
-
-    return () => clearInterval(intervalId);
+    initSplashScreen(setLoading, setHideLoading);
+    initAxios(clearUser, setUserFromToken, router);
+    return initLoadingData(getProductsResponse, getCurrenciesResponse);
   }, []);
 
   const queryClient = new QueryClient({

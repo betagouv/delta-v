@@ -9,6 +9,7 @@ import shallow from 'zustand/shallow';
 
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
+import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
@@ -147,7 +148,7 @@ const Declaration = () => {
   }, []);
 
   return (
-    <>
+    <AgentRoute>
       <DeclarationSteps
         currentStep={3}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
@@ -199,7 +200,7 @@ const Declaration = () => {
         onClose={handleCloseDownModal}
         defaultCurrency={defaultCurrency}
       />
-    </>
+    </AgentRoute>
   );
 };
 

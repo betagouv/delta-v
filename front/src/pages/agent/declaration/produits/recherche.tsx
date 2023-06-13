@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
+import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
@@ -60,36 +61,38 @@ const SearchProduct = () => {
   };
 
   return (
-    <MainAgent
-      meta={
-        <Meta
-          title="Simulateur Déclare Douanes"
-          description="Simuler la déclaration de douane en quelques clics"
-        />
-      }
-      withHeader
-      withTitle
-      titleHeader="Créer une déclaration"
-    >
-      <div className="flex flex-1 flex-col gap-6">
-        {id ? (
-          <NomenclatureCard product={productsThatMatch as Product} onClick={onClickProduct} />
-        ) : (
-          (productsThatMatch as SearchType<Product>[])?.map((product) => (
-            <NomenclatureCard key={product.id} product={product} onClick={onClickProduct} />
-          ))
+    <AgentRoute>
+      <MainAgent
+        meta={
+          <Meta
+            title="Simulateur Déclare Douanes"
+            description="Simuler la déclaration de douane en quelques clics"
+          />
+        }
+        withHeader
+        withTitle
+        titleHeader="Créer une déclaration"
+      >
+        <div className="flex flex-1 flex-col gap-6">
+          {id ? (
+            <NomenclatureCard product={productsThatMatch as Product} onClick={onClickProduct} />
+          ) : (
+            (productsThatMatch as SearchType<Product>[])?.map((product) => (
+              <NomenclatureCard key={product.id} product={product} onClick={onClickProduct} />
+            ))
+          )}
+        </div>
+        {selectedProduct && (
+          <ModalAddProductCartDeclaration
+            open={openModalAddProduct}
+            onClose={() => setOpenModalAddProduct(false)}
+            onAddProduct={onAddProduct}
+            currentProduct={selectedProduct}
+            defaultCurrency={defaultCurrency}
+          />
         )}
-      </div>
-      {selectedProduct && (
-        <ModalAddProductCartDeclaration
-          open={openModalAddProduct}
-          onClose={() => setOpenModalAddProduct(false)}
-          onAddProduct={onAddProduct}
-          currentProduct={selectedProduct}
-          defaultCurrency={defaultCurrency}
-        />
-      )}
-    </MainAgent>
+      </MainAgent>
+    </AgentRoute>
   );
 };
 export default declaration(SearchProduct);

@@ -6,6 +6,7 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
+import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
@@ -142,141 +143,143 @@ const Declaration = () => {
   };
 
   return (
-    <DeclarationSteps
-      currentStep={1}
-      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
-      onSubmit={onSubmit}
-    >
-      <div className="w5/6">
-        <InputGroup
-          type="text"
-          name="lastName"
-          fullWidth={false}
-          placeholder="Nom"
-          register={register('lastName')}
-          control={control}
-          error={errors?.lastName?.message}
-          required
-        />
-        <InputGroup
-          type="text"
-          name="firstName"
-          fullWidth={false}
-          placeholder="Prénom"
-          register={register('firstName')}
-          control={control}
-          error={errors?.firstName?.message}
-          required
-        />
-      </div>
-      <div className="mt-5">
-        <InputGroup
-          type="text"
-          name="address"
-          fullWidth={true}
-          placeholder="Adresse"
-          register={register('address')}
-          control={control}
-          error={errors?.address?.message}
-          required
-        />
-        <div className="flex flex-row gap-4">
-          <div className="min-w-[139px] flex-1">
-            <InputGroup
-              type="text"
-              name="postalCode"
-              fullWidth={true}
-              placeholder="Code postal"
-              register={register('postalCode')}
-              control={control}
-              error={errors?.postalCode?.message}
-              required
-            />
-          </div>
-          <div className="flex-3">
-            <InputGroup
-              type="text"
-              name="city"
-              fullWidth={true}
-              placeholder="Ville"
-              register={register('city')}
-              control={control}
-              error={errors?.city?.message}
-              required
-            />
+    <AgentRoute>
+      <DeclarationSteps
+        currentStep={1}
+        handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
+        onSubmit={onSubmit}
+      >
+        <div className="w5/6">
+          <InputGroup
+            type="text"
+            name="lastName"
+            fullWidth={false}
+            placeholder="Nom"
+            register={register('lastName')}
+            control={control}
+            error={errors?.lastName?.message}
+            required
+          />
+          <InputGroup
+            type="text"
+            name="firstName"
+            fullWidth={false}
+            placeholder="Prénom"
+            register={register('firstName')}
+            control={control}
+            error={errors?.firstName?.message}
+            required
+          />
+        </div>
+        <div className="mt-5">
+          <InputGroup
+            type="text"
+            name="address"
+            fullWidth={true}
+            placeholder="Adresse"
+            register={register('address')}
+            control={control}
+            error={errors?.address?.message}
+            required
+          />
+          <div className="flex flex-row gap-4">
+            <div className="min-w-[139px] flex-1">
+              <InputGroup
+                type="text"
+                name="postalCode"
+                fullWidth={true}
+                placeholder="Code postal"
+                register={register('postalCode')}
+                control={control}
+                error={errors?.postalCode?.message}
+                required
+              />
+            </div>
+            <div className="flex-3">
+              <InputGroup
+                type="text"
+                name="city"
+                fullWidth={true}
+                placeholder="Ville"
+                register={register('city')}
+                control={control}
+                error={errors?.city?.message}
+                required
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-9">
-        <InputGroup
-          label="Avez-vous plus de 18 ans ?"
-          type="radio"
-          name="adult"
-          fullWidth={true}
-          placeholder="Âge"
-          register={register('adult')}
-          error={errors?.adult?.message}
-          radioValues={[
-            { id: 'true', value: 'Oui' },
-            { id: 'false', value: 'Non' },
-          ]}
-        />
-        {displayNotAdult && (
-          <div className="mt-4">
-            <InputGroup
-              label="Sélectionnez votre âge"
-              type="select"
-              name="notAdultAge"
-              fullWidth={false}
-              placeholder="Âge"
-              register={register('notAdultAge')}
-              control={control}
-              error={errors?.notAdultAge?.message}
-              options={[
-                { id: 'none', value: 'Âge' },
-                { id: 14, value: 'Moins de 15 ans' },
-                { id: 15, value: '15 ans' },
-                { id: 16, value: '16 ans' },
-                { id: 17, value: '17 ans' },
-              ]}
-            />
-          </div>
-        )}
-      </div>
+        <div className="mt-9">
+          <InputGroup
+            label="Avez-vous plus de 18 ans ?"
+            type="radio"
+            name="adult"
+            fullWidth={true}
+            placeholder="Âge"
+            register={register('adult')}
+            error={errors?.adult?.message}
+            radioValues={[
+              { id: 'true', value: 'Oui' },
+              { id: 'false', value: 'Non' },
+            ]}
+          />
+          {displayNotAdult && (
+            <div className="mt-4">
+              <InputGroup
+                label="Sélectionnez votre âge"
+                type="select"
+                name="notAdultAge"
+                fullWidth={false}
+                placeholder="Âge"
+                register={register('notAdultAge')}
+                control={control}
+                error={errors?.notAdultAge?.message}
+                options={[
+                  { id: 'none', value: 'Âge' },
+                  { id: 14, value: 'Moins de 15 ans' },
+                  { id: 15, value: '15 ans' },
+                  { id: 16, value: '16 ans' },
+                  { id: 17, value: '17 ans' },
+                ]}
+              />
+            </div>
+          )}
+        </div>
 
-      <div className="mt-5">
-        <InputGroup
-          type="text"
-          name="mail"
-          fullWidth={true}
-          placeholder="Email"
-          register={register('email')}
-          control={control}
-          error={errors?.email?.message}
-          required
-        />
-        <InputGroup
-          type="text"
-          name="phone"
-          fullWidth={false}
-          placeholder="Téléphone"
-          register={register('phoneNumber')}
-          control={control}
-          error={errors?.phoneNumber?.message}
-          required
-        />
-      </div>
+        <div className="mt-5">
+          <InputGroup
+            type="text"
+            name="mail"
+            fullWidth={true}
+            placeholder="Email"
+            register={register('email')}
+            control={control}
+            error={errors?.email?.message}
+            required
+          />
+          <InputGroup
+            type="text"
+            name="phone"
+            fullWidth={false}
+            placeholder="Téléphone"
+            register={register('phoneNumber')}
+            control={control}
+            error={errors?.phoneNumber?.message}
+            required
+          />
+        </div>
 
-      <div className="mb-8 flex-1" />
-      <div>
-        {errors?.adult && <div className="text-red-500">{errors.adult.message}</div>}
+        <div className="mb-8 flex-1" />
+        <div>
+          {errors?.adult && <div className="text-red-500">{errors.adult.message}</div>}
 
-        <Button fullWidth={true} type="submit" disabled={!age || !isValid}>
-          Valider
-        </Button>
-      </div>
-    </DeclarationSteps>
+          <Button fullWidth={true} type="submit" disabled={!age || !isValid}>
+            Valider
+          </Button>
+        </div>
+      </DeclarationSteps>
+    </AgentRoute>
   );
 };
 

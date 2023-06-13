@@ -7,6 +7,7 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
+import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
@@ -137,61 +138,63 @@ const Declaration = () => {
   }, []);
 
   return (
-    <DeclarationSteps
-      currentStep={2}
-      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
-      onSubmit={onSubmit}
-    >
-      <InputGroup
-        label="Quel est votre moyen de transport ?"
-        type="radioCard"
-        name="meansOfTransport"
-        radioCardValues={meansOfTransports}
-        register={register('meansOfTransport', { required: true })}
-        control={control}
-        error={errors?.meansOfTransport?.message}
-      />
-      {transportChosen && (
-        <div className="mt-4">
-          <InputGroup
-            label="De quel pays arrivez-vous ?"
-            type="comboboxes"
-            fullWidth={true}
-            name="country"
-            placeholder="Pays"
-            trailingIcon="search"
-            options={countriesOptions}
-            register={register('country', { required: true })}
-            control={control}
-            error={errors?.country?.message}
-          />
-        </div>
-      )}
-      {isPlane && (
-        <div className="mt-4">
-          <InputGroup
-            type="text"
-            name="phone"
-            fullWidth={false}
-            placeholder="Numéro de vol"
-            register={register('flightNumber')}
-            control={control}
-            error={errors?.flightNumber?.message}
-            required
-          />
-        </div>
-      )}
-      <div>
-        {errors?.meansOfTransport && (
-          <div className="text-red-500">{errors.meansOfTransport.message}</div>
+    <AgentRoute>
+      <DeclarationSteps
+        currentStep={2}
+        handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
+        onSubmit={onSubmit}
+      >
+        <InputGroup
+          label="Quel est votre moyen de transport ?"
+          type="radioCard"
+          name="meansOfTransport"
+          radioCardValues={meansOfTransports}
+          register={register('meansOfTransport', { required: true })}
+          control={control}
+          error={errors?.meansOfTransport?.message}
+        />
+        {transportChosen && (
+          <div className="mt-4">
+            <InputGroup
+              label="De quel pays arrivez-vous ?"
+              type="comboboxes"
+              fullWidth={true}
+              name="country"
+              placeholder="Pays"
+              trailingIcon="search"
+              options={countriesOptions}
+              register={register('country', { required: true })}
+              control={control}
+              error={errors?.country?.message}
+            />
+          </div>
         )}
-      </div>
-      <div className="absolute bottom-8 w-40 self-center">
-        <Button fullWidth={true} type="submit" disabled={!isValid}>
-          Valider
-        </Button>
-      </div>
-    </DeclarationSteps>
+        {isPlane && (
+          <div className="mt-4">
+            <InputGroup
+              type="text"
+              name="phone"
+              fullWidth={false}
+              placeholder="Numéro de vol"
+              register={register('flightNumber')}
+              control={control}
+              error={errors?.flightNumber?.message}
+              required
+            />
+          </div>
+        )}
+        <div>
+          {errors?.meansOfTransport && (
+            <div className="text-red-500">{errors.meansOfTransport.message}</div>
+          )}
+        </div>
+        <div className="absolute bottom-8 w-40 self-center">
+          <Button fullWidth={true} type="submit" disabled={!isValid}>
+            Valider
+          </Button>
+        </div>
+      </DeclarationSteps>
+    </AgentRoute>
   );
 };
 

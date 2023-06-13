@@ -36,6 +36,8 @@ import {
   SimulatorAppStateSlice,
 } from './simulator/appState.store';
 import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/useCase.store';
+import { createUsersAppStateSlice, UsersAppStateSlice } from './users/appState.store';
+import { createUseCaseUserSlice, UsersUseCaseSlice } from './users/useCase.store';
 
 export type StoreState = SimulatorUseCaseSlice &
   SimulatorAppStateSlice &
@@ -50,7 +52,9 @@ export type StoreState = SimulatorUseCaseSlice &
   FaqAppStateSlice &
   FaqUseCaseSlice &
   PrepareMyTripAppStateSlice &
-  PrepareMyTripUseCaseSlice;
+  PrepareMyTripUseCaseSlice &
+  UsersAppStateSlice &
+  UsersUseCaseSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -85,6 +89,8 @@ export const useStore = create<StoreState>(
       ...createUseCaseFaqSlice(set, get, api),
       ...createPrepareMyTripAppStateSlice(set, get, api),
       ...createUseCasePrepareMyTripSlice(set, get, api),
+      ...createUsersAppStateSlice(set, get, api),
+      ...createUseCaseUserSlice(set, get, api),
     }),
 
     {
@@ -97,6 +103,7 @@ export const useStore = create<StoreState>(
           products: state.products,
           currencies: state.currencies,
           global: state.global,
+          users: state.users,
         };
       },
       migrate(persistedState: StoreState, version) {

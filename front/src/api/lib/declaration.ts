@@ -50,6 +50,6 @@ export const checkSimulatorDataRequest = (
 };
 
 export const simulateRequest = async (data: SimulatorDataRequest): Promise<SimulatorResponse> => {
-  const response = await axios.post('/api/simulator/', data);
+  const response = await axios.post('/simulator/', data);
   return response.data;
 };

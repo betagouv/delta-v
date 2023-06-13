@@ -8,6 +8,7 @@ import { Button } from '@/components/common/Button';
 import { TextLink } from '@/components/common/TextLink';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
+import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
 
@@ -37,8 +38,15 @@ const LoginPage = () => {
 
   const router = useRouter();
 
+  const { setUserFromToken } = useStore((state) => ({
+    setUserFromToken: state.setUserFromToken,
+  }));
+
   const loginMutation = useLoginMutation({
-    onSuccess: () => router.replace('/agent'),
+    onSuccess: (data) => {
+      setUserFromToken(data.accessToken, data.refreshToken);
+      router.replace('/agent');
+    },
   });
   const error = loginMutation.error?.response.data;
 
