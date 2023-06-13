@@ -1,11 +1,9 @@
-import { Method } from 'axios';
+import axios, { Method } from 'axios';
 import { QueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 
-import axiosInstance from './axios';
-
 const defaultQueryFn = async ({ queryKey }: { queryKey: any }) => {
-  const data = await axiosInstance.get(queryKey[0], {
+  const data = await axios.get(queryKey[0], {
     ...(queryKey[1]?.params ? { params: queryKey[1].params } : {}),
   });
 
@@ -14,7 +12,7 @@ const defaultQueryFn = async ({ queryKey }: { queryKey: any }) => {
 
 export const fetch = async <T>(url: string, input: T, method: Method = 'POST') => {
   try {
-    const { data } = await axiosInstance(url, {
+    const { data } = await axios(url, {
       method,
       data: input,
     });
