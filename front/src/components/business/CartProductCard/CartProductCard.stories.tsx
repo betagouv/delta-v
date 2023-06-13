@@ -55,7 +55,7 @@ const item1: CartProductCardProps = {
   ],
   deletable: true,
   detailsButton: true,
-  onClick: (id) => console.log(id),
+  onDelete: (id) => console.log(id),
 };
 
 const item2: CartProductCardProps = {
@@ -70,7 +70,7 @@ const item2: CartProductCardProps = {
   ],
   deletable: true,
   detailsButton: false,
-  onClick: (id) => console.log(id),
+  onDelete: (id) => console.log(id),
 };
 
 const item3: CartProductCardProps = {
@@ -85,7 +85,7 @@ const item3: CartProductCardProps = {
   ],
   deletable: false,
   detailsButton: true,
-  onClick: (id) => console.log(id),
+  onDelete: (id) => console.log(id),
 };
 
 const item4: CartProductCardProps = {
@@ -99,7 +99,7 @@ const item4: CartProductCardProps = {
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
   ],
   deletable: false,
-  onClick: (id) => console.log(id),
+  onDelete: (id) => console.log(id),
 };
 
 export const Base = () => {

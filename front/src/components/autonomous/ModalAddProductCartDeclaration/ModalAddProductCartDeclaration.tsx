@@ -1,7 +1,5 @@
 import React from 'react';
 
-import router from 'next/router';
-
 import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
 import DownModal from '@/components/common/DownModal';
 import { Product } from '@/model/product';
@@ -23,37 +21,17 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
   open,
   defaultCurrency,
 }) => {
-  const displayedProducts =
-    currentProduct?.subProducts.map((product) => {
-      return {
-        id: product.id,
-        svgNames: product.icon ?? 'categoryOther',
-        title: product.name,
-      };
-    }) ?? [];
-
-  const onRedirectProduct = (idRedirect: string) => {
-    router.push(`/simulateur/produits/${idRedirect}`);
-  };
-
   return (
     <>
       <DownModal bgColor="bg-white" open={open} onClose={onClose}>
         <div className=" flex h-[90vh]">
           <div className="flex flex-1 flex-col gap-6">
-            {currentProduct?.finalProduct ? (
-              <FormSelectProduct
-                currentProduct={currentProduct}
-                onAddProduct={onAddProduct}
-                role="agent"
-              />
-            ) : (
-              <CategoryList
-                items={displayedProducts}
-                title="Catégories"
-                onSelectProduct={onRedirectProduct}
-              />
-            )}
+            <FormSelectProduct
+              currentProduct={currentProduct}
+              onAddProduct={onAddProduct}
+              templateRole="agent"
+              defaultCurrency={defaultCurrency}
+            />
           </div>
         </div>
       </DownModal>

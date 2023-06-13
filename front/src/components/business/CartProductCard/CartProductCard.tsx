@@ -29,7 +29,7 @@ export type CartProductCardProps = {
   vatAmount?: string;
   detailsButton?: boolean;
   deletable?: boolean;
-  onClick?: (id: string) => void;
+  onDelete: (id: string) => void;
 };
 
 export const CartProductCard = ({
@@ -40,7 +40,7 @@ export const CartProductCard = ({
   vatAmount,
   detailsButton,
   deletable = false,
-  onClick,
+  onDelete,
 }: CartProductCardProps) => {
   const [open, setOpen] = useState(false);
   const color = getCartProductCardColor(deletable);
@@ -50,7 +50,7 @@ export const CartProductCard = ({
         <div className="absolute right-2 top-2 cursor-pointer">
           <Typography
             color={deletable ? 'red' : 'primary'}
-            onClick={onClick ? () => onClick(product.customId) : undefined}
+            onClick={() => onDelete(product.customId)}
           >
             <Icon name="cross-thin" size="sm" />
           </Typography>

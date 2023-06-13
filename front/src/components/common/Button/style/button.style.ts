@@ -1,4 +1,4 @@
-export type ButtonSize = '2xs' | '2xs' | 'xs' | 'sm' | 'base' | 'lg' | 'xl';
+export type ButtonSize = '2xs' | 'xs' | 'sm' | 'base' | 'lg' | 'xl';
 export type ButtonVariant = 'normal' | 'outlined' | 'ghost';
 export type ButtonColor = 'primary' | 'secondary' | 'card' | 'red';
 export type IconPosition = 'left' | 'right';
