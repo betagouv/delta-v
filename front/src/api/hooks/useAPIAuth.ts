@@ -11,13 +11,13 @@ import {
   resetPasswordRequest,
   validateEmailRequest,
 } from '../lib/auth';
-import { ICommonResponse, MutationAxiosResponse, MutationSuccessCallback } from '../lib/types';
+import { ICommonResponse, IErrorResponse, MutationSuccessCallback } from '../lib/types';
 import { setAccessToken, setRefreshToken } from '@/utils/auth';
 
 export const useLoginMutation = ({ onSuccess }: MutationSuccessCallback<LoginResponse>) => {
   const queryClient = useQueryClient();
 
-  return useMutation<LoginResponse, MutationAxiosResponse, LoginRequestOptions>(loginRequest, {
+  return useMutation<LoginResponse, IErrorResponse, LoginRequestOptions>(loginRequest, {
     onSuccess: (data: LoginResponse) => {
       queryClient.invalidateQueries();
       if (onSuccess) {
@@ -30,21 +30,19 @@ export const useLoginMutation = ({ onSuccess }: MutationSuccessCallback<LoginRes
 };
 
 export const useRegisterMutation = () => {
-  return useMutation<ICommonResponse, MutationAxiosResponse, RegisterRequestOptions>(
-    registerRequest,
-  );
+  return useMutation<ICommonResponse, IErrorResponse, RegisterRequestOptions>(registerRequest);
 };
 
 export const useValidationEmailMutation = () => {
-  return useMutation<ICommonResponse, MutationAxiosResponse, string>(validateEmailRequest);
+  return useMutation<ICommonResponse, IErrorResponse, string>(validateEmailRequest);
 };
 
 export const useAskResetPasswordMutation = () => {
-  return useMutation<ICommonResponse, MutationAxiosResponse, string>(askResetPasswordRequest);
+  return useMutation<ICommonResponse, IErrorResponse, string>(askResetPasswordRequest);
 };
 
 export const useResetPasswordMutation = () => {
-  return useMutation<ICommonResponse, MutationAxiosResponse, ResetPasswordRequestOptions>(
+  return useMutation<ICommonResponse, IErrorResponse, ResetPasswordRequestOptions>(
     resetPasswordRequest,
   );
 };

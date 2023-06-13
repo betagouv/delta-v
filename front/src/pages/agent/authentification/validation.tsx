@@ -13,7 +13,7 @@ const ResetPasswordPage = () => {
   const { token } = router.query;
 
   const validationEmailMutation = useValidationEmailMutation();
-  const apiError = validationEmailMutation.error?.response;
+  const apiError = validationEmailMutation.error;
   const { data: apiSuccess } = validationEmailMutation;
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const ResetPasswordPage = () => {
       }
     >
       {apiSuccess && <div className="text-sm font-bold text-green-500">{apiSuccess.message}</div>}
-      {apiError && <div className="text-sm font-bold text-red-500">{apiError.data.message}</div>}
+      {apiError && <div className="text-sm font-bold text-red-500">{apiError.message}</div>}
       <TextLink underline to={RoutingAuthentication.login}>
         se connecter
       </TextLink>

@@ -48,7 +48,8 @@ const LoginPage = () => {
       router.replace('/agent');
     },
   });
-  const error = loginMutation.error?.response.data;
+
+  const error = loginMutation.error ?? undefined;
 
   const onSubmit = async (data: FormLoginData) => {
     loginMutation.mutate(data);

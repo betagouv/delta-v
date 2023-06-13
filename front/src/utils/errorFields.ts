@@ -1,16 +1,16 @@
-import { AxiosResponse } from 'axios';
+import { IErrorResponse } from '@/api/lib/types';
 
 export const getErrorFields = (
   fieldName: string,
-  apiError?: AxiosResponse<any, any>,
+  apiError?: IErrorResponse,
 ): string | undefined => {
   if (!apiError) {
     return undefined;
   }
-  if (apiError.status !== 400) {
+  if (apiError.statusCode !== 400) {
     return undefined;
   }
 
-  return apiError?.data?.context?.validationErrors.find((error: any) => error.name === fieldName)
+  return apiError?.context?.validationErrors?.find((error: any) => error.name === fieldName)
     ?.message;
 };

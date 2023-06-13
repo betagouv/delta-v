@@ -36,7 +36,8 @@ const RegisterPage = () => {
   });
 
   const registerMutation = useRegisterMutation();
-  const apiError = registerMutation.error?.response;
+
+  const apiError = registerMutation.error ?? undefined;
   const { isLoading, data: apiSuccess } = registerMutation;
 
   const onSubmit = async (data: FormRegisterData) => {
@@ -73,7 +74,7 @@ const RegisterPage = () => {
         <TextLink underline to={RoutingAuthentication.login}>
           se connecter
         </TextLink>
-        {apiError && <div className="text-sm font-bold text-red-500">{apiError.data.message}</div>}
+        {apiError && <div className="text-sm font-bold text-red-500">{apiError.message}</div>}
         {apiSuccess && <div className="text-sm font-bold text-green-500">{apiSuccess.message}</div>}
         <div>
           <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid || isLoading}>

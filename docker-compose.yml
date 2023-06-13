@@ -117,6 +117,8 @@ services:
       - backend
     working_dir: /usr/app
     command: yarn dev
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=/api
 
   storybook-delta-v:
     container_name: storybook-delta-v

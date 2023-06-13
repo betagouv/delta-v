@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios';
-
 export type TAgeCategory = 0 | 10 | 12 | 16 | 18 | null;
 
 export interface ICommonResponse {
@@ -23,6 +21,6 @@ export interface MutationSuccessCallback<T = ICommonResponse> {
   onSuccess?: (data: T) => void;
 }
 
-export interface MutationAxiosResponse<T = AxiosResponse<IErrorResponse, any>> {
+export interface MutationAxiosResponse<T = IErrorResponse> {
   response: T;
 }

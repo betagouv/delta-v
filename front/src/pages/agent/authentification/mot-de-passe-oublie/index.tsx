@@ -33,7 +33,7 @@ const AskResetPasswordPage = () => {
   });
 
   const askResetPasswordMutation = useAskResetPasswordMutation();
-  const apiError = askResetPasswordMutation.error?.response;
+  const apiError = askResetPasswordMutation.error ?? undefined;
   const { data: apiSuccess } = askResetPasswordMutation;
 
   const onSubmit = async (data: FormForgetPasswordData) => {
@@ -61,7 +61,7 @@ const AskResetPasswordPage = () => {
         <TextLink underline to={RoutingAuthentication.login}>
           se connecter
         </TextLink>
-        {apiError && <div className="text-sm font-bold text-red-500">{apiError.data.message}</div>}
+        {apiError && <div className="text-sm font-bold text-red-500">{apiError.message}</div>}
         {apiSuccess && <div className="text-sm font-bold text-green-500">{apiSuccess.message}</div>}
         <div>
           <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>
