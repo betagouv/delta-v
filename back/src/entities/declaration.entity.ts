@@ -8,7 +8,8 @@ export enum DeclarationStatus {
   SUBMITTED = 'submitted',
   VALIDATED = 'validated',
   PAID = 'paid',
-  REFUSED = 'refused',
+  REFUSED_ERROR = 'refused-error',
+  REFUSED_LITIGATION = 'refused-litigation',
 }
 
 export interface VersionData {
