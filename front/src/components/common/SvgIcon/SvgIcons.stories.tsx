@@ -12,6 +12,7 @@ export default {
 
 const iconNames: SvgNames[] = [
   'logo',
+  'logoAgent',
   'logoFrenchRepublic',
   'logoFrenchDouane',
   'logoDouane',

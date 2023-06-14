@@ -138,6 +138,7 @@ import Tea from '@/assets/icons/Tea.svg';
 import Train from '@/assets/icons/Train.svg';
 import Traveler from '@/assets/icons/Traveler.svg';
 import Watch from '@/assets/icons/Watch.svg';
+import LogoAgent from '@/assets/images/Logo-Agent.svg';
 import LogoDouane from '@/assets/images/Logo-Douane.svg';
 import LogoFrenchDouane from '@/assets/images/Logo-French-Douane.svg';
 import LogoFrenchRepublic from '@/assets/images/Logo-French-Republic.svg';
@@ -145,6 +146,7 @@ import Logo from '@/assets/images/Logo.svg';
 
 export type SvgNames =
   | 'logo'
+  | 'logoAgent'
   | 'logoFrenchRepublic'
   | 'logoFrenchDouane'
   | 'logoDouane'
@@ -297,6 +299,8 @@ const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
     case 'logo':
       return Logo;
+    case 'logoAgent':
+      return LogoAgent;
     case 'logoFrenchRepublic':
       return LogoFrenchRepublic;
     case 'logoFrenchDouane':
