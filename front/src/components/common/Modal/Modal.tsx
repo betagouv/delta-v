@@ -11,6 +11,7 @@ export interface IModalProps {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
   children?: any;
+  preventClose?: boolean;
 }
 
 export const Modal: React.FC<IModalProps> = ({
@@ -19,8 +20,10 @@ export const Modal: React.FC<IModalProps> = ({
   title,
   children,
   subtitle,
+  preventClose = false,
 }: IModalProps) => {
   const handleOnClose = (): void => {
+    if (preventClose) return;
     if (onClose) {
       onClose();
     }
@@ -60,9 +63,11 @@ export const Modal: React.FC<IModalProps> = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="my-largeBase inline-block w-full rounded-lg bg-white p-modal text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle">
-              <div className="absolute top-4 right-4 flex h-4 w-4 items-center">
-                <Icon name="clear" onClick={onClose} />
-              </div>
+              {!preventClose && (
+                <div className="absolute top-4 right-4 flex h-4 w-4 items-center">
+                  <Icon name="clear" onClick={onClose} />
+                </div>
+              )}
               {title && (
                 <div className="text-center">
                   <Dialog.Title>
