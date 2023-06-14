@@ -92,14 +92,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <MatomoProvider value={instance}>
-        <QueryClientProvider client={queryClient}>
+        {!hideLoading && (
           <div
             className={classNames({
               'fixed z-50 flex h-full w-full items-center bg-white transition-[opacity] ease-out duration-300':
                 true,
               'opacity-100': loading,
               'opacity-0': !loading,
-              hidden: hideLoading,
             })}
           >
             <span className="flex-1" />
@@ -116,9 +115,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             </div>
             <span className="flex-1" />
           </div>
-          <Component {...pageProps} />
-          <ToastContainer />
-        </QueryClientProvider>
+        )}
+        {!loading && <Component {...pageProps} />}
+        <ToastContainer />
       </MatomoProvider>
     </QueryClientProvider>
   );
