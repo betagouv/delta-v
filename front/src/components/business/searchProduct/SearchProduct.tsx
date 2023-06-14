@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { SearchResultProducts } from './product/SearchResultProducts';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
+import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
@@ -42,26 +43,28 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
   }, [resultSearch]);
 
   return (
-    <div
-      className="flex h-5/6 flex-1 flex-col content-between justify-between gap-4"
-      data-testid="search-element"
-    >
-      <div className="relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 top-1 flex h-9 w-9 pl-4">
-          <Icon name="search" />
+    <div data-testid="search-element" className="items-between flex flex-col h-full">
+      <div className={`flex flex-col p-5 pb-6 bg-secondary-100 rounded-md`}>
+        <div className="text-black flex flex-row items-center gap-2">
+          <Icon name="search" size="sm" />
+          <Typography color="black" size="text-sm" weight="bold">
+            Recherche
+          </Typography>
         </div>
         <input
           data-testid="input-search-element"
           placeholder={placeholder}
           disabled={disabled}
           enterKeyHint="search"
-          className="block w-full rounded-full border border-solid border-secondary-300 px-4 py-2 pl-11 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent"
+          className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2"
           onChange={(event) => {
             setSearchValue(event.target.value);
             onSearch(event.target.value);
           }}
           autoFocus={autoFocus}
         />
+      </div>
+      <div className="p-5 flex-1">
         {searchValue.length === 0 ? (
           <></>
         ) : (
@@ -72,12 +75,8 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
           />
         )}
       </div>
-      <div className="min-w-40 absolute bottom-8 self-center">
-        <Button
-          fullWidth={true}
-          onClick={() => onSearchAll(searchValue)}
-          disabled={resultSearch.length === 0}
-        >
+      <div className="my-5 self-center">
+        <Button onClick={() => onSearchAll(searchValue)} disabled={resultSearch.length === 0}>
           {`Voir les ${resultSearch.length} résultats`}
         </Button>
       </div>

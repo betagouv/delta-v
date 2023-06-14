@@ -9,9 +9,9 @@ export const BackButton: React.FC = () => {
     <Link back>
       <div className="flex flex-row items-center">
         <div className="mr-4 h-5 w-5">
-          <Icon name="chevron-thin-left" />
+          <Icon name="chevron-left" />
         </div>
-        <Typography color="secondary"> Retour</Typography>
+        <Typography color="secondary">Retour</Typography>
       </div>
     </Link>
   );

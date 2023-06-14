@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 
 import { CustomHeader } from '@/components/autonomous/CustomHeader';
-import { SvgNames } from '@/components/common/SvgIcon';
-import { TitleHeader } from '@/components/common/TitleHeader';
+import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 
 type IMainAgentProps = {
   meta: ReactNode;
@@ -15,8 +14,6 @@ type IMainAgentProps = {
   titleHeader?: string;
   linkSearch?: string;
   withTitle?: boolean;
-  titleValue?: React.ReactNode;
-  titleIcon?: SvgNames;
 };
 
 const MainAgent = ({
@@ -26,18 +23,14 @@ const MainAgent = ({
   withLogo = false,
   titleHeader,
   withTitle = false,
-  titleValue,
-  titleIcon,
 }: IMainAgentProps) => {
   return (
     <div className="h-full antialiased">
       {meta}
 
-      <div
-        className={withHeader || withTitle ? 'flex min-h-[calc(100%-74px)] flex-col gap-6 p-4' : ''}
-      >
+      <div className={withHeader || withTitle ? 'flex min-h-[calc(100%)] flex-col' : ''}>
         {withHeader && <CustomHeader withLogo={withLogo} title={titleHeader} />}
-        {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}
+        {withTitle && <TitleHeaderAgent title={titleHeader ?? ''} />}
         {children}
       </div>
     </div>

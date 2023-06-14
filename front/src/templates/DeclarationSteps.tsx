@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import classNames from 'classnames';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
 import { MainAgent } from './MainAgent';
@@ -12,6 +13,7 @@ type IMainProps = {
   currentStep: number;
   handleSubmit: UseFormHandleSubmit<any>;
   onSubmit: (data: any) => void;
+  simpleBg?: boolean;
 };
 
 export type ProgressBarAgentItemType = {
@@ -26,7 +28,13 @@ const links: ProgressBarAgentItemType[] = [
   { name: 'Marchandises', to: DECLARATION_STEP_PAGE[3] ?? '', stepNumber: 3 },
 ];
 
-const DeclarationSteps = ({ children, currentStep, handleSubmit, onSubmit }: IMainProps) => {
+const DeclarationSteps = ({
+  children,
+  currentStep,
+  handleSubmit,
+  onSubmit,
+  simpleBg,
+}: IMainProps) => {
   const showProgressBar = currentStep <= 3 && currentStep >= 1;
 
   return (
@@ -37,13 +45,23 @@ const DeclarationSteps = ({ children, currentStep, handleSubmit, onSubmit }: IMa
           description="Simuler la déclaration de douane en quelques clics"
         />
       }
-      withHeader
       withTitle
       titleHeader="Créer une déclaration"
     >
-      {showProgressBar && <ProgressBarAgent links={links} currentStep={currentStep} />}
+      {showProgressBar && (
+        <div className="px-4">
+          <ProgressBarAgent links={links} currentStep={currentStep} />
+        </div>
+      )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={classNames({
+          'flex flex-1 flex-col h-full p-4 mt-4': true,
+          'bg-white': simpleBg,
+          'bg-secondary-100': !simpleBg,
+        })}
+      >
         {children}
       </form>
     </MainAgent>

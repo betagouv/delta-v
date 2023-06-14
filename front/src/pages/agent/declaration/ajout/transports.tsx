@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { getEmojiFlag } from 'countries-list';
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
@@ -35,14 +36,14 @@ const meansOfTransports: IRadioCardType[] = [
     svgIcon: 'plane',
   },
   {
-    id: 'boat',
-    value: 'Bateau',
-    svgIcon: 'boat',
-  },
-  {
     id: 'train',
     value: 'Train',
     svgIcon: 'train',
+  },
+  {
+    id: 'boat',
+    value: 'Bateau',
+    svgIcon: 'boat',
   },
   {
     id: 'other',
@@ -130,7 +131,7 @@ const Declaration = () => {
     return enabledKeys.map((key) => {
       const countryAlternative = countriesAlternatives.find((country) => country.id === key);
       return {
-        value: countries[key] ?? '',
+        value: `${countries[key]} ${getEmojiFlag(key).toString()} ` ?? '',
         id: key,
         alternatives: countryAlternative?.alternatives ?? [],
       };
@@ -152,6 +153,7 @@ const Declaration = () => {
           register={register('meansOfTransport', { required: true })}
           control={control}
           error={errors?.meansOfTransport?.message}
+          littleCard
         />
         {transportChosen && (
           <div className="mt-4">

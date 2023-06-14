@@ -65,10 +65,10 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
 
   const className = classNames(fullWidth ? 'w-full' : 'max-w-fit');
   let classNameCombobox =
-    'w-full border py-2 pl-3 pr-10 focus:outline-none rounded-full placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
+    'w-full border-secondary-100 border py-2 pl-3 pr-10 focus:outline-none rounded-full placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
   classNameCombobox += error
     ? ' border-red-300 focus:ring-red-500 focus:border-red-500'
-    : ' border-secondary-300';
+    : ' border-secondary-100';
   classNameCombobox += disabled ? ' bg-secondary-200 text-secondary-400' : '';
 
   return (

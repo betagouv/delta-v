@@ -87,7 +87,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
     <div className="flex flex-1 flex-col gap-4" data-testid="search-element">
       <div className="relative">
         <input
-          className="w-full rounded-full border border-secondary-300 py-2 pl-3 pr-10 placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none focus:ring-transparent"
+          className="w-full rounded-full border border-secondary-100 py-2 pl-3 pr-10 placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none focus:ring-transparent"
           autoFocus={autoFocus}
           enterKeyHint="search"
           data-testid="input-search-element"

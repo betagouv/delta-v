@@ -26,12 +26,12 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
   return (
     <div
       className={cs(
-        'relative grid rounded-xl border border-gray-200 grid-cols-[40px_1fr] w-full h-28 p-3',
+        'relative grid rounded-xl border border-secondary-300 grid-cols-[40px_1fr] w-full h-28 p-3',
       )}
       onClick={onClick ? () => onClick(product) : undefined}
     >
       <div className="h-7 w-7 bg-gray-200" />
-      <div className="grid-rows-[1fr_3fr]">
+      <div className="grid-rows-[1fr_3fr] overflow-hidden">
         <div className="flex flex-row gap-6">
           {product.nomenclatures &&
             product.nomenclatures.map((item, index) => (

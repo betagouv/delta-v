@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { getEmojiFlag } from 'countries-list';
 import dayjs from 'dayjs';
 
-import { DataInfoItem } from '../DataInfoItem';
+import { NewDataInfoItem } from '../NewDataInfoItem';
+import { Typography } from '@/components/common/Typography';
 
 require('dayjs/locale/fr');
 
@@ -30,22 +32,19 @@ export const DeclarationContactDetails = ({
   city,
 }: DeclarationContactDetailsProps) => {
   return (
-    <div>
-      <div className="grid h-full w-full grid-cols-2">
-        <DataInfoItem label="NOM" value={lastName} size="text-sm" isRequired />
-        <DataInfoItem label="Prénom" value={firstName} size="text-sm" isRequired />
-      </div>
-      <div className="flex flex-col justify-start gap-4 mt-4">
-        <DataInfoItem label="Àge" value={age.toString()} size="text-sm" isRequired />
-        <DataInfoItem label="Mail" value={email} size="text-sm" />
-        <DataInfoItem label="Numéro de téléphone" value={phoneNumber} size="text-sm" />
-        <DataInfoItem label="Adresse" value={address} size="text-sm" isRequired />
-      </div>
-      <div className="grid h-full w-full grid-cols-2 mt-4 gap-y-4">
-        <DataInfoItem label="Code Postal" value={postalCode} size="text-sm" isRequired />
-        <DataInfoItem label="Ville" value={city} size="text-sm" isRequired />
-        <DataInfoItem label="Pays" value={'🇫🇷 France'} size="text-sm" isRequired />
-      </div>
+    <div className="flex flex-col bg-secondary-100 px-4 py-7 gap-4">
+      <Typography size="text-base" weight="bold" color="black">
+        Coordonnées
+      </Typography>
+      <NewDataInfoItem label="NOM" value={lastName} />
+      <NewDataInfoItem label="Prénom" value={firstName} />
+      <NewDataInfoItem label="Àge" value={age.toString()} />
+      <NewDataInfoItem label="Mail" value={email} />
+      <NewDataInfoItem label="Numéro de téléphone" value={phoneNumber} />
+      <NewDataInfoItem label="Adresse" value={address} />
+      <NewDataInfoItem label="Code Postal" value={postalCode} />
+      <NewDataInfoItem label="Ville" value={city} />
+      <NewDataInfoItem label="Pays" value={`${getEmojiFlag('FR')} France`} />
     </div>
   );
 };

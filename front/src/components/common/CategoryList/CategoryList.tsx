@@ -4,6 +4,7 @@ import cs from 'classnames';
 
 import { Icon } from '../Icon';
 import { SvgIcon, SvgNames } from '../SvgIcon';
+import { TitleAgent } from '../TitleAgent';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
 
 export interface Item {
@@ -27,11 +28,15 @@ export const CategoryList: React.FC<CategoryListProps> = ({
 }: CategoryListProps) => {
   return (
     <ul role="list">
-      {title && <li className="flex py-1 text-sm">{title}</li>}
+      {title && (
+        <li className="flex py-1 text-sm">
+          <TitleAgent title={title} />
+        </li>
+      )}
       <div
         className={cs({
-          'flex flex-row': true,
-          'grid grid-cols-3 gap-2': displayType === 'card',
+          'flex flex-row ': true,
+          'grid grid-cols-3 gap-2 mt-6': displayType === 'card',
           'flex-col': displayType === 'list',
         })}
       >
@@ -56,7 +61,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
                 </div>
                 <div className="ml-2 flex-1 text-base">{item.title}</div>
                 <div className="w-4 place-content-center">
-                  <Icon name="chevron-thin-right" />
+                  <Icon name="chevron-right" />
                 </div>
               </li>
               <div className="border-b border-b-gray-200" />

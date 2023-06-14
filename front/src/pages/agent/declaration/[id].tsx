@@ -5,12 +5,11 @@ import { useRouter } from 'next/router';
 import { useDeclaration } from '@/api/hooks/useAPIDeclaration';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { AddNote } from '@/components/business/AddNote';
 import { DeclarationContactDetails } from '@/components/business/DeclarationContactDetails';
 import { DeclarationStatusDetails } from '@/components/business/DeclarationStatusDetails';
-import { DeclarationTravelDetails } from '@/components/business/DeclarationTravelDetails';
 import { TaxTable } from '@/components/business/TaxTable';
 import { Button } from '@/components/common/Button';
+import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { isUUIDRegex } from '@/utils/formatTools';
@@ -32,19 +31,18 @@ const DeclarationSearch = () => {
             description="Simuler la déclaration de douane en quelques clics"
           />
         }
-        withHeader
-        titleHeader="Déclaration"
+        withTitle
       >
         {!isLoading && validateDeclarationResponse && (
           <div className="flex flex-1 flex-col">
-            <div className="flex w-full flex-col gap-4 border-b border-black py-6 pt-0">
+            <div className="flex w-full flex-col gap-4 border-b border-white px-4 pb-7 pt-0">
               <DeclarationStatusDetails
                 status={validateDeclarationResponse.status}
                 declarationId={validateDeclarationResponse.publicId}
                 date={validateDeclarationResponse.versionDate}
               />
             </div>
-            <div className="flex w-full flex-col gap-4 border-b border-black py-6">
+            <div className="flex w-full flex-col gap-4 border-b-4 border-white">
               <DeclarationContactDetails
                 address={validateDeclarationResponse.declarantAddressStreet}
                 city={validateDeclarationResponse.declarantAddressCity}
@@ -56,23 +54,27 @@ const DeclarationSearch = () => {
                 phoneNumber={validateDeclarationResponse.declarantPhoneNumber}
               />
             </div>
-            <div className="flex w-full flex-col gap-4 border-b border-black py-6">
-              <DeclarationTravelDetails
-                country={validateDeclarationResponse.declarantCountry}
-                transport={validateDeclarationResponse.declarantMeanOfTransport}
-              />
-            </div>
-            <div className="border-b border-black py-8">
+            <div className="py-7 bg-secondary-100 flex flex-col justify-center">
               <TaxTable declarationResponse={validateDeclarationResponse} />
+              <button
+                onClick={() => setOpenDownModal(true)}
+                className="bg-primary-400 px-8 py-3 text-white rounded-full self-center"
+              >
+                Ajouter un commentaire
+              </button>
             </div>
-            <div className="border-b border-black py-6 w-full">
-              <AddNote onClick={() => setOpenDownModal(true)} />
-            </div>
-            <div className="w-3/6 flex flex-col gap-4 pt-6 self-center">
-              <Button fullWidth>Valider la déclaration</Button>
-              <Button fullWidth variant="outlined">
-                Annuler
-              </Button>
+            <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
+              <Typography size="text-sm" color="black">
+                Voulez-vous valider cette déclaration ?
+              </Typography>
+              <div className="flex flex-row gap-5">
+                <Button fullWidth variant="outlined" onClick={() => setOpenDownModal(true)}>
+                  Annuler
+                </Button>
+                <Button fullWidth onClick={() => setOpenDownModal(true)}>
+                  Valider
+                </Button>
+              </div>
             </div>
             <ModalUnderConstruction open={openDownModal} onClose={() => setOpenDownModal(false)} />
           </div>

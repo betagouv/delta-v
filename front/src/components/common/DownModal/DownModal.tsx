@@ -11,6 +11,7 @@ export interface IDownModalProps {
   title?: React.ReactNode;
   bgColor?: string;
   children?: any;
+  withoutMargin?: boolean;
 }
 
 export const DownModal: React.FC<IDownModalProps> = ({
@@ -19,6 +20,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
   title,
   bgColor = 'bg-white',
   children,
+  withoutMargin = false,
 }: IDownModalProps) => {
   const handleOnClose = (): void => {
     if (onClose) {
@@ -49,9 +51,11 @@ export const DownModal: React.FC<IDownModalProps> = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`inline-block h-full w-full rounded-t-3xl ${bgColor} px-4 py-5 text-left shadow-xl transition-all sm:max-w-lg sm:align-middle lg:rounded-b-3xl`}
+              className={`inline-block h-full w-full rounded-t-3xl ${bgColor} ${
+                withoutMargin ? '' : 'px-4 py-5'
+              } text-left shadow-xl transition-all sm:max-w-lg sm:align-middle lg:rounded-b-3xl`}
             >
-              <div className="absolute top-4 right-4 flex h-4 w-4 items-center">
+              <div className="absolute top-4 right-4 flex h-7 w-7 items-center">
                 <Icon name="clear" onClick={onClose} />
               </div>
               {title && (

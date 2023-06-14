@@ -61,6 +61,7 @@ export interface IInputGroupProps {
   leadingAddons?: string;
   control?: any;
   rules?: any;
+  littleCard?: boolean;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -84,6 +85,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   register,
   control,
   rules,
+  littleCard = false,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
   return (
@@ -172,6 +174,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               radioCardValues={radioCardValues ?? []}
               register={register}
               control={control}
+              littleCard={littleCard}
             />
           )}
           {type !== 'select' &&

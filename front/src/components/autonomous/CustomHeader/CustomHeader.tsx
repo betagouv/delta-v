@@ -97,8 +97,8 @@ export const CustomHeader: React.FC<HeaderProps> = ({
     </>
   );
   return (
-    <>
+    <div className="px-5 pt-6 pb-0">
       <Header leftButtons={leftButtons} rightButtons={rightButtons} />
-    </>
+    </div>
   );
 };

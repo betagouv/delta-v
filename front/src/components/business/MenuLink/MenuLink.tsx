@@ -28,7 +28,7 @@ export const MenuLink = ({ title, to, badgeNumber, iconName }: MenuLinkProps) =>
         </div>
         <Typography color="black">{title}</Typography>
         <div className="flex items-center justify-self-center">
-          <Icon name="chevron-thin-right" size="base" />
+          <Icon name="chevron-right" size="base" />
         </div>
       </a>
     </Link>
