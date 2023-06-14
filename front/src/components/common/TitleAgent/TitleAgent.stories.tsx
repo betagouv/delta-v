@@ -1,16 +1,16 @@
 import { Meta } from '@storybook/react';
 
-import { TitleHeader } from './TitleAgent';
+import { TitleAgent } from './TitleAgent';
 
 export default {
-  title: 'Components/Common/TitleHeader',
-  component: TitleHeader,
+  title: 'Components/Common/TitleAgent',
+  component: TitleAgent,
 } as Meta;
 
 export const withVariant = (): JSX.Element => (
   <div className="p-3">
-    <p>Basic TitleHeader horizontal :</p>
-    <TitleHeader title="Simuler mes achats" icon="calculator" />
+    <p>Basic TitleAgent horizontal :</p>
+    <TitleAgent title="Simuler mes achats" />
     <br />
   </div>
 );

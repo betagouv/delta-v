@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DataInfoItem } from './NewDataInfoItem';
+import { NewDataInfoItem } from './NewDataInfoItem';
 
-const meta: Meta<typeof DataInfoItem> = {
-  title: 'Components/Business/DataInfoItem',
-  component: DataInfoItem,
+const meta: Meta<typeof NewDataInfoItem> = {
+  title: 'Components/Business/NewDataInfoItem',
+  component: NewDataInfoItem,
 };
 
 export default meta;
-type Story = StoryObj<typeof DataInfoItem>;
+type Story = StoryObj<typeof NewDataInfoItem>;
 
 export const Base: Story = {
   args: {
