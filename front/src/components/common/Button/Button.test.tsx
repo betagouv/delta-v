@@ -11,7 +11,7 @@ describe('Button', () => {
   });
   test.each([
     ['normal', ['text-white', 'bg-primary-600', 'border-transparent']],
-    ['outlined', ['text-primary-600', 'bg-white', 'border-primary-600']],
+    ['outlined', ['text-primary-600', 'border-primary-600']],
     ['ghost', ['text-primary-600', 'bg-transparent', 'border-transparent']],
   ])('should render button with variant %p', (variant, classes) => {
     const wrapper = render(

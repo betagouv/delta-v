@@ -1,6 +1,6 @@
 export type ButtonSize = '2xs' | 'xs' | 'sm' | 'base' | 'lg' | 'xl';
 export type ButtonVariant = 'normal' | 'outlined' | 'ghost';
-export type ButtonColor = 'primary' | 'secondary' | 'card';
+export type ButtonColor = 'primary' | 'secondary' | 'card' | 'red';
 export type IconPosition = 'left' | 'right';
 export type ButtonRounded = 'full' | 'lg' | 'md' | 'base' | 'none';
 
@@ -168,12 +168,15 @@ const styleManager: IButtonStyle = {
           'disabled:bg-secondary-600': true,
         },
       },
+      red: {
+        classes: {
+          'bg-red-600': true,
+          'hover:bg-red-700': true,
+          'disabled:bg-red-600': true,
+        },
+      },
     },
     outlined: {
-      classes: {
-        'bg-white': true,
-        'disabled:bg-white': true,
-      },
       primary: {
         classes: {
           'text-primary-600': true,
@@ -192,6 +195,16 @@ const styleManager: IButtonStyle = {
           'active:bg-gray-300': true,
           'active:border-secondary-500': true,
           'disabled:text-secondary-600': true,
+        },
+      },
+      red: {
+        classes: {
+          'text-red-600': true,
+          'border-red-600': true,
+          'active:text-red-500': true,
+          'active:bg-gray-300': true,
+          'active:border-red-500': true,
+          'disabled:text-red-600': true,
         },
       },
       card: {

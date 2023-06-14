@@ -1,6 +1,7 @@
 export type Color =
   | 'primary'
   | 'secondary'
+  | 'red'
   | 'white'
   | 'middle-gray'
   | 'light-gray'
@@ -37,6 +38,8 @@ export const getColor = (color: Color): string => {
       return 'text-primary-600';
     case 'secondary':
       return 'text-secondary-800';
+    case 'red':
+      return 'text-red-600';
     case 'white':
       return 'text-white';
     case 'light-gray':
