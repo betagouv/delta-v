@@ -5,7 +5,10 @@ import * as yup from 'yup';
 
 import { useLoginMutation } from '@/api/hooks/useAPIAuth';
 import { Button } from '@/components/common/Button';
+import { Link } from '@/components/common/Link';
+import { SvgIcon } from '@/components/common/SvgIcon';
 import { TextLink } from '@/components/common/TextLink';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
@@ -57,45 +60,70 @@ const LoginPage = () => {
 
   return (
     <MainAuth
+      noPadding
       meta={
         <Meta
-          title="Simulateur Déclare Douanes"
-          description="Simuler la déclaration de douane en quelques clics"
+          title="Déclare Douanes - Authentification agent"
+          description="Page d'authentification d'un agent des douanes"
         />
       }
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-6">
-        <InputGroup
-          type="email"
-          name="adult"
-          fullWidth={false}
-          placeholder="Email"
-          register={register('email')}
-          error={errors?.email?.message}
-        />
-        <InputGroup
-          type="password"
-          name="adult"
-          fullWidth={false}
-          placeholder="Mot de passe"
-          register={register('password')}
-          error={errors?.password?.message}
-        />
-
-        <TextLink underline to={RoutingAuthentication.forgetPassword}>
-          mot de passe oublié
-        </TextLink>
-
-        <TextLink underline to={RoutingAuthentication.register}>
-          créer mon compte
-        </TextLink>
-        {error?.message && <div className="text-sm font-bold text-red-500">{error.message}</div>}
-        <div>
-          <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>
-            Valider
-          </Button>
+      <section className="my-auto flex flex-col items-center self-center ">
+        <div className="mb-14 h-14">
+          <SvgIcon name="logoAgent" />
         </div>
-      </form>
+        <Typography variant="h1" size="text-xl" weight="bold">
+          Se connecter
+        </Typography>
+        <form onSubmit={handleSubmit(onSubmit)} className="w-60">
+          <div className="flex flex-col gap-3">
+            <InputGroup
+              type="email"
+              name="adult"
+              fullWidth={true}
+              placeholder="Email"
+              register={register('email')}
+              error={errors?.email?.message}
+            />
+            <InputGroup
+              type="password"
+              name="adult"
+              fullWidth={true}
+              placeholder="Mot de passe"
+              register={register('password')}
+              error={errors?.password?.message}
+            />
+          </div>
+          {error?.message && (
+            <div className="ml-3">
+              <Typography color="error" size="text-2xs">
+                {error.message}
+              </Typography>
+            </div>
+          )}
+          <TextLink underline to={RoutingAuthentication.forgetPassword}>
+            <Typography size="text-2xs">Mot de passe oublié ?</Typography>
+          </TextLink>
+
+          <div className="px-12 pt-4 pb-9">
+            <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
+              Valider
+            </Button>
+          </div>
+        </form>
+      </section>
+      <section className="absolute bottom-0 flex h-1/4 w-full flex-col items-center justify-center gap-4 bg-secondary-100">
+        <Typography color="black" weight="bold" size="text-xs">
+          Vous n'avez pas de compte ?
+        </Typography>
+        <Link to={RoutingAuthentication.register}>
+          <Button fullWidth={false} size="sm" variant="outlined">
+            <Typography weight="bold" size="text-xs">
+              Créer mon compte
+            </Typography>
+          </Button>
+        </Link>
+      </section>
     </MainAuth>
   );
 };

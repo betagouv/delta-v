@@ -59,7 +59,7 @@ export const Input: React.FC<IInputOptions> = ({
     parentClassName += ' w-fit';
   }
   let className =
-    'block w-full border-secondary-100 px-4 py-2 border border-solid text-base rounded-full focus:outline-none focus:ring-transparent focus:border-secondary-300 placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
+    'text-xs block w-full border-secondary-300 px-4 py-2 border border-solid rounded-full focus:outline-none focus:ring-transparent focus:border-secondary-300 placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
   if (error) {
     className += ' border-red-300 text-red-900 placeholder-red-300 focus:border-red-500';
   }

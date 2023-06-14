@@ -10,7 +10,7 @@ import { IOptions, Select } from '../StandardInputs/Select';
 import { SimpleSelect } from '../StandardInputs/SimpleSelect';
 import { TextArea } from '../StandardInputs/TextArea';
 import { Toggle } from '../StandardInputs/Toggle';
-import { Icon } from '@/components/common/Icon';
+import { Typography } from '@/components/common/Typography';
 
 export interface IErrorType {
   message: string;
@@ -203,13 +203,12 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
         {loading && 'Loading'}
       </>
       {error && (
-        <div data-testid="error-element" className="flex pl-2 text-sm text-red-600">
-          <div className="flex h-3 w-3 self-center">
-            <Icon name="error" />
-          </div>
-          <p className="pl-1" id="email-error">
-            {error}
-          </p>
+        <div data-testid="error-element" className="flex pl-2">
+          <span className="pl-1" id="input-error">
+            <Typography size="text-2xs" color="error">
+              {error}
+            </Typography>
+          </span>
         </div>
       )}
     </div>
