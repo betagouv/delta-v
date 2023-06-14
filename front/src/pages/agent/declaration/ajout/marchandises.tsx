@@ -17,7 +17,7 @@ import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Product } from '@/model/product';
-import { ShoppingProduct } from '@/stores/simulator/appState.store';
+import { DetailedProduct, ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
@@ -35,6 +35,7 @@ const Declaration = () => {
     declarationId,
     declarationRequest,
     defaultCurrency,
+    products,
   } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
@@ -42,7 +43,7 @@ const Declaration = () => {
       getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
-      products: state.declaration.appState.declarationRequest.products,
+      products: state.declaration.appState.declarationResponse?.valueProducts,
       declarationId: state.declaration.appState.declarationRequest.declarationId,
       declarationRequest: state.declaration.appState.declarationRequest,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
@@ -164,42 +165,49 @@ const Declaration = () => {
           </button>
         </div>
 
-        <div className="w-full mt-5 flex flex-col gap-4">
-          <div className="w-full flex flex-row justify-between items-center mb-1">
-            <Typography color="black" size="text-xs">
-              Marchandises <b>{products.length}</b>
-            </Typography>
-            <Typography
-              color={IsAvailableToRemove ? 'black' : 'primary'}
-              colorGradient="400"
-              size="text-xs"
-              onClick={() => setIsAvailableToRemove(!IsAvailableToRemove)}
-            >
-              {IsAvailableToRemove ? 'Annuler' : 'Supprimer'}
-            </Typography>
-          </div>
-          {products.map((product) => (
-            <div
-              key={product.id}
-              onClick={IsAvailableToRemove ? () => onClickProductToRemove(product.id) : undefined}
-            >
-              <CartProductCard
-                product={product}
-                key={product.id}
-                bgColor={IsAvailableToRemove ? 'selectable' : 'base'}
-              />
+        {products && (
+          <>
+            <div className="w-full mt-5 flex flex-col gap-4">
+              <div className="w-full flex flex-row justify-between items-center mb-1">
+                <Typography color="black" size="text-xs">
+                  Marchandises <b>{products.length}</b>
+                </Typography>
+                <Typography
+                  color={IsAvailableToRemove ? 'black' : 'primary'}
+                  colorGradient="400"
+                  size="text-xs"
+                  onClick={() => setIsAvailableToRemove(!IsAvailableToRemove)}
+                >
+                  {IsAvailableToRemove ? 'Annuler' : 'Supprimer'}
+                </Typography>
+              </div>
+              {products.map((product) => (
+                <div
+                  key={product.id}
+                  onClick={
+                    IsAvailableToRemove ? () => onClickProductToRemove(product.id) : undefined
+                  }
+                >
+                  <CartProductCard
+                    product={product as DetailedProduct}
+                    nomenclatures={product.nomenclatures}
+                    key={product.id}
+                    deletable={IsAvailableToRemove}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <Button
-          type="submit"
-          onClick={() => onSubmit}
-          disabled={!allShoppingProducts.length}
-          className={{ 'absolute bottom-6 self-center': true }}
-        >
-          Valider les marchandises
-        </Button>
+            <Button
+              type="submit"
+              onClick={() => onSubmit}
+              disabled={!allShoppingProducts.length}
+              className={{ 'absolute bottom-6 self-center': true }}
+            >
+              Valider les marchandises
+            </Button>
+          </>
+        )}
       </DeclarationSteps>
 
       <ModalSearchProduct
