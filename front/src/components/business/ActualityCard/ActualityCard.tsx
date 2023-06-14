@@ -3,6 +3,7 @@ import React from 'react';
 import cs from 'classnames';
 import dayjs from 'dayjs';
 
+import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 
 require('dayjs/locale/fr');
@@ -18,12 +19,17 @@ export type ActualityCardProps = {
 
 export const ActualityCard = ({ title, creationDate, content, tag }: ActualityCardProps) => {
   return (
-    <div className={cs('grid rounded-xl bg-gray-100 p-5 grid-rows-[20px_35px_1fr] w-72 h-48')}>
-      <div className="grid h-full w-full grid-cols-2">
-        <Typography color="middle-gray" size="text-xs">
-          {tag}
-        </Typography>
-
+    <div
+      className={cs(
+        'grid grid-rows-[20px_35px_1fr] rounded-xl border border-gray-300 px-5 py-4 gap-2',
+      )}
+    >
+      <div className="grid h-full w-full grid-cols-2 pb-4">
+        {tag && (
+          <Button variant="outlined" color="card" size="2xs">
+            {tag}
+          </Button>
+        )}
         <Typography color="middle-gray" size="text-xs" textPosition="text-right">
           {dayjs(creationDate).format('DD/MM/YYYY')}
         </Typography>
