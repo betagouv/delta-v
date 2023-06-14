@@ -7,7 +7,7 @@ import { FilterItem } from './FilterItem';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
-  title: 'Components/Business/Filter',
+  title: 'Components/Business/FilterGroup',
   component: FilterGroup,
 } as Meta;
 

@@ -22,7 +22,7 @@ export const Base = (): JSX.Element => {
           register={register}
           startDateInputId="startDate"
           endDateInputId="endDate"
-          // noBorder
+          noBorder
         />
         <button type="submit">Submit</button>
       </form>
