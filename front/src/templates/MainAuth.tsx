@@ -5,10 +5,10 @@ import cs from 'classnames';
 type IMainAgentProps = {
   meta: ReactNode;
   children: ReactNode;
-  noPadding?: boolean;
+  withPadding?: boolean;
 };
 
-const MainAuth = ({ children, meta, noPadding = false }: IMainAgentProps) => {
+const MainAuth = ({ children, meta, withPadding = true }: IMainAgentProps) => {
   return (
     <div className="h-full antialiased">
       {meta}
@@ -16,7 +16,7 @@ const MainAuth = ({ children, meta, noPadding = false }: IMainAgentProps) => {
       <div
         className={cs({
           'flex min-h-[calc(100%-74px)] flex-col gap-6': true,
-          'p-4': !noPadding,
+          'p-4': withPadding,
         })}
       >
         {children}

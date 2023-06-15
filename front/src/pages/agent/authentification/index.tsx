@@ -60,7 +60,6 @@ const LoginPage = () => {
 
   return (
     <MainAuth
-      noPadding
       meta={
         <Meta
           title="Déclare Douanes - Authentification agent"
