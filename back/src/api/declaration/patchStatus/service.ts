@@ -1,20 +1,27 @@
-import { DeclarationEntityInterface } from '../../../entities/declaration.entity';
+import { DeclarationStatus } from '../../../entities/declaration.entity';
 import { DeclarationRepositoryInterface } from '../../../repositories/declaration.repository';
 import declarationNotFoundError from '../../common/errors/declarationNotFound.error';
+import { checkStatusChange } from './services/checkStatusChange.service';
 
-export interface IGetOneDeclarationServiceOptions {
+export interface PatchStatusServiceOptions {
+  status: DeclarationStatus;
   declarationId: string;
   declarationRepository: DeclarationRepositoryInterface;
 }
 
 export const service = async ({
+  status,
   declarationId,
   declarationRepository,
-}: IGetOneDeclarationServiceOptions): Promise<DeclarationEntityInterface> => {
+}: PatchStatusServiceOptions): Promise<void> => {
   const declaration = await declarationRepository.getOne(declarationId);
   if (!declaration) {
     throw declarationNotFoundError();
   }
 
-  return declaration;
+  checkStatusChange({ initialStatus: declaration.status, newStatus: status });
+
+  await declarationRepository.updateOne(declarationId, {
+    status,
+  });
 };
