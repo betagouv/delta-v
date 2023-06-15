@@ -19,6 +19,10 @@ const DeclarationSearch = () => {
   const query = router.query as { id: string };
   const id = isUUIDRegex(query.id) ? query.id : '';
 
+  if (!isUUIDRegex(id)) {
+    return <></>;
+  }
+
   const { isLoading, data: validateDeclarationResponse } = useDeclaration(id);
 
   const [openDownModal, setOpenDownModal] = useState(false);

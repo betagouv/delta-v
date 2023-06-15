@@ -80,8 +80,6 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   };
 
   const onAddProduct = ({ product, value, currency }: OnAddProductOptions) => {
-    console.log('🚀 ~ file: ModalCategoryProduct.tsx:83 ~ onAddProduct ~ product:', product);
-
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,

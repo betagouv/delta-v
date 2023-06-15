@@ -13,7 +13,6 @@ import {
   DeclarationResponse,
 } from './appState.store';
 import { Currencies } from '@/model/currencies';
-import { Product } from '@/model/product';
 
 export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
@@ -142,8 +141,8 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     set((state: any) => {
       const newState = { ...state };
 
-      const newProducts = newState.declaration.appState.declarationRequest.products.filter(
-        (product: Product) => product.id !== id,
+      const newProducts = newState.declaration.appState.declarationRequest.shoppingProducts.filter(
+        (product: ShoppingProduct) => product.productId !== id,
       );
       newState.declaration.appState.declarationRequest.shoppingProducts = newProducts;
       return newState;

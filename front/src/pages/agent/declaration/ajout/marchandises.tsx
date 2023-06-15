@@ -160,41 +160,42 @@ const Declaration = () => {
 
         {valueProducts && (
           <>
-            <div className="w-full mt-5 flex flex-col gap-4">
-              <div className="w-full flex flex-row justify-between items-center mb-1">
-                <Typography color="black" size="text-xs">
-                  Marchandises <b>{valueProducts.length}</b>
-                </Typography>
-                <Typography
-                  color={IsAvailableToRemove ? 'black' : 'primary'}
-                  colorGradient="400"
-                  size="text-xs"
-                  onClick={() => setIsAvailableToRemove(!IsAvailableToRemove)}
-                >
-                  {IsAvailableToRemove ? 'Annuler' : 'Supprimer'}
-                </Typography>
+            <div className="w-full mt-5 flex flex-col gap-4 flex-1 justify-between">
+              <div className="w-full flex flex-col gap-4">
+                <div className="w-full flex flex-row justify-between items-center mb-1">
+                  <Typography color="black" size="text-xs">
+                    Marchandises <b>{valueProducts.length}</b>
+                  </Typography>
+                  <Typography
+                    color={IsAvailableToRemove ? 'black' : 'primary'}
+                    colorGradient="400"
+                    size="text-xs"
+                    onClick={() => setIsAvailableToRemove(!IsAvailableToRemove)}
+                  >
+                    {IsAvailableToRemove ? 'Annuler' : 'Supprimer'}
+                  </Typography>
+                </div>
+                {valueProducts.map((product) => (
+                  <CartProductCard
+                    product={product}
+                    nomenclatures={[]}
+                    key={product.id}
+                    deletable={IsAvailableToRemove}
+                    onDelete={onClickProductToRemove}
+                    detailsButton
+                  />
+                ))}
               </div>
-              {valueProducts.map((product) => (
-                <CartProductCard
-                  product={product}
-                  nomenclatures={[]}
-                  key={product.id}
-                  deletable={IsAvailableToRemove}
-                  onDelete={onClickProductToRemove}
-                  relatedWords={[]}
-                  detailsButton
-                />
-              ))}
-            </div>
 
-            <Button
-              type="submit"
-              onClick={() => onSubmit}
-              disabled={!valueProducts.length}
-              className={{ 'absolute bottom-6 self-center': true }}
-            >
-              Valider les marchandises
-            </Button>
+              <Button
+                type="submit"
+                onClick={() => onSubmit}
+                disabled={!valueProducts.length}
+                className={{ 'self-center': true }}
+              >
+                Valider les marchandises
+              </Button>
+            </div>
           </>
         )}
       </DeclarationSteps>
