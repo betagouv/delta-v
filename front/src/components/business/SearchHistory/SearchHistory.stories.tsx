@@ -15,8 +15,6 @@ const mockedString = `${faker.commerce.product()} ${faker.commerce.product()} ${
 const mockedStart = mockedString.indexOf(' ');
 const mockedEnd = mockedString.indexOf(' ', mockedStart + 1);
 
-console.log(mockedEnd);
-
 const SEARCH_HISTORY_ITEM_DATA: SearchHistoryItemProps = {
   matchingValue: mockedString,
   searchStart: mockedStart,
