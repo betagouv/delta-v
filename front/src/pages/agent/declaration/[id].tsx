@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useDeclaration } from '@/api/hooks/useAPIDeclaration';
+import { useDeclarationWithPublicId } from '@/api/hooks/useAPIDeclaration';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { DeclarationContactDetails } from '@/components/business/DeclarationContactDetails';
@@ -12,14 +12,17 @@ import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
-import { isUUIDRegex } from '@/utils/formatTools';
 
 const DeclarationSearch = () => {
   const router = useRouter();
   const query = router.query as { id: string };
-  const id = isUUIDRegex(query.id) ? query.id : '';
+  const { id } = query;
 
-  const { isLoading, data: validateDeclarationResponse } = useDeclaration(id);
+  if (!id) {
+    return null;
+  }
+
+  const { isLoading, data: validateDeclarationResponse } = useDeclarationWithPublicId(id);
 
   const [openDownModal, setOpenDownModal] = useState(false);
   return (

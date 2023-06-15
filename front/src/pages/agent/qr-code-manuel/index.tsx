@@ -23,7 +23,7 @@ const ManualQRCodePage = () => {
 
   const handleChange = (value: string) => {
     setQr(value);
-    if (value.length > 5) {
+    if (qr.length > 5) {
       setSearchPublicId(value.toLocaleUpperCase());
     }
   };

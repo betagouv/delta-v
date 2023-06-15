@@ -6,14 +6,10 @@ export default class DeclarationQueryBuilder extends SelectQueryBuilder<Declarat
     if (search) {
       this.andWhere(
         new Brackets((qb) => {
-          qb.orWhere('declaration.description ILIKE :search', { search: `%${search}%` })
-            .orWhere('declaration.id ILIKE :search', { search: `%${search}%` })
-            .orWhere('declaration.address ILIKE :search', { search: `%${search}%` })
-            .orWhere('declaration.email ILIKE :search', { search: `%${search}%` })
-            .orWhere('department.name ILIKE :search', { search: `%${search}%` })
-            .orWhere('department.description ILIKE :search', { search: `%${search}%` })
-            .orWhere('agent.firstName ILIKE :search', { search: `%${search}%` })
-            .orWhere('agent.lastName ILIKE :search', { search: `%${search}%` });
+          qb.orWhere('declaration.id ILIKE :search', { search: `%${search}%` })
+            .orWhere('declaration.declarantEmail ILIKE :search', { search: `%${search}%` })
+            .orWhere('declaration.declarantLastName ILIKE :search', { search: `%${search}%` })
+            .orWhere('declaration.declarantFirstName ILIKE :search', { search: `%${search}%` });
         }),
       );
     }

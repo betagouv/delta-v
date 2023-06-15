@@ -121,9 +121,14 @@ export const getDeclarations = async ({
   search,
   searchPublicId,
 }: GetDeclarationsOptions): Promise<DeclarationResponse[]> => {
-  const { data } = await await axios.get(
-    `/declaration?limit=${limit}&offset=${offset}&search=${search}&searchPublicId=${searchPublicId}`,
-  );
+  const { data } = await await axios.get(`/declaration`, {
+    params: {
+      limit: limit as number,
+      offset: offset as number,
+      search,
+      searchPublicId,
+    },
+  });
 
   return data.declarations;
 };
@@ -131,6 +136,6 @@ export const getDeclarations = async ({
 export const getDeclarationWithPublicId = async (
   publicId: string,
 ): Promise<DeclarationResponse | null> => {
-  const { data } = await axios.get(`/api/declaration/public/${publicId}`);
+  const { data } = await axios.get(`/declaration/public/${publicId}`);
   return data.declaration;
 };

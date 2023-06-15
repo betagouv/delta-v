@@ -43,7 +43,7 @@ export const useDeclarationWithPublicId = (publicId: string) =>
 export const useDeclarations = ({
   limit,
   offset,
-  search = null,
+  search,
   searchPublicId = null,
 }: UseDeclarationParams) => {
   return useQuery(
