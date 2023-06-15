@@ -24,9 +24,6 @@ const getCartProductCardColor = (deletable: boolean): string => {
 export type CartProductCardProps = {
   product: DetailedProduct;
   nomenclatures: string[];
-  relatedWords: string[];
-  declaredPrice?: string;
-  vatAmount?: string;
   detailsButton?: boolean;
   deletable?: boolean;
   onDelete: (id: string) => void;
@@ -35,9 +32,6 @@ export type CartProductCardProps = {
 export const CartProductCard = ({
   product,
   nomenclatures,
-  relatedWords,
-  declaredPrice,
-  vatAmount,
   detailsButton,
   deletable = false,
   onDelete,
@@ -64,10 +58,10 @@ export const CartProductCard = ({
             size="text-sm"
             weight="bold"
           >
-            {product.name}
+            {product.customName}
           </Typography>
           <Typography color="black" transform="sentence-case" size="text-xs">
-            {relatedWords.map((item) => item).join(', ')}
+            {product.name}
           </Typography>
           {nomenclatures && (
             <span className="flex flex-row gap-6">
@@ -79,7 +73,7 @@ export const CartProductCard = ({
             </span>
           )}
         </div>
-        {(declaredPrice || vatAmount) && (
+        {(product.unitPrice || product.unitTaxes) && (
           <div className="flex flex-col divide-y divide-black">
             <div className="grid grid-cols-2 pb-2">
               <Typography color="black" transform="sentence-case" size="text-xs" weight="bold">
@@ -92,7 +86,7 @@ export const CartProductCard = ({
                 textPosition="text-right"
                 weight="bold"
               >
-                {declaredPrice || ''}
+                {`${product.unitPrice} €`}
               </Typography>
             </div>
             <div className="grid grid-cols-2 pt-2">
@@ -111,7 +105,7 @@ export const CartProductCard = ({
                 textPosition="text-right"
                 weight="bold"
               >
-                {vatAmount || ''}
+                {`${product.unitTaxes} €`}
               </Typography>
             </div>
           </div>

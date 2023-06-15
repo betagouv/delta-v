@@ -45,9 +45,6 @@ const product2: DetailedProduct = {
 
 const item1: CartProductCardProps = {
   product: product1,
-  declaredPrice: faker.lorem.sentence(3),
-  vatAmount: faker.lorem.sentence(3),
-  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
@@ -60,9 +57,6 @@ const item1: CartProductCardProps = {
 
 const item2: CartProductCardProps = {
   product: product1,
-  declaredPrice: faker.lorem.sentence(3),
-  vatAmount: faker.lorem.sentence(3),
-  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
@@ -75,9 +69,6 @@ const item2: CartProductCardProps = {
 
 const item3: CartProductCardProps = {
   product: product1,
-  declaredPrice: faker.lorem.sentence(3),
-  vatAmount: faker.lorem.sentence(3),
-  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
@@ -90,9 +81,6 @@ const item3: CartProductCardProps = {
 
 const item4: CartProductCardProps = {
   product: product2,
-  declaredPrice: faker.lorem.sentence(3),
-  vatAmount: faker.lorem.sentence(3),
-  relatedWords: [faker.word.noun(), faker.word.noun(), faker.word.noun()],
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
