@@ -84,6 +84,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   declare: async () => {
     try {
       const declarationData = get().declaration.appState;
+      console.log('🚀 ~ file: useCase.store.ts:87 ~ declare: ~ declarationData:', declarationData);
       const data = {
         shoppingProducts: declarationData.declarationRequest.shoppingProducts.map(
           (shoppingProduct: ShoppingProduct) => ({
@@ -116,6 +117,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   },
   addProductCartDeclaration: (shoppingProduct: ShoppingProduct): void => {
     const product: Product | undefined = get().findProduct(shoppingProduct.productId ?? '');
+    console.log('🚀 ~ file: useCase.store.ts:119 ~ product:', product);
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);

@@ -113,6 +113,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           register={register}
           errors={errors}
           defaultCurrency={defaultCurrency}
+          templateRole={templateRole}
         />
       )}
     </form>

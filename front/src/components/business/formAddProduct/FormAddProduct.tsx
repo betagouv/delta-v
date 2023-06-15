@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
+import { Role } from '../formSelectProduct/utils';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
@@ -22,6 +23,7 @@ interface FormAddProductProps {
   submitted?: boolean;
   errors: FieldErrors;
   defaultCurrency?: string;
+  templateRole?: Role;
 }
 
 export interface FormSimulatorData {
@@ -37,6 +39,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   productId,
   errors,
   defaultCurrency = 'EUR',
+  templateRole,
 }: FormAddProductProps) => {
   const { currencies, simulatorRequest, findProduct } = useStore(
     (state) => ({

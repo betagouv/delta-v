@@ -9,6 +9,7 @@ import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAdd
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
+import { Typography } from '@/components/common/Typography';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Meta } from '@/layout/Meta';
 import { Product } from '@/model/product';
@@ -34,9 +35,13 @@ const SearchProduct = () => {
 
   const { id, search } = router.query;
 
-  const productsThatMatch = id
-    ? findProduct(id as string)
-    : searchProducts((search as string) ?? '');
+  const productsThatMatch: Product[] = [];
+
+  if (id) {
+    productsThatMatch.push(findProduct(id as string) as Product);
+  } else {
+    searchProducts((search as string) ?? '').map((product) => productsThatMatch.push(product));
+  }
   const [selectedProduct, setSelectedProduct] = useState<Product>();
 
   const onAddProduct = ({ product, value, currency }: OnAddProductOptions) => {
@@ -69,18 +74,22 @@ const SearchProduct = () => {
             description="Simuler la déclaration de douane en quelques clics"
           />
         }
-        withHeader
         withTitle
-        titleHeader="Créer une déclaration"
+        titleHeader="Recherche"
       >
-        <div className="flex flex-1 flex-col gap-6">
-          {id ? (
-            <NomenclatureCard product={productsThatMatch as Product} onClick={onClickProduct} />
-          ) : (
-            (productsThatMatch as SearchType<Product>[])?.map((product) => (
+        <div className="flex flex-1 flex-col border-t border-secondary-300 py-4 mx-5">
+          <div className="">
+            <Typography size="text-sm" color="black">
+              {`${(productsThatMatch as Product[])?.length} résultat${
+                (productsThatMatch as SearchType<Product>[])?.length > 1 ? 's' : ''
+              } pour "${id ? productsThatMatch[0]?.name : search ?? ''}"`}
+            </Typography>
+          </div>
+          <div className="flex flex-1 flex-col gap-4 mt-2">
+            {(productsThatMatch as SearchType<Product>[])?.map((product) => (
               <NomenclatureCard key={product.id} product={product} onClick={onClickProduct} />
-            ))
-          )}
+            ))}
+          </div>
         </div>
         {selectedProduct && (
           <ModalAddProductCartDeclaration

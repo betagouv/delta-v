@@ -27,11 +27,6 @@ export const declaration = (Component: React.FC) => {
       }
 
       const maxLevel = getLevelWithData(declarationRequest);
-      console.log(
-        '🚀 ~ file: declaration.hoc.tsx:30 ~ useEffect ~ declarationRequest:',
-        declarationRequest,
-      );
-      console.log('🚀 ~ file: declaration.hoc.tsx:30 ~ useEffect ~ maxLevel:', maxLevel);
       const currentLevel = getCurrentLevelPath(path);
 
       if (maxLevel < currentLevel) {

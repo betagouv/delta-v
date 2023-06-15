@@ -43,8 +43,8 @@ const Declaration = () => {
       getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
-      products: state.declaration.appState.declarationResponse?.valueProducts,
       declarationId: state.declaration.appState.declarationRequest.declarationId,
+      products: state.declaration.appState.declarationResponse?.valueProducts,
       declarationRequest: state.declaration.appState.declarationRequest,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
@@ -190,9 +190,11 @@ const Declaration = () => {
                 >
                   <CartProductCard
                     product={product as DetailedProduct}
-                    nomenclatures={product.nomenclatures}
+                    nomenclatures={[]}
                     key={product.id}
                     deletable={IsAvailableToRemove}
+                    onDelete={() => onClickProductToRemove}
+                    relatedWords={[]}
                   />
                 </div>
               ))}
