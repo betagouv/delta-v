@@ -18,6 +18,9 @@ export const CurrencyRepository: CurrencyRepositoryInterface = AppDataSource.get
     return this.createQueryBuilder('currency').getMany();
   },
   async getManyByIds(currencyIds: string[]): Promise<Currency[]> {
+    if (!currencyIds.length) {
+      return [];
+    }
     return this.createQueryBuilder('currency')
       .where('currency.id in (:...currencyIds)', { currencyIds })
       .getMany();
