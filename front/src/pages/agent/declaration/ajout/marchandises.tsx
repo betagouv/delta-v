@@ -73,8 +73,8 @@ const Declaration = () => {
   const { handleSubmit } = useForm();
 
   const createDeclarationMutation = useCreateDeclarationMutation({
-    onSuccess: (data) => {
-      router.push(`/agent/declaration/${data.declarationPublicId}`);
+    onSuccess: () => {
+      router.push(`/agent/declaration/${declarationId}`);
       resetDeclaration();
       toast.success(
         "Votre signalement a bien été envoyé. Vous serez notifié dès qu'il sera traité.",
