@@ -1,4 +1,3 @@
-
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable global-require */
 const path = require('path');
