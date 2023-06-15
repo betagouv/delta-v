@@ -1,5 +1,6 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 
+import { SvgNames } from '@/components/common/SvgIcon';
 import { TabItem } from '@/components/common/TabBar';
 
 export enum Routing {
@@ -13,9 +14,10 @@ export enum Routing {
 }
 
 export enum RoutingAgent {
-  home = '/agent/',
+  home = '/',
+  createDeclaration = '/agent/declaration/ajout/coordonnees',
   nomenclature = '/agent/nomenclature',
-  quittances = '/agent/quittances',
+  declarations = '/agent/declarations',
   actualities = '/agent/actualites',
   account = '/agent/mon-compte',
   contactUs = '/agent/contact',
@@ -112,27 +114,39 @@ export const MENU_ITEMS: TabItem[] = [
 
 export const MENU_AGENT_ITEMS = [
   {
-    title: 'Accueil',
-    path: RoutingAgent.home,
+    id: 'declaration',
+    title: 'Créer une déclaration',
+    path: RoutingAgent.createDeclaration,
+    svgIcon: 'categoryCreateDeclaration' as SvgNames,
   },
   {
+    id: 'nomenclature',
     title: 'Nomenclature',
     path: RoutingAgent.nomenclature,
+    svgIcon: 'categoryVetements' as SvgNames,
   },
   {
-    title: 'Quittance',
-    path: RoutingAgent.quittances,
+    id: 'declarationList',
+    title: 'Déclarations',
+    path: RoutingAgent.declarations,
+    svgIcon: 'categoryDouanier' as SvgNames,
   },
   {
+    id: 'actualities',
     title: 'Actualités',
     path: RoutingAgent.actualities,
+    svgIcon: 'categoryActualities' as SvgNames,
   },
   {
-    title: 'Mon compte',
-    path: RoutingAgent.account,
-  },
-  {
+    id: 'contact',
     title: 'Nous contacter',
     path: RoutingAgent.contactUs,
+    svgIcon: 'categoryContact' as SvgNames,
+  },
+  {
+    id: 'account',
+    title: 'Mon compte',
+    path: RoutingAgent.account,
+    svgIcon: 'categorySmiley' as SvgNames,
   },
 ];

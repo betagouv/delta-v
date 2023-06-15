@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
+import classNames from 'classnames';
 import { useRouter } from 'next/router';
 
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { Link } from '@/components/common/Link';
+import { LinkWithIcon } from '@/components/common/LinkWithIcon';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
-import { Input } from '@/components/input/StandardInputs/Input';
 import { QrCodeScanner } from '@/components/input/StandardInputs/QrCodeScanner';
 import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
@@ -34,53 +34,67 @@ const Index = () => {
           />
         }
       >
-        <div className="-mt-2 -mb-3 flex flex-col items-center">
-          <div className="h-6 ">
-            <SvgIcon name="logo" />
-          </div>
-        </div>
-        <button
-          className="inline-flex justify-center rounded-md border border-primary-500 p-3 align-middle shadow-xl"
-          onClick={() => setMode(mode === 'tools' ? 'declaration' : 'tools')}
-        >
-          {mode === 'tools' ? 'Déclaration' : 'Outils'}
-        </button>
-        {mode === 'tools' ? (
-          <div className="flex flex-col gap-3">
-            <p className="text-[26px] leading-7">Scanner le QR Code</p>
-            <QrCodeScanner onScan={getIdByQRCode} height={SCAN_HEIGHT} width={SCAN_WIDTH} />
-            <div className="inline-flex items-center justify-center">
+        <div className="px-8 pt-9">
+          <div className=" flex flex-col justify-center items-center gap-1">
+            <div className="border border-secondary-500 inline-flex flex-row rounded-full p-1 text-center">
               <button
-                className="z-50 flex flex-row items-center justify-center gap-1 rounded-full border border-black bg-secondary-300 py-3 px-6"
-                onClick={() => router.push(RoutingAgent.qrCodeManuel)}
-                type="button"
+                className={classNames({
+                  'inline-flex justify-center rounded-full px-5 py-2 align-middle text-xs': true,
+                  'bg-primary-600 text-white': mode === 'scanner',
+                  'text-disabled-text': mode === 'tools',
+                })}
+                disabled
               >
-                <SvgIcon name="keyboard" />
-                <Typography size="text-sm" color="black">
-                  saisir manuellement
-                </Typography>
+                Scanner
+              </button>
+              <button
+                className={classNames({
+                  'inline-flex justify-center rounded-full px-5 py-2 align-middle text-xs': true,
+                  'bg-disabled-bg text-white': mode === 'tools',
+                  'text-disabled-text': mode === 'scanner',
+                })}
+                onClick={() => setMode('tools')}
+              >
+                Outils
               </button>
             </div>
+            <p className="text-[8px] text-center w-[185px] text-black">
+              Nos équipes travaillent actuellement sur le scanner, il sera disponible d’ici quelques
+              jours.
+            </p>
           </div>
-        ) : (
-          <div className="mb-1 flex flex-col gap-6">
-            <div>
-              <Input
-                name="search"
-                type="text"
-                fullWidth
-                placeholder="Que recherchez-vous ?"
-                trailingIcon="search"
-                onClick={() => router.push(`/recherche`)}
-              />
+          {mode === 'tools' ? (
+            <div className="mb-1 flex flex-col gap-6 mt-7">
+              {MENU_AGENT_ITEMS.map((item) => (
+                <LinkWithIcon
+                  href={item.path}
+                  key={item.title}
+                  svgName={item.svgIcon}
+                  name={item.title}
+                  withBgColor={item.id === 'declaration'}
+                >
+                  {item.title}
+                </LinkWithIcon>
+              ))}
             </div>
-            {MENU_AGENT_ITEMS.map((item) => (
-              <Link withBorder to={item.path}>
-                {item.title}
-              </Link>
-            ))}
-          </div>
-        )}
+          ) : (
+            <div className="flex flex-col gap-3">
+              <QrCodeScanner onScan={getIdByQRCode} height={SCAN_HEIGHT} width={SCAN_WIDTH} />
+              <div className="inline-flex items-center justify-center">
+                <button
+                  className="z-50 flex flex-row items-center justify-center gap-1 rounded-full border border-black bg-secondary-300 py-3 px-6"
+                  onClick={() => router.push(RoutingAgent.qrCodeManuel)}
+                  type="button"
+                >
+                  <SvgIcon name="keyboard" />
+                  <Typography size="text-sm" color="black">
+                    saisir manuellement
+                  </Typography>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </MainAgent>
     </AgentRoute>
   );
