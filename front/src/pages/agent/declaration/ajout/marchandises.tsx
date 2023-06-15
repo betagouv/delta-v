@@ -17,7 +17,6 @@ import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Product } from '@/model/product';
-import { DetailedProduct, ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
@@ -29,44 +28,40 @@ const Declaration = () => {
   const {
     resetDeclarationSteps,
     setProductsDeclarationToDisplay,
-    getAllShoppingProduct,
     removeProductDeclaration,
     resetDeclaration,
     declarationId,
     declarationRequest,
     defaultCurrency,
-    products,
+    valueProducts,
   } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
       setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
-      getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
       declarationId: state.declaration.appState.declarationRequest.declarationId,
-      products: state.declaration.appState.declarationResponse?.valueProducts,
+      valueProducts: state.declaration.appState.declarationResponse?.valueProducts,
       declarationRequest: state.declaration.appState.declarationRequest,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
   );
   const router = useRouter();
+  console.log('🚀 ~ file: marchandises.tsx:38 ~ Declaration ~ valueProducts:', valueProducts);
 
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
-  const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
   const [IsAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
 
   useEffect(() => {
     resetDeclarationSteps(3);
     setProductsDeclarationToDisplay();
-    setAllShoppingProducts(getAllShoppingProduct());
   }, []);
 
   const onClickProductToRemove = (id: string) => {
     removeProductDeclaration(id);
-    setAllShoppingProducts(getAllShoppingProduct());
   };
 
   const handleCloseDownModal = () => {
@@ -165,12 +160,12 @@ const Declaration = () => {
           </button>
         </div>
 
-        {products && (
+        {valueProducts && (
           <>
             <div className="w-full mt-5 flex flex-col gap-4">
               <div className="w-full flex flex-row justify-between items-center mb-1">
                 <Typography color="black" size="text-xs">
-                  Marchandises <b>{products.length}</b>
+                  Marchandises <b>{valueProducts.length}</b>
                 </Typography>
                 <Typography
                   color={IsAvailableToRemove ? 'black' : 'primary'}
@@ -181,29 +176,23 @@ const Declaration = () => {
                   {IsAvailableToRemove ? 'Annuler' : 'Supprimer'}
                 </Typography>
               </div>
-              {products.map((product) => (
-                <div
+              {valueProducts.map((product) => (
+                <CartProductCard
+                  product={product}
+                  nomenclatures={[]}
                   key={product.id}
-                  onClick={
-                    IsAvailableToRemove ? () => onClickProductToRemove(product.id) : undefined
-                  }
-                >
-                  <CartProductCard
-                    product={product as DetailedProduct}
-                    nomenclatures={[]}
-                    key={product.id}
-                    deletable={IsAvailableToRemove}
-                    onDelete={() => onClickProductToRemove}
-                    relatedWords={[]}
-                  />
-                </div>
+                  deletable={IsAvailableToRemove}
+                  onDelete={() => onClickProductToRemove}
+                  relatedWords={[]}
+                  detailsButton
+                />
               ))}
             </div>
 
             <Button
               type="submit"
               onClick={() => onSubmit}
-              disabled={!allShoppingProducts.length}
+              disabled={!valueProducts.length}
               className={{ 'absolute bottom-6 self-center': true }}
             >
               Valider les marchandises

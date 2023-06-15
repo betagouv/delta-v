@@ -20,7 +20,6 @@ export interface DeclarationUseCaseSlice {
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
   resetDeclarationSteps: (step: number) => void;
   addProductCartDeclaration: (product: ShoppingProduct) => void;
-  getAllShoppingProduct: () => ShoppingProduct[];
   removeProductCartDeclaration: (id: string) => void;
   declare: () => void;
   getDeclaration: (declarationId: string) => void;
@@ -84,7 +83,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   declare: async () => {
     try {
       const declarationData = get().declaration.appState;
-      console.log('🚀 ~ file: useCase.store.ts:87 ~ declare: ~ declarationData:', declarationData);
       const data = {
         shoppingProducts: declarationData.declarationRequest.shoppingProducts.map(
           (shoppingProduct: ShoppingProduct) => ({
@@ -126,9 +124,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     });
     get().declare();
   },
-  getAllShoppingProduct: (): ShoppingProduct[] => {
-    return get().declaration.appState.declarationRequest.shoppingProducts;
-  },
   getDeclaration: async (declarationId: string) => {
     try {
       const response = (await axios.get(`/api/declaration/${declarationId}`)).data
@@ -149,11 +144,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   removeProductCartDeclaration: (id: string): void => {
     set((state: any) => {
       const newState = { ...state };
-      const newShoppingProducts =
-        newState.declaration.appState.declarationRequest.shoppingProducts.filter(
-          (shoppingProduct: ShoppingProduct) => shoppingProduct.productId !== id,
-        );
-      newState.declaration.appState.declarationRequest.shoppingProducts = newShoppingProducts;
       const newProducts = newState.declaration.appState.declarationRequest.products.filter(
         (product: Product) => product.id !== id,
       );
