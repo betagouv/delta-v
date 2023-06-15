@@ -22,13 +22,16 @@ const useTokenValidity = () => {
   );
 
   const checkTokenValidity = () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     const isExpiredRefreshToken = exp && dayjs().isAfter(dayjs.unix(exp));
     const shouldShowExpirationPopup = exp && dayjs.unix(exp).diff(dayjs(), 'minutes') < 5;
 
-    if (isExpiredRefreshToken) {
+    if (!isAgent || isExpiredRefreshToken) {
       setTokenValidity(TokenValidity.INVALID);
-    }
-    if (shouldShowExpirationPopup) {
+    } else if (shouldShowExpirationPopup) {
       setTokenValidity(TokenValidity.SOON_EXPIRED);
     } else {
       setTokenValidity(TokenValidity.VALID);
@@ -44,23 +47,9 @@ const useTokenValidity = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (!isAgent) {
-        setTokenValidity(TokenValidity.INVALID);
-      }
-    }
-  }, [isAgent]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isExpiredRefreshToken = exp && dayjs().isAfter(dayjs.unix(exp));
-      if (isExpiredRefreshToken) {
-        setTokenValidity(TokenValidity.INVALID);
-      }
-    }
-
+    checkTokenValidity();
     return initCheckUserConnected();
-  }, [exp]);
+  }, [isAgent, exp]);
 
   return tokenValidity;
 };

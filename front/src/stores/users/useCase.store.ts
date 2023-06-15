@@ -30,6 +30,7 @@ export const createUseCaseUserSlice: StoreSlice<UsersUseCaseSlice> = (set) => ({
       newState.users.appState.user.email = email;
       newState.users.appState.user.isAgent = true;
       newState.users.appState.user.exp = exp;
+
       return newState;
     });
   },

@@ -31,7 +31,7 @@ export const checkSimulatorDataRequest = (
     !simulatorRequest.age ||
     !simulatorRequest.meanOfTransport ||
     !simulatorRequest.country ||
-    !simulatorRequest.border
+    simulatorRequest.border === undefined
   ) {
     throw Error('Bad simulator request');
   }
