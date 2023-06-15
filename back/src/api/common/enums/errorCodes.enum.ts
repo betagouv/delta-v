@@ -12,4 +12,5 @@ export enum ErrorCodes {
   INVALID_TOKEN_UNAUTHORIZED = 'invalid-token-unauthorized',
   INVALID_JWT_FORMAT = 'invalid-jwt-format',
   DECLARATION_NOT_FOUND = 'declaration-not-found',
+  DECLARATION_STATUS_CHANGE_FORBIDDEN = 'declaration-status-change-forbidden',
 }

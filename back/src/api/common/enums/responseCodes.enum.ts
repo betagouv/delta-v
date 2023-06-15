@@ -7,4 +7,5 @@ export enum ResponseCodes {
   USER_EMAIL_UPDATED = 'user-email-updated',
   USER_PASSWORD_RESET = 'user-password-reset',
   USER_PASSWORD_UPDATED = 'user-password-updated',
+  DECLARATION_STATUS_UPDATED = 'declaration-status-updated',
 }
