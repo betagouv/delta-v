@@ -42,10 +42,7 @@ export const CartProductCard = ({
     <div className={cs('relative flex flex-col rounded-md w-full ', color)}>
       {deletable && (
         <div className="absolute right-2 top-2 cursor-pointer">
-          <Typography
-            color={deletable ? 'red' : 'primary'}
-            onClick={() => onDelete(product.customId)}
-          >
+          <Typography color={deletable ? 'red' : 'primary'} onClick={() => onDelete(product.id)}>
             <Icon name="cross-thin" size="sm" />
           </Typography>
         </div>

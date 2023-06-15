@@ -114,12 +114,9 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     }
   },
   addProductCartDeclaration: (shoppingProduct: ShoppingProduct): void => {
-    const product: Product | undefined = get().findProduct(shoppingProduct.productId ?? '');
-    console.log('🚀 ~ file: useCase.store.ts:119 ~ product:', product);
     set((state: any) => {
       const newState = { ...state };
       newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);
-      newState.declaration.appState.declarationRequest.products.push(product);
       return newState;
     });
     get().declare();
@@ -144,10 +141,11 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   removeProductCartDeclaration: (id: string): void => {
     set((state: any) => {
       const newState = { ...state };
+
       const newProducts = newState.declaration.appState.declarationRequest.products.filter(
         (product: Product) => product.id !== id,
       );
-      newState.declaration.appState.declarationRequest.products = newProducts;
+      newState.declaration.appState.declarationRequest.shoppingProducts = newProducts;
       return newState;
     });
     get().declare();

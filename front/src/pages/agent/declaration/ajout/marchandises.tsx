@@ -48,8 +48,6 @@ const Declaration = () => {
     shallow,
   );
   const router = useRouter();
-  console.log('🚀 ~ file: marchandises.tsx:38 ~ Declaration ~ valueProducts:', valueProducts);
-
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
@@ -182,7 +180,7 @@ const Declaration = () => {
                   nomenclatures={[]}
                   key={product.id}
                   deletable={IsAvailableToRemove}
-                  onDelete={() => onClickProductToRemove}
+                  onDelete={onClickProductToRemove}
                   relatedWords={[]}
                   detailsButton
                 />
