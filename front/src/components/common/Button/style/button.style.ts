@@ -74,7 +74,6 @@ const styleManager: IButtonStyle = {
       'disabled:cursor-not-allowed': true,
       'disabled:shadow-none': true,
       'disabled:bg-disabled-bg': true,
-      'disabled:text-disabled-text': true,
       'disabled:border-transparent': true,
     },
   },
