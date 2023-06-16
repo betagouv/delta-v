@@ -6,7 +6,9 @@ export default class DeclarationQueryBuilder extends SelectQueryBuilder<Declarat
     if (search) {
       this.setParameter('search', `%${search}%`).andWhere(
         new Brackets((qb) => {
-          qb.orWhere("declaration.publicId ILIKE :searchStartWith", { searchStartWith: `${search}%` })
+          qb.orWhere('declaration.publicId ILIKE :searchStartWith', {
+            searchStartWith: `${search}%`,
+          })
             .orWhere('declaration.declarantEmail ILIKE :search')
             .orWhere('declaration.declarantLastName ILIKE :search')
             .orWhere('declaration.declarantFirstName ILIKE :search');
@@ -28,7 +30,9 @@ export default class DeclarationQueryBuilder extends SelectQueryBuilder<Declarat
 
   public whereSearchPublicId(searchPublicId?: string): this {
     if (searchPublicId) {
-      this.andWhere('declaration.publicId ILIKE :searchPublicId', { searchPublicId: `${searchPublicId}%` });
+      this.andWhere('declaration.publicId ILIKE :searchPublicId', {
+        searchPublicId: `${searchPublicId}%`,
+      });
     }
 
     return this;
