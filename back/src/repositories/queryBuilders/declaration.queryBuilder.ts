@@ -4,12 +4,12 @@ import { DeclarationEntityInterface } from '../../entities/declaration.entity';
 export default class DeclarationQueryBuilder extends SelectQueryBuilder<DeclarationEntityInterface> {
   public whereSearch(search?: string): this {
     if (search) {
-      this.andWhere(
+      this.setParameter('search', `%${search}%`).andWhere(
         new Brackets((qb) => {
-          qb.orWhere('declaration.id ILIKE :search', { search: `%${search}%` })
-            .orWhere('declaration.declarantEmail ILIKE :search', { search: `%${search}%` })
-            .orWhere('declaration.declarantLastName ILIKE :search', { search: `%${search}%` })
-            .orWhere('declaration.declarantFirstName ILIKE :search', { search: `%${search}%` });
+          qb.orWhere("declaration.publicId ILIKE :searchStartWith", { searchStartWith: `${search}%` })
+            .orWhere('declaration.declarantEmail ILIKE :search')
+            .orWhere('declaration.declarantLastName ILIKE :search')
+            .orWhere('declaration.declarantFirstName ILIKE :search');
         }),
       );
     }
@@ -28,7 +28,7 @@ export default class DeclarationQueryBuilder extends SelectQueryBuilder<Declarat
 
   public whereSearchPublicId(searchPublicId?: string): this {
     if (searchPublicId) {
-      this.andWhere('declaration.publicId ~ :searchPublicId', { searchPublicId });
+      this.andWhere('declaration.publicId ILIKE :searchPublicId', { searchPublicId: `${searchPublicId}%` });
     }
 
     return this;

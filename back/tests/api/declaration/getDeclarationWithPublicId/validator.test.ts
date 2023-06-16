@@ -24,7 +24,7 @@ describe('getOneDeclarationWithPublicId validator', () => {
     expect(isValid(validData)).toBe(false);
   });
 
-  it('should throw error - declarationId not UUID format', () => {
+  it('should throw error - declarationId not nanoId format', () => {
     const validData = {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       publicDeclarationId: `${faker.string.nanoid()}ABC`,

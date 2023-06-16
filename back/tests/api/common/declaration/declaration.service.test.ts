@@ -1,9 +1,9 @@
-import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
-import { UNIQUE_CUSTOM_DUTY } from '../../../src/entities/productTaxes.entity';
-import { DeclarationFactory } from '../../helpers/factories/declaration.factory';
-import { DetailedShoppingProductFactory } from '../../helpers/factories/detailedShoppingProduct.factory';
-import { productEntityFactory } from '../../helpers/factories/product.factory';
-import { ShoppingProductFactory } from '../../helpers/factories/shoppingProduct.factory';
+import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
+import { UNIQUE_CUSTOM_DUTY } from '../../../../src/entities/productTaxes.entity';
+import { DeclarationFactory } from '../../../helpers/factories/declaration.factory';
+import { DetailedShoppingProductFactory } from '../../../helpers/factories/detailedShoppingProduct.factory';
+import { productEntityFactory } from '../../../helpers/factories/product.factory';
+import { ShoppingProductFactory } from '../../../helpers/factories/shoppingProduct.factory';
 
 describe('declaration', () => {
   it('should take under franchise rate', () => {

@@ -14,6 +14,12 @@ const queryParams = {
 };
 
 describe('getDeclarations validator', () => {
+  it('should validate proper data with all data', () => {
+    const validData = {
+      query: queryParams,
+    };
+    expect(isValid(validData)).toBe(true);
+  });
   it('should validate proper data without searchPublicId', () => {
     const validData = {
       query: {
@@ -32,6 +38,24 @@ describe('getDeclarations validator', () => {
     };
     expect(isValid(validData)).toBe(true);
   });
+  it('should not validate data limit less than 0', () => {
+    const validData = {
+      query: {
+        ...queryParams,
+        limit: -1,
+      },
+    };
+    expect(isValid(validData)).toBe(false);
+  });
+  it('should not validate data limit more than 100', () => {
+    const validData = {
+      query: {
+        ...queryParams,
+        limit: 101,
+      },
+    };
+    expect(isValid(validData)).toBe(false);
+  });
   it('should validate proper data without offset', () => {
     const validData = {
       query: {
@@ -40,6 +64,15 @@ describe('getDeclarations validator', () => {
       },
     };
     expect(isValid(validData)).toBe(true);
+  });
+  it('should not validate data offset more than 0', () => {
+    const validData = {
+      query: {
+        ...queryParams,
+        offset: -1,
+      },
+    };
+    expect(isValid(validData)).toBe(false);
   });
   it('should validate proper data without search', () => {
     const validData = {

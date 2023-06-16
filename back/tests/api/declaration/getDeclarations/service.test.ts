@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { faker } from '@faker-js/faker';
 
 import { declarationEntityFactory } from '../../../helpers/factories/declaration.factory';
@@ -18,6 +19,11 @@ describe('test getDeclarations service', () => {
       declarationRepository,
     });
 
+    expect(declarationRepository.getAll).toBeCalledWith({
+      searchPublicId: nanoId.slice(0, 6),
+      limit: 10,
+      offset: 0,
+    });
     expect(declarations).toMatchObject([
       {
         publicId: nanoId,

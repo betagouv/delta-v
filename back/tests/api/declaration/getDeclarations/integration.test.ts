@@ -7,7 +7,7 @@ import { testDbManager } from '../../../helpers/testDb.helper';
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
 
-describe('getOneDeclarations endpoint', () => {
+describe('getDeclarations endpoint', () => {
   beforeAll(async () => {
     await testDb.connect();
   });
@@ -19,7 +19,7 @@ describe('getOneDeclarations endpoint', () => {
   afterAll(async () => {
     await testDb.disconnect();
   });
-  it('should return a declaration', async () => {
+  it('should return a list of declarations', async () => {
     await prepareContextDeclaration({ testDb });
     const declaration = await prepareContextDeclaration({ testDb });
 
@@ -35,6 +35,28 @@ describe('getOneDeclarations endpoint', () => {
         publicId: declaration.publicId,
       },
     ]);
+  });
+  it('should return a declaration', async () => {
+    for (let index = 0; index < 5; index++) {
+      await prepareContextDeclaration({
+        testDb,
+        dataDeclaration: {
+          publicId: `AZERTYUIOPQSDFGHJKLM${index}`,
+        },
+      });
+      await prepareContextDeclaration({
+        testDb,
+        dataDeclaration: {
+          publicId: `QSDFGHJKLMAZERTYUIOP${index}`,
+        },
+      });
+    }
+    const { status, body } = await request(testApp).get(`/api/declaration`).query({
+      search: 'AZERTYUIOP',
+    });
+
+    expect(status).toBe(200);
+    expect(body.declarations.length).toBe(5);
   });
   it('should return 200 with empty array', async () => {
     await prepareContextDeclaration({ testDb });

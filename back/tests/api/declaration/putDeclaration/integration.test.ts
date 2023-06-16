@@ -9,6 +9,7 @@ import { prepareDeclarationData } from '../../../helpers/prepareContext/declarat
 import buildTestApp from '../../../helpers/testApp.helper';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import { prepareContextProduct } from '../../../utils/prepareContext/product';
+import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
 
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
@@ -179,41 +180,7 @@ describe('test put declaration API', () => {
     });
 
     expect(status).toBe(200);
-
-    expect(body.valueProducts.length).toBe(3);
-    expect(body.customProducts.length).toBe(3);
-
-    expect(body).toMatchObject({
-      total: 900,
-      totalCustomDuty: 64.17,
-      totalVat: 121.17,
-      totalTaxes: 185.34,
-      franchiseAmount: 300,
-    });
-
-    expect(body.valueProducts[1]).toMatchObject({
-      unitPrice: 41.67,
-      originalPrice: 50,
-      originalCurrency: 'USD',
-      rateCurrency: 1.2,
-      customDuty: 10,
-      vat: 20,
-      unitCustomDuty: 4.17,
-      unitVat: 9.17,
-      unitTaxes: 13.34,
-    });
-
-    expect(body.customProducts[0]).toMatchObject({
-      unitPrice: 8.33,
-      originalPrice: 10,
-      originalCurrency: 'USD',
-      rateCurrency: 1.2,
-      customDuty: 0,
-      vat: 0,
-      unitCustomDuty: 0,
-      unitVat: 0,
-      unitTaxes: 0,
-    });
+    expect(body.code).toBe(ResponseCodes.DECLARATION_UPDATED);
 
     const dbDeclarations = await testDb.getDeclarations();
     expect(dbDeclarations.length).toBe(1);

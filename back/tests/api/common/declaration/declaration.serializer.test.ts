@@ -1,16 +1,15 @@
 import { faker } from '@faker-js/faker';
-import serializer from '../../../../src/api/declaration/getDeclaration/serializer';
+import { declarationSerializer } from '../../../../src/api/declaration/common/serializer/declarationSerializer';
 import { declarationEntityFactory } from '../../../helpers/factories/declaration.factory';
-
-describe('getOneDeclaration serializer', () => {
+describe('Declaration serializer', () => {
   it('should serialize data', () => {
     const oneDeclaration = declarationEntityFactory({
       id: faker.string.uuid(),
     });
 
-    const result = serializer(oneDeclaration);
+    const result = declarationSerializer(oneDeclaration);
 
-    expect(result.declaration).toMatchObject({
+    expect(result).toMatchObject({
       id: oneDeclaration.id,
       publicId: oneDeclaration.publicId,
       products: [

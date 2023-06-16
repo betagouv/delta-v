@@ -9,5 +9,5 @@ export interface SerializedGetOneDeclaration {
 }
 
 export default (declarations: DeclarationEntity[]): SerializedGetOneDeclaration => ({
-  declarations: declarations.map((declaration) => declarationSerializer(declaration)),
+  declarations: declarations.map(declarationSerializer),
 });

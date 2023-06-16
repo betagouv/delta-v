@@ -17,7 +17,7 @@ const ManualQRCodePage = () => {
   const { isLoading, data } = useDeclarations({
     search: null,
     searchPublicId,
-    limit: Constants.LiST_LIMIT,
+    limit: Constants.LIST_LIMIT,
     offset: 0,
   });
 

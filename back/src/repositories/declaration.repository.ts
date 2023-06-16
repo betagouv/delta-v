@@ -65,6 +65,9 @@ export const DeclarationRepository: DeclarationRepositoryInterface = AppDataSour
       .limit(limit)
       .offset(offset);
 
+    console.log('🚀 ~ file: declaration.repository.ts:67 ~ query:', query.getSql());
+    console.log('🚀 ~ file: declaration.repository.ts:67 ~ parameters:', query.getParameters());
+
     return query.getMany();
   },
 });

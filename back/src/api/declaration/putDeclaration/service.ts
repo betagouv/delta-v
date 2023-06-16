@@ -8,7 +8,7 @@ import { DeclarationRepositoryInterface } from '../../../repositories/declaratio
 import { ProductRepositoryInterface } from '../../../repositories/product.repository';
 import { AuthorType } from '../../common/enums/author.enum';
 import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
-import { Declaration, generateDeclaration } from '../../common/services/declaration';
+import { generateDeclaration } from '../../common/services/declaration';
 import { getTaxesDataFromDeclaration } from '../../common/services/declaration/getTaxesDataFromDeclaration.service';
 import { ShoppingProduct } from '../../common/services/shoppingProducts';
 import { getProductsDeclarationFromDeclaration } from './services/products.service';
@@ -37,11 +37,6 @@ interface DeclarationOptions {
   declarantLastName: string;
 }
 
-interface DeclarationResponse {
-  declaration: Declaration;
-  publicId: string;
-}
-
 export const service = async ({
   declarationId,
   productRepository,
@@ -63,7 +58,7 @@ export const service = async ({
   declarantPhoneNumber,
   declarantFirstName,
   declarantLastName,
-}: DeclarationOptions): Promise<DeclarationResponse> => {
+}: DeclarationOptions): Promise<void> => {
   const publicId = generatePublicId();
   const declaration = await generateDeclaration({
     shoppingProducts,
@@ -101,6 +96,4 @@ export const service = async ({
   };
 
   await declarationRepository.createOne(declarationEntity);
-
-  return { declaration, publicId };
 };

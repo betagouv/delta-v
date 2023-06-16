@@ -12,7 +12,7 @@ export interface IGetDeclarationsRequest {
 
 export const getGetDeclarationsValidator = {
   query: validator.object({
-    limit: validator.number().integer().default(10).min(1),
+    limit: validator.number().integer().default(10).min(1).max(100),
     offset: validator.number().integer().default(0).min(0),
     searchPublicId: validator.string().optional().allow(''),
     search: validator.string().optional().allow(''),
