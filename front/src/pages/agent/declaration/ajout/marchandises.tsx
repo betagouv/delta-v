@@ -51,7 +51,7 @@ const Declaration = () => {
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
-  const [IsAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
+  const [isAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
 
   useEffect(() => {
     resetDeclarationSteps(3);
@@ -167,12 +167,12 @@ const Declaration = () => {
                     Marchandises <b>{valueProducts.length}</b>
                   </Typography>
                   <Typography
-                    color={IsAvailableToRemove ? 'black' : 'primary'}
+                    color={isAvailableToRemove ? 'black' : 'primary'}
                     colorGradient="400"
                     size="text-xs"
-                    onClick={() => setIsAvailableToRemove(!IsAvailableToRemove)}
+                    onClick={() => setIsAvailableToRemove(!isAvailableToRemove)}
                   >
-                    {IsAvailableToRemove ? 'Annuler' : 'Supprimer'}
+                    {isAvailableToRemove ? 'Annuler' : 'Supprimer'}
                   </Typography>
                 </div>
                 {valueProducts.map((product) => (
@@ -180,7 +180,7 @@ const Declaration = () => {
                     product={product}
                     nomenclatures={[]}
                     key={product.id}
-                    deletable={IsAvailableToRemove}
+                    deletable={isAvailableToRemove}
                     onDelete={onClickProductToRemove}
                     detailsButton
                   />
