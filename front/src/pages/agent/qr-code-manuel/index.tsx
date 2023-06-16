@@ -2,17 +2,34 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useDeclarations } from '@/api/hooks/useAPIDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { DeclarationCard } from '@/components/business/DeclarationCard';
 import { Icon } from '@/components/common/Icon';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
+import { Constants } from '@/utils/enums';
 
 const ManualQRCodePage = () => {
-  const [qr, setQr] = useState('');
+  const [searchPublicId, setSearchPublicId] = useState<string | null>(null);
   const router = useRouter();
+  const [qr, setQr] = useState<string>('');
+  const { isLoading, data } = useDeclarations({
+    search: null,
+    searchPublicId,
+    limit: Constants.LIST_LIMIT,
+    offset: 0,
+  });
 
   const handleChange = (value: string) => {
     setQr(value);
+    if (qr.length > 5) {
+      setSearchPublicId(value.toLocaleUpperCase());
+    }
+  };
+
+  const onDeclarationClick = (id: string) => {
+    router.push(`/agent/declaration/${id}`);
   };
 
   return (
@@ -40,16 +57,25 @@ const ManualQRCodePage = () => {
               onChange={(event) => handleChange(event.target.value)}
               value={qr}
             />
+            {!isLoading &&
+              data &&
+              data.length === 1 &&
+              searchPublicId &&
+              data.map((item: any) => (
+                <div onClick={() => onDeclarationClick(item.publicId)} key={item.publicId}>
+                  <DeclarationCard
+                    firstName={item.declarantFirstName}
+                    lastName={item.declarantLastName}
+                    id={item.publicId}
+                    status={item.status}
+                    date={item.versionDate}
+                    transport={item.declarantMeanOfTransport}
+                    key={item.publicId}
+                  />
+                </div>
+              ))}
           </div>
-          <div className="mt-6 flex flex-col gap-6">
-            <li
-              key={1}
-              className="flex cursor-pointer flex-row items-center rounded-lg bg-gray-300 p-3"
-              onClick={() => router.push('/agent/declaration/1')}
-            >
-              Page of first id
-            </li>
-          </div>
+          <div className="mt-6 flex flex-col gap-6"></div>
         </div>
       </MainAgent>
     </AgentRoute>

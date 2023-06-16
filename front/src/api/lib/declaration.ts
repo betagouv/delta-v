@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-import { BaseAPIResponse, CreateDeclarationParams } from './types';
+import { CreateDeclarationParams } from './types';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import {
+  DetailedProduct,
+  GroupedAmountProduct,
   ShoppingProduct,
   SimulatorRequest,
   SimulatorResponse,
@@ -56,11 +58,24 @@ export const simulateRequest = async (data: SimulatorDataRequest): Promise<Simul
   return response.data;
 };
 
-export interface CreateDeclarationResponse extends BaseAPIResponse {
-  context: {
-    id: string;
-  };
+export interface CreateDeclarationResponse {
+  valueProducts?: DetailedProduct[];
+  customProducts?: DetailedProduct[];
+  amountProducts?: GroupedAmountProduct[];
+  total: number;
+  totalCustomDuty: number;
+  totalVat: number;
+  totalTaxes: number;
+  franchiseAmount: number;
+  declarationPublicId: string;
 }
+
+export type GetDeclarationsOptions = {
+  limit?: number;
+  offset?: number;
+  search: string | null;
+  searchPublicId: string | null;
+};
 
 export const createDeclarationRequest = async (
   params: CreateDeclarationParams,
@@ -97,5 +112,30 @@ export const createDeclarationRequest = async (
 
 export const getDeclaration = async (id: string): Promise<DeclarationResponse | null> => {
   const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}`);
+  return data.declaration;
+};
+
+export const getDeclarations = async ({
+  limit,
+  offset,
+  search,
+  searchPublicId,
+}: GetDeclarationsOptions): Promise<DeclarationResponse[]> => {
+  const { data } = await await axios.get(`/declaration`, {
+    params: {
+      limit: limit as number,
+      offset: offset as number,
+      search,
+      searchPublicId,
+    },
+  });
+
+  return data.declarations;
+};
+
+export const getDeclarationWithPublicId = async (
+  publicId: string,
+): Promise<DeclarationResponse | null> => {
+  const { data } = await axios.get(`/declaration/public/${publicId}`);
   return data.declaration;
 };

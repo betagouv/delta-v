@@ -38,7 +38,7 @@ export interface DetailedProduct {
   vat: number;
 }
 
-interface GroupedAmountProduct {
+export interface GroupedAmountProduct {
   group: string;
   products: {
     id: string;
