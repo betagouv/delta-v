@@ -47,6 +47,7 @@ export interface ITypographyProps {
   lineHeight?: LineHeight;
   variant?: Variant;
   color?: Color;
+  colorGradient?: string;
   weight?: Weight;
   italic?: boolean;
   transform?: Transform;
@@ -61,6 +62,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   variant,
   tag,
   color = 'primary',
+  colorGradient = '600',
   size = 'text-sm',
   lineHeight = 'leading-normal',
   children,
@@ -81,7 +83,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   const className = cn({
     // [`${usedVariant}`]: true,
     [getFontWeight(weight)]: true,
-    [getColor(color)]: true,
+    [getColor(color, colorGradient)]: true,
     [getActiveColor(activeColor)]: activeColor,
     [size]: true,
     [lineHeight]: true,

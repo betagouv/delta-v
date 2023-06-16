@@ -3,6 +3,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 
 import { DetailedProduct, ShoppingProduct, SimulatorResponse } from '../simulator/appState.store';
 import { StoreSlice } from '../store';
+import { Product } from '@/model/product';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export enum MeansOfTransport {
@@ -19,6 +20,7 @@ export interface DeclarationRequest {
   meansOfTransportAndCountry: MeansOfTransportAndCountry;
   defaultCurrency?: string;
   shoppingProducts: ShoppingProduct[];
+  products: Product[];
   border?: boolean;
 }
 
@@ -105,6 +107,7 @@ export const DECLARATION_EMPTY_STATE = {
     defaultCurrency: 'EUR',
     border: undefined,
     shoppingProducts: [],
+    products: [],
     customShoppingProducts: [],
   },
   declarationResponse: undefined,

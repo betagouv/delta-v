@@ -11,12 +11,12 @@ import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProdu
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { CartProductCard } from '@/components/business/CartProductCard';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Product } from '@/model/product';
-import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
@@ -28,41 +28,38 @@ const Declaration = () => {
   const {
     resetDeclarationSteps,
     setProductsDeclarationToDisplay,
-    getAllShoppingProduct,
     removeProductDeclaration,
     resetDeclaration,
     declarationId,
     declarationRequest,
     defaultCurrency,
+    valueProducts,
   } = useStore(
     (state) => ({
       resetDeclarationSteps: state.resetDeclarationSteps,
       setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
-      getAllShoppingProduct: state.getAllShoppingProduct,
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
       declarationId: state.declaration.appState.declarationRequest.declarationId,
+      valueProducts: state.declaration.appState.declarationResponse?.valueProducts,
       declarationRequest: state.declaration.appState.declarationRequest,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
   );
   const router = useRouter();
-
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
-  const [allShoppingProducts, setAllShoppingProducts] = useState<ShoppingProduct[]>([]);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
+  const [isAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
 
   useEffect(() => {
     resetDeclarationSteps(3);
     setProductsDeclarationToDisplay();
-    setAllShoppingProducts(getAllShoppingProduct());
   }, []);
 
   const onClickProductToRemove = (id: string) => {
     removeProductDeclaration(id);
-    setAllShoppingProducts(getAllShoppingProduct());
   };
 
   const handleCloseDownModal = () => {
@@ -161,24 +158,46 @@ const Declaration = () => {
           </button>
         </div>
 
-        {allShoppingProducts.map((product) => (
-          <button
-            key={product.id}
-            className="mt-1 w-full bg-red-500"
-            onClick={() => onClickProductToRemove(product.id)}
-          >
-            {product.name}
-          </button>
-        ))}
+        {valueProducts && (
+          <>
+            <div className="w-full mt-5 flex flex-col gap-4 flex-1 justify-between">
+              <div className="w-full flex flex-col gap-4">
+                <div className="w-full flex flex-row justify-between items-center mb-1">
+                  <Typography color="black" size="text-xs">
+                    Marchandises <b>{valueProducts.length}</b>
+                  </Typography>
+                  <Typography
+                    color={isAvailableToRemove ? 'black' : 'primary'}
+                    colorGradient="400"
+                    size="text-xs"
+                    onClick={() => setIsAvailableToRemove(!isAvailableToRemove)}
+                  >
+                    {isAvailableToRemove ? 'Annuler' : 'Supprimer'}
+                  </Typography>
+                </div>
+                {valueProducts.map((product) => (
+                  <CartProductCard
+                    product={product}
+                    nomenclatures={[]}
+                    key={product.id}
+                    deletable={isAvailableToRemove}
+                    onDelete={onClickProductToRemove}
+                    detailsButton
+                  />
+                ))}
+              </div>
 
-        <Button
-          type="submit"
-          onClick={() => onSubmit}
-          disabled={!allShoppingProducts.length}
-          className={{ 'absolute bottom-6 self-center': true }}
-        >
-          Valider les marchandises
-        </Button>
+              <Button
+                type="submit"
+                onClick={() => onSubmit}
+                disabled={!valueProducts.length}
+                className={{ 'self-center': true }}
+              >
+                Valider les marchandises
+              </Button>
+            </div>
+          </>
+        )}
       </DeclarationSteps>
 
       <ModalSearchProduct

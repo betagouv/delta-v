@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
+import classNames from 'classnames';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
+import { Role } from '../formSelectProduct/utils';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';
@@ -21,6 +23,7 @@ interface FormAddProductProps {
   submitted?: boolean;
   errors: FieldErrors;
   defaultCurrency?: string;
+  templateRole?: Role;
 }
 
 export interface FormSimulatorData {
@@ -36,6 +39,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   productId,
   errors,
   defaultCurrency = 'EUR',
+  templateRole,
 }: FormAddProductProps) => {
   const { currencies, simulatorRequest, findProduct } = useStore(
     (state) => ({
@@ -70,7 +74,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   const [openModalInfoProduct, setOpenModalInfoProduct] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-1 flex-col gap-6">
+    <div className="flex flex-1 flex-col gap-6 w-full">
       {productType !== 'valueProduct' ? (
         <>
           <InputGroup
@@ -99,32 +103,54 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           </Info>
         </>
       ) : (
-        <>
-          <InputGroup
-            disabled={disabled}
-            label="Saisissez le montant"
-            placeholder="Montant"
-            type="number"
-            fullWidth={false}
-            name="value"
-            register={register('value', { required: false })}
-            control={control}
-            error={errors.value?.message as string | undefined}
-          />
-          <InputGroup
-            disabled={disabled}
-            label="Choisissez la devise"
-            type="simple-select"
-            fullWidth={false}
-            name="currency"
-            options={selectOptions}
-            register={register('currency', { required: true })}
-            control={control}
-            error={errors.currency?.message as string | undefined}
-          />
-        </>
+        <div className={classNames({ 'grid grid-cols-2 gap-5': templateRole === 'agent' })}>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="value" className="text-xs" data-testid="label-element">
+              Saisissez le montant
+            </label>
+            <InputGroup
+              disabled={disabled}
+              placeholder="Montant"
+              type="number"
+              fullWidth={true}
+              name="value"
+              register={register('value', { required: false })}
+              control={control}
+              error={errors.value?.message as string | undefined}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="currency" className="text-xs" data-testid="label-element">
+              Choisissez une devise
+            </label>
+            <InputGroup
+              disabled={disabled}
+              type="simple-select"
+              fullWidth={true}
+              name="currency"
+              options={selectOptions}
+              register={register('currency', { required: true })}
+              control={control}
+              error={errors.currency?.message as string | undefined}
+            />
+          </div>
+        </div>
       )}
-      <div className="flex-1" />
+      {templateRole === 'agent' && (
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name" className="text-xs" data-testid="label-element">
+            Ajouter une dénomination
+          </label>
+          <InputGroup
+            type="text"
+            fullWidth
+            name="name"
+            placeholder="Exemple : Jeans, pantalon noir, slim..."
+            register={register('name', { required: false })}
+            error={errors.name?.message as string | undefined}
+          />
+        </div>
+      )}
       {submitted ? (
         <div className="flex justify-center">
           <Typography color="link" size="text-xl" weight="bold">

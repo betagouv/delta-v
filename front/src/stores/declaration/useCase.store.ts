@@ -19,7 +19,6 @@ export interface DeclarationUseCaseSlice {
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
   resetDeclarationSteps: (step: number) => void;
   addProductCartDeclaration: (product: ShoppingProduct) => void;
-  getAllShoppingProduct: () => ShoppingProduct[];
   removeProductCartDeclaration: (id: string) => void;
   declare: () => void;
   getDeclaration: (declarationId: string) => void;
@@ -121,9 +120,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     });
     get().declare();
   },
-  getAllShoppingProduct: (): ShoppingProduct[] => {
-    return get().declaration.appState.declarationRequest.shoppingProducts;
-  },
   getDeclaration: async (declarationId: string) => {
     try {
       const response = (await axios.get(`/api/declaration/${declarationId}`)).data
@@ -144,11 +140,11 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   removeProductCartDeclaration: (id: string): void => {
     set((state: any) => {
       const newState = { ...state };
-      const newShoppingProducts =
-        newState.declaration.appState.declarationRequest.shoppingProducts.filter(
-          (product: ShoppingProduct) => product.id !== id,
-        );
-      newState.declaration.appState.declarationRequest.shoppingProducts = newShoppingProducts;
+
+      const newProducts = newState.declaration.appState.declarationRequest.shoppingProducts.filter(
+        (product: ShoppingProduct) => product.productId !== id,
+      );
+      newState.declaration.appState.declarationRequest.shoppingProducts = newProducts;
       return newState;
     });
     get().declare();
@@ -156,7 +152,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   resetDeclaration: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState = DECLARATION_EMPTY_STATE;
+      newState.declaration.appState.declarationRequest = undefined;
       return newState;
     });
   },

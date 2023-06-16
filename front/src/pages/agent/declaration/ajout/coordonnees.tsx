@@ -149,29 +149,29 @@ const Declaration = () => {
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
       >
-        <div className="w5/6">
-          <InputGroup
-            type="text"
-            name="lastName"
-            fullWidth={false}
-            placeholder="Nom"
-            register={register('lastName')}
-            control={control}
-            error={errors?.lastName?.message}
-            required
-          />
-          <InputGroup
-            type="text"
-            name="firstName"
-            fullWidth={false}
-            placeholder="Prénom"
-            register={register('firstName')}
-            control={control}
-            error={errors?.firstName?.message}
-            required
-          />
-        </div>
-        <div className="mt-5">
+        <div className="flex flex-col gap-4 mt-1">
+          <div className="w5/6 flex flex-col gap-4">
+            <InputGroup
+              type="text"
+              name="lastName"
+              fullWidth={false}
+              placeholder="Nom"
+              register={register('lastName')}
+              control={control}
+              error={errors?.lastName?.message}
+              required
+            />
+            <InputGroup
+              type="text"
+              name="firstName"
+              fullWidth={false}
+              placeholder="Prénom"
+              register={register('firstName')}
+              control={control}
+              error={errors?.firstName?.message}
+              required
+            />
+          </div>
           <InputGroup
             type="text"
             name="address"
@@ -209,7 +209,6 @@ const Declaration = () => {
             </div>
           </div>
         </div>
-
         <div className="mt-9">
           <InputGroup
             label="Avez-vous plus de 18 ans ?"
@@ -247,7 +246,7 @@ const Declaration = () => {
           )}
         </div>
 
-        <div className="mt-5">
+        <div className="mt-5 flex flex-col gap-4">
           <InputGroup
             type="text"
             name="mail"
@@ -271,7 +270,7 @@ const Declaration = () => {
         </div>
 
         <div className="mb-8 flex-1" />
-        <div>
+        <div className="w-40 self-center">
           {errors?.adult && <div className="text-red-500">{errors.adult.message}</div>}
 
           <Button fullWidth={true} type="submit" disabled={!age || !isValid}>

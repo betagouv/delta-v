@@ -1,5 +1,5 @@
 export enum DeclarationStatus {
-  PENDING = 'pending',
+  SUBMITTED = 'submitted',
   PAID = 'paid',
   ERROR = 'error',
   LITIGATION = 'litigation',
@@ -7,7 +7,7 @@ export enum DeclarationStatus {
 
 export const getDeclarationStatusLabel = (status: DeclarationStatus): string => {
   switch (status) {
-    case DeclarationStatus.PENDING:
+    case DeclarationStatus.SUBMITTED:
       return 'En attente de validation';
     case DeclarationStatus.PAID:
       return 'Payée';
@@ -22,7 +22,7 @@ export const getDeclarationStatusLabel = (status: DeclarationStatus): string => 
 
 export const getDeclarationStatusColor = (status: DeclarationStatus): string => {
   switch (status) {
-    case DeclarationStatus.PENDING:
+    case DeclarationStatus.SUBMITTED:
       return 'bg-[#B45FFA]';
     case DeclarationStatus.PAID:
       return 'bg-[#5FB1FA]';
@@ -37,7 +37,7 @@ export const getDeclarationStatusColor = (status: DeclarationStatus): string => 
 
 export const getDeclarationStatusIcon = (status: DeclarationStatus): string => {
   switch (status) {
-    case DeclarationStatus.PENDING:
+    case DeclarationStatus.SUBMITTED:
       return 'clock';
     case DeclarationStatus.PAID:
       return 'checkmark';
