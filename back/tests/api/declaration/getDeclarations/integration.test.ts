@@ -3,6 +3,7 @@ import api from '../../../../src/api';
 import { prepareContextDeclaration } from '../../../helpers/prepareContext/declaration';
 import buildTestApp from '../../../helpers/testApp.helper';
 import { testDbManager } from '../../../helpers/testDb.helper';
+import { DeclarationEntityInterface } from '../../../../src/entities/declaration.entity';
 
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
@@ -37,26 +38,68 @@ describe('getDeclarations endpoint', () => {
     ]);
   });
   it('should return a declaration', async () => {
-    for (let index = 0; index < 5; index++) {
+    const dataDeclaration: Partial<DeclarationEntityInterface> = {
+      publicId: `AZERTYUIOPQSDFGHJKLMQ`,
+      declarantEmail: 'pVAZERTYUIOPz@example.com',
+      declarantFirstName: 'JoAZERTYUIOPhn',
+      declarantLastName: 'JoAZERTYUIOP',
+    };
+
+    const declaration = [];
+    declaration.push(
+      await prepareContextDeclaration({
+        testDb,
+        dataDeclaration,
+      }),
+    );
+
+    declaration.push(
       await prepareContextDeclaration({
         testDb,
         dataDeclaration: {
-          publicId: `AZERTYUIOPQSDFGHJKLM${index}`,
+          ...dataDeclaration,
+          publicId: `QSDFGHJKLMAZERTYUIOPQ`,
         },
-      });
+      }),
+    );
+    declaration.push(
       await prepareContextDeclaration({
         testDb,
         dataDeclaration: {
-          publicId: `QSDFGHJKLMAZERTYUIOP${index}`,
+          ...dataDeclaration,
+          declarantEmail: 'pVQSDFGHJKLMz@example.com',
+          publicId: `A1ERTYUIOPQSDFGHJKLMQ`,
         },
-      });
-    }
+      }),
+    );
+    declaration.push(
+      await prepareContextDeclaration({
+        testDb,
+        dataDeclaration: {
+          ...dataDeclaration,
+          declarantFirstName: 'JOQSDFGHJKLM',
+          publicId: `A2ERTYUIOPQSDFGHJKLMQ`,
+        },
+      }),
+    );
+
+    declaration.push(
+      await prepareContextDeclaration({
+        testDb,
+        dataDeclaration: {
+          ...dataDeclaration,
+          declarantEmail: 'JOQSDFGHJKLMhn',
+          publicId: `A3ERTYUIOPQSDFGHJKLMQ`,
+        },
+      }),
+    );
     const { status, body } = await request(testApp).get(`/api/declaration`).query({
-      search: 'AZERTYUIOP',
+      search: 'QSDFGHJKLM',
     });
 
     expect(status).toBe(200);
-    expect(body.declarations.length).toBe(5);
+    expect(body.declarations.length).toBe(4);
+    expect(body.declarations).not.toContain(declaration[0]);
   });
   it('should return 200 with empty array', async () => {
     await prepareContextDeclaration({ testDb });
