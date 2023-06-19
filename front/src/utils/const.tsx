@@ -28,6 +28,7 @@ export enum RoutingAgent {
 export enum RoutingAuthentication {
   login = '/agent/authentification',
   register = '/agent/authentification/inscription',
+  registerSuccess = '/agent/authentification/inscription-reussie',
   forgetPassword = '/agent/authentification/mot-de-passe-oublie',
   resetPassword = '/agent/authentification/mot-de-passe-oublie/reinitialiser',
 }

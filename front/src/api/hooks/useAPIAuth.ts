@@ -46,12 +46,26 @@ export const useRefreshMutation = ({ onSuccess }: MutationSuccessCallback<LoginR
   });
 };
 
-export const useRegisterMutation = () => {
-  return useMutation<ICommonResponse, IErrorResponse, RegisterRequestOptions>(registerRequest);
+export const useRegisterMutation = ({ onSuccess }: MutationSuccessCallback<ICommonResponse>) => {
+  return useMutation<ICommonResponse, IErrorResponse, RegisterRequestOptions>(registerRequest, {
+    onSuccess: (data: ICommonResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
 };
 
-export const useValidationEmailMutation = () => {
-  return useMutation<ICommonResponse, IErrorResponse, string>(validateEmailRequest);
+export const useValidationEmailMutation = ({
+  onSuccess,
+}: MutationSuccessCallback<ICommonResponse>) => {
+  return useMutation<ICommonResponse, IErrorResponse, string>(validateEmailRequest, {
+    onSuccess: (data: ICommonResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
 };
 
 export const useAskEmailValidationMutation = () => {

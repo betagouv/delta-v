@@ -1,32 +1,28 @@
 import React from 'react';
 
-import classNames from 'classnames';
+import cs from 'classnames';
 
 import { Icon } from '../Icon';
 import { Link } from '../Link';
 import { TitleAgent } from '../TitleAgent';
 
 export interface TitleHeaderProps {
-  title?: string;
+  title: string;
+  bgColorClass?: string;
 }
 
-export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({ title }: TitleHeaderProps) => {
+export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
+  title,
+  bgColorClass,
+}: TitleHeaderProps) => {
   return (
-    <div
-      className={classNames({
-        'items-center w-full flex flex-row': true,
-        'px-5 py-6': title,
-        'px-4 py-5': !title,
-      })}
-    >
+    <div className={cs('flex w-full flex-row items-center px-6 py-5', bgColorClass)}>
       <Link back>
         <Icon name="chevron-left" size="base" />
       </Link>
-      {title && (
-        <div className="flex justify-center w-full">
-          <TitleAgent title={title} />
-        </div>
-      )}
+      <div className="flex w-full justify-center">
+        <TitleAgent title={title} />
+      </div>
     </div>
   );
 };

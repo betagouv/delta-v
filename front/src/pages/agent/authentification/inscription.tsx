@@ -1,10 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useRegisterMutation } from '@/api/hooks/useAPIAuth';
 import { Button } from '@/components/common/Button';
-import { TextLink } from '@/components/common/TextLink';
+import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
@@ -25,6 +28,7 @@ const RegisterPage = () => {
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
     formState: { isDirty, isValid },
   } = useForm<FormRegisterData>({
@@ -35,7 +39,14 @@ const RegisterPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const registerMutation = useRegisterMutation();
+  const router = useRouter();
+
+  const onSuccess = () => {
+    const { email } = getValues();
+
+    router.push(`${RoutingAuthentication.registerSuccess}?email=${email}`);
+  };
+  const registerMutation = useRegisterMutation({ onSuccess });
 
   const apiError = registerMutation.error ?? undefined;
   const { isLoading, data: apiSuccess } = registerMutation;
@@ -46,42 +57,70 @@ const RegisterPage = () => {
 
   return (
     <MainAuth
+      bgColor="gray"
+      withPadding={false}
       meta={
         <Meta
-          title="Simulateur Déclare Douanes"
-          description="Simuler la déclaration de douane en quelques clics"
+          title="Déclare Douanes - Inscription agent"
+          description="Page de création d'un compte agent des douanes"
         />
       }
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-6">
-        <InputGroup
-          type="email"
-          name="adult"
-          fullWidth={false}
-          placeholder="Email"
-          register={register('email')}
-          error={errors?.email?.message ?? getErrorFields('email', apiError)}
-        />
-        <InputGroup
-          type="password"
-          name="adult"
-          fullWidth={false}
-          placeholder="Mot de passe"
-          register={register('password')}
-          error={errors?.password?.message ?? getErrorFields('password', apiError)}
-        />
-
-        <TextLink underline to={RoutingAuthentication.login}>
-          se connecter
-        </TextLink>
-        {apiError && <div className="text-sm font-bold text-red-500">{apiError.message}</div>}
-        {apiSuccess && <div className="text-sm font-bold text-green-500">{apiSuccess.message}</div>}
-        <div>
-          <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid || isLoading}>
-            Valider
-          </Button>
-        </div>
-      </form>
+      <TitleHeaderAgent title="Créer votre compte" bgColorClass="bg-white"></TitleHeaderAgent>
+      <section className="my-auto flex flex-col items-center self-center ">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-80">
+          <div className="flex flex-col gap-3">
+            <InputGroup
+              type="email"
+              name="adult"
+              fullWidth={true}
+              placeholder="Email"
+              register={register('email')}
+              error={errors?.email?.message ?? getErrorFields('email', apiError)}
+            />
+            <InputGroup
+              type="password"
+              name="adult"
+              fullWidth={true}
+              placeholder="Mot de passe"
+              register={register('password')}
+              error={errors?.password?.message ?? getErrorFields('password', apiError)}
+              helperText="1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial, 8 caractères minimum"
+            />
+          </div>
+          <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
+            {apiError && (
+              <Typography color="error" textPosition="text-center">
+                {apiError.message}
+              </Typography>
+            )}
+            {apiSuccess && (
+              <Typography color="success" textPosition="text-center">
+                {apiSuccess.message}
+              </Typography>
+            )}
+            <Button
+              fullWidth={true}
+              type="submit"
+              disabled={!isDirty || !isValid || isLoading}
+              size="sm"
+            >
+              Créer mon compte
+            </Button>
+            <Typography color="black" size="text-2xs" textPosition="text-center">
+              Champs obligatoires *
+            </Typography>
+          </div>
+          <span className="flex justify-center gap-2">
+            <Typography color="black" size="text-xs">
+              Vous avez déjà un compte ?
+            </Typography>
+            <Typography color="primary" size="text-xs" underline>
+              <Link href={RoutingAuthentication.login}>Se connecter</Link>
+            </Typography>
+          </span>
+        </form>
+      </section>
     </MainAuth>
   );
 };
