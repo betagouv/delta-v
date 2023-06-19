@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import { faker } from '@faker-js/faker';
 import { userRepositoryMock } from '../../../mocks/user.repository.mock';
 import { userEntityFactory } from '../../../helpers/factories/user.factory';
 import service from '../../../../src/api/authentication/askEmailValidation/service';
@@ -14,59 +15,60 @@ describe('askEmailValidation service', () => {
 
   it('should ask for validate email correctly', async () => {
     const user = userEntityFactory({ enabled: false });
-    const userRepository = userRepositoryMock({ getOneById: user });
+    const userRepository = userRepositoryMock({ getOneByEmail: user });
 
     await service({
-      userId: user.id,
+      email: user.email,
       userRepository,
       eventEmitter: eventEmitterMock,
     });
 
-    expect(userRepository.getOneById).toBeCalledWith(user.id);
+    expect(userRepository.getOneByEmail).toBeCalledWith(user.email);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
   it('should return error - user not found', async () => {
-    const userRepository = userRepositoryMock({ getOneById: undefined });
+    const userRepository = userRepositoryMock({ getOneByEmail: undefined });
+    const email = faker.internet.email();
 
     await expect(
       service({
-        userId: '12',
+        email,
         userRepository,
         eventEmitter: eventEmitterMock,
       }),
     ).rejects.toMatchObject(userNotFoundError());
 
-    expect(userRepository.getOneById).toBeCalledWith('12');
+    expect(userRepository.getOneByEmail).toBeCalledWith(email);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
   it('should return error - user blocked', async () => {
     const user = userEntityFactory({ blocked: true, enabled: false });
-    const userRepository = userRepositoryMock({ getOneById: user });
+    const userRepository = userRepositoryMock({ getOneByEmail: user });
 
     await expect(
       service({
-        userId: '12',
+        email: user.email,
         userRepository,
         eventEmitter: eventEmitterMock,
       }),
     ).rejects.toMatchObject(userBlockedError());
 
-    expect(userRepository.getOneById).toBeCalledWith('12');
+    expect(userRepository.getOneByEmail).toBeCalledWith(user.email);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
   it('should return error - user already enabled', async () => {
     const user = userEntityFactory({ enabled: true });
-    const userRepository = userRepositoryMock({ getOneById: user });
+    const userRepository = userRepositoryMock({ getOneByEmail: user });
 
     await expect(
       service({
-        userId: '12',
+        email: user.email,
         userRepository,
         eventEmitter: eventEmitterMock,
       }),
     ).rejects.toMatchObject(userAlreadyEnabledError());
 
-    expect(userRepository.getOneById).toBeCalledWith('12');
+    expect(userRepository.getOneByEmail).toBeCalledWith(user.email);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
 });

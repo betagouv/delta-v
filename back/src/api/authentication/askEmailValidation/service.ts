@@ -7,16 +7,20 @@ import userNotFoundError from '../../common/errors/userNotFound.error';
 import { sendEventValidationEmailToken } from '../common/services/sendValidationEmail.service';
 
 interface IValidationEmailServiceOptions {
-  userId: string;
+  email?: string;
   userRepository: UserRepositoryInterface;
   eventEmitter: CustomEventEmitterInterface;
 }
 
 const getAndCheckUser = async (
-  userId: string,
   userRepository: UserRepositoryInterface,
+  email?: string,
 ): Promise<User> => {
-  const user = await userRepository.getOneById(userId);
+  if (!email) {
+    throw userNotFoundError();
+  }
+
+  const user = await userRepository.getOneByEmail(email);
   if (!user) {
     throw userNotFoundError();
   }
@@ -31,11 +35,11 @@ const getAndCheckUser = async (
 };
 
 export default async ({
-  userId,
+  email,
   userRepository,
   eventEmitter,
 }: IValidationEmailServiceOptions): Promise<void> => {
-  const user = await getAndCheckUser(userId, userRepository);
+  const user = await getAndCheckUser(userRepository, email);
 
   await sendEventValidationEmailToken({ user, eventEmitter });
 };

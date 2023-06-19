@@ -6,6 +6,6 @@ import route from './route';
 
 export const askEmailValidation = Router().post(
   '/email/validate/ask',
-  jwtMiddleware(),
+  jwtMiddleware({ isOptional: true }),
   validatedExpressRequest(route),
 );

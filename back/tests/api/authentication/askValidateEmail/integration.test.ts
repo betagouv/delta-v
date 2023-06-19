@@ -29,12 +29,25 @@ describe('askEmailValidationRouter route', () => {
     await testDb.disconnect();
   });
 
-  test('should return success with code 200', async () => {
+  test('should return success with code 200 - with jwt', async () => {
     const { accessToken } = await prepareContextUser({ testDb, enabled: false });
 
     const { status, body } = await request(testApp)
       .post('/api/email/validate/ask')
       .set('Authorization', `Bearer ${accessToken}`);
+
+    expect(status).toBe(HttpStatuses.OK);
+    expect(body.code).toEqual(ResponseCodes.USER_ASK_EMAIL_VALIDATION);
+
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
+  });
+
+  test('should return success with code 200 - with body', async () => {
+    const { user } = await prepareContextUser({ testDb, enabled: false });
+
+    const { status, body } = await request(testApp)
+      .post('/api/email/validate/ask')
+      .send({ email: user.email });
 
     expect(status).toBe(HttpStatuses.OK);
     expect(body.code).toEqual(ResponseCodes.USER_ASK_EMAIL_VALIDATION);
