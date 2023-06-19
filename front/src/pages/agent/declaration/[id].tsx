@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
 import {
   useChangeStatusOfDeclarationMutation,
-  useDeclaration,
+  useDeclarationMutation,
 } from '@/api/hooks/useAPIDeclaration';
 import { ModalPaidDeclaration } from '@/components/autonomous/ModalPaidDeclaration';
 import { ModalRejectedDeclaration } from '@/components/autonomous/ModalRejectedDeclaration';
@@ -27,12 +27,11 @@ const DeclarationSearch = () => {
   const query = router.query as { id: string };
   const id = isUUIDRegex(query.id) ? query.id : '';
 
-  const { isLoading, data: validateDeclarationResponse } = useDeclaration(id);
-
   const [openDownModal, setOpenDownModal] = useState(false);
   const [openValidateDeclarationModal, setOpenValidateDeclarationModal] = useState(false);
   const [openPayDeclarationModal, setOpenPayDeclarationModal] = useState(false);
   const [openRejectDeclarationModal, setOpenRejectDeclarationModal] = useState(false);
+  const [validateDeclarationResponse, setValidateDeclarationResponse] = useState<any>();
 
   const onClose = () => {
     setOpenDownModal(false);
@@ -40,10 +39,22 @@ const DeclarationSearch = () => {
     setOpenRejectDeclarationModal(false);
   };
 
+  const getDeclarationMutation = useDeclarationMutation({
+    onSuccess: (data) => {
+      setValidateDeclarationResponse(data);
+    },
+  });
+
+  const { isLoading } = getDeclarationMutation;
+
+  useEffect(() => {
+    getDeclarationMutation.mutate(id);
+  }, [id]);
+
   const changeStatusOfDeclarationMutation = useChangeStatusOfDeclarationMutation({
     onSuccess: () => {
       onClose();
-      router.replace(router.asPath);
+      getDeclarationMutation.mutate(id);
       toast.success(
         "Votre signalement a bien été envoyé. Vous serez notifié dès qu'il sera traité.",
       );

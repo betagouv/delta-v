@@ -13,11 +13,13 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loadin
       <>
         <div className="p-5 border border-secondary-100 bg-white rounded-xl flex flex-col justify-start gap-2">
           <Typography color="black" size="text-xs" weight="bold">
-            {detailedProduct.name.replace('.', '')}
+            {detailedProduct.customName}
           </Typography>
-          <Typography color="black" size="text-xs">
-            {detailedProduct.customId}
-          </Typography>
+          {detailedProduct.name !== detailedProduct.customName && (
+            <Typography color="black" size="text-xs">
+              {detailedProduct.name}
+            </Typography>
+          )}
           <div className="flex flex-row justify-between w-3/6">
             <Typography color="black" size="text-xs">
               Prix d'achat

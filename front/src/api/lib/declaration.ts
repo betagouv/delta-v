@@ -110,13 +110,13 @@ export const createDeclarationRequest = async (
     declarantLastName: params.contactDetails.lastName,
   };
 
-  const { data } = await axios.put(`/declaration/${params.declarationId}`, bodyParams);
+  const { data } = await axios.put(`/declaration/${params.declarationId}/`, bodyParams);
 
   return data;
 };
 
-export const getDeclaration = async (id: string): Promise<DeclarationResponse | null> => {
-  const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}`);
+export const getDeclaration = async (id: string): Promise<DeclarationResponse> => {
+  const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}/`);
   return data.declaration;
 };
 
@@ -127,7 +127,7 @@ export const changeStatusOfDeclarationRequest = async (
     status: params.status,
   };
 
-  const { data } = await axios.patch(`/declaration/${params.declarationId}`, bodyParams);
+  const { data } = await axios.patch(`/declaration/${params.declarationId}/`, bodyParams);
 
   return data;
 };
@@ -138,7 +138,7 @@ export const getDeclarations = async ({
   search,
   searchPublicId,
 }: GetDeclarationsOptions): Promise<DeclarationResponse[]> => {
-  const { data } = await await axios.get(`/declaration`, {
+  const { data } = await await axios.get(`/declaration/`, {
     params: {
       limit: limit as number,
       offset: offset as number,
@@ -153,6 +153,6 @@ export const getDeclarations = async ({
 export const getDeclarationWithPublicId = async (
   publicId: string,
 ): Promise<DeclarationResponse | null> => {
-  const { data } = await axios.get(`/declaration/public/${publicId}`);
+  const { data } = await axios.get(`/declaration/public/${publicId}/`);
   return data.declaration;
 };

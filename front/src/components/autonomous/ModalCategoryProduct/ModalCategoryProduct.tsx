@@ -115,6 +115,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
                 items={displayedProducts}
                 title="Filter par catégories"
                 displayType="card"
+                fullWidth
               />
             )}
           </div>

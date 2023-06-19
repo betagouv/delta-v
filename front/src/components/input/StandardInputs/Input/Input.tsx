@@ -32,6 +32,7 @@ export interface IInputOptions {
   register?: UseFormRegisterReturn;
   autoFocus?: boolean;
   onClick?: () => void;
+  withBorder?: boolean;
 }
 
 export const Input: React.FC<IInputOptions> = ({
@@ -50,6 +51,7 @@ export const Input: React.FC<IInputOptions> = ({
   leadingAddons,
   register,
   autoFocus = false,
+  withBorder = true,
   onClick = () => {},
 }: IInputOptions) => {
   let parentClassName = 'relative';
@@ -58,10 +60,13 @@ export const Input: React.FC<IInputOptions> = ({
   } else {
     parentClassName += ' w-fit';
   }
-  let className =
-    'text-xs block w-full border-secondary-300 px-4 py-2 border border-solid rounded-full focus:outline-none focus:ring-transparent focus:border-secondary-300 placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
+  let className = `text-xs block w-full px-5 py-3 border border-solid rounded-full focus:outline-none focus:ring-transparent ${
+    withBorder ? 'border-secondary-300 focus:border-secondary-300' : 'border-0 focus:border-0'
+  } placeholder:italic placeholder:text-secondary-400 placeholder:font-light`;
   if (error) {
-    className += ' border-red-300 text-red-900 placeholder-red-300 focus:border-red-500';
+    className += `text-red-900 placeholder-red-300 ${
+      withBorder ? 'border-red-300 focus:border-red-500' : 'border-0'
+    }`;
   }
 
   if (trailingIcon || trailingAddons || trailingSvgIcon) {

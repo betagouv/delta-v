@@ -117,6 +117,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               register={register('value', { required: false })}
               control={control}
               error={errors.value?.message as string | undefined}
+              withBorder={false}
             />
           </div>
           <div className="flex flex-col gap-2">

@@ -114,7 +114,6 @@ export const ModalValidateDeclaration: React.FC<ModalValidateDeclarationProps> =
           </div>
           <div className="flex flex-1 flex-col items-center mt-7">
             <Button
-              onClick={onValidate}
               disabled={
                 isLoading || !validateInformation || !validateDocument || !validateMarchandise
               }

@@ -14,6 +14,7 @@ import {
   CreateDeclarationParams,
   ErrorResponse,
 } from '../lib/types';
+import { DeclarationResponse } from '@/stores/declaration/appState.store';
 
 export type UseDeclarationParams = {
   limit?: number;
@@ -57,10 +58,21 @@ export const useChangeStatusOfDeclarationMutation = ({
   });
 };
 
-// QUERY
-export const useDeclaration = (id: string) =>
-  useQuery(['declaration', { id }], () => getDeclaration(id));
+export const useDeclarationMutation = ({
+  onSuccess,
+}: {
+  onSuccess?: (data: DeclarationResponse) => void;
+}) => {
+  return useMutation<DeclarationResponse, ErrorResponse, string>(getDeclaration, {
+    onSuccess: (data: DeclarationResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
+};
 
+// QUERY
 export const useDeclarationWithPublicId = (publicId: string) =>
   useQuery(['declaration', { publicId }], () => getDeclarationWithPublicId(publicId));
 
