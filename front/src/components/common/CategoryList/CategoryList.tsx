@@ -18,6 +18,7 @@ export interface CategoryListProps {
   items: Item[];
   onSelectProduct: (id: string) => void;
   displayType?: 'list' | 'card';
+  fullWidth?: boolean;
 }
 
 export const CategoryList: React.FC<CategoryListProps> = ({
@@ -25,6 +26,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
   title,
   onSelectProduct,
   displayType = 'list',
+  fullWidth,
 }: CategoryListProps) => {
   return (
     <ul role="list">
@@ -47,6 +49,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
                 value={item.title}
                 svgIcon={item.svgNames}
                 onClick={() => onSelectProduct(item.id)}
+                fullWidth={fullWidth}
               />
             </div>
           ) : (

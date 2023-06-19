@@ -62,6 +62,7 @@ export interface IInputGroupProps {
   control?: any;
   rules?: any;
   littleCard?: boolean;
+  withBorder?: boolean;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -86,6 +87,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   control,
   rules,
   littleCard = false,
+  withBorder,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
   return (
@@ -199,6 +201,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
                 trailingAddons={trailingAddons}
                 leadingIcon={leadingIcon}
                 trailingIcon={trailingIcon}
+                withBorder={withBorder}
               />
             )}
         </>

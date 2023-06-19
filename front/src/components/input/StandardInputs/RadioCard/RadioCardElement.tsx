@@ -8,6 +8,7 @@ export interface IRadioCardElementOptions {
   checked?: boolean;
   svgIcon: SvgNames;
   onClick: (transport?: string) => void;
+  fullWidth?: boolean;
 }
 
 export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
@@ -15,6 +16,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
   value,
   disabled,
   checked,
+  fullWidth = false,
   onClick,
 }) => {
   return (
@@ -28,7 +30,8 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
           ? 'opacity-50 cursor-not-allowed'
           : 'active:bg-gray-50 active:p-[15px] active:border-4',
         checked ? 'font-bold border-4 p-[15px]' : 'font-normal border',
-        'border-gray-200 rounded-xl w-full h-32 flex items-center justify-center text-sm sm:flex-1',
+        fullWidth ? 'w-full h-32' : 'p-[18px] h-[130px] w-[104px]',
+        'border-gray-200 rounded-xl flex items-center justify-center text-sm sm:flex-1',
       )}
       onClick={(e) => {
         if (disabled) {

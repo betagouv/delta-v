@@ -160,6 +160,7 @@ const Declaration = () => {
               control={control}
               error={errors?.lastName?.message}
               required
+              withBorder={false}
             />
             <InputGroup
               type="text"
@@ -170,6 +171,7 @@ const Declaration = () => {
               control={control}
               error={errors?.firstName?.message}
               required
+              withBorder={false}
             />
           </div>
           <InputGroup
@@ -181,6 +183,7 @@ const Declaration = () => {
             control={control}
             error={errors?.address?.message}
             required
+            withBorder={false}
           />
           <div className="flex flex-row gap-4">
             <div className="min-w-[139px] flex-1">
@@ -193,6 +196,7 @@ const Declaration = () => {
                 control={control}
                 error={errors?.postalCode?.message}
                 required
+                withBorder={false}
               />
             </div>
             <div className="flex-3">
@@ -205,6 +209,7 @@ const Declaration = () => {
                 control={control}
                 error={errors?.city?.message}
                 required
+                withBorder={false}
               />
             </div>
           </div>
@@ -256,6 +261,7 @@ const Declaration = () => {
             control={control}
             error={errors?.email?.message}
             required
+            withBorder={false}
           />
           <InputGroup
             type="text"
@@ -266,6 +272,7 @@ const Declaration = () => {
             control={control}
             error={errors?.phoneNumber?.message}
             required
+            withBorder={false}
           />
         </div>
 

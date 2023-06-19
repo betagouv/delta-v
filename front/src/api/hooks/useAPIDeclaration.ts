@@ -1,13 +1,20 @@
 import { useMutation, useQuery } from 'react-query';
 
 import {
+  changeStatusOfDeclarationRequest,
+  ChangeStatusOfDeclarationResponse,
   createDeclarationRequest,
   CreateDeclarationResponse,
   getDeclaration,
   getDeclarations,
   getDeclarationWithPublicId,
 } from '../lib/declaration';
-import { CreateDeclarationParams, ErrorResponse } from '../lib/types';
+import {
+  ChangeStatusOfDeclarationParams,
+  CreateDeclarationParams,
+  ErrorResponse,
+} from '../lib/types';
+import { DeclarationResponse } from '@/stores/declaration/appState.store';
 
 export type UseDeclarationParams = {
   limit?: number;
@@ -33,10 +40,39 @@ export const useCreateDeclarationMutation = ({
   );
 };
 
-// QUERY
-export const useDeclaration = (id: string) =>
-  useQuery(['declaration', { id }], () => getDeclaration(id));
+export const useChangeStatusOfDeclarationMutation = ({
+  onSuccess,
+}: {
+  onSuccess?: (data: ChangeStatusOfDeclarationResponse) => void;
+}) => {
+  return useMutation<
+    ChangeStatusOfDeclarationResponse,
+    ErrorResponse,
+    ChangeStatusOfDeclarationParams
+  >(changeStatusOfDeclarationRequest, {
+    onSuccess: (data: ChangeStatusOfDeclarationResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
+};
 
+export const useDeclarationMutation = ({
+  onSuccess,
+}: {
+  onSuccess?: (data: DeclarationResponse) => void;
+}) => {
+  return useMutation<DeclarationResponse, ErrorResponse, string>(getDeclaration, {
+    onSuccess: (data: DeclarationResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
+};
+
+// QUERY
 export const useDeclarationWithPublicId = (publicId: string) =>
   useQuery(['declaration', { publicId }], () => getDeclarationWithPublicId(publicId));
 
