@@ -5,12 +5,17 @@ import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
+import { RoutingAuthentication } from '@/utils/const';
 
 const ResetPasswordPage = () => {
   const router = useRouter();
   const { token } = router.query;
 
-  const validationEmailMutation = useValidationEmailMutation();
+  const onSuccess = () => {
+    router.push(RoutingAuthentication.login);
+  };
+
+  const validationEmailMutation = useValidationEmailMutation({ onSuccess });
   const apiError = validationEmailMutation.error;
   const { data: apiSuccess } = validationEmailMutation;
 
@@ -27,8 +32,6 @@ const ResetPasswordPage = () => {
         />
       }
     >
-      {apiSuccess && <div className="text-sm font-bold text-green-500">{apiSuccess.message}</div>}
-      {apiError && <div className="text-sm font-bold text-red-500">{apiError.message}</div>}
       <div className="my-auto flex flex-col items-center self-center gap-8">
         <div className="pb-16">
           <Typography
@@ -63,6 +66,16 @@ const ResetPasswordPage = () => {
           </Typography>
         </div>
         <div className="flex flex-col self-center items-center w-48 gap-2 mt-8">
+          {apiSuccess && (
+            <Typography color="success" size="text-2xs">
+              {apiSuccess.message}
+            </Typography>
+          )}
+          {apiError && (
+            <Typography color="error" size="text-2xs">
+              {apiError.message}
+            </Typography>
+          )}
           <Button onClick={handleValidate} fullWidth={true} type="submit" size="sm">
             J'active mon compte
           </Button>
