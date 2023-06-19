@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 
+import { useAskEmailValidationMutation } from '@/api/hooks/useAPIAuth';
 import { Button } from '@/components/common/Button';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
@@ -15,6 +16,14 @@ export interface FormRegisterData {
 const RegisterSuccessPage = () => {
   const router = useRouter();
   const { email } = router.query;
+
+  const resendEmailMutation = useAskEmailValidationMutation();
+
+  const handleResend = () => {
+    if (typeof email === 'string') {
+      resendEmailMutation.mutate(email);
+    }
+  };
 
   return (
     <MainAuth
@@ -46,7 +55,7 @@ const RegisterSuccessPage = () => {
             Activez dès à présent votre compte à partir de votre mail !
           </Typography>
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>
-            <span className="cursor-pointer" onClick={() => console.log('clicked')}>
+            <span className="cursor-pointer" onClick={handleResend}>
               Renvoyer le lien
             </span>
           </Typography>
