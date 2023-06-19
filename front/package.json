@@ -64,7 +64,7 @@
     "@storybook/addon-actions": "7.0.2",
     "@storybook/addon-essentials": "7.0.9",
     "@storybook/addon-interactions": "6.5.9",
-    "@storybook/addon-links": "6.5.9",
+    "@storybook/addon-links": "7.0.22",
     "@storybook/addon-postcss": "2.0.0",
     "@storybook/builder-webpack5": "6.5.16",
     "@storybook/manager-webpack5": "6.5.9",
