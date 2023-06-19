@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CreateDeclarationParams } from './types';
+import { ChangeStatusOfDeclarationParams, CreateDeclarationParams } from './types';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import {
   DetailedProduct,
@@ -70,6 +70,11 @@ export interface CreateDeclarationResponse {
   declarationPublicId: string;
 }
 
+export interface ChangeStatusOfDeclarationResponse {
+  message: string;
+  code: string;
+}
+
 export type GetDeclarationsOptions = {
   limit?: number;
   offset?: number;
@@ -113,6 +118,18 @@ export const createDeclarationRequest = async (
 export const getDeclaration = async (id: string): Promise<DeclarationResponse | null> => {
   const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}`);
   return data.declaration;
+};
+
+export const changeStatusOfDeclarationRequest = async (
+  params: ChangeStatusOfDeclarationParams,
+): Promise<ChangeStatusOfDeclarationResponse> => {
+  const bodyParams = {
+    status: params.status,
+  };
+
+  const { data } = await axios.patch(`/declaration/${params.declarationId}`, bodyParams);
+
+  return data;
 };
 
 export const getDeclarations = async ({

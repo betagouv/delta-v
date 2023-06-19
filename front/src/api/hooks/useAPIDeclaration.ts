@@ -1,13 +1,19 @@
 import { useMutation, useQuery } from 'react-query';
 
 import {
+  changeStatusOfDeclarationRequest,
+  ChangeStatusOfDeclarationResponse,
   createDeclarationRequest,
   CreateDeclarationResponse,
   getDeclaration,
   getDeclarations,
   getDeclarationWithPublicId,
 } from '../lib/declaration';
-import { CreateDeclarationParams, ErrorResponse } from '../lib/types';
+import {
+  ChangeStatusOfDeclarationParams,
+  CreateDeclarationParams,
+  ErrorResponse,
+} from '../lib/types';
 
 export type UseDeclarationParams = {
   limit?: number;
@@ -31,6 +37,24 @@ export const useCreateDeclarationMutation = ({
       },
     },
   );
+};
+
+export const useChangeStatusOfDeclarationMutation = ({
+  onSuccess,
+}: {
+  onSuccess?: (data: ChangeStatusOfDeclarationResponse) => void;
+}) => {
+  return useMutation<
+    ChangeStatusOfDeclarationResponse,
+    ErrorResponse,
+    ChangeStatusOfDeclarationParams
+  >(changeStatusOfDeclarationRequest, {
+    onSuccess: (data: ChangeStatusOfDeclarationResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
 };
 
 // QUERY

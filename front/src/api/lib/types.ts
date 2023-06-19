@@ -53,6 +53,11 @@ export type CreateDeclarationParams = {
   border?: boolean;
 };
 
+export type ChangeStatusOfDeclarationParams = {
+  declarationId: string;
+  status: string;
+};
+
 export type GetOneDeclarationParams = {
   declarationId: string;
   contactDetails: ContactDetails;

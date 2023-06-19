@@ -12,6 +12,7 @@ export interface IModalProps {
   subtitle?: React.ReactNode;
   children?: any;
   preventClose?: boolean;
+  withMargin?: boolean;
 }
 
 export const Modal: React.FC<IModalProps> = ({
@@ -21,6 +22,7 @@ export const Modal: React.FC<IModalProps> = ({
   children,
   subtitle,
   preventClose = false,
+  withMargin = true,
 }: IModalProps) => {
   const handleOnClose = (): void => {
     if (preventClose) return;
@@ -84,7 +86,9 @@ export const Modal: React.FC<IModalProps> = ({
                   </Typography>
                 </div>
               )}
-              {children && <div className="mt-base flex justify-center">{children}</div>}
+              {children && (
+                <div className={`flex ${withMargin && 'mt-base'} justify-center`}>{children}</div>
+              )}
             </div>
           </Transition.Child>
         </div>
