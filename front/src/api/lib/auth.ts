@@ -49,6 +49,13 @@ export const registerRequest = async (registerData: {
   return response.data;
 };
 
+export const askEmailValidationRequest = async (email?: string): Promise<ICommonResponse> => {
+  const response = await axios.post('/email/validate/ask/', {
+    email,
+  });
+  return response.data;
+};
+
 export const askResetPasswordRequest = async (email: string): Promise<ICommonResponse> => {
   const response = await axios.post('/password/ask/', {
     email,

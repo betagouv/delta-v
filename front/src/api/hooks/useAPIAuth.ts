@@ -5,6 +5,7 @@ import {
   LoginResponse,
   RegisterRequestOptions,
   ResetPasswordRequestOptions,
+  askEmailValidationRequest,
   askResetPasswordRequest,
   loginRequest,
   refreshRequest,
@@ -51,6 +52,12 @@ export const useRegisterMutation = () => {
 
 export const useValidationEmailMutation = () => {
   return useMutation<ICommonResponse, IErrorResponse, string>(validateEmailRequest);
+};
+
+export const useAskEmailValidationMutation = () => {
+  return useMutation<ICommonResponse, IErrorResponse, string | undefined>(
+    askEmailValidationRequest,
+  );
 };
 
 export const useAskResetPasswordMutation = () => {
