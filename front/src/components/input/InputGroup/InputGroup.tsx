@@ -49,6 +49,7 @@ export interface IInputGroupProps {
   radioCardValues?: IRadioCardType[];
   variant?: 'default' | 'rounded';
   error?: string;
+  helperText?: string;
   elementRef?: object;
   mobileColumn?: boolean;
   register?: UseFormRegisterReturn;
@@ -75,6 +76,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   disabled,
   loading,
   error,
+  helperText,
   rows,
   specificClassName,
   fullWidth,
@@ -204,8 +206,17 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
         </>
         {loading && 'Loading'}
       </>
+      {helperText && (
+        <div data-testid="helper-element" className="flex pl-2 pt-1">
+          <span className="pl-1" id="input-error">
+            <Typography size="text-2xs" color="light-gray">
+              {helperText}
+            </Typography>
+          </span>
+        </div>
+      )}
       {error && (
-        <div data-testid="error-element" className="flex pl-2">
+        <div data-testid="error-element" className="flex pl-2 pt-1">
           <span className="pl-1" id="input-error">
             <Typography size="text-2xs" color="error">
               {error}

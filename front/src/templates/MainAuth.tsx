@@ -6,11 +6,12 @@ type IMainAgentProps = {
   meta: ReactNode;
   children: ReactNode;
   withPadding?: boolean;
+  bgColor?: 'none' | 'gray';
 };
 
-const MainAuth = ({ children, meta, withPadding = true }: IMainAgentProps) => {
+const MainAuth = ({ children, meta, withPadding = true, bgColor = 'none' }: IMainAgentProps) => {
   return (
-    <div className="h-full antialiased">
+    <div className={cs({ 'h-full antialiased': true, 'bg-secondary-100': bgColor === 'gray' })}>
       {meta}
 
       <div

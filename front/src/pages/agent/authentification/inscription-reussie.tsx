@@ -1,0 +1,69 @@
+import { useRouter } from 'next/router';
+
+import { Button } from '@/components/common/Button';
+import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
+import { Typography } from '@/components/common/Typography';
+import { Meta } from '@/layout/Meta';
+import { MainAuth } from '@/templates/MainAuth';
+import { RoutingAuthentication } from '@/utils/const';
+
+export interface FormRegisterData {
+  email: string;
+  password: string;
+}
+
+const RegisterSuccessPage = () => {
+  const router = useRouter();
+  const { email } = router.query;
+
+  return (
+    <MainAuth
+      withPadding={false}
+      meta={
+        <Meta
+          title="Déclare Douanes - Inscription agent réussie"
+          description="Page de création d'un compte agent des douanes"
+        />
+      }
+    >
+      <TitleHeaderAgent title="Créer votre compte" bgColorClass="bg-white"></TitleHeaderAgent>
+      <div className="my-auto flex flex-col items-center self-center gap-8">
+        <Typography variant="h1" size="text-xl" weight="bold" textPosition="text-center">
+          Email envoyé !
+        </Typography>
+        <div className="flex flex-col gap-5">
+          <div>
+            <Typography textPosition="text-center" size="text-xs" color="black">
+              {`Un lien d’activation a été envoyé à l’adresse : `}
+            </Typography>
+            {email && (
+              <Typography textPosition="text-center" size="text-xs" color="black" weight="bold">
+                {email}
+              </Typography>
+            )}
+          </div>
+          <Typography textPosition="text-center" size="text-xs" color="black">
+            Activez dès à présent votre compte à partir de votre mail !
+          </Typography>
+          <Typography textPosition="text-center" color="primary" size="text-xs" underline>
+            <span className="cursor-pointer" onClick={() => console.log('clicked')}>
+              Renvoyer le lien
+            </span>
+          </Typography>
+        </div>
+        <div className="flex flex-col gap-5">
+          <Button
+            onClick={() => router.push(RoutingAuthentication.login)}
+            fullWidth={true}
+            type="submit"
+            size="sm"
+          >
+            J’ai activé mon compte
+          </Button>
+        </div>
+      </div>
+    </MainAuth>
+  );
+};
+
+export default RegisterSuccessPage;
