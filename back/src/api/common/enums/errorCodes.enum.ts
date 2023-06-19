@@ -4,6 +4,7 @@ export enum ErrorCodes {
   CURRENCIES_SERVER_UNAVAILABLE = 'CURRENCIES_SERVER_UNAVAILABLE',
   CURRENCY_NOT_FOUND = 'CURRENCY_NOT_FOUND',
   USER_NOT_FOUND = 'user-not-found',
+  EMAIL_NOT_PROVIDED = 'email-not-provided',
   BAD_CREDENTIALS = 'bad-credentials',
   EMAIL_ALREADY_EXIST_BAD_REQUEST = 'email-already-exist-bad-request',
   USER_BLOCKED_UNAUTHORIZED = 'user-blocked-unauthorized',

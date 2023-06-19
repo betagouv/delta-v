@@ -1,6 +1,7 @@
 import { CustomEventEmitterInterface } from '../../../core/eventManager/eventManager';
 import { User } from '../../../entities/user.entity';
 import { UserRepositoryInterface } from '../../../repositories/user.repository';
+import emailNotProvidedError from '../../common/errors/emailNotProvided.error';
 import userAlreadyEnabledError from '../../common/errors/userAlreadyEnabled.error';
 import userBlockedError from '../../common/errors/userBlocked.error';
 import userNotFoundError from '../../common/errors/userNotFound.error';
@@ -17,7 +18,7 @@ const getAndCheckUser = async (
   email?: string,
 ): Promise<User> => {
   if (!email) {
-    throw userNotFoundError();
+    throw emailNotProvidedError();
   }
 
   const user = await userRepository.getOneByEmail(email);

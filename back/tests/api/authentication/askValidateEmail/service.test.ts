@@ -7,6 +7,7 @@ import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmi
 import userNotFoundError from '../../../../src/api/common/errors/userNotFound.error';
 import userBlockedError from '../../../../src/api/common/errors/userBlocked.error';
 import userAlreadyEnabledError from '../../../../src/api/common/errors/userAlreadyEnabled.error';
+import emailNotProvidedError from '../../../../src/api/common/errors/emailNotProvided.error';
 
 describe('askEmailValidation service', () => {
   beforeEach(() => {
@@ -39,6 +40,19 @@ describe('askEmailValidation service', () => {
     ).rejects.toMatchObject(userNotFoundError());
 
     expect(userRepository.getOneByEmail).toBeCalledWith(email);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
+  });
+  it('should return error - email not provided', async () => {
+    const userRepository = userRepositoryMock({});
+    await expect(
+      service({
+        email: undefined,
+        userRepository,
+        eventEmitter: eventEmitterMock,
+      }),
+    ).rejects.toMatchObject(emailNotProvidedError());
+
+    expect(userRepository.getOneByEmail).not.toBeCalled();
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
   it('should return error - user blocked', async () => {
