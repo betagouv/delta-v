@@ -91,7 +91,7 @@ export const getColor = (color: Color, colorGradient?: string): string => {
     case 'link':
       return 'text-link';
     case 'success':
-      return 'text-success';
+      return 'text-[#18753C]';
     case 'error':
       return 'text-[#CE0500]';
     case 'black':
