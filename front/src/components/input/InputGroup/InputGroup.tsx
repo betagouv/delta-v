@@ -64,7 +64,6 @@ export interface IInputGroupProps {
   rules?: any;
   littleCard?: boolean;
   withBorder?: boolean;
-  defaultValue?: string | number;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
