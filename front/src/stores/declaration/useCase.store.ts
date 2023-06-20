@@ -7,17 +7,16 @@ import { ShoppingProduct, SimulatorResponse } from '../simulator/appState.store'
 import { StoreSlice } from '../store';
 import {
   MeansOfTransport,
-  DECLARATION_EMPTY_STATE,
   ContactDetails,
   MeansOfTransportAndCountry,
   DeclarationResponse,
+  DECLARATION_EMPTY_STATE,
 } from './appState.store';
 import { Currencies } from '@/model/currencies';
 
 export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
-  resetDeclarationSteps: (step: number) => void;
   addProductCartDeclaration: (product: ShoppingProduct) => void;
   removeProductCartDeclaration: (id: string) => void;
   declare: () => void;
@@ -57,25 +56,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       ) {
         newState.declaration.appState.declarationRequest.border = false;
       }
-      return newState;
-    });
-  },
-  resetDeclarationSteps: (step: number): void => {
-    set((state: any) => {
-      const newState = { ...state };
-      if (step <= 2) {
-        newState.declaration.appState.declarationRequest.meanOfTransport =
-          DECLARATION_EMPTY_STATE.declarationRequest.meansOfTransportAndCountry;
-      }
-      if (step <= 1) {
-        newState.declaration.appState.declarationRequest.contactDetails =
-          DECLARATION_EMPTY_STATE.declarationRequest.contactDetails;
-      }
-      newState.declaration.appState.declarationRequest.shoppingProducts =
-        DECLARATION_EMPTY_STATE.declarationRequest.shoppingProducts;
-
-      newState.declaration.appState.declarationResponse =
-        DECLARATION_EMPTY_STATE.declarationResponse;
       return newState;
     });
   },
@@ -142,7 +122,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       const newState = { ...state };
 
       const newProducts = newState.declaration.appState.declarationRequest.shoppingProducts.filter(
-        (product: ShoppingProduct) => product.productId !== id,
+        (product: ShoppingProduct) => product.id !== id,
       );
       newState.declaration.appState.declarationRequest.shoppingProducts = newProducts;
       return newState;
@@ -152,7 +132,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   resetDeclaration: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState.declarationRequest = undefined;
+      newState.declaration.appState.declarationRequest = DECLARATION_EMPTY_STATE.declarationRequest;
       return newState;
     });
   },

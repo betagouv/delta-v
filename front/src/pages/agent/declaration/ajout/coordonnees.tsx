@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -14,7 +14,7 @@ import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
 export interface FormDeclarationData {
-  adult?: boolean;
+  adult?: string;
   notAdultAge?: number;
   lastName: string;
   firstName: string;
@@ -33,20 +33,14 @@ interface EventChangeRadio {
 }
 
 const Declaration = () => {
-  const [age, setAge] = useState<number>();
-  const [displayNotAdult, setDisplayNotAdult] = useState(false);
-  const { resetDeclarationSteps, validateDeclarationStep1 } = useStore(
+  const { validateDeclarationStep1, declarationRequest } = useStore(
     (state) => ({
-      resetDeclarationSteps: state.resetDeclarationSteps,
       validateDeclarationStep1: state.validateDeclarationStep1,
+      declarationRequest: state.declaration.appState.declarationRequest,
     }),
     shallow,
   );
   const router = useRouter();
-  useEffect(() => {
-    resetDeclarationSteps(1);
-  }, []);
-
   const schema = yup.object({
     lastName: yup
       .string()
@@ -86,21 +80,28 @@ const Declaration = () => {
     register,
     control,
     formState: { errors, isValid },
+    getValues,
   } = useForm<FormDeclarationData>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      adult: undefined,
-      notAdultAge: undefined,
+      adult: declarationRequest.contactDetails.age >= 18 ? 'true' : 'false',
+      notAdultAge: declarationRequest.contactDetails.age,
+      lastName: declarationRequest.contactDetails.lastName || '',
+      firstName: declarationRequest.contactDetails.firstName || '',
+      address: declarationRequest.contactDetails.address || '',
+      city: declarationRequest.contactDetails.city || '',
+      postalCode: declarationRequest.contactDetails.postalCode || '',
+      email: declarationRequest.contactDetails.email || '',
+      phoneNumber: declarationRequest.contactDetails.phoneNumber || '',
     },
   });
 
+  const [displayNotAdult, setDisplayNotAdult] = useState(getValues('adult') !== 'true');
+  const [age, setAge] = useState<number | undefined>(getValues('notAdultAge'));
+
   register('adult', {
-    onChange: ({ type, target: { name, value } }: EventChangeRadio) => {
-      const notResetDeclarationSteps = !name || type !== 'change';
-      if (notResetDeclarationSteps) {
-        return;
-      }
+    onChange: ({ target: { value } }: EventChangeRadio) => {
       if (typeof value === 'string') {
         const isAdult = value === 'true';
         if (isAdult) {

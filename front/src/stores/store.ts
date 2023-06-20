@@ -100,6 +100,7 @@ export const useStore = create<StoreState>(
       partialize: (state) => {
         return {
           simulator: state.simulator,
+          declaration: state.declaration,
           products: state.products,
           currencies: state.currencies,
           global: state.global,

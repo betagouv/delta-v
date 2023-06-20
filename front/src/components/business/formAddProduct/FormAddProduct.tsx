@@ -126,13 +126,14 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             </label>
             <InputGroup
               disabled={disabled}
-              type="simple-select"
+              type="select"
               fullWidth={true}
               name="currency"
               options={selectOptions}
               register={register('currency', { required: true })}
               control={control}
               error={errors.currency?.message as string | undefined}
+              withBorder={templateRole !== 'agent'}
             />
           </div>
         </div>
@@ -149,6 +150,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             placeholder="Exemple : Jeans, pantalon noir, slim..."
             register={register('name', { required: false })}
             error={errors.name?.message as string | undefined}
+            withBorder={false}
           />
         </div>
       )}

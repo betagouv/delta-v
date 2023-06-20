@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
@@ -34,7 +32,6 @@ export const RadioCard: React.FC<IRadioOptions> = ({
   rules,
   littleCard,
 }) => {
-  const [card, setCard] = useState<IRadioCardType>();
   const { field } = useController({
     control,
     name,
@@ -57,9 +54,8 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               svgIcon={radioCardValue.svgIcon}
               value={radioCardValue.value}
               disabled={radioCardValue.disabled}
-              checked={card?.id === radioCardValue.id}
+              checked={radioCardValue.id === field.value}
               onClick={() => {
-                setCard(radioCardValue);
                 field.onChange(radioCardValue.id);
               }}
             />
@@ -69,9 +65,8 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               svgIcon={radioCardValue.svgIcon}
               value={radioCardValue.value}
               disabled={radioCardValue.disabled}
-              checked={card?.id === radioCardValue.id}
+              checked={radioCardValue.id === field.value}
               onClick={() => {
-                setCard(radioCardValue);
                 field.onChange(radioCardValue.id);
               }}
             />

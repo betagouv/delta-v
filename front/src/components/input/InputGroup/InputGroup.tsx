@@ -114,6 +114,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               control={control}
               rules={rules}
               fullWidth={fullWidth}
+              withBorder={withBorder}
             />
           )}
           {type === 'comboboxes' && (

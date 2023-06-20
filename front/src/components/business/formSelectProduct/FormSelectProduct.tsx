@@ -49,6 +49,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     defaultValues: {
       name: undefined,
       value: null,
+      currency: defaultCurrency,
       ...getDefaultValues(steps),
     },
     resolver: yupResolver(getSchema(!!currentProduct.amountProduct)),
@@ -57,6 +58,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   useEffect(() => {
     reset({
       name: undefined,
+      currency: defaultCurrency,
       ...getDefaultValues(steps),
     });
   }, [steps]);
