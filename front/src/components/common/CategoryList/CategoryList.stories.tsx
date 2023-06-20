@@ -38,7 +38,12 @@ const items: Item[] = [
 export const listDisplay = (): JSX.Element => (
   <div className="p-3">
     <br />
-    <CategoryList items={items} title="Catégories" onSelectProduct={() => console.log('clicked')} />
+    <CategoryList
+      items={items}
+      title="Catégories"
+      onSelectProduct={() => console.log('clicked')}
+      onClick={() => console.log('clicked')}
+    />
     <br />
   </div>
 );
@@ -51,6 +56,7 @@ export const cardDisplay = (): JSX.Element => (
       title="Catégories"
       displayType="card"
       onSelectProduct={() => console.log('clicked')}
+      onClick={() => console.log('clicked')}
     />
     <br />
   </div>

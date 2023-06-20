@@ -4,11 +4,11 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
+import { AddProductCartDeclaration } from '../AddProductCartDeclaration';
+import { OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
 import { SvgNames } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
@@ -30,17 +30,19 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   open,
   defaultCurrency,
 }) => {
-  const { findProduct, products, addProductCartDeclaration } = useStore(
+  const { findProduct, products, addProductCartDeclaration, findProductTree } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       products: state.products.appState.products,
       addProductCartDeclaration: state.addProductCartDeclaration,
+      findProductTree: state.findProductTree,
     }),
     shallow,
   );
   const { trackEvent } = useMatomo();
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
+  const [productTree, setProductTree] = useState<Product[]>([]);
 
   const defaultDisplayedProducts: DisplayedProduct[] = products?.map((product): Item => {
     return {
@@ -55,6 +57,8 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   useEffect(() => {
     if (currentId) {
       const selectedProduct = findProduct(currentId);
+
+      setProductTree(findProductTree(currentId));
       setCurrentProduct(selectedProduct);
       setDisplayedProducts(
         selectedProduct?.subProducts.map((product) => {
@@ -65,6 +69,9 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
           };
         }) ?? [],
       );
+    } else {
+      setProductTree([]);
+      setDisplayedProducts(defaultDisplayedProducts);
     }
   }, [currentId]);
 
@@ -98,49 +105,38 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
     }
   };
 
+  const onCloseModal = () => {
+    if (onClose) {
+      onClose();
+    }
+    setProductTree([]);
+  };
+
+  const onParentCategoryClick = () => {
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    setCurrentId(productTree?.[1]?.id);
+  };
+
   return (
     <>
-      <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
+      <DownModal bgColor="bg-white" open={open} onClose={onCloseModal} withoutMargin>
         <div className="min-h-[50vh] flex h-auto flex-1 flex-col gap-6">
           <div className="flex flex-1 flex-col gap-6">
             {currentProduct?.finalProduct ? (
-              <div className="flex flex-col h-auto">
-                <div className="px-4 py-5">
-                  <div className="flex flex-row gap-4">
-                    <Typography color="secondary" colorGradient="600" size="text-2xs">
-                      BreadCrumbs
-                    </Typography>
-                  </div>
-                  <div className="flex flex-col gap-2 pt-5 pb-2">
-                    <Typography color="black" size="text-xl" weight="bold">
-                      {currentProduct.name}
-                    </Typography>
-                    <div className="flex flex-row gap-2">
-                      {currentProduct.nomenclatures &&
-                        currentProduct.nomenclatures.map((nomenclature) => (
-                          <Typography color="primary" size="text-2xs">
-                            {nomenclature}
-                          </Typography>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-1 flex-col gap-6 bg-secondary-100 px-4 py-5">
-                  <FormSelectProduct
-                    currentProduct={currentProduct}
-                    onAddProduct={onAddProduct}
-                    templateRole="agent"
-                    defaultCurrency={defaultCurrency}
-                  />
-                </div>
-              </div>
+              <AddProductCartDeclaration
+                currentProduct={currentProduct}
+                defaultCurrency={defaultCurrency}
+                onAddProduct={onAddProduct}
+              />
             ) : (
               <div className="px-4 py-5">
                 <CategoryList
                   onSelectProduct={onSelectProduct}
+                  productTree={productTree}
                   items={displayedProducts}
                   title="Filter par catégories"
                   displayType="card"
+                  onClick={onParentCategoryClick}
                   fullWidth
                 />
               </div>
