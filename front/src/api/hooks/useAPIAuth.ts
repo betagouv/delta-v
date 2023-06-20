@@ -74,8 +74,16 @@ export const useAskEmailValidationMutation = () => {
   );
 };
 
-export const useAskResetPasswordMutation = () => {
-  return useMutation<ICommonResponse, IErrorResponse, string>(askResetPasswordRequest);
+export const useAskResetPasswordMutation = ({
+  onSuccess,
+}: MutationSuccessCallback<ICommonResponse>) => {
+  return useMutation<ICommonResponse, IErrorResponse, string>(askResetPasswordRequest, {
+    onSuccess: (data: ICommonResponse) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
 };
 
 export const useResetPasswordMutation = () => {

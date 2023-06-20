@@ -4,6 +4,9 @@ import { Typography } from '../Typography';
 
 export interface TitleAgentProps {
   title: string;
+  switchWordPosition?: number;
+  colorClassnameOne?: string;
+  colorClassnameTwo?: string;
 }
 
 export const splitTitle = (item: string): string[] => {
@@ -16,11 +19,21 @@ export const splitTitle = (item: string): string[] => {
   return [firstLine, secondLine];
 };
 
-export const TitleAgent: React.FC<TitleAgentProps> = ({ title }: TitleAgentProps) => {
-  const titleSplit = title.split(/(?<=^\S+)\s/);
+export const TitleAgent: React.FC<TitleAgentProps> = ({
+  title,
+  switchWordPosition = 1,
+  colorClassnameOne = 'text-primary-600',
+  colorClassnameTwo = 'text-black',
+}: TitleAgentProps) => {
+  const titleSplit = title.split(' ');
+  const firstPart = titleSplit.slice(0, switchWordPosition).join(' ');
+  const secondPart = titleSplit.slice(switchWordPosition).join(' ');
+
   return (
-    <Typography weight="bold" variant="h1" tag="h2" color="black" size="text-xl">
-      <span className="text-primary-600">{titleSplit[0]}</span> {titleSplit[1]}
+    <Typography weight="bold" variant="h1" tag="h2" size="text-xl" textPosition="text-center">
+      <span className={colorClassnameOne}>{firstPart}</span>
+      &nbsp;
+      <span className={colorClassnameTwo}>{secondPart}</span>
     </Typography>
   );
 };
