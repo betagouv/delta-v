@@ -126,13 +126,14 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             </label>
             <InputGroup
               disabled={disabled}
-              type="simple-select"
+              type="select"
               fullWidth={true}
               name="currency"
               options={selectOptions}
               register={register('currency', { required: true })}
               control={control}
               error={errors.currency?.message as string | undefined}
+              defaultValue={defaultSelectOption.id}
             />
           </div>
         </div>

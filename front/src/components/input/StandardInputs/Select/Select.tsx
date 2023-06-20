@@ -21,6 +21,7 @@ export interface ISelectOptions {
   name: string;
   rules?: any;
   fullWidth?: boolean;
+  defaultValue?: string | number;
 }
 
 export const Select: React.FC<ISelectOptions> = ({
@@ -31,15 +32,18 @@ export const Select: React.FC<ISelectOptions> = ({
   name,
   rules,
   fullWidth,
+  defaultValue,
 }: ISelectOptions) => {
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState(
+    options.find((option) => option.id === defaultValue) ?? options[0],
+  );
   const { field } = useController({
     control,
     name,
     rules,
   });
 
-  let classNameButton = `min-w-[200px] bg-white relative border border-secondary-100 border-solid rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600 text-base`;
+  let classNameButton = `bg-white relative border border-secondary-100 border-solid rounded-full shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary-600 focus:border-primary-600 text-base`;
   classNameButton += fullWidth ? ' w-full' : ' w-auto';
   classNameButton += error
     ? ' border-red-300 focus:ring-red-500 focus:border-red-500'

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getEmojiFlag } from 'countries-list';
@@ -53,20 +53,16 @@ const meansOfTransports: IRadioCardType[] = [
 ];
 
 const Declaration = () => {
-  const { resetDeclarationSteps, validateDeclarationStep2 } = useStore(
+  const { validateDeclarationStep2, declarationRequest } = useStore(
     (state) => ({
-      resetDeclarationSteps: state.resetDeclarationSteps,
       validateDeclarationStep2: state.validateDeclarationStep2,
+      declarationRequest: state.declaration.appState.declarationRequest,
     }),
     shallow,
   );
   const router = useRouter();
-  useEffect(() => {
-    resetDeclarationSteps(2);
-  }, []);
 
   const [isPlane, setIsPlane] = useState(false);
-  const [transportChosen, setTransportChosen] = useState<string | undefined>();
 
   const schema = yup.object({
     meansOfTransport: yup.string().required('Champ obligatoire'),
@@ -79,13 +75,19 @@ const Declaration = () => {
     register,
     control,
     formState: { errors, isValid },
+    getValues,
   } = useForm<MeansOfTransportAndCountryData>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      meansOfTransport: undefined,
+      meansOfTransport: declarationRequest.meansOfTransportAndCountry?.meansOfTransport,
+      country: declarationRequest.meansOfTransportAndCountry?.country,
     },
   });
+
+  const [transportChosen, setTransportChosen] = useState<string | undefined>(
+    getValues('meansOfTransport'),
+  );
 
   const onSubmit = (data: MeansOfTransportAndCountryData) => {
     if (!data.meansOfTransport) {
@@ -154,6 +156,7 @@ const Declaration = () => {
           control={control}
           error={errors?.meansOfTransport?.message}
           littleCard
+          defaultValue={getValues('meansOfTransport')}
         />
         {transportChosen && (
           <div className="mt-4">
@@ -168,6 +171,7 @@ const Declaration = () => {
               register={register('country', { required: true })}
               control={control}
               error={errors?.country?.message}
+              defaultValue={getValues('country')}
             />
           </div>
         )}

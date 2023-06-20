@@ -26,7 +26,6 @@ export interface FormDeclarationData {
 
 const Declaration = () => {
   const {
-    resetDeclarationSteps,
     setProductsDeclarationToDisplay,
     removeProductDeclaration,
     resetDeclaration,
@@ -36,11 +35,10 @@ const Declaration = () => {
     valueProducts,
   } = useStore(
     (state) => ({
-      resetDeclarationSteps: state.resetDeclarationSteps,
       setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
-      declarationId: state.declaration.appState.declarationRequest.declarationId,
+      declarationId: state.declaration.appState.declarationRequest?.declarationId,
       valueProducts: state.declaration.appState.declarationResponse?.valueProducts,
       declarationRequest: state.declaration.appState.declarationRequest,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
@@ -54,9 +52,14 @@ const Declaration = () => {
   const [isAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
 
   useEffect(() => {
-    resetDeclarationSteps(3);
     setProductsDeclarationToDisplay();
   }, []);
+
+  useEffect(() => {
+    if (valueProducts?.length === 0) {
+      setIsAvailableToRemove(false);
+    }
+  }, [valueProducts]);
 
   const onClickProductToRemove = (id: string) => {
     removeProductDeclaration(id);
@@ -71,8 +74,8 @@ const Declaration = () => {
 
   const createDeclarationMutation = useCreateDeclarationMutation({
     onSuccess: () => {
-      router.push(`/agent/declaration/${declarationId}`);
       resetDeclaration();
+      router.push(`/agent/declaration/${declarationId}`);
       toast.success(
         "Votre signalement a bien été envoyé. Vous serez notifié dès qu'il sera traité.",
       );
@@ -166,14 +169,16 @@ const Declaration = () => {
                   <Typography color="black" size="text-xs">
                     Marchandises <b>{valueProducts.length}</b>
                   </Typography>
-                  <Typography
-                    color={isAvailableToRemove ? 'black' : 'primary'}
-                    colorGradient="400"
-                    size="text-xs"
-                    onClick={() => setIsAvailableToRemove(!isAvailableToRemove)}
-                  >
-                    {isAvailableToRemove ? 'Annuler' : 'Supprimer'}
-                  </Typography>
+                  {valueProducts.length > 0 && (
+                    <Typography
+                      color={isAvailableToRemove ? 'black' : 'primary'}
+                      colorGradient="400"
+                      size="text-xs"
+                      onClick={() => setIsAvailableToRemove(!isAvailableToRemove)}
+                    >
+                      {isAvailableToRemove ? 'Annuler' : 'Supprimer'}
+                    </Typography>
+                  )}
                 </div>
                 {valueProducts.map((product) => (
                   <CartProductCard

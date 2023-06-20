@@ -44,11 +44,11 @@ const SearchProduct = () => {
   }
   const [selectedProduct, setSelectedProduct] = useState<Product>();
 
-  const onAddProduct = ({ product, value, currency }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
-      name: product.name,
+      name,
       value: parseFloat(value),
       amount: 1,
       currency: currency ?? 'EUR',
