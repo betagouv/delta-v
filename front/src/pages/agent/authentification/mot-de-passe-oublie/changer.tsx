@@ -85,8 +85,8 @@ const ResetPasswordPage = () => {
     <MainAuth
       meta={
         <Meta
-          title="Simulateur Déclare Douanes"
-          description="Simuler la déclaration de douane en quelques clics"
+          title="Déclare Douanes - Modification du mot de passe"
+          description="Page de modification du mot de passe"
         />
       }
     >

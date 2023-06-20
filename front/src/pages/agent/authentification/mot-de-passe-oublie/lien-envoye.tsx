@@ -33,8 +33,8 @@ const ResetLinkSentPage = () => {
       withPadding={false}
       meta={
         <Meta
-          title="Déclare Douanes - Inscription agent réussie"
-          description="Page de création d'un compte agent des douanes"
+          title="Déclare Douanes - Demande de modification du mot de passe"
+          description="Page de demande de création d'un nouveau mot de passe"
         />
       }
     >

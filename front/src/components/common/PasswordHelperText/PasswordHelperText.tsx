@@ -21,21 +21,16 @@ export const checkPasswordRequirements = (password: string): PasswordRequirement
 };
 
 export const PasswordHelperText: React.FC<{ password: string }> = ({ password }) => {
+  const passwordRequirements = checkPasswordRequirements(password);
   return (
     <>
-      <span className={cs({ 'text-[#18753C]': checkPasswordRequirements(password).uppercase })}>
-        1 majuscule,{' '}
-      </span>
-      <span className={cs({ 'text-[#18753C]': checkPasswordRequirements(password).lowercase })}>
-        1 minuscule,{' '}
-      </span>
-      <span className={cs({ 'text-[#18753C]': checkPasswordRequirements(password).number })}>
-        1 chiffre,{' '}
-      </span>
-      <span className={cs({ 'text-[#18753C]': checkPasswordRequirements(password).special })}>
+      <span className={cs({ 'text-success': passwordRequirements.uppercase })}>1 majuscule, </span>
+      <span className={cs({ 'text-success': passwordRequirements.lowercase })}>1 minuscule, </span>
+      <span className={cs({ 'text-success': passwordRequirements.number })}>1 chiffre, </span>
+      <span className={cs({ 'text-success': passwordRequirements.special })}>
         1 caractère spécial,{' '}
       </span>
-      <span className={cs({ 'text-[#18753C]': checkPasswordRequirements(password).length })}>
+      <span className={cs({ 'text-success': passwordRequirements.length })}>
         8 caractères minimum
       </span>
     </>

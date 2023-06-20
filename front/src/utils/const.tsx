@@ -34,7 +34,7 @@ export enum RoutingAuthentication {
   forgetPasswordLinkSent = '/agent/authentification/mot-de-passe-oublie/lien-envoye',
   forgetPasswordLinkClicked = '/agent/authentification/mot-de-passe-oublie/nouveau-mot-de-passe',
   resetPassword = '/agent/authentification/mot-de-passe-oublie/reinitialiser',
-  resetPasswordForm = '/agent/authentification/mot-de-passe-oublie/formulaire',
+  resetPasswordChange = '/agent/authentification/mot-de-passe-oublie/changer',
 }
 
 export const DECLARATION_STEP_PAGE: Record<number, string> = {
