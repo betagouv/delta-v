@@ -133,7 +133,6 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               register={register('currency', { required: true })}
               control={control}
               error={errors.currency?.message as string | undefined}
-              defaultValue={defaultSelectOption.id}
               withBorder={templateRole !== 'agent'}
             />
           </div>

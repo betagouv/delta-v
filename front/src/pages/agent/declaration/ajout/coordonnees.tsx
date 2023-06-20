@@ -247,7 +247,6 @@ const Declaration = () => {
                   { id: 16, value: '16 ans' },
                   { id: 17, value: '17 ans' },
                 ]}
-                defaultValue={getValues('notAdultAge')}
               />
             </div>
           )}

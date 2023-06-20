@@ -156,7 +156,6 @@ const Declaration = () => {
           control={control}
           error={errors?.meansOfTransport?.message}
           littleCard
-          defaultValue={getValues('meansOfTransport')}
         />
         {transportChosen && (
           <div className="mt-4">
@@ -171,7 +170,6 @@ const Declaration = () => {
               register={register('country', { required: true })}
               control={control}
               error={errors?.country?.message}
-              defaultValue={getValues('country')}
             />
           </div>
         )}
