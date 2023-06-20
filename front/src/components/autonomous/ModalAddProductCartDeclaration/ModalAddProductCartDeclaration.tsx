@@ -10,7 +10,7 @@ type OnAddProduct = (options: OnAddProductOptions) => void;
 interface ModalAddProductCartDeclarationProps {
   open: boolean;
   onClose?: () => void;
-  currentProduct: Product;
+  currentProduct?: Product;
   onAddProduct: OnAddProduct;
   defaultCurrency?: string;
 }
@@ -34,10 +34,10 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
             </div>
             <div className="flex flex-col gap-2 pt-5 pb-2">
               <Typography color="black" size="text-xl" weight="bold">
-                {currentProduct.name}
+                {currentProduct?.name}
               </Typography>
               <div className="flex flex-row gap-2">
-                {currentProduct.nomenclatures &&
+                {currentProduct?.nomenclatures &&
                   currentProduct.nomenclatures.map((nomenclature) => (
                     <Typography color="primary" size="text-2xs">
                       {nomenclature}
@@ -47,12 +47,14 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
             </div>
           </div>
           <div className="flex flex-1 flex-col gap-6 bg-secondary-100 px-4 py-5">
-            <FormSelectProduct
-              currentProduct={currentProduct}
-              onAddProduct={onAddProduct}
-              templateRole="agent"
-              defaultCurrency={defaultCurrency}
-            />
+            {currentProduct && (
+              <FormSelectProduct
+                currentProduct={currentProduct}
+                onAddProduct={onAddProduct}
+                templateRole="agent"
+                defaultCurrency={defaultCurrency}
+              />
+            )}
           </div>
         </div>
       </DownModal>

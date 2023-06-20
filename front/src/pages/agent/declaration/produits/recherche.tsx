@@ -91,15 +91,13 @@ const SearchProduct = () => {
             ))}
           </div>
         </div>
-        {selectedProduct && (
-          <ModalAddProductCartDeclaration
-            open={openModalAddProduct}
-            onClose={() => setOpenModalAddProduct(false)}
-            onAddProduct={onAddProduct}
-            currentProduct={selectedProduct}
-            defaultCurrency={defaultCurrency}
-          />
-        )}
+        <ModalAddProductCartDeclaration
+          open={openModalAddProduct}
+          onClose={() => setOpenModalAddProduct(false)}
+          onAddProduct={onAddProduct}
+          currentProduct={selectedProduct}
+          defaultCurrency={defaultCurrency}
+        />
       </MainAgent>
     </AgentRoute>
   );
