@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
@@ -39,9 +37,6 @@ export const RadioCard: React.FC<IRadioOptions> = ({
     name,
     rules,
   });
-  const [card, setCard] = useState<IRadioCardType | undefined>(
-    radioCardValues.find((radioCard) => radioCard.id === field.value),
-  );
 
   return (
     <div data-testid="radio-cards-element" className="mt-2 flex">
@@ -59,9 +54,8 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               svgIcon={radioCardValue.svgIcon}
               value={radioCardValue.value}
               disabled={radioCardValue.disabled}
-              checked={card?.id === radioCardValue.id}
+              checked={radioCardValue.id === field.value}
               onClick={() => {
-                setCard(radioCardValue);
                 field.onChange(radioCardValue.id);
               }}
             />
@@ -71,9 +65,8 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               svgIcon={radioCardValue.svgIcon}
               value={radioCardValue.value}
               disabled={radioCardValue.disabled}
-              checked={card?.id === radioCardValue.id}
+              checked={radioCardValue.id === field.value}
               onClick={() => {
-                setCard(radioCardValue);
                 field.onChange(radioCardValue.id);
               }}
             />
