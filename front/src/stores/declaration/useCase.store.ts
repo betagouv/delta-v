@@ -19,6 +19,7 @@ export interface DeclarationUseCaseSlice {
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
   addProductCartDeclaration: (product: ShoppingProduct) => void;
   removeProductCartDeclaration: (id: string) => void;
+  checkProductCartDeclaration: () => void;
   declare: () => void;
   getDeclaration: (declarationId: string) => void;
   resetDeclaration: () => void;
@@ -34,6 +35,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       newState.declaration.appState.declarationRequest.declarationId = uuidv4();
       return newState;
     });
+    get().checkProductCartDeclaration();
   },
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry): void => {
     set((state: any) => {
@@ -58,6 +60,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       }
       return newState;
     });
+    get().checkProductCartDeclaration();
   },
   declare: async () => {
     try {
@@ -128,6 +131,20 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       return newState;
     });
     get().declare();
+  },
+  checkProductCartDeclaration: (): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      const { shoppingProducts } = newState.declaration.appState.declarationRequest;
+      const shoppingProductsToKeep: ShoppingProduct[] = [];
+      shoppingProducts.forEach((product: ShoppingProduct) => {
+        if (newState.findProduct(product.productId)) {
+          shoppingProductsToKeep.push(product);
+        }
+      });
+      newState.declaration.appState.declarationRequest.shoppingProducts = shoppingProductsToKeep;
+      return newState;
+    });
   },
   resetDeclaration: () => {
     set((state: any) => {

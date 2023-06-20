@@ -18,14 +18,16 @@ import { Main } from '@/templates/Main';
 const ProductSearch = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { findProduct, addProduct, defaultCurrency } = useStore(
+  const { findProduct, addProduct, defaultCurrency, findProductTree } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       addProduct: state.addProduct,
       defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
+      findProductTree: state.findProductTree,
     }),
     shallow,
   );
+
   const router = useRouter();
   const { id } = router.query;
   const currentProduct = findProduct(id as string);
@@ -40,6 +42,8 @@ const ProductSearch = () => {
         title: product.name,
       };
     }) ?? [];
+
+  console.log(findProductTree(id as string));
 
   const onAddProduct = ({ product, value, name, currency }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
