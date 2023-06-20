@@ -49,10 +49,6 @@ const DeclarationSearch = () => {
 
   useEffect(() => {
     getDeclarationMutation.mutate(id);
-  }, []);
-
-  useEffect(() => {
-    getDeclarationMutation.mutate(id);
   }, [id]);
 
   const changeStatusOfDeclarationMutation = useChangeStatusOfDeclarationMutation({

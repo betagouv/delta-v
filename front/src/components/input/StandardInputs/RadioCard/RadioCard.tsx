@@ -25,7 +25,6 @@ export interface IRadioOptions {
   control: any;
   rules?: any;
   onChange?: () => void;
-  defaultValue?: string | number;
 }
 
 export const RadioCard: React.FC<IRadioOptions> = ({
@@ -34,14 +33,15 @@ export const RadioCard: React.FC<IRadioOptions> = ({
   name,
   rules,
   littleCard,
-  defaultValue,
 }) => {
-  const [card, setCard] = useState<IRadioCardType>();
   const { field } = useController({
     control,
     name,
     rules,
   });
+  const [card, setCard] = useState<IRadioCardType | undefined>(
+    radioCardValues.find((radioCard) => radioCard.id === field.value),
+  );
 
   return (
     <div data-testid="radio-cards-element" className="mt-2 flex">
@@ -59,7 +59,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               svgIcon={radioCardValue.svgIcon}
               value={radioCardValue.value}
               disabled={radioCardValue.disabled}
-              checked={card ? card.id === radioCardValue.id : defaultValue === radioCardValue.id}
+              checked={card?.id === radioCardValue.id}
               onClick={() => {
                 setCard(radioCardValue);
                 field.onChange(radioCardValue.id);

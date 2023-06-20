@@ -91,7 +91,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   rules,
   littleCard = false,
   withBorder,
-  defaultValue,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
   return (
@@ -116,7 +115,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               control={control}
               rules={rules}
               fullWidth={fullWidth}
-              defaultValue={defaultValue}
+              withBorder={withBorder}
             />
           )}
           {type === 'comboboxes' && (
@@ -130,7 +129,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               fullWidth={fullWidth}
               placeholder={placeholder}
               trailingIcon={trailingIcon}
-              defaultValue={defaultValue}
             />
           )}
           {type === 'simple-select' && (
@@ -173,7 +171,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               error={error}
               radioValues={radioValues ?? []}
               register={register}
-              defaultValue={defaultValue}
             />
           )}
           {type === 'radioCard' && (
@@ -186,7 +183,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               register={register}
               control={control}
               littleCard={littleCard}
-              defaultValue={defaultValue}
             />
           )}
           {type !== 'select' &&

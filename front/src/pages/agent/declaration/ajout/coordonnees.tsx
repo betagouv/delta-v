@@ -14,7 +14,7 @@ import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
 export interface FormDeclarationData {
-  adult?: boolean;
+  adult?: string;
   notAdultAge?: number;
   lastName: string;
   firstName: string;
@@ -85,7 +85,7 @@ const Declaration = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      adult: declarationRequest.contactDetails.age >= 18,
+      adult: declarationRequest.contactDetails.age >= 18 ? 'true' : 'false',
       notAdultAge: declarationRequest.contactDetails.age,
       lastName: declarationRequest.contactDetails.lastName || '',
       firstName: declarationRequest.contactDetails.firstName || '',
@@ -97,15 +97,11 @@ const Declaration = () => {
     },
   });
 
-  const [displayNotAdult, setDisplayNotAdult] = useState(!getValues('adult'));
+  const [displayNotAdult, setDisplayNotAdult] = useState(getValues('adult') !== 'true');
   const [age, setAge] = useState<number | undefined>(getValues('notAdultAge'));
 
   register('adult', {
-    onChange: ({ type, target: { name, value } }: EventChangeRadio) => {
-      const notResetDeclarationSteps = !name || type !== 'change';
-      if (notResetDeclarationSteps) {
-        return;
-      }
+    onChange: ({ target: { value } }: EventChangeRadio) => {
       if (typeof value === 'string') {
         const isAdult = value === 'true';
         if (isAdult) {
@@ -232,7 +228,6 @@ const Declaration = () => {
               { id: 'true', value: 'Oui' },
               { id: 'false', value: 'Non' },
             ]}
-            defaultValue={typeof getValues('adult')}
           />
           {displayNotAdult && (
             <div className="mt-4">

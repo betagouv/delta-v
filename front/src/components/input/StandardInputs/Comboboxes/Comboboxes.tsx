@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import Fuse from 'fuse.js';
-import { find } from 'lodash';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
 import { Icon } from '@/components/common/Icon';
@@ -24,7 +23,6 @@ export interface ComboboxesOptions {
   fullWidth?: boolean;
   placeholder?: string;
   trailingIcon?: string;
-  defaultValue?: string | number;
 }
 
 export const Comboboxes: React.FC<ComboboxesOptions> = ({
@@ -37,21 +35,18 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
   fullWidth,
   placeholder,
   trailingIcon,
-  defaultValue,
 }) => {
   const [query, setQuery] = useState('');
   const [filteredOptions, setFilteredOptions] = useState<Options[]>([]);
-  const [selectedOption, setSelectedOption] = useState<Options>(
-    defaultValue
-      ? find(options, { id: defaultValue }) ?? { id: null, value: '' }
-      : { id: null, value: '' },
-  );
   const { field } = useController({
     control,
     name,
     rules,
   });
 
+  const [selectedOption, setSelectedOption] = useState<Options>(
+    options.find((option) => option.id === field.value) ?? { id: '', value: '' },
+  );
   useEffect(() => {
     if (query === '') {
       setFilteredOptions(options);
@@ -69,7 +64,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
   }, [query]);
 
   const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    find(options, { id: defaultValue })?.value ?? '',
+    options.find((option) => option.id === field.value)?.value,
   );
 
   const className = classNames(fullWidth ? 'w-full' : 'max-w-fit');

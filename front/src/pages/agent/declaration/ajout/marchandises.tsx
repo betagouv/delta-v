@@ -56,9 +56,7 @@ const Declaration = () => {
   }, []);
 
   useEffect(() => {
-    if (valueProducts?.length === 0) {
-      setIsAvailableToRemove(false);
-    }
+    setIsAvailableToRemove(valueProducts?.length !== 0);
   }, [valueProducts]);
 
   const onClickProductToRemove = (id: string) => {

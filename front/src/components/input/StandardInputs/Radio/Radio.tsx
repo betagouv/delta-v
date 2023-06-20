@@ -14,10 +14,9 @@ export interface IRadioOptions {
   register?: UseFormRegisterReturn;
   control?: any;
   rules?: any;
-  defaultValue?: string | number;
 }
 
-export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name, defaultValue }) => {
+export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) => {
   return (
     <div className="flex items-center space-y-0 space-x-6">
       {radioValues.map((radioValue, index) => (
@@ -30,7 +29,6 @@ export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name, de
             type="radio"
             className="form-radio h-6 w-6 border-black text-primary-600 focus:ring-transparent disabled:text-disabled-text"
             {...register}
-            defaultChecked={defaultValue === radioValue.id}
           />
           <label
             htmlFor={index.toString()}
