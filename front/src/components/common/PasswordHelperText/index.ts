@@ -1,1 +1,1 @@
-export * from './TitleAgent';
+export * from './PasswordHelperText';
