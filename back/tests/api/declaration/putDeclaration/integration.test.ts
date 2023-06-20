@@ -10,6 +10,7 @@ import buildTestApp from '../../../helpers/testApp.helper';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import { prepareContextProduct } from '../../../utils/prepareContext/product';
 import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
+import { prepareContextUser } from '../../../helpers/prepareContext/user';
 
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
@@ -41,6 +42,7 @@ interface SimulateEndpointOptions {
   age?: number;
   country?: Alpha2Code;
   meanOfTransport?: MeansOfTransport;
+  accessToken: string;
 }
 export interface ProductTaxesDetails {
   id: string;
@@ -69,10 +71,12 @@ const simulateEndpoint = async ({
   age = faker.number.int({ min: 15, max: 100 }),
   meanOfTransport = MeansOfTransport.CAR,
   country = 'US',
+  accessToken,
 }: SimulateEndpointOptions): Promise<SimulateEndpointResponse> => {
   const declarationData = prepareDeclarationData();
   const { status, body } = await request(testApp)
     .put(`/api/declaration/${declarationId}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .send({
       ...declarationData,
       declarationId: undefined,
@@ -121,6 +125,7 @@ describe('test put declaration API', () => {
     await testDb.disconnect();
   });
   it('should simulate declaration', async () => {
+    const { accessToken } = await prepareContextUser({ testDb });
     const products = await prepareContext();
     const declarationId = faker.string.uuid();
     const age = faker.number.int({ min: 15, max: 100 });
@@ -177,6 +182,7 @@ describe('test put declaration API', () => {
       border,
       country,
       meanOfTransport,
+      accessToken,
     });
 
     expect(status).toBe(200);

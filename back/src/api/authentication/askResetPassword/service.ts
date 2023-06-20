@@ -15,7 +15,7 @@ export default async ({
   eventEmitter,
 }: IValidationEmailServiceOptions): Promise<void> => {
   const user = await userRepository.getOneByEmail(email);
-  if (!user || user.blocked || !user.enabled) {
+  if (!user || user.blocked) {
     return;
   }
 

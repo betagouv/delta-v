@@ -33,7 +33,7 @@ describe('reset password route', () => {
   test('should return success with code 200', async () => {
     const { resetPasswordToken, user } = await prepareContextUser({ testDb });
 
-    const newPassword = 'NewPassword95';
+    const newPassword = 'NewPassword95*';
 
     const { status, body } = await request(testApp)
       .post('/api/password/reset')
@@ -57,7 +57,7 @@ describe('reset password route', () => {
   test('should return error - invalid token', async () => {
     const { user, accessToken } = await prepareContextUser({ testDb });
 
-    const newPassword = 'NewPassword95';
+    const newPassword = 'NewPassword95*';
     const invalidToken = accessToken;
 
     const { status, body } = await request(testApp)
@@ -84,7 +84,7 @@ describe('reset password route', () => {
       blocked: true,
     });
 
-    const newPassword = 'NewPassword95';
+    const newPassword = 'NewPassword95*';
 
     const { status, body } = await request(testApp)
       .post('/api/password/reset')
@@ -110,7 +110,7 @@ describe('reset password route', () => {
       enabled: false,
     });
 
-    const newPassword = 'NewPassword95';
+    const newPassword = 'NewPassword95*';
 
     const { status, body } = await request(testApp)
       .post('/api/password/reset')
@@ -136,7 +136,7 @@ describe('reset password route', () => {
       saveUser: false,
     });
 
-    const newPassword = 'NewPassword95';
+    const newPassword = 'NewPassword95*';
 
     const { status, body } = await request(testApp)
       .post('/api/password/reset')

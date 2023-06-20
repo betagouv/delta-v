@@ -5,6 +5,7 @@ import buildTestApp from '../../../helpers/testApp.helper';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import { DeclarationStatus } from '../../../../src/entities/declaration.entity';
 import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
+import { prepareContextUser } from '../../../helpers/prepareContext/user';
 
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
@@ -22,6 +23,7 @@ describe('patchStatus endpoint', () => {
     await testDb.disconnect();
   });
   it('should change declaration status', async () => {
+    const { accessToken } = await prepareContextUser({ testDb });
     await prepareContextDeclaration({ testDb });
     const declaration = await prepareContextDeclaration({
       testDb,
@@ -30,6 +32,7 @@ describe('patchStatus endpoint', () => {
 
     const { status, body } = await request(testApp)
       .patch(`/api/declaration/${declaration.id}`)
+      .set('Authorization', `Bearer ${accessToken}`)
       .send({
         status: DeclarationStatus.SUBMITTED,
       });
@@ -43,11 +46,13 @@ describe('patchStatus endpoint', () => {
     expect(updatedDeclaration?.status).toEqual(DeclarationStatus.SUBMITTED);
   });
   it('should return a 404 error if the declaration does not exist', async () => {
+    const { accessToken } = await prepareContextUser({ testDb });
     await prepareContextDeclaration({ testDb });
     const declaration = await prepareContextDeclaration({ testDb, saveDeclaration: false });
 
     const { status, body } = await request(testApp)
       .patch(`/api/declaration/${declaration.id}`)
+      .set('Authorization', `Bearer ${accessToken}`)
       .send({
         status: DeclarationStatus.SUBMITTED,
       });

@@ -1,6 +1,6 @@
 import { sign } from 'jsonwebtoken';
 import config from '../../loader/config';
-import { IAuthObject } from './AuthObject';
+import { AccessTokenAuthObject, IAuthObject } from './AuthObject';
 
 interface GenerateTokenOptions<T extends object> {
   generateJwtOptions: T;
@@ -34,10 +34,10 @@ export const generateToken = <T extends object>({
 };
 
 export const generateAccessToken = (
-  generateJwtOptions: IAuthObject,
+  generateJwtOptions: AccessTokenAuthObject,
   expiresIn?: number | string,
 ): Promise<string> =>
-  generateToken<IAuthObject>({
+  generateToken<AccessTokenAuthObject>({
     expiresIn: expiresIn ?? config.ACCESS_TOKEN_LIFE,
     secret: config.ACCESS_TOKEN_SECRET,
     generateJwtOptions,

@@ -35,7 +35,11 @@ export const service = async ({
     error: invalidTokenError(),
   });
 
-  const newAccessToken = await generateAccessToken({ userId: user.id, email: user.email });
+  const newAccessToken = await generateAccessToken({
+    userId: user.id,
+    email: user.email,
+    isAgent: true,
+  });
   const newRefreshToken = await generateRefreshToken({ userId: user.id, email: user.email });
 
   return { accessToken: newAccessToken, refreshToken: newRefreshToken };

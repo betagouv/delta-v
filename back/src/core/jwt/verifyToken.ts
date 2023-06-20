@@ -1,7 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import invalidTokenError from '../../api/common/errors/invalidToken.error';
 import config from '../../loader/config';
-import { IAuthObject } from './AuthObject';
+import { AccessTokenAuthObject, IAuthObject } from './AuthObject';
 
 interface VerifyTokenOptions {
   token: string;
@@ -11,7 +11,7 @@ interface VerifyTokenOptions {
 
 export const checkAndReturnAuthAccessToken = (header: string | undefined): string => {
   if (!header?.startsWith('Bearer')) {
-    throw invalidTokenError;
+    throw invalidTokenError();
   }
 
   return header.replace('Bearer ', '');
@@ -63,8 +63,8 @@ export const buildTokenObject = async <T extends object>(
 export const buildAccessTokenObject = (
   token: string,
   ignoreExpiration = false,
-): Promise<IAuthObject> =>
-  buildTokenObject<IAuthObject>(token, config.ACCESS_TOKEN_SECRET, ignoreExpiration);
+): Promise<AccessTokenAuthObject> =>
+  buildTokenObject<AccessTokenAuthObject>(token, config.ACCESS_TOKEN_SECRET, ignoreExpiration);
 
 export const buildRefreshTokenObject = (token: string): Promise<IAuthObject> =>
   buildTokenObject<IAuthObject>(token, config.REFRESH_TOKEN_SECRET);

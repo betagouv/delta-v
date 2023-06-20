@@ -6,7 +6,7 @@ describe('register validator', () => {
   const validData = {
     body: {
       email: 'firstname.lastname@douane.finances.gouv.fr',
-      password: 'Password95',
+      password: 'Password95*',
     },
   };
   const { isValid } = validatorHelper(validator);
@@ -37,7 +37,7 @@ describe('register validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'Passw95',
+        password: 'Pass95*',
       },
     };
 
@@ -47,7 +47,7 @@ describe('register validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'Passwordddd',
+        password: 'Passwordddd*',
       },
     };
 
@@ -57,7 +57,7 @@ describe('register validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'password95',
+        password: 'password95*',
       },
     };
 
@@ -67,7 +67,17 @@ describe('register validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'PASSWORD95',
+        password: 'PASSWORD95*',
+      },
+    };
+
+    expect(isValid(data)).toBeFalsy();
+  });
+  it('should be invalid - password bad format - without special char', () => {
+    const data = {
+      body: {
+        ...validData.body,
+        password: 'Password95',
       },
     };
 

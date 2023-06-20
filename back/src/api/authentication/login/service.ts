@@ -31,7 +31,11 @@ export const service = async ({
     throw badCredentialsError();
   }
 
-  const accessToken = await generateAccessToken({ userId: user.id, email: user.email });
+  const accessToken = await generateAccessToken({
+    userId: user.id,
+    email: user.email,
+    isAgent: true,
+  });
   const refreshToken = await generateRefreshToken({ userId: user.id, email: user.email });
 
   return { accessToken, refreshToken };

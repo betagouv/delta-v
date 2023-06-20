@@ -41,7 +41,7 @@ export const prepareContextUser = async ({
   userId = '8e339c8f-2187-46a9-8c30-aa15d3ebc330',
   expiredRefreshToken = false,
 }: IPrepareContextUserOptions): Promise<IPrepareContextUserResponse> => {
-  const password = 'Password95';
+  const password = 'Password95*';
   const hashedPassword = await hashPassword(password);
   const user = userEntityFactory({
     password: hashedPassword,
@@ -59,7 +59,7 @@ export const prepareContextUser = async ({
   if (saveUser) {
     await testDb.persistUser(user);
   }
-  const accessToken = await generateAccessToken({ email: user.email, userId });
+  const accessToken = await generateAccessToken({ email: user.email, userId, isAgent: true });
   const refreshToken = await generateRefreshToken(
     {
       email: user.email,

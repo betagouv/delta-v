@@ -28,7 +28,7 @@ describe('askResetPassword route', () => {
     await testDb.disconnect();
   });
 
-  test('should return success with code 200', async () => {
+  test('should return success with code 200 and send email', async () => {
     const { user } = await prepareContextUser({ testDb });
 
     const { status, body } = await request(testApp)
@@ -40,7 +40,19 @@ describe('askResetPassword route', () => {
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 
-  test('should return success with code 200 - user not found', async () => {
+  test('should return 200 and send email - user not enabled', async () => {
+    const { user } = await prepareContextUser({ testDb, enabled: false });
+
+    const { status, body } = await request(testApp)
+      .post('/api/password/ask')
+      .send({ email: user.email });
+
+    expect(status).toBe(HttpStatuses.OK);
+    expect(body.code).toEqual(ResponseCodes.USER_ASK_RESET_PASSWORD);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
+  });
+
+  test('should return 200 but do not send email - user not found', async () => {
     const { user } = await prepareContextUser({ testDb, saveUser: false });
 
     const { status, body } = await request(testApp)
@@ -52,20 +64,8 @@ describe('askResetPassword route', () => {
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
 
-  test('should return success with code 200 - user blocked', async () => {
+  test('should return 200 but do not send email - user blocked', async () => {
     const { user } = await prepareContextUser({ testDb, blocked: true });
-
-    const { status, body } = await request(testApp)
-      .post('/api/password/ask')
-      .send({ email: user.email });
-
-    expect(status).toBe(HttpStatuses.OK);
-    expect(body.code).toEqual(ResponseCodes.USER_ASK_RESET_PASSWORD);
-    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
-  });
-
-  test('should return success with code 200 - user not enabled', async () => {
-    const { user } = await prepareContextUser({ testDb, enabled: false });
 
     const { status, body } = await request(testApp)
       .post('/api/password/ask')

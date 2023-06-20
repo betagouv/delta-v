@@ -8,7 +8,7 @@ describe('reset password validator', () => {
     body: {
       token:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-      password: 'Password95',
+      password: 'Password95*',
     },
   };
 
@@ -49,7 +49,7 @@ describe('reset password validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'Passw95',
+        password: 'Pass95*',
       },
     };
 
@@ -59,7 +59,7 @@ describe('reset password validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'Passwordddd',
+        password: 'Passwordddd*',
       },
     };
 
@@ -69,7 +69,7 @@ describe('reset password validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'password95',
+        password: 'password95*',
       },
     };
 
@@ -79,7 +79,17 @@ describe('reset password validator', () => {
     const data = {
       body: {
         ...validData.body,
-        password: 'PASSWORD95',
+        password: 'PASSWORD95*',
+      },
+    };
+
+    expect(isValid(data)).toBe(false);
+  });
+  it('should be invalid - password bad format - without special char', () => {
+    const data = {
+      body: {
+        ...validData.body,
+        password: 'Password95',
       },
     };
 

@@ -7,16 +7,17 @@ import userBlockedError from '../../../../src/api/common/errors/userBlocked.erro
 import userNotEnabledError from '../../../../src/api/common/errors/userNotEnabled.error';
 import { generateAccessToken, generateRefreshToken } from '../../../../src/core/jwt/generateToken';
 import invalidTokenError from '../../../../src/api/common/errors/invalidToken.error';
-import { buildRefreshTokenObject } from '../../../../src/core/jwt/verifyToken';
 
 describe('refresh service', () => {
   it('should refresh correctly', async () => {
     const user = userEntityFactory({});
     const userRepository = userRepositoryMock({ getOneById: user });
-    const accessToken = await generateAccessToken({ email: user.email, userId: user.id });
+    const accessToken = await generateAccessToken({
+      email: user.email,
+      userId: user.id,
+      isAgent: true,
+    });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
-    const test = await buildRefreshTokenObject(refreshToken);
-    console.log(test);
 
     const response = await service({
       accessToken,
@@ -35,6 +36,7 @@ describe('refresh service', () => {
     const accessToken = await generateAccessToken({
       email: user.email,
       userId: faker.string.uuid(),
+      isAgent: true,
     });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
 
@@ -53,6 +55,7 @@ describe('refresh service', () => {
     const accessToken = await generateAccessToken({
       email: user.email,
       userId: user.id,
+      isAgent: true,
     });
     const refreshToken = await generateRefreshToken({
       email: user.email,
@@ -71,7 +74,11 @@ describe('refresh service', () => {
   it('should throw 401 - user blocked', async () => {
     const user = userEntityFactory({ blocked: true });
     const userRepository = userRepositoryMock({ getOneById: user });
-    const accessToken = await generateAccessToken({ email: user.email, userId: user.id });
+    const accessToken = await generateAccessToken({
+      email: user.email,
+      userId: user.id,
+      isAgent: true,
+    });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
 
     await expect(
@@ -86,7 +93,11 @@ describe('refresh service', () => {
   it('should throw 401 - user not enabled', async () => {
     const user = userEntityFactory({ enabled: false });
     const userRepository = userRepositoryMock({ getOneById: user });
-    const accessToken = await generateAccessToken({ email: user.email, userId: user.id });
+    const accessToken = await generateAccessToken({
+      email: user.email,
+      userId: user.id,
+      isAgent: true,
+    });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
 
     await expect(
