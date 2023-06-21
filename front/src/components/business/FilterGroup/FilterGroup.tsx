@@ -3,12 +3,12 @@ import React from 'react';
 import { FilterItem, FilterItemProps } from './FilterItem';
 import { Typography } from '@/components/common/Typography';
 
-export type FilterProps = {
+export type FilterGroupProps = {
   title: string;
   filters: FilterItemProps[];
 };
 
-export const Filter = ({ title, filters }: FilterProps) => {
+export const FilterGroup = ({ title, filters }: FilterGroupProps) => {
   return (
     <div>
       <Typography color="black" size="text-xs">
