@@ -6,6 +6,6 @@ export interface IAskResetPasswordResponse {
 }
 
 export default (): IAskResetPasswordResponse => ({
-  message: 'Email sent for reset password',
+  message: 'Email de réinitialisation du mot de passe envoyé',
   code: ResponseCodes.USER_ASK_RESET_PASSWORD,
 });

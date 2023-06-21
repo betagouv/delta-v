@@ -6,6 +6,6 @@ export interface IUpdatePasswordResponse {
 }
 
 export default (): IUpdatePasswordResponse => ({
-  message: 'Password successfully changed',
+  message: 'Mot de passe modifié avec succès',
   code: ResponseCodes.USER_PASSWORD_RESET,
 });

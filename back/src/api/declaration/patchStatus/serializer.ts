@@ -6,6 +6,6 @@ interface SerializedPatchStatusResponse {
 }
 
 export default (): SerializedPatchStatusResponse => ({
-  message: 'Status successfully updated',
+  message: 'Le statut de la déclaration a été mis à jour',
   code: ResponseCodes.DECLARATION_STATUS_UPDATED,
 });
