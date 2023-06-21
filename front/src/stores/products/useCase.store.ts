@@ -8,7 +8,7 @@ import { advancedSearch, SearchType } from '@/utils/search';
 
 export interface ProductsUseCaseSlice {
   findProduct: (id: string) => Product | undefined;
-  findProductTree: (id: string) => Product[] | undefined;
+  findProductTree: (id: string) => Product[];
   searchProducts: (searchValue: string) => SearchType<Product>[];
   searchAllProducts: (searchValue: string) => SearchType<Product>[];
   getProductsResponse: () => Promise<void>;

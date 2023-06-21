@@ -3,9 +3,11 @@ import React from 'react';
 import cs from 'classnames';
 
 import { Icon } from '../Icon';
+import { IconButtonWithTitle } from '../IconButtonWithTitle';
 import { SvgIcon, SvgNames } from '../SvgIcon';
 import { TitleAgent } from '../TitleAgent';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
+import { Product } from '@/model/product';
 
 export interface Item {
   title: string;
@@ -17,6 +19,8 @@ export interface CategoryListProps {
   title?: string;
   items: Item[];
   onSelectProduct: (id: string) => void;
+  onClick?: () => void;
+  productTree?: Product[];
   displayType?: 'list' | 'card';
   fullWidth?: boolean;
 }
@@ -25,6 +29,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({
   items,
   title,
   onSelectProduct,
+  onClick,
+  productTree,
   displayType = 'list',
   fullWidth,
 }: CategoryListProps) => {
@@ -35,10 +41,20 @@ export const CategoryList: React.FC<CategoryListProps> = ({
           <TitleAgent title={title} />
         </li>
       )}
+
+      {productTree && productTree.length > 0 && (
+        <div className="mt-7">
+          <IconButtonWithTitle
+            icon="chevron-left"
+            title={productTree[0]?.name ?? ''}
+            onClick={onClick}
+          />
+        </div>
+      )}
       <div
         className={cs({
           'flex flex-row ': true,
-          'grid grid-cols-3 gap-2 mt-6': displayType === 'card',
+          'grid grid-cols-3 gap-2 mt-5': displayType === 'card',
           'flex-col': displayType === 'list',
         })}
       >
