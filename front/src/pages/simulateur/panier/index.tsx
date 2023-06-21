@@ -18,7 +18,6 @@ import {
   getAmountCategoryName,
   getAmountProductType,
   getMessageOverMaximumAmount,
-  getUnit,
 } from '@/model/amount';
 import { AmountProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
@@ -119,12 +118,7 @@ const Panier = () => {
               {amountProduct.products.map((product) => (
                 <AmountProductBasket
                   containError={amountProduct.isOverMaximum}
-                  dataBasket={{
-                    unit: getUnit(product.amountProduct) ?? '',
-                    amount: product.amount,
-                    customName: product.customName,
-                    name: product.name,
-                  }}
+                  product={product}
                   onDeleteProduct={() => {
                     idToDelete.current = product.customId;
                     setOpenActionModal(true);

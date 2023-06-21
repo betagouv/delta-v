@@ -38,16 +38,18 @@ export interface DetailedProduct {
   vat: number;
 }
 
+export interface AmountProductInterface {
+  id: string;
+  name: string;
+  amountProduct: AmountProduct;
+  customName?: string;
+  customId: string;
+  amount: number;
+}
+
 export interface GroupedAmountProduct {
   group: string;
-  products: {
-    id: string;
-    name: string;
-    amountProduct: AmountProduct;
-    customName?: string;
-    customId: string;
-    amount: number;
-  }[];
+  products: AmountProductInterface[];
   isOverMaximum: boolean;
 }
 

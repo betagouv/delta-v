@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import classnames from 'classnames';
 
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
-import { DetailedProduct } from '@/stores/simulator/appState.store';
+import { getUnit } from '@/model/amount';
+import { AmountProductInterface } from '@/stores/simulator/appState.store';
 
 interface AmountProductBasketProps {
   containError?: boolean;
-  detailedProduct?: DetailedProduct;
-  dataBasket: {
-    amount: number;
-    unit: string;
-    name: string;
-    customName?: string;
-  };
+  product: AmountProductInterface;
   onUpdateProduct: () => void;
   onDeleteProduct: () => void;
 }
 
 export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
   containError = false,
-  dataBasket: { amount, unit, name, customName },
+  product: { name, amount, customName, amountProduct },
   onUpdateProduct,
   onDeleteProduct,
 }: AmountProductBasketProps) => {
   const [open, setOpen] = useState(false);
+  const [unit, setUnit] = useState<string>('');
+  useEffect(() => {
+    setUnit(getUnit(amountProduct) ?? '');
+  }, [amountProduct]);
+
   return (
     <div
       className={classnames({
