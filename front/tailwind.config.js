@@ -32,7 +32,8 @@ module.exports = {
         },
         cancel: colors.red,
         link: '#6A6AF4',
-        success: '#27A658',
+        error: '#CE0500',
+        success: '#18753C',
         note: '#FFEA79',
       },
       spacing: {

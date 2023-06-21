@@ -7,7 +7,7 @@ import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
 
-const ResetPasswordPage = () => {
+const RegisterValidationPage = () => {
   const router = useRouter();
   const { token } = router.query;
 
@@ -88,4 +88,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default RegisterValidationPage;

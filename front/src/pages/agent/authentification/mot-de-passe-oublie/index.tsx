@@ -1,10 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useAskResetPasswordMutation } from '@/api/hooks/useAPIAuth';
 import { Button } from '@/components/common/Button';
-import { TextLink } from '@/components/common/TextLink';
+import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
@@ -23,6 +25,7 @@ const AskResetPasswordPage = () => {
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
     formState: { isDirty, isValid },
   } = useForm<FormForgetPasswordData>({
@@ -31,8 +34,15 @@ const AskResetPasswordPage = () => {
     },
     resolver: yupResolver(schema),
   });
+  const router = useRouter();
 
-  const askResetPasswordMutation = useAskResetPasswordMutation();
+  const onSuccess = () => {
+    const { email } = getValues();
+
+    router.push(`${RoutingAuthentication.forgetPasswordLinkSent}?email=${email}`);
+  };
+
+  const askResetPasswordMutation = useAskResetPasswordMutation({ onSuccess });
   const apiError = askResetPasswordMutation.error ?? undefined;
   const { data: apiSuccess } = askResetPasswordMutation;
 
@@ -40,35 +50,65 @@ const AskResetPasswordPage = () => {
     askResetPasswordMutation.mutate(data.email);
   };
 
+  const handleCancelClick = () => {
+    router.push(RoutingAuthentication.login);
+  };
+
   return (
     <MainAuth
+      withPadding={false}
       meta={
         <Meta
-          title="Simulateur Déclare Douanes"
-          description="Simuler la déclaration de douane en quelques clics"
+          title="Déclare Douanes - Mot de passe oublié"
+          description="Page de demande de création d'un nouveau mot de passe"
         />
       }
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-6">
-        <InputGroup
-          type="email"
-          name="adult"
-          fullWidth={false}
-          placeholder="Email"
-          register={register('email')}
-          error={errors?.email?.message ?? getErrorFields('email', apiError)}
-        />
-        <TextLink underline to={RoutingAuthentication.login}>
-          se connecter
-        </TextLink>
-        {apiError && <div className="text-sm font-bold text-red-500">{apiError.message}</div>}
-        {apiSuccess && <div className="text-sm font-bold text-green-500">{apiSuccess.message}</div>}
-        <div>
-          <Button fullWidth={false} type="submit" disabled={!isDirty || !isValid}>
-            Valider
-          </Button>
-        </div>
-      </form>
+      <TitleHeaderAgent
+        title="Mot de passe oublié"
+        bgColorClass="bg-white"
+        switchWordPosition={3}
+      />
+      <section className="mt-12 flex flex-col items-center self-center">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-6 w-80">
+          <InputGroup
+            label="Saisissez votre adresse email *"
+            type="email"
+            name="adult"
+            fullWidth={true}
+            placeholder="Email"
+            register={register('email')}
+            error={errors?.email?.message ?? getErrorFields('email', apiError)}
+          />
+          <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
+            {apiError && (
+              <Typography color="error" textPosition="text-center">
+                {apiError.message}
+              </Typography>
+            )}
+            {apiSuccess && (
+              <Typography color="success" textPosition="text-center">
+                {apiSuccess.message}
+              </Typography>
+            )}
+            <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
+              Envoyer
+            </Button>
+            <Button
+              fullWidth={true}
+              type="button"
+              size="sm"
+              variant="outlined"
+              onClick={handleCancelClick}
+            >
+              Annuler
+            </Button>
+          </div>
+          <Typography color="black" size="text-2xs" textPosition="text-center">
+            Champs obligatoires *
+          </Typography>
+        </form>
+      </section>
     </MainAuth>
   );
 };

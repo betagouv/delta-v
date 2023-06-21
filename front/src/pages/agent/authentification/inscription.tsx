@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,6 +8,7 @@ import * as yup from 'yup';
 
 import { useRegisterMutation } from '@/api/hooks/useAPIAuth';
 import { Button } from '@/components/common/Button';
+import { PasswordHelperText } from '@/components/common/PasswordHelperText/PasswordHelperText';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -39,6 +42,14 @@ const RegisterPage = () => {
     resolver: yupResolver(schema),
   });
 
+  const [password, setPassword] = useState<string>('');
+
+  register('password', {
+    onChange: (event: any) => {
+      setPassword(event.target.value);
+    },
+  });
+
   const router = useRouter();
 
   const onSuccess = () => {
@@ -66,7 +77,7 @@ const RegisterPage = () => {
         />
       }
     >
-      <TitleHeaderAgent title="Créer votre compte" bgColorClass="bg-white"></TitleHeaderAgent>
+      <TitleHeaderAgent title="Créer votre compte" bgColorClass="bg-white" />
       <section className="my-auto flex flex-col items-center self-center ">
         <form onSubmit={handleSubmit(onSubmit)} className="w-80">
           <div className="flex flex-col gap-3">
@@ -78,15 +89,20 @@ const RegisterPage = () => {
               register={register('email')}
               error={errors?.email?.message ?? getErrorFields('email', apiError)}
             />
-            <InputGroup
-              type="password"
-              name="adult"
-              fullWidth={true}
-              placeholder="Mot de passe"
-              register={register('password')}
-              error={errors?.password?.message ?? getErrorFields('password', apiError)}
-              helperText="1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial, 8 caractères minimum"
-            />
+
+            <div className="flex flex-col gap-1">
+              <InputGroup
+                type="password"
+                name="adult"
+                fullWidth={true}
+                placeholder="Mot de passe"
+                register={register('password')}
+                error={errors?.password?.message ?? getErrorFields('password', apiError)}
+              />
+              <Typography color="light-gray" size="text-xs">
+                <PasswordHelperText password={password} />
+              </Typography>
+            </div>
           </div>
           <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
             {apiError && (
