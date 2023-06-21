@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import cs from 'classnames';
 import dayjs from 'dayjs';
@@ -23,6 +23,8 @@ export type DeclarationCardProps = {
   status: DeclarationStatus;
   verificationButton?: boolean;
   verificationLink?: string;
+  newLimit?: () => void;
+  isLast?: boolean;
 };
 
 export const DeclarationCard = ({
@@ -33,13 +35,31 @@ export const DeclarationCard = ({
   transport,
   status,
   verificationButton,
+  newLimit,
+  isLast,
 }: DeclarationCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!cardRef?.current) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (isLast && entry?.isIntersecting) {
+        if (newLimit) newLimit();
+        observer.unobserve(entry.target);
+      }
+    });
+
+    observer.observe(cardRef.current);
+  }, [isLast]);
+
   const transportLabel = getMeanOfTransport(transport);
   return (
     <div
       className={cs({
         'flex flex-col rounded-xl border border-gray-300 px-5 py-4 gap-1': true,
       })}
+      ref={cardRef}
     >
       {verificationButton && (
         <span className="pb-1.5">

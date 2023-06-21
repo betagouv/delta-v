@@ -8,6 +8,7 @@ interface GetAllOptions {
   offset: number;
   search?: string;
   searchPublicId?: string;
+  status?: string;
 }
 
 export type UpdateDeclaration = Partial<Omit<DeclarationEntityInterface, 'id'>>;
@@ -57,10 +58,12 @@ export const DeclarationRepository: DeclarationRepositoryInterface = AppDataSour
     offset,
     search,
     searchPublicId,
+    status,
   }: GetAllOptions): Promise<DeclarationEntityInterface[]> {
     const query = this.declarationQueryBuilder()
       .addSelect('declaration.products')
       .whereSearch(search)
+      .whereStatus(status)
       .whereSearchPublicId(searchPublicId)
       .limit(limit)
       .offset(offset);

@@ -51,6 +51,7 @@ export interface DeclarationData {
   declarationResponse?: SimulatorResponse;
   displayInfo: boolean;
   error?: any;
+  allDeclarations: DeclarationResponse[];
 }
 
 export interface DeclarationAppStateSlice {
@@ -113,6 +114,7 @@ export const DECLARATION_EMPTY_STATE = {
   declarationResponse: undefined,
   displayInfo: true,
   error: undefined,
+  allDeclarations: [],
 };
 
 export const createDeclarationAppStateSlice: StoreSlice<DeclarationAppStateSlice> = () => ({

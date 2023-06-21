@@ -15,13 +15,14 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { limit, offset, search, searchPublicId } = req.query;
+    const { limit, offset, search, searchPublicId, status } = req.query;
 
     const declarations = await service({
       limit,
       offset,
       search,
       searchPublicId,
+      status,
       declarationRepository: AppDataSource.manager.withRepository(DeclarationRepository),
     });
 
