@@ -14,6 +14,7 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
+import { getErrorFields } from '@/utils/errorFields';
 
 export interface FormLoginData {
   email: string;
@@ -21,7 +22,7 @@ export interface FormLoginData {
 }
 
 const schema = yup.object({
-  email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
+  email: yup.string().required("L'email est requis"),
   password: yup.string().required('Le mot de passe est requis'),
 });
 
@@ -52,7 +53,7 @@ const LoginPage = () => {
     },
   });
 
-  const error = loginMutation.error ?? undefined;
+  const apiError = loginMutation.error ?? undefined;
 
   const onSubmit = async (data: FormLoginData) => {
     loginMutation.mutate(data);
@@ -78,12 +79,12 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-60">
           <div className="flex flex-col gap-3">
             <InputGroup
-              type="email"
+              type="text"
               name="adult"
               fullWidth={true}
               placeholder="Email"
               register={register('email')}
-              error={errors?.email?.message}
+              error={errors?.email?.message ?? getErrorFields('email', apiError)}
             />
             <InputGroup
               type="password"
@@ -91,16 +92,9 @@ const LoginPage = () => {
               fullWidth={true}
               placeholder="Mot de passe"
               register={register('password')}
-              error={errors?.password?.message}
+              error={errors?.password?.message ?? getErrorFields('password', apiError)}
             />
           </div>
-          {error?.message && (
-            <div className="ml-3">
-              <Typography color="error" size="text-2xs">
-                {error.message}
-              </Typography>
-            </div>
-          )}
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>
