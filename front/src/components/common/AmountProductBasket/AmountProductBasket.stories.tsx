@@ -1,8 +1,9 @@
 import { Meta } from '@storybook/react';
 
 import { AmountProductBasket } from './AmountProductBasket';
+import { AmountProductBasketGroup } from './AmountProductBasketGroup';
 import { AmountProduct } from '@/model/product';
-import { AmountProductInterface } from '@/stores/simulator/appState.store';
+import { AmountProductInterface, GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
 export default {
   title: 'Components/Common/AmountProductBasket',
@@ -14,21 +15,35 @@ const amountProduct: AmountProductInterface = {
   customId: '12',
   name: 'Produit',
   customName: 'Produit 1',
-  amount: 5,
-  amountProduct: AmountProduct.cigarette,
+  amount: 500,
+  amountProduct: AmountProduct.tobacco,
+};
+
+const groupedProduct: GroupedAmountProduct = {
+  group: 'alcoholIntermediate',
+  products: [amountProduct, amountProduct, amountProduct],
+  isOverMaximum: true,
 };
 
 export const withVariant = (): JSX.Element => (
   <div className="p-3">
-    <p>Product basket :</p>
+    <p>Base product basket :</p>
+    <br />
+    <AmountProductBasket product={amountProduct} onButtonClick={() => console.log('clicked')} />
+    <br />
+    <p>Product basket with error:</p>
     <br />
     <AmountProductBasket
       product={amountProduct}
-      // eslint-disable-next-line no-alert
-      onUpdateProduct={() => alert('On Update')}
-      // eslint-disable-next-line no-alert
-      onDeleteProduct={() => alert('On Delete')}
+      containError
+      onButtonClick={() => console.log('clicked')}
     />
     <br />
+  </div>
+);
+
+export const group = (): JSX.Element => (
+  <div className="p-3">
+    <AmountProductBasketGroup amountProductGroup={groupedProduct} />
   </div>
 );

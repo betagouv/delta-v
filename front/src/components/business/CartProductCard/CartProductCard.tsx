@@ -15,10 +15,10 @@ dayjs.locale('fr');
 
 const getCartProductCardColor = (deletable: boolean): string => {
   if (deletable === true) {
-    return 'bg-[#FFE8E8]';
+    return 'bg-[#FFE8E5]';
   }
 
-  return 'bg-[#E8EDFF]';
+  return 'bg-[#E3E3FD]';
 };
 
 export type CartProductCardProps = {
@@ -52,6 +52,15 @@ export const CartProductCard = ({
       )}
       <div className="flex flex-col gap-2 p-5">
         <div className="flex flex-col line-clamp-6">
+          {nomenclatures && (
+            <span className="flex flex-row gap-6">
+              {nomenclatures.map((item, index) => (
+                <Typography key={index} color="light-gray" size="text-2xs">
+                  {item}
+                </Typography>
+              ))}
+            </span>
+          )}
           <Typography
             color={deletable ? 'red' : 'primary'}
             transform="sentence-case"
@@ -63,15 +72,6 @@ export const CartProductCard = ({
           <Typography color="black" transform="sentence-case" size="text-xs">
             {product.name}
           </Typography>
-          {nomenclatures && (
-            <span className="flex flex-row gap-6">
-              {nomenclatures.map((item, index) => (
-                <Typography key={index} color="black" size="text-2xs">
-                  {item}
-                </Typography>
-              ))}
-            </span>
-          )}
         </div>
         {(product.unitPrice || product.unitTaxes) && (
           <div className="flex flex-col divide-y divide-black">
