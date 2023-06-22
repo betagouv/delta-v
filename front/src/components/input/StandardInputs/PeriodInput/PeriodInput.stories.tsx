@@ -1,5 +1,6 @@
+import { useState } from 'react';
+
 import { Meta } from '@storybook/react';
-import { useForm } from 'react-hook-form';
 
 import { PeriodInput } from './PeriodInput';
 
@@ -9,23 +10,20 @@ export default {
 } as Meta;
 
 export const Base = (): JSX.Element => {
-  const { handleSubmit, register } = useForm();
-
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const onChangeDate = (newStartDate: Date | null, newEndDate: Date | null) => {
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <PeriodInput
-          register={register}
-          startDateInputId="startDate"
-          endDateInputId="endDate"
-          noBorder
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <PeriodInput
+        endDate={endDate}
+        startDate={startDate}
+        onChangeDate={() => onChangeDate(startDate, endDate)}
+      />
     </>
   );
 };
