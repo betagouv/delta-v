@@ -39,6 +39,11 @@ const FILTER_BAR_DATA: FilterBarProps = {
   searchType: 'actuality',
   filterGroups: [FILTER_DATA, FILTER_DATA, FILTER_DATA],
   filterHistories: [FILTER_HISTORY_ITEM_DATA, FILTER_HISTORY_ITEM_DATA, FILTER_HISTORY_ITEM_DATA],
+  startDate: null,
+  endDate: null,
+  onSearch: () => {},
+  onChangeDate: () => {},
+  onValidateFilter: () => {},
 };
 
 export const Playground: Story<FilterGroupProps> = (args) => (
@@ -56,6 +61,11 @@ export const FilterBarExample = (): JSX.Element => (
     searchType={FILTER_BAR_DATA.searchType}
     filterGroups={FILTER_BAR_DATA.filterGroups}
     filterHistories={FILTER_BAR_DATA.filterHistories}
+    startDate={FILTER_BAR_DATA.startDate}
+    endDate={FILTER_BAR_DATA.endDate}
+    onSearch={FILTER_BAR_DATA.onSearch}
+    onChangeDate={FILTER_BAR_DATA.onChangeDate}
+    onValidateFilter={FILTER_BAR_DATA.onValidateFilter}
   />
 );
 
