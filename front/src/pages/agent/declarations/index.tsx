@@ -1,36 +1,124 @@
 import { useEffect, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
-import { useDeclarations } from '@/api/hooks/useAPIDeclaration';
+import { UseDeclarationParams, useDeclarations } from '@/api/hooks/useAPIDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { DeclarationCard } from '@/components/business/DeclarationCard';
+import { FilterGroupProps } from '@/components/business/FilterGroup';
+import { FilterBar } from '@/components/business/FilterGroup/FilterBar';
 import { Meta } from '@/layout/Meta';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
+import { MeansOfTransport } from '@/stores/simulator/appState.store';
 import { MainAgent } from '@/templates/MainAgent';
+import { DeclarationStatus, getDeclarationStatusLabel } from '@/utils/declarationStatus.util';
 import { Constants } from '@/utils/enums';
+import { getMeanOfTransportsLabel } from '@/utils/meanOfTransports.util';
 
 const QuittancePage = () => {
-  const router = useRouter();
   const [search, setSearch] = useState<string | null>(null);
   const [page, setPage] = useState<number>(0);
   const [declarations, setDeclarations] = useState<DeclarationResponse[]>([]);
-  const { isLoading, data } = useDeclarations({
-    search,
+  const [filterStatus, setFilterStatus] = useState<string>('');
+  const [filterMeanOfTransports, setFilterMeanOfTransports] = useState<string>('');
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [queryData, setQueryData] = useState<UseDeclarationParams>({
+    search: null,
     searchPublicId: null,
     limit: Constants.MINI_TABLE_LIMIT,
     offset: page * Constants.MINI_TABLE_LIMIT,
   });
 
+  const { isLoading, data } = useDeclarations(queryData);
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+  };
+
+  const FILTER_STATUS: FilterGroupProps = {
+    title: 'Statut de la déclaration',
+    filters: Object.values(DeclarationStatus).map((value) => ({
+      title: getDeclarationStatusLabel(value.toLocaleLowerCase() as DeclarationStatus),
+      onClick: (isActive: boolean) => {
+        if (isActive) {
+          const newFilter = filterStatus?.split(',') ?? [];
+          newFilter.push(value.toLocaleLowerCase());
+
+          setFilterStatus(newFilter.toString());
+        } else {
+          const newFilter = filterStatus?.split(',') ?? [];
+          const index = newFilter.indexOf(value.toLocaleLowerCase());
+          if (index > -1) {
+            newFilter.splice(index, 1);
+          }
+
+          setFilterStatus(newFilter.toString());
+        }
+      },
+      isActive: filterStatus.includes(value.toLocaleLowerCase()),
+    })),
+  };
+
+  const FILTER_MEANS_OF_TRANSPORT: FilterGroupProps = {
+    title: 'Moyen de transport',
+    filters: Object.values(MeansOfTransport).map((value) => {
+      return {
+        title: getMeanOfTransportsLabel(value as MeansOfTransport),
+        onClick: (isActive: boolean) => {
+          if (isActive) {
+            const newFilter = filterMeanOfTransports?.split(',') ?? [];
+            newFilter.push(value);
+
+            setFilterMeanOfTransports(newFilter.toString());
+          } else {
+            const newFilter = filterMeanOfTransports?.split(',') ?? [];
+            const index = newFilter.indexOf(value);
+            if (index > -1) {
+              newFilter.splice(index, 1);
+            }
+            setFilterMeanOfTransports(newFilter.toString());
+          }
+        },
+        isActive: filterMeanOfTransports.includes(value),
+      };
+    }),
+  };
+
+  const onChangeDate = (newStartDate: Date | null, newEndDate: Date | null) => {
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
+  };
+
   useEffect(() => {
     if (data) {
       const tmpDeclarations = [...declarations, ...data];
-      setDeclarations(tmpDeclarations);
+      const uniqueArray = tmpDeclarations.filter(
+        (v, i, a) =>
+          a.findIndex((v2: DeclarationResponse) => ['id'].every((k) => v2[k] === v[k])) === i,
+      );
+      setDeclarations(uniqueArray);
     }
   }, [data]);
 
+  const onValidateFilter = () => {
+    setPage(0);
+    setDeclarations([]);
+    setQueryData({
+      ...queryData,
+      search,
+      offset: 0 * Constants.MINI_TABLE_LIMIT,
+      status: filterStatus !== '' ? filterStatus : undefined,
+      meanOfTransports: filterMeanOfTransports !== '' ? filterMeanOfTransports : undefined,
+      startDate: startDate ?? undefined,
+      endDate: endDate ?? undefined,
+    });
+  };
+
   const newLimit = () => {
     setPage(page + 1);
+    setQueryData({
+      ...queryData,
+      offset: (page + 1) * Constants.MINI_TABLE_LIMIT,
+    });
   };
 
   return (
@@ -50,24 +138,27 @@ const QuittancePage = () => {
             <div>Loading...</div>
           ) : (
             <div className="flex flex-col gap-[10px]">
-              <input
-                data-testid="input-search-element"
-                enterKeyHint="search"
-                className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2"
-                onChange={(event) => {
-                  setSearch(event.target.value);
-                }}
+              <FilterBar
+                title="Declarations"
+                searchType="global"
+                onSearch={handleSearch}
+                filterGroups={[FILTER_MEANS_OF_TRANSPORT, FILTER_STATUS]}
+                onValidateFilter={onValidateFilter}
+                onChangeDate={onChangeDate}
+                startDate={startDate}
+                endDate={endDate}
               />
               {declarations &&
                 declarations?.map((declaration, index) => (
                   <DeclarationCard
                     key={declaration.id}
                     {...declaration}
+                    date={declaration.versionDate}
                     id={declaration.publicId}
                     firstName={declaration.declarantFirstName}
                     lastName={declaration.declarantLastName}
                     transport={declaration.declarantMeanOfTransport}
-                    newLimit={data?.length ? newLimit : undefined}
+                    newLimit={data && data.length ? newLimit : undefined}
                     isLast={index === declarations.length - 1}
                   />
                 ))}

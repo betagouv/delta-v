@@ -71,7 +71,7 @@ export const DeclarationCard = ({
       <div className="grid w-full grid-cols-2">
         <DataInfoItem
           label="Numéro de déclaration"
-          value={id}
+          value={`${id.slice(0, 10)} ${id.slice(10)}`}
           labelSize="text-2xs"
           valueSize="text-sm"
         />

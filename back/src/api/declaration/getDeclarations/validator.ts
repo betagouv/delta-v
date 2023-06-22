@@ -1,6 +1,6 @@
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { validator } from '../../../core/validator';
-import { validateStatus } from '../../../utils/joiCustomValidators';
+import { validateMeanOfTransports, validateStatus } from '../../../utils/joiCustomValidators';
 
 export interface IGetDeclarationsRequest {
   query: {
@@ -9,6 +9,9 @@ export interface IGetDeclarationsRequest {
     search?: string;
     searchPublicId?: string;
     status?: string;
+    meanOfTransports?: string;
+    startDate?: Date;
+    endDate?: Date;
   };
 }
 
@@ -19,6 +22,9 @@ export const getGetDeclarationsValidator = {
     searchPublicId: validator.string().optional().allow(''),
     search: validator.string().optional().allow(''),
     status: validator.string().custom(validateStatus).optional(),
+    meanOfTransports: validator.string().custom(validateMeanOfTransports).optional(),
+    startDate: validator.date().optional(),
+    endDate: validator.date().optional(),
   }),
 };
 

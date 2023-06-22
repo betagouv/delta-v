@@ -1,3 +1,5 @@
+import { MeansOfTransport } from '@/stores/declaration/appState.store';
+
 export enum DeclarationStatus {
   DRAFT = 'draft',
   SUBMITTED = 'submitted',
@@ -7,20 +9,18 @@ export enum DeclarationStatus {
   LITIGATION = 'refused-litigation',
 }
 
-export const getDeclarationStatusLabel = (status: DeclarationStatus): string => {
-  switch (status) {
-    case DeclarationStatus.DRAFT:
-      return 'En cours de traitement';
-    case DeclarationStatus.SUBMITTED:
-      return 'En attente de validation';
-    case DeclarationStatus.VALIDATED:
-      return 'En attente de paiement';
-    case DeclarationStatus.PAID:
-      return 'Payée';
-    case DeclarationStatus.ERROR:
-      return 'Non conforme pour erreur';
-    case DeclarationStatus.LITIGATION:
-      return 'Non conforme pour contentieux';
+export const getMeanOfTransportsLabel = (meanOfTransports: MeansOfTransport): string => {
+  switch (meanOfTransports) {
+    case MeansOfTransport.BOAT:
+      return 'Bateau';
+    case MeansOfTransport.CAR:
+      return 'Voiture';
+    case MeansOfTransport.PLANE:
+      return 'Avion';
+    case MeansOfTransport.TRAIN:
+      return 'Train';
+    case MeansOfTransport.OTHER:
+      return 'Autre';
     default:
       return '';
   }

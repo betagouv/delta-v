@@ -7,6 +7,9 @@ export interface IGetOneDeclarationServiceOptions {
   search?: string;
   searchPublicId?: string;
   status?: string;
+  meanOfTransports?: string;
+  startDate?: Date;
+  endDate?: Date;
   declarationRepository: DeclarationRepositoryInterface;
 }
 
@@ -16,6 +19,9 @@ export default async ({
   search,
   searchPublicId,
   status,
+  meanOfTransports,
+  startDate,
+  endDate,
   declarationRepository,
 }: IGetOneDeclarationServiceOptions): Promise<DeclarationEntityInterface[]> => {
   const declarations = await declarationRepository.getAll({
@@ -24,6 +30,9 @@ export default async ({
     search,
     searchPublicId,
     status,
+    meanOfTransports,
+    startDate,
+    endDate,
   });
 
   return declarations;

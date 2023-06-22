@@ -107,7 +107,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   addDeclarationsLoaded: (declarationsLoaded: DeclarationResponse[]): void => {
     set((state: any) => {
       const newState = { ...state };
-      console.log('🚀 ~ file: useCase.store.ts:110 ~ set ~ newState:', newState);
       if (newState.declaration.appState.allDeclarations) {
         newState.declaration.appState.allDeclarations.push(declarationsLoaded);
       } else {
