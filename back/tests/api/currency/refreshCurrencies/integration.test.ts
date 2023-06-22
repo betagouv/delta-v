@@ -1,8 +1,12 @@
+import request from 'supertest';
 import axios from 'axios';
-import { syncCurrency } from '../../../src/scripts/syncCurrency/script';
-import { RawCurrency } from '../../../src/api/currency/common/services/currencySerializer.service';
-import { testDbManager } from '../../helpers/testDb.helper';
+import api from '../../../../src/api';
+import buildTestApp from '../../../helpers/testApp.helper';
+import { testDbManager } from '../../../helpers/testDb.helper';
+import { RawCurrency } from '../../../../src/api/currency/common/services/currencySerializer.service';
+import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
 
+const testApp = buildTestApp(api);
 const testDb = testDbManager();
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -40,7 +44,10 @@ describe('test get all product API', () => {
     ];
     mockedAxios.get.mockResolvedValueOnce({ data: response });
 
-    await syncCurrency();
+    const { status, body } = await request(testApp).post('/api/currency/refresh');
+
+    expect(status).toBe(200);
+    expect(body.code).toEqual(ResponseCodes.CURRENCIES_UPDATED);
 
     const currencies = await testDb.getCurrencies();
 

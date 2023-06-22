@@ -9,4 +9,5 @@ export enum ResponseCodes {
   USER_PASSWORD_UPDATED = 'user-password-updated',
   DECLARATION_STATUS_UPDATED = 'declaration-status-updated',
   DECLARATION_UPDATED = 'declaration-updated',
+  CURRENCIES_UPDATED = 'currency-updated',
 }

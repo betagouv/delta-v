@@ -1,7 +1,7 @@
 import {
   RawCurrency,
   serializeCurrency,
-} from '../../../../src/scripts/syncCurrency/services/currencySerializer.service';
+} from '../../../../../src/api/currency/common/services/currencySerializer.service';
 
 describe('serializeCurrency', () => {
   it('should serialize currency raw to currency entity', () => {

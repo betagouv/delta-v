@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { service } from '../../../src/scripts/syncCurrency/service';
-import { RawCurrency } from '../../../src/api/currency/common/services/currencySerializer.service';
-import { currencyRepositoryMock } from '../../mocks/currency.repository.mock';
+import { RawCurrency } from '../../../../src/api/currency/common/services/currencySerializer.service';
+import { currencyRepositoryMock } from '../../../mocks/currency.repository.mock';
+import { service } from '../../../../src/api/currency/refreshCurrencies/service';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -31,7 +31,7 @@ describe('syncCurrencyService', () => {
 
     const currencyRepository = currencyRepositoryMock({});
 
-    await service(currencyRepository);
+    await service({ currencyRepository });
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(mockedAxios.get).toBeCalled();
@@ -59,7 +59,7 @@ describe('syncCurrencyService', () => {
 
     const currencyRepository = currencyRepositoryMock({});
 
-    await service(currencyRepository);
+    await service({ currencyRepository });
 
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(mockedAxios.get).toBeCalled();

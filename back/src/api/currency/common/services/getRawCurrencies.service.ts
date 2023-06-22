@@ -1,5 +1,5 @@
 import axios from 'axios';
-import currencyServerUnavailableError from '../../../api/common/errors/currencyServerUnavailable.error';
+import currencyServerUnavailableError from '../../../common/errors/currencyServerUnavailable.error';
 import { RawCurrency } from './currencySerializer.service';
 
 export const getRawCurrencies = async (): Promise<RawCurrency[]> => {

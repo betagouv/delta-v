@@ -1,4 +1,4 @@
-import { Currency } from '../../../entities/currency.entity';
+import { Currency } from '../../../../entities/currency.entity';
 
 export interface RawCurrency {
   country: string;

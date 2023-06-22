@@ -11,11 +11,11 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const currencies = await service({
+    await service({
       currencyRepository: AppDataSource.manager.withRepository(CurrencyRepository),
     });
 
-    const response = serializer(currencies);
+    const response = serializer();
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {
