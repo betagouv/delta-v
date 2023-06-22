@@ -92,8 +92,7 @@ const QuittancePage = () => {
     if (data) {
       const tmpDeclarations = [...declarations, ...data];
       const uniqueArray = tmpDeclarations.filter(
-        (v, i, a) =>
-          a.findIndex((v2: DeclarationResponse) => ['id'].every((k) => v2[k] === v[k])) === i,
+        (v, i, a) => a.findIndex((t) => JSON.stringify(t) === JSON.stringify(v)) === i,
       );
       setDeclarations(uniqueArray);
     }
