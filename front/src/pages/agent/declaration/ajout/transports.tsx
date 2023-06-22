@@ -13,10 +13,10 @@ import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
-import { MeansOfTransport } from '@/stores/declaration/appState.store';
+import { DECLARATION_EMPTY_STATE, MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
-import { disabledCountries } from '@/utils/const';
+import { DECLARATION_STEP_PAGE, disabledCountries } from '@/utils/const';
 
 export interface MeansOfTransportAndCountryData {
   meansOfTransport: MeansOfTransport;
@@ -70,6 +70,8 @@ const Declaration = () => {
     country: yup.string().required('Champ obligatoire'),
   });
 
+  const notEmptyDeclaration = declarationRequest !== DECLARATION_EMPTY_STATE.declarationRequest;
+
   const {
     handleSubmit,
     register,
@@ -80,8 +82,12 @@ const Declaration = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      meansOfTransport: declarationRequest.meansOfTransportAndCountry?.meansOfTransport,
-      country: declarationRequest.meansOfTransportAndCountry?.country,
+      meansOfTransport: notEmptyDeclaration
+        ? declarationRequest.meansOfTransportAndCountry?.meansOfTransport
+        : undefined,
+      country: notEmptyDeclaration
+        ? declarationRequest.meansOfTransportAndCountry?.country
+        : undefined,
     },
   });
 
@@ -146,6 +152,7 @@ const Declaration = () => {
         currentStep={2}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
+        linkButton={DECLARATION_STEP_PAGE[1]}
       >
         <InputGroup
           label="Quel est votre moyen de transport ?"

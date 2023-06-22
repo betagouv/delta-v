@@ -12,6 +12,7 @@ export interface TitleHeaderProps {
   switchWordPosition?: number;
   colorClassnameOne?: string;
   colorClassnameTwo?: string;
+  href?: string;
 }
 
 export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
@@ -20,6 +21,7 @@ export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
   switchWordPosition,
   colorClassnameOne,
   colorClassnameTwo,
+  href,
 }: TitleHeaderProps) => {
   return (
     <div
@@ -28,7 +30,7 @@ export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
         bgColorClass,
       )}
     >
-      <Link back>
+      <Link back={!href} href={href}>
         <Icon name="chevron-left" size="base" />
       </Link>
       <div className="flex w-full justify-center">

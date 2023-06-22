@@ -14,6 +14,7 @@ type IMainAgentProps = {
   titleHeader?: string;
   linkSearch?: string;
   withTitle?: boolean;
+  linkButton?: string;
 };
 
 const MainAgent = ({
@@ -23,6 +24,7 @@ const MainAgent = ({
   withLogo = false,
   titleHeader,
   withTitle = false,
+  linkButton,
 }: IMainAgentProps) => {
   return (
     <div className="h-full antialiased">
@@ -30,7 +32,7 @@ const MainAgent = ({
 
       <div className={withHeader || withTitle ? 'flex min-h-[calc(100%)] flex-col' : ''}>
         {withHeader && <CustomHeader withLogo={withLogo} title={titleHeader} />}
-        {withTitle && <TitleHeaderAgent title={titleHeader || ''} />}
+        {withTitle && <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />}
         {children}
       </div>
     </div>
