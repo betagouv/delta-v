@@ -9,7 +9,9 @@ export interface AskEmailValidationRequest {
 
 export const askEmailValidationValidator: IRequestValidatorSchema = {
   body: validator.object({
-    email: validator.string().email(),
+    email: validator.string().email().messages({
+      'string.email': "L'email n'est pas valide",
+    }),
   }),
 };
 

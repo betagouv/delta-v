@@ -9,7 +9,10 @@ export interface IAskResetPasswordRequest {
 
 export const askResetPasswordValidator = {
   body: validator.object({
-    email: validator.string().email().required(),
+    email: validator.string().email().required().messages({
+      'string.empty': "L'email est requis",
+      'string.email': "L'email n'est pas valide",
+    }),
   }),
 };
 

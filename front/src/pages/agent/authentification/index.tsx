@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useLoginMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
@@ -14,7 +15,7 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
-import { getErrorFields } from '@/utils/errorFields';
+import { getErrorFields, getErrorFields } from '@/utils/errorFields';
 
 export interface FormLoginData {
   email: string;
@@ -85,6 +86,7 @@ const LoginPage = () => {
               placeholder="Email"
               register={register('email')}
               error={errors?.email?.message ?? getErrorFields('email', apiError)}
+              error={errors?.email?.message ?? getErrorFields('email', apiError)}
             />
             <InputGroup
               type="password"
@@ -95,6 +97,11 @@ const LoginPage = () => {
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
             />
           </div>
+          {apiError?.message && (
+            <div className="ml-3">
+              <ApiError apiError={apiError} />
+            </div>
+          )}
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>

@@ -10,7 +10,10 @@ export interface IValidateEmailRequest {
 
 export const ValidateEmailValidator = {
   body: validator.object({
-    token: validator.string().regex(jwtTokenRegex).required(),
+    token: validator.string().regex(jwtTokenRegex).required().messages({
+      'string.empty': 'Le jeton est requis',
+      'string.pattern.base': 'Le jeton ne respecte pas le bon format',
+    }),
   }),
 };
 

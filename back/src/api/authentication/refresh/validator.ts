@@ -11,8 +11,14 @@ export interface IRefreshRequest {
 
 export const refreshValidator = {
   body: validator.object({
-    accessToken: validator.string().regex(jwtTokenRegex).required(),
-    refreshToken: validator.string().regex(jwtTokenRegex).required(),
+    accessToken: validator.string().regex(jwtTokenRegex).required().messages({
+      'string.empty': "L'access token est requis",
+      'string.pattern.base': "L'access token ne respecte pas le bon format",
+    }),
+    refreshToken: validator.string().regex(jwtTokenRegex).required().messages({
+      'string.empty': 'Le refresh token est requis',
+      'string.pattern.base': 'Le refresh token ne respecte pas le bon format',
+    }),
   }),
 };
 

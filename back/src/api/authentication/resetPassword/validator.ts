@@ -11,8 +11,14 @@ export interface IResetPasswordRequest {
 
 export const resetPasswordValidator = {
   body: validator.object({
-    token: validator.string().regex(jwtTokenRegex).required(),
-    password: validator.string().regex(passwordRegex).required(),
+    token: validator.string().regex(jwtTokenRegex).required().messages({
+      'string.empty': 'Le jeton est requis',
+      'string.pattern.base': 'Le jeton ne respecte pas le bon format',
+    }),
+    password: validator.string().regex(passwordRegex).required().messages({
+      'string.empty': 'Le mot de passe est requis',
+      'string.pattern.base': 'Le mot de passe ne respecte pas le format demandé',
+    }),
   }),
 };
 

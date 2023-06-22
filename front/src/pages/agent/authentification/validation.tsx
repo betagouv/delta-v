@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 
 import { useValidationEmailMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
+import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
@@ -66,16 +68,8 @@ const RegisterValidationPage = () => {
           </Typography>
         </div>
         <div className="flex flex-col self-center items-center w-48 gap-2 mt-8">
-          {apiSuccess && (
-            <Typography color="success" size="text-2xs">
-              {apiSuccess.message}
-            </Typography>
-          )}
-          {apiError && (
-            <Typography color="error" size="text-2xs">
-              {apiError.message}
-            </Typography>
-          )}
+          {apiError && <ApiError apiError={apiError} />}
+          {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
           <Button onClick={handleValidate} fullWidth={true} type="submit" size="sm">
             J'active mon compte
           </Button>
