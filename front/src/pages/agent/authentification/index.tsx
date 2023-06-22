@@ -15,7 +15,7 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
-import { getErrorFields, getErrorFields } from '@/utils/errorFields';
+import { getErrorFields } from '@/utils/errorFields';
 
 export interface FormLoginData {
   email: string;
@@ -85,7 +85,6 @@ const LoginPage = () => {
               fullWidth={true}
               placeholder="Email"
               register={register('email')}
-              error={errors?.email?.message ?? getErrorFields('email', apiError)}
               error={errors?.email?.message ?? getErrorFields('email', apiError)}
             />
             <InputGroup
