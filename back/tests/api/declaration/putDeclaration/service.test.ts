@@ -57,8 +57,13 @@ describe('test put declaration service', () => {
       createOne: undefined,
     });
 
+    const authorEmail = faker.internet.email();
+    const authorId = faker.string.uuid();
+
     await service({
       ...declarationData,
+      authorEmail,
+      authorId,
       shoppingProducts: [shoppingProduct1, shoppingProduct2, shoppingProduct3],
       productRepository,
       currencyRepository,
@@ -66,10 +71,9 @@ describe('test put declaration service', () => {
     });
 
     const expectedDeclaration: DeclarationEntityInterface = {
-      authorFullName: declarationData.authorFullName,
-      authorEmail: declarationData.authorEmail,
+      authorEmail,
       authorType: declarationData.authorType,
-      authorId: declarationData.authorId,
+      authorId,
       declarantAddressStreet: declarationData.declarantAddressStreet,
       declarantAddressPostalCode: declarationData.declarantAddressPostalCode,
       declarantAddressCity: declarationData.declarantAddressCity,

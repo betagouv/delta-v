@@ -9,9 +9,6 @@ export interface DeclarationData {
   age: number;
   border: boolean;
   country: Alpha2Code;
-  authorEmail: string;
-  authorFullName: string;
-  authorId: string;
   authorType: AuthorType;
   declarantAddressStreet: string;
   declarantAddressPostalCode: string;
@@ -33,9 +30,6 @@ export const prepareDeclarationData = (): DeclarationData => {
     age: faker.number.int({ min: 18, max: 99 }),
     border: false,
     country: 'US',
-    authorEmail: faker.internet.email(),
-    authorFullName: faker.person.fullName(),
-    authorId: faker.string.uuid(),
     authorType: faker.helpers.arrayElement(AuthorTypeList),
     declarantAddressStreet: faker.location.streetAddress(),
     declarantAddressPostalCode: faker.location.zipCode(),

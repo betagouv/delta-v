@@ -15,7 +15,6 @@ export enum DeclarationStatus {
 export interface VersionData {
   versionDate: Date;
   authorType: AuthorType;
-  authorFullName: string;
   authorEmail: string;
   authorId?: string;
   status: DeclarationStatus;
@@ -98,9 +97,6 @@ export class DeclarationEntity implements DeclarationEntityInterface {
     select: false,
   })
   authorType: AuthorType;
-
-  @Column({ type: 'varchar' })
-  authorFullName: string;
 
   @Column({ type: 'varchar' })
   authorEmail: string;

@@ -20,9 +20,6 @@ export interface PutDeclarationRequest {
     age: number;
     country: Alpha2Code;
     meanOfTransport?: MeansOfTransport;
-    authorEmail: string;
-    authorId?: string;
-    authorFullName: string;
     authorType: AuthorType;
     declarantAddressStreet: string;
     declarantAddressPostalCode: string;
@@ -67,9 +64,6 @@ export const putDeclarationValidator: IRequestValidatorSchema = {
           .required(),
       }),
     }),
-    authorEmail: validator.string().email().required(),
-    authorId: validator.string().uuid(),
-    authorFullName: validator.string().required(),
     authorType: validator
       .string()
       .valid(...Object.values(AuthorType))

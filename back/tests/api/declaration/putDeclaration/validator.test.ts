@@ -195,33 +195,6 @@ describe('test simulator validator', () => {
     };
     expect(isValid(data)).toBe(result);
   });
-  it('should not validate data - missing authorEmail', () => {
-    const data = {
-      body: {
-        ...defaultValidBody,
-        authorEmail: undefined,
-      },
-    };
-    expect(isValid(data)).toBe(false);
-  });
-  it('should validate data - missing authorId', () => {
-    const data = {
-      body: {
-        ...defaultValidBody,
-        authorId: undefined,
-      },
-    };
-    expect(isValid(data)).toBe(true);
-  });
-  it('should not validate data - missing authorFullName', () => {
-    const data = {
-      body: {
-        ...defaultValidBody,
-        authorFullName: undefined,
-      },
-    };
-    expect(isValid(data)).toBe(false);
-  });
   it('should not validate data - missing authorType', () => {
     const data = {
       body: {

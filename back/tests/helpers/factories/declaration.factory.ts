@@ -43,7 +43,6 @@ const buildSchema = (): DeclarationEntityInterface => {
     id: faker.string.uuid(),
     publicId: faker.string.nanoid(21),
     versionDate: faker.date.past(),
-    authorFullName: faker.person.fullName(),
     authorEmail: faker.internet.email(),
     authorId: faker.string.uuid(),
     status: DeclarationStatus.SUBMITTED,
