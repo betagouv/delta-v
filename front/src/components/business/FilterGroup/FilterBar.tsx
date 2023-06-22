@@ -5,23 +5,27 @@ import cs from 'classnames';
 import { FilterHistoryItemProps } from '../FilterHistory';
 import { FilterHistory } from '../FilterHistory/FilterHistory';
 import { SearchDisplayType } from '../search';
-import { FilterGroup, FilterGroupProps } from './FilterGroup';
+import { FilterGroup } from './FilterGroup';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { PeriodInput } from '@/components/input/StandardInputs/PeriodInput';
+import { FILTER_MEANS_OF_TRANSPORT, FILTER_STATUS } from '@/utils/filters';
 
 export type FilterBarProps = {
   title: string;
   searchType?: SearchDisplayType;
   noSearchBar?: boolean;
   noPeriodInput?: boolean;
-  filterGroups?: FilterGroupProps[];
   filterHistories?: FilterHistoryItemProps[];
   startDate: Date | null;
   endDate: Date | null;
   onSearch?: (search: string) => void;
   onChangeDate: (startDate: Date | null, endDate: Date | null) => void;
+  onChangeFilterStatus?: (value: string) => void;
+  onChangeFilterMeanOfTransports?: (value: string) => void;
+  activeFiltersStatus: string;
+  activeFiltersMeanOfTransports: string;
   onValidateFilter: () => void;
 };
 
@@ -29,13 +33,16 @@ export const FilterBar = ({
   title = 'Plus de filtres',
   noSearchBar = false,
   noPeriodInput = false,
-  filterGroups = [],
   filterHistories = [],
   startDate,
   endDate,
   onSearch,
   onValidateFilter,
   onChangeDate,
+  onChangeFilterStatus,
+  onChangeFilterMeanOfTransports,
+  activeFiltersStatus,
+  activeFiltersMeanOfTransports,
 }: FilterBarProps) => {
   const [open, setOpen] = useState(false);
 
@@ -87,10 +94,22 @@ export const FilterBar = ({
               endDate={endDate}
             />
           )}
-          {filterGroups.length > 0 &&
-            filterGroups.map((filterGroup, index) => (
-              <FilterGroup key={index} title={filterGroup.title} filters={filterGroup.filters} />
-            ))}
+          {onChangeFilterStatus && (
+            <FilterGroup
+              title="Statut de la déclaration"
+              onSelectFilter={onChangeFilterStatus}
+              filters={FILTER_STATUS}
+              activeFilters={activeFiltersStatus}
+            />
+          )}
+          {onChangeFilterMeanOfTransports && (
+            <FilterGroup
+              title="Moyen de transport"
+              onSelectFilter={onChangeFilterMeanOfTransports}
+              filters={FILTER_MEANS_OF_TRANSPORT}
+              activeFilters={activeFiltersMeanOfTransports}
+            />
+          )}
         </div>
         <div className="flex flex-col gap-8 py-5">
           {filterHistories.length > 0 && <FilterHistory histories={filterHistories} />}

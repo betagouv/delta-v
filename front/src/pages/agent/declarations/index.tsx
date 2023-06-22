@@ -3,15 +3,11 @@ import { useEffect, useState } from 'react';
 import { UseDeclarationParams, useDeclarations } from '@/api/hooks/useAPIDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { DeclarationCard } from '@/components/business/DeclarationCard';
-import { FilterGroupProps } from '@/components/business/FilterGroup';
 import { FilterBar } from '@/components/business/FilterGroup/FilterBar';
 import { Meta } from '@/layout/Meta';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
-import { MeansOfTransport } from '@/stores/simulator/appState.store';
 import { MainAgent } from '@/templates/MainAgent';
-import { DeclarationStatus, getDeclarationStatusLabel } from '@/utils/declarationStatus.util';
 import { Constants } from '@/utils/enums';
-import { getMeanOfTransportsLabel } from '@/utils/meanOfTransports.util';
 
 const QuittancePage = () => {
   const [search, setSearch] = useState<string | null>(null);
@@ -34,53 +30,38 @@ const QuittancePage = () => {
     setSearch(value);
   };
 
-  const FILTER_STATUS: FilterGroupProps = {
-    title: 'Statut de la déclaration',
-    filters: Object.values(DeclarationStatus).map((value) => ({
-      title: getDeclarationStatusLabel(value.toLocaleLowerCase() as DeclarationStatus),
-      onClick: (isActive: boolean) => {
-        if (isActive) {
-          const newFilter = filterStatus?.split(',') ?? [];
-          newFilter.push(value.toLocaleLowerCase());
+  const onChangeFilterStatus = (value: string) => {
+    if (!filterStatus.includes(value.toLocaleLowerCase())) {
+      const newFilter = filterStatus?.split(',') ?? [];
+      newFilter.push(value.toLocaleLowerCase());
 
-          setFilterStatus(newFilter.toString());
-        } else {
-          const newFilter = filterStatus?.split(',') ?? [];
-          const index = newFilter.indexOf(value.toLocaleLowerCase());
-          if (index > -1) {
-            newFilter.splice(index, 1);
-          }
+      setFilterStatus(newFilter.toString());
+    } else {
+      const newFilter = filterStatus?.split(',') ?? [];
+      const index = newFilter.indexOf(value.toLocaleLowerCase());
+      if (index > -1) {
+        newFilter.splice(index, 1);
+      }
 
-          setFilterStatus(newFilter.toString());
-        }
-      },
-      isActive: filterStatus.includes(value.toLocaleLowerCase()),
-    })),
+      setFilterStatus(newFilter.toString());
+    }
   };
 
-  const FILTER_MEANS_OF_TRANSPORT: FilterGroupProps = {
-    title: 'Moyen de transport',
-    filters: Object.values(MeansOfTransport).map((value) => {
-      return {
-        title: getMeanOfTransportsLabel(value as MeansOfTransport),
-        onClick: (isActive: boolean) => {
-          if (isActive) {
-            const newFilter = filterMeanOfTransports?.split(',') ?? [];
-            newFilter.push(value);
+  const onChangeFilterMeanOfTransports = (value: string) => {
+    if (!filterMeanOfTransports.includes(value.toLocaleLowerCase())) {
+      const newFilter = filterMeanOfTransports?.split(',') ?? [];
+      newFilter.push(value.toLocaleLowerCase());
 
-            setFilterMeanOfTransports(newFilter.toString());
-          } else {
-            const newFilter = filterMeanOfTransports?.split(',') ?? [];
-            const index = newFilter.indexOf(value);
-            if (index > -1) {
-              newFilter.splice(index, 1);
-            }
-            setFilterMeanOfTransports(newFilter.toString());
-          }
-        },
-        isActive: filterMeanOfTransports.includes(value),
-      };
-    }),
+      setFilterMeanOfTransports(newFilter.toString());
+    } else {
+      const newFilter = filterMeanOfTransports?.split(',') ?? [];
+      const index = newFilter.indexOf(value.toLocaleLowerCase());
+      if (index > -1) {
+        newFilter.splice(index, 1);
+      }
+
+      setFilterMeanOfTransports(newFilter.toString());
+    }
   };
 
   const onChangeDate = (newStartDate: Date | null, newEndDate: Date | null) => {
@@ -141,9 +122,12 @@ const QuittancePage = () => {
                 title="Declarations"
                 searchType="global"
                 onSearch={handleSearch}
-                filterGroups={[FILTER_MEANS_OF_TRANSPORT, FILTER_STATUS]}
                 onValidateFilter={onValidateFilter}
                 onChangeDate={onChangeDate}
+                onChangeFilterStatus={onChangeFilterStatus}
+                onChangeFilterMeanOfTransports={onChangeFilterMeanOfTransports}
+                activeFiltersStatus={filterStatus}
+                activeFiltersMeanOfTransports={filterMeanOfTransports}
                 startDate={startDate}
                 endDate={endDate}
               />

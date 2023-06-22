@@ -18,7 +18,6 @@ export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
   addProductCartDeclaration: (product: ShoppingProduct) => void;
-  addDeclarationsLoaded: (declarations: DeclarationResponse[]) => void;
   removeProductCartDeclaration: (id: string) => void;
   checkProductCartDeclaration: () => void;
   declare: () => void;
@@ -103,17 +102,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       return newState;
     });
     get().declare();
-  },
-  addDeclarationsLoaded: (declarationsLoaded: DeclarationResponse[]): void => {
-    set((state: any) => {
-      const newState = { ...state };
-      if (newState.declaration.appState.allDeclarations) {
-        newState.declaration.appState.allDeclarations.push(declarationsLoaded);
-      } else {
-        newState.declaration.appState.allDeclarations = declarationsLoaded;
-      }
-      return newState;
-    });
   },
   getDeclaration: async (declarationId: string) => {
     try {

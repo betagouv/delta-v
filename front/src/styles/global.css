@@ -214,6 +214,18 @@ svg {
     letter-spacing: -0.22px;
     flex: 1;
   } 
+.react-datepicker__day--today  {
+  border-radius: 25px !important;
+  background: white !important;
+  color: black !important;
+  font-weight: bold !important;
+  }
+.react-datepicker__day--selected  {
+  border-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+  background: #000091 !important;
+  color: white !important;
+  }
 
 .react-datepicker__day--in-selecting-range  {
     border-radius: 0% !important;

@@ -24,7 +24,11 @@ export const getGetDeclarationsValidator = {
     status: validator.string().custom(validateStatus).optional(),
     meanOfTransports: validator.string().custom(validateMeanOfTransports).optional(),
     startDate: validator.date().optional(),
-    endDate: validator.date().optional(),
+    endDate: validator.when('startDate', {
+      is: validator.exist(),
+      then: validator.date().min(validator.ref('startDate')).optional(),
+      otherwise: validator.date().optional(),
+    }),
   }),
 };
 

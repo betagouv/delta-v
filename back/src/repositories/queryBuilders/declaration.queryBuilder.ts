@@ -20,19 +20,17 @@ export default class DeclarationQueryBuilder extends SelectQueryBuilder<Declarat
   }
 
   public whereStatus(status?: string): this {
-    const newStatus = status?.replace(',', '');
     if (status) {
-      this.andWhere(':status ~ declaration.status::text', { status: newStatus });
+      this.andWhere(':status ~ declaration.status::text', { status });
     }
 
     return this;
   }
 
   public whereMeanOfTransports(meanOfTransports?: string): this {
-    const newMeanOfTransports = meanOfTransports?.replace(',', '');
     if (meanOfTransports) {
-      this.andWhere(':meanOfTransport ~ declaration.declarantMeanOfTransport', {
-        meanOfTransport: newMeanOfTransports,
+      this.andWhere(':meanOfTransports ~ declaration.declarantMeanOfTransport', {
+        meanOfTransports,
       });
     }
 
@@ -50,10 +48,6 @@ export default class DeclarationQueryBuilder extends SelectQueryBuilder<Declarat
   }
 
   public whereEndDate(endDate?: Date): this {
-    console.log(
-      '🚀 ~ file: declaration.queryBuilder.ts:53 ~ DeclarationQueryBuilder ~ whereEndDate ~ endDate:',
-      endDate,
-    );
     if (endDate) {
       this.andWhere('declaration.versionDate <= :endDate', {
         endDate,
