@@ -125,7 +125,7 @@ describe('test put declaration API', () => {
     await testDb.disconnect();
   });
   it('should simulate declaration', async () => {
-    const { accessToken } = await prepareContextUser({ testDb });
+    const { accessToken, user } = await prepareContextUser({ testDb });
     const products = await prepareContext();
     const declarationId = faker.string.uuid();
     const age = faker.number.int({ min: 15, max: 100 });
@@ -201,6 +201,8 @@ describe('test put declaration API', () => {
       declarantAge: age,
       declarantCountry: country,
       declarantMeanOfTransport: meanOfTransport,
+      authorEmail: user.email,
+      authorId: user.id,
     });
   });
 });
