@@ -56,7 +56,6 @@ export interface SerializedDeclaration {
   history?: DeclarationVersion[];
   versionDate: Date;
   authorType: AuthorType;
-  authorFullName: string;
   authorEmail: string;
   authorId?: string;
   status: DeclarationStatus;
@@ -87,7 +86,6 @@ export const declarationSerializer = (
   history: declaration.history,
   versionDate: declaration.versionDate,
   authorType: declaration.authorType,
-  authorFullName: declaration.authorFullName,
   authorEmail: declaration.authorEmail,
   authorId: declaration.authorId,
   status: declaration.status,

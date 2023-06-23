@@ -26,7 +26,6 @@ interface DeclarationOptions {
   shoppingProducts: ShoppingProduct[];
   authorEmail: string;
   authorId?: string;
-  authorFullName: string;
   authorType: AuthorType;
   declarantAddressStreet: string;
   declarantAddressPostalCode: string;
@@ -49,7 +48,6 @@ export const service = async ({
   shoppingProducts,
   authorEmail,
   authorId,
-  authorFullName,
   authorType,
   declarantAddressStreet,
   declarantAddressPostalCode,
@@ -76,7 +74,6 @@ export const service = async ({
     products: getProductsDeclarationFromDeclaration(declaration),
     authorEmail,
     authorId,
-    authorFullName,
     authorType,
     status: DeclarationStatus.SUBMITTED,
     versionDate: new Date(),

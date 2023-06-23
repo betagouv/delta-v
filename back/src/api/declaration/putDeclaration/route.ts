@@ -23,12 +23,9 @@ export default async (
       border,
       age,
       country,
-      meanOfTransport,
-      authorEmail,
-      declarantPhoneNumber,
-      authorId,
-      authorFullName,
       authorType,
+      meanOfTransport,
+      declarantPhoneNumber,
       declarantAddressStreet,
       declarantAddressPostalCode,
       declarantAddressCity,
@@ -36,6 +33,8 @@ export default async (
       declarantFirstName,
       declarantLastName,
     } = req.body;
+
+    const { email: authorEmail, userId: authorId } = req.jwt;
 
     await service({
       declarationId,
@@ -49,7 +48,6 @@ export default async (
       declarationRepository: AppDataSource.manager.withRepository(DeclarationRepository),
       authorEmail,
       authorId,
-      authorFullName,
       authorType,
       declarantAddressStreet,
       declarantAddressPostalCode,

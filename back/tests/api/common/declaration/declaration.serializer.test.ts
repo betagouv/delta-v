@@ -31,7 +31,6 @@ describe('Declaration serializer', () => {
       history: oneDeclaration.history,
       versionDate: oneDeclaration.versionDate,
       authorType: oneDeclaration.authorType,
-      authorFullName: oneDeclaration.authorFullName,
       authorEmail: oneDeclaration.authorEmail,
       authorId: oneDeclaration.authorId,
       status: oneDeclaration.status,
