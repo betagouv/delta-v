@@ -95,6 +95,8 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       if (step <= 3) {
         newState.simulator.appState.simulatorRequest.country =
           SIMULATOR_EMPTY_STATE.simulatorRequest.country;
+        newState.simulator.appState.simulatorRequest.defaultCurrency =
+          SIMULATOR_EMPTY_STATE.simulatorRequest.defaultCurrency;
       }
       if (step <= 2) {
         newState.simulator.appState.simulatorRequest.meanOfTransport =
@@ -104,8 +106,9 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         newState.simulator.appState.simulatorRequest.age =
           SIMULATOR_EMPTY_STATE.simulatorRequest.age;
       }
-      newState.simulator.appState.simulatorRequest.shoppingProducts =
-        SIMULATOR_EMPTY_STATE.simulatorRequest.shoppingProducts;
+      newState.simulator.appState.simulatorRequest.shoppingProducts = {
+        ...SIMULATOR_EMPTY_STATE.simulatorRequest.shoppingProducts,
+      };
       newState.simulator.appState.simulatorResponse = SIMULATOR_EMPTY_STATE.simulatorResponse;
       return newState;
     });
