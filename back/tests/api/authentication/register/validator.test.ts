@@ -1,5 +1,7 @@
+import { faker } from '@faker-js/faker';
 import { registerValidator } from '../../../../src/api/authentication/register/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
+import config from '../../../../src/loader/config';
 
 describe('register validator', () => {
   const validator = registerValidator;
@@ -10,8 +12,17 @@ describe('register validator', () => {
     },
   };
   const { isValid } = validatorHelper(validator);
-  it('should validate proper data', () => {
+  it('should validate proper data - douane email', () => {
     expect(isValid(validData)).toBeTruthy();
+  });
+  it('should validate proper data - whitelist email', () => {
+    const data = {
+      body: {
+        ...validData.body,
+        email: faker.helpers.arrayElement(config.WHITE_LIST_AGENT_EMAIL),
+      },
+    };
+    expect(isValid(data)).toBeTruthy();
   });
   it('should be invalid - email bad format', () => {
     const data = {

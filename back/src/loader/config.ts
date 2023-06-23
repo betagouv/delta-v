@@ -12,6 +12,7 @@ export interface IAppConfig {
   URL_FRONTEND: string;
   ROUTE_FRONTEND_VALIDATE_ACCOUNT: string;
   ROUTE_FRONTEND_RESET_PASSWORD: string;
+  WHITE_LIST_AGENT_EMAIL: string[];
 }
 
 const REQUIRED_VARIABLES: string[] = [
@@ -48,6 +49,9 @@ function parseConfig(config: any): IAppConfig {
     URL_FRONTEND: config.URL_FRONTEND,
     ROUTE_FRONTEND_VALIDATE_ACCOUNT: config.ROUTE_FRONTEND_VALIDATE_ACCOUNT,
     ROUTE_FRONTEND_RESET_PASSWORD: config.ROUTE_FRONTEND_RESET_PASSWORD,
+    WHITE_LIST_AGENT_EMAIL: config.WHITE_LIST_AGENT_EMAIL
+      ? config.WHITE_LIST_AGENT_EMAIL.split(',')
+      : [],
   };
 }
 
