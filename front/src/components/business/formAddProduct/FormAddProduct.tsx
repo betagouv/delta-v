@@ -103,7 +103,12 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           </Info>
         </>
       ) : (
-        <div className={classNames({ 'grid grid-cols-2 gap-5': templateRole === 'agent' })}>
+        <div
+          className={classNames({
+            'grid grid-cols-2 gap-5': templateRole === 'agent',
+            'flex flex-col gap-5': templateRole !== 'agent',
+          })}
+        >
           <div className="flex flex-col gap-2">
             <label htmlFor="value" className="text-xs" data-testid="label-element">
               Saisissez le montant
@@ -112,12 +117,12 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               disabled={disabled}
               placeholder="Montant"
               type="number"
-              fullWidth={true}
+              fullWidth={false}
               name="value"
               register={register('value', { required: false })}
               control={control}
               error={errors.value?.message as string | undefined}
-              withBorder={false}
+              withBorder={templateRole !== 'agent'}
             />
           </div>
           <div className="flex flex-col gap-2">
