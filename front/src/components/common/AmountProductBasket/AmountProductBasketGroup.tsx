@@ -6,25 +6,15 @@ import { GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
 interface AmountProductBasketGroupProps {
   amountProductGroup: GroupedAmountProduct;
+  onModifyClick?: () => void;
+  onOverMaximumClick?: () => void;
 }
-
-// const [productType, setProductType] = useState<
-//   'alcohol' | 'tobacco' | 'valueProduct' | undefined
-// >();
-// const [openModal, setOpenModal] = useState<boolean>(false);
-// const openModalProductType = (amountProduct?: AmountProduct) => {
-//   setProductType(amountProduct ? getAmountProductType(amountProduct) : 'valueProduct');
-
-//   setTimeout(() => {
-//     setOpenModal(true);
-//   }, 150);
-// };
 
 export const AmountProductBasketGroup: React.FC<AmountProductBasketGroupProps> = ({
   amountProductGroup,
+  onModifyClick,
+  onOverMaximumClick,
 }) => {
-  console.log(amountProductGroup);
-
   return (
     <div className="flex flex-col gap-3">
       <div className="mt-2">
@@ -37,6 +27,7 @@ export const AmountProductBasketGroup: React.FC<AmountProductBasketGroupProps> =
           key={product.id}
           containError={amountProductGroup.isOverMaximum}
           product={product}
+          onButtonClick={onModifyClick}
         />
       ))}
       {amountProductGroup.isOverMaximum && (
@@ -48,18 +39,9 @@ export const AmountProductBasketGroup: React.FC<AmountProductBasketGroupProps> =
             Vous dépassez la limite légale d'unités{' '}
             {getMessageOverMaximumAmount(amountProductGroup.group)}. Pour connaître les quantités
             maximales autorisées{' '}
-            {/* <span
-              className="text-link"
-              onClick={() => {
-                openModalProductType(
-                  amountProductGroup.products[0]
-                    ? amountProductGroup.products[0].amountProduct
-                    : undefined,
-                );
-              }}
-            >
+            <span className="text-link cursor-pointer" onClick={onOverMaximumClick}>
               cliquez ici
-            </span> */}
+            </span>
           </p>
         </div>
       )}
