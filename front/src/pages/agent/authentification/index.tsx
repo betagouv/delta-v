@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useLoginMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
 import { Link } from '@/components/common/Link';
 import { SvgIcon } from '@/components/common/SvgIcon';
@@ -95,6 +96,11 @@ const LoginPage = () => {
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
             />
           </div>
+          {apiError?.message && (
+            <div className="ml-3">
+              <ApiError apiError={apiError} />
+            </div>
+          )}
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>

@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useResetPasswordMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
+import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
 import { PasswordHelperText } from '@/components/common/PasswordHelperText/PasswordHelperText';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
@@ -22,18 +24,8 @@ export interface FormForgetPasswordData {
 }
 
 const schema = yup.object({
-  password: yup
-    .string()
-    .required('Le mot de passe est requis')
-    .matches(/[A-Z]+/, 'Le mot de passe doit avoir au moins 1 majuscule')
-    .matches(/[a-z]+/, 'Le mot de passe doit avoir au moins 1 minuscule')
-    .matches(/\d+/, 'Le mot de passe doit avoir au moins 1 chiffre')
-    .matches(/\W+/, 'Le mot de passe doit avoir au moins 1 caractère spécial')
-    .min(8, 'Le mot de passe doit faire au moins 8 caractères'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Les mots de passe doivent correspondre')
-    .required('Confirmez votre mot de passe'),
+  password: yup.string().required('Le mot de passe est requis'),
+  confirmPassword: yup.string().required('Confirmez votre mot de passe'),
 });
 
 const ResetPasswordPage = () => {
@@ -72,7 +64,7 @@ const ResetPasswordPage = () => {
   const { data: apiSuccess } = resetPasswordMutation;
 
   const onSubmit = async (data: FormForgetPasswordData) => {
-    if (isValid && data.password === data.confirmPassword) {
+    if (!apiError && isValid && data.password === data.confirmPassword) {
       resetPasswordMutation.mutate({
         token: token as string,
         password: data.password,
@@ -108,9 +100,11 @@ const ResetPasswordPage = () => {
               register={register('password')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
             />
-            <Typography color="light-gray" size="text-xs">
-              <PasswordHelperText password={password} />
-            </Typography>
+            <div className="ml-3">
+              <Typography color="light-gray" size="text-2xs">
+                <PasswordHelperText password={password} />
+              </Typography>
+            </div>
           </div>
           <div className="flex flex-col gap-1">
             <InputGroup
@@ -123,22 +117,28 @@ const ResetPasswordPage = () => {
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
             />
             {password && confirmPassword && (
-              <Typography color={password === confirmPassword ? 'success' : 'error'} size="text-xs">
-                Les deux mots de passe doivent être identiques
-              </Typography>
+              <div className="ml-3">
+                <Typography
+                  color={password === confirmPassword ? 'success' : 'error'}
+                  size="text-2xs"
+                >
+                  Les deux mots de passe doivent être identiques
+                </Typography>
+              </div>
             )}
           </div>
+
+          {apiError && (
+            <div className="ml-3">
+              <ApiError apiError={apiError} />
+            </div>
+          )}
+          {apiSuccess && (
+            <div className="ml-3">
+              <ApiSuccess apiSuccess={apiSuccess} />
+            </div>
+          )}
           <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
-            {apiError && (
-              <Typography color="error" textPosition="text-center">
-                {apiError.message}
-              </Typography>
-            )}
-            {apiSuccess && (
-              <Typography color="success" textPosition="text-center">
-                {apiSuccess.message}
-              </Typography>
-            )}
             <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
               Valider
             </Button>

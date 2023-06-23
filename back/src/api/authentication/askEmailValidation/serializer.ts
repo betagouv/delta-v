@@ -6,6 +6,6 @@ export interface IAskValidateEmailResponse {
 }
 
 export default (): IAskValidateEmailResponse => ({
-  message: 'Email sent for validate email',
+  message: 'Email de validation envoyé',
   code: ResponseCodes.USER_ASK_EMAIL_VALIDATION,
 });

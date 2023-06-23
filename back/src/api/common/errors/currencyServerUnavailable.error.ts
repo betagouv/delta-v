@@ -6,7 +6,7 @@ import { HttpStatuses } from '../../../core/httpStatuses';
 export default (context: any): IAppError =>
   buildError({
     message: 'Unable to sync currencies',
-    publicMessage: 'Unable to sync currencies',
+    publicMessage: 'Mise à jour des monnaies impossible',
     code: ErrorCodes.CURRENCIES_SERVER_UNAVAILABLE,
     statusCode: HttpStatuses.SERVICE_UNAVAILABLE,
     context,

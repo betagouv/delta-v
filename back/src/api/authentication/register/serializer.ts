@@ -6,6 +6,6 @@ export interface IUserCreatedResponse {
 }
 
 export default (): IUserCreatedResponse => ({
-  message: 'User successfully created, you received an email to validate your account',
+  message: 'Compte créé avec succès, un email de validation vous a été envoyé',
   code: ResponseCodes.USER_CREATED,
 });

@@ -10,8 +10,13 @@ export interface LoginRequest {
 
 export const loginValidator: IRequestValidatorSchema = {
   body: validator.object({
-    email: validator.string().email().required(),
-    password: validator.string().required(),
+    email: validator.string().required().email().messages({
+      'string.empty': "L'email est requis",
+      'string.email': "L'email n'est pas valide",
+    }),
+    password: validator.string().required().messages({
+      'string.empty': 'Le mot de passe est requis',
+    }),
   }),
 };
 

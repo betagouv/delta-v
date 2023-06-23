@@ -6,6 +6,6 @@ export interface PutDeclarationResponse {
 }
 
 export const serializeSimulator = (): PutDeclarationResponse => ({
-  message: 'Declaration updated successfully',
+  message: 'Declaration mise à jour avec succès',
   code: ResponseCodes.DECLARATION_UPDATED,
 });

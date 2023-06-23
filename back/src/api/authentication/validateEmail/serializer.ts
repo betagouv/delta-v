@@ -6,6 +6,6 @@ export interface IValidateEmailResponse {
 }
 
 export default (): IValidateEmailResponse => ({
-  message: 'User email successfully validated',
+  message: 'Votre email a été validé',
   code: ResponseCodes.USER_EMAIL_VALIDATED,
 });

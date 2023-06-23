@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useRegisterMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
+import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
 import { PasswordHelperText } from '@/components/common/PasswordHelperText/PasswordHelperText';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
@@ -99,22 +101,24 @@ const RegisterPage = () => {
                 register={register('password')}
                 error={errors?.password?.message ?? getErrorFields('password', apiError)}
               />
-              <Typography color="light-gray" size="text-xs">
-                <PasswordHelperText password={password} />
-              </Typography>
+              <div className="ml-3">
+                <Typography color="light-gray" size="text-2xs">
+                  <PasswordHelperText password={password} />
+                </Typography>
+              </div>
             </div>
           </div>
+          {apiError && (
+            <div className="pt-8 ml-3">
+              <ApiError apiError={apiError} />
+            </div>
+          )}
+          {apiSuccess && (
+            <div className="pt-8 ml-3">
+              <ApiSuccess apiSuccess={apiSuccess} />
+            </div>
+          )}
           <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
-            {apiError && (
-              <Typography color="error" textPosition="text-center">
-                {apiError.message}
-              </Typography>
-            )}
-            {apiSuccess && (
-              <Typography color="success" textPosition="text-center">
-                {apiSuccess.message}
-              </Typography>
-            )}
             <Button
               fullWidth={true}
               type="submit"
