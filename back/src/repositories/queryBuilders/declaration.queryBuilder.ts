@@ -20,9 +20,38 @@ export default class DeclarationQueryBuilder extends SelectQueryBuilder<Declarat
   }
 
   public whereStatus(status?: string): this {
-    const newStatus = status?.replace(',', '');
     if (status) {
-      this.andWhere(':status ~ declaration.status::text', { status: newStatus });
+      this.andWhere(':status ~ declaration.status::text', { status });
+    }
+
+    return this;
+  }
+
+  public whereMeanOfTransports(meanOfTransports?: string): this {
+    if (meanOfTransports) {
+      this.andWhere(':meanOfTransports ~ declaration.declarantMeanOfTransport', {
+        meanOfTransports,
+      });
+    }
+
+    return this;
+  }
+
+  public whereStartDate(startDate?: Date): this {
+    if (startDate) {
+      this.andWhere('declaration.versionDate >= :startDate', {
+        startDate,
+      });
+    }
+
+    return this;
+  }
+
+  public whereEndDate(endDate?: Date): this {
+    if (endDate) {
+      this.andWhere('declaration.versionDate <= :endDate', {
+        endDate,
+      });
     }
 
     return this;

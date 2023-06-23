@@ -80,6 +80,10 @@ export type GetDeclarationsOptions = {
   offset?: number;
   search: string | null;
   searchPublicId: string | null;
+  status?: string;
+  meanOfTransports?: string;
+  startDate?: Date;
+  endDate?: Date;
 };
 
 export const createDeclarationRequest = async (
@@ -134,6 +138,10 @@ export const getDeclarations = async ({
   offset,
   search,
   searchPublicId,
+  status,
+  meanOfTransports,
+  startDate,
+  endDate,
 }: GetDeclarationsOptions): Promise<DeclarationResponse[]> => {
   const { data } = await await axios.get(`/declaration/`, {
     params: {
@@ -141,6 +149,10 @@ export const getDeclarations = async ({
       offset: offset as number,
       search,
       searchPublicId,
+      status,
+      meanOfTransports,
+      startDate,
+      endDate,
     },
   });
 

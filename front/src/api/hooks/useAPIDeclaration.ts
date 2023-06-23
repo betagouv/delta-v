@@ -21,6 +21,10 @@ export type UseDeclarationParams = {
   offset?: number;
   search: string | null;
   searchPublicId: string | null;
+  status?: string;
+  meanOfTransports?: string;
+  startDate?: Date;
+  endDate?: Date;
 };
 
 export const useCreateDeclarationMutation = ({
@@ -80,11 +84,35 @@ export const useDeclarations = ({
   limit,
   offset,
   search,
+  status,
+  meanOfTransports,
+  startDate,
+  endDate,
   searchPublicId = null,
 }: UseDeclarationParams) => {
   return useQuery(
-    ['declaration', limit, offset, search, searchPublicId],
-    () => getDeclarations({ limit, offset, search, searchPublicId }),
+    [
+      'declaration',
+      limit,
+      offset,
+      search,
+      status,
+      meanOfTransports,
+      startDate,
+      endDate,
+      searchPublicId,
+    ],
+    () =>
+      getDeclarations({
+        limit,
+        offset,
+        search,
+        status,
+        meanOfTransports,
+        startDate,
+        endDate,
+        searchPublicId,
+      }),
     {
       keepPreviousData: true,
     },
