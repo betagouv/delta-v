@@ -19,6 +19,7 @@ import { declaration } from '@/core/hoc/declaration.hoc';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
+import { DECLARATION_STEP_PAGE } from '@/utils/const';
 
 export interface FormDeclarationData {
   country?: Alpha2Code;
@@ -56,7 +57,7 @@ const Declaration = () => {
   }, []);
 
   useEffect(() => {
-    setIsAvailableToRemove(valueProducts?.length !== 0);
+    if (valueProducts && valueProducts.length === 0) setIsAvailableToRemove(false);
   }, [valueProducts]);
 
   const onClickProductToRemove = (id: string) => {
@@ -112,6 +113,7 @@ const Declaration = () => {
         currentStep={3}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
+        linkButton={DECLARATION_STEP_PAGE[2]}
         simpleBg
       >
         <div className="p-5 bg-secondary-100 rounded-md">

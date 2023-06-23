@@ -47,7 +47,9 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loadin
         Marchandises
       </Typography>
       <div>
-        {declarationResponse.products.map((detailedProduct) => renderLine(detailedProduct))}
+        <div className="flex flex-col gap-4">
+          {declarationResponse.products.map((detailedProduct) => renderLine(detailedProduct))}
+        </div>
         <div className="flex flex-row justify-between p-5">
           <Typography size="text-base" weight="bold">
             TOTAL

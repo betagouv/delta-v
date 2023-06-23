@@ -14,6 +14,7 @@ type IMainProps = {
   handleSubmit: UseFormHandleSubmit<any>;
   onSubmit: (data: any) => void;
   simpleBg?: boolean;
+  linkButton?: string;
 };
 
 export type ProgressBarAgentItemType = {
@@ -34,6 +35,7 @@ const DeclarationSteps = ({
   handleSubmit,
   onSubmit,
   simpleBg,
+  linkButton,
 }: IMainProps) => {
   const showProgressBar = currentStep <= 3 && currentStep >= 1;
 
@@ -47,6 +49,7 @@ const DeclarationSteps = ({
       }
       withTitle
       titleHeader="Créer une déclaration"
+      linkButton={linkButton}
     >
       {showProgressBar && (
         <div className="px-4">

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,6 +11,7 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
+import { DECLARATION_EMPTY_STATE } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
@@ -40,6 +42,8 @@ const Declaration = () => {
     }),
     shallow,
   );
+
+  const notEmptyDeclaration = declarationRequest !== DECLARATION_EMPTY_STATE.declarationRequest;
   const router = useRouter();
   const schema = yup.object({
     lastName: yup
@@ -85,19 +89,23 @@ const Declaration = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      adult: declarationRequest.contactDetails.age >= 18 ? 'true' : 'false',
-      notAdultAge: declarationRequest.contactDetails.age,
-      lastName: declarationRequest.contactDetails.lastName || '',
-      firstName: declarationRequest.contactDetails.firstName || '',
-      address: declarationRequest.contactDetails.address || '',
-      city: declarationRequest.contactDetails.city || '',
-      postalCode: declarationRequest.contactDetails.postalCode || '',
-      email: declarationRequest.contactDetails.email || '',
-      phoneNumber: declarationRequest.contactDetails.phoneNumber || '',
+      adult: notEmptyDeclaration
+        ? declarationRequest.contactDetails.age >= 18
+          ? 'true'
+          : 'false'
+        : undefined,
+      notAdultAge: notEmptyDeclaration ? declarationRequest.contactDetails.age : undefined,
+      lastName: notEmptyDeclaration ? declarationRequest.contactDetails.lastName : undefined,
+      firstName: notEmptyDeclaration ? declarationRequest.contactDetails.firstName : undefined,
+      address: notEmptyDeclaration ? declarationRequest.contactDetails.address : undefined,
+      city: notEmptyDeclaration ? declarationRequest.contactDetails.city : undefined,
+      postalCode: notEmptyDeclaration ? declarationRequest.contactDetails.postalCode : undefined,
+      email: notEmptyDeclaration ? declarationRequest.contactDetails.email : undefined,
+      phoneNumber: notEmptyDeclaration ? declarationRequest.contactDetails.phoneNumber : undefined,
     },
   });
 
-  const [displayNotAdult, setDisplayNotAdult] = useState(getValues('adult') !== 'true');
+  const [displayNotAdult, setDisplayNotAdult] = useState(getValues('adult') === 'false');
   const [age, setAge] = useState<number | undefined>(getValues('notAdultAge'));
 
   register('adult', {
@@ -149,6 +157,7 @@ const Declaration = () => {
         currentStep={1}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
+        linkButton="/agent/"
       >
         <div className="flex flex-col gap-4 mt-1">
           <div className="w5/6 flex flex-col gap-4">

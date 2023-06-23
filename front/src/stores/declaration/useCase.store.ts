@@ -149,7 +149,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   resetDeclaration: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState.declarationRequest = DECLARATION_EMPTY_STATE.declarationRequest;
+      newState.declaration.appState = { ...DECLARATION_EMPTY_STATE };
       return newState;
     });
   },
