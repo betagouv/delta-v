@@ -38,6 +38,7 @@ jobs:
       ROUTE_FRONTEND_VALIDATE_ACCOUNT: /validate-account
       ROUTE_FRONTEND_RESET_PASSWORD: /reset-password
       LOG_LEVEL: fatal
+      WHITE_LIST_AGENT_EMAIL: "test@gmail.com"
 
     steps:
       - uses: actions/checkout@v3
