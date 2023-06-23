@@ -19,10 +19,16 @@ const amountProduct: AmountProductInterface = {
   amountProduct: AmountProduct.tobacco,
 };
 
-const groupedProduct: GroupedAmountProduct = {
+const groupedOverMaxProduct: GroupedAmountProduct = {
   group: 'alcoholIntermediate',
   products: [amountProduct, amountProduct, amountProduct],
   isOverMaximum: true,
+};
+
+const groupedProduct: GroupedAmountProduct = {
+  group: 'alcoholIntermediate',
+  products: [amountProduct, amountProduct, amountProduct],
+  isOverMaximum: false,
 };
 
 export const withVariant = (): JSX.Element => (
@@ -43,7 +49,16 @@ export const withVariant = (): JSX.Element => (
 );
 
 export const group = (): JSX.Element => (
-  <div className="p-3">
-    <AmountProductBasketGroup amountProductGroup={groupedProduct} />
+  <div className="gap-12 p-3 flex flex-col">
+    <div>
+      <p>Group over maximum limit :</p>
+      <br />
+      <AmountProductBasketGroup amountProductGroup={groupedOverMaxProduct} />
+    </div>
+    <div>
+      <p>Group under maximum limit :</p>
+      <br />
+      <AmountProductBasketGroup amountProductGroup={groupedProduct} />
+    </div>
   </div>
 );
