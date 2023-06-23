@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { SummaryExport } from '../../business/summaryExport';
+import { Role } from '@/components/business/formSelectProduct/utils';
 import { BackButton } from '@/components/common/BackButton';
 import { BackButtonWithTitle } from '@/components/common/BackButtonWithTitle';
 import { Header } from '@/components/common/Header';
@@ -19,6 +20,7 @@ interface HeaderProps {
   withLogo?: boolean;
   title?: string;
   linkSearch?: string;
+  templateRole?: Role;
 }
 
 export const CustomHeader: React.FC<HeaderProps> = ({
@@ -28,6 +30,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
   withLogo = false,
   title,
   linkSearch = '/simulateur/produits/recherche',
+  templateRole = 'user',
 }: HeaderProps) => {
   const { shoppingProducts, simulatorRequest, simulatorResponse } = useStore(
     (state) => ({
@@ -97,7 +100,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
     </>
   );
   return (
-    <div className="px-5 pt-6 pb-0">
+    <div className={templateRole === 'agent' ? 'px-5 pt-6 pb-0' : ''}>
       <Header leftButtons={leftButtons} rightButtons={rightButtons} />
     </div>
   );

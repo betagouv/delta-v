@@ -1,6 +1,8 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
 
 import { Icon } from '@/components/common/Icon';
 import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
@@ -60,21 +62,17 @@ export const Input: React.FC<IInputOptions> = ({
   } else {
     parentClassName += ' w-fit';
   }
-  let className = `text-xs block w-full px-5 py-3 border border-solid rounded-full focus:outline-none focus:ring-transparent ${
-    withBorder ? 'border-secondary-300 focus:border-secondary-300' : 'border-0 focus:border-0'
-  } placeholder:italic placeholder:text-secondary-400 placeholder:font-light`;
-  if (error) {
-    className += `text-red-900 placeholder-red-300 ${
-      withBorder ? 'border-red-300 focus:border-red-500' : 'border-0'
-    }`;
-  }
-
-  if (trailingIcon || trailingAddons || trailingSvgIcon) {
-    className += ' pr-11';
-  }
-  if (leadingIcon || leadingAddons) {
-    className += ' pl-11';
-  }
+  const className = twMerge(
+    classNames({
+      'border-0 focus:outline-none focus:ring-0 text-xs block w-full px-5 py-3 border-solid rounded-full focus:outline-none focus:ring-transparent placeholder:italic placeholder:text-secondary-400 placeholder:font-light':
+        true,
+      'border border-secondary-300 focus:border-secondary-300 ': withBorder,
+      'text-red-900 placeholder-red-300': error,
+      'border border-red-300 focus:border-red-500': withBorder && error,
+      'pr-11': trailingIcon || trailingAddons || trailingSvgIcon,
+      'pl-11': leadingIcon || leadingAddons,
+    }),
+  );
 
   return (
     <div className={parentClassName} onClick={onClick}>

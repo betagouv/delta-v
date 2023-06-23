@@ -31,7 +31,9 @@ const MainAgent = ({
       {meta}
 
       <div className={withHeader || withTitle ? 'flex min-h-[calc(100%)] flex-col' : ''}>
-        {withHeader && <CustomHeader withLogo={withLogo} title={titleHeader} />}
+        {withHeader && (
+          <CustomHeader withLogo={withLogo} title={titleHeader} templateRole="agent" />
+        )}
         {withTitle && <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />}
         {children}
       </div>

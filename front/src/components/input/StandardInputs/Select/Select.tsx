@@ -4,6 +4,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
 
 import { Icon } from '../../../common/Icon';
 
@@ -44,15 +45,6 @@ export const Select: React.FC<ISelectOptions> = ({
     options.find((option) => option.id === field.value) ?? options[0],
   );
 
-  let classNameButton = `bg-white relative rounded-full pl-3 pr-10 py-2 text-left cursor-default focus:outline-none text-base`;
-
-  classNameButton += fullWidth ? ' w-full' : ' w-auto';
-  classNameButton += disabled ? ' bg-secondary-200 text-secondary-400' : '';
-  classNameButton += withBorder
-    ? 'border border-secondary-100 focus:ring-1 focus:ring-primary-600 focus:border-primary-600 border-solid  shadow-sm'
-    : 'border-0 focus:ring-0';
-  classNameButton += error && ' border-red-300 focus:ring-red-500 focus:border-red-500';
-
   let classNameOptions =
     'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm';
   classNameOptions += fullWidth ? ' w-full' : ' w-auto';
@@ -69,7 +61,20 @@ export const Select: React.FC<ISelectOptions> = ({
       {({ open }) => (
         <>
           <div className="relative mt-1">
-            <Listbox.Button data-testid="select-element" className={classNameButton}>
+            <Listbox.Button
+              data-testid="select-element"
+              className={twMerge(
+                classNames({
+                  'bg-white relative rounded-full pl-3 pr-10 py-2 text-left cursor-default focus:outline-none text-base w-auto border-0 focus:ring-0':
+                    true,
+                  'w-full': fullWidth,
+                  'bg-secondary-200 text-secondary-400': disabled,
+                  'border border-secondary-300 focus:ring-1 focus:ring-primary-600 focus:border-primary-600 border-solid':
+                    withBorder,
+                  'border-red-300 focus:ring-red-500 focus:border-red-500': error,
+                }),
+              )}
+            >
               <span className="block truncate">{selected?.value}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5">
                 {open ? <Icon name="chevron-thin-up" /> : <Icon name="chevron-thin-down" />}
