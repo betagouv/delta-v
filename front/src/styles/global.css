@@ -142,7 +142,8 @@ svg {
 }
 
 .react-datepicker {
-    font-family: RobotoMedium;
+    font-family: inherit;
+    font-weight: normal;
     font-size: 14px !important;
     color: #c7c7c7 !important;
     border: 0;
@@ -174,7 +175,6 @@ svg {
     margin-right: 0;
     color: var(--dark-text-mention-grey, #929292);
     font-size: 8px;
-    font-family: Roboto;
     line-height: 18px;
     letter-spacing: -0.176px;
     flex: 1;
@@ -187,14 +187,12 @@ svg {
 .react-datepicker-wrapper  {
     color: var(--light-text-title-grey, #161616);
     font-size: 12px;
-    font-family: Roboto;
     line-height: 18px;
     letter-spacing: -0.264px;
   } 
 .react-datepicker-wrapper::placeholder  {
     color: var(--light-text-disabled-grey, #929292);
     font-size: 12px;
-    font-family: Roboto;
     font-style: italic;
     line-height: 18px;
     letter-spacing: -0.264px;
@@ -209,8 +207,7 @@ svg {
     margin-right: 0;
     color: var(--dark-text-inverted-grey, #161616);
     font-size: 10px;
-    font-family: Roboto;
-    line-height: 18px;
+    line-height: 26px;
     letter-spacing: -0.22px;
     flex: 1;
   } 

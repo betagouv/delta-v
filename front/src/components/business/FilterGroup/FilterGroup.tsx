@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useController } from 'react-hook-form';
+
 import { FilterItem } from './FilterItem';
 import { Typography } from '@/components/common/Typography';
 import { FilterOptions } from '@/utils/filters';
@@ -7,16 +9,32 @@ import { FilterOptions } from '@/utils/filters';
 export type FilterGroupProps = {
   title: string;
   filters: FilterOptions[];
-  activeFilters: string;
-  onSelectFilter: (value: string) => void;
+  control?: any;
+  name: string;
+  rules?: any;
 };
 
-export const FilterGroup = ({
-  title,
-  filters,
-  activeFilters,
-  onSelectFilter,
-}: FilterGroupProps) => {
+export const FilterGroup = ({ title, filters, control, name, rules }: FilterGroupProps) => {
+  const { field } = useController({
+    control,
+    name,
+    rules,
+  });
+
+  const handleSelectFilter = (id: string) => {
+    const selectedValues = field.value;
+    if (selectedValues.includes(id)) {
+      selectedValues.splice(selectedValues.indexOf(id), 1);
+      field.onChange(id);
+    } else {
+      field.onChange([...selectedValues, id]);
+    }
+  };
+
+  const isActiveFilter = (value: string) => {
+    return field.value.includes(value);
+  };
+
   return (
     <div>
       <Typography color="black" size="text-xs">
@@ -28,8 +46,8 @@ export const FilterGroup = ({
           <FilterItem
             key={index}
             filter={item}
-            onClick={onSelectFilter}
-            activeFilters={activeFilters}
+            onClick={handleSelectFilter}
+            isActive={isActiveFilter(item.id)}
           />
         ))}
       </div>

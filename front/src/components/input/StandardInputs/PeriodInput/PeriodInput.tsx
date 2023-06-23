@@ -3,34 +3,44 @@ import React from 'react';
 import cs from 'classnames';
 import dayjs from 'dayjs';
 import DatePicker from 'react-datepicker';
+import { useController } from 'react-hook-form';
 
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 
 export interface IPeriodInputOptions {
-  onChangeDate: (startDate: Date | null, endDate: Date | null) => void;
-  startDate: Date | null;
-  endDate: Date | null;
   noBorder?: boolean;
+  control?: any;
+  startDateName: string;
+  endDateName: string;
 }
 
 export const PeriodInput: React.FC<IPeriodInputOptions> = ({
-  startDate,
-  endDate,
   noBorder = false,
-  onChangeDate,
+  control,
+  startDateName,
+  endDateName,
 }: IPeriodInputOptions) => {
+  const { field: startDateField } = useController({
+    control,
+    name: startDateName,
+  });
+  const { field: endDateField } = useController({
+    control,
+    name: endDateName,
+  });
   return (
     <div className="flex w-full flex-row gap-[2px] justify-center z-50">
       <DatePicker
         selectsStart
-        selected={startDate}
-        onChange={(date) => onChangeDate(date, endDate)}
-        startDate={startDate}
-        endDate={endDate}
+        dateFormat={'dd/MM/yyyy'}
+        selected={startDateField.value}
+        onChange={(date) => startDateField.onChange(date)}
+        startDate={startDateField.value}
+        endDate={endDateField.value}
         maxDate={
-          endDate
-            ? dayjs(endDate).subtract(1, 'day').toDate()
+          endDateField.value
+            ? dayjs(endDateField.value).subtract(1, 'day').toDate()
             : dayjs(new Date()).subtract(1, 'day').toDate()
         }
         placeholderText="Du : jj/mm/aaaa"
@@ -67,19 +77,20 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
           </header>
         )}
         dayClassName={(day) =>
-          dayjs(day).format('YYYY-MM-DD') === dayjs(startDate).format('YYYY-MM-DD')
+          dayjs(day).format('YYYY-MM-DD') === dayjs(startDateField.value).format('YYYY-MM-DD')
             ? 'text-secondary-300'
             : 'bg-white'
         }
       />
       <DatePicker
         selectsEnd
-        selected={endDate}
-        onChange={(date) => onChangeDate(startDate, date)}
-        endDate={endDate}
-        startDate={startDate}
+        dateFormat={'dd/MM/yyyy'}
+        selected={endDateField.value}
+        onChange={(date) => endDateField.onChange(date)}
+        endDate={endDateField.value}
+        startDate={startDateField.value}
         placeholderText="Au : jj/mm/aaaa"
-        minDate={dayjs(startDate).add(1, 'day').toDate()}
+        minDate={dayjs(startDateField.value).add(1, 'day').toDate()}
         maxDate={dayjs(new Date()).toDate()}
         className={cs({
           'justify-center max-w-[157px] rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:italic placeholder:text-secondary-400':

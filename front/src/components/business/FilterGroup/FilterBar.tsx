@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import cs from 'classnames';
+import { useForm } from 'react-hook-form';
 
 import { FilterHistoryItemProps } from '../FilterHistory';
 import { FilterHistory } from '../FilterHistory/FilterHistory';
@@ -18,33 +19,39 @@ export type FilterBarProps = {
   noSearchBar?: boolean;
   noPeriodInput?: boolean;
   filterHistories?: FilterHistoryItemProps[];
+  onValidateFilter: (data: FilterBarForm) => void;
+};
+
+export interface FilterBarForm {
+  status: string[];
+  meanOfTransport: string[];
   startDate: Date | null;
   endDate: Date | null;
-  onSearch?: (search: string) => void;
-  onChangeDate: (startDate: Date | null, endDate: Date | null) => void;
-  onChangeFilterStatus?: (value: string) => void;
-  onChangeFilterMeanOfTransports?: (value: string) => void;
-  activeFiltersStatus: string;
-  activeFiltersMeanOfTransports: string;
-  onValidateFilter: () => void;
-};
+  search: string | null;
+}
 
 export const FilterBar = ({
   title = 'Plus de filtres',
   noSearchBar = false,
   noPeriodInput = false,
   filterHistories = [],
-  startDate,
-  endDate,
-  onSearch,
   onValidateFilter,
-  onChangeDate,
-  onChangeFilterStatus,
-  onChangeFilterMeanOfTransports,
-  activeFiltersStatus,
-  activeFiltersMeanOfTransports,
 }: FilterBarProps) => {
   const [open, setOpen] = useState(false);
+
+  const { register, control, handleSubmit } = useForm<FilterBarForm>({
+    defaultValues: {
+      status: [],
+      meanOfTransport: [],
+      startDate: null,
+      endDate: null,
+      search: null,
+    },
+  });
+
+  const onSubmit = (data: FilterBarForm) => {
+    onValidateFilter(data);
+  };
 
   return (
     <div className="flex flex-col rounded-xl bg-gray-100 px-5 py-4">
@@ -72,58 +79,45 @@ export const FilterBar = ({
           'max-h-[1000px]': open,
         })}
       >
-        <div className="flex flex-col gap-4 py-5">
-          {!noSearchBar && (
-            <input
-              data-testid="input-search-element"
-              enterKeyHint="search"
-              placeholder="Thèmes, mots-clés..."
-              className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2"
-              onChange={(event) => {
-                if (onSearch) {
-                  onSearch(event.target.value);
-                }
-              }}
-            />
-          )}
-          {!noPeriodInput && (
-            <PeriodInput
-              noBorder
-              onChangeDate={onChangeDate}
-              startDate={startDate}
-              endDate={endDate}
-            />
-          )}
-          {onChangeFilterStatus && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-4 py-5">
+            {!noSearchBar && (
+              <input
+                data-testid="input-search-element"
+                enterKeyHint="search"
+                placeholder="Thèmes, mots-clés..."
+                className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2"
+                {...register('search')}
+              />
+            )}
+            {!noPeriodInput && (
+              <PeriodInput
+                noBorder
+                endDateName="endDate"
+                startDateName="startDate"
+                control={control}
+              />
+            )}
             <FilterGroup
               title="Statut de la déclaration"
-              onSelectFilter={onChangeFilterStatus}
+              control={control}
+              name="status"
               filters={FILTER_STATUS}
-              activeFilters={activeFiltersStatus}
             />
-          )}
-          {onChangeFilterMeanOfTransports && (
             <FilterGroup
               title="Moyen de transport"
-              onSelectFilter={onChangeFilterMeanOfTransports}
+              control={control}
+              name="meanOfTransport"
               filters={FILTER_MEANS_OF_TRANSPORT}
-              activeFilters={activeFiltersMeanOfTransports}
             />
-          )}
-        </div>
-        <div className="flex flex-col gap-8 py-5">
-          {filterHistories.length > 0 && <FilterHistory histories={filterHistories} />}
-          <span className="self-center">
-            <Button
-              onClick={() => {
-                onValidateFilter();
-                setOpen(false);
-              }}
-            >
-              Voir les résultats
-            </Button>
-          </span>
-        </div>
+          </div>
+          <div className="flex flex-col gap-8 py-5">
+            {filterHistories.length > 0 && <FilterHistory histories={filterHistories} />}
+            <span className="self-center">
+              <Button type="submit">Voir les résultats</Button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
   );
