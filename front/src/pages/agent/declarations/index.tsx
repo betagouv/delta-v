@@ -3,20 +3,15 @@ import { useEffect, useState } from 'react';
 import { UseDeclarationParams, useDeclarations } from '@/api/hooks/useAPIDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { DeclarationCard } from '@/components/business/DeclarationCard';
-import { FilterBar } from '@/components/business/FilterGroup/FilterBar';
+import { FilterBar, FilterBarForm } from '@/components/business/FilterGroup/FilterBar';
 import { Meta } from '@/layout/Meta';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { MainAgent } from '@/templates/MainAgent';
 import { Constants } from '@/utils/enums';
 
 const QuittancePage = () => {
-  const [search, setSearch] = useState<string | null>(null);
   const [page, setPage] = useState<number>(0);
   const [declarations, setDeclarations] = useState<DeclarationResponse[]>([]);
-  const [filterStatus, setFilterStatus] = useState<string>('');
-  const [filterMeanOfTransports, setFilterMeanOfTransports] = useState<string>('');
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
   const [queryData, setQueryData] = useState<UseDeclarationParams>({
     search: null,
     searchPublicId: null,
@@ -24,76 +19,42 @@ const QuittancePage = () => {
     offset: page * Constants.MINI_TABLE_LIMIT,
   });
 
-  const { isLoading, data } = useDeclarations(queryData);
-
-  const handleSearch = (value: string) => {
-    setSearch(value);
-  };
-
-  const onChangeFilterStatus = (value: string) => {
-    if (!filterStatus.includes(value.toLocaleLowerCase())) {
-      const newFilter = filterStatus?.split(',') ?? [];
-      newFilter.push(value.toLocaleLowerCase());
-
-      setFilterStatus(newFilter.toString());
-    } else {
-      const newFilter = filterStatus?.split(',') ?? [];
-      const index = newFilter.indexOf(value.toLocaleLowerCase());
-      if (index > -1) {
-        newFilter.splice(index, 1);
-      }
-
-      setFilterStatus(newFilter.toString());
-    }
-  };
-
-  const onChangeFilterMeanOfTransports = (value: string) => {
-    if (!filterMeanOfTransports.includes(value.toLocaleLowerCase())) {
-      const newFilter = filterMeanOfTransports?.split(',') ?? [];
-      newFilter.push(value.toLocaleLowerCase());
-
-      setFilterMeanOfTransports(newFilter.toString());
-    } else {
-      const newFilter = filterMeanOfTransports?.split(',') ?? [];
-      const index = newFilter.indexOf(value.toLocaleLowerCase());
-      if (index > -1) {
-        newFilter.splice(index, 1);
-      }
-
-      setFilterMeanOfTransports(newFilter.toString());
-    }
-  };
-
-  const onChangeDate = (newStartDate: Date | null, newEndDate: Date | null) => {
-    setStartDate(newStartDate);
-    setEndDate(newEndDate);
-  };
+  const { isLoading, data: apiDeclarations } = useDeclarations(queryData);
 
   useEffect(() => {
-    if (data) {
-      const tmpDeclarations = [...declarations, ...data];
+    if (apiDeclarations) {
+      const tmpDeclarations = [...declarations, ...apiDeclarations];
       const uniqueArray = tmpDeclarations.filter(
         (v, i, a) => a.findIndex((t) => JSON.stringify(t) === JSON.stringify(v)) === i,
       );
       setDeclarations(uniqueArray);
     }
-  }, [data]);
+  }, [apiDeclarations]);
 
-  const onValidateFilter = () => {
+  const onValidateFilter = (data: FilterBarForm) => {
     setPage(0);
     setDeclarations([]);
     setQueryData({
       ...queryData,
-      search,
+      search: data.search,
       offset: 0 * Constants.MINI_TABLE_LIMIT,
-      status: filterStatus !== '' ? filterStatus : undefined,
-      meanOfTransports: filterMeanOfTransports !== '' ? filterMeanOfTransports : undefined,
-      startDate: startDate ?? undefined,
-      endDate: endDate ?? undefined,
+      status: data.status.length > 0 ? data.status.join(',') : undefined,
+      meanOfTransports:
+        data.meanOfTransport.length > 0 ? data.meanOfTransport.join(',') : undefined,
+      startDate: data.startDate ?? undefined,
+      endDate: data.endDate ?? undefined,
     });
   };
 
   const newLimit = () => {
+    if (!apiDeclarations || apiDeclarations.length === 0) {
+      return;
+    }
+
+    if (apiDeclarations.length < Constants.MINI_TABLE_LIMIT) {
+      return;
+    }
+
     setPage(page + 1);
     setQueryData({
       ...queryData,
@@ -121,15 +82,7 @@ const QuittancePage = () => {
               <FilterBar
                 title="Declarations"
                 searchType="global"
-                onSearch={handleSearch}
                 onValidateFilter={onValidateFilter}
-                onChangeDate={onChangeDate}
-                onChangeFilterStatus={onChangeFilterStatus}
-                onChangeFilterMeanOfTransports={onChangeFilterMeanOfTransports}
-                activeFiltersStatus={filterStatus}
-                activeFiltersMeanOfTransports={filterMeanOfTransports}
-                startDate={startDate}
-                endDate={endDate}
               />
               {declarations &&
                 declarations?.map((declaration, index) => (
@@ -141,7 +94,7 @@ const QuittancePage = () => {
                     firstName={declaration.declarantFirstName}
                     lastName={declaration.declarantLastName}
                     transport={declaration.declarantMeanOfTransport}
-                    newLimit={data && data.length ? newLimit : undefined}
+                    newLimit={newLimit}
                     isLast={index === declarations.length - 1}
                   />
                 ))}
