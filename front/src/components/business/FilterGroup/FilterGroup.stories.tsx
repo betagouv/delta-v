@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Meta } from '@storybook/react';
 
 import { FilterHistoryItemProps } from '../FilterHistory';
@@ -25,13 +23,7 @@ const FILTER_BAR_DATA: FilterBarProps = {
   title: 'Plus de filtres',
   searchType: 'actuality',
   filterHistories: [FILTER_HISTORY_ITEM_DATA, FILTER_HISTORY_ITEM_DATA, FILTER_HISTORY_ITEM_DATA],
-  startDate: null,
-  endDate: null,
-  onSearch: () => {},
-  onChangeDate: () => {},
-  onValidateFilter: () => {},
-  activeFiltersMeanOfTransports: '',
-  activeFiltersStatus: '',
+  onValidateFilter: (data) => console.log(data),
 };
 
 export const FilterBarExample = (): JSX.Element => (
@@ -39,21 +31,13 @@ export const FilterBarExample = (): JSX.Element => (
     title={FILTER_BAR_DATA.title}
     searchType={FILTER_BAR_DATA.searchType}
     filterHistories={FILTER_BAR_DATA.filterHistories}
-    startDate={FILTER_BAR_DATA.startDate}
-    endDate={FILTER_BAR_DATA.endDate}
-    onSearch={FILTER_BAR_DATA.onSearch}
-    onChangeDate={FILTER_BAR_DATA.onChangeDate}
     onValidateFilter={FILTER_BAR_DATA.onValidateFilter}
-    activeFiltersMeanOfTransports={FILTER_BAR_DATA.activeFiltersMeanOfTransports}
-    activeFiltersStatus={FILTER_BAR_DATA.activeFiltersStatus}
   />
 );
 
 export const FilterGroupExample = (): JSX.Element => {
-  const [activeFilters, setActiveFilters] = useState('');
   return (
     <FilterGroup
-      activeFilters={activeFilters}
       filters={[
         {
           id: '1',
@@ -65,7 +49,7 @@ export const FilterGroupExample = (): JSX.Element => {
         },
       ]}
       title="Filtres"
-      onSelectFilter={() => setActiveFilters('Filtre actif')}
+      name="filter"
     />
   );
 };
@@ -77,7 +61,8 @@ export const FilterItemExample = (): JSX.Element => (
         id: '1',
         value: 'Filtre actif',
       }}
-      activeFilters="1"
+      isActive
+      onClick={() => console.log('click')}
     />
     <br />
     <FilterItem
@@ -85,7 +70,8 @@ export const FilterItemExample = (): JSX.Element => (
         id: '2',
         value: 'Filtre inactif',
       }}
-      activeFilters="Filtre actif"
+      isActive={false}
+      onClick={() => console.log('click')}
     />
   </div>
 );
