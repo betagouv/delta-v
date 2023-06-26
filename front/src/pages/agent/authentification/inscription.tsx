@@ -68,6 +68,12 @@ const RegisterPage = () => {
     registerMutation.mutate(data);
   };
 
+  const [passwordVisible, setPasswwordVisible] = useState(false);
+
+  const handleIconClick = () => {
+    setPasswwordVisible(!passwordVisible);
+  };
+
   return (
     <MainAuth
       bgColor="gray"
@@ -94,12 +100,14 @@ const RegisterPage = () => {
 
             <div className="flex flex-col gap-1">
               <InputGroup
-                type="password"
+                type={!passwordVisible ? 'password' : 'text'}
                 name="adult"
                 fullWidth={true}
                 placeholder="Mot de passe"
                 register={register('password')}
                 error={errors?.password?.message ?? getErrorFields('password', apiError)}
+                trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
+                onTrailingSvgIconClick={handleIconClick}
               />
               <div className="ml-3">
                 <Typography color="light-gray" size="text-2xs">

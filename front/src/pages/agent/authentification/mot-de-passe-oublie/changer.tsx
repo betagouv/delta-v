@@ -73,6 +73,18 @@ const ResetPasswordPage = () => {
     }
   };
 
+  const [passwordVisible, setPasswwordVisible] = useState(false);
+
+  const handleIconClick = () => {
+    setPasswwordVisible(!passwordVisible);
+  };
+
+  const [confirmPasswordVisible, setConfirmPasswwordVisible] = useState(false);
+
+  const handleConfirmIconClick = () => {
+    setConfirmPasswwordVisible(!confirmPasswordVisible);
+  };
+
   return (
     <MainAuth
       meta={
@@ -93,12 +105,14 @@ const ResetPasswordPage = () => {
           <div className="flex flex-col gap-1">
             <InputGroup
               label="Mon nouveau mot de passe *"
-              type="password"
+              type={!passwordVisible ? 'password' : 'text'}
               name="password"
               fullWidth={true}
               placeholder="Nouveau mot de passe"
               register={register('password')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
+              trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
+              onTrailingSvgIconClick={handleIconClick}
             />
             <div className="ml-3">
               <Typography color="light-gray" size="text-2xs">
@@ -109,12 +123,14 @@ const ResetPasswordPage = () => {
           <div className="flex flex-col gap-1">
             <InputGroup
               label="Confirmer le mot de passe *"
-              type="password"
+              type={!confirmPasswordVisible ? 'password' : 'text'}
               name="confirmPassword"
               fullWidth={true}
               placeholder="Nouveau mot de passe"
               register={register('confirmPassword')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
+              trailingSvgIcon={!confirmPasswordVisible ? 'visibilityOff' : 'visibilityOn'}
+              onTrailingSvgIconClick={handleConfirmIconClick}
             />
             {password && confirmPassword && (
               <div className="ml-3">
