@@ -78,11 +78,10 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
       get().declaration.appState.declarationRequest;
     const { allProducts } = get().products.appState;
 
-    if (!contactDetails || !meansOfTransportAndCountry) {
-      return;
-    }
-
     set((state: any) => {
+      if (contactDetails.age === undefined || !meansOfTransportAndCountry.country) {
+        return state;
+      }
       const newState = { ...state };
       newState.products.appState.products = setupProductsToDisplay(
         allProducts,

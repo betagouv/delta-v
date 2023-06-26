@@ -69,7 +69,9 @@ export const group = (): JSX.Element => (
       <br />
       <AmountAgentProductBasketGroup
         amountProductGroup={groupedOverMaxProduct}
-        onDeleteClick={() => console.log('clicked')}
+        onModifyClick={() => console.log('clicked')}
+        deletable={false}
+        onDelete={(id) => console.log(id)}
       />
     </div>
     <div>
@@ -77,7 +79,9 @@ export const group = (): JSX.Element => (
       <br />
       <AmountAgentProductBasketGroup
         amountProductGroup={groupedProduct}
-        onDeleteClick={() => console.log('clicked')}
+        deletable={false}
+        onDelete={(id) => console.log(id)}
+        onModifyClick={() => console.log('clicked')}
       />
     </div>
   </div>

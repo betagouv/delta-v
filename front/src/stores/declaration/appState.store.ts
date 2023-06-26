@@ -15,7 +15,7 @@ export enum MeansOfTransport {
 }
 
 export interface DeclarationRequest {
-  declarationId: string;
+  declarationId?: string;
   contactDetails: ContactDetails;
   meansOfTransportAndCountry: MeansOfTransportAndCountry;
   defaultCurrency?: string;
@@ -25,19 +25,19 @@ export interface DeclarationRequest {
 }
 
 export interface ContactDetails {
-  age: number;
-  lastName: string;
-  firstName: string;
-  address: string;
-  city: string;
-  postalCode: string;
-  email: string;
-  phoneNumber: string;
+  age?: number;
+  lastName?: string;
+  firstName?: string;
+  address?: string;
+  city?: string;
+  postalCode?: string;
+  email?: string;
+  phoneNumber?: string;
 }
 
 export interface MeansOfTransportAndCountry {
-  meansOfTransport: MeansOfTransport;
-  country: Alpha2Code;
+  meansOfTransport?: MeansOfTransport;
+  country?: Alpha2Code;
   flightNumber?: string;
 }
 
@@ -49,9 +49,6 @@ export interface ValidateStep3Options {
 export interface DeclarationData {
   declarationRequest: DeclarationRequest;
   declarationResponse?: SimulatorResponse;
-  displayInfo: boolean;
-  error?: any;
-  allDeclarations: DeclarationResponse[];
 }
 
 export interface DeclarationAppStateSlice {
@@ -89,20 +86,20 @@ export interface DeclarationResponse {
 
 export const DECLARATION_EMPTY_STATE = {
   declarationRequest: {
-    declarationId: '',
+    declarationId: undefined,
     contactDetails: {
-      age: 0,
-      lastName: '',
-      firstName: '',
-      address: '',
-      city: '',
-      postalCode: '',
-      email: '',
-      phoneNumber: '',
+      age: undefined,
+      lastName: undefined,
+      firstName: undefined,
+      address: undefined,
+      city: undefined,
+      postalCode: undefined,
+      email: undefined,
+      phoneNumber: undefined,
     },
     meansOfTransportAndCountry: {
-      meansOfTransport: MeansOfTransport.OTHER,
-      country: 'FR' as Alpha2Code,
+      meansOfTransport: undefined,
+      country: undefined,
       flightNumber: undefined,
     },
     defaultCurrency: 'EUR',
@@ -112,9 +109,6 @@ export const DECLARATION_EMPTY_STATE = {
     customShoppingProducts: [],
   },
   declarationResponse: undefined,
-  displayInfo: true,
-  error: undefined,
-  allDeclarations: [],
 };
 
 export const createDeclarationAppStateSlice: StoreSlice<DeclarationAppStateSlice> = () => ({

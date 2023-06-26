@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
@@ -7,16 +8,20 @@ import { toast } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
+import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { CartProductCard } from '@/components/business/CartProductCard';
+import { OnAddProductOptions } from '@/components/business/formSelectProduct';
+import { ValueAgentProductBasket } from '@/components/business/ValueAgentProductBasket';
+import { AmountAgentProductBasketGroup } from '@/components/common/AmountAgentProductBasket/AmountAgentProductBasketGroup';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Product } from '@/model/product';
+import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 import { DECLARATION_STEP_PAGE } from '@/utils/const';
@@ -29,28 +34,40 @@ const Declaration = () => {
   const {
     setProductsDeclarationToDisplay,
     removeProductDeclaration,
+    updateProductCartDeclaration,
     resetDeclaration,
+    findProduct,
     declarationId,
     declarationRequest,
+    meansOfTransportAndCountry,
     defaultCurrency,
     valueProducts,
+    amountProducts,
   } = useStore(
     (state) => ({
       setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
+      updateProductCartDeclaration: state.updateProductCartDeclaration,
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
+      findProduct: state.findProduct,
       declarationId: state.declaration.appState.declarationRequest?.declarationId,
       valueProducts: state.declaration.appState.declarationResponse?.valueProducts,
+      amountProducts: state.declaration.appState.declarationResponse?.amountProducts,
       declarationRequest: state.declaration.appState.declarationRequest,
+      meansOfTransportAndCountry:
+        state.declaration.appState.declarationRequest.meansOfTransportAndCountry,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
     shallow,
   );
+  const { trackEvent } = useMatomo();
   const router = useRouter();
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
   const [isAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
+  const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
 
   useEffect(() => {
     setProductsDeclarationToDisplay();
@@ -81,7 +98,29 @@ const Declaration = () => {
     },
   });
 
+  const onUpdateProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
+    const shoppingProduct: Partial<ShoppingProduct> = {
+      productId: product.id,
+      name,
+      value: parseFloat(value),
+      amount: 1,
+      currency: currency ?? 'EUR',
+    };
+
+    updateProductCartDeclaration(shoppingProduct);
+    trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
+    setOpenModalAddProduct(false);
+    router.push(`/agent/declaration/ajout/marchandises`);
+  };
+
+  const onModifyClick = (id: string) => {
+    const product = findProduct(id);
+    setSelectedProduct(product);
+    setOpenModalAddProduct(true);
+  };
+
   const onSubmit = () => {
+    if (!declarationId) return;
     createDeclarationMutation.mutate({
       declarationId,
       contactDetails: declarationRequest.contactDetails,
@@ -161,15 +200,16 @@ const Declaration = () => {
           </button>
         </div>
 
-        {valueProducts && (
+        {(valueProducts || amountProducts) && (
           <>
             <div className="w-full mt-5 flex flex-col gap-4 flex-1 justify-between">
               <div className="w-full flex flex-col gap-4">
                 <div className="w-full flex flex-row justify-between items-center mb-1">
                   <Typography color="black" size="text-xs">
-                    Marchandises <b>{valueProducts.length}</b>
+                    Marchandises{' '}
+                    <b>{(valueProducts?.length ?? 0) + (amountProducts?.length ?? 0)}</b>
                   </Typography>
-                  {valueProducts.length > 0 && (
+                  {(valueProducts?.length ?? 0) + (amountProducts?.length ?? 0) > 0 && (
                     <Typography
                       color={isAvailableToRemove ? 'black' : 'primary'}
                       colorGradient="400"
@@ -180,22 +220,37 @@ const Declaration = () => {
                     </Typography>
                   )}
                 </div>
-                {valueProducts.map((product) => (
-                  <CartProductCard
+                {valueProducts?.map((product, index) => (
+                  <ValueAgentProductBasket
                     product={product}
                     nomenclatures={[]}
-                    key={product.id}
+                    key={`${product.id}-${index}`}
                     deletable={isAvailableToRemove}
                     onDelete={onClickProductToRemove}
                     detailsButton
                   />
                 ))}
+                {amountProducts &&
+                  amountProducts.map((amountProduct, index) => (
+                    <AmountAgentProductBasketGroup
+                      amountProductGroup={amountProduct}
+                      country={meansOfTransportAndCountry.country}
+                      border={declarationRequest.border}
+                      onDelete={onClickProductToRemove}
+                      deletable={isAvailableToRemove}
+                      onModifyClick={onModifyClick}
+                      key={`${amountProduct.group}-${index}`}
+                    />
+                  ))}
               </div>
 
               <Button
                 type="submit"
                 onClick={() => onSubmit}
-                disabled={!valueProducts.length}
+                disabled={
+                  (!valueProducts?.length && !amountProducts?.length) ||
+                  !!amountProducts?.find((amountProduct) => amountProduct.isOverMaximum)
+                }
                 className={{ 'self-center': true }}
               >
                 Valider les marchandises
@@ -219,6 +274,14 @@ const Declaration = () => {
       <ModalUnderConstruction
         open={openFavoriteDownModal}
         onClose={() => setOpenFavoriteDownModal(false)}
+      />
+
+      <ModalAddProductCartDeclaration
+        open={openModalAddProduct}
+        onClose={() => setOpenModalAddProduct(false)}
+        onAddProduct={onUpdateProduct}
+        currentProduct={selectedProduct}
+        defaultCurrency={defaultCurrency}
       />
     </AgentRoute>
   );

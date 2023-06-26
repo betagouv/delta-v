@@ -18,6 +18,7 @@ export interface DeclarationUseCaseSlice {
   validateDeclarationStep1: (contactDetails: ContactDetails) => void;
   validateDeclarationStep2: (meansOfTransportAndCountry: MeansOfTransportAndCountry) => void;
   addProductCartDeclaration: (product: ShoppingProduct) => void;
+  updateProductCartDeclaration: (product: Partial<ShoppingProduct>) => void;
   removeProductCartDeclaration: (id: string) => void;
   checkProductCartDeclaration: () => void;
   declare: () => void;
@@ -56,7 +57,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
         meansOfTransportAndCountry.country !== 'CH' ||
         state.declaration.appState.declarationRequest.meanOfTransport !== MeansOfTransport.CAR
       ) {
-        newState.declaration.appState.declarationRequest.border = false;
+        newState.declaration.appState.declarationRequest.border = undefined;
       }
       return newState;
     });
@@ -75,7 +76,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
             currency: shoppingProduct.currency,
           }),
         ),
-        border: declarationData.declarationRequest.border,
+        border: declarationData.declarationRequest.border ?? false,
         age: declarationData.declarationRequest.contactDetails.age,
         country: declarationData.declarationRequest.meansOfTransportAndCountry.country,
         meanOfTransport:
@@ -98,6 +99,29 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   addProductCartDeclaration: (shoppingProduct: ShoppingProduct): void => {
     set((state: any) => {
       const newState = { ...state };
+      newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);
+      return newState;
+    });
+    get().declare();
+  },
+  updateProductCartDeclaration: (shoppingProduct: Partial<ShoppingProduct>): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      const isProductInCart =
+        newState.declaration.appState.declarationRequest.shoppingProducts.findIndex(
+          (productInCart: ShoppingProduct) => productInCart.productId === shoppingProduct.productId,
+        );
+      if (isProductInCart >= 0) {
+        newState.declaration.appState.declarationRequest.shoppingProducts[isProductInCart] = {
+          ...newState.declaration.appState.declarationRequest.shoppingProducts[isProductInCart],
+          name: shoppingProduct.name,
+          amount: shoppingProduct.amount,
+          value: shoppingProduct.value,
+          currency: shoppingProduct.currency,
+        };
+
+        return newState;
+      }
       newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);
       return newState;
     });

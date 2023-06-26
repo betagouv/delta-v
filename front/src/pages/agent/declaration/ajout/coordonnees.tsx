@@ -11,7 +11,6 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
-import { DECLARATION_EMPTY_STATE } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
@@ -35,15 +34,14 @@ interface EventChangeRadio {
 }
 
 const Declaration = () => {
-  const { validateDeclarationStep1, declarationRequest } = useStore(
+  const { validateDeclarationStep1, contactDetails } = useStore(
     (state) => ({
       validateDeclarationStep1: state.validateDeclarationStep1,
-      declarationRequest: state.declaration.appState.declarationRequest,
+      contactDetails: state.declaration.appState.declarationRequest.contactDetails,
     }),
     shallow,
   );
 
-  const notEmptyDeclaration = declarationRequest !== DECLARATION_EMPTY_STATE.declarationRequest;
   const router = useRouter();
   const schema = yup.object({
     lastName: yup
@@ -79,6 +77,13 @@ const Declaration = () => {
       ),
   });
 
+  const checkIsAdult = (age: number | undefined) => {
+    if (age === undefined) {
+      return undefined;
+    }
+    return age >= 18 ? 'true' : 'false';
+  };
+
   const {
     handleSubmit,
     register,
@@ -89,19 +94,15 @@ const Declaration = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      adult: notEmptyDeclaration
-        ? declarationRequest.contactDetails.age >= 18
-          ? 'true'
-          : 'false'
-        : undefined,
-      notAdultAge: notEmptyDeclaration ? declarationRequest.contactDetails.age : undefined,
-      lastName: notEmptyDeclaration ? declarationRequest.contactDetails.lastName : undefined,
-      firstName: notEmptyDeclaration ? declarationRequest.contactDetails.firstName : undefined,
-      address: notEmptyDeclaration ? declarationRequest.contactDetails.address : undefined,
-      city: notEmptyDeclaration ? declarationRequest.contactDetails.city : undefined,
-      postalCode: notEmptyDeclaration ? declarationRequest.contactDetails.postalCode : undefined,
-      email: notEmptyDeclaration ? declarationRequest.contactDetails.email : undefined,
-      phoneNumber: notEmptyDeclaration ? declarationRequest.contactDetails.phoneNumber : undefined,
+      adult: checkIsAdult(contactDetails.age),
+      notAdultAge: contactDetails.age,
+      lastName: contactDetails.lastName,
+      firstName: contactDetails.firstName,
+      address: contactDetails.address,
+      city: contactDetails.city,
+      postalCode: contactDetails.postalCode,
+      email: contactDetails.email,
+      phoneNumber: contactDetails.phoneNumber,
     },
   });
 

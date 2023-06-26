@@ -1,5 +1,5 @@
 import { Routing } from './const';
-import { DeclarationRequest, MeansOfTransport } from '@/stores/declaration/appState.store';
+import { DeclarationRequest } from '@/stores/declaration/appState.store';
 
 export interface RouteLevel {
   path: string;
@@ -27,20 +27,20 @@ export const routes: RouteLevel[] = [
 
 export const getLevelWithData = (declarationRequest: DeclarationRequest): number => {
   if (
-    declarationRequest.contactDetails.firstName === '' ||
-    declarationRequest.contactDetails.lastName === '' ||
-    declarationRequest.contactDetails.address === '' ||
-    declarationRequest.contactDetails.city === '' ||
-    declarationRequest.contactDetails.postalCode === '' ||
-    declarationRequest.contactDetails.email === '' ||
-    declarationRequest.contactDetails.phoneNumber === '' ||
-    declarationRequest.contactDetails.age === 0
+    declarationRequest.contactDetails.firstName === undefined ||
+    declarationRequest.contactDetails.lastName === undefined ||
+    declarationRequest.contactDetails.address === undefined ||
+    declarationRequest.contactDetails.city === undefined ||
+    declarationRequest.contactDetails.postalCode === undefined ||
+    declarationRequest.contactDetails.email === undefined ||
+    declarationRequest.contactDetails.phoneNumber === undefined ||
+    declarationRequest.contactDetails.age === undefined
   ) {
     return 1;
   }
   if (
-    declarationRequest.meansOfTransportAndCountry.meansOfTransport === MeansOfTransport.OTHER &&
-    declarationRequest.meansOfTransportAndCountry.country === 'FR'
+    declarationRequest.meansOfTransportAndCountry.meansOfTransport === undefined &&
+    declarationRequest.meansOfTransportAndCountry.country === undefined
   ) {
     return 2;
   }
