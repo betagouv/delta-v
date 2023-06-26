@@ -3,6 +3,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 
+import { ModalResumeDeclaration } from '@/components/autonomous/ModalResumeDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { LinkWithIcon } from '@/components/common/LinkWithIcon';
 import { SvgIcon } from '@/components/common/SvgIcon';
@@ -10,8 +11,10 @@ import { Typography } from '@/components/common/Typography';
 import { QrCodeScanner } from '@/components/input/StandardInputs/QrCodeScanner';
 import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
+import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
 import { MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
+import { getLevelWithData } from '@/utils/declaration';
 
 const SCAN_HEIGHT = '268px';
 const SCAN_WIDTH = '357px';
@@ -19,9 +22,22 @@ const SCAN_WIDTH = '357px';
 const Index = () => {
   const router = useRouter();
   const [mode, setMode] = useState('tools');
+  const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
 
   const getIdByQRCode = (qrCode: string) => {
     console.log(qrCode);
+  };
+
+  const { declarationRequest } = useStore((state) => ({
+    declarationRequest: state.declaration.appState.declarationRequest,
+  }));
+
+  const openDeclaration = () => {
+    if (getLevelWithData(declarationRequest) === 1) {
+      router.push(RoutingAgent.declaration);
+    } else {
+      setOpenModalResumeDeclaration(true);
+    }
   };
 
   return (
@@ -66,15 +82,23 @@ const Index = () => {
           {mode === 'tools' ? (
             <div className="mb-1 flex flex-col gap-6 mt-7">
               {MENU_AGENT_ITEMS.map((item) => (
-                <LinkWithIcon
-                  href={item.path}
-                  key={item.title}
-                  svgName={item.svgIcon}
-                  name={item.title}
-                  withBgColor={item.id === 'declaration'}
+                <div
+                  onClick={() => {
+                    if (item.openDeclarationResumeModal) {
+                      openDeclaration();
+                    }
+                  }}
                 >
-                  {item.title}
-                </LinkWithIcon>
+                  <LinkWithIcon
+                    href={item.path}
+                    key={item.title}
+                    svgName={item.svgIcon}
+                    name={item.title}
+                    withBgColor={item.id === 'declaration'}
+                  >
+                    {item.title}
+                  </LinkWithIcon>
+                </div>
               ))}
             </div>
           ) : (
@@ -95,6 +119,10 @@ const Index = () => {
             </div>
           )}
         </div>
+        <ModalResumeDeclaration
+          open={openModalResumeDeclaration}
+          onClose={() => setOpenModalResumeDeclaration(false)}
+        />
       </MainAgent>
     </AgentRoute>
   );

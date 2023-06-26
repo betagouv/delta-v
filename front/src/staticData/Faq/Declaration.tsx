@@ -8,8 +8,10 @@ export const Declaration: DataElement[] = [
     answer: (
       <p>
         Une déclaration est la formalité où vous indiquez à l’administration des douanes les
-        marchandises que vous transportez sur vous et dans vos bagages personnels.\n\nCes produits
-        peuvent avoir été achetés ou vous avoir été offerts à l’étranger.
+        marchandises que vous transportez sur vous et dans vos bagages personnels.
+        <br />
+        <br />
+        Ces produits peuvent avoir été achetés ou vous avoir été offerts à l’étranger.
       </p>
     ),
   },
@@ -70,8 +72,10 @@ export const Declaration: DataElement[] = [
     answer: (
       <p>
         Je dois effectuer ma déclaration auprès des services douaniers dès mon arrivée sur le
-        territoire français.\n\n Si je ne croise pas d’agents des douanes au passage de la
-        frontière, je peux également me rapprocher des{' '}
+        territoire français.
+        <br />
+        <br /> Si je ne croise pas d’agents des douanes au passage de la frontière, je peux
+        également me rapprocher des{' '}
         <Link
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"

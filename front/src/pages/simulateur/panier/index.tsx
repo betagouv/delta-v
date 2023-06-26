@@ -116,7 +116,17 @@ const Panier = () => {
                 </Typography>
               </div>
               {amountProduct.products.map((product) => (
-                <AmountProductBasket containError={amountProduct.isOverMaximum} product={product} />
+                <AmountProductBasket
+                  containError={amountProduct.isOverMaximum}
+                  product={product}
+                  onDeleteProduct={() => {
+                    idToDelete.current = product.customId;
+                    setOpenActionModal(true);
+                  }}
+                  onUpdateProduct={() => {
+                    router.push(`/simulateur/panier/modifier/${product.customId}`);
+                  }}
+                />
               ))}
               {amountProduct.isOverMaximum && (
                 <div className="flex flex-row gap-1 text-red-700">

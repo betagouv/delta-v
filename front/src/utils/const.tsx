@@ -117,12 +117,20 @@ export const MENU_ITEMS: TabItem[] = [
   },
 ];
 
-export const MENU_AGENT_ITEMS = [
+interface MenuAgentItem {
+  id: string;
+  title: string;
+  path?: string;
+  svgIcon: SvgNames;
+  openDeclarationResumeModal?: boolean;
+}
+
+export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
   {
     id: 'declaration',
     title: 'Créer une déclaration',
-    path: RoutingAgent.createDeclaration,
     svgIcon: 'categoryCreateDeclaration' as SvgNames,
+    openDeclarationResumeModal: true,
   },
   {
     id: 'nomenclature',
