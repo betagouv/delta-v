@@ -1,0 +1,7 @@
+entity: DeclarationEntity
+processor: ./processor/declarationProcessor
+items:
+  declaration{1..50}:
+    authorId: '9b35fa42-536d-40fa-81fb-ab4f71032ccb'
+    authorEmail: 'user.agent@gmail.com'
+
