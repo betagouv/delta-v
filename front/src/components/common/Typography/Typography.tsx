@@ -93,7 +93,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     [getTruncate(truncate)]: truncate,
     [getTextTransform(transform)]: transform,
   });
-  const CustomTag = tag ?? 'p';
+  const CustomTag = tag ?? 'span';
 
   return (
     <CustomTag onClick={onClick} className={className} data-testid="typography-element">

@@ -60,7 +60,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
       >
         {items.map((item, index) =>
           displayType === 'card' ? (
-            <div>
+            <div key={index}>
               <RadioCardElement
                 value={item.title}
                 svgIcon={item.svgNames}

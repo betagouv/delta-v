@@ -12,7 +12,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: ['tests/**/*', 'tests/*'],
+        devDependencies: ['tests/**/*', 'tests/*', 'fixtures/processor/*'],
       },
     ],
   },
