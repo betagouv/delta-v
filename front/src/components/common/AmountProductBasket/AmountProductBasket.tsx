@@ -11,8 +11,8 @@ import { AmountProductInterface } from '@/stores/simulator/appState.store';
 interface AmountProductBasketProps {
   containError?: boolean;
   product: AmountProductInterface;
-  onUpdateProduct: () => void;
-  onDeleteProduct: () => void;
+  onUpdateProduct?: () => void;
+  onDeleteProduct?: () => void;
 }
 
 export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
