@@ -22,9 +22,22 @@ export const DeclarationJourneyDetails = ({
 }: DeclarationJourneyDetailsProps) => {
   return (
     <div className="grid h-full w-full grid-cols-2 gap-y-4">
-      <DataInfoItem label="Pays" value={country} size="text-sm" isRequired />
+      <DataInfoItem
+        label="Pays"
+        value={country}
+        labelSize="text-sm"
+        valueSize="text-sm"
+        isRequired
+      />
       <DataInfoItem label="Transport" value={transport} svgName={transport} isRequired />
-      {journeyId && <DataInfoItem label="Numero de vol" value={journeyId} size="text-sm" />}
+      {journeyId && (
+        <DataInfoItem
+          label="Numero de vol"
+          value={journeyId}
+          labelSize="text-sm"
+          valueSize="text-sm"
+        />
+      )}
     </div>
   );
 };

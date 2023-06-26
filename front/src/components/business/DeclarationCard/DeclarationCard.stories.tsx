@@ -32,7 +32,8 @@ export const Playground: Story = {
 };
 
 export const Base = () => (
-  <div>
+  <div className="flex flex-col gap-5">
     <DeclarationCard {...DECLARATION_CARD_DATA} />
+    <DeclarationCard {...DECLARATION_CARD_DATA} verificationButton={false} />
   </div>
 );
