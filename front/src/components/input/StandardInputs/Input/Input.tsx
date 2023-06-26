@@ -140,13 +140,14 @@ export const Input: React.FC<IInputOptions> = ({
         <div
           className={twMerge(
             classNames({
-              'pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4':
+              'pointer-events-none absolute inset-y-0 right-0 flex h-fit w-5 items-center mr-4 mt-auto mb-auto':
                 true,
               'pointer-events-auto cursor-pointer': onTrailingSvgIconClick,
             }),
           )}
+          onClick={onTrailingSvgIconClick}
         >
-          <SvgIcon name={trailingSvgIcon} onClick={onTrailingSvgIconClick} />
+          <SvgIcon name={trailingSvgIcon} />
         </div>
       )}
       {trailingAddons && (

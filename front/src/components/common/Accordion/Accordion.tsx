@@ -49,9 +49,9 @@ export const Accordion: React.FC<AccordionProps> = ({
           </div>
           <div className="ml-4 h-4 w-4">
             {open ? (
-              <Icon name="chevron-thin-up" size="xl" />
+              <Icon name="chevron-thin-up" size="lg" />
             ) : (
-              <Icon name="chevron-thin-down" size="xl" />
+              <Icon name="chevron-thin-down" size="lg" />
             )}
           </div>
         </button>
