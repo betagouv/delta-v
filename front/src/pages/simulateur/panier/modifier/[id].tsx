@@ -103,6 +103,7 @@ const UpdateProductBasket = () => {
                 control={control}
                 register={register}
                 errors={errors as FieldErrors}
+                templateRole="user"
               />
             </div>
           </form>

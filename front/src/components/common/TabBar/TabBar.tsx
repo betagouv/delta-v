@@ -26,9 +26,7 @@ export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarPr
     const onClickMenu = () => {
       if (simulator) {
         openSimulator();
-      }
-
-      if (path) {
+      } else if (path) {
         router.push(path);
       }
     };

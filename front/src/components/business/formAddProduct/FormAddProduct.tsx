@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { Alpha2Code } from 'i18n-iso-countries';
@@ -77,11 +77,18 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
     shallow,
   );
 
-  const { border, country } = getCurrentRequest({
-    templateRole,
-    declarationRequest,
-    simulatorRequest,
-  });
+  const [border, setBorder] = useState<boolean | undefined>();
+  const [country, setCountry] = useState<Alpha2Code | undefined>();
+
+  useEffect(() => {
+    const { border: currentBorder, country: currentCountry } = getCurrentRequest({
+      templateRole,
+      declarationRequest,
+      simulatorRequest,
+    });
+    setBorder(currentBorder);
+    setCountry(currentCountry);
+  }, [templateRole, declarationRequest, simulatorRequest]);
 
   const product = productId ? findProduct(productId) : undefined;
 

@@ -4,6 +4,7 @@ import cs from 'classnames';
 import dayjs from 'dayjs';
 
 import { Icon } from '@/components/common/Icon';
+import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 
@@ -26,12 +27,17 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
   return (
     <div
       className={cs(
-        'relative grid rounded-xl border border-secondary-300 grid-cols-[40px_1fr] w-full h-28 p-3',
+        'relative grid rounded-xl border border-secondary-300 grid-cols-[95px_1fr] w-full h-28 p-3',
       )}
       onClick={onClick ? () => onClick(product) : undefined}
     >
-      <div className="h-7 w-7 bg-gray-200" />
-      <div className="grid-rows-[1fr_3fr] overflow-hidden">
+      <div className="grid-rows-1 flex flex-col justify-center items-center">
+        <div className="h-12 w-12 flex justify-self-center">
+          <SvgIcon name={product.icon ?? 'categoryOther'} />
+        </div>
+      </div>
+
+      <div className="grid-rows-1 overflow-hidden">
         <div className="flex flex-row gap-6">
           {product.nomenclatures &&
             product.nomenclatures.map((item, index) => (

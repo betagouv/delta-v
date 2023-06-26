@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -15,11 +15,21 @@ const QuittancePage = () => {
   const router = useRouter();
   const [page, setPage] = useState<number>(0);
   const [declarations, setDeclarations] = useState<DeclarationResponse[]>([]);
+
+  const addDeclarations = (apiDeclarationsData: DeclarationResponse[]): void => {
+    const tmpDeclarations = [...declarations, ...apiDeclarationsData];
+    const uniqueArray = tmpDeclarations.filter(
+      (v, i, a) => a.findIndex((t) => JSON.stringify(t) === JSON.stringify(v)) === i,
+    );
+    setDeclarations(uniqueArray);
+  };
+
   const [queryData, setQueryData] = useState<UseDeclarationParams>({
     search: null,
     searchPublicId: null,
     limit: Constants.MINI_TABLE_LIMIT,
     offset: page * Constants.MINI_TABLE_LIMIT,
+    onSuccess: (data) => addDeclarations(data),
   });
 
   const { isLoading, data: apiDeclarations } = useDeclarations(queryData);
@@ -28,19 +38,8 @@ const QuittancePage = () => {
     router.push(`/agent/declaration/${id}`);
   };
 
-  useEffect(() => {
-    if (apiDeclarations) {
-      const tmpDeclarations = [...declarations, ...apiDeclarations];
-      const uniqueArray = tmpDeclarations.filter(
-        (v, i, a) => a.findIndex((t) => JSON.stringify(t) === JSON.stringify(v)) === i,
-      );
-      setDeclarations(uniqueArray);
-    }
-  }, [apiDeclarations]);
-
   const onValidateFilter = (data: FilterBarForm) => {
     setPage(0);
-    setDeclarations([]);
     setQueryData({
       ...queryData,
       search: data.search,
@@ -50,6 +49,7 @@ const QuittancePage = () => {
         data.meanOfTransport.length > 0 ? data.meanOfTransport.join(',') : undefined,
       startDate: data.startDate ?? undefined,
       endDate: data.endDate ?? undefined,
+      onSuccess: (dataSuccess) => setDeclarations(dataSuccess),
     });
   };
 
@@ -66,6 +66,7 @@ const QuittancePage = () => {
     setQueryData({
       ...queryData,
       offset: (page + 1) * Constants.MINI_TABLE_LIMIT,
+      onSuccess: (data) => addDeclarations(data),
     });
   };
 
@@ -81,7 +82,7 @@ const QuittancePage = () => {
         withTitle
         titleHeader="Déclaration"
       >
-        <div className="flex flex-col px-4">
+        <div className="flex flex-col px-4 pb-4">
           {isLoading ? (
             <div>Loading...</div>
           ) : (

@@ -52,7 +52,12 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       currency: defaultCurrency,
       ...getDefaultValues(steps),
     },
-    resolver: yupResolver(getSchema(!!currentProduct.amountProduct)),
+    resolver: yupResolver(
+      getSchema({
+        amountProduct: !!currentProduct.amountProduct,
+        withName: templateRole === 'agent',
+      }),
+    ),
   });
 
   useEffect(() => {

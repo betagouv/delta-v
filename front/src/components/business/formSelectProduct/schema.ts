@@ -35,9 +35,16 @@ const getCurrency = (currency: boolean): any => {
   return string().required('Veuillez séléctionner la devise.');
 };
 
-export const getSchema = (amountProduct = false, withName = false) => {
+interface GetSchema {
+  amountProduct: boolean;
+  withName?: boolean;
+}
+
+export const getSchema = ({ amountProduct, withName }: GetSchema) => {
   return object({
-    name: withName ? string().required() : string().optional(),
+    name: withName
+      ? string().required('Vous devez renseigner le nom du produit.')
+      : string().optional(),
     value: getValue(amountProduct),
     currency: getCurrency(amountProduct),
   }).required();

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 
 import {
   useChangeStatusOfDeclarationMutation,
@@ -36,6 +35,7 @@ const DeclarationSearch = () => {
   const onClose = () => {
     setOpenDownModal(false);
     setOpenValidateDeclarationModal(false);
+    setOpenPayDeclarationModal(false);
     setOpenRejectDeclarationModal(false);
   };
 
@@ -55,9 +55,6 @@ const DeclarationSearch = () => {
     onSuccess: () => {
       onClose();
       getDeclarationMutation.mutate(id);
-      toast.success(
-        "Votre signalement a bien été envoyé. Vous serez notifié dès qu'il sera traité.",
-      );
     },
   });
 
@@ -97,48 +94,36 @@ const DeclarationSearch = () => {
     switch (status) {
       case DeclarationStatus.VALIDATED:
         return (
-          <div className="flex flex-col gap-2 w-[230px] self-center">
-            <Typography size="text-sm" color="black">
-              Voulez-vous valider le paiement cette déclaration ?
-            </Typography>
-            <Button fullWidth onClick={() => setOpenPayDeclarationModal(true)}>
-              Valider
-            </Button>
+          <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
+            <div className="flex flex-col gap-2 w-[230px] self-center">
+              <Typography size="text-sm" color="black">
+                Voulez-vous valider le paiement cette déclaration ?
+              </Typography>
+              <Button fullWidth onClick={() => setOpenPayDeclarationModal(true)}>
+                Valider
+              </Button>
+            </div>
           </div>
         );
       case DeclarationStatus.PAID:
-        return (
-          <div className="flex flex-col gap-2 w-[230px] self-center px-3 py-2 border-primary-600 border rounded-md">
-            <Typography size="text-sm" color="primary" textPosition="text-center">
-              Cette déclaration à été payée
-            </Typography>
-          </div>
-        );
       case DeclarationStatus.ERROR:
-        return (
-          <Typography size="text-sm" color="red" textPosition="text-center">
-            Cette déclaration à été refusée par l'agent dû à une erreur
-          </Typography>
-        );
       case DeclarationStatus.LITIGATION:
-        return (
-          <Typography size="text-sm" color="red" textPosition="text-center">
-            Cette déclaration à été refusée par l'agent dû à un litige
-          </Typography>
-        );
+        return <></>;
       default:
         return (
-          <div className="flex flex-col gap-2">
-            <Button fullWidth onClick={() => setOpenValidateDeclarationModal(true)}>
-              Valider la déclaration
-            </Button>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => setOpenRejectDeclarationModal(true)}
-            >
-              Déclaration non conforme
-            </Button>
+          <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
+            <div className="flex flex-col gap-2">
+              <Button fullWidth onClick={() => setOpenValidateDeclarationModal(true)}>
+                Valider la déclaration
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={() => setOpenRejectDeclarationModal(true)}
+              >
+                Déclaration non conforme
+              </Button>
+            </div>
           </div>
         );
     }
@@ -185,9 +170,7 @@ const DeclarationSearch = () => {
                 Ajouter un commentaire
               </button>
             </div>
-            <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
-              {renderValidateDeclarationModal(validateDeclarationResponse.status)}
-            </div>
+            {renderValidateDeclarationModal(validateDeclarationResponse.status)}
             <ModalUnderConstruction open={openDownModal} onClose={() => setOpenDownModal(false)} />
           </div>
         )}

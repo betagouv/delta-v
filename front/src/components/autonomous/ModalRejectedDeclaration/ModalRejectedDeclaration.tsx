@@ -34,10 +34,10 @@ export const ModalRejectedDeclaration: React.FC<ModalRejectedDeclarationProps> =
             </Typography>
           </div>
           <div className="flex flex-1 flex-col items-center mt-5 gap-3">
-            <Button onClick={onRejectedForError} disabled={isLoading} fullWidth>
+            <Button onClick={onRejectedForLitigation} disabled={isLoading} fullWidth>
               Contentieux
             </Button>
-            <Button onClick={onRejectedForLitigation} disabled={isLoading} fullWidth>
+            <Button onClick={onRejectedForError} disabled={isLoading} fullWidth>
               Erreur de l’usager
             </Button>
             <Typography

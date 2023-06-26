@@ -50,6 +50,7 @@ export const FilterBar = ({
   });
 
   const onSubmit = (data: FilterBarForm) => {
+    setOpen(false);
     onValidateFilter(data);
   };
 

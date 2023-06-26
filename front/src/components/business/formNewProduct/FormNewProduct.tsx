@@ -115,6 +115,7 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
           register={register}
           errors={errors as FieldErrors}
           submitted={submitted}
+          templateRole="user"
         />
       </div>
     </form>

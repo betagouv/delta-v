@@ -37,7 +37,7 @@ export const ModalPaidDeclaration: React.FC<ModalPaidDeclarationProps> = ({
             </Typography>
           </div>
           <div className="mt-5 w-[190px]">
-            <Typography size="text-xs" color="secondary" textPosition="text-center">
+            <Typography size="text-xs" color="secondary" textPosition="text-center" tag="p">
               La déclaration est validée, vous pouvez procéder à l’encaissement de la déclaration.
             </Typography>
           </div>

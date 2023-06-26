@@ -25,6 +25,7 @@ export type UseDeclarationParams = {
   meanOfTransports?: string;
   startDate?: Date;
   endDate?: Date;
+  onSuccess?: (data: DeclarationResponse[]) => void;
 };
 
 export const useCreateDeclarationMutation = ({
@@ -89,6 +90,7 @@ export const useDeclarations = ({
   startDate,
   endDate,
   searchPublicId = null,
+  onSuccess,
 }: UseDeclarationParams) => {
   return useQuery(
     [
@@ -115,6 +117,11 @@ export const useDeclarations = ({
       }),
     {
       keepPreviousData: true,
+      onSuccess(data: DeclarationResponse[]) {
+        if (onSuccess) {
+          onSuccess(data);
+        }
+      },
     },
   );
 };

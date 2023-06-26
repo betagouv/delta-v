@@ -74,6 +74,7 @@ export const DeclarationRepository: DeclarationRepositoryInterface = AppDataSour
       .whereStartDate(startDate)
       .whereEndDate(endDate)
       .whereSearchPublicId(searchPublicId)
+      .orderBy('declaration.versionDate', 'DESC')
       .limit(limit)
       .offset(offset);
 

@@ -22,10 +22,10 @@ export const FilterGroup = ({ title, filters, control, name, rules }: FilterGrou
   });
 
   const handleSelectFilter = (id: string) => {
-    const selectedValues = field.value;
+    const selectedValues: string[] = field.value;
     if (selectedValues.includes(id)) {
       selectedValues.splice(selectedValues.indexOf(id), 1);
-      field.onChange(id);
+      field.onChange(selectedValues);
     } else {
       field.onChange([...selectedValues, id]);
     }

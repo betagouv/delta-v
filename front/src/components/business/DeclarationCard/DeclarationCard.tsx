@@ -31,6 +31,7 @@ export type DeclarationCardProps = {
 
 export const DeclarationCard = ({
   id,
+  publicId,
   date,
   firstName,
   lastName,
@@ -75,7 +76,7 @@ export const DeclarationCard = ({
       <div className="grid w-full grid-cols-2">
         <DataInfoItem
           label="Numéro de déclaration"
-          value={`${id.slice(0, 10)} ${id.slice(10)}`}
+          value={`${publicId.slice(0, 10)} ${publicId.slice(10)}`}
           labelSize="text-2xs"
           valueSize="text-sm"
         />
