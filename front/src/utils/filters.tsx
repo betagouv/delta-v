@@ -7,10 +7,12 @@ export interface FilterOptions {
   id: string;
 }
 
-export const FILTER_STATUS: FilterOptions[] = Object.values(DeclarationStatus).map((value) => ({
-  value: getDeclarationStatusLabel(value.toLocaleLowerCase() as DeclarationStatus),
-  id: value.toLocaleLowerCase() as DeclarationStatus,
-}));
+export const FILTER_STATUS: FilterOptions[] = Object.values(DeclarationStatus)
+  .filter((item) => item !== DeclarationStatus.DRAFT)
+  .map((value) => ({
+    value: getDeclarationStatusLabel(value.toLocaleLowerCase() as DeclarationStatus),
+    id: value.toLocaleLowerCase() as DeclarationStatus,
+  }));
 
 export const FILTER_MEANS_OF_TRANSPORT: FilterOptions[] = Object.values(MeansOfTransport).map(
   (value) => ({

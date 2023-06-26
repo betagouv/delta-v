@@ -17,12 +17,11 @@ export enum RoutingAgent {
   home = '/',
   createDeclaration = '/agent/declaration/ajout/coordonnees',
   nomenclature = '/agent/nomenclature',
-  declarations = '/agent/declarations',
+  declarations = '/agent/declaration',
   actualities = '/agent/actualites',
   account = '/agent/mon-compte',
   contactUs = '/agent/contact',
   qrCodeManuel = '/agent/qr-code-manuel',
-  declaration = '/agent/declaration',
 }
 
 export enum RoutingAuthentication {

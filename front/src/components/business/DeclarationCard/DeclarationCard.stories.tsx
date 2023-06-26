@@ -13,7 +13,9 @@ export default meta;
 type Story = StoryObj<typeof DeclarationCard>;
 
 const DECLARATION_CARD_DATA: DeclarationCardProps = {
-  id: '458YT56PM00',
+  id: 'eca48f46-548c-4e87-87cc-564fe01de67d',
+  publicId: '458YT56PM00',
+  onClick: () => console.log('click'),
   date: new Date(),
   lastName: 'DOE',
   firstName: 'John',

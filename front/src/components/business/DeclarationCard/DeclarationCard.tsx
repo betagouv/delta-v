@@ -16,11 +16,13 @@ dayjs.locale('fr');
 
 export type DeclarationCardProps = {
   id: string;
+  publicId: string;
   date?: Date;
   firstName: string;
   lastName: string;
   transport: MeansOfTransport;
   status: DeclarationStatus;
+  onClick: (id: string) => void;
   verificationButton?: boolean;
   verificationLink?: string;
   newLimit?: () => void;
@@ -34,6 +36,7 @@ export const DeclarationCard = ({
   lastName,
   transport,
   status,
+  onClick,
   verificationButton,
   newLimit,
   isLast,
@@ -60,6 +63,7 @@ export const DeclarationCard = ({
         'flex flex-col rounded-xl border border-gray-300 px-5 py-4 gap-1': true,
       })}
       ref={cardRef}
+      onClick={() => onClick(id)}
     >
       {verificationButton && (
         <span className="pb-1.5">
