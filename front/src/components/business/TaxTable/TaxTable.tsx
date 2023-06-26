@@ -10,34 +10,35 @@ export interface ITaxTableProps {
 export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loading }) => {
   const renderLine = (detailedProduct: DetailedProduct) => {
     return (
-      <>
-        <div className="p-5 border border-secondary-100 bg-white rounded-xl flex flex-col justify-start gap-2">
-          <Typography color="black" size="text-xs" weight="bold">
-            {detailedProduct.customName}
+      <div
+        className="p-5 border border-secondary-100 bg-white rounded-xl flex flex-col justify-start gap-2"
+        key={detailedProduct.id}
+      >
+        <Typography color="black" size="text-xs" weight="bold">
+          {detailedProduct.customName}
+        </Typography>
+        {detailedProduct.name !== detailedProduct.customName && (
+          <Typography color="black" size="text-xs">
+            {detailedProduct.name}
           </Typography>
-          {detailedProduct.name !== detailedProduct.customName && (
-            <Typography color="black" size="text-xs">
-              {detailedProduct.name}
-            </Typography>
-          )}
-          <div className="flex flex-row justify-between w-3/6">
-            <Typography color="black" size="text-xs">
-              Prix d'achat
-            </Typography>
-            <Typography color="black" size="text-xs">
-              {detailedProduct.unitPrice} €
-            </Typography>
-          </div>
-          <div className="te flex flex-row justify-between w-full">
-            <Typography size="text-xs" weight="bold">
-              Taxes dues
-            </Typography>
-            <Typography size="text-xs" weight="bold">
-              {detailedProduct.unitTaxes} €
-            </Typography>
-          </div>
+        )}
+        <div className="flex flex-row justify-between w-3/6">
+          <Typography color="black" size="text-xs">
+            Prix d'achat
+          </Typography>
+          <Typography color="black" size="text-xs">
+            {detailedProduct.unitPrice} €
+          </Typography>
         </div>
-      </>
+        <div className="te flex flex-row justify-between w-full">
+          <Typography size="text-xs" weight="bold">
+            Taxes dues
+          </Typography>
+          <Typography size="text-xs" weight="bold">
+            {detailedProduct.unitTaxes} €
+          </Typography>
+        </div>
+      </div>
     );
   };
 
