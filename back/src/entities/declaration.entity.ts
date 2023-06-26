@@ -83,7 +83,7 @@ export class DeclarationEntity implements DeclarationEntityInterface {
   @Column({ type: 'jsonb', select: false })
   products: ProductDeclaration[];
 
-  @Column({ type: 'jsonb', select: false, nullable: true })
+  @Column({ type: 'jsonb', select: false, nullable: true, default: [] })
   history?: DeclarationVersion[];
 
   @Column({ type: 'timestamp' })
