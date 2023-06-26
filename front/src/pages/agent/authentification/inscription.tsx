@@ -68,11 +68,7 @@ const RegisterPage = () => {
     registerMutation.mutate(data);
   };
 
-  const [passwordVisible, setPasswwordVisible] = useState(false);
-
-  const handleIconClick = () => {
-    setPasswwordVisible(!passwordVisible);
-  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
     <MainAuth
@@ -107,7 +103,7 @@ const RegisterPage = () => {
                 register={register('password')}
                 error={errors?.password?.message ?? getErrorFields('password', apiError)}
                 trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
-                onTrailingSvgIconClick={handleIconClick}
+                onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
               />
               <div className="ml-3">
                 <Typography color="light-gray" size="text-2xs">

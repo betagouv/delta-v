@@ -62,11 +62,7 @@ const LoginPage = () => {
     loginMutation.mutate(data);
   };
 
-  const [passwordVisible, setPasswwordVisible] = useState(false);
-
-  const handleIconClick = () => {
-    setPasswwordVisible(!passwordVisible);
-  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
     <MainAuth
@@ -103,7 +99,7 @@ const LoginPage = () => {
               register={register('password')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
               trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
-              onTrailingSvgIconClick={handleIconClick}
+              onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
             />
           </div>
           {apiError?.message && (

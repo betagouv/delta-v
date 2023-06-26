@@ -73,17 +73,8 @@ const ResetPasswordPage = () => {
     }
   };
 
-  const [passwordVisible, setPasswwordVisible] = useState(false);
-
-  const handleIconClick = () => {
-    setPasswwordVisible(!passwordVisible);
-  };
-
-  const [confirmPasswordVisible, setConfirmPasswwordVisible] = useState(false);
-
-  const handleConfirmIconClick = () => {
-    setConfirmPasswwordVisible(!confirmPasswordVisible);
-  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   return (
     <MainAuth
@@ -112,7 +103,7 @@ const ResetPasswordPage = () => {
               register={register('password')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
               trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
-              onTrailingSvgIconClick={handleIconClick}
+              onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
             />
             <div className="ml-3">
               <Typography color="light-gray" size="text-2xs">
@@ -130,7 +121,7 @@ const ResetPasswordPage = () => {
               register={register('confirmPassword')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
               trailingSvgIcon={!confirmPasswordVisible ? 'visibilityOff' : 'visibilityOn'}
-              onTrailingSvgIconClick={handleConfirmIconClick}
+              onTrailingSvgIconClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
             />
             {password && confirmPassword && (
               <div className="ml-3">
