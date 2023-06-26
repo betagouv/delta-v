@@ -6,7 +6,7 @@ import { AmountProduct } from '@/model/product';
 import { AmountProductInterface, GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
 export default {
-  title: 'Components/Common/AmountProductBasket',
+  title: 'Components/Common/AmountAgentProductBasket',
   component: AmountAgentProductBasket,
 } as Meta;
 
@@ -38,6 +38,7 @@ export const withVariant = (): JSX.Element => (
     <AmountAgentProductBasket
       product={amountProduct}
       onButtonClick={() => console.log('clicked')}
+      onDelete={(id) => console.log(id)}
     />
     <br />
     <p>Product basket with error:</p>
@@ -46,6 +47,16 @@ export const withVariant = (): JSX.Element => (
       product={amountProduct}
       containError
       onButtonClick={() => console.log('clicked')}
+      onDelete={(id) => console.log(id)}
+    />
+    <br />
+    <p>Product basket deletable:</p>
+    <br />
+    <AmountAgentProductBasket
+      product={amountProduct}
+      onButtonClick={() => console.log('clicked')}
+      deletable
+      onDelete={(id) => console.log(id)}
     />
     <br />
   </div>
