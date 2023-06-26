@@ -43,7 +43,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
             ? dayjs(endDateField.value).subtract(1, 'day').toDate()
             : dayjs(new Date()).subtract(1, 'day').toDate()
         }
-        placeholderText="Du : jj/mm/aaaa"
+        placeholderText="Du: jj/mm/aaaa"
         className={cs({
           'justify-center max-w-[157px] rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:italic placeholder:text-secondary-400':
             true,

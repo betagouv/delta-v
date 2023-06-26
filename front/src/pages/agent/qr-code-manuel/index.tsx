@@ -62,17 +62,17 @@ const ManualQRCodePage = () => {
               data.length === 1 &&
               searchPublicId &&
               data.map((item: any) => (
-                <div onClick={() => onDeclarationClick(item.publicId)} key={item.publicId}>
-                  <DeclarationCard
-                    firstName={item.declarantFirstName}
-                    lastName={item.declarantLastName}
-                    id={item.publicId}
-                    status={item.status}
-                    date={item.versionDate}
-                    transport={item.declarantMeanOfTransport}
-                    key={item.publicId}
-                  />
-                </div>
+                <DeclarationCard
+                  firstName={item.declarantFirstName}
+                  lastName={item.declarantLastName}
+                  id={item.id}
+                  status={item.status}
+                  date={item.versionDate}
+                  transport={item.declarantMeanOfTransport}
+                  key={item.publicId}
+                  publicId={item.publicId}
+                  onClick={onDeclarationClick}
+                />
               ))}
           </div>
           <div className="mt-6 flex flex-col gap-6"></div>

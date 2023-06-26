@@ -224,6 +224,15 @@ svg {
   color: white !important;
   }
 
+.react-datepicker__close-icon  {
+  width: 27px;
+  &::after {
+    background-color: #000091;
+    height: 20px;
+    width: 20px;
+    padding-bottom: 3px;
+  }
+  } 
 .react-datepicker__day--in-selecting-range  {
     border-radius: 0% !important;
     background: white !important;
