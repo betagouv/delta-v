@@ -16,7 +16,7 @@ import { GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
 interface AmountAgentProductBasketGroupProps {
   amountProductGroup: GroupedAmountProduct;
-  country: Alpha2Code;
+  country?: Alpha2Code;
   border?: boolean;
   onModifyClick: (id: string) => void;
   onDelete: (id: string) => void;
