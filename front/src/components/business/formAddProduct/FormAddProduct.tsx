@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import classNames from 'classnames';
+import { Alpha2Code } from 'i18n-iso-countries';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
@@ -13,6 +14,8 @@ import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { getAmountProductType, getUnit } from '@/model/amount';
 import { Currencies } from '@/model/currencies';
+import { DeclarationRequest } from '@/stores/declaration/appState.store';
+import { SimulatorRequest } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 
 interface FormAddProductProps {
@@ -31,6 +34,29 @@ export interface FormSimulatorData {
   currency?: string;
 }
 
+interface GetCurrentRequestOptions {
+  templateRole?: Role;
+  simulatorRequest: SimulatorRequest;
+  declarationRequest: DeclarationRequest;
+}
+
+const getCurrentRequest = ({
+  templateRole,
+  declarationRequest,
+  simulatorRequest,
+}: GetCurrentRequestOptions): { border?: boolean; country?: Alpha2Code } => {
+  if (templateRole === 'user') {
+    return {
+      border: simulatorRequest.border,
+      country: simulatorRequest.country,
+    };
+  }
+  return {
+    border: declarationRequest.border,
+    country: declarationRequest.meansOfTransportAndCountry.country,
+  };
+};
+
 export const FormAddProduct: React.FC<FormAddProductProps> = ({
   register,
   control,
@@ -41,14 +67,21 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   defaultCurrency = 'EUR',
   templateRole,
 }: FormAddProductProps) => {
-  const { currencies, simulatorRequest, findProduct } = useStore(
+  const { currencies, simulatorRequest, declarationRequest, findProduct } = useStore(
     (state) => ({
       currencies: state.currencies.appState.currencies,
       simulatorRequest: state.simulator.appState.simulatorRequest,
+      declarationRequest: state.declaration.appState.declarationRequest,
       findProduct: state.findProduct,
     }),
     shallow,
   );
+
+  const { border, country } = getCurrentRequest({
+    templateRole,
+    declarationRequest,
+    simulatorRequest,
+  });
 
   const product = productId ? findProduct(productId) : undefined;
 
@@ -175,8 +208,8 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           open={openModalInfoProduct}
           onClose={() => setOpenModalInfoProduct(false)}
           productType={productType}
-          country={simulatorRequest.country}
-          border={simulatorRequest.border}
+          country={country}
+          border={border}
         />
       )}
     </div>
