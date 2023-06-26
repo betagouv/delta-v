@@ -1,105 +1,107 @@
 import React, { useEffect, useState } from 'react';
 
-import cs from 'classnames';
+import classnames from 'classnames';
 
 import { Button } from '../Button';
+import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 import { getUnit } from '@/model/amount';
 import { AmountProductInterface } from '@/stores/simulator/appState.store';
 
 interface AmountProductBasketProps {
-  product: AmountProductInterface;
-  nomenclatures?: string[];
   containError?: boolean;
-  onButtonClick?: () => void;
+  product: AmountProductInterface;
+  onUpdateProduct: () => void;
+  onDeleteProduct: () => void;
 }
 
-const getAmountProductBasketColors = (containError: boolean): string => {
-  if (containError === true) {
-    return 'bg-[#FFE8E5] border border-[#CE0500]';
-  }
-
-  return 'bg-[#E3E3FD]';
-};
-
 export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
-  product,
-  nomenclatures,
   containError = false,
-  onButtonClick,
+  product: { name, amount, customName, amountProduct },
+  onUpdateProduct,
+  onDeleteProduct,
 }: AmountProductBasketProps) => {
+  const [open, setOpen] = useState(false);
   const [unit, setUnit] = useState<string>('');
   useEffect(() => {
-    setUnit(getUnit(product.amountProduct) ?? '');
-  }, [product.amountProduct]);
-  const colors = getAmountProductBasketColors(containError);
+    setUnit(getUnit(amountProduct) ?? '');
+  }, [amountProduct]);
+
   return (
-    <div className={cs('relative flex flex-col rounded-md w-full ', colors)}>
-      <div className="flex flex-col gap-5 p-5">
-        <div className="flex flex-col line-clamp-6">
-          {nomenclatures && (
-            <span className="flex flex-row gap-6">
-              {nomenclatures.map((item, index) => (
-                <Typography key={index} color="light-gray" size="text-2xs">
-                  {item}
-                </Typography>
-              ))}
-            </span>
-          )}
-          <Typography
-            color={containError ? 'red' : 'primary'}
-            transform="sentence-case"
-            size="text-sm"
-            weight="bold"
-          >
-            {product.customName}
-          </Typography>
-          <Typography color="black" transform="sentence-case" size="text-xs">
-            {product.name}
+    <div
+      className={classnames({
+        'w-full divide-y-2 divide-dashed rounded-xl border': true,
+        'border-red-700': containError,
+      })}
+      onClick={() => setOpen(!open)}
+    >
+      <div className="p-3 leading-tight">
+        <div className="flex">
+          <div className="mr-2 flex-1 leading-none">
+            <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
+              {name}
+            </Typography>
+          </div>
+          <Typography weight="extrabold" color="secondary" size="text-lg" lineHeight="leading-none">
+            {amount} {unit}
           </Typography>
         </div>
-        {product.amount && (
-          <div className="flex flex-col divide-y divide-black">
-            <div className="grid grid-cols-2 pb-2">
-              <Typography color="black" transform="sentence-case" size="text-xs" weight="bold">
-                {unit}
-              </Typography>
-              <Typography
-                color="black"
-                transform="sentence-case"
-                size="text-xs"
-                textPosition="text-right"
-                weight="bold"
-              >
-                {product.amount}
-              </Typography>
+        <Typography weight="light" color="light-gray" size="text-base">
+          {customName}
+        </Typography>
+      </div>
+      <div className={classnames({ 'divide-y-2 divide-dashed': open })}>
+        <div
+          className={classnames({
+            'overflow-hidden transition-[max-height] duration-300 ease-in-out': true,
+            'max-h-0': !open,
+            'max-h-[1000px]': open,
+          })}
+        >
+          <div className="w-full px-4 py-5">
+            <div className="flex">
+              <div className="flex-1 text-left"></div>
+              <div className="mt-[2px] ml-3">
+                <Icon size="xl" name="chevron-thin-up" />
+              </div>
             </div>
-            <div className="grid grid-cols-2 pt-2">
-              <Typography
-                color={containError ? 'red' : 'primary'}
-                transform="sentence-case"
-                size="text-sm"
-                weight="bold"
-              >
-                {unit}
-              </Typography>
-              <Typography
-                color={containError ? 'red' : 'primary'}
-                transform="sentence-case"
-                size="text-sm"
-                textPosition="text-right"
-                weight="bold"
-              >
-                {product.amount}
-              </Typography>
+            <div className="flex items-end">
+              <div className="flex-1" />
+              <div className="mb-[2px]">
+                <Typography color="secondary" size="text-base">
+                  TOTAL
+                </Typography>
+              </div>
+              <div className="ml-5 content-end">
+                <Typography color="primary" size="text-xl">
+                  {amount} {unit}
+                </Typography>
+              </div>
             </div>
           </div>
-        )}
-        <span className="flex justify-center">
-          <Button color={containError ? 'red' : 'primary'} size="2xs" onClick={onButtonClick}>
-            <span>Modifier</span>
-          </Button>
-        </span>
+        </div>
+        <div className="flex p-3">
+          {!open ? (
+            <>
+              <div className="flex-1 text-left"></div>
+              <Typography weight="normal" color="primary" size="text-lg">
+                {amount} {unit}
+              </Typography>
+              <div className="mt-[2px] ml-3">
+                <Icon size="xl" name="chevron-thin-down" />
+              </div>
+            </>
+          ) : (
+            <div className="flex w-full gap-5">
+              <Button fullWidth variant="outlined" onClick={onUpdateProduct}>
+                Modifier
+              </Button>
+              <Button fullWidth icon="bin" iconPosition="right" onClick={onDeleteProduct}>
+                Supprimer
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

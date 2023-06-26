@@ -1,6 +1,6 @@
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
-import { AmountProductBasket } from './AmountProductBasket';
+import { AmountAgentProductBasket } from './AmountAgentProductBasket';
 import { getAmountCategoryName, getMessageOverMaximumAmount } from '@/model/amount';
 import { GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
@@ -10,7 +10,7 @@ interface AmountProductBasketGroupProps {
   onOverMaximumClick?: () => void;
 }
 
-export const AmountProductBasketGroup: React.FC<AmountProductBasketGroupProps> = ({
+export const AmountAgentProductBasketGroup: React.FC<AmountProductBasketGroupProps> = ({
   amountProductGroup,
   onModifyClick,
   onOverMaximumClick,
@@ -23,7 +23,7 @@ export const AmountProductBasketGroup: React.FC<AmountProductBasketGroupProps> =
         </Typography>
       </div>
       {amountProductGroup.products.map((product) => (
-        <AmountProductBasket
+        <AmountAgentProductBasket
           key={product.id}
           containError={amountProductGroup.isOverMaximum}
           product={product}

@@ -16,6 +16,14 @@ export class DetailedShoppingProduct {
     return this.product.productType === ProductType.value;
   }
 
+  isAmountProduct(): boolean {
+    if (!this.product) {
+      return false;
+    }
+
+    return this.product.productType === ProductType.amount;
+  }
+
   isUncompletedProduct(): boolean {
     return !this.product;
   }
@@ -23,6 +31,10 @@ export class DetailedShoppingProduct {
   getDefaultCurrencyValue(): number {
     if (!this.currency) {
       return 0;
+    }
+
+    if (this.isAmountProduct()) {
+      return this.shoppingProduct.originalValue;
     }
 
     return currency(this.shoppingProduct.originalValue).divide(this.currency.value).value;

@@ -1,9 +1,8 @@
 import { Meta } from '@storybook/react';
 
 import { AmountProductBasket } from './AmountProductBasket';
-import { AmountProductBasketGroup } from './AmountProductBasketGroup';
 import { AmountProduct } from '@/model/product';
-import { AmountProductInterface, GroupedAmountProduct } from '@/stores/simulator/appState.store';
+import { AmountProductInterface } from '@/stores/simulator/appState.store';
 
 export default {
   title: 'Components/Common/AmountProductBasket',
@@ -15,50 +14,21 @@ const amountProduct: AmountProductInterface = {
   customId: '12',
   name: 'Produit',
   customName: 'Produit 1',
-  amount: 500,
-  amountProduct: AmountProduct.tobacco,
-};
-
-const groupedOverMaxProduct: GroupedAmountProduct = {
-  group: 'alcoholIntermediate',
-  products: [amountProduct, amountProduct, amountProduct],
-  isOverMaximum: true,
-};
-
-const groupedProduct: GroupedAmountProduct = {
-  group: 'alcoholIntermediate',
-  products: [amountProduct, amountProduct, amountProduct],
-  isOverMaximum: false,
+  amount: 5,
+  amountProduct: AmountProduct.cigarette,
 };
 
 export const withVariant = (): JSX.Element => (
   <div className="p-3">
-    <p>Base product basket :</p>
-    <br />
-    <AmountProductBasket product={amountProduct} onButtonClick={() => console.log('clicked')} />
-    <br />
-    <p>Product basket with error:</p>
+    <p>Product basket :</p>
     <br />
     <AmountProductBasket
       product={amountProduct}
-      containError
-      onButtonClick={() => console.log('clicked')}
+      // eslint-disable-next-line no-alert
+      onUpdateProduct={() => alert('On Update')}
+      // eslint-disable-next-line no-alert
+      onDeleteProduct={() => alert('On Delete')}
     />
     <br />
-  </div>
-);
-
-export const group = (): JSX.Element => (
-  <div className="gap-12 p-3 flex flex-col">
-    <div>
-      <p>Group over maximum limit :</p>
-      <br />
-      <AmountProductBasketGroup amountProductGroup={groupedOverMaxProduct} />
-    </div>
-    <div>
-      <p>Group under maximum limit :</p>
-      <br />
-      <AmountProductBasketGroup amountProductGroup={groupedProduct} />
-    </div>
   </div>
 );
