@@ -67,12 +67,18 @@ export const group = (): JSX.Element => (
     <div>
       <p>Group over maximum limit :</p>
       <br />
-      <AmountAgentProductBasketGroup amountProductGroup={groupedOverMaxProduct} />
+      <AmountAgentProductBasketGroup
+        amountProductGroup={groupedOverMaxProduct}
+        onDeleteClick={() => console.log('clicked')}
+      />
     </div>
     <div>
       <p>Group under maximum limit :</p>
       <br />
-      <AmountAgentProductBasketGroup amountProductGroup={groupedProduct} />
+      <AmountAgentProductBasketGroup
+        amountProductGroup={groupedProduct}
+        onDeleteClick={() => console.log('clicked')}
+      />
     </div>
   </div>
 );
