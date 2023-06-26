@@ -149,6 +149,8 @@ import LogoDouane from '@/assets/images/Logo-Douane.svg';
 import LogoFrenchDouane from '@/assets/images/Logo-French-Douane.svg';
 import LogoFrenchRepublic from '@/assets/images/Logo-French-Republic.svg';
 import Logo from '@/assets/images/Logo.svg';
+import VisibilityOff from '@/assets/images/VisibilityOff.svg';
+import VisibilityOn from '@/assets/images/VisibilityOn.svg';
 
 export type SvgNames =
   | 'logo'
@@ -299,12 +301,15 @@ export type SvgNames =
   | 'categoryWindsurf'
   | 'categoryWine'
   | 'categoryWood'
+  | 'visibilityOff'
+  | 'visibilityOn'
   | 'categoryWoodenFloor';
 
 export interface ISvgIconProps {
   name: SvgNames;
   height?: number;
   width?: number;
+  onClick?: () => void;
 }
 
 const getSvgFromName = (name: SvgNames): any => {
@@ -607,12 +612,21 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryWood;
     case 'categoryWoodenFloor':
       return CategoryWoodenFloor;
+    case 'visibilityOff':
+      return VisibilityOff;
+    case 'visibilityOn':
+      return VisibilityOn;
     default:
       return CategoryOther;
   }
 };
 
-export const SvgIcon: React.FC<ISvgIconProps> = ({ name, height, width }: ISvgIconProps) => {
+export const SvgIcon: React.FC<ISvgIconProps> = ({
+  name,
+  height,
+  width,
+  onClick,
+}: ISvgIconProps) => {
   const Svg = getSvgFromName(name);
-  return <Svg data-testid="svg-element" height={height} width={width} />;
+  return <Svg data-testid="svg-element" height={height} width={width} onClick={onClick} />;
 };

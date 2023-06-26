@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -60,6 +62,8 @@ const LoginPage = () => {
     loginMutation.mutate(data);
   };
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
   return (
     <MainAuth
       withPadding={false}
@@ -88,12 +92,14 @@ const LoginPage = () => {
               error={errors?.email?.message ?? getErrorFields('email', apiError)}
             />
             <InputGroup
-              type="password"
+              type={!passwordVisible ? 'password' : 'text'}
               name="adult"
               fullWidth={true}
               placeholder="Mot de passe"
               register={register('password')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
+              trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
+              onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
             />
           </div>
           {apiError?.message && (

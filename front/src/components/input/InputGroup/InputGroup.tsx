@@ -10,6 +10,7 @@ import { IOptions, Select } from '../StandardInputs/Select';
 import { SimpleSelect } from '../StandardInputs/SimpleSelect';
 import { TextArea } from '../StandardInputs/TextArea';
 import { Toggle } from '../StandardInputs/Toggle';
+import { SvgNames } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 
 export interface IErrorType {
@@ -57,6 +58,7 @@ export interface IInputGroupProps {
   specificClassName?: string;
   fullWidth?: boolean;
   trailingIcon?: string;
+  trailingSvgIcon?: SvgNames;
   leadingIcon?: string;
   trailingAddons?: string;
   leadingAddons?: string;
@@ -64,6 +66,8 @@ export interface IInputGroupProps {
   rules?: any;
   littleCard?: boolean;
   withBorder?: boolean;
+  onTrailingIconClick?: () => void;
+  onTrailingSvgIconClick?: () => void;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -82,6 +86,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   specificClassName,
   fullWidth,
   trailingIcon,
+  trailingSvgIcon,
   leadingIcon,
   trailingAddons,
   leadingAddons,
@@ -90,6 +95,8 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   rules,
   littleCard = false,
   withBorder,
+  onTrailingIconClick,
+  onTrailingSvgIconClick,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
   return (
@@ -204,7 +211,10 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
                 trailingAddons={trailingAddons}
                 leadingIcon={leadingIcon}
                 trailingIcon={trailingIcon}
+                trailingSvgIcon={trailingSvgIcon}
                 withBorder={withBorder}
+                onTrailingIconClick={onTrailingIconClick}
+                onTrailingSvgIconClick={onTrailingSvgIconClick}
               />
             )}
         </>

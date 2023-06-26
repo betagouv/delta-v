@@ -34,6 +34,8 @@ export interface IInputOptions {
   register?: UseFormRegisterReturn;
   autoFocus?: boolean;
   onClick?: () => void;
+  onTrailingIconClick?: () => void;
+  onTrailingSvgIconClick?: () => void;
   withBorder?: boolean;
 }
 
@@ -55,6 +57,8 @@ export const Input: React.FC<IInputOptions> = ({
   autoFocus = false,
   withBorder = true,
   onClick = () => {},
+  onTrailingIconClick = () => {},
+  onTrailingSvgIconClick = () => {},
 }: IInputOptions) => {
   let parentClassName = 'relative';
   if (fullWidth) {
@@ -119,13 +123,30 @@ export const Input: React.FC<IInputOptions> = ({
       )}
 
       {trailingIcon && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
-          <Icon name={trailingIcon} />
+        <div
+          className={twMerge(
+            classNames({
+              'pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4':
+                true,
+              'pointer-events-auto cursor-pointer': onTrailingIconClick,
+            }),
+          )}
+        >
+          <Icon name={trailingIcon} onClick={onTrailingIconClick} />
         </div>
       )}
+
       {trailingSvgIcon && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
-          <SvgIcon name={trailingSvgIcon} />
+        <div
+          className={twMerge(
+            classNames({
+              'pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4':
+                true,
+              'pointer-events-auto cursor-pointer': onTrailingSvgIconClick,
+            }),
+          )}
+        >
+          <SvgIcon name={trailingSvgIcon} onClick={onTrailingSvgIconClick} />
         </div>
       )}
       {trailingAddons && (
