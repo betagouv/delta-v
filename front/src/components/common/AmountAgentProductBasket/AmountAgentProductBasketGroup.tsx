@@ -8,12 +8,14 @@ interface AmountProductBasketGroupProps {
   amountProductGroup: GroupedAmountProduct;
   onModifyClick?: () => void;
   onOverMaximumClick?: () => void;
+  onDeleteClick: () => void;
 }
 
 export const AmountAgentProductBasketGroup: React.FC<AmountProductBasketGroupProps> = ({
   amountProductGroup,
   onModifyClick,
   onOverMaximumClick,
+  onDeleteClick,
 }) => {
   return (
     <div className="flex flex-col gap-3">
@@ -28,6 +30,7 @@ export const AmountAgentProductBasketGroup: React.FC<AmountProductBasketGroupPro
           containError={amountProductGroup.isOverMaximum}
           product={product}
           onButtonClick={onModifyClick}
+          onDelete={onDeleteClick}
         />
       ))}
       {amountProductGroup.isOverMaximum && (
