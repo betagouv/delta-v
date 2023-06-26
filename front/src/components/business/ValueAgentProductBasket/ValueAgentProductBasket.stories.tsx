@@ -1,12 +1,12 @@
 import { faker } from '@faker-js/faker';
 import { Meta } from '@storybook/react';
 
-import { CartProductCard, CartProductCardProps } from './CartProductCard';
+import { ValueAgentProductBasket, ValueAgentProductBasketProps } from './ValueAgentProductBasket';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
-const meta: Meta<typeof CartProductCard> = {
-  title: 'Components/Business/CartProductCards',
-  component: CartProductCard,
+const meta: Meta<typeof ValueAgentProductBasket> = {
+  title: 'Components/Business/ValueAgentProductBaskets',
+  component: ValueAgentProductBasket,
 };
 
 export default meta;
@@ -43,7 +43,7 @@ const product2: DetailedProduct = {
   unitTaxes: 62.5,
 };
 
-const item1: CartProductCardProps = {
+const item1: ValueAgentProductBasketProps = {
   product: product1,
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
@@ -55,7 +55,7 @@ const item1: CartProductCardProps = {
   onDelete: (id) => console.log(id),
 };
 
-const item2: CartProductCardProps = {
+const item2: ValueAgentProductBasketProps = {
   product: product1,
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
@@ -67,7 +67,7 @@ const item2: CartProductCardProps = {
   onDelete: (id) => console.log(id),
 };
 
-const item3: CartProductCardProps = {
+const item3: ValueAgentProductBasketProps = {
   product: product1,
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
@@ -79,7 +79,7 @@ const item3: CartProductCardProps = {
   onDelete: (id) => console.log(id),
 };
 
-const item4: CartProductCardProps = {
+const item4: ValueAgentProductBasketProps = {
   product: product2,
   nomenclatures: [
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
@@ -93,10 +93,10 @@ const item4: CartProductCardProps = {
 export const Base = () => {
   return (
     <div className="flex flex-col gap-8">
-      <CartProductCard {...item1} />
-      <CartProductCard {...item2} />
-      <CartProductCard {...item3} />
-      <CartProductCard {...item4} />
+      <ValueAgentProductBasket {...item1} />
+      <ValueAgentProductBasket {...item2} />
+      <ValueAgentProductBasket {...item3} />
+      <ValueAgentProductBasket {...item4} />
     </div>
   );
 };

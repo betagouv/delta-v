@@ -13,7 +13,7 @@ require('dayjs/locale/fr');
 
 dayjs.locale('fr');
 
-const getCartProductCardColor = (deletable: boolean): string => {
+const getValueAgentProductBasketColor = (deletable: boolean): string => {
   if (deletable === true) {
     return 'bg-[#FFE8E5]';
   }
@@ -21,7 +21,7 @@ const getCartProductCardColor = (deletable: boolean): string => {
   return 'bg-[#E3E3FD]';
 };
 
-export type CartProductCardProps = {
+export type ValueAgentProductBasketProps = {
   product: DetailedProduct;
   nomenclatures: string[];
   detailsButton?: boolean;
@@ -29,15 +29,15 @@ export type CartProductCardProps = {
   onDelete: (id: string) => void;
 };
 
-export const CartProductCard = ({
+export const ValueAgentProductBasket = ({
   product,
   nomenclatures,
   detailsButton,
   deletable = false,
   onDelete,
-}: CartProductCardProps) => {
+}: ValueAgentProductBasketProps) => {
   const [open, setOpen] = useState(false);
-  const color = getCartProductCardColor(deletable);
+  const color = getValueAgentProductBasketColor(deletable);
   return (
     <div className={cs('relative flex flex-col rounded-md w-full ', color)}>
       {deletable && (
@@ -51,7 +51,7 @@ export const CartProductCard = ({
         </div>
       )}
       <div className="flex flex-col gap-2 p-5">
-        <div className="flex flex-col line-clamp-6">
+        <div className="flex flex-col">
           {nomenclatures && (
             <span className="flex flex-row gap-6">
               {nomenclatures.map((item, index) => (

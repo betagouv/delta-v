@@ -97,7 +97,7 @@ export const createDeclarationRequest = async (
       originalValue: shoppingProduct.value,
       currency: shoppingProduct.currency,
     })),
-    border: params.border,
+    border: params.border ?? false,
     age: params.contactDetails.age,
     country: params.meansOfTransportAndCountry.country,
     meanOfTransport: params.meansOfTransportAndCountry.meansOfTransport,
@@ -143,7 +143,7 @@ export const getDeclarations = async ({
   startDate,
   endDate,
 }: GetDeclarationsOptions): Promise<DeclarationResponse[]> => {
-  const { data } = await await axios.get(`/declaration/`, {
+  const { data } = await axios.get(`/declaration/`, {
     params: {
       limit: limit as number,
       offset: offset as number,

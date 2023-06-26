@@ -11,6 +11,7 @@ import shallow from 'zustand/shallow';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
+import { IRadioType } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { DECLARATION_EMPTY_STATE, MeansOfTransport } from '@/stores/declaration/appState.store';
@@ -22,6 +23,7 @@ export interface MeansOfTransportAndCountryData {
   meansOfTransport: MeansOfTransport;
   country: Alpha2Code;
   flightNumber?: string;
+  border: boolean;
 }
 
 const meansOfTransports: IRadioCardType[] = [
@@ -52,6 +54,11 @@ const meansOfTransports: IRadioCardType[] = [
   },
 ];
 
+const radioValues: IRadioType[] = [
+  { id: 'true', value: 'Oui' },
+  { id: 'false', value: 'Non' },
+];
+
 const Declaration = () => {
   const { validateDeclarationStep2, declarationRequest } = useStore(
     (state) => ({
@@ -62,12 +69,13 @@ const Declaration = () => {
   );
   const router = useRouter();
 
-  const [isPlane, setIsPlane] = useState(false);
-
   const schema = yup.object({
     meansOfTransport: yup.string().required('Champ obligatoire'),
     flightNumber: yup.string().nullable(),
     country: yup.string().required('Champ obligatoire'),
+    border: yup
+      .boolean()
+      .when('country', (country, field) => (country === 'CH' ? field.required() : field)),
   });
 
   const notEmptyDeclaration = declarationRequest !== DECLARATION_EMPTY_STATE.declarationRequest;
@@ -88,12 +96,16 @@ const Declaration = () => {
       country: notEmptyDeclaration
         ? declarationRequest.meansOfTransportAndCountry?.country
         : undefined,
+      border: notEmptyDeclaration ? declarationRequest.border : undefined,
     },
   });
 
   const [transportChosen, setTransportChosen] = useState<string | undefined>(
     getValues('meansOfTransport'),
   );
+
+  const [isPlane, setIsPlane] = useState(getValues('meansOfTransport') === 'plane');
+  const [isFrontalier, setIsFrontalier] = useState(getValues('country') === 'CH');
 
   const onSubmit = (data: MeansOfTransportAndCountryData) => {
     if (!data.meansOfTransport) {
@@ -110,6 +122,17 @@ const Declaration = () => {
         setIsPlane(true);
       } else {
         setIsPlane(false);
+      }
+    },
+  });
+
+  register('country', {
+    onChange: (e) => {
+      setTransportChosen(e.target.value);
+      if (e.target.value === 'CH') {
+        setIsFrontalier(true);
+      } else {
+        setIsFrontalier(false);
       }
     },
   });
@@ -191,6 +214,18 @@ const Declaration = () => {
               control={control}
               error={errors?.flightNumber?.message}
               required
+            />
+          </div>
+        )}
+        {isFrontalier && (
+          <div className="mt-4">
+            <InputGroup
+              label="Êtes-vous dans le cadre d’un déplacement de résident frontalier ?"
+              type="radio"
+              name="border"
+              radioValues={radioValues}
+              register={register('border')}
+              error={errors?.border?.message}
             />
           </div>
         )}
