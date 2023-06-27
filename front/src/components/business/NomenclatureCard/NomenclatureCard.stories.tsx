@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { NomenclatureCard } from './NomenclatureCard';
 import { productFactory } from '@/tests/factories/Product.factory';
 
-const product = productFactory({});
+const product = productFactory({ icon: 'categoryCigar' });
 
 const meta: Meta<typeof NomenclatureCard> = {
   title: 'Components/Business/NomenclatureCard',
