@@ -13,7 +13,6 @@ export default {
 
 export const Base = () => {
   // const [open, setOpen] = useState(false);
-
   // const onClose = (): void => {
   //   setOpen(false);
   // };

@@ -6,7 +6,7 @@ on:
       job:
         description: "Job to run."
         required: true
-        default: "prod-deploy"
+        default: "stage-deploy"
   pull_request:
     paths:
       - front/**
@@ -35,7 +35,7 @@ jobs:
 
   deploy-front-staging:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || ${{ github.event.inputs.job == 'stage-deploy'}}
     needs: test-front
     steps:
       - uses: actions/checkout@v3

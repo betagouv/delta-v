@@ -6,7 +6,7 @@ on:
       job:
         description: "Job to run."
         required: true
-        default: "prod-deploy"
+        default: "stage-deploy"
   pull_request:
     paths:
       - back/**
@@ -60,7 +60,7 @@ jobs:
 
   deploy-back-staging:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || ${{ github.event.inputs.job == 'stage-deploy'}}
     needs: test-back
     steps:
       - uses: actions/checkout@v3
