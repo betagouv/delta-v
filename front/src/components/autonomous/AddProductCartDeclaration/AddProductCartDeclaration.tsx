@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
+import {
+  DefaultValuesUpdateProduct,
+  FormSelectProduct,
+  OnAddProductOptions,
+} from '@/components/business/formSelectProduct';
 import { Breadcrumbs } from '@/components/common/Breadcrumbs';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
@@ -12,12 +16,14 @@ interface AddProductCartDeclarationProps {
   currentProduct?: Product;
   onAddProduct: OnAddProduct;
   defaultCurrency?: string;
+  defaultValues?: DefaultValuesUpdateProduct;
 }
 
 export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps> = ({
   currentProduct,
   onAddProduct,
   defaultCurrency,
+  defaultValues,
 }) => {
   const { findProductTree } = useStore((state) => ({
     findProductTree: state.findProductTree,
@@ -57,6 +63,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
               onAddProduct={onAddProduct}
               templateRole="agent"
               defaultCurrency={defaultCurrency}
+              defaultValues={defaultValues}
             />
           )}
         </div>

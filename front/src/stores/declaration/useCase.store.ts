@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { ShoppingProduct, SimulatorResponse } from '../simulator/appState.store';
 import { StoreSlice } from '../store';
 import {
-  MeansOfTransport,
   ContactDetails,
   MeansOfTransportAndCountry,
   DeclarationResponse,
@@ -20,6 +19,7 @@ export interface DeclarationUseCaseSlice {
   addProductCartDeclaration: (product: ShoppingProduct) => void;
   updateProductCartDeclaration: (product: Partial<ShoppingProduct>) => void;
   removeProductCartDeclaration: (id: string) => void;
+  findDeclarationShoppingProduct: (id: string) => ShoppingProduct | undefined;
   checkProductCartDeclaration: () => void;
   declare: () => void;
   getDeclaration: (declarationId: string) => void;
@@ -53,15 +53,17 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       newState.declaration.appState.declarationRequest.defaultCurrency =
         defaultCurrency?.id ?? 'EUR';
 
-      if (
-        meansOfTransportAndCountry.country !== 'CH' ||
-        state.declaration.appState.declarationRequest.meanOfTransport !== MeansOfTransport.CAR
-      ) {
-        newState.declaration.appState.declarationRequest.border = undefined;
-      }
+      newState.declaration.appState.declarationRequest.border = meansOfTransportAndCountry.border;
       return newState;
     });
     get().checkProductCartDeclaration();
+  },
+  findDeclarationShoppingProduct: (id: string): ShoppingProduct | undefined => {
+    return (
+      get().declaration?.appState?.declarationRequest.shoppingProducts?.find(
+        (product: ShoppingProduct) => product.id === id,
+      ) ?? undefined
+    );
   },
   declare: async () => {
     try {
@@ -104,25 +106,25 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
     });
     get().declare();
   },
-  updateProductCartDeclaration: (shoppingProduct: Partial<ShoppingProduct>): void => {
+  updateProductCartDeclaration: ({ id, name, value, currency }: Partial<ShoppingProduct>): void => {
     set((state: any) => {
       const newState = { ...state };
-      const isProductInCart =
-        newState.declaration.appState.declarationRequest.shoppingProducts.findIndex(
-          (productInCart: ShoppingProduct) => productInCart.productId === shoppingProduct.productId,
+      const currentShoppingProduct =
+        newState.declaration.appState.declarationRequest.shoppingProducts.find(
+          (product: ShoppingProduct) => product.id === id,
         );
-      if (isProductInCart >= 0) {
-        newState.declaration.appState.declarationRequest.shoppingProducts[isProductInCart] = {
-          ...newState.declaration.appState.declarationRequest.shoppingProducts[isProductInCart],
-          name: shoppingProduct.name,
-          amount: shoppingProduct.amount,
-          value: shoppingProduct.value,
-          currency: shoppingProduct.currency,
-        };
+      const newShoppingProducts =
+        newState.declaration.appState.declarationRequest.shoppingProducts.filter(
+          (product: ShoppingProduct) => product.id !== id,
+        );
+      newState.declaration.appState.declarationRequest.shoppingProducts = newShoppingProducts;
+      newState.declaration.appState.declarationRequest.shoppingProducts.push({
+        ...currentShoppingProduct,
+        name,
+        value,
+        currency,
+      });
 
-        return newState;
-      }
-      newState.declaration.appState.declarationRequest.shoppingProducts.push(shoppingProduct);
       return newState;
     });
     get().declare();

@@ -13,8 +13,16 @@ import { Product, ProductDisplayTypes } from '@/model/product';
 
 export interface OnAddProductOptions {
   product: Product;
+  customId?: string;
   name: string;
   value: string;
+  currency: string;
+}
+
+export interface DefaultValuesUpdateProduct {
+  customId: string;
+  name: string;
+  value: number;
   currency: string;
 }
 
@@ -23,6 +31,7 @@ interface FormSelectProductProps {
   onAddProduct: (options: OnAddProductOptions) => void;
   templateRole?: Role;
   defaultCurrency?: string;
+  defaultValues?: DefaultValuesUpdateProduct;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
@@ -30,6 +39,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   onAddProduct,
   templateRole = 'user',
   defaultCurrency = 'EUR',
+  defaultValues,
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
 
@@ -47,10 +57,10 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
-      name: undefined,
-      value: null,
-      currency: defaultCurrency,
       ...getDefaultValues(steps),
+      name: defaultValues?.name ?? undefined,
+      value: defaultValues?.value ?? null,
+      currency: defaultValues?.currency ?? defaultCurrency,
     },
     resolver: yupResolver(
       getSchema({
@@ -62,8 +72,9 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   useEffect(() => {
     reset({
-      name: undefined,
-      currency: defaultCurrency,
+      name: defaultValues?.name ?? undefined,
+      value: defaultValues?.value ?? null,
+      currency: defaultValues?.currency ?? defaultCurrency,
       ...getDefaultValues(steps),
     });
   }, [steps]);
@@ -72,6 +83,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     const product = steps.pop();
     if (product) {
       onAddProduct({
+        customId: (defaultValues?.customId as string) ?? undefined,
         name: (data.name as string) ?? '',
         product,
         value: data.value?.toString() ?? '1',

@@ -1,7 +1,10 @@
 import React from 'react';
 
 import { AddProductCartDeclaration } from '../AddProductCartDeclaration';
-import { OnAddProductOptions } from '@/components/business/formSelectProduct';
+import {
+  DefaultValuesUpdateProduct,
+  OnAddProductOptions,
+} from '@/components/business/formSelectProduct';
 import DownModal from '@/components/common/DownModal';
 import { Product } from '@/model/product';
 
@@ -13,6 +16,7 @@ interface ModalAddProductCartDeclarationProps {
   currentProduct?: Product;
   onAddProduct: OnAddProduct;
   defaultCurrency?: string;
+  defaultValues?: DefaultValuesUpdateProduct;
 }
 
 export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclarationProps> = ({
@@ -21,6 +25,7 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
   onAddProduct,
   open,
   defaultCurrency,
+  defaultValues,
 }) => {
   return (
     <>
@@ -29,6 +34,7 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
           onAddProduct={onAddProduct}
           defaultCurrency={defaultCurrency}
           currentProduct={currentProduct}
+          defaultValues={defaultValues}
         />
       </DownModal>
     </>

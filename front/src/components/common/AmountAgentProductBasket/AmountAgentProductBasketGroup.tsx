@@ -52,7 +52,7 @@ export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGro
       </div>
       {amountProductGroup.products.map((product) => (
         <AmountAgentProductBasket
-          key={product.id}
+          key={product.customId}
           containError={amountProductGroup.isOverMaximum}
           product={product}
           onProductClick={onModifyClick}

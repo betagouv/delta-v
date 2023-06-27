@@ -38,6 +38,7 @@ export interface ContactDetails {
 export interface MeansOfTransportAndCountry {
   meansOfTransport?: MeansOfTransport;
   country?: Alpha2Code;
+  border?: boolean;
   flightNumber?: string;
 }
 

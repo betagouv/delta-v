@@ -4,7 +4,6 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
@@ -13,7 +12,10 @@ import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProdu
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { OnAddProductOptions } from '@/components/business/formSelectProduct';
+import {
+  DefaultValuesUpdateProduct,
+  OnAddProductOptions,
+} from '@/components/business/formSelectProduct';
 import { ValueAgentProductBasket } from '@/components/business/ValueAgentProductBasket';
 import { AmountAgentProductBasketGroup } from '@/components/common/AmountAgentProductBasket/AmountAgentProductBasketGroup';
 import { Button } from '@/components/common/Button';
@@ -37,6 +39,7 @@ const Declaration = () => {
     updateProductCartDeclaration,
     resetDeclaration,
     findProduct,
+    findDeclarationShoppingProduct,
     declarationId,
     declarationRequest,
     meansOfTransportAndCountry,
@@ -50,6 +53,7 @@ const Declaration = () => {
       removeProductDeclaration: state.removeProductCartDeclaration,
       resetDeclaration: state.resetDeclaration,
       findProduct: state.findProduct,
+      findDeclarationShoppingProduct: state.findDeclarationShoppingProduct,
       declarationId: state.declaration.appState.declarationRequest?.declarationId,
       valueProducts: state.declaration.appState.declarationResponse?.valueProducts,
       amountProducts: state.declaration.appState.declarationResponse?.amountProducts,
@@ -68,6 +72,9 @@ const Declaration = () => {
   const [isAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  const [defaultValuesProduct, setDefaultValuesProduct] = useState<
+    DefaultValuesUpdateProduct | undefined
+  >();
 
   useEffect(() => {
     setProductsDeclarationToDisplay();
@@ -92,14 +99,12 @@ const Declaration = () => {
     onSuccess: () => {
       resetDeclaration();
       router.push(`/agent/declaration/${declarationId}`);
-      toast.success(
-        "Votre signalement a bien été envoyé. Vous serez notifié dès qu'il sera traité.",
-      );
     },
   });
 
-  const onUpdateProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
+  const onUpdateProduct = ({ product, value, currency, name, customId }: OnAddProductOptions) => {
     const shoppingProduct: Partial<ShoppingProduct> = {
+      id: customId,
       productId: product.id,
       name,
       value: parseFloat(value),
@@ -114,7 +119,17 @@ const Declaration = () => {
   };
 
   const onModifyClick = (id: string) => {
-    const product = findProduct(id);
+    const shoppingProduct = findDeclarationShoppingProduct(id);
+    const product = findProduct(shoppingProduct?.productId ?? '');
+    if (!shoppingProduct) {
+      return;
+    }
+    setDefaultValuesProduct({
+      customId: id,
+      currency: shoppingProduct?.currency,
+      name: shoppingProduct?.name,
+      value: shoppingProduct?.value,
+    });
     setSelectedProduct(product);
     setOpenModalAddProduct(true);
   };
@@ -282,6 +297,7 @@ const Declaration = () => {
         onAddProduct={onUpdateProduct}
         currentProduct={selectedProduct}
         defaultCurrency={defaultCurrency}
+        defaultValues={defaultValuesProduct ?? undefined}
       />
     </AgentRoute>
   );

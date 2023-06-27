@@ -82,7 +82,7 @@ const QuittancePage = () => {
           {isLoading ? (
             <div>Loading...</div>
           ) : (
-            <div className="flex flex-col gap-[10px]">
+            <div className="flex flex-col gap-2.5">
               <FilterBar
                 title="Declarations"
                 searchType="global"

@@ -121,7 +121,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
                 onButtonClick();
               }
               if (onProductClick) {
-                onProductClick(product.id);
+                onProductClick(product.customId);
               }
             }}
           >

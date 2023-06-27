@@ -14,7 +14,7 @@ import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioType } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
-import { DECLARATION_EMPTY_STATE, MeansOfTransport } from '@/stores/declaration/appState.store';
+import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 import { DECLARATION_STEP_PAGE, disabledCountries } from '@/utils/const';
@@ -23,7 +23,7 @@ export interface MeansOfTransportAndCountryData {
   meansOfTransport: MeansOfTransport;
   country: Alpha2Code;
   flightNumber?: string;
-  border: boolean;
+  border: string;
 }
 
 const meansOfTransports: IRadioCardType[] = [
@@ -78,8 +78,6 @@ const Declaration = () => {
       .when('country', (country, field) => (country === 'CH' ? field.required() : field)),
   });
 
-  const notEmptyDeclaration = declarationRequest !== DECLARATION_EMPTY_STATE.declarationRequest;
-
   const {
     handleSubmit,
     register,
@@ -90,13 +88,9 @@ const Declaration = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      meansOfTransport: notEmptyDeclaration
-        ? declarationRequest.meansOfTransportAndCountry?.meansOfTransport
-        : undefined,
-      country: notEmptyDeclaration
-        ? declarationRequest.meansOfTransportAndCountry?.country
-        : undefined,
-      border: notEmptyDeclaration ? declarationRequest.border : undefined,
+      meansOfTransport: declarationRequest.meansOfTransportAndCountry?.meansOfTransport,
+      country: declarationRequest.meansOfTransportAndCountry?.country,
+      border: declarationRequest.border ? 'true' : 'false',
     },
   });
 
@@ -111,7 +105,12 @@ const Declaration = () => {
     if (!data.meansOfTransport) {
       return;
     }
-    validateDeclarationStep2({ ...data });
+
+    validateDeclarationStep2({
+      meansOfTransport: data.meansOfTransport,
+      country: data.country,
+      border: !!data.border,
+    });
     router.push(`/agent/declaration/ajout/marchandises`);
   };
 
