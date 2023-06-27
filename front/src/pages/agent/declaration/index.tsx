@@ -15,6 +15,7 @@ const QuittancePage = () => {
   const router = useRouter();
   const [page, setPage] = useState<number>(0);
   const [declarations, setDeclarations] = useState<DeclarationResponse[]>([]);
+  const [openFilterBar, setOpenFilterBar] = useState(false);
 
   const addDeclarations = (apiDeclarationsData: DeclarationResponse[]): void => {
     const tmpDeclarations = [...declarations, ...apiDeclarationsData];
@@ -82,29 +83,36 @@ const QuittancePage = () => {
           {isLoading ? (
             <div>Loading...</div>
           ) : (
-            <div className="flex flex-col gap-2.5">
-              <FilterBar
-                title="Declarations"
-                searchType="global"
-                onValidateFilter={onValidateFilter}
-              />
-              {declarations &&
-                declarations?.map((declaration, index) => (
-                  <DeclarationCard
-                    key={declaration.id}
-                    {...declaration}
-                    date={declaration.versionDate}
-                    id={declaration.id}
-                    publicId={declaration.publicId}
-                    onClick={() => router.push(`/agent/declaration/${declaration.id}`)}
-                    firstName={declaration.declarantFirstName}
-                    lastName={declaration.declarantLastName}
-                    transport={declaration.declarantMeanOfTransport}
-                    newLimit={apiDeclarations && apiDeclarations.length ? newLimit : undefined}
-                    isLast={index === declarations.length - 1}
-                  />
-                ))}
-            </div>
+            <>
+              <div className="mb-5">
+                <FilterBar
+                  title="Declarations"
+                  searchType="global"
+                  onValidateFilter={onValidateFilter}
+                  open={openFilterBar}
+                  setOpen={setOpenFilterBar}
+                />
+              </div>
+              <div className="flex flex-col gap-2.5">
+                {declarations &&
+                  !openFilterBar &&
+                  declarations?.map((declaration, index) => (
+                    <DeclarationCard
+                      key={declaration.id}
+                      {...declaration}
+                      date={declaration.versionDate}
+                      id={declaration.id}
+                      publicId={declaration.publicId}
+                      onClick={() => router.push(`/agent/declaration/${declaration.id}`)}
+                      firstName={declaration.declarantFirstName}
+                      lastName={declaration.declarantLastName}
+                      transport={declaration.declarantMeanOfTransport}
+                      newLimit={apiDeclarations && apiDeclarations.length ? newLimit : undefined}
+                      isLast={index === declarations.length - 1}
+                    />
+                  ))}
+              </div>
+            </>
           )}
         </div>
       </MainAgent>

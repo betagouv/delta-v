@@ -29,6 +29,10 @@ export const clearTokens = () => {
   removeCookie('refreshToken');
 };
 
+export const hasToken = () => {
+  return !!getAccessToken() && !!getRefreshToken();
+};
+
 const isAccessTokenExpiredError = (status: number) => status === AUTHENTICATION_ERROR_STATUS;
 
 const isRefreshEndpointFromConfig = (config: AxiosRequestConfig) =>

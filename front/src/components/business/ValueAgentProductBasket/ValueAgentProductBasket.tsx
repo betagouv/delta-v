@@ -119,7 +119,11 @@ export const ValueAgentProductBasket = ({
               onClick={() => setOpen(!open)}
             >
               <span>Voir calcul </span>
-              {open ? <Icon name="chevron-up" size="xs" /> : <Icon name="chevron-down" size="xs" />}
+              {open ? (
+                <Icon name="chevron-thin-up" size="xs" />
+              ) : (
+                <Icon name="chevron-thin-down" size="xs" />
+              )}
             </Button>
           </span>
         )}

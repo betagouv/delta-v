@@ -73,7 +73,7 @@ export const DeclarationCard = ({
           </Button>
         </span>
       )}
-      <div className="grid w-full grid-cols-[140px_52px_1fr] md:grid-cols-[140px_52px_1fr]">
+      <div className="grid w-full grid-cols-[140px_52px_1fr] md:grid-cols-[140px_52px_1fr] mb-4">
         <DataInfoItem
           label="Numéro de déclaration"
           value={`${publicId.slice(0, 10)} ${publicId.slice(10)}`}
@@ -88,7 +88,7 @@ export const DeclarationCard = ({
           valueSize="text-sm"
         />
       </div>
-      <div className="grid w-full grid-cols-[140px_52px_1fr] md:grid-cols-[140px_52px_1fr]">
+      <div className="grid w-full grid-cols-[140px_52px_1fr] md:grid-cols-[140px_52px_1fr] mb-4">
         <DataInfoItem
           label="Nom Prénom"
           value={`${firstName} ${lastName}`}

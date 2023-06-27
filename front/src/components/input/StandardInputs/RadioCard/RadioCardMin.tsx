@@ -34,9 +34,21 @@ export const RadioCardMin: React.FC<IRadioCardMinOptions> = ({
         onClick(e.currentTarget.value);
       }}
     >
-      <div className="flex flex-row items-center py-1 px-3">
-        <Icon name={checked ? 'cancel' : 'add_circle'} size="base" />
-        <label className="ml-2">{value}</label>
+      <div
+        className={classNames({
+          'flex flex-row items-center pl-1 pr-3 py-0.5': true,
+          'pl-2.5': checked,
+        })}
+      >
+        <Icon name={checked ? 'cross-thin' : 'add_circle'} size={checked ? 'xs' : 'lg'} />
+        <label
+          className={classNames({
+            'ml-1 text-xs': true,
+            'ml-2.5': checked,
+          })}
+        >
+          {value}
+        </label>
       </div>
     </button>
   );

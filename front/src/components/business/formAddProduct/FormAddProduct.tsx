@@ -206,9 +206,11 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           </Typography>
         </div>
       ) : (
-        <Button disabled={disabled} fullWidth={true} type="submit">
-          Valider
-        </Button>
+        <div className={classNames({ 'w-40': templateRole === 'agent' })}>
+          <Button disabled={disabled} fullWidth={true} type="submit">
+            Ajouter
+          </Button>
+        </div>
       )}
       {productType !== 'valueProduct' && (
         <ModalMaximumAmount

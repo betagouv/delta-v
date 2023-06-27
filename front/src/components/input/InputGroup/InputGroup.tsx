@@ -114,6 +114,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
           )}
           {type === 'select' && (
             <Select
+              placeholder={placeholder}
               name={name}
               disabled={inputDisabled}
               options={options ?? []}

@@ -64,14 +64,14 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
             }}
             className="flex justify-between items-center"
           >
-            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+            <button type="button" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
               <Icon name="chevron-left" size="base" color="black" />
             </button>
             <Typography color="primary" size="text-lg">
               {dayjs(date).format('MMMM YYYY')}
             </Typography>
 
-            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+            <button type="button" onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
               <Icon name="chevron-right" size="base" color="black" />
             </button>
           </header>
@@ -112,14 +112,14 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
             }}
             className="flex justify-between items-center"
           >
-            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+            <button type="button" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
               <Icon name="chevron-left" size="base" color="black" />
             </button>
             <Typography color="primary" size="text-lg">
               {dayjs(date).format('MMMM YYYY')}
             </Typography>
 
-            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+            <button type="button" onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
               <Icon name="chevron-right" size="base" color="black" />
             </button>
           </header>

@@ -22,7 +22,8 @@ export type TextSize =
   | 'text-lg'
   | 'text-xl'
   | 'text-2xl'
-  | 'text-3xl';
+  | 'text-3xl'
+  | string;
 
 type LineHeight =
   | 'leading-3'

@@ -60,7 +60,7 @@ const DeclarationSteps = ({
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={classNames({
-          'flex flex-1 flex-col h-full p-4 mt-4': true,
+          'flex flex-1 flex-col h-full p-5 mt-4': true,
           'bg-white': simpleBg,
           'bg-secondary-100': !simpleBg,
         })}

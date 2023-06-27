@@ -41,7 +41,7 @@ export const FilterGroup = ({ title, filters, control, name, rules }: FilterGrou
         {title}
       </Typography>
 
-      <div className="mt-2.5 flex flex-wrap gap-2">
+      <div className="mt-2.5 flex flex-wrap gap-2.5 pr-6">
         {filters.map((item, index) => (
           <FilterItem
             key={index}

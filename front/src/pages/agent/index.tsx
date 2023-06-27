@@ -74,13 +74,14 @@ const Index = () => {
                 Outils
               </button>
             </div>
-            <p className="text-[8px] text-center w-[185px] text-black">
-              Nos équipes travaillent actuellement sur le scanner, il sera disponible d’ici quelques
-              jours.
-            </p>
+            <Typography color="black" size="text-[8px]" textPosition="text-center">
+              Nos équipes travaillent actuellement sur le scanner, <br />
+              il sera disponible d’ici quelques jours.
+            </Typography>
+            <p className="text-[8px] text-center w-[185px] text-black"></p>
           </div>
           {mode === 'tools' ? (
-            <div className="mb-1 flex flex-col gap-6 mt-7">
+            <div className="mb-1 flex flex-col gap-5 mt-4">
               {MENU_AGENT_ITEMS.map((item) => (
                 <div
                   onClick={() => {
@@ -95,6 +96,7 @@ const Index = () => {
                     svgName={item.svgIcon}
                     name={item.title}
                     withBgColor={item.id === 'declaration'}
+                    disabled={item.disabled}
                   >
                     {item.title}
                   </LinkWithIcon>

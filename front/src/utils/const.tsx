@@ -123,6 +123,7 @@ interface MenuAgentItem {
   path?: string;
   svgIcon: SvgNames;
   openDeclarationResumeModal?: boolean;
+  disabled?: boolean;
 }
 
 export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
@@ -137,6 +138,7 @@ export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Nomenclature',
     path: RoutingAgent.nomenclature,
     svgIcon: 'categoryVetements' as SvgNames,
+    disabled: true,
   },
   {
     id: 'declarationList',
@@ -149,17 +151,20 @@ export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Actualités',
     path: RoutingAgent.actualities,
     svgIcon: 'categoryActualities' as SvgNames,
+    disabled: true,
   },
   {
     id: 'contact',
     title: 'Nous contacter',
     path: RoutingAgent.contactUs,
     svgIcon: 'categoryContact' as SvgNames,
+    disabled: true,
   },
   {
     id: 'account',
     title: 'Mon compte',
     path: RoutingAgent.account,
     svgIcon: 'categorySmiley' as SvgNames,
+    disabled: true,
   },
 ];

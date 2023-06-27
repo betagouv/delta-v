@@ -19,7 +19,11 @@ const RenderProgress = (step: ProgressBarAgentItemType, currentStep: number) => 
   const isActive = step.stepNumber === currentStep;
   return (
     <Fragment key={step.name}>
-      {step.stepNumber > 1 && <Icon name="chevron-right" size="base" />}
+      {step.stepNumber > 1 && (
+        <div className="flex items-center">
+          <Icon name="chevron-right" size="sm" />
+        </div>
+      )}
       <ProgressBarAgentItem link={step} isActive={isActive} isFutureStep={isFutureStep} />
     </Fragment>
   );

@@ -1,7 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
@@ -14,6 +13,7 @@ export interface IOptions {
 }
 
 export interface ISelectOptions {
+  placeholder?: string;
   disabled?: boolean;
   options: IOptions[];
   error?: string;
@@ -26,6 +26,7 @@ export interface ISelectOptions {
 }
 
 export const Select: React.FC<ISelectOptions> = ({
+  placeholder,
   options,
   disabled,
   error,
@@ -41,21 +42,20 @@ export const Select: React.FC<ISelectOptions> = ({
     rules,
   });
 
-  const [selected, setSelected] = useState(
-    options.find((option) => option.id === field.value) ?? options[0],
-  );
+  const getSelectedOption = () => {
+    return options.find((option) => option.id === field.value);
+  };
 
   let classNameOptions =
-    'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm';
+    'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none text-sm';
   classNameOptions += fullWidth ? ' w-full' : ' w-auto';
   return (
     <Listbox
       disabled={disabled}
       {...field}
-      value={selected}
+      value={getSelectedOption()}
       onChange={(e) => {
         field.onChange(e?.id);
-        setSelected(e);
       }}
     >
       {({ open }) => (
@@ -65,7 +65,7 @@ export const Select: React.FC<ISelectOptions> = ({
               data-testid="select-element"
               className={twMerge(
                 classNames({
-                  'bg-white relative rounded-full pl-3 pr-10 py-2 text-left cursor-default focus:outline-none text-base w-auto border-0 focus:ring-0':
+                  'bg-white relative rounded-full pl-3 pr-10 py-3 text-left cursor-default focus:outline-none text-xs w-auto border-0 focus:ring-0':
                     true,
                   'w-full': fullWidth,
                   'bg-secondary-200 text-secondary-400': disabled,
@@ -75,9 +75,15 @@ export const Select: React.FC<ISelectOptions> = ({
                 }),
               )}
             >
-              <span className="block truncate">{selected?.value}</span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5">
-                {open ? <Icon name="chevron-thin-up" /> : <Icon name="chevron-thin-down" />}
+              <span className="block truncate ml-2">
+                {options.find((option) => option.id === field.value)?.value ?? placeholder}
+              </span>
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5 items-center">
+                {open ? (
+                  <Icon name="chevron-thin-up" size="sm" />
+                ) : (
+                  <Icon name="chevron-thin-down" size="sm" />
+                )}
               </span>
             </Listbox.Button>
 
@@ -94,34 +100,22 @@ export const Select: React.FC<ISelectOptions> = ({
                     key={option.id}
                     className={({ active }) =>
                       classNames(
-                        active ? 'text-white bg-primary-600' : 'text-secondary-900',
-                        'cursor-default select-none relative py-2 pl-3 pr-9',
+                        active ? 'bg-lightBlue' : 'text-secondary-900',
+                        'cursor-default select-none relative py-3 pl-2 pr-9',
                       )
                     }
                     value={option}
                   >
                     {({ selected: selectedValue, active }) => (
-                      <>
-                        <span
-                          className={classNames(
-                            selectedValue ? 'font-semibold' : 'font-normal',
-                            'block truncate',
-                          )}
-                        >
-                          {option.value}
-                        </span>
-
-                        {selectedValue ? (
-                          <span
-                            className={classNames(
-                              active ? 'text-white' : 'text-primary-600',
-                              'absolute inset-y-0 right-0 flex items-center pr-4',
-                            )}
-                          >
-                            <CheckIcon className="h-6 w-5" aria-hidden="true" />
-                          </span>
-                        ) : null}
-                      </>
+                      <span
+                        className={classNames(
+                          selectedValue ? 'font-semibold bg-lightBlue' : 'font-normal',
+                          'block truncate text-xs',
+                          active ? 'bg-lightBlue' : '',
+                        )}
+                      >
+                        {option.value}
+                      </span>
                     )}
                   </Listbox.Option>
                 ))}

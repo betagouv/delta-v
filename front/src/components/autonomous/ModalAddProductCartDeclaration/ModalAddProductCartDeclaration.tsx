@@ -12,7 +12,7 @@ type OnAddProduct = (options: OnAddProductOptions) => void;
 
 interface ModalAddProductCartDeclarationProps {
   open: boolean;
-  onClose?: () => void;
+  onClose: () => void;
   currentProduct?: Product;
   onAddProduct: OnAddProduct;
   defaultCurrency?: string;
@@ -28,15 +28,13 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
   defaultValues,
 }) => {
   return (
-    <>
-      <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
-        <AddProductCartDeclaration
-          onAddProduct={onAddProduct}
-          defaultCurrency={defaultCurrency}
-          currentProduct={currentProduct}
-          defaultValues={defaultValues}
-        />
-      </DownModal>
-    </>
+    <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
+      <AddProductCartDeclaration
+        onAddProduct={onAddProduct}
+        defaultCurrency={defaultCurrency}
+        currentProduct={currentProduct}
+        defaultValues={defaultValues}
+      />
+    </DownModal>
   );
 };

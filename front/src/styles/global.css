@@ -99,14 +99,6 @@
 }
 
 @font-face {
-    font-family: "Marianne";
-    font-style: italic;
-    font-weight: 100;
-    src: url("/fonts/Marianne/Marianne-Thin_Italic.woff2") format("woff2");
-    font-display: optional;
-}
-
-@font-face {
     font-family: 'icomoon';
     src: url("/fonts/Marianne/icomoon.woff") format("woff");
     font-weight: 300;
@@ -115,8 +107,106 @@
 }
 
 
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 500;
+  src: url("/fonts/Roboto/Roboto-MediumItalic.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/Roboto/Roboto-Medium.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/fonts/Roboto/Roboto-Italic.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    src: url("/fonts/Roboto/Roboto-Bold.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 700;
+    src: url("/fonts/Roboto/Roboto-BoldItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 800;
+    src: url("/fonts/Roboto/Roboto-Black.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 800;
+    src: url("/fonts/Roboto/Roboto-BlackItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 300;
+    src: url("/fonts/Roboto/Roboto-Light.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 300;
+    src: url("/fonts/Roboto/Roboto-LightItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 100;
+    src: url("/fonts/Roboto/Roboto-Thin.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 100;
+    src: url("/fonts/Roboto/Roboto-ThinItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+
 body {
-    font-family: "Marianne", sans-serif;
+    font-family: "Roboto", "Marianne", sans-serif;
     font-size: 14px;
 }
 
@@ -150,8 +240,15 @@ svg {
   }
   
 .react-datepicker__header {
-      background-color: white;
-    }
+  background-color: white;
+  >header {
+    margin-bottom: 10px !important;
+  }
+}
+
+.react-datepicker__day--outside-month {
+  visibility: hidden;
+}
 
 .react-datepicker__header--custom {
     border: 0 !important;

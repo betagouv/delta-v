@@ -80,7 +80,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
                 </div>
                 <div className="ml-2 flex-1 text-base">{item.title}</div>
                 <div className="w-4 place-content-center">
-                  <Icon name="chevron-right" />
+                  <Icon name="chevron-right" size="sm" />
                 </div>
               </li>
               <div className="border-b border-b-gray-200" />

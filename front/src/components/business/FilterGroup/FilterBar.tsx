@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import cs from 'classnames';
 import { useForm } from 'react-hook-form';
@@ -20,6 +20,8 @@ export type FilterBarProps = {
   noPeriodInput?: boolean;
   filterHistories?: FilterHistoryItemProps[];
   onValidateFilter: (data: FilterBarForm) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 };
 
 export interface FilterBarForm {
@@ -36,9 +38,9 @@ export const FilterBar = ({
   noPeriodInput = false,
   filterHistories = [],
   onValidateFilter,
+  open,
+  setOpen,
 }: FilterBarProps) => {
-  const [open, setOpen] = useState(false);
-
   const { register, control, handleSubmit } = useForm<FilterBarForm>({
     defaultValues: {
       status: [],
@@ -100,16 +102,16 @@ export const FilterBar = ({
               />
             )}
             <FilterGroup
-              title="Statut de la déclaration"
-              control={control}
-              name="status"
-              filters={FILTER_STATUS}
-            />
-            <FilterGroup
               title="Moyen de transport"
               control={control}
               name="meanOfTransport"
               filters={FILTER_MEANS_OF_TRANSPORT}
+            />
+            <FilterGroup
+              title="Statut de la déclaration"
+              control={control}
+              name="status"
+              filters={FILTER_STATUS}
             />
           </div>
           <div className="flex flex-col gap-8 py-5">

@@ -27,9 +27,10 @@ module.exports = {
         },
         secondary: colors.gray,
         disabled: {
-          bg: '#E5E5E5',
+          bg: '#D9D9D9',
           text: '#929292',
         },
+        lightBlue: '#E3E3FD',
         cancel: colors.red,
         link: '#6A6AF4',
         error: '#CE0500',
@@ -49,6 +50,7 @@ module.exports = {
       },
       fontFamily: {
         marianne: ['Marianne', 'sans-serif'],
+        roboto: ['Roboto', 'Marianne', 'sans-serif'],
       },
     },
   },

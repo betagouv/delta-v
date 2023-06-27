@@ -7,7 +7,7 @@ import { ModalTokenExpire } from '../ModalTokenExpire';
 import { useRefreshMutation } from '@/api/hooks/useAPIAuth';
 import useTokenValidity, { TokenValidity } from '@/hooks/useTokenValidity';
 import { useStore } from '@/stores/store';
-import { clearTokens } from '@/utils/auth';
+import { clearTokens, hasToken } from '@/utils/auth';
 import { RoutingAuthentication } from '@/utils/const';
 
 type AdminRouteProps = {
@@ -45,7 +45,7 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
   useEffect(() => {
     setShowExpirationModal(tokenValidity === TokenValidity.SOON_EXPIRED);
 
-    if (tokenValidity === TokenValidity.INVALID) {
+    if (tokenValidity === TokenValidity.INVALID || !hasToken()) {
       disconnect();
     }
   }, [tokenValidity]);

@@ -9,7 +9,9 @@ import shallow from 'zustand/shallow';
 
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
+import { Radio } from '@/components/input/StandardInputs/Radio';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
@@ -160,30 +162,34 @@ const Declaration = () => {
         onSubmit={onSubmit}
         linkButton="/agent/"
       >
-        <div className="flex flex-col gap-4 mt-1">
+        <div className="flex flex-col gap-4">
           <div className="w5/6 flex flex-col gap-4">
-            <InputGroup
-              type="text"
-              name="lastName"
-              fullWidth={false}
-              placeholder="Nom"
-              register={register('lastName')}
-              control={control}
-              error={errors?.lastName?.message}
-              required
-              withBorder={false}
-            />
-            <InputGroup
-              type="text"
-              name="firstName"
-              fullWidth={false}
-              placeholder="Prénom"
-              register={register('firstName')}
-              control={control}
-              error={errors?.firstName?.message}
-              required
-              withBorder={false}
-            />
+            <div className="w-56">
+              <InputGroup
+                type="text"
+                name="lastName"
+                fullWidth={true}
+                placeholder="Nom"
+                register={register('lastName')}
+                control={control}
+                error={errors?.lastName?.message}
+                required
+                withBorder={false}
+              />
+            </div>
+            <div className="w-56">
+              <InputGroup
+                type="text"
+                name="firstName"
+                fullWidth={true}
+                placeholder="Prénom"
+                register={register('firstName')}
+                control={control}
+                error={errors?.firstName?.message}
+                required
+                withBorder={false}
+              />
+            </div>
           </div>
           <InputGroup
             type="text"
@@ -197,7 +203,7 @@ const Declaration = () => {
             withBorder={false}
           />
           <div className="flex flex-row gap-4">
-            <div className="min-w-[139px] flex-1">
+            <div className="w-28">
               <InputGroup
                 type="text"
                 name="postalCode"
@@ -210,7 +216,7 @@ const Declaration = () => {
                 withBorder={false}
               />
             </div>
-            <div className="flex-3">
+            <div className="w-52">
               <InputGroup
                 type="text"
                 name="city"
@@ -225,33 +231,44 @@ const Declaration = () => {
             </div>
           </div>
         </div>
-        <div className="mt-9">
-          <InputGroup
-            label="Avez-vous plus de 18 ans ?"
-            type="radio"
-            name="adult"
-            fullWidth={true}
-            placeholder="Âge"
-            register={register('adult')}
-            error={errors?.adult?.message}
-            radioValues={[
-              { id: 'true', value: 'Oui' },
-              { id: 'false', value: 'Non' },
-            ]}
-          />
+        <div className="mt-4">
+          <div>
+            <label htmlFor="adult" className={`mb-2 block text-sm`} data-testid="label-element">
+              L’usager a-t-il plus de 18 ans ?
+            </label>
+            <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
+              <Radio
+                id="adult"
+                name="adult"
+                error={errors?.adult?.message}
+                radioValues={[
+                  { id: 'true', value: 'Oui' },
+                  { id: 'false', value: 'Non' },
+                ]}
+                register={register('adult')}
+              />
+            </div>
+            {errors?.adult?.message && (
+              <div data-testid="error-element" className="flex pl-2 pt-1">
+                <span className="pl-1" id="input-error">
+                  <Typography size="text-2xs" color="error">
+                    {errors?.adult?.message}
+                  </Typography>
+                </span>
+              </div>
+            )}
+          </div>
           {displayNotAdult && (
-            <div className="mt-4">
+            <div className="mt-4 w-44">
               <InputGroup
-                label="Sélectionnez votre âge"
                 type="select"
                 name="notAdultAge"
-                fullWidth={false}
-                placeholder="Âge"
+                fullWidth={true}
+                placeholder="Sélectionnez l’âge"
                 register={register('notAdultAge')}
                 control={control}
                 error={errors?.notAdultAge?.message}
                 options={[
-                  { id: 'none', value: 'Âge' },
                   { id: 14, value: 'Moins de 15 ans' },
                   { id: 15, value: '15 ans' },
                   { id: 16, value: '16 ans' },

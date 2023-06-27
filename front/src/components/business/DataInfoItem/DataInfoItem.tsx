@@ -25,7 +25,7 @@ export const DataInfoItem = ({
 }: DataInfoItemProps) => {
   return (
     <div className={`flex ${svgName ? 'flex-row' : 'flex-col'}`}>
-      <Typography weight="medium" color="light-gray" size={labelSize}>
+      <Typography weight="medium" color="middle-gray" size={labelSize} lineHeight="leading-loose">
         {label} {isRequired && ' *'}
       </Typography>
       {svgName ? (
@@ -33,7 +33,12 @@ export const DataInfoItem = ({
           <TransportBadge svgName={svgName} />
         </div>
       ) : (
-        <Typography color="black" size={valueSize} weight={isBold ? 'bold' : 'normal'}>
+        <Typography
+          color="black"
+          size={valueSize}
+          weight={isBold ? 'bold' : 'normal'}
+          lineHeight="leading-none"
+        >
           {value}
         </Typography>
       )}

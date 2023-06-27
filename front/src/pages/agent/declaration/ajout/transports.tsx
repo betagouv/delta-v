@@ -10,9 +10,10 @@ import shallow from 'zustand/shallow';
 
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioType } from '@/components/input/StandardInputs/Radio';
-import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
+import { IRadioCardType, RadioCard } from '@/components/input/StandardInputs/RadioCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
@@ -158,7 +159,7 @@ const Declaration = () => {
     const countries = getNames('fr', { select: 'official' });
     const keys = Object.keys(countries) as Alpha2Code[];
     const enabledKeys = keys.filter((key) => !disabledCountries.includes(key));
-    return enabledKeys.map((key) => {
+    const finalCountriesOptions = enabledKeys.map((key) => {
       const countryAlternative = countriesAlternatives.find((country) => country.id === key);
       return {
         value: `${countries[key]} ${getEmojiFlag(key).toString()} ` ?? '',
@@ -166,6 +167,8 @@ const Declaration = () => {
         alternatives: countryAlternative?.alternatives ?? [],
       };
     });
+
+    return finalCountriesOptions;
   }, []);
 
   return (
@@ -176,9 +179,10 @@ const Declaration = () => {
         onSubmit={onSubmit}
         linkButton={DECLARATION_STEP_PAGE[1]}
       >
-        <InputGroup
-          label="Quel est votre moyen de transport ?"
-          type="radioCard"
+        <label htmlFor="adult" className={`mb-4 block text-sm`} data-testid="label-element">
+          Sélectionner le moyen de transport
+        </label>
+        <RadioCard
           name="meansOfTransport"
           radioCardValues={meansOfTransports}
           register={register('meansOfTransport', { required: true })}
@@ -189,31 +193,39 @@ const Declaration = () => {
         {transportChosen && (
           <div className="mt-4">
             <InputGroup
-              label="De quel pays arrivez-vous ?"
-              type="comboboxes"
+              type="select"
               fullWidth={true}
               name="country"
-              placeholder="Pays"
+              placeholder="Sélectionner le pays d’où vous arrivez"
               trailingIcon="search"
               options={countriesOptions}
               register={register('country', { required: true })}
               control={control}
               error={errors?.country?.message}
+              withBorder={false}
             />
           </div>
         )}
         {isPlane && (
-          <div className="mt-4">
-            <InputGroup
-              type="text"
-              name="phone"
-              fullWidth={false}
-              placeholder="Numéro de vol"
-              register={register('flightNumber')}
-              control={control}
-              error={errors?.flightNumber?.message}
-              required
-            />
+          <div className="mt-4 flex flex-row items-center">
+            <div className="w-52">
+              <InputGroup
+                type="text"
+                name="phone"
+                fullWidth={true}
+                placeholder="Numéro de vol  : A36WJB..."
+                register={register('flightNumber')}
+                control={control}
+                error={errors?.flightNumber?.message}
+                required
+                withBorder={false}
+              />
+            </div>
+            <div className="ml-2.5">
+              <Typography size="text-2xs" color="light-gray" italic>
+                Facultatif
+              </Typography>
+            </div>
           </div>
         )}
         {isFrontalier && (

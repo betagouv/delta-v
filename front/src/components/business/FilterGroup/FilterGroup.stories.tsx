@@ -24,6 +24,8 @@ const FILTER_BAR_DATA: FilterBarProps = {
   searchType: 'actuality',
   filterHistories: [FILTER_HISTORY_ITEM_DATA, FILTER_HISTORY_ITEM_DATA, FILTER_HISTORY_ITEM_DATA],
   onValidateFilter: (data) => console.log(data),
+  open: true,
+  setOpen: () => console.log('open'),
 };
 
 export const FilterBarExample = (): JSX.Element => (
@@ -32,6 +34,8 @@ export const FilterBarExample = (): JSX.Element => (
     searchType={FILTER_BAR_DATA.searchType}
     filterHistories={FILTER_BAR_DATA.filterHistories}
     onValidateFilter={FILTER_BAR_DATA.onValidateFilter}
+    open={FILTER_BAR_DATA.open}
+    setOpen={FILTER_BAR_DATA.setOpen}
   />
 );
 

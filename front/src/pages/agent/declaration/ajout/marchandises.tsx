@@ -9,6 +9,7 @@ import shallow from 'zustand/shallow';
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
+import { ModalDeleteProductCartDeclaration } from '@/components/autonomous/ModalDeleteProductCartDeclaration';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -71,7 +72,9 @@ const Declaration = () => {
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
   const [isAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
+  const [openModalDeleteProduct, setOpenModalDeleteProduct] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  const [deletedProductId, setDeletedProductId] = useState<string | undefined>();
   const [defaultValuesProduct, setDefaultValuesProduct] = useState<
     DefaultValuesUpdateProduct | undefined
   >();
@@ -91,6 +94,9 @@ const Declaration = () => {
   const handleCloseDownModal = () => {
     setOpenSearchDownModal(false);
     setOpenCategoryDownModal(false);
+    setOpenFavoriteDownModal(false);
+    setOpenModalAddProduct(false);
+    setOpenModalDeleteProduct(false);
   };
 
   const { handleSubmit } = useForm();
@@ -198,16 +204,16 @@ const Declaration = () => {
               <Typography color="white" size="text-xs">
                 Mes favoris
               </Typography>
-              <Icon name="chevron-down" size="sm" />
+              <Icon name="chevron-thin-down" size="sm" />
             </div>
           </button>
           <button
             onClick={() => setOpenCategoryDownModal(true)}
             type="button"
-            className="gap-3 bg-white border-2 border-secondary-200 rounded-full flex-1 flex justify-center items-center"
+            className="border gap-3 bg-white border-gray-300 rounded-full flex-1 flex justify-center items-center"
           >
             <div className="flex flex-row items-center gap-3">
-              <Typography color="black" size="text-xs">
+              <Typography color="black" weight="bold" size="text-xs">
                 Filtrer par catégories
               </Typography>
               <Icon name="chevron-down" size="sm" />
@@ -241,7 +247,10 @@ const Declaration = () => {
                     nomenclatures={[]}
                     key={`${product.id}-${index}`}
                     deletable={isAvailableToRemove}
-                    onDelete={onClickProductToRemove}
+                    onDelete={(id) => {
+                      setDeletedProductId(id);
+                      setOpenModalDeleteProduct(true);
+                    }}
                     detailsButton
                   />
                 ))}
@@ -251,7 +260,10 @@ const Declaration = () => {
                       amountProductGroup={amountProduct}
                       country={meansOfTransportAndCountry.country}
                       border={declarationRequest.border}
-                      onDelete={onClickProductToRemove}
+                      onDelete={(id) => {
+                        setDeletedProductId(id);
+                        setOpenModalDeleteProduct(true);
+                      }}
                       deletable={isAvailableToRemove}
                       onModifyClick={onModifyClick}
                       key={`${amountProduct.group}-${index}`}
@@ -293,11 +305,22 @@ const Declaration = () => {
 
       <ModalAddProductCartDeclaration
         open={openModalAddProduct}
-        onClose={() => setOpenModalAddProduct(false)}
+        onClose={handleCloseDownModal}
         onAddProduct={onUpdateProduct}
         currentProduct={selectedProduct}
         defaultCurrency={defaultCurrency}
         defaultValues={defaultValuesProduct ?? undefined}
+      />
+
+      <ModalDeleteProductCartDeclaration
+        open={openModalDeleteProduct}
+        onClose={handleCloseDownModal}
+        onDeleteProduct={() => {
+          if (deletedProductId) {
+            onClickProductToRemove(deletedProductId);
+          }
+          handleCloseDownModal();
+        }}
       />
     </AgentRoute>
   );
