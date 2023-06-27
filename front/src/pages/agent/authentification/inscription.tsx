@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -10,6 +9,7 @@ import { useRegisterMutation } from '@/api/hooks/useAPIAuth';
 import { ApiError } from '@/components/common/ApiError';
 import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
+import { Link } from '@/components/common/Link';
 import { PasswordHelperText } from '@/components/common/PasswordHelperText/PasswordHelperText';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
@@ -82,34 +82,32 @@ const RegisterPage = () => {
       }
     >
       <TitleHeaderAgent title="Créer votre compte" bgColorClass="bg-white" />
-      <section className="my-auto flex flex-col items-center self-center ">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-80">
-          <div className="flex flex-col gap-3">
+      <section className="my-auto flex flex-col items-center self-center px-4">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InputGroup
+            type="email"
+            name="adult"
+            fullWidth={true}
+            placeholder="Email"
+            register={register('email')}
+            error={errors?.email?.message ?? getErrorFields('email', apiError)}
+          />
+
+          <div className="flex flex-col gap-1 py-4">
             <InputGroup
-              type="email"
+              type={!passwordVisible ? 'password' : 'text'}
               name="adult"
               fullWidth={true}
-              placeholder="Email"
-              register={register('email')}
-              error={errors?.email?.message ?? getErrorFields('email', apiError)}
+              placeholder="Mot de passe"
+              register={register('password')}
+              error={errors?.password?.message ?? getErrorFields('password', apiError)}
+              trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
+              onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
             />
-
-            <div className="flex flex-col gap-1">
-              <InputGroup
-                type={!passwordVisible ? 'password' : 'text'}
-                name="adult"
-                fullWidth={true}
-                placeholder="Mot de passe"
-                register={register('password')}
-                error={errors?.password?.message ?? getErrorFields('password', apiError)}
-                trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
-                onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
-              />
-              <div className="ml-3">
-                <Typography color="light-gray" size="text-2xs">
-                  <PasswordHelperText password={password} />
-                </Typography>
-              </div>
+            <div className="ml-3">
+              <Typography color="light-gray" size="text-2xs">
+                <PasswordHelperText password={password} />
+              </Typography>
             </div>
           </div>
           {apiError && (
@@ -122,7 +120,7 @@ const RegisterPage = () => {
               <ApiSuccess apiSuccess={apiSuccess} />
             </div>
           )}
-          <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
+          <div className="flex flex-col gap-2 w-40 mx-auto ">
             <Button
               fullWidth={true}
               type="submit"
@@ -135,15 +133,15 @@ const RegisterPage = () => {
               Champs obligatoires *
             </Typography>
           </div>
-          <span className="flex justify-center gap-2">
-            <Typography color="black" size="text-xs">
-              Vous avez déjà un compte ?
-            </Typography>
-            <Typography color="primary" size="text-xs" underline>
-              <Link href={RoutingAuthentication.login}>Se connecter</Link>
-            </Typography>
-          </span>
         </form>
+        <span className="absolute bottom-12 flex justify-center gap-2">
+          <Typography color="black" size="text-xs">
+            Vous avez déjà un compte ?
+          </Typography>
+          <Typography color="primary" size="text-xs" underline>
+            <Link href={RoutingAuthentication.login}>Se connecter</Link>
+          </Typography>
+        </span>
       </section>
     </MainAuth>
   );

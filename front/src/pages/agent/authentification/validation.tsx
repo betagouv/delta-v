@@ -27,6 +27,7 @@ const RegisterValidationPage = () => {
 
   return (
     <MainAuth
+      withPadding={false}
       meta={
         <Meta
           title="Déclare Douanes - Activation de compte Agent"
@@ -34,8 +35,8 @@ const RegisterValidationPage = () => {
         />
       }
     >
-      <div className="my-auto flex flex-col items-center self-center gap-8">
-        <div className="pb-16">
+      <div className="my-auto flex flex-col items-center self-center">
+        <div className="flex flex-col pb-16">
           <Typography
             variant="h1"
             size="text-xl"
@@ -58,16 +59,16 @@ const RegisterValidationPage = () => {
         <div className="flex flex-col gap-5 max-w-xs">
           <Typography size="text-xs" color="black">
             Bonjour,
-          </Typography>
-          <Typography size="text-xs" color="black">
+            <br />
+            <br />
             Vous venez de créer votre compte Déclare Douane Agent.
-          </Typography>
-          <Typography size="text-xs" color="black">
+            <br />
+            <br />
             Pour activer celui-ci, il vous suffit de cliquer sur le lien ci-dessous et profiter de
             l’application dès à présent !
           </Typography>
         </div>
-        <div className="flex flex-col self-center items-center w-48 gap-2 mt-8">
+        <div className="flex flex-col self-center items-center w-48 gap-2 mt-7">
           {apiError && <ApiError apiError={apiError} />}
           {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
           <Button onClick={handleValidate} fullWidth={true} type="submit" size="sm">
