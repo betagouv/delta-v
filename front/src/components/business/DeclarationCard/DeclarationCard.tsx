@@ -67,7 +67,7 @@ export const DeclarationCard = ({
       onClick={() => onClick(id)}
     >
       {verificationButton && (
-        <span className="pb-1.5">
+        <span className="pb-2">
           <Button variant="outlined" color="card" size="2xs">
             Mes vérifications
           </Button>
@@ -105,7 +105,11 @@ export const DeclarationCard = ({
       </div>
       <DataInfoItem
         label="Statut"
-        value={<DeclarationBadgeStatus status={status} />}
+        value={
+          <div className="pt-1 w-fit">
+            <DeclarationBadgeStatus status={status} />
+          </div>
+        }
         labelSize="text-2xs"
         valueSize="text-sm"
       />

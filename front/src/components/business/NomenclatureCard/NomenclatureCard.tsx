@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import cs from 'classnames';
 import dayjs from 'dayjs';
 
-import { Icon } from '@/components/common/Icon';
-import { SvgIcon } from '@/components/common/SvgIcon';
+import { SvgIcon, SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 
@@ -56,14 +55,10 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
         </div>
       </div>
       <div
-        className="absolute top-2 right-2 h-4 w-4 cursor-pointer text-[#5A7BF0]"
+        className="absolute top-2 right-2 h-5 w-5 cursor-pointer text-[#5A7BF0]"
         onClick={onFavoriteClick}
       >
-        {isFavorite ? (
-          <Icon name="star-full" color="#5A7BF0" />
-        ) : (
-          <Icon name="star-empty" color="grey" />
-        )}
+        {isFavorite ? <SvgIcon name="starFull" /> : <SvgIcon name="star" />}
       </div>
     </div>
   );

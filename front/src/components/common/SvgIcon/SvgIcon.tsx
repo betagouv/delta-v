@@ -149,6 +149,8 @@ import LogoDouane from '@/assets/images/Logo-Douane.svg';
 import LogoFrenchDouane from '@/assets/images/Logo-French-Douane.svg';
 import LogoFrenchRepublic from '@/assets/images/Logo-French-Republic.svg';
 import Logo from '@/assets/images/Logo.svg';
+import Star from '@/assets/images/Star.svg';
+import StarFull from '@/assets/images/StarFull.svg';
 import VisibilityOff from '@/assets/images/VisibilityOff.svg';
 import VisibilityOn from '@/assets/images/VisibilityOn.svg';
 
@@ -303,6 +305,8 @@ export type SvgNames =
   | 'categoryWood'
   | 'visibilityOff'
   | 'visibilityOn'
+  | 'star'
+  | 'starFull'
   | 'categoryWoodenFloor';
 
 export interface ISvgIconProps {
@@ -613,6 +617,10 @@ const getSvgFromName = (name: SvgNames): any => {
       return VisibilityOff;
     case 'visibilityOn':
       return VisibilityOn;
+    case 'star':
+      return Star;
+    case 'starFull':
+      return StarFull;
     default:
       return CategoryOther;
   }
