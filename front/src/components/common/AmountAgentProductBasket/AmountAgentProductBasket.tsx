@@ -53,7 +53,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
         </div>
       )}
       <div className="flex flex-col gap-5 p-5">
-        <div className="flex flex-col gap-[6px]">
+        <div className="flex flex-col gap-2.5">
           {nomenclatures && (
             <span className="flex flex-row gap-6">
               {nomenclatures.map((item, index) => (

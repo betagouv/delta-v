@@ -10,22 +10,22 @@ export type DataInfoItemProps = {
   value: string | React.ReactNode;
   valueSize?: TextSize;
   isRequired?: boolean;
-  size?: TextSize;
   svgName?: SvgNames;
   isBold?: boolean;
 };
 
 export const DataInfoItem = ({
   label,
+  labelSize,
   value,
+  valueSize,
   isRequired,
-  size,
   svgName,
   isBold = false,
 }: DataInfoItemProps) => {
   return (
     <div className={`flex ${svgName ? 'flex-row' : 'flex-col'}`}>
-      <Typography weight="bold" color="light-gray" size={size}>
+      <Typography weight="medium" color="light-gray" size={labelSize}>
         {label} {isRequired && ' *'}
       </Typography>
       {svgName ? (
@@ -33,7 +33,7 @@ export const DataInfoItem = ({
           <TransportBadge svgName={svgName} />
         </div>
       ) : (
-        <Typography color="black" size={size} weight={isBold ? 'bold' : 'normal'}>
+        <Typography color="black" size={valueSize} weight={isBold ? 'bold' : 'normal'}>
           {value}
         </Typography>
       )}

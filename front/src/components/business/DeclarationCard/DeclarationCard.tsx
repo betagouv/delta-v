@@ -61,25 +61,26 @@ export const DeclarationCard = ({
   return (
     <div
       className={cs({
-        'flex flex-col rounded-xl border border-gray-300 px-5 py-4 gap-1': true,
+        'flex flex-col rounded-xl border border-gray-300 px-5 py-5 w-72 md:w-80': true,
       })}
       ref={cardRef}
       onClick={() => onClick(id)}
     >
       {verificationButton && (
-        <span className="pb-1.5">
+        <span className="pb-2">
           <Button variant="outlined" color="card" size="2xs">
             Mes vérifications
           </Button>
         </span>
       )}
-      <div className="grid w-full grid-cols-2">
+      <div className="grid w-full grid-cols-[140px_16px_1fr] md:grid-cols-[140px_52px_1fr]">
         <DataInfoItem
           label="Numéro de déclaration"
           value={`${publicId.slice(0, 10)} ${publicId.slice(10)}`}
           labelSize="text-2xs"
           valueSize="text-sm"
         />
+        <div></div>
         <DataInfoItem
           label="Date de déclaration"
           value={dayjs(date).format('DD/MM/YYYY')}
@@ -87,13 +88,14 @@ export const DeclarationCard = ({
           valueSize="text-sm"
         />
       </div>
-      <div className="grid w-full grid-cols-2">
+      <div className="grid w-full grid-cols-[140px_16px_1fr] md:grid-cols-[140px_52px_1fr]">
         <DataInfoItem
           label="Nom Prénom"
           value={`${firstName} ${lastName}`}
           labelSize="text-2xs"
           valueSize="text-sm"
         />
+        <div></div>
         <DataInfoItem
           label="Moyen de transport"
           value={transportLabel}
@@ -103,7 +105,11 @@ export const DeclarationCard = ({
       </div>
       <DataInfoItem
         label="Statut"
-        value={<DeclarationBadgeStatus status={status} />}
+        value={
+          <div className="pt-1 w-fit">
+            <DeclarationBadgeStatus status={status} />
+          </div>
+        }
         labelSize="text-2xs"
         valueSize="text-sm"
       />
