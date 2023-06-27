@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import cs from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
 import { Button } from '../Button';
 import { Icon } from '../Icon';
@@ -18,14 +19,6 @@ interface AmountAgentProductBasketProps {
   onProductClick?: (id: string) => void;
 }
 
-const getAmountAgentProductBasketColors = (containError: boolean): string => {
-  if (containError === true) {
-    return 'bg-[#FFE8E5] border border-[#CE0500]';
-  }
-
-  return 'bg-[#E3E3FD]';
-};
-
 export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> = ({
   product,
   nomenclatures,
@@ -39,9 +32,26 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
   useEffect(() => {
     setUnit(getUnit(product.amountProduct) ?? '');
   }, [product.amountProduct]);
-  const colors = getAmountAgentProductBasketColors(containError);
   return (
-    <div className={cs('relative flex flex-col rounded-md w-full ', colors)}>
+    <div
+      className={twMerge(
+        cs({
+          'relative flex flex-col rounded-md w-full bg-[#E3E3FD]': true,
+          'bg-[#FFE8E5] border border-[#CE0500]': containError,
+          'bg-[#FFE8E5]': deletable,
+        }),
+      )}
+    >
+      {deletable && (
+        <div className="absolute right-2 top-2 cursor-pointer">
+          <Typography
+            color={deletable ? 'red' : 'primary'}
+            onClick={() => onDelete(product.customId)}
+          >
+            <Icon name="cross-thin" size="sm" />
+          </Typography>
+        </div>
+      )}
       {deletable && (
         <div className="absolute right-2 top-2 cursor-pointer">
           <Typography
@@ -114,7 +124,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
         )}
         <span className="flex justify-center">
           <Button
-            color={containError ? 'red' : 'primary'}
+            color={containError || deletable ? 'red' : 'primary'}
             size="2xs"
             onClick={() => {
               if (onButtonClick) {
