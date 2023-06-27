@@ -19,7 +19,7 @@
     "migration:generate": "yarn typeorm-ts-node-commonjs migration:generate -d ./src/loader/ormconfig.ts -p ",
     "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d ./src/loader/ormconfig.ts",
     "migration:revert": "yarn typeorm-ts-node-commonjs migration:revert -d ./src/loader/ormconfig.ts",
-    "migration:create": "yarn typeorm-ts-node-commonjs migration:create -d ./src/loader/ormconfig.ts ",
+    "migration:create": "yarn typeorm-ts-node-commonjs migration:create",
     "fixtures:load": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/loader/ormconfig.ts --debug",
     "cron:syncCurrencies": "node ./dist/scripts/syncCurrency"
   },

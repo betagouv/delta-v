@@ -34,10 +34,6 @@ const QuittancePage = () => {
 
   const { isLoading, data: apiDeclarations } = useDeclarations(queryData);
 
-  const onDeclarationCardClick = (id: string) => {
-    router.push(`/agent/declaration/${id}`);
-  };
-
   const onValidateFilter = (data: FilterBarForm) => {
     setPage(0);
     setQueryData({
@@ -100,7 +96,7 @@ const QuittancePage = () => {
                     date={declaration.versionDate}
                     id={declaration.id}
                     publicId={declaration.publicId}
-                    onClick={onDeclarationCardClick}
+                    onClick={() => router.push(`/agent/declaration/${declaration.id}`)}
                     firstName={declaration.declarantFirstName}
                     lastName={declaration.declarantLastName}
                     transport={declaration.declarantMeanOfTransport}
