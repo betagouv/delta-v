@@ -26,7 +26,7 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
   return (
     <div
       className={cs(
-        'relative grid rounded-lg border border-secondary-300 grid-cols-[40px_1fr] w-72 p-5 gap-5',
+        'relative grid rounded-lg border border-secondary-300 grid-cols-[40px_1fr] md:w-72 p-5 gap-5',
       )}
       onClick={onClick ? () => onClick(product) : undefined}
     >

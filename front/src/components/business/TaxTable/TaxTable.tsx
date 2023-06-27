@@ -1,6 +1,8 @@
 import { Typography } from '@/components/common/Typography';
+import { getUnit } from '@/model/amount';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
+import { useStore } from '@/stores/store';
 
 export interface ITaxTableProps {
   declarationResponse: DeclarationResponse;
@@ -8,6 +10,9 @@ export interface ITaxTableProps {
 }
 
 export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loading }) => {
+  const { findProduct } = useStore((state) => ({
+    findProduct: state.findProduct,
+  }));
   const renderLine = (detailedProduct: DetailedProduct) => {
     return (
       <div
@@ -24,10 +29,13 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loadin
         )}
         <div className="flex flex-row justify-between w-3/6">
           <Typography color="black" size="text-xs">
-            Prix d'achat
+            {detailedProduct.originalCurrency ? "Prix d'achat" : 'Quantité'}
           </Typography>
           <Typography color="black" size="text-xs">
-            {detailedProduct.unitPrice} €
+            {detailedProduct.unitPrice}{' '}
+            {detailedProduct.originalCurrency
+              ? '€'
+              : getUnit(findProduct(detailedProduct.id)?.amountProduct)}
           </Typography>
         </div>
         <div className="te flex flex-row justify-between w-full">

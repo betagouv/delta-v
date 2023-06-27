@@ -58,9 +58,9 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   } = useForm<any>({
     defaultValues: {
       ...getDefaultValues(steps),
-      name: defaultValues?.name ?? undefined,
-      value: defaultValues?.value ?? null,
-      currency: defaultValues?.currency ?? defaultCurrency,
+      name: undefined,
+      value: null,
+      currency: defaultCurrency,
     },
     resolver: yupResolver(
       getSchema({
