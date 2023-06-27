@@ -69,8 +69,8 @@ const AskResetPasswordPage = () => {
         bgColorClass="bg-white"
         switchWordPosition={3}
       />
-      <section className="mt-12 flex flex-col items-center self-center">
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-6 w-80">
+      <section className="self-center w-full mt-12 flex flex-col items-center px-10">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
           <InputGroup
             label="Saisissez votre adresse email *"
             type="email"
@@ -80,7 +80,7 @@ const AskResetPasswordPage = () => {
             register={register('email')}
             error={errors?.email?.message ?? getErrorFields('email', apiError)}
           />
-          <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
+          <div className="flex flex-col gap-4 w-36 pt-10 self-center">
             {apiError && (
               <Typography color="error" textPosition="text-center">
                 {apiError.message}
@@ -104,10 +104,12 @@ const AskResetPasswordPage = () => {
               Annuler
             </Button>
           </div>
+        </form>
+        <span className="absolute bottom-3.5 flex justify-center">
           <Typography color="black" size="text-2xs" textPosition="text-center">
             Champs obligatoires *
           </Typography>
-        </form>
+        </span>
       </section>
     </MainAuth>
   );

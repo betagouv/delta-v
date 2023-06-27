@@ -78,6 +78,7 @@ const ResetPasswordPage = () => {
 
   return (
     <MainAuth
+      withPadding={false}
       meta={
         <Meta
           title="Déclare Douanes - Modification du mot de passe"
@@ -91,9 +92,9 @@ const ResetPasswordPage = () => {
         title="Créer un nouveau mot de passe"
         bgColorClass="bg-white"
       ></TitleHeaderAgent>
-      <section className="mt-12 flex flex-col items-center self-center">
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-6 w-80">
-          <div className="flex flex-col gap-1">
+      <section className="self-center w-full flex flex-col items-center px-10">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
+          <div className="flex flex-col gap-1 pb-12">
             <InputGroup
               label="Mon nouveau mot de passe *"
               type={!passwordVisible ? 'password' : 'text'}
@@ -145,7 +146,7 @@ const ResetPasswordPage = () => {
               <ApiSuccess apiSuccess={apiSuccess} />
             </div>
           )}
-          <div className="flex flex-col gap-2 px-20 pt-8 pb-9">
+          <div className="flex flex-col gap-4 w-36 pt-10 self-center pb-2">
             <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
               Valider
             </Button>

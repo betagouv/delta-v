@@ -43,7 +43,8 @@ const ResetLinkSentPage = () => {
         bgColorClass="bg-white"
         switchWordPosition={3}
       />
-      <div className="my-auto flex flex-col items-center self-center gap-8">
+
+      <div className="my-auto flex flex-col items-center self-center px-10">
         <Typography
           variant="h1"
           size="text-xl"
@@ -53,20 +54,20 @@ const ResetLinkSentPage = () => {
         >
           Email envoyé !
         </Typography>
-        <div className="flex flex-col gap-5">
-          <div>
-            <Typography textPosition="text-center" size="text-xs" color="black">
-              {`Un lien vient de vous être envoyé à l'adresse : `}
+        <div className="flex flex-col pt-7 pb-10">
+          <Typography textPosition="text-center" size="text-xs" color="black">
+            {`Un lien vient de vous être envoyé à l'adresse : `}
+          </Typography>
+          {email && (
+            <Typography textPosition="text-center" size="text-xs" color="black" weight="bold">
+              {email}
             </Typography>
-            {email && (
-              <Typography textPosition="text-center" size="text-xs" color="black" weight="bold">
-                {email}
-              </Typography>
-            )}
-          </div>
+          )}
+          <br />
           <Typography textPosition="text-center" size="text-xs" color="black">
             Suivez le guide pour renouveler votre mot de passe.
           </Typography>
+          <br />
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>
             <span className="cursor-pointer" onClick={handleResend}>
               Renvoyer le lien

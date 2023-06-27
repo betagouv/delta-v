@@ -36,31 +36,37 @@ const RegisterSuccessPage = () => {
       }
     >
       <TitleHeaderAgent title="Créer votre compte" bgColorClass="bg-white"></TitleHeaderAgent>
-      <div className="my-auto flex flex-col items-center self-center gap-8">
-        <Typography variant="h1" size="text-xl" weight="bold" textPosition="text-center">
+      <div className="my-auto flex flex-col items-center self-center px-10">
+        <Typography
+          variant="h1"
+          size="text-xl"
+          weight="bold"
+          textPosition="text-center"
+          color="black"
+        >
           Email envoyé !
         </Typography>
-        <div className="flex flex-col gap-5">
-          <div>
-            <Typography textPosition="text-center" size="text-xs" color="black">
-              {`Un lien d’activation a été envoyé à l’adresse : `}
+        <div className="flex flex-col pt-7 pb-10">
+          <Typography textPosition="text-center" size="text-xs" color="black">
+            {`Un lien d’activation a été envoyé à l’adresse : `}
+          </Typography>
+          {email && (
+            <Typography textPosition="text-center" size="text-xs" color="black" weight="bold">
+              {email}
             </Typography>
-            {email && (
-              <Typography textPosition="text-center" size="text-xs" color="black" weight="bold">
-                {email}
-              </Typography>
-            )}
-          </div>
+          )}
+          <br />
           <Typography textPosition="text-center" size="text-xs" color="black">
             Activez dès à présent votre compte à partir de votre mail !
           </Typography>
+          <br />
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>
             <span className="cursor-pointer" onClick={handleResend}>
               Renvoyer le lien
             </span>
           </Typography>
         </div>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 w-48 mx-auto">
           <Button
             onClick={() => router.push(RoutingAuthentication.login)}
             fullWidth={true}

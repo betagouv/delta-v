@@ -26,13 +26,15 @@ export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
   return (
     <div
       className={cs(
-        'grid grid-cols-[40px_1fr_40px] w-full flex-row items-center px-6 py-5',
+        'grid grid-cols-[40px_1fr_40px] w-full flex-row items-center h-14',
         bgColorClass,
       )}
     >
-      <Link back={!href} href={href}>
-        <Icon name="chevron-left" size="base" />
-      </Link>
+      <div className="mx-auto">
+        <Link back={!href} href={href}>
+          <Icon name="chevron-left" size="base" />
+        </Link>
+      </div>
       <div className="flex w-full justify-center">
         <TitleAgent
           title={title}

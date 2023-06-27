@@ -74,15 +74,15 @@ const LoginPage = () => {
         />
       }
     >
-      <section className="my-auto flex flex-col items-center self-center ">
-        <div className="mb-14 h-14">
+      <section className="h-3/4 flex flex-col items-center w-full px-10 py-14">
+        <div className="mb-16 h-14">
           <SvgIcon name="logoAgent" />
         </div>
-        <Typography variant="h1" size="text-xl" weight="bold">
-          Se connecter
-        </Typography>
-        <form onSubmit={handleSubmit(onSubmit)} className="w-60">
-          <div className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
+          <Typography variant="h1" size="text-xl" weight="bold" textPosition="text-center">
+            Se connecter
+          </Typography>
+          <div className="my-5">
             <InputGroup
               type="text"
               name="adult"
@@ -91,6 +91,8 @@ const LoginPage = () => {
               register={register('email')}
               error={errors?.email?.message ?? getErrorFields('email', apiError)}
             />
+          </div>
+          <div className="my-2.5">
             <InputGroup
               type={!passwordVisible ? 'password' : 'text'}
               name="adult"
@@ -110,8 +112,7 @@ const LoginPage = () => {
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>
-
-          <div className="px-12 pt-4 pb-9">
+          <div className="my-5 w-36 self-center">
             <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
               Valider
             </Button>
