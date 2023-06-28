@@ -139,6 +139,8 @@ import Plane from '@/assets/icons/Plane.svg';
 import Plants from '@/assets/icons/Plants.svg';
 import Question from '@/assets/icons/Question.svg';
 import Search from '@/assets/icons/Search.svg';
+import Star from '@/assets/icons/Star.svg';
+import StarFull from '@/assets/icons/StarFull.svg';
 import Sweets from '@/assets/icons/Sweets.svg';
 import Tea from '@/assets/icons/Tea.svg';
 import Train from '@/assets/icons/Train.svg';
@@ -149,8 +151,6 @@ import LogoDouane from '@/assets/images/Logo-Douane.svg';
 import LogoFrenchDouane from '@/assets/images/Logo-French-Douane.svg';
 import LogoFrenchRepublic from '@/assets/images/Logo-French-Republic.svg';
 import Logo from '@/assets/images/Logo.svg';
-import Star from '@/assets/images/Star.svg';
-import StarFull from '@/assets/images/StarFull.svg';
 import VisibilityOff from '@/assets/images/VisibilityOff.svg';
 import VisibilityOn from '@/assets/images/VisibilityOn.svg';
 
