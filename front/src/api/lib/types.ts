@@ -45,6 +45,11 @@ export interface ErrorResponse extends BaseAPIResponse {
   };
 }
 
+export type CreateFeedbackParams = {
+  feedbackId: string;
+  comment: string;
+};
+
 export type CreateDeclarationParams = {
   declarationId: string;
   contactDetails: ContactDetails;
