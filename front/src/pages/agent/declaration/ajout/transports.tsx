@@ -12,8 +12,8 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
-import { IRadioType } from '@/components/input/StandardInputs/Radio';
-import { IRadioCardType, RadioCard } from '@/components/input/StandardInputs/RadioCard';
+import { IRadioType, Radio } from '@/components/input/StandardInputs/Radio';
+import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
@@ -179,16 +179,16 @@ const Declaration = () => {
         onSubmit={onSubmit}
         linkButton={DECLARATION_STEP_PAGE[1]}
       >
-        <label htmlFor="adult" className={`mb-4 block text-sm`} data-testid="label-element">
-          Sélectionner le moyen de transport
-        </label>
-        <RadioCard
+        <InputGroup
+          type="radioCard"
+          label="Sélectionner le moyen de transport"
           name="meansOfTransport"
           radioCardValues={meansOfTransports}
           register={register('meansOfTransport', { required: true })}
           control={control}
           error={errors?.meansOfTransport?.message}
           littleCard
+          newLabel
         />
         {transportChosen && (
           <div className="mt-4">
@@ -230,14 +230,17 @@ const Declaration = () => {
         )}
         {isFrontalier && (
           <div className="mt-4">
-            <InputGroup
-              label="Êtes-vous dans le cadre d’un déplacement de résident frontalier ?"
-              type="radio"
-              name="border"
-              radioValues={radioValues}
-              register={register('border')}
-              error={errors?.border?.message}
-            />
+            <label htmlFor="adult" className={`mb-4 block text-sm`} data-testid="label-element">
+              Est-ce dans le cadre d’un déplacement frontalier ?
+            </label>
+            <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
+              <Radio
+                name="border"
+                radioValues={radioValues}
+                register={register('border')}
+                error={errors?.border?.message}
+              />
+            </div>
           </div>
         )}
         <div>

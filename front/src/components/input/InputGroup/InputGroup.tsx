@@ -1,5 +1,6 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Comboboxes } from '../StandardInputs/Comboboxes';
@@ -66,6 +67,7 @@ export interface IInputGroupProps {
   rules?: any;
   littleCard?: boolean;
   withBorder?: boolean;
+  newLabel?: boolean;
   onTrailingIconClick?: () => void;
   onTrailingSvgIconClick?: () => void;
 }
@@ -95,6 +97,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   rules,
   littleCard = false,
   withBorder,
+  newLabel = false,
   onTrailingIconClick,
   onTrailingSvgIconClick,
 }: IInputGroupProps) => {
@@ -106,7 +109,10 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
           {label && (
             <label
               htmlFor={name}
-              className={`mb-4 block text-base font-bold`}
+              className={classNames({
+                'mb-4 block text-base font-bold': !newLabel,
+                'mb-5 block text-sm font-normal': newLabel,
+              })}
               data-testid="label-element"
             >
               {label}
