@@ -9,7 +9,7 @@ import { AppDataSource } from '../../../../src/loader/database';
 import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
-import { putFeedback } from '../../../../src/api/feedback/putFeedback';
+import api from '../../../../src/api';
 import { FeedbackRepository } from '../../../../src/repositories/feedback.repository';
 
 const testDb = testDbManager();
@@ -19,7 +19,7 @@ describe('putFeedback route', () => {
 
   beforeAll(async () => {
     await testDb.connect();
-    testApp = buildTestApp(putFeedback);
+    testApp = buildTestApp(api);
   });
 
   beforeEach(async () => {

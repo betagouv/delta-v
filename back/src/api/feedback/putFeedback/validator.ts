@@ -11,12 +11,16 @@ export interface PutFeedbackRequest {
 }
 
 export const putFeedbackValidator: IRequestValidatorSchema = {
-  params: validator.object({
-    feedbackId: validator.string().uuid().required(),
-  }),
-  body: validator.object({
-    comment: validator.string().min(10).required(),
-  }),
+  params: validator
+    .object({
+      feedbackId: validator.string().uuid().required(),
+    })
+    .required(),
+  body: validator
+    .object({
+      comment: validator.string().min(10).required(),
+    })
+    .required(),
 };
 
 export default buildValidationMiddleware(putFeedbackValidator);
