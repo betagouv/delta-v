@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 
 import { UseDeclarationParams, useDeclarations } from '@/api/hooks/useAPIDeclaration';
@@ -45,7 +46,7 @@ const QuittancePage = () => {
       meanOfTransports:
         data.meanOfTransport.length > 0 ? data.meanOfTransport.join(',') : undefined,
       startDate: data.startDate ?? undefined,
-      endDate: data.endDate ?? undefined,
+      endDate: dayjs(data.endDate).add(1, 'day').toDate() ?? undefined,
       onSuccess: (dataSuccess) => setDeclarations(dataSuccess),
     });
   };

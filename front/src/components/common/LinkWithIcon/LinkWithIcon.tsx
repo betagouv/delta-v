@@ -47,7 +47,7 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
               true,
             'bg-primary-400 text-white': withBgColor,
             'text-black': !withBgColor,
-            'bg-disabled-bg border-none': disabled,
+            'bg-disabled-bg border-none opacity-40': disabled,
           })}
         >
           <div className="flex flex-row gap-4 h-4 items-center">

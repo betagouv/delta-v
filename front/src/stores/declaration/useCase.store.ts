@@ -8,7 +8,6 @@ import { StoreSlice } from '../store';
 import {
   ContactDetails,
   MeansOfTransportAndCountry,
-  DeclarationResponse,
   DECLARATION_EMPTY_STATE,
 } from './appState.store';
 import { Currencies } from '@/model/currencies';
@@ -22,7 +21,6 @@ export interface DeclarationUseCaseSlice {
   findDeclarationShoppingProduct: (id: string) => ShoppingProduct | undefined;
   checkProductCartDeclaration: () => void;
   declare: () => void;
-  getDeclaration: (declarationId: string) => void;
   resetDeclaration: () => void;
 }
 
@@ -128,23 +126,6 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       return newState;
     });
     get().declare();
-  },
-  getDeclaration: async (declarationId: string) => {
-    try {
-      const response = (await axios.get(`/api/declaration/${declarationId}`)).data
-        .declaration as DeclarationResponse;
-      set((state: any) => {
-        const newState = { ...state };
-        newState.declaration.appState.validateDeclarationResponse = response;
-        return newState;
-      });
-    } catch (error: any) {
-      set((state: any) => {
-        const newState = { ...state };
-        newState.declaration.appState.error = error?.response?.data;
-        return newState;
-      });
-    }
   },
   removeProductCartDeclaration: (id: string): void => {
     set((state: any) => {
