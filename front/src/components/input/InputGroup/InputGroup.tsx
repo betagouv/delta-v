@@ -9,7 +9,6 @@ import { IRadioCardType, RadioCard } from '../StandardInputs/RadioCard';
 import { IOptions, Select } from '../StandardInputs/Select';
 import { SimpleSelect } from '../StandardInputs/SimpleSelect';
 import { TextArea } from '../StandardInputs/TextArea';
-import { TextAreaContact } from '../StandardInputs/TextArea copy';
 import { Toggle } from '../StandardInputs/Toggle';
 import { SvgNames } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
@@ -41,7 +40,6 @@ export interface IInputGroupProps {
     | 'radioCard'
     | 'checkbox'
     | 'textarea'
-    | 'textarea-contact'
     | 'comboboxes'
     | 'file';
   withSeparator?: boolean;
@@ -172,18 +170,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               register={register}
             />
           )}
-          {type === 'textarea-contact' && (
-            <TextAreaContact
-              id={name}
-              name={name}
-              placeholder={placeholder}
-              disabled={inputDisabled}
-              error={error}
-              rows={rows}
-              specificClassName={specificClassName}
-              register={register}
-            />
-          )}
           {type === 'radio' && (
             <Radio
               id={name}
@@ -210,7 +196,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
             type !== 'simple-select' &&
             type !== 'comboboxes' &&
             type !== 'textarea' &&
-            type !== 'textarea-contact' &&
             type !== 'toggle' &&
             type !== 'radio' &&
             type !== 'radioCard' && (

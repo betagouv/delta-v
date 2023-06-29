@@ -89,7 +89,7 @@ const ContactPage = () => {
             </Typography>
             <div className="mt-4">
               <InputGroup
-                type="textarea-contact"
+                type="textarea"
                 placeholder="Votre message"
                 name="comment"
                 register={register('comment')}
