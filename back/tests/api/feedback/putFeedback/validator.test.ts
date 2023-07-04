@@ -42,10 +42,11 @@ describe('putFeedback validator', () => {
 
     expect(isValid(data)).toBe(false);
   });
-  it('should be invalid - feedbackId undefined', () => {
+  it('should be invalid - comment undefined', () => {
     const data = {
       body: {
         ...validData.body,
+        comment: undefined,
       },
     };
 
