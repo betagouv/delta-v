@@ -4,7 +4,7 @@ x-envs: &common-envs
   PORT: 8080
   DB_PORT: 5432
   LOG_LEVEL: info
-  DB_USERNAME: ${DB_USERNAME:-postges}
+  DB_USERNAME: ${DB_USERNAME:-postgres}
   DB_PASSWORD: ${DB_PASSWORD:-pass}
   DB_DATABASE: ${DB_DATABASE:-postgres}
   DB_HOST: ${DB_HOST:-database-delta-v}
@@ -68,7 +68,7 @@ services:
     networks:
       - backend
     environment:
-      POSTGRES_USER: ${DB_USERNAME:-postges}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-pass}
       POSTGRES_DB: ${DB_DATABASE:-postgres}
       PGDATA: /var/lib/postgresql/data/db-files/
@@ -99,7 +99,7 @@ services:
     volumes:
       - ./adminerPlugins/:/var/www/html/plugins-enabled:delegated
     environment:
-      DB_USERNAME: ${DB_USERNAME:-postges}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-pass}
       DB_DATABASE: ${DB_DATABASE:-postgres}
       DB_HOST: ${DB_HOST:-database-delta-v}

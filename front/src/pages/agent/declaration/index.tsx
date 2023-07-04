@@ -46,7 +46,7 @@ const QuittancePage = () => {
       meanOfTransports:
         data.meanOfTransport.length > 0 ? data.meanOfTransport.join(',') : undefined,
       startDate: data.startDate ?? undefined,
-      endDate: dayjs(data.endDate).add(1, 'day').toDate() ?? undefined,
+      endDate: data.endDate ? dayjs(data.endDate).add(1, 'day').toDate() : undefined,
       onSuccess: (dataSuccess) => setDeclarations(dataSuccess),
     });
   };
