@@ -57,6 +57,14 @@ module.exports = {
   variants: {
     extend: {},
   },
+  corePlugins: {
+    textOpacity: false,
+    backgroundOpacity: false,
+    borderOpacity: false,
+    divideOpacity: false,
+    placeholderOpacity: false,
+    ringOpacity: false,
+  },
   plugins: [
     require('@tailwindcss/forms'),
     // eslint-disable-next-line func-names

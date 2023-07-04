@@ -158,7 +158,7 @@ export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Nous contacter',
     path: RoutingAgent.contactUs,
     svgIcon: 'categoryContact' as SvgNames,
-    disabled: true,
+    disabled: false,
   },
   {
     id: 'account',
