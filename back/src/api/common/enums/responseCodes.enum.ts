@@ -10,4 +10,5 @@ export enum ResponseCodes {
   DECLARATION_STATUS_UPDATED = 'declaration-status-updated',
   DECLARATION_UPDATED = 'declaration-updated',
   CURRENCIES_UPDATED = 'currency-updated',
+  FEEDBACK_UPDATED = 'feedback-updated',
 }

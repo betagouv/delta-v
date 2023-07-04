@@ -4,7 +4,7 @@ import Mail from 'nodemailer/lib/mailer';
 import { buildConfig } from './config';
 
 export interface IMailerSendOptions {
-  to: string;
+  to: string | string[];
   html: string;
   subject: string;
   attachments?: Mail.Attachment[];
