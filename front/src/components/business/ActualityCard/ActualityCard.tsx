@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import cs from 'classnames';
 import dayjs from 'dayjs';
 
-import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 
 require('dayjs/locale/fr');
@@ -14,17 +13,50 @@ export type ActualityCardProps = {
   title: string;
   creationDate: Date;
   content: string;
-  tag?: string;
+  tags?: string[];
+  newLimit?: () => void;
+  isLast?: boolean;
 };
 
-export const ActualityCard = ({ title, creationDate, content, tag }: ActualityCardProps) => {
+export const ActualityCard = ({
+  title,
+  creationDate,
+  content,
+  tags,
+  newLimit,
+  isLast,
+}: ActualityCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!cardRef?.current) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (isLast && entry?.isIntersecting) {
+        if (newLimit) newLimit();
+        observer.unobserve(entry.target);
+      }
+    });
+
+    observer.observe(cardRef.current);
+  }, [isLast]);
+
   return (
-    <div className={cs('flex flex-col rounded-xl border border-gray-300 p-5 gap-4 w-72 md:w-80')}>
+    <div
+      className={cs(
+        'flex flex-col rounded-xl border border-gray-300 p-5 gap-4 w-full lg:w-72 md:w-80',
+      )}
+      ref={cardRef}
+    >
       <div className="grid grid-cols-2">
-        {tag && (
-          <Button variant="outlined" color="card" size="2xs">
-            {tag}
-          </Button>
+        {tags && (
+          <div className="flex flex-row gap-2">
+            {tags.map((tag) => (
+              <div className="border text-[10px] border-secondary-300 rounded-full px-[10px] py-[5px]">
+                {tag}
+              </div>
+            ))}
+          </div>
         )}
         <Typography color="middle-gray" size="text-2xs" textPosition="text-right">
           {dayjs(creationDate).format('DD/MM/YYYY')}

@@ -11,7 +11,7 @@ import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { PeriodInput } from '@/components/input/StandardInputs/PeriodInput';
-import { FILTER_MEANS_OF_TRANSPORT, FILTER_STATUS } from '@/utils/filters';
+import { FILTER_MEANS_OF_TRANSPORT, FILTER_NEWS_TAGS, FILTER_STATUS } from '@/utils/filters';
 
 export type FilterBarProps = {
   title: string;
@@ -20,15 +20,19 @@ export type FilterBarProps = {
   noPeriodInput?: boolean;
   filterHistories?: FilterHistoryItemProps[];
   onValidateFilter: (data: FilterBarForm) => void;
+  withMeanOfTransportFilter?: boolean;
+  withStatusFilter?: boolean;
+  withNewsTagsFilter?: boolean;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
 
 export interface FilterBarForm {
-  status: string[];
-  meanOfTransport: string[];
-  startDate: Date | null;
-  endDate: Date | null;
+  status?: string[];
+  meanOfTransport?: string[];
+  newsTags?: string[];
+  startDate?: Date | null;
+  endDate?: Date | null;
   search: string | null;
 }
 
@@ -37,6 +41,9 @@ export const FilterBar = ({
   noSearchBar = false,
   noPeriodInput = false,
   filterHistories = [],
+  withMeanOfTransportFilter = false,
+  withStatusFilter = false,
+  withNewsTagsFilter = false,
   onValidateFilter,
   open,
   setOpen,
@@ -45,6 +52,7 @@ export const FilterBar = ({
     defaultValues: {
       status: [],
       meanOfTransport: [],
+      newsTags: [],
       startDate: null,
       endDate: null,
       search: null,
@@ -101,18 +109,30 @@ export const FilterBar = ({
                 control={control}
               />
             )}
-            <FilterGroup
-              title="Moyen de transport"
-              control={control}
-              name="meanOfTransport"
-              filters={FILTER_MEANS_OF_TRANSPORT}
-            />
-            <FilterGroup
-              title="Statut de la déclaration"
-              control={control}
-              name="status"
-              filters={FILTER_STATUS}
-            />
+            {withMeanOfTransportFilter && (
+              <FilterGroup
+                title="Moyen de transport"
+                control={control}
+                name="meanOfTransport"
+                filters={FILTER_MEANS_OF_TRANSPORT}
+              />
+            )}
+            {withStatusFilter && (
+              <FilterGroup
+                title="Statut de la déclaration"
+                control={control}
+                name="status"
+                filters={FILTER_STATUS}
+              />
+            )}
+            {withNewsTagsFilter && (
+              <FilterGroup
+                title="Filter par"
+                control={control}
+                name="newsTags"
+                filters={FILTER_NEWS_TAGS}
+              />
+            )}
           </div>
           <div className="flex flex-col gap-8 py-5">
             {filterHistories.length > 0 && <FilterHistory histories={filterHistories} />}

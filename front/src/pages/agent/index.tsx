@@ -89,6 +89,7 @@ const Index = () => {
                       openDeclaration();
                     }
                   }}
+                  key={item.title}
                 >
                   <LinkWithIcon
                     href={item.path}

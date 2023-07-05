@@ -42,9 +42,11 @@ const QuittancePage = () => {
       ...queryData,
       search: data.search,
       offset: 0 * Constants.MINI_TABLE_LIMIT,
-      status: data.status.length > 0 ? data.status.join(',') : undefined,
+      status: data.status && data.status.length > 0 ? data.status.join(',') : undefined,
       meanOfTransports:
-        data.meanOfTransport.length > 0 ? data.meanOfTransport.join(',') : undefined,
+        data.meanOfTransport && data.meanOfTransport.length > 0
+          ? data.meanOfTransport.join(',')
+          : undefined,
       startDate: data.startDate ?? undefined,
       endDate: data.endDate ? dayjs(data.endDate).add(1, 'day').toDate() : undefined,
       onSuccess: (dataSuccess) => setDeclarations(dataSuccess),
@@ -87,11 +89,13 @@ const QuittancePage = () => {
             <>
               <div className="mb-5">
                 <FilterBar
-                  title="Declarations"
+                  title="Déclarations"
                   searchType="global"
                   onValidateFilter={onValidateFilter}
                   open={openFilterBar}
                   setOpen={setOpenFilterBar}
+                  withMeanOfTransportFilter
+                  withStatusFilter
                 />
               </div>
               <div className="flex flex-col gap-2.5">
