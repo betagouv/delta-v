@@ -1,0 +1,6 @@
+entity: NewsEntity
+processor: ./processor/actualityProcessor
+items:
+  actuality{1..50}:
+
+
