@@ -57,7 +57,8 @@ const RegisterSuccessPage = () => {
           )}
           <br />
           <Typography textPosition="text-center" size="text-xs" color="black">
-            Activez dès à présent votre compte à partir de votre mail !
+            Activez dès à présent
+            <br /> votre compte à partir de votre mail !
           </Typography>
           <br />
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>

@@ -74,7 +74,7 @@ const LoginPage = () => {
         />
       }
     >
-      <section className="h-3/4 flex flex-col items-center w-full px-10 py-14">
+      <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10 ">
         <div className="mb-16 h-14">
           <SvgIcon name="logoAgent" />
         </div>
@@ -112,7 +112,7 @@ const LoginPage = () => {
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>
-          <div className="my-5 w-36 self-center">
+          <div className="mt-5 w-36 self-center">
             <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
               Valider
             </Button>
