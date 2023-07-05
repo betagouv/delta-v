@@ -1,11 +1,15 @@
 import { MeansOfTransport } from '../api/common/enums/meansOfTransport.enum';
 import { DeclarationStatus } from '../entities/declaration.entity';
+import { NewsTags } from '../entities/news.entity';
 
 export const validateStatus = (str: string): string => {
   return validateList(str, Object.values(DeclarationStatus));
 };
 export const validateMeanOfTransports = (str: string): string => {
   return validateList(str, Object.values(MeansOfTransport));
+};
+export const validateNewsTags = (str: string): string => {
+  return validateList(str, Object.values(NewsTags));
 };
 
 const validateList = (str: string, arrayAllowed: string[]): string => {

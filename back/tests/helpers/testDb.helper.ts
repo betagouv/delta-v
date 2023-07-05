@@ -7,6 +7,7 @@ import {
 import { Product, ProductEntity } from '../../src/entities/product.entity';
 import { AppDataSource, initDatabase } from '../../src/loader/database';
 import UserEntity, { User } from '../../src/entities/user.entity';
+import { News, NewsEntity } from '../../src/entities/news.entity';
 
 export interface ITestDbManager {
   getConnection: () => DataSource;
@@ -16,13 +17,14 @@ export interface ITestDbManager {
   persistCurrency: (args: Currency) => Promise<Currency>;
   persistUser: (args: User) => Promise<User>;
   persistDeclaration: (args: DeclarationEntityInterface) => Promise<DeclarationEntityInterface>;
+  persistActuality: (args: News) => Promise<News>;
   getCurrencies: () => Promise<Currency[]>;
   getDeclarations: () => Promise<DeclarationEntityInterface[]>;
   getUser: (id: string) => Promise<User | null>;
   clear: () => Promise<void>;
 }
 
-const ENTITIES = [DeclarationEntity, ProductEntity, CurrencyEntity, UserEntity];
+const ENTITIES = [DeclarationEntity, ProductEntity, CurrencyEntity, UserEntity, NewsEntity];
 
 export const testDbManager = (): ITestDbManager => {
   const connection = AppDataSource;
@@ -43,6 +45,8 @@ export const testDbManager = (): ITestDbManager => {
     persistDeclaration: async (
       args: DeclarationEntityInterface,
     ): Promise<DeclarationEntityInterface> => connection.manager.save(DeclarationEntity, args),
+    persistActuality: async (args: News): Promise<News> =>
+      connection.manager.save(NewsEntity, args),
     getCurrencies: async (): Promise<Currency[]> => connection.manager.find(CurrencyEntity),
     getDeclarations: async (): Promise<DeclarationEntity[]> =>
       connection.manager.find(DeclarationEntity),
