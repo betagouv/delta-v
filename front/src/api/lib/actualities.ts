@@ -30,7 +30,6 @@ export const getActualities = async ({
   startDate,
   endDate,
 }: GetActualitiesOptions): Promise<ActualityResponse[]> => {
-  console.log('🚀 ~ HGFKHFGKHFKHF:');
   const { data } = await axios.get(`/actuality/`, {
     params: {
       limit: limit as number,
@@ -41,7 +40,6 @@ export const getActualities = async ({
       endDate,
     },
   });
-  console.log('fin', data);
 
   return data.actualities;
 };

@@ -34,7 +34,6 @@ const ActualitiesPage = () => {
   const { isLoading, data: apiActualities } = useActualities(queryData);
 
   const onValidateFilter = (data: FilterBarForm) => {
-    console.log('🚀 ~ file: index.tsx:37 ~ onValidateFilter ~ data:', data);
     setPage(0);
     setQueryData({
       ...queryData,

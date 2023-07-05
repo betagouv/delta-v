@@ -21,8 +21,6 @@ export const useActualities = ({
   tags,
   onSuccess,
 }: UseActualityParams) => {
-  console.log('🚀 ~ file: useAPIActualities.ts:24 ~ UseActualityParams:');
-
   return useQuery(
     ['actuality', limit, offset, search, startDate, endDate],
     () =>
