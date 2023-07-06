@@ -69,7 +69,7 @@ const AskResetPasswordPage = () => {
         bgColorClass="bg-white"
         switchWordPosition={3}
       />
-      <section className="self-center w-full mt-12 flex flex-col items-center px-10">
+      <section className="self-center w-full flex flex-col items-center px-10">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
           <InputGroup
             label="Saisissez votre adresse email *"

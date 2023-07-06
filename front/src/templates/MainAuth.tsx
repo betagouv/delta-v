@@ -16,7 +16,7 @@ const MainAuth = ({ children, meta, withPadding = true, bgColor = 'none' }: IMai
 
       <div
         className={cs({
-          'flex min-h-[calc(100%-74px)] flex-col gap-6': true,
+          'flex flex-col gap-6': true,
           'p-4': withPadding,
         })}
       >
