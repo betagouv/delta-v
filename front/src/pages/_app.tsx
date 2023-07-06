@@ -9,11 +9,13 @@ import '../styles/global.css';
 import '../config/i18n';
 import { NextRouter, useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { ToastContainer } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
 import { configureAxios } from '@/api/base';
 import { SvgIcon } from '@/components/common/SvgIcon';
+import { Config } from '@/config';
 import { useStore } from '@/stores/store';
 import { RoutingAuthentication } from '@/utils/const';
 
@@ -120,6 +122,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         {!loading && <Component {...pageProps} />}
         <ToastContainer />
       </MatomoProvider>
+      {!Config.isProduction && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );
 };
