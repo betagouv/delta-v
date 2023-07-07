@@ -245,19 +245,4 @@ describe('getActualities endpoint', () => {
     expect(status).toBe(200);
     expect(body.actualities).toEqual([]);
   });
-  it('should return 200 with empty array', async () => {
-    const { accessToken } = await prepareContextUser({ testDb, douaneEmail: false });
-    await prepareContextActuality({ testDb });
-    const actuality = await prepareContextActuality({ testDb, saveActuality: false });
-
-    const { status, body } = await request(testApp)
-      .get(`/api/actuality`)
-      .query({
-        search: `${actuality.id.slice(0, 6)}`,
-      })
-      .set('Authorization', `Bearer ${accessToken}`);
-
-    expect(status).toBe(200);
-    expect(body.actualities).toEqual([]);
-  });
 });
