@@ -104,7 +104,7 @@ describe('getActualities validator', () => {
     };
     expect(isValid(validData)).toBe(true);
   });
-  it('should not validate data offset more than 0', () => {
+  it('should not validate data offset less than 0', () => {
     const validData = {
       query: {
         ...queryParams,
