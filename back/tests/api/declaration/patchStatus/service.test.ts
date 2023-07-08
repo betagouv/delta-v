@@ -78,6 +78,76 @@ describe('test patchStatus service', () => {
       expect(declarationRepository.updateOne).not.toBeCalled();
     },
   );
+  it.each([
+    [DeclarationStatus.DRAFT, DeclarationStatus.SUBMITTED],
+    [DeclarationStatus.DRAFT, DeclarationStatus.REFUSED_ERROR],
+    [DeclarationStatus.DRAFT, DeclarationStatus.REFUSED_LITIGATION],
+    [DeclarationStatus.SUBMITTED, DeclarationStatus.REFUSED_ERROR],
+    [DeclarationStatus.SUBMITTED, DeclarationStatus.REFUSED_LITIGATION],
+  ])('should patch status - contain custom product', async (initialStatus, newStatus) => {
+    const currentDeclaration = declarationEntityFactory({ status: initialStatus });
+    currentDeclaration.products.push({
+      id: undefined,
+      name: faker.commerce.productName(),
+      value: faker.number.float(),
+      calculatedCustomDuty: 0,
+      calculatedVat: 0,
+      calculatedTaxes: 0,
+      customDuty: 0,
+      vat: 0,
+      customId: faker.string.uuid(),
+      originalValue: faker.number.float(),
+      rateCurrency: 1,
+    });
+    const declarationRepository = declarationRepositoryMock({
+      getOne: currentDeclaration,
+    });
+
+    await service({
+      declarationId: currentDeclaration.id,
+      status: newStatus,
+      declarationRepository,
+    });
+
+    expect(declarationRepository.updateOne).toBeCalledWith(currentDeclaration.id, {
+      status: newStatus,
+    });
+  });
+  it.each([
+    [DeclarationStatus.DRAFT, DeclarationStatus.VALIDATED],
+    [DeclarationStatus.DRAFT, DeclarationStatus.PAID],
+    [DeclarationStatus.SUBMITTED, DeclarationStatus.VALIDATED],
+    [DeclarationStatus.SUBMITTED, DeclarationStatus.PAID],
+    [DeclarationStatus.VALIDATED, DeclarationStatus.PAID],
+  ])('should not patch status - contain custom product', async (initialStatus, newStatus) => {
+    const currentDeclaration = declarationEntityFactory({ status: initialStatus });
+    currentDeclaration.products.push({
+      id: undefined,
+      name: faker.commerce.productName(),
+      value: faker.number.float(),
+      calculatedCustomDuty: 0,
+      calculatedVat: 0,
+      calculatedTaxes: 0,
+      customDuty: 0,
+      vat: 0,
+      customId: faker.string.uuid(),
+      originalValue: faker.number.float(),
+      rateCurrency: 1,
+    });
+    const declarationRepository = declarationRepositoryMock({
+      getOne: currentDeclaration,
+    });
+    await expect(
+      service({
+        declarationId: currentDeclaration.id,
+        status: newStatus,
+        declarationRepository,
+      }),
+    ).rejects.toMatchObject({
+      code: ErrorCodes.DECLARATION_CUSTOM_PRODUCT_STATUS_CHANGE_FORBIDDEN,
+    });
+    expect(declarationRepository.updateOne).not.toBeCalled();
+  });
   it('should not patch status - declaration not found', async () => {
     const declarationRepository = declarationRepositoryMock({
       getOne: undefined,

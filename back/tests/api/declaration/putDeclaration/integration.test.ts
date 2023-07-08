@@ -124,7 +124,7 @@ describe('test put declaration API', () => {
   afterAll(async () => {
     await testDb.disconnect();
   });
-  it('should simulate declaration', async () => {
+  it('should put declaration', async () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
     const products = await prepareContext();
     const declarationId = faker.string.uuid();
@@ -203,6 +203,63 @@ describe('test put declaration API', () => {
       declarantMeanOfTransport: meanOfTransport,
       authorEmail: user.email,
       authorId: user.id,
+    });
+  });
+  it('should put declaration - with custom products', async () => {
+    const { accessToken } = await prepareContextUser({ testDb });
+    const products = await prepareContext();
+    const declarationId = faker.string.uuid();
+    const age = faker.number.int({ min: 15, max: 100 });
+    const country = 'US';
+    const meanOfTransport = MeansOfTransport.CAR;
+    const border = false;
+    const shoppingProducts: ShoppingProduct[] = [
+      {
+        id: products[0].id,
+        customName: 'product1',
+        customId: faker.string.uuid(),
+        originalValue: 50,
+        currency: 'USD',
+      },
+      {
+        id: products[1].id,
+        customName: 'product2',
+        customId: faker.string.uuid(),
+        originalValue: 300,
+        currency: 'EUR',
+      },
+      {
+        id: undefined,
+        customName: 'product3',
+        customId: faker.string.uuid(),
+        originalValue: 500,
+        currency: 'EUR',
+      },
+    ];
+
+    const { body, status } = await simulateEndpoint({
+      declarationId,
+      products,
+      shoppingProducts,
+      age,
+      border,
+      country,
+      meanOfTransport,
+      accessToken,
+    });
+
+    expect(status).toBe(200);
+    expect(body.code).toBe(ResponseCodes.DECLARATION_UPDATED);
+
+    const dbDeclaration = await testDb.getDeclaration(declarationId);
+    expect(dbDeclaration).not.toBeNull();
+
+    const customDbProduct = dbDeclaration?.products.find((product) => !product.id);
+    expect(customDbProduct).toMatchObject({
+      customName: 'product3',
+      customId: shoppingProducts[2].customId,
+      originalValue: shoppingProducts[2].originalValue,
+      currency: shoppingProducts[2].currency,
     });
   });
 });

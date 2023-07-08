@@ -18,6 +18,7 @@ export interface ITestDbManager {
   persistDeclaration: (args: DeclarationEntityInterface) => Promise<DeclarationEntityInterface>;
   getCurrencies: () => Promise<Currency[]>;
   getDeclarations: () => Promise<DeclarationEntityInterface[]>;
+  getDeclaration: (id: string) => Promise<DeclarationEntityInterface | null>;
   getUser: (id: string) => Promise<User | null>;
   clear: () => Promise<void>;
 }
@@ -46,6 +47,12 @@ export const testDbManager = (): ITestDbManager => {
     getCurrencies: async (): Promise<Currency[]> => connection.manager.find(CurrencyEntity),
     getDeclarations: async (): Promise<DeclarationEntity[]> =>
       connection.manager.find(DeclarationEntity),
+    getDeclaration: async (id: string): Promise<DeclarationEntity | null> =>
+      connection.manager
+        .createQueryBuilder(DeclarationEntity, 'declaration')
+        .addSelect('declaration.products')
+        .where('declaration.id = :id', { id })
+        .getOne(),
     getUser: async (id: string): Promise<User | null> =>
       connection.manager.findOne(UserEntity, { where: { id } }),
     clear: async (): Promise<void> => {

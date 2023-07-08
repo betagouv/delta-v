@@ -1,6 +1,7 @@
 import { DeclarationStatus } from '../../../entities/declaration.entity';
 import { DeclarationRepositoryInterface } from '../../../repositories/declaration.repository';
 import declarationNotFoundError from '../../common/errors/declarationNotFound.error';
+import { checkCustomProducts } from './services/checkCustomProduct.service';
 import { checkStatusChange } from './services/checkStatusChange.service';
 
 export interface PatchStatusServiceOptions {
@@ -20,6 +21,7 @@ export const service = async ({
   }
 
   checkStatusChange({ initialStatus: declaration.status, newStatus: status });
+  checkCustomProducts(declaration, status);
 
   await declarationRepository.updateOne(declarationId, {
     status,
