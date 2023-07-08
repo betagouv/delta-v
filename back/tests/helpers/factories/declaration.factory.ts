@@ -41,7 +41,7 @@ export const DeclarationFactory = ({
 const buildSchema = (): DeclarationEntityInterface => {
   return {
     id: faker.string.uuid(),
-    publicId: faker.string.nanoid(21),
+    publicId: faker.string.nanoid(10),
     versionDate: faker.date.past(),
     authorEmail: faker.internet.email(),
     authorId: faker.string.uuid(),

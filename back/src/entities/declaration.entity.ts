@@ -77,7 +77,7 @@ export class DeclarationEntity implements DeclarationEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
 
-  @Column({ type: 'char', length: 21, unique: true })
+  @Column({ type: 'varchar', length: 21, unique: true })
   publicId: string;
 
   @Column({ type: 'jsonb', select: false })

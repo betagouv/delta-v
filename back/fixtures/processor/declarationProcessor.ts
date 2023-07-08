@@ -9,7 +9,7 @@ const preProcessDeclarationFixture = (fields: DeclarationEntity): Partial<Declar
   return {
     ...values,
     id: faker.string.uuid(),
-    publicId: faker.string.nanoid(21),
+    publicId: faker.string.nanoid(10),
     versionDate: faker.date.past(),
     status: faker.helpers.arrayElement([
       DeclarationStatus.SUBMITTED,

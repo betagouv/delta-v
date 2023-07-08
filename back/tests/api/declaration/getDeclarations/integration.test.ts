@@ -43,7 +43,7 @@ describe('getDeclarations endpoint', () => {
   it('should return a declaration', async () => {
     const { accessToken } = await prepareContextUser({ testDb });
     const dataDeclaration: Partial<DeclarationEntityInterface> = {
-      publicId: `AZERTYUIOPQSDFGHJKLMQ`,
+      publicId: `AZERTYUIOP`,
       declarantEmail: 'pVAZERTYUIOPz@example.com',
       declarantFirstName: 'JoAZERTYUIOPhn',
       declarantLastName: 'JoAZERTYUIOP',
@@ -62,7 +62,7 @@ describe('getDeclarations endpoint', () => {
         testDb,
         dataDeclaration: {
           ...dataDeclaration,
-          publicId: `QSDFGHJKLMAZERTYUIOPQ`,
+          publicId: `QSDFGHJKLM`,
         },
       }),
     );
@@ -72,7 +72,7 @@ describe('getDeclarations endpoint', () => {
         dataDeclaration: {
           ...dataDeclaration,
           declarantEmail: 'pVQSDFGHJKLMz@example.com',
-          publicId: `A1ERTYUIOPQSDFGHJKLMQ`,
+          publicId: `A1ERTYUIOP`,
         },
       }),
     );
@@ -82,7 +82,7 @@ describe('getDeclarations endpoint', () => {
         dataDeclaration: {
           ...dataDeclaration,
           declarantFirstName: 'JOQSDFGHJKLM',
-          publicId: `A2ERTYUIOPQSDFGHJKLMQ`,
+          publicId: `A2ERTYUIOP`,
         },
       }),
     );
@@ -93,7 +93,7 @@ describe('getDeclarations endpoint', () => {
         dataDeclaration: {
           ...dataDeclaration,
           declarantEmail: 'JOQSDFGHJKLMhn',
-          publicId: `A3ERTYUIOPQSDFGHJKLMQ`,
+          publicId: `A3ERTYUIOP`,
         },
       }),
     );
@@ -117,7 +117,7 @@ describe('getDeclarations endpoint', () => {
       .get(`/api/declaration`)
       .set('Authorization', `Bearer ${accessToken}`)
       .query({
-        searchPublicId: `${declaration.publicId.slice(0, 6)}ABC`,
+        searchPublicId: `${declaration.publicId.slice(0, 4)}ABC`,
       });
 
     expect(status).toBe(200);

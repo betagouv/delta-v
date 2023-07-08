@@ -7,7 +7,7 @@ import { declarationRepositoryMock } from '../../../mocks/declaration.repository
 
 describe('test getDeclarations service', () => {
   it('should return a valid declaration', async () => {
-    const nanoId = faker.string.nanoid();
+    const nanoId = faker.string.nanoid(10);
     const declarationRepository = declarationRepositoryMock({
       getAll: [declarationEntityFactory({ publicId: nanoId })],
     });

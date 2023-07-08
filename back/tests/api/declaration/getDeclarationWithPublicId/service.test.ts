@@ -7,7 +7,7 @@ import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 
 describe('test getDeclaration service', () => {
   it('should return a valid declaration', async () => {
-    const nanoId = faker.string.nanoid();
+    const nanoId = faker.string.nanoid(10);
     const declarationRepository = declarationRepositoryMock({
       getOneWithPublicId: declarationEntityFactory({ publicId: nanoId }),
     });
