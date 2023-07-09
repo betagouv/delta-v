@@ -1,6 +1,6 @@
 import currency from 'currency.js';
 import { Currency } from '../../../../entities/currency.entity';
-import { Product, ProductType } from '../../../../entities/product.entity';
+import { Product, ProductDisplayTypes, ProductType } from '../../../../entities/product.entity';
 import { ShoppingProduct } from '../shoppingProducts';
 
 export class DetailedShoppingProduct {
@@ -9,7 +9,7 @@ export class DetailedShoppingProduct {
   currency?: Currency;
 
   isValueProduct(): boolean {
-    if (!this.product) {
+    if (!this.product || this.isUncompletedProduct()) {
       return false;
     }
 
@@ -17,7 +17,7 @@ export class DetailedShoppingProduct {
   }
 
   isAmountProduct(): boolean {
-    if (!this.product) {
+    if (!this.product || this.isUncompletedProduct()) {
       return false;
     }
 
@@ -25,7 +25,10 @@ export class DetailedShoppingProduct {
   }
 
   isUncompletedProduct(): boolean {
-    return !this.product;
+    if (!this.product) {
+      return true;
+    }
+    return this.product.productDisplayTypes === ProductDisplayTypes.notManaged;
   }
 
   getDefaultCurrencyValue(): number {

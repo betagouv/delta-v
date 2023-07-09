@@ -18,6 +18,7 @@ export const advancedSearch = <T>({
   searchValue,
   searchList,
   searchKey,
+  limit = 10,
 }: AdvancedSearchOptions<T>): SearchType<T>[] => {
   if (searchValue.length === 0) {
     return [];
@@ -34,10 +35,12 @@ export const advancedSearch = <T>({
   });
   const result = fuse.search(searchValue);
 
-  return result.map((rankedItem) => ({
-    ...rankedItem.item,
-    rank: rankedItem.score ?? 0,
-    rankedValue: rankedItem.matches?.[0]?.value ?? '',
-    rankedPosition: rankedItem.matches?.[0]?.indices[0] ?? [0, 0],
-  }));
+  return result
+    .map((rankedItem) => ({
+      ...rankedItem.item,
+      rank: rankedItem.score ?? 0,
+      rankedValue: rankedItem.matches?.[0]?.value ?? '',
+      rankedPosition: rankedItem.matches?.[0]?.indices[0] ?? [0, 0],
+    }))
+    .slice(0, limit);
 };

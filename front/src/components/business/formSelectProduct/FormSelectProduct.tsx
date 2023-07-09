@@ -31,7 +31,9 @@ interface FormSelectProductProps {
   onAddProduct: (options: OnAddProductOptions) => void;
   templateRole?: Role;
   defaultCurrency?: string;
+  defaultName?: string;
   defaultValues?: DefaultValuesUpdateProduct;
+  allowNotManagedProduct?: boolean;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
@@ -39,7 +41,9 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   onAddProduct,
   templateRole = 'user',
   defaultCurrency = 'EUR',
+  defaultName = '',
   defaultValues,
+  allowNotManagedProduct = false,
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
 
@@ -58,7 +62,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   } = useForm<any>({
     defaultValues: {
       ...getDefaultValues(steps),
-      name: undefined,
+      name: defaultName,
       value: null,
       currency: defaultCurrency,
     },
@@ -93,9 +97,11 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   };
 
   const isAddAble =
-    steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1;
+    steps.findIndex((step) => step.productDisplayTypes === ProductDisplayTypes.addable) !== -1 ||
+    currentProduct.productDisplayTypes === ProductDisplayTypes.notManaged;
 
-  return currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
+  return allowNotManagedProduct ||
+    currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
       {templateRole === 'user' && (
         <div>
@@ -137,6 +143,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       )}
     </form>
   ) : (
-    <ProductNotManaged />
+    <ProductNotManaged currentProduct={currentProduct} />
   );
 };

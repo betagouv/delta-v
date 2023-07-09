@@ -23,10 +23,17 @@ interface SearchProps<T> {
   disabled?: boolean;
 }
 
-const getSearchResult = <T extends unknown>(
-  searchType: SearchDisplayType,
-  resultSearch: SearchType<T>[],
-) => {
+interface GetSearchResultOptions<T extends unknown> {
+  searchType: SearchDisplayType;
+  resultSearch: SearchType<T>[];
+  searchValue: string;
+}
+
+const getSearchResult = <T extends unknown>({
+  searchType,
+  resultSearch,
+  searchValue,
+}: GetSearchResultOptions<T>) => {
   switch (searchType) {
     case 'global':
       return (
@@ -39,7 +46,10 @@ const getSearchResult = <T extends unknown>(
     case 'product':
     default:
       return (
-        <SearchResultProducts resultSearch={resultSearch as unknown as SearchType<Product>[]} />
+        <SearchResultProducts
+          searchValue={searchValue}
+          resultSearch={resultSearch as unknown as SearchType<Product>[]}
+        />
       );
   }
 };
@@ -94,7 +104,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
     onChange(displayResults);
   }, [resultSearch]);
 
-  const SearchResult = getSearchResult(searchType, resultSearch);
+  const SearchResult = getSearchResult({ searchType, resultSearch, searchValue });
 
   return (
     <div className="flex flex-1 flex-col gap-4" data-testid="search-element">
