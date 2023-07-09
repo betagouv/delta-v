@@ -7,7 +7,11 @@ interface SearchResultGlobalProps {
   resultSearch: SearchType<SearchData>[];
 }
 
-const BoldedText = (value: string, position: [number, number]) => {
+const BoldedText = (value: string, position?: [number, number]) => {
+  if (!position || typeof value !== 'string') {
+    return <span>{value}</span>;
+  }
+
   const strBefore = value.slice(0, position[0]);
   const boldValue = value.slice(position[0], position[1]);
   const strAfter = value.slice(position[1], value.length);
@@ -34,7 +38,7 @@ export const SearchResultGlobal: React.FC<SearchResultGlobalProps> = ({
           >
             <div className="flex flex-col">
               <Typography
-                color="light-gray"
+                color="secondary"
                 size="text-sm"
                 lineHeight="leading-normal"
                 weight="light"

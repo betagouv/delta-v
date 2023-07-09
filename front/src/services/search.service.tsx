@@ -15,7 +15,7 @@ export interface SearchData extends AccordionData {
 
 const extractMatchedData = (
   matches?: readonly Fuse.FuseResultMatch[],
-): { value: string; position: Fuse.RangeTuple } | undefined => {
+): { value: string; wordValue: string; position: Fuse.RangeTuple } | undefined => {
   const matchedData = matches?.[0];
   if (!matchedData?.value) {
     return;
@@ -32,11 +32,11 @@ const extractMatchedData = (
 
   const wordValue = getWord(matchedData.value, usedIndex);
   const { value, worldPosition } = shorten(matchedData.value, usedIndex, 30);
-  console.log('wordValue', wordValue);
 
   // eslint-disable-next-line consistent-return
   return {
     value,
+    wordValue,
     position: worldPosition,
   };
 };

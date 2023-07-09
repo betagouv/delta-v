@@ -1,6 +1,4 @@
-import { matchSorter, MatchSorterOptions } from 'match-sorter';
-
-import { capitalize } from './string';
+import Fuse from 'fuse.js';
 
 interface AdvancedSearchOptions<T> {
   searchValue: string;
@@ -20,30 +18,26 @@ export const advancedSearch = <T>({
   searchValue,
   searchList,
   searchKey,
-  minRankAllowed = 0,
-  limit = 10,
 }: AdvancedSearchOptions<T>): SearchType<T>[] => {
-  const options: MatchSorterOptions<any> = {
-    keys: searchKey,
-    sorter: (rankedItems) => {
-      return rankedItems
-        .map((rankedItem) => ({
-          ...rankedItem,
-          item: {
-            ...rankedItem.item,
-            rank: rankedItem.rank,
-            rankedValue: capitalize(rankedItem.rankedValue),
-          },
-        }))
-        .sort((a, b) => b.rank - a.rank);
-    },
-  };
-
   if (searchValue.length === 0) {
     return [];
   }
 
-  return (matchSorter(searchList, searchValue, options) as SearchType<T>[])
-    .filter((rankedItem) => rankedItem.rank >= minRankAllowed)
-    .slice(0, limit);
+  const fuse = new Fuse(searchList, {
+    includeScore: true,
+    includeMatches: true,
+    findAllMatches: false,
+    minMatchCharLength: 2,
+    threshold: 0.2,
+    shouldSort: true,
+    keys: searchKey,
+  });
+  const result = fuse.search(searchValue);
+
+  return result.map((rankedItem) => ({
+    ...rankedItem.item,
+    rank: rankedItem.score ?? 0,
+    rankedValue: rankedItem.matches?.[0]?.value ?? '',
+    rankedPosition: rankedItem.matches?.[0]?.indices[0] ?? [0, 0],
+  }));
 };
