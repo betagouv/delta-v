@@ -9,7 +9,7 @@ export interface IGetOneDeclarationWithPublicId {
 
 export const getOneDeclarationWithPublicIdValidator = {
   params: validator.object({
-    publicDeclarationId: validator.string().length(21).required(),
+    publicDeclarationId: validator.string().length(10).required(),
   }),
 };
 

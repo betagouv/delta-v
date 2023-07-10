@@ -7,8 +7,8 @@ const validator = getGetDeclarationsValidator;
 const { isValid } = validatorHelper(validator);
 
 const queryParams = {
-  searchPublicId: faker.string.nanoid(21),
-  search: faker.string.nanoid(21),
+  searchPublicId: faker.string.nanoid(10),
+  search: faker.string.nanoid(10),
   status: ',validated,submitted',
   meanOfTransports: ',car,train',
   startDate: faker.date.past(),

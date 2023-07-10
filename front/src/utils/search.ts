@@ -19,6 +19,7 @@ export const advancedSearch = <T>({
   searchList,
   searchKey,
   limit = 10,
+  minRankAllowed = 0.2,
 }: AdvancedSearchOptions<T>): SearchType<T>[] => {
   if (searchValue.length === 0) {
     return [];
@@ -29,7 +30,7 @@ export const advancedSearch = <T>({
     includeMatches: true,
     findAllMatches: false,
     minMatchCharLength: 2,
-    threshold: 0.2,
+    threshold: minRankAllowed,
     shouldSort: true,
     keys: searchKey,
   });

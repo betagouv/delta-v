@@ -170,6 +170,7 @@ describe('test simulator API', () => {
       shoppingProducts,
     });
     expect(status).toBe(200);
+    console.log(body);
 
     expect(body.valueProducts.length).toBe(3);
     expect(body.customProducts.length).toBe(3);
@@ -211,7 +212,7 @@ describe('test simulator API', () => {
     [16.25, 650, 12],
     [13, 650, 2],
   ])(
-    'should simulate declaration with total custom duty %p€ - totalProducts = %p and customDuty = %p',
+    'should simulate declaration with total custom duty %p€ - totalProducts = %p€ and customDuty = %p€',
     async (totalCustomDutyExpected, totalProducts, customDuty) => {
       const products = await prepareContext(customDuty);
       const shoppingProducts: ShoppingProduct[] = [

@@ -43,25 +43,16 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
       <div className="p-3 leading-tight">
         <div className="flex">
           <div className="mr-2 flex-1 leading-none">
-            {detailedProduct?.name ? (
-              <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
-                {detailedProduct?.name}
-              </Typography>
-            ) : (
-              <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center">
+              {customProduct ? (
                 <div className="mr-1 flex h-2 w-2 text-link">
                   <Icon name="point" size="xs" />
                 </div>
-                <Typography
-                  weight="bold"
-                  color="secondary"
-                  size="text-lg"
-                  lineHeight="leading-tight"
-                >
-                  Nouvelle marchandise
-                </Typography>
-              </div>
-            )}
+              ) : null}
+              <Typography weight="bold" color="secondary" size="text-lg" lineHeight="leading-tight">
+                {detailedProduct?.name ?? 'Nouvelle marchandise'}
+              </Typography>
+            </div>
           </div>
           <Typography weight="extrabold" color="secondary" size="text-lg" lineHeight="leading-none">
             {detailedProduct?.originalPrice} {originalCurrencySymbol}
@@ -119,9 +110,14 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
                   Conversion en €
                 </Typography>
               </div>
-              {detailedProduct && (
+              {detailedProduct && !customProduct && (
                 <Typography weight="normal" color="primary" size="text-lg">
                   {detailedProduct?.unitPrice} €
+                </Typography>
+              )}
+              {customProduct && (
+                <Typography weight="normal" color="primary" size="text-lg">
+                  non renseignée
                 </Typography>
               )}
               <div className="mt-[2px] ml-3">

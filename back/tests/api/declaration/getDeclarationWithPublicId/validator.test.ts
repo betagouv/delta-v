@@ -10,7 +10,7 @@ describe('getOneDeclarationWithPublicId validator', () => {
   it('should validate proper data', () => {
     const validData = {
       params: {
-        publicDeclarationId: faker.string.nanoid(21),
+        publicDeclarationId: faker.string.nanoid(10),
       },
     };
     expect(isValid(validData)).toBe(true);
