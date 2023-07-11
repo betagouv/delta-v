@@ -1,3 +1,14 @@
+export type TextSize =
+  | 'text-2xs'
+  | 'text-xs'
+  | 'text-sm'
+  | 'text-base'
+  | 'text-lg'
+  | 'text-xl'
+  | 'text-2xl'
+  | 'text-3xl'
+  | string;
+
 export type Color =
   | 'primary'
   | 'secondary'
@@ -136,4 +147,27 @@ export const getTextTransform = (transform?: Transform): string => {
     return 'first-letter:uppercase';
   }
   return transform ?? '';
+};
+
+export const getIncreasedTextSize = (size: TextSize): string => {
+  switch (size) {
+    case 'text-2xs':
+      return 'text-xs';
+    case 'text-xs':
+      return 'text-sm';
+    case 'text-sm':
+      return 'text-base';
+    case 'text-base':
+      return 'text-lg';
+    case 'text-lg':
+      return 'text-xl';
+    case 'text-xl':
+      return 'text-2xl';
+    case 'text-2xl':
+      return 'text-3xl';
+    case 'text-3xl':
+      return 'text-4xl';
+    default:
+      return size;
+  }
 };

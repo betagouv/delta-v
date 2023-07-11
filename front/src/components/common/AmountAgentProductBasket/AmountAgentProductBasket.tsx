@@ -125,7 +125,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
         <span className="flex justify-center">
           <Button
             color={containError || deletable ? 'red' : 'primary'}
-            size="2xs"
+            size="sm"
             onClick={() => {
               if (onButtonClick) {
                 onButtonClick();

@@ -213,7 +213,7 @@ const Declaration = () => {
                 type="text"
                 name="phone"
                 fullWidth={true}
-                placeholder="Numéro de vol  : A36WJB..."
+                placeholder="N° de vol  : A36WJB..."
                 register={register('flightNumber')}
                 control={control}
                 error={errors?.flightNumber?.message}
@@ -222,7 +222,7 @@ const Declaration = () => {
               />
             </div>
             <div className="ml-2.5">
-              <Typography size="text-2xs" color="light-gray" italic>
+              <Typography size="text-xs" color="light-gray" italic>
                 Facultatif
               </Typography>
             </div>
@@ -230,7 +230,7 @@ const Declaration = () => {
         )}
         {isFrontalier && (
           <div className="mt-4">
-            <label htmlFor="adult" className={`mb-4 block text-sm`} data-testid="label-element">
+            <label htmlFor="adult" className={`mb-4 block text-base`} data-testid="label-element">
               Est-ce dans le cadre d’un déplacement frontalier ?
             </label>
             <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">

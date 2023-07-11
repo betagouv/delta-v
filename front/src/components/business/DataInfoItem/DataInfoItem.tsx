@@ -2,7 +2,8 @@ import React from 'react';
 
 import { SvgNames } from '@/components/common/SvgIcon';
 import { TransportBadge } from '@/components/common/TransportBadge';
-import { TextSize, Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/common/Typography';
+import { TextSize } from '@/components/common/Typography/style/typography.style';
 
 export type DataInfoItemProps = {
   label: string;

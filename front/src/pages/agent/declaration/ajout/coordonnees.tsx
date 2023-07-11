@@ -203,7 +203,7 @@ const Declaration = () => {
             withBorder={false}
           />
           <div className="flex flex-row gap-4">
-            <div className="w-28">
+            <div className="w-32">
               <InputGroup
                 type="text"
                 name="postalCode"
@@ -216,7 +216,7 @@ const Declaration = () => {
                 withBorder={false}
               />
             </div>
-            <div className="w-52">
+            <div className="flex-1">
               <InputGroup
                 type="text"
                 name="city"
@@ -231,12 +231,12 @@ const Declaration = () => {
             </div>
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex flex-col w-fit">
           <div>
-            <label htmlFor="adult" className={`mb-2 block text-sm`} data-testid="label-element">
+            <label htmlFor="adult" className={`mb-2 block text-base`} data-testid="label-element">
               L’usager a-t-il plus de 18 ans ?
             </label>
-            <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
+            <div className="bg-white px-5 py-2.5 rounded-full flex justify-center">
               <Radio
                 id="adult"
                 name="adult"
@@ -259,7 +259,7 @@ const Declaration = () => {
             )}
           </div>
           {displayNotAdult && (
-            <div className="mt-4 w-44">
+            <div className="mt-4">
               <InputGroup
                 type="select"
                 name="notAdultAge"

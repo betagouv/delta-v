@@ -115,7 +115,7 @@ export const ValueAgentProductBasket = ({
             <Button
               variant="outlined"
               color={deletable ? 'red' : 'primary'}
-              size="2xs"
+              size="sm"
               onClick={() => setOpen(!open)}
             >
               <span>Voir calcul </span>

@@ -47,7 +47,7 @@ export const Select: React.FC<ISelectOptions> = ({
   };
 
   let classNameOptions =
-    'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none text-sm';
+    'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none';
   classNameOptions += fullWidth ? ' w-full' : ' w-auto';
   return (
     <Listbox
@@ -65,7 +65,7 @@ export const Select: React.FC<ISelectOptions> = ({
               data-testid="select-element"
               className={twMerge(
                 classNames({
-                  'bg-white relative rounded-full pl-3 pr-10 py-3 text-left cursor-default focus:outline-none text-xs w-auto border-0 focus:ring-0':
+                  'bg-white relative rounded-full pl-3 pr-10 py-3 text-left cursor-default focus:outline-none text-base w-auto border-0 focus:ring-0':
                     true,
                   'w-full': fullWidth,
                   'bg-secondary-200 text-secondary-400': disabled,
@@ -110,7 +110,7 @@ export const Select: React.FC<ISelectOptions> = ({
                       <span
                         className={classNames(
                           selectedValue ? 'font-semibold bg-lightBlue' : 'font-normal',
-                          'block truncate text-xs',
+                          'block truncate text-base',
                           active ? 'bg-lightBlue' : '',
                         )}
                       >

@@ -167,7 +167,7 @@ const DeclarationSearch = () => {
                 onClick={() => setOpenDownModal(true)}
                 className="bg-primary-400 px-8 py-3 text-white rounded-full self-center"
               >
-                Ajouter un commentaire
+                <Typography color="white">Ajouter un commentaire</Typography>
               </button>
             </div>
             {renderValidateDeclarationModal(validateDeclarationResponse.status)}

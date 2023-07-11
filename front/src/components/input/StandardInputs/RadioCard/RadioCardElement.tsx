@@ -25,13 +25,12 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
       type="button"
       disabled={disabled}
       className={classNames(
-        'text-sm',
         disabled
           ? 'opacity-50 cursor-not-allowed'
           : 'active:bg-gray-50 active:p-[15px] active:border-4',
         checked ? 'font-bold border-4 p-[15px]' : 'font-normal border',
         fullWidth ? 'w-full h-32' : 'p-[18px] h-[130px] w-[104px]',
-        'border-gray-200 rounded-xl flex items-center justify-center text-sm sm:flex-1',
+        'border-gray-200 rounded-xl flex items-center justify-center text-base sm:flex-1',
       )}
       onClick={(e) => {
         if (disabled) {

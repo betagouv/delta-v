@@ -107,7 +107,7 @@ const styleManager: IButtonStyle = {
     '2xs': {
       classes: {
         'px-2': true,
-        'text-2xs': true,
+        'text-xs': true,
         'h-5': true,
       },
     },
@@ -115,35 +115,35 @@ const styleManager: IButtonStyle = {
       classes: {
         'px-2.5': true,
         'py-1.5': true,
-        'text-xs': true,
+        'text-sm': true,
       },
     },
     sm: {
       classes: {
         'px-3': true,
         'py-2': true,
-        'text-sm': true,
+        'text-base': true,
       },
     },
     base: {
       classes: {
-        'px-4': true,
+        'px-5': true,
         'py-2.5': true,
-        'text-sm': true,
+        'text-lg': true,
       },
     },
     lg: {
       classes: {
         'px-4': true,
         'py-2': true,
-        'text-base': true,
+        'text-xl': true,
       },
     },
     xl: {
       classes: {
         'px-base': true,
         'py-3': true,
-        'text-base': true,
+        'text-2xl': true,
       },
     },
   },
