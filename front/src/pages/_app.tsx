@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
