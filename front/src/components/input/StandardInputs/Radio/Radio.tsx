@@ -20,7 +20,7 @@ export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) 
   return (
     <div className="flex items-center space-y-0 space-x-6">
       {radioValues.map((radioValue, index) => (
-        <div key={index} className="flex items-center">
+        <div key={index} className="flex items-center space-x-3">
           <input
             data-testid="radio-element"
             name={name}
@@ -32,7 +32,7 @@ export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) 
           />
           <label
             htmlFor={index.toString()}
-            className="ml-2.5 block text-sm text-black disabled:text-disabled-text"
+            className="ml-2.5 block text-base text-black disabled:text-disabled-text"
           >
             {radioValue.value}
           </label>

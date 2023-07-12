@@ -2,6 +2,7 @@ import classNames from 'classnames';
 
 import { Icon } from '@/components/common/Icon';
 import { SvgNames } from '@/components/common/SvgIcon';
+import { Typography } from '@/components/common/Typography';
 
 export interface IRadioCardMinOptions {
   value: string;
@@ -23,8 +24,7 @@ export const RadioCardMin: React.FC<IRadioCardMinOptions> = ({
       type="button"
       disabled={disabled}
       className={classNames(
-        'text-sm',
-        'border-primary-600 border rounded-full flex items-center justify-center text-sm sm:flex-1',
+        'border-primary-600 border rounded-full flex items-center justify-center sm:flex-1',
         checked ? 'bg-primary-600 text-white' : ' text-primary-600',
       )}
       onClick={(e) => {
@@ -43,11 +43,11 @@ export const RadioCardMin: React.FC<IRadioCardMinOptions> = ({
         <Icon name={checked ? 'cross-thin' : 'add_circle'} size={checked ? 'xs' : 'lg'} />
         <label
           className={classNames({
-            'ml-1 text-xs': true,
+            'ml-1': true,
             'ml-2.5': checked,
           })}
         >
-          {value}
+          <Typography color={checked ? 'white' : undefined}>{value}</Typography>
         </label>
       </div>
     </button>

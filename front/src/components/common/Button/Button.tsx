@@ -73,7 +73,7 @@ export const Button: React.FC<IButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={buttonDisabled}
-      className={cn({ ...customButtonClassName, ...className })}
+      className={cn({ 'min-w-[120px]': true, ...customButtonClassName, ...className })}
     >
       {children && <span>{children}</span>}
       {icon && !loading && (

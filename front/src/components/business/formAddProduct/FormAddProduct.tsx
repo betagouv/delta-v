@@ -150,7 +150,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           })}
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="value" className="text-xs" data-testid="label-element">
+            <label htmlFor="value" className="text-base" data-testid="label-element">
               Saisissez le montant
             </label>
             <InputGroup
@@ -166,7 +166,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="currency" className="text-xs" data-testid="label-element">
+            <label htmlFor="currency" className="text-base" data-testid="label-element">
               Choisissez une devise
             </label>
             <InputGroup
@@ -185,7 +185,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
       )}
       {templateRole === 'agent' && (
         <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="text-xs" data-testid="label-element">
+          <label htmlFor="name" className="text-base" data-testid="label-element">
             Ajouter une dénomination
           </label>
           <InputGroup

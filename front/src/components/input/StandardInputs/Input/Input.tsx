@@ -68,7 +68,7 @@ export const Input: React.FC<IInputOptions> = ({
   }
   const className = twMerge(
     classNames({
-      'border-0 focus:outline-none focus:ring-0 text-xs block w-full px-5 py-3 border-solid rounded-full focus:placeholder-transparent focus:outline-none focus:ring-transparent placeholder:italic placeholder:text-secondary-400 placeholder:font-light':
+      'border-0 focus:outline-none focus:ring-0 text-base block w-full px-5 py-3 border-solid rounded-full focus:placeholder-transparent focus:outline-none focus:ring-transparent placeholder:italic placeholder:text-secondary-400 placeholder:font-light':
         true,
       'border border-secondary-300 focus:border-secondary-300 ': withBorder,
       'text-red-900 placeholder-red-300': error,

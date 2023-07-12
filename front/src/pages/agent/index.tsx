@@ -55,7 +55,7 @@ const Index = () => {
             <div className="border border-secondary-500 inline-flex flex-row rounded-full p-1 text-center">
               <button
                 className={classNames({
-                  'inline-flex justify-center rounded-full px-5 py-2 align-middle text-xs': true,
+                  'inline-flex justify-center rounded-full px-5 py-2 align-middle text-base': true,
                   'bg-primary-600 text-white': mode === 'scanner',
                   'text-disabled-text': mode === 'tools',
                 })}
@@ -65,7 +65,7 @@ const Index = () => {
               </button>
               <button
                 className={classNames({
-                  'inline-flex justify-center rounded-full px-5 py-2 align-middle text-xs': true,
+                  'inline-flex justify-center rounded-full px-5 py-2 align-middle text-base': true,
                   'bg-disabled-bg text-white': mode === 'tools',
                   'text-disabled-text': mode === 'scanner',
                 })}
@@ -74,7 +74,7 @@ const Index = () => {
                 Outils
               </button>
             </div>
-            <Typography color="black" size="text-[8px]" textPosition="text-center">
+            <Typography color="black" size="text-2xs" textPosition="text-center">
               Nos équipes travaillent actuellement sur le scanner, <br />
               il sera disponible d’ici quelques jours.
             </Typography>

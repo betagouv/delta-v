@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { Icon } from '../Icon';
+import { Typography } from '../Typography';
 import { ProgressBarAgentItemType } from '@/templates/DeclarationSteps';
 
 export interface IProgressBarAgentProps {
@@ -38,13 +39,9 @@ export const ProgressBarAgentItem: React.FC<IProgressBarAgentItemProps> = ({
               name={isActive ? 'circle-check' : isFutureStep ? 'circle-empty' : 'circle-full'}
               size="base"
             />
-            <p
-              className={classNames({
-                'ml-2 text-center text-2xs leading-[12px]': true,
-              })}
-            >
-              {link.name}
-            </p>
+            <Typography textPosition="text-center" size="text-2xs" color="black">
+              <span className="ml-2">{link.name}</span>
+            </Typography>
           </div>
         </div>
       </>

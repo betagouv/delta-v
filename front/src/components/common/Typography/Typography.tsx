@@ -7,23 +7,14 @@ import {
   Color,
   getActiveColor,
   getColor,
-  getTruncate,
   getFontWeight,
-  Weight,
-  Transform,
+  getIncreasedTextSize,
   getTextTransform,
+  getTruncate,
+  TextSize,
+  Transform,
+  Weight,
 } from './style/typography.style';
-
-export type TextSize =
-  | 'text-2xs'
-  | 'text-xs'
-  | 'text-sm'
-  | 'text-base'
-  | 'text-lg'
-  | 'text-xl'
-  | 'text-2xl'
-  | 'text-3xl'
-  | string;
 
 type LineHeight =
   | 'leading-3'
@@ -83,10 +74,12 @@ export const Typography: React.FC<ITypographyProps> = ({
 
   const className = cn({
     // [`${usedVariant}`]: true,
+    // hidden: true,
     [getFontWeight(weight)]: true,
     [getColor(color, colorGradient)]: true,
     [getActiveColor(activeColor)]: activeColor,
-    [size]: true,
+    // [size]: true,
+    [getIncreasedTextSize(size)]: true,
     [lineHeight]: true,
     italic,
     underline,

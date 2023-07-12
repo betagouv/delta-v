@@ -5,6 +5,7 @@ import NextLink from 'next/link';
 
 import { Icon } from '../Icon';
 import { SvgIcon, SvgNames } from '../SvgIcon';
+import { Typography } from '../Typography';
 
 interface LinkWithIconProps {
   href?: string;
@@ -29,13 +30,12 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
             className={classNames({
               'border border-secondary-200 py-4 px-5 rounded-md flex flex-row items-center justify-between':
                 true,
-              'bg-primary-400 text-white': withBgColor,
-              'text-black': !withBgColor,
+              'bg-primary-400': withBgColor,
             })}
           >
-            <div className="flex flex-row gap-4 h-4 items-center">
+            <div className="flex flex-row gap-4 items-center">
               <SvgIcon name={svgName} />
-              <p className="text-sm">{name}</p>
+              <Typography color={withBgColor ? 'white' : 'black'}>{name}</Typography>
             </div>
             <Icon name="chevron-right" size="base" />
           </a>
@@ -45,14 +45,13 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
           className={classNames({
             'border border-secondary-500 py-4 px-5 rounded-md flex flex-row items-center justify-between':
               true,
-            'bg-primary-400 text-white': withBgColor,
-            'text-black': !withBgColor,
+            'bg-primary-400': withBgColor,
             'bg-disabled-bg border-none opacity-40': disabled,
           })}
         >
           <div className="flex flex-row gap-4 h-4 items-center">
             <SvgIcon name={svgName} />
-            <p className="text-sm">{name}</p>
+            <Typography color={withBgColor ? 'white' : 'black'}>{name}</Typography>
           </div>
           <Icon name="chevron-right" size="base" />
         </div>

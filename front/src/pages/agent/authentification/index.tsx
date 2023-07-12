@@ -125,9 +125,7 @@ const LoginPage = () => {
         </Typography>
         <Link to={RoutingAuthentication.register}>
           <Button fullWidth={false} size="sm" variant="outlined">
-            <Typography weight="bold" size="text-xs">
-              Créer mon compte
-            </Typography>
+            <Typography weight="bold">Créer mon compte</Typography>
           </Button>
         </Link>
       </section>

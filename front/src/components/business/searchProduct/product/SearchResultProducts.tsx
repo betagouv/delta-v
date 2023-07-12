@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Icon } from '@/components/common/Icon';
+import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
@@ -12,18 +13,23 @@ interface SearchResultProductsProps {
 
 export const renderMatchedWithSearch = (product: SearchType<Product>, search: string) => {
   if (!product.rankedValue.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
-    return <span className="text-xs text-black">{product.rankedValue}</span>;
+    // return <span className="text-xs text-black">{product.rankedValue}</span>;
+    return (
+      <Typography color="black" size="text-base">
+        {product.rankedValue}
+      </Typography>
+    );
   }
 
   const matchValue = product.rankedValue.replace(new RegExp(`(${search})`, 'gi'), ',');
   const matchValues = matchValue.split(',');
 
   return (
-    <span className="text-xs text-black">
+    <Typography color="black" size="text-base">
       {matchValues[0]}
       <b>{search}</b>
       {matchValues[1]}
-    </span>
+    </Typography>
   );
 };
 
@@ -44,14 +50,19 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
           >
             <div className="flex items-center gap-3">
               <span className="mb-1 text-blue-700">
-                <Icon name="search" size="sm" />
+                <Icon name="search" size="base" />
               </span>
               <span>
                 {renderMatchedWithSearch(resultElement, search)}
                 {resultElement.name && (
                   <React.Fragment>
-                    <span className="text-xs text-gray-400"> dans </span>
-                    <span className="text-xs text-blue-700">{resultElement.name}</span>
+                    <Typography color="light-gray" size="text-base">
+                      {' '}
+                      dans{' '}
+                    </Typography>
+                    <Typography size="text-base">
+                      <span className="text-blue-700">{resultElement.name}</span>
+                    </Typography>
                   </React.Fragment>
                 )}
               </span>

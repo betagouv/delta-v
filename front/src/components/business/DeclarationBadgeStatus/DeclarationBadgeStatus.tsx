@@ -20,8 +20,8 @@ export const DeclarationBadgeStatus = ({ status }: DeclarationBadgeStatusProps) 
   const color = getDeclarationStatusColor(status);
   const icon = getDeclarationStatusIcon(status);
   return (
-    <div className={cs('h-[19px] rounded-md px-[10px] w-fit flex items-center gap-[6px]', color)}>
-      {icon && <Icon name={icon} size="xs" color="white" />}
+    <div className={cs('h-6 rounded-md px-[10px] w-fit flex items-center gap-[6px]', color)}>
+      {icon && <Icon name={icon} size="sm" color="white" />}
       <Typography size="text-2xs" color="white" weight="bold">
         {label}
       </Typography>
