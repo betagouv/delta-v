@@ -60,7 +60,7 @@
     "zustand": "3.7.2"
   },
   "devDependencies": {
-    "@babel/core": "7.18.5",
+    "@babel/core": "7.22.8",
     "@faker-js/faker": "7.3.0",
     "@next/eslint-plugin-next": "13.4.7",
     "@storybook/addon-actions": "7.0.2",
