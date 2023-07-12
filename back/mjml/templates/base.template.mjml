@@ -1,0 +1,105 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="Arial, Helvetica, sans-serif"></mj-all>
+      <mj-text color="#000000" align="center"></mj-text>
+    </mj-attributes>
+    <mj-style>
+      body {
+        color: #000000;
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
+      }
+      
+      .delta-v-button {
+        display: inline-block;
+        padding: 12px 36px;
+        background-color: #000091;
+        border: none;
+        border-radius: 70px;
+        font-size: 16px;
+        font-weight: normal;
+        margin: 20px;
+        line-height: 20px;
+        color: white;
+      }
+
+      .row-buttons {
+        text-align: center;
+      }
+
+      .delta-v-button a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      a {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word;
+
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+      }
+
+      .template {
+        background-color: #cd1446;
+        background: linear-gradient(to right, #cd1446, #2f0380);
+      	padding: 100px 16px;
+      }
+
+      .template-body {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 30px 50px;
+        max-width: 640px;
+      }
+
+      @media only screen and (max-width:480px) {
+        .template {
+      	  padding: 16px;
+        }
+        .template-body {
+          padding: 30px 20px;
+          max-width: 640px;
+        }
+        .delta-v-button {
+          padding: 16px 36px;
+          font-size: 14px;
+        }
+      }
+
+    </mj-style>
+  </mj-head>
+  <mj-body css-class="template">
+    <mj-wrapper text-align="left" css-class="template-body" padding="0">
+    <mj-section padding="0">
+      <mj-column padding="0">
+        <mj-image href="{{siteUrl}}" alt="Déclare Douane" width="100px" src="https://declare-douane.beta.gouv.fr/_next/static/media/Step-One-Tuto.53c8a3e6.png"></mj-image>
+      </mj-column>
+    </mj-section>
+     <mj-section>
+      <mj-column>
+        <mj-raw padding="0">
+          <tr>
+            <td style="
+                  font-size: 16px;
+                  line-height: 15px;
+                  text-align: left;
+                  padding: 0;
+                ">
+              {{> layout }}
+            </td>
+          </tr>
+        </mj-raw>
+       </mj-column>
+       </mj-section>
+    </mj-wrapper>
+  </mj-body>
+</mjml>

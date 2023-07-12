@@ -2,6 +2,8 @@ import { UserRepositoryInterface } from '../../../repositories/user.repository';
 import { CustomEventEmitterInterface } from '../../../core/eventManager/eventManager';
 import { generateResetPasswordToken } from '../../../core/jwt/generateToken';
 import { config } from '../../../loader/config';
+import { buildAskResetPasswordUrl } from '../../../utils/frontUrls.enum';
+import { buildAskResetPasswordEmailRenderer } from './emailRenderer';
 
 interface IValidationEmailServiceOptions {
   email: string;
@@ -23,11 +25,16 @@ export default async ({
     userId: user.id,
     email: user.email,
   });
-  const urlValidationToken = `${config.URL_FRONTEND}${config.ROUTE_FRONTEND_RESET_PASSWORD}?token=${token}`;
+
+  const askResetPasswordHtml = await buildAskResetPasswordEmailRenderer({
+    siteUrl: config.URL_FRONTEND,
+    email: user.email,
+    emailAskResetPasswordUrl: buildAskResetPasswordUrl(token),
+  });
 
   eventEmitter.emitSendEmail({
     to: user.email,
-    html: `Url reset password : ${urlValidationToken}`,
+    html: askResetPasswordHtml,
     subject: 'Veuillez changer votre mot de passe en cliquant sur le lien',
   });
 };
