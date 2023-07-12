@@ -4,6 +4,10 @@ import { Search } from './Search';
 import { Product } from '@/model/product';
 import { productFactory } from '@/tests/factories/Product.factory';
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
+
 describe('Search', () => {
   it('should render results', () => {
     const searchResult: Product[] = [productFactory(), productFactory()];

@@ -74,7 +74,7 @@
     "@storybook/testing-library": "0.0.13",
     "@svgr/webpack": "6.5.0",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "12.1.5",
+    "@testing-library/react": "14.0.0",
     "@types/jest": "29.1.2",
     "@types/js-cookie": "^3.0.3",
     "@types/jwt-decode": "^3.1.0",
