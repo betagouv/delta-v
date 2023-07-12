@@ -3,7 +3,7 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 
 import { ProgressBarAgent } from '.';
-import { ProgressBarAgentItemType } from '@/templates/DeclarationSteps';
+import { ProgressBarAgentItemType } from '@/templates/DeclarationAgentSteps';
 
 export default {
   title: 'Molecules/ProgressBarAgent',

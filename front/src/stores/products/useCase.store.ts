@@ -14,6 +14,7 @@ export interface ProductsUseCaseSlice {
   getProductsResponse: () => Promise<void>;
   setProductsToDisplay: () => void;
   setProductsDeclarationToDisplay: () => void;
+  setProductsDeclarationToDisplayAgent: () => void;
 }
 
 const getFlattenProducts = (products: Product[]): Product[] => {
@@ -76,6 +77,27 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
   setProductsDeclarationToDisplay: () => {
     const { contactDetails, meansOfTransportAndCountry } =
       get().declaration.appState.declarationRequest;
+    const { allProducts } = get().products.appState;
+
+    set((state: any) => {
+      if (contactDetails.age === undefined || !meansOfTransportAndCountry.country) {
+        return state;
+      }
+      const newState = { ...state };
+      newState.products.appState.products = setupProductsToDisplay(
+        allProducts,
+        contactDetails.age,
+        meansOfTransportAndCountry.country,
+      );
+      newState.products.appState.flattenProducts = getFlattenProducts(
+        newState.products.appState.products,
+      );
+      return newState;
+    });
+  },
+  setProductsDeclarationToDisplayAgent: () => {
+    const { contactDetails, meansOfTransportAndCountry } =
+      get().declaration.appState.declarationAgentRequest;
     const { allProducts } = get().products.appState;
 
     set((state: any) => {

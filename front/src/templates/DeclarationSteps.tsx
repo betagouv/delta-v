@@ -3,14 +3,11 @@ import { ReactNode } from 'react';
 import classNames from 'classnames';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
-import { MainAgent } from './MainAgent';
-import { ProgressBarAgent } from '@/components/common/ProgressBarAgent';
+import { Main } from './Main';
 import { Meta } from '@/layout/Meta';
-import { DECLARATION_STEP_PAGE } from '@/utils/const';
 
 type IMainProps = {
   children: ReactNode;
-  currentStep: number;
   handleSubmit: UseFormHandleSubmit<any>;
   onSubmit: (data: any) => void;
   simpleBg?: boolean;
@@ -23,51 +20,37 @@ export type ProgressBarAgentItemType = {
   stepNumber: number;
 };
 
-const links: ProgressBarAgentItemType[] = [
-  { name: 'Coordonnées', to: DECLARATION_STEP_PAGE[1] ?? '', stepNumber: 1 },
-  { name: 'Transports', to: DECLARATION_STEP_PAGE[2] ?? '', stepNumber: 2 },
-  { name: 'Marchandises', to: DECLARATION_STEP_PAGE[3] ?? '', stepNumber: 3 },
-];
-
-const DeclarationSteps = ({
-  children,
-  currentStep,
-  handleSubmit,
-  onSubmit,
-  simpleBg,
-  linkButton,
-}: IMainProps) => {
-  const showProgressBar = currentStep <= 3 && currentStep >= 1;
-
+const DeclarationSteps = ({ children, handleSubmit, onSubmit, linkButton }: IMainProps) => {
   return (
-    <MainAgent
+    <Main
       meta={
         <Meta
-          title="Simulateur Déclare Douanes"
-          description="Simuler la déclaration de douane en quelques clics"
+          title="Declaration Déclare Douanes"
+          description="Déclaration de douane en quelques clics"
         />
       }
+      withHeader
       withTitle
-      titleHeader="Créer une déclaration"
+      titleValue={
+        <>
+          Déclarer
+          <br />
+          mes achats
+        </>
+      }
+      titleIcon="categoryDouanier"
+      method="declaration"
       linkButton={linkButton}
     >
-      {showProgressBar && (
-        <div className="px-4">
-          <ProgressBarAgent links={links} currentStep={currentStep} />
-        </div>
-      )}
-
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={classNames({
-          'flex flex-1 flex-col h-full p-5 mt-4': true,
-          'bg-white': simpleBg,
-          'bg-secondary-100': !simpleBg,
+          'flex flex-1 flex-col h-full': true,
         })}
       >
         {children}
       </form>
-    </MainAgent>
+    </Main>
   );
 };
 

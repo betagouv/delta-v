@@ -12,9 +12,9 @@ import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Radio } from '@/components/input/StandardInputs/Radio';
-import { declaration } from '@/core/hoc/declaration.hoc';
+import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { useStore } from '@/stores/store';
-import { DeclarationSteps } from '@/templates/DeclarationSteps';
+import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
 
 export interface FormDeclarationData {
   adult?: string;
@@ -36,10 +36,10 @@ interface EventChangeRadio {
 }
 
 const Declaration = () => {
-  const { validateDeclarationStep1, contactDetails } = useStore(
+  const { validateDeclarationAgentStep1, contactDetails } = useStore(
     (state) => ({
-      validateDeclarationStep1: state.validateDeclarationStep1,
-      contactDetails: state.declaration.appState.declarationRequest.contactDetails,
+      validateDeclarationAgentStep1: state.validateDeclarationAgentStep1,
+      contactDetails: state.declaration.appState.declarationAgentRequest.contactDetails,
     }),
     shallow,
   );
@@ -128,8 +128,8 @@ const Declaration = () => {
 
   register('notAdultAge', {
     onChange: ({ type, target: { name, value } }: EventChangeRadio) => {
-      const notResetDeclarationSteps = !name || type !== 'change';
-      if (notResetDeclarationSteps) {
+      const notResetDeclarationAgentSteps = !name || type !== 'change';
+      if (notResetDeclarationAgentSteps) {
         return;
       }
       if (typeof value === 'number') {
@@ -141,7 +141,7 @@ const Declaration = () => {
   });
 
   const onSubmit = (data: FormDeclarationData) => {
-    validateDeclarationStep1({
+    validateDeclarationAgentStep1({
       age: age ?? 0,
       lastName: data.lastName,
       firstName: data.firstName,
@@ -156,7 +156,7 @@ const Declaration = () => {
 
   return (
     <AgentRoute>
-      <DeclarationSteps
+      <DeclarationAgentSteps
         currentStep={1}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
@@ -313,9 +313,9 @@ const Declaration = () => {
             Valider
           </Button>
         </div>
-      </DeclarationSteps>
+      </DeclarationAgentSteps>
     </AgentRoute>
   );
 };
 
-export default declaration(Declaration);
+export default declarationAgent(Declaration);

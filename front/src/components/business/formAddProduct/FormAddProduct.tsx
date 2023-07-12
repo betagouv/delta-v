@@ -37,13 +37,15 @@ export interface FormSimulatorData {
 interface GetCurrentRequestOptions {
   templateRole?: Role;
   simulatorRequest: SimulatorRequest;
+  declarationAgentRequest: DeclarationRequest;
   declarationRequest: DeclarationRequest;
 }
 
 const getCurrentRequest = ({
   templateRole,
-  declarationRequest,
+  declarationAgentRequest,
   simulatorRequest,
+  declarationRequest,
 }: GetCurrentRequestOptions): { border?: boolean; country?: Alpha2Code } => {
   if (templateRole === 'user') {
     return {
@@ -51,9 +53,15 @@ const getCurrentRequest = ({
       country: simulatorRequest.country,
     };
   }
+  if (templateRole === 'userDeclaration') {
+    return {
+      border: declarationRequest.border,
+      country: declarationRequest.meansOfTransportAndCountry.country,
+    };
+  }
   return {
-    border: declarationRequest.border,
-    country: declarationRequest.meansOfTransportAndCountry.country,
+    border: declarationAgentRequest.border,
+    country: declarationAgentRequest.meansOfTransportAndCountry.country,
   };
 };
 
@@ -67,15 +75,17 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   defaultCurrency = 'EUR',
   templateRole,
 }: FormAddProductProps) => {
-  const { currencies, simulatorRequest, declarationRequest, findProduct } = useStore(
-    (state) => ({
-      currencies: state.currencies.appState.currencies,
-      simulatorRequest: state.simulator.appState.simulatorRequest,
-      declarationRequest: state.declaration.appState.declarationRequest,
-      findProduct: state.findProduct,
-    }),
-    shallow,
-  );
+  const { currencies, simulatorRequest, declarationAgentRequest, declarationRequest, findProduct } =
+    useStore(
+      (state) => ({
+        currencies: state.currencies.appState.currencies,
+        simulatorRequest: state.simulator.appState.simulatorRequest,
+        declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
+        declarationRequest: state.declaration.appState.declarationRequest,
+        findProduct: state.findProduct,
+      }),
+      shallow,
+    );
 
   const [border, setBorder] = useState<boolean | undefined>();
   const [country, setCountry] = useState<Alpha2Code | undefined>();
@@ -83,12 +93,13 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   useEffect(() => {
     const { border: currentBorder, country: currentCountry } = getCurrentRequest({
       templateRole,
-      declarationRequest,
+      declarationAgentRequest,
       simulatorRequest,
+      declarationRequest,
     });
     setBorder(currentBorder);
     setCountry(currentCountry);
-  }, [templateRole, declarationRequest, simulatorRequest]);
+  }, [templateRole, declarationAgentRequest, simulatorRequest, declarationRequest]);
 
   const product = productId ? findProduct(productId) : undefined;
 

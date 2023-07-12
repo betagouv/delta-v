@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
-import { ProgressBarAgentItemType } from '@/templates/DeclarationSteps';
+import { ProgressBarAgentItemType } from '@/templates/DeclarationAgentSteps';
 
 export interface IProgressBarAgentProps {
   links: ProgressBarAgentItemType[];

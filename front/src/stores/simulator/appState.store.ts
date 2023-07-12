@@ -65,6 +65,7 @@ export interface SimulatorResponse {
 }
 
 export interface SimulatorRequest {
+  declarationId?: string;
   age?: number;
   meanOfTransport?: MeansOfTransport;
   country?: Alpha2Code;
@@ -88,6 +89,7 @@ export interface SimulatorAppStateSlice {
 
 export const SIMULATOR_EMPTY_STATE = {
   simulatorRequest: {
+    declarationId: undefined,
     age: undefined,
     meanOfTransport: undefined,
     country: undefined,

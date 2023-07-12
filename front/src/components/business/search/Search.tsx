@@ -21,18 +21,21 @@ interface SearchProps<T> {
   autoFocus?: boolean;
   searchType?: SearchDisplayType;
   disabled?: boolean;
+  method?: 'declaration' | 'simulator';
 }
 
 interface GetSearchResultOptions<T extends unknown> {
   searchType: SearchDisplayType;
   resultSearch: SearchType<T>[];
   searchValue: string;
+  method?: 'declaration' | 'simulator';
 }
 
 const getSearchResult = <T extends unknown>({
   searchType,
   resultSearch,
   searchValue,
+  method,
 }: GetSearchResultOptions<T>) => {
   switch (searchType) {
     case 'global':
@@ -49,6 +52,7 @@ const getSearchResult = <T extends unknown>({
         <SearchResultProducts
           searchValue={searchValue}
           resultSearch={resultSearch as unknown as SearchType<Product>[]}
+          method={method}
         />
       );
   }
@@ -73,6 +77,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
   autoFocus = false,
   withSearchIcon = false,
   disabled = false,
+  method,
 }: SearchProps<T>) => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
@@ -104,7 +109,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
     onChange(displayResults);
   }, [resultSearch]);
 
-  const SearchResult = getSearchResult({ searchType, resultSearch, searchValue });
+  const SearchResult = getSearchResult({ searchType, resultSearch, searchValue, method });
 
   return (
     <div className="flex flex-1 flex-col gap-4" data-testid="search-element">
