@@ -7,6 +7,7 @@ export enum Routing {
   home = '/',
   simulator = '/simulateur/configuration/etape0',
   faq = '/faqs',
+  createDeclaration = '/declaration/ajout/age',
   prepareMyTrip = '/preparer-mon-voyage',
   prepareMyTripConfig = '/preparer-mon-voyage/configuration',
   about = '/a-propos',
@@ -95,6 +96,11 @@ export const MENU_ITEMS: TabItem[] = [
     path: Routing.prepareMyTripConfig,
   },
   {
+    title: 'Déclarer mes achats',
+    path: Routing.createDeclaration,
+    icon: 'categoryDouanier',
+  },
+  {
     icon: 'calculator',
     title: (
       <>
@@ -109,11 +115,6 @@ export const MENU_ITEMS: TabItem[] = [
     icon: 'question',
     title: 'FAQ',
     path: Routing.faq,
-  },
-  {
-    icon: 'info',
-    title: 'À propos',
-    path: Routing.about,
   },
 ];
 

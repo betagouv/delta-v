@@ -10,7 +10,7 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { OnAddProductOptions } from '@/components/business/formSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
 import { Typography } from '@/components/common/Typography';
-import { declaration } from '@/core/hoc/declaration.hoc';
+import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { Meta } from '@/layout/Meta';
 import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
@@ -21,12 +21,12 @@ import { SearchType } from '@/utils/search';
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { addProductCartDeclaration, searchProducts, findProduct, defaultCurrency } = useStore(
+  const { addProductCartDeclarationAgent, searchProducts, findProduct, defaultCurrency } = useStore(
     (state) => ({
       findProduct: state.findProduct,
-      addProductCartDeclaration: state.addProductCartDeclaration,
+      addProductCartDeclarationAgent: state.addProductCartDeclarationAgent,
       searchProducts: state.searchProducts,
-      defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
+      defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
     }),
     shallow,
   );
@@ -54,7 +54,7 @@ const SearchProduct = () => {
       currency: currency ?? 'EUR',
     };
 
-    addProductCartDeclaration(shoppingProduct);
+    addProductCartDeclarationAgent(shoppingProduct);
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
     setOpenModalAddProduct(false);
     router.push(`/agent/declaration/ajout/marchandises`);
@@ -102,4 +102,4 @@ const SearchProduct = () => {
     </AgentRoute>
   );
 };
-export default declaration(SearchProduct);
+export default declarationAgent(SearchProduct);

@@ -34,7 +34,8 @@ export default async (
       declarantLastName,
     } = req.body;
 
-    const { email: authorEmail, userId: authorId } = req.jwt;
+    const authorEmail = req.jwt?.email ?? declarantEmail;
+    const authorId = req.jwt?.userId;
 
     await service({
       declarationId,

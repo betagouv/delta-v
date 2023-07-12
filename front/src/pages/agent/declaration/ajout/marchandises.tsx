@@ -22,11 +22,11 @@ import { AmountAgentProductBasketGroup } from '@/components/common/AmountAgentPr
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
-import { declaration } from '@/core/hoc/declaration.hoc';
+import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
-import { DeclarationSteps } from '@/templates/DeclarationSteps';
+import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
 import { DECLARATION_STEP_PAGE } from '@/utils/const';
 
 export interface FormDeclarationData {
@@ -35,33 +35,33 @@ export interface FormDeclarationData {
 
 const Declaration = () => {
   const {
-    setProductsDeclarationToDisplay,
+    setProductsDeclarationToDisplayAgent,
     removeProductDeclaration,
-    updateProductCartDeclaration,
+    updateProductCartDeclarationAgent,
     resetDeclaration,
     findProduct,
-    findDeclarationShoppingProduct,
+    findDeclarationShoppingProductAgent,
     declarationId,
-    declarationRequest,
+    declarationAgentRequest,
     meansOfTransportAndCountry,
     defaultCurrency,
     valueProducts,
     amountProducts,
   } = useStore(
     (state) => ({
-      setProductsDeclarationToDisplay: state.setProductsDeclarationToDisplay,
-      updateProductCartDeclaration: state.updateProductCartDeclaration,
-      removeProductDeclaration: state.removeProductCartDeclaration,
+      setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
+      updateProductCartDeclarationAgent: state.updateProductCartDeclarationAgent,
+      removeProductDeclaration: state.removeProductCartDeclarationAgent,
       resetDeclaration: state.resetDeclaration,
       findProduct: state.findProduct,
-      findDeclarationShoppingProduct: state.findDeclarationShoppingProduct,
-      declarationId: state.declaration.appState.declarationRequest?.declarationId,
-      valueProducts: state.declaration.appState.declarationResponse?.valueProducts,
-      amountProducts: state.declaration.appState.declarationResponse?.amountProducts,
-      declarationRequest: state.declaration.appState.declarationRequest,
+      findDeclarationShoppingProductAgent: state.findDeclarationShoppingProductAgent,
+      declarationId: state.declaration.appState.declarationAgentRequest?.declarationId,
+      valueProducts: state.declaration.appState.declarationAgentResponse?.valueProducts,
+      amountProducts: state.declaration.appState.declarationAgentResponse?.amountProducts,
+      declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
       meansOfTransportAndCountry:
-        state.declaration.appState.declarationRequest.meansOfTransportAndCountry,
-      defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
+        state.declaration.appState.declarationAgentRequest.meansOfTransportAndCountry,
+      defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
     }),
     shallow,
   );
@@ -80,7 +80,7 @@ const Declaration = () => {
   >();
 
   useEffect(() => {
-    setProductsDeclarationToDisplay();
+    setProductsDeclarationToDisplayAgent();
   }, []);
 
   useEffect(() => {
@@ -118,14 +118,14 @@ const Declaration = () => {
       currency: currency ?? 'EUR',
     };
 
-    updateProductCartDeclaration(shoppingProduct);
+    updateProductCartDeclarationAgent(shoppingProduct);
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
     setOpenModalAddProduct(false);
     router.push(`/agent/declaration/ajout/marchandises`);
   };
 
   const onModifyClick = (id: string) => {
-    const shoppingProduct = findDeclarationShoppingProduct(id);
+    const shoppingProduct = findDeclarationShoppingProductAgent(id);
     const product = findProduct(shoppingProduct?.productId ?? '');
     if (!shoppingProduct) {
       return;
@@ -144,10 +144,10 @@ const Declaration = () => {
     if (!declarationId) return;
     createDeclarationMutation.mutate({
       declarationId,
-      contactDetails: declarationRequest.contactDetails,
-      shoppingProducts: declarationRequest.shoppingProducts,
-      border: declarationRequest.border,
-      meansOfTransportAndCountry: declarationRequest.meansOfTransportAndCountry,
+      contactDetails: declarationAgentRequest.contactDetails,
+      shoppingProducts: declarationAgentRequest.shoppingProducts,
+      border: declarationAgentRequest.border,
+      meansOfTransportAndCountry: declarationAgentRequest.meansOfTransportAndCountry,
     });
   };
 
@@ -169,7 +169,7 @@ const Declaration = () => {
 
   return (
     <AgentRoute>
-      <DeclarationSteps
+      <DeclarationAgentSteps
         currentStep={3}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
@@ -259,7 +259,7 @@ const Declaration = () => {
                     <AmountAgentProductBasketGroup
                       amountProductGroup={amountProduct}
                       country={meansOfTransportAndCountry.country}
-                      border={declarationRequest.border}
+                      border={declarationAgentRequest.border}
                       onDelete={(id) => {
                         setDeletedProductId(id);
                         setOpenModalDeleteProduct(true);
@@ -285,7 +285,7 @@ const Declaration = () => {
             </div>
           </>
         )}
-      </DeclarationSteps>
+      </DeclarationAgentSteps>
 
       <ModalSearchProduct
         open={openSearchDownModal}
@@ -326,4 +326,4 @@ const Declaration = () => {
   );
 };
 
-export default declaration(Declaration);
+export default declarationAgent(Declaration);

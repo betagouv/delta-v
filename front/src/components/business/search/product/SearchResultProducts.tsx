@@ -12,11 +12,13 @@ import { SearchType } from '@/utils/search';
 interface SearchResultProductsProps {
   searchValue: string;
   resultSearch: SearchType<Product>[];
+  method?: 'declaration' | 'simulator';
 }
 
 export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
   searchValue,
   resultSearch,
+  method = 'simulator',
 }: SearchResultProductsProps) => {
   const router = useRouter();
   const { trackEvent } = useMatomo();
@@ -31,7 +33,7 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
     });
     setTimeout(() => {
       router.push(
-        `/simulateur/produits/${searchProduct.id}?customName=${searchProduct.rankedValue}`,
+        `/${method}/produits/${searchProduct.id}?customName=${searchProduct.rankedValue}`,
       );
     }, 250);
   };

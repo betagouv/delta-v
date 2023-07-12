@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
+import { ModalDeclareSimulation } from '@/components/autonomous/ModalDeclareSimulation';
 import { SummarySimulator } from '@/components/business/summarySimulator';
 import { Button } from '@/components/common/Button';
 import { Link } from '@/components/common/Link';
@@ -30,6 +31,11 @@ const Summary = () => {
     }),
     shallow,
   );
+  const [openModal, setOpenModal] = useState(false);
+
+  const onDeclare = () => {
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     if (!simulatorResponse) {
@@ -75,14 +81,14 @@ const Summary = () => {
           </div>
         </div>
         <div className="mt-2">
-          <Link to={Routing.home}>
-            <Button fullWidth>Revenir à l’accueil</Button>
-          </Link>
+          <Button fullWidth onClick={onDeclare}>
+            Je déclare
+          </Button>
         </div>
         <div className="mb-2">
-          <Link to={Routing.simulator}>
+          <Link to={Routing.home}>
             <Button variant="outlined" fullWidth>
-              Nouvelle simulation
+              Revenir à l’accueil
             </Button>
           </Link>
         </div>
@@ -107,6 +113,7 @@ const Summary = () => {
           En savoir plus
         </TextLink>
       </div>
+      <ModalDeclareSimulation open={openModal} onClose={() => setOpenModal(false)} />
     </Main>
   );
 };

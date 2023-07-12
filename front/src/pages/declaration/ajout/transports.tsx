@@ -8,17 +8,16 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioType, Radio } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
-import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
+import { declaration } from '@/core/hoc/declaration.hoc';
 import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
-import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
-import { DECLARATION_STEP_PAGE, disabledCountries } from '@/utils/const';
+import { DeclarationSteps } from '@/templates/DeclarationSteps';
+import { disabledCountries } from '@/utils/const';
 
 export interface MeansOfTransportAndCountryData {
   meansOfTransport: MeansOfTransport;
@@ -61,10 +60,10 @@ const radioValues: IRadioType[] = [
 ];
 
 const Declaration = () => {
-  const { validateDeclarationAgentStep2, declarationAgentRequest } = useStore(
+  const { validateDeclarationStep3, declarationRequest } = useStore(
     (state) => ({
-      validateDeclarationAgentStep2: state.validateDeclarationAgentStep2,
-      declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
+      validateDeclarationStep3: state.validateDeclarationStep3,
+      declarationRequest: state.declaration.appState.declarationRequest,
     }),
     shallow,
   );
@@ -89,9 +88,9 @@ const Declaration = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      meansOfTransport: declarationAgentRequest.meansOfTransportAndCountry?.meansOfTransport,
-      country: declarationAgentRequest.meansOfTransportAndCountry?.country,
-      border: declarationAgentRequest.border ? 'true' : 'false',
+      meansOfTransport: declarationRequest.meansOfTransportAndCountry?.meansOfTransport,
+      country: declarationRequest.meansOfTransportAndCountry?.country,
+      border: declarationRequest.border ? 'true' : 'false',
     },
   });
 
@@ -107,12 +106,12 @@ const Declaration = () => {
       return;
     }
 
-    validateDeclarationAgentStep2({
+    validateDeclarationStep3({
       meansOfTransport: data.meansOfTransport,
       country: data.country,
       border: !!data.border,
     });
-    router.push(`/agent/declaration/ajout/marchandises`);
+    router.push(`/declaration/produits`);
   };
 
   register('meansOfTransport', {
@@ -172,90 +171,88 @@ const Declaration = () => {
   }, []);
 
   return (
-    <AgentRoute>
-      <DeclarationAgentSteps
-        currentStep={2}
-        handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
-        onSubmit={onSubmit}
-        linkButton={DECLARATION_STEP_PAGE[1]}
-      >
-        <InputGroup
-          type="radioCard"
-          label="Sélectionner le moyen de transport"
-          name="meansOfTransport"
-          radioCardValues={meansOfTransports}
-          register={register('meansOfTransport', { required: true })}
-          control={control}
-          error={errors?.meansOfTransport?.message}
-          littleCard
-          newLabel
-        />
-        {transportChosen && (
-          <div className="mt-4">
-            <InputGroup
-              type="select"
-              fullWidth={true}
-              name="country"
-              placeholder="Sélectionner le pays d’où vous arrivez"
-              trailingIcon="search"
-              options={countriesOptions}
-              register={register('country', { required: true })}
-              control={control}
-              error={errors?.country?.message}
-              withBorder={false}
-            />
-          </div>
-        )}
-        {isPlane && (
-          <div className="mt-4 flex flex-row items-center">
-            <div className="w-52">
+    <DeclarationSteps
+      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
+      onSubmit={onSubmit}
+      linkButton="/declaration/ajout/coordonnees"
+    >
+      <div className="flex flex-col justify-between flex-1">
+        <div className="flex flex-col flex-1">
+          <InputGroup
+            type="radioCard"
+            label="Sélectionner le moyen de transport"
+            name="meansOfTransport"
+            radioCardValues={meansOfTransports}
+            register={register('meansOfTransport', { required: true })}
+            control={control}
+            error={errors?.meansOfTransport?.message}
+            newLabel
+          />
+          {transportChosen && (
+            <div className="mt-4">
               <InputGroup
-                type="text"
-                name="phone"
+                type="select"
                 fullWidth={true}
-                placeholder="N° de vol  : A36WJB..."
-                register={register('flightNumber')}
+                name="country"
+                placeholder="Sélectionner le pays d’où vous arrivez"
+                trailingIcon="search"
+                options={countriesOptions}
+                register={register('country', { required: true })}
                 control={control}
-                error={errors?.flightNumber?.message}
-                required
-                withBorder={false}
+                error={errors?.country?.message}
               />
             </div>
-            <div className="ml-2.5">
-              <Typography size="text-xs" color="light-gray" italic>
-                Facultatif
-              </Typography>
-            </div>
-          </div>
-        )}
-        {isFrontalier && (
-          <div className="mt-4">
-            <label htmlFor="adult" className={`mb-4 block text-base`} data-testid="label-element">
-              Est-ce dans le cadre d’un déplacement frontalier ?
-            </label>
-            <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
-              <Radio
-                name="border"
-                radioValues={radioValues}
-                register={register('border')}
-                error={errors?.border?.message}
-              />
-            </div>
-          </div>
-        )}
-        <div>
-          {errors?.meansOfTransport && (
-            <div className="text-red-500">{errors.meansOfTransport.message}</div>
           )}
+          {isPlane && (
+            <div className="mt-4 flex flex-row items-center">
+              <div className="w-52">
+                <InputGroup
+                  type="text"
+                  name="phone"
+                  fullWidth={true}
+                  placeholder="Numéro de vol  : A36WJB..."
+                  register={register('flightNumber')}
+                  control={control}
+                  error={errors?.flightNumber?.message}
+                  required
+                />
+              </div>
+              <div className="ml-2.5">
+                <Typography size="text-2xs" color="light-gray" italic>
+                  Facultatif
+                </Typography>
+              </div>
+            </div>
+          )}
+          {isFrontalier && (
+            <div className="mt-4">
+              <label htmlFor="adult" className={`mb-4 block text-sm`} data-testid="label-element">
+                Est-ce dans le cadre d’un déplacement frontalier ?
+              </label>
+              <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
+                <Radio
+                  name="border"
+                  radioValues={radioValues}
+                  register={register('border')}
+                  error={errors?.border?.message}
+                />
+              </div>
+            </div>
+          )}
+          <div>
+            {errors?.meansOfTransport && (
+              <div className="text-red-500">{errors.meansOfTransport.message}</div>
+            )}
+          </div>
         </div>
-        <div className="absolute bottom-8 w-40 self-center">
+        <div className="w-40 self-center">
           <Button fullWidth={true} type="submit" disabled={!isValid}>
             Valider
           </Button>
         </div>
-      </DeclarationAgentSteps>
-    </AgentRoute>
+      </div>
+    </DeclarationSteps>
   );
 };
 
-export default declarationAgent(Declaration);
+export default declaration(Declaration);

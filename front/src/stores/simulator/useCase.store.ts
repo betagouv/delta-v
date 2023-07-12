@@ -1,5 +1,6 @@
 import { countries } from 'countries-list';
 import { Alpha2Code } from 'i18n-iso-countries';
+import { v4 as uuidv4 } from 'uuid';
 
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
@@ -44,6 +45,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     set((state: any) => {
       const newState = { ...state };
       newState.simulator.appState.simulatorRequest.age = age;
+      newState.simulator.appState.simulatorRequest.declarationId = uuidv4();
       return newState;
     });
   },

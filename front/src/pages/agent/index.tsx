@@ -14,7 +14,7 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
 import { MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
-import { getLevelWithData } from '@/utils/declaration';
+import { getLevelWithData } from '@/utils/declarationAgent';
 
 const SCAN_HEIGHT = '268px';
 const SCAN_WIDTH = '357px';
@@ -28,12 +28,12 @@ const Index = () => {
     console.log(qrCode);
   };
 
-  const { declarationRequest } = useStore((state) => ({
-    declarationRequest: state.declaration.appState.declarationRequest,
+  const { declarationAgentRequest } = useStore((state) => ({
+    declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
   }));
 
   const openDeclaration = () => {
-    if (getLevelWithData(declarationRequest) === 1) {
+    if (getLevelWithData(declarationAgentRequest) === 1) {
       router.push(RoutingAgent.createDeclaration);
     } else {
       setOpenModalResumeDeclaration(true);

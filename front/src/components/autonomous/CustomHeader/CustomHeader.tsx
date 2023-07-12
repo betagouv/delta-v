@@ -21,6 +21,8 @@ interface HeaderProps {
   title?: string;
   linkSearch?: string;
   templateRole?: Role;
+  linkButton?: string;
+  method?: 'declaration' | 'simulateur';
 }
 
 export const CustomHeader: React.FC<HeaderProps> = ({
@@ -31,10 +33,15 @@ export const CustomHeader: React.FC<HeaderProps> = ({
   title,
   linkSearch = '/simulateur/produits/recherche',
   templateRole = 'user',
+  method = 'simulateur',
+  linkButton,
 }: HeaderProps) => {
   const { shoppingProducts, simulatorRequest, simulatorResponse } = useStore(
     (state) => ({
-      shoppingProducts: state.simulator.appState.simulatorRequest.shoppingProducts,
+      shoppingProducts:
+        method === 'simulateur'
+          ? state.simulator.appState.simulatorRequest.shoppingProducts
+          : state.declaration.appState.declarationRequest.shoppingProducts,
       simulatorRequest: state.simulator.appState.simulatorRequest,
       simulatorResponse: state.simulator.appState.simulatorResponse,
     }),
@@ -51,13 +58,21 @@ export const CustomHeader: React.FC<HeaderProps> = ({
 
   const onClickBasket = () => {
     if (nbCartItems > 0) {
-      router.push('/simulateur/panier');
+      router.push(`/${method}/panier`);
       return;
     }
     setOpenBasketModal(true);
   };
 
-  const leftButtons = <>{title ? <BackButtonWithTitle title={title} /> : <BackButton />}</>;
+  const leftButtons = (
+    <>
+      {title ? (
+        <BackButtonWithTitle title={title} href={linkButton} />
+      ) : (
+        <BackButton href={linkButton} />
+      )}
+    </>
+  );
 
   const rightButtons = (
     <>
@@ -87,7 +102,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
           />
         </>
       )}
-      {withPrint && (
+      {withPrint && method === 'simulateur' && (
         <SummaryExport simulatorRequest={simulatorRequest} simulatorResponse={simulatorResponse} />
       )}
       {withLogo && (

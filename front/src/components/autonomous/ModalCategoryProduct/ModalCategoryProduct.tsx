@@ -30,11 +30,11 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   open,
   defaultCurrency,
 }) => {
-  const { findProduct, products, addProductCartDeclaration, findProductTree } = useStore(
+  const { findProduct, products, addProductCartDeclarationAgent, findProductTree } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       products: state.products.appState.products,
-      addProductCartDeclaration: state.addProductCartDeclaration,
+      addProductCartDeclarationAgent: state.addProductCartDeclarationAgent,
       findProductTree: state.findProductTree,
     }),
     shallow,
@@ -97,7 +97,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
       currency: currency ?? 'EUR',
     };
 
-    addProductCartDeclaration(shoppingProduct);
+    addProductCartDeclarationAgent(shoppingProduct);
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
 
     if (onClose) {

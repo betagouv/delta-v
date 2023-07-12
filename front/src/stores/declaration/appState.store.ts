@@ -49,7 +49,9 @@ export interface ValidateStep3Options {
 
 export interface DeclarationData {
   declarationRequest: DeclarationRequest;
+  declarationAgentRequest: DeclarationRequest;
   declarationResponse?: SimulatorResponse;
+  declarationAgentResponse?: SimulatorResponse;
 }
 
 export interface DeclarationAppStateSlice {
@@ -109,7 +111,31 @@ export const DECLARATION_EMPTY_STATE = {
     products: [],
     customShoppingProducts: [],
   },
+  declarationAgentRequest: {
+    declarationId: undefined,
+    contactDetails: {
+      age: undefined,
+      lastName: undefined,
+      firstName: undefined,
+      address: undefined,
+      city: undefined,
+      postalCode: undefined,
+      email: undefined,
+      phoneNumber: undefined,
+    },
+    meansOfTransportAndCountry: {
+      meansOfTransport: undefined,
+      country: undefined,
+      flightNumber: undefined,
+    },
+    defaultCurrency: 'EUR',
+    border: undefined,
+    shoppingProducts: [],
+    products: [],
+    customShoppingProducts: [],
+  },
   declarationResponse: undefined,
+  declarationAgentResponse: undefined,
 };
 
 export const createDeclarationAppStateSlice: StoreSlice<DeclarationAppStateSlice> = () => ({

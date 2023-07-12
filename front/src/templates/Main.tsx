@@ -23,6 +23,8 @@ type IMainProps = {
   withLogo?: boolean;
   titleValue?: React.ReactNode;
   titleIcon?: SvgNames;
+  linkButton?: string;
+  method?: 'declaration' | 'simulateur';
 };
 
 const Main = ({
@@ -35,8 +37,10 @@ const Main = ({
   withLogo = false,
   linkSearch,
   withTitle = false,
+  method,
   titleValue,
   titleIcon,
+  linkButton,
 }: IMainProps) => {
   const [openModalResumeSimulator, setOpenModalResumeSimulator] = useState<boolean>(false);
   const router = useRouter();
@@ -64,6 +68,8 @@ const Main = ({
             linkSearch={linkSearch}
             withPrint={withPrint}
             withLogo={withLogo}
+            linkButton={linkButton}
+            method={method}
           />
         )}
         {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}

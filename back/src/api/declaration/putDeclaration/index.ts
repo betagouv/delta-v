@@ -6,7 +6,7 @@ import validator from './validator';
 
 export const putDeclaration = Router().put(
   '/declaration/:declarationId',
-  jwtMiddleware({ isAgent: true }),
+  jwtMiddleware({ isOptional: true }),
   validator,
   validatedExpressRequest(route),
 );
