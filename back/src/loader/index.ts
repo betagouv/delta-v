@@ -1,5 +1,5 @@
 import apiRouter from '../api';
-import config from './config';
+import { config } from './config';
 import buildApp from './app';
 import { initDatabase } from './database';
 

@@ -2,7 +2,7 @@ import { ILogger } from '../../../../core/logger';
 import { MailerFunction } from '../../../../core/mailer';
 import { User } from '../../../../entities/user.entity';
 import { generateValidationToken } from '../../../../core/jwt/generateToken';
-import config from '../../../../loader/config';
+import { config } from '../../../../loader/config';
 
 export interface SaveAndSendValidationEmailTokenOptions {
   user: User;

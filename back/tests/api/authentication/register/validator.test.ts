@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { registerValidator } from '../../../../src/api/authentication/register/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
-import config from '../../../../src/loader/config';
+import { config } from '../../../../src/loader/config';
 
 describe('register validator', () => {
   const validator = registerValidator;
@@ -12,6 +12,7 @@ describe('register validator', () => {
     },
   };
   const { isValid } = validatorHelper(validator);
+
   it('should validate proper data - douane email', () => {
     expect(isValid(validData)).toBeTruthy();
   });

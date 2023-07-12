@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import config from '../../loader/config';
+import { config } from '../../loader/config';
 
 export enum CacheDuration {
   ZERO = 0,

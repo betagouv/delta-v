@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import sanitizeHtml from 'sanitize-html';
 
-export const validator = Joi.extend((joi) => ({
+export const validator: Joi.Root = Joi.extend((joi) => ({
   base: joi.string(),
   type: 'string',
   rules: {

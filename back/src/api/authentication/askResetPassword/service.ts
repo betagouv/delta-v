@@ -1,7 +1,7 @@
 import { UserRepositoryInterface } from '../../../repositories/user.repository';
 import { CustomEventEmitterInterface } from '../../../core/eventManager/eventManager';
 import { generateResetPasswordToken } from '../../../core/jwt/generateToken';
-import config from '../../../loader/config';
+import { config } from '../../../loader/config';
 
 interface IValidationEmailServiceOptions {
   email: string;

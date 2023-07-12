@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken';
 import invalidTokenError from '../../api/common/errors/invalidToken.error';
-import config from '../../loader/config';
+import { config } from '../../loader/config';
 import { AccessTokenAuthObject, IAuthObject } from './AuthObject';
 
 interface VerifyTokenOptions {

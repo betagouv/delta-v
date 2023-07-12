@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import config from '../../loader/config';
+import { config } from '../../loader/config';
 import { AccessTokenAuthObject, IAuthObject } from './AuthObject';
 
 interface GenerateTokenOptions<T extends object> {

@@ -55,9 +55,9 @@ function parseConfig(config: any): IAppConfig {
   };
 }
 
-function buildConfig(config = process.env): IAppConfig {
+export const buildConfig = (config = process.env): IAppConfig => {
   checkRequiredVariables(config);
   return parseConfig(config);
-}
+};
 
-export default buildConfig();
+export const config = buildConfig();

@@ -1,7 +1,7 @@
 import { CustomEventEmitterInterface } from '../../../../core/eventManager/eventManager';
 import { generateValidationToken } from '../../../../core/jwt/generateToken';
 import { User } from '../../../../entities/user.entity';
-import config from '../../../../loader/config';
+import { config } from '../../../../loader/config';
 
 export interface SaveAndSendValidationEmailTokenOptions {
   user: User;

@@ -1,6 +1,6 @@
 import { CustomEventEmitterInterface } from '../../../core/eventManager/eventManager';
 import { Feedback } from '../../../entities/feedback.entity';
-import config from '../../../loader/config';
+import { config } from '../../../loader/config';
 import { FeedbackRepositoryInterface } from '../../../repositories/feedback.repository';
 
 interface FeedbackOptions {
