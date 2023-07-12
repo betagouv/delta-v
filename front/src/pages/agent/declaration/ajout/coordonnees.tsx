@@ -39,7 +39,7 @@ const Declaration = () => {
   const { validateDeclarationAgentStep1, contactDetails } = useStore(
     (state) => ({
       validateDeclarationAgentStep1: state.validateDeclarationAgentStep1,
-      contactDetails: state.declaration.appState.declarationAgentRequest.contactDetails,
+      contactDetails: state.declaration.appState.declarationAgentRequest?.contactDetails,
     }),
     shallow,
   );
@@ -96,15 +96,15 @@ const Declaration = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
     defaultValues: {
-      adult: checkIsAdult(contactDetails.age),
-      notAdultAge: contactDetails.age,
-      lastName: contactDetails.lastName,
-      firstName: contactDetails.firstName,
-      address: contactDetails.address,
-      city: contactDetails.city,
-      postalCode: contactDetails.postalCode,
-      email: contactDetails.email,
-      phoneNumber: contactDetails.phoneNumber,
+      adult: checkIsAdult(contactDetails?.age),
+      notAdultAge: contactDetails?.age,
+      lastName: contactDetails?.lastName,
+      firstName: contactDetails?.firstName,
+      address: contactDetails?.address,
+      city: contactDetails?.city,
+      postalCode: contactDetails?.postalCode,
+      email: contactDetails?.email,
+      phoneNumber: contactDetails?.phoneNumber,
     },
   });
 

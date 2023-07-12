@@ -37,8 +37,8 @@ const Declaration = () => {
     (state) => ({
       validateDeclarationStep2: state.validateDeclarationStep2,
       contactDetails:
-        from === 'simulateur' ? {} : state.declaration.appState.declarationRequest.contactDetails,
-      declarationId: state.simulator.appState.simulatorRequest.declarationId,
+        from === 'simulateur' ? {} : state.declaration.appState.declarationRequest?.contactDetails,
+      declarationId: state.simulator.appState.simulatorRequest?.declarationId,
       simulatorRequest: state.simulator.appState.simulatorRequest,
       resetAllRequests: state.resetAllRequests,
     }),

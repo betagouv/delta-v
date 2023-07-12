@@ -27,24 +27,24 @@ export const routes: RouteLevel[] = [
 
 export const getLevelWithData = (declarationAgentRequest: DeclarationRequest): number => {
   if (
-    declarationAgentRequest.contactDetails.firstName === undefined ||
-    declarationAgentRequest.contactDetails.lastName === undefined ||
-    declarationAgentRequest.contactDetails.address === undefined ||
-    declarationAgentRequest.contactDetails.city === undefined ||
-    declarationAgentRequest.contactDetails.postalCode === undefined ||
-    declarationAgentRequest.contactDetails.email === undefined ||
-    declarationAgentRequest.contactDetails.phoneNumber === undefined ||
-    declarationAgentRequest.contactDetails.age === undefined
+    declarationAgentRequest?.contactDetails.firstName === undefined ||
+    declarationAgentRequest?.contactDetails.lastName === undefined ||
+    declarationAgentRequest?.contactDetails.address === undefined ||
+    declarationAgentRequest?.contactDetails.city === undefined ||
+    declarationAgentRequest?.contactDetails.postalCode === undefined ||
+    declarationAgentRequest?.contactDetails.email === undefined ||
+    declarationAgentRequest?.contactDetails.phoneNumber === undefined ||
+    declarationAgentRequest?.contactDetails.age === undefined
   ) {
     return 1;
   }
   if (
-    declarationAgentRequest.meansOfTransportAndCountry.meansOfTransport === undefined &&
-    declarationAgentRequest.meansOfTransportAndCountry.country === undefined
+    declarationAgentRequest?.meansOfTransportAndCountry.meansOfTransport === undefined &&
+    declarationAgentRequest?.meansOfTransportAndCountry.country === undefined
   ) {
     return 2;
   }
-  if (declarationAgentRequest.shoppingProducts.length === 0) {
+  if (declarationAgentRequest?.shoppingProducts.length === 0) {
     return 3;
   }
   return 4;
