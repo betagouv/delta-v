@@ -1,5 +1,5 @@
 import { DataElement } from '..';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 
 export const Declaration: DataElement[] = [
   {
@@ -24,13 +24,12 @@ export const Declaration: DataElement[] = [
         votre arrivée sur le territoire français (dans le port, l'aéroport, dans la gare ou au point
         de passage routier que vous empruntez). Si vous ne croisez pas d’agents des douanes à votre
         passage de la frontière, vous pouvez également vous rapprocher des{' '}
-        <Link
+        <ExternalLink
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"
-          external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
-        </Link>
+        </ExternalLink>
         .
       </p>
     ),
@@ -55,13 +54,12 @@ export const Declaration: DataElement[] = [
       <p>
         Je peux déclarer à mon arrivée sur le territoire français. Si je ne croise pas de douaniers
         à l’occasion de mon retour, je peux également me rapprocher des{' '}
-        <Link
+        <ExternalLink
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"
-          external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
-        </Link>
+        </ExternalLink>
         .
       </p>
     ),
@@ -76,13 +74,12 @@ export const Declaration: DataElement[] = [
         <br />
         <br /> Si je ne croise pas d’agents des douanes au passage de la frontière, je peux
         également me rapprocher des{' '}
-        <Link
+        <ExternalLink
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"
-          external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
-        </Link>
+        </ExternalLink>
         .
       </p>
     ),
@@ -100,13 +97,12 @@ export const Declaration: DataElement[] = [
         <p>
           Si vous ne croisez pas d’agents des douanes au passage de la frontière, vous pouvez
           également vous rapprocher des{' '}
-          <Link
+          <ExternalLink
             href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
             tag="span"
-            external
           >
             <span className="text-link">services douaniers les plus proches de chez vous</span>
-          </Link>
+          </ExternalLink>
           .
         </p>
       </div>

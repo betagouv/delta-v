@@ -1,5 +1,5 @@
 import { DataElement } from '..';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import { SvgIcon } from '@/components/common/SvgIcon';
 
 export const WhenDeclare: DataElement[] = [
@@ -50,15 +50,14 @@ export const WhenDeclare: DataElement[] = [
         <div>
           Si vous ne croisez pas de douaniers à l’occasion de votre retour, vous pouvez également
           vous rapprocher des{' '}
-          <Link
+          <ExternalLink
             href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
             tag="span"
-            external
           >
             <span className="text-link underline">
               services douaniers les plus proches de chez vous
             </span>
-          </Link>
+          </ExternalLink>
           .
         </div>
       </div>

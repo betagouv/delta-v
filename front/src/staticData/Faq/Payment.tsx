@@ -1,5 +1,5 @@
 import { DataElement } from '..';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 
 export const Payment: DataElement[] = [
   {
@@ -48,13 +48,12 @@ export const Payment: DataElement[] = [
           ramenez avec vous de l'étranger, rapprochez vous des agents douaniers présents à votre
           arrivée sur le territoire française. Si vous ne croisez pas d’agents des douanes à votre
           passage de la frontière, vous pouvez également vous rapprocher des{' '}
-          <Link
+          <ExternalLink
             href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
             tag="span"
-            external
           >
             <span className="text-link">services douaniers les plus proches de chez vous</span>
-          </Link>
+          </ExternalLink>
           .
         </p>
         <p className="mt-4 mb-1">Le règlement des sommes à payer peut :</p>

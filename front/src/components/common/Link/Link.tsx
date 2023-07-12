@@ -49,7 +49,6 @@ export const Link: React.FC<LinkProps> = ({
   withBorder = false,
 }: LinkProps) => {
   const router = useRouter();
-
   const handleClick = () => {
     if (back) {
       router.back();
@@ -77,8 +76,8 @@ export const Link: React.FC<LinkProps> = ({
         </CustomTag>
       )}
       {linkType === LinkType.href && href && (
-        <NextLink href={href}>
-          <a target={external ? '_blank' : '_self'}>{children}</a>
+        <NextLink href={href} target={external ? '_blank' : '_self'}>
+          {children}
         </NextLink>
       )}
       {linkType === LinkType.onClick && onClick && <div onClick={onClick}>{children}</div>}

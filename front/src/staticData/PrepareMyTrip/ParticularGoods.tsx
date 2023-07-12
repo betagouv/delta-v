@@ -1,5 +1,5 @@
 import { DataElement } from '..';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 
 export const ParticularGoods: DataElement[] = [
   {
@@ -14,13 +14,12 @@ export const ParticularGoods: DataElement[] = [
             peuvent être dangereux pour votre santé ou pour l’écosystème français.
           </span>{' '}
           Certains de ces produits sont soumis à des{' '}
-          <Link
+          <ExternalLink
             href="https://www.douane.gouv.fr/demarche/vous-rapportez-des-vegetaux-fruits-et-legumes-en-provenance-dun-pays-non-membre-de-lunion"
             tag="span"
-            external
           >
             <span className="text-link underline">formalités particulières</span>
-          </Link>
+          </ExternalLink>
           .
         </div>
       </div>

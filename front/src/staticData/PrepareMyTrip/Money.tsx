@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { DataElement } from '..';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import { Typography } from '@/components/common/Typography';
 import { Radio } from '@/components/input/StandardInputs/Radio';
 
@@ -58,9 +58,9 @@ const ContentMoney: React.FC = () => {
         <>
           <div>
             Vous pouvez d’ores et déjà déclarer vos sommes et liquidités sur{' '}
-            <Link href="https://www.douane.gouv.fr/dalia/Dalia.jsp" tag="span" external>
+            <ExternalLink href="https://www.douane.gouv.fr/dalia/Dalia.jsp" tag="span">
               <span className="text-link underline">Dalia</span>
-            </Link>
+            </ExternalLink>
             .
           </div>
 

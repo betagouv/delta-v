@@ -1,5 +1,5 @@
 import { DataElement } from '..';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 
 export const Border: DataElement[] = [
   {
@@ -10,13 +10,12 @@ export const Border: DataElement[] = [
         En cas d’oubli de déclaration d’une ou de plusieurs marchandises, adressez-vous aux services
         douaniers présent à votre arrivée sur le territoire français. Si vous êtes déjà entrés en
         France, rapprochez-vous des{' '}
-        <Link
+        <ExternalLink
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"
-          external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
-        </Link>
+        </ExternalLink>
         .
       </p>
     ),
