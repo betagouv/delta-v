@@ -34,7 +34,7 @@ export const ModalUnderConstruction: React.FC<ModalUnderConstructionProps> = ({
         open={open}
         onClose={onClose}
       >
-        <Button size="lg" rounded="full" fullWidth onClick={onClose}>
+        <Button rounded="full" onClick={onClose}>
           Retour
         </Button>
       </Modal>

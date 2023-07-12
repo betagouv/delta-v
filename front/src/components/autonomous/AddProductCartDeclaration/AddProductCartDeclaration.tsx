@@ -32,7 +32,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
   const productTree = currentProduct ? findProductTree(currentProduct.id) : [];
   return (
     <>
-      <div className="flex flex-col h-auto">
+      <div className="flex flex-col h-full">
         <div className="px-4 py-5">
           <div className="flex flex-row gap-4">
             <Breadcrumbs

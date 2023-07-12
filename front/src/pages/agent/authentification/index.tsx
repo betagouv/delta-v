@@ -75,7 +75,7 @@ const LoginPage = () => {
       }
     >
       <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10 ">
-        <div className="mb-16 h-14">
+        <div className="mb-16 h-20">
           <SvgIcon name="logoAgent" />
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
@@ -104,18 +104,20 @@ const LoginPage = () => {
               onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
             />
           </div>
-          {apiError?.message && (
-            <div className="ml-3">
-              <ApiError apiError={apiError} />
-            </div>
-          )}
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>
-          <div className="mt-5 w-36 self-center">
-            <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
-              Valider
-            </Button>
+          <div className="mt-5 flex flex-col items-center gap-2">
+            <span>
+              <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
+                Valider
+              </Button>
+            </span>
+            {apiError?.message && (
+              <div className="ml-3">
+                <ApiError apiError={apiError} />
+              </div>
+            )}
           </div>
         </form>
       </section>

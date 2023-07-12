@@ -202,7 +202,7 @@ const Declaration = () => {
             required
             withBorder={false}
           />
-          <div className="flex flex-row gap-4">
+          <div className="flex items-end gap-4">
             <div className="w-32">
               <InputGroup
                 type="text"
@@ -292,17 +292,19 @@ const Declaration = () => {
             required
             withBorder={false}
           />
-          <InputGroup
-            type="text"
-            name="phone"
-            fullWidth={false}
-            placeholder="Téléphone"
-            register={register('phoneNumber')}
-            control={control}
-            error={errors?.phoneNumber?.message}
-            required
-            withBorder={false}
-          />
+          <div className="w-56">
+            <InputGroup
+              type="text"
+              name="phone"
+              fullWidth={false}
+              placeholder="Téléphone"
+              register={register('phoneNumber')}
+              control={control}
+              error={errors?.phoneNumber?.message}
+              required
+              withBorder={false}
+            />
+          </div>
         </div>
 
         <div className="mb-8 flex-1" />

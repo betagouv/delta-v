@@ -25,13 +25,14 @@ export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({
   return (
     <>
       <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
-        <div className="flex h-[90vh] flex-1 flex-col gap-6">
+        <div className="flex h-[calc(100vh-50px)] flex-1 flex-col gap-6 w-full">
           <SearchProduct
             onSearch={searchProducts}
             autoFocus
             withSearchIcon
             onClickProduct={onClickProduct}
             onSearchAll={onSearchAll}
+            placeholder="Saisissez votre recherche…"
           />
         </div>
       </DownModal>
