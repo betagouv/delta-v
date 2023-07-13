@@ -99,6 +99,7 @@ export const MENU_ITEMS: TabItem[] = [
     title: 'Déclarer mes achats',
     path: Routing.createDeclaration,
     icon: 'categoryDouanier',
+    declaration: true,
   },
   {
     icon: 'calculator',

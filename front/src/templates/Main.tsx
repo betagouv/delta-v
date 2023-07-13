@@ -1,14 +1,17 @@
 import { ReactNode, useState } from 'react';
 
 import { useRouter } from 'next/router';
+import shallow from 'zustand/shallow';
 
 import { MENU_ITEMS, Routing } from '../utils/const';
 import { CustomHeader } from '@/components/autonomous/CustomHeader';
+import { ModalResumeDeclaration } from '@/components/autonomous/ModalResumeDeclaration';
 import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
 import { SvgNames } from '@/components/common/SvgIcon';
 import { TabBar } from '@/components/common/TabBar';
 import { TitleHeader } from '@/components/common/TitleHeader';
 import { useStore } from '@/stores/store';
+import { getLevelWithData as getDeclarationLevelWithData } from '@/utils/declaration';
 import { getLevelWithData } from '@/utils/simulator';
 
 type IMainProps = {
@@ -43,17 +46,30 @@ const Main = ({
   linkButton,
 }: IMainProps) => {
   const [openModalResumeSimulator, setOpenModalResumeSimulator] = useState<boolean>(false);
+  const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
   const router = useRouter();
 
-  const { simulatorRequest } = useStore((state) => ({
-    simulatorRequest: state.simulator.appState.simulatorRequest,
-  }));
+  const { simulatorRequest, declarationRequest } = useStore(
+    (state) => ({
+      simulatorRequest: state.simulator.appState.simulatorRequest,
+      declarationRequest: state.declaration.appState.declarationRequest,
+    }),
+    shallow,
+  );
 
   const openSimulator = () => {
     if (getLevelWithData(simulatorRequest) === 1) {
       router.push(Routing.simulator);
     } else {
       setOpenModalResumeSimulator(true);
+    }
+  };
+
+  const openDeclaration = () => {
+    if (getDeclarationLevelWithData(declarationRequest) === 1) {
+      router.push(Routing.createDeclaration);
+    } else {
+      setOpenModalResumeDeclaration(true);
     }
   };
   return (
@@ -75,11 +91,16 @@ const Main = ({
         {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}
         {children}
       </div>
-      <TabBar items={MENU_ITEMS} openSimulator={openSimulator} />
+      <TabBar items={MENU_ITEMS} openSimulator={openSimulator} openDeclaration={openDeclaration} />
       <ModalResumeSimulator
         open={openModalResumeSimulator}
         onClose={() => setOpenModalResumeSimulator(false)}
         simulatorRequest={simulatorRequest}
+      />
+      <ModalResumeDeclaration
+        open={openModalResumeDeclaration}
+        onClose={() => setOpenModalResumeDeclaration(false)}
+        templateRole="user"
       />
     </div>
   );

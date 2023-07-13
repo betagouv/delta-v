@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FieldErrors, useForm } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { FormAddProduct } from '../formAddProduct';
@@ -15,9 +14,10 @@ import { useStore } from '@/stores/store';
 interface FormSelectProductProps {
   productName?: string;
   openModal: () => void;
+  addNewProduct: (data: AddNewProductForm) => void;
 }
 
-interface AddNewProductForm {
+export interface AddNewProductForm {
   name?: string;
   category?: string;
   value?: number;
@@ -27,14 +27,14 @@ interface AddNewProductForm {
 export const FormNewProduct: React.FC<FormSelectProductProps> = ({
   productName,
   openModal,
+  addNewProduct,
 }: FormSelectProductProps) => {
   const { trackEvent } = useMatomo();
   const defaultCategory = { id: '', value: 'Catégorie' };
-  const { products, defaultCurrency, addProduct } = useStore(
+  const { products, defaultCurrency } = useStore(
     (state) => ({
       products: state.products.appState.products,
       defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
-      addProduct: state.addProduct,
     }),
     shallow,
   );
@@ -76,13 +76,7 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
 
   const onSubmit = (data: AddNewProductForm) => {
     setSubmitted(true);
-    addProduct({
-      amount: 1,
-      id: uuidv4(),
-      name: data.name ?? '',
-      value: data.value ?? 0,
-      currency: data.currency ?? 'EUR',
-    });
+    addNewProduct(data);
     setTimeout(() => {
       openModal();
     }, 250);

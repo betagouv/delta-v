@@ -34,6 +34,7 @@ export interface DeclarationUseCaseSlice {
   declare: () => void;
   declareAgent: () => void;
   resetDeclaration: () => void;
+  resetDeclarationAgent: () => void;
   resetAllRequests: () => void;
 }
 
@@ -286,7 +287,8 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   checkProductCartDeclaration: (): void => {
     set((state: any) => {
       const newState = { ...state };
-      const { shoppingProducts } = newState.declaration.appState.declarationAgentRequest;
+      const shoppingProducts: ShoppingProduct[] =
+        newState.declaration.appState.declarationAgentRequest?.shoppingProducts ?? [];
       const shoppingProductsToKeep: ShoppingProduct[] = [];
       shoppingProducts.forEach((product: ShoppingProduct) => {
         if (newState.findProduct(product.productId)) {
@@ -301,7 +303,18 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   resetDeclaration: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState = { ...DECLARATION_EMPTY_STATE };
+      newState.declaration.appState.declarationRequest = {
+        ...DECLARATION_EMPTY_STATE.declarationRequest,
+      };
+      return newState;
+    });
+  },
+  resetDeclarationAgent: () => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.declaration.appState.declarationAgentRequest = {
+        ...DECLARATION_EMPTY_STATE.declarationAgentRequest,
+      };
       return newState;
     });
   },

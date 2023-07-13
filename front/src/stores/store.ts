@@ -10,6 +10,7 @@ import {
 import { createUseCaseCurrencySlice, CurrenciesUseCaseSlice } from './currencies/useCase.store';
 import {
   createDeclarationAppStateSlice,
+  DECLARATION_EMPTY_STATE,
   DeclarationAppStateSlice,
 } from './declaration/appState.store';
 import {
@@ -96,7 +97,7 @@ export const useStore = create<StoreState>(
     {
       name: 'app-storage',
       getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
-      version: 4,
+      version: 5,
       partialize: (state) => {
         return {
           simulator: state.simulator,
@@ -128,6 +129,10 @@ export const useStore = create<StoreState>(
             countries[
               newPersistedState.simulator.appState.simulatorRequest.country ?? 'FR'
             ].currency;
+        }
+
+        if (version < 5) {
+          newPersistedState.declaration.appState = DECLARATION_EMPTY_STATE;
         }
 
         return newPersistedState;

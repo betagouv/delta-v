@@ -78,7 +78,7 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
         </div>
         <div className=" flex w-full flex-col items-center">
           <div className="flex w-60 flex-col">
-            <Link to={`/simulateur/produits/ajout?searchValue=${searchValue}`}>
+            <Link to={`./ajout?searchValue=${searchValue}`}>
               <Button fullWidth>Enregistrer votre produit</Button>
             </Link>
           </div>

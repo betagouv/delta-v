@@ -5,22 +5,32 @@ import { useRouter } from 'next/router';
 import { Button } from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
 import { useStore } from '@/stores/store';
-import { RoutingAgent } from '@/utils/const';
+import { Routing, RoutingAgent } from '@/utils/const';
 
 interface ModalDeclarationProps {
   open: boolean;
   onClose?: () => void;
+  templateRole: 'agent' | 'user';
 }
 
-export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({ onClose, open }) => {
+export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({
+  onClose,
+  open,
+  templateRole,
+}) => {
   const router = useRouter();
 
-  const { resetDeclaration } = useStore((state) => ({
+  const { resetDeclaration, resetDeclarationAgent } = useStore((state) => ({
     resetDeclaration: state.resetDeclaration,
+    resetDeclarationAgent: state.resetDeclarationAgent,
   }));
 
   const resumeDeclaration = () => {
-    router.push(RoutingAgent.createDeclaration);
+    if (templateRole === 'agent') {
+      router.push(RoutingAgent.createDeclaration);
+    } else {
+      router.push(Routing.createDeclaration);
+    }
     onClose?.();
   };
   return (
@@ -39,8 +49,13 @@ export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({ onClos
             rounded="full"
             fullWidth
             onClick={() => {
-              resetDeclaration();
-              router.push(RoutingAgent.createDeclaration);
+              if (templateRole === 'agent') {
+                resetDeclarationAgent();
+                router.push(RoutingAgent.createDeclaration);
+              } else {
+                resetDeclaration();
+                router.push(Routing.createDeclaration);
+              }
             }}
           >
             Nouvelle declaration

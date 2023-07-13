@@ -29,7 +29,7 @@ export const ProductNotManaged: React.FC<ProductNotManagedProps> = ({
 
       <div className=" flex w-full flex-col items-center">
         <div className="flex w-60 flex-col gap-4">
-          <Link to={`/simulateur/produits/${currentProduct.id}?allowNotManagedProduct=true`}>
+          <Link to={`./${currentProduct.id}?allowNotManagedProduct=true`}>
             <Button fullWidth>Enregistrer la marchandise</Button>
           </Link>
         </div>

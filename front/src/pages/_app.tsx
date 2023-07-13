@@ -9,7 +9,6 @@ import '../config/i18n';
 import { NextRouter, useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { ToastContainer } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
 import { configureAxios } from '@/api/base';
@@ -28,7 +27,7 @@ const initAxios = (
   configureAxios({
     onRefreshTokenError: () => {
       clearUser();
-      router.push(RoutingAuthentication.login);
+      router.replace(RoutingAuthentication.login);
     },
     onRefreshTokenSuccess: (accessToken, refreshToken) => {
       setUserFromToken(accessToken, refreshToken);
@@ -119,7 +118,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           </div>
         )}
         {!loading && <Component {...pageProps} />}
-        <ToastContainer />
       </MatomoProvider>
       {!Config.isProduction && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>

@@ -87,7 +87,7 @@ export interface DeclarationResponse {
   products: DetailedProduct[];
 }
 
-export const DECLARATION_EMPTY_STATE = {
+export const DECLARATION_EMPTY_STATE: DeclarationData = {
   declarationRequest: {
     declarationId: undefined,
     contactDetails: {
@@ -109,7 +109,6 @@ export const DECLARATION_EMPTY_STATE = {
     border: undefined,
     shoppingProducts: [],
     products: [],
-    customShoppingProducts: [],
   },
   declarationAgentRequest: {
     declarationId: undefined,
@@ -132,7 +131,6 @@ export const DECLARATION_EMPTY_STATE = {
     border: undefined,
     shoppingProducts: [],
     products: [],
-    customShoppingProducts: [],
   },
   declarationResponse: undefined,
   declarationAgentResponse: undefined,

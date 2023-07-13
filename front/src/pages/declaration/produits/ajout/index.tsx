@@ -15,7 +15,7 @@ const AddNewProduct = () => {
   const { searchValue } = router.query;
   const productName = typeof searchValue === 'string' ? searchValue : undefined;
   const { addProduct } = useStore((state) => ({
-    addProduct: state.addProduct,
+    addProduct: state.addProductCartDeclaration,
   }));
 
   const addNewProduct = (data: AddNewProductForm) => {
@@ -32,20 +32,23 @@ const AddNewProduct = () => {
     <Main
       meta={
         <Meta
-          title="Simulateur Déclaration Douanes"
-          description="Simuler la déclaration de douane en quelques clics"
+          title="Declaration Déclare Douanes"
+          description="Déclaration de douane en quelques clics"
         />
       }
       withHeader
       withCart
+      withSearch
+      linkSearch="/declaration/produits/recherche"
       withTitle
+      titleIcon="categoryDouanier"
+      method="declaration"
       titleValue={
         <>
           Nouvelle
           <br /> marchandise
         </>
       }
-      titleIcon="calculator"
     >
       <div className="flex flex-1 flex-col gap-6">
         <FormNewProduct
@@ -54,7 +57,7 @@ const AddNewProduct = () => {
           addNewProduct={addNewProduct}
         />
       </div>
-      <ModalAddProduct open={openModal} onClose={() => setOpenModal(false)} />
+      <ModalAddProduct open={openModal} onClose={() => setOpenModal(false)} method="declaration" />
     </Main>
   );
 };

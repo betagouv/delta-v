@@ -8,24 +8,35 @@ export interface TabItem {
   icon: SvgNames;
   path?: string;
   simulator?: boolean;
+  declaration?: boolean;
 }
 
 interface TabBarProps {
   items: TabItem[];
   openSimulator: () => void;
+  openDeclaration: () => void;
 }
 
-export const TabBar: React.FC<TabBarProps> = ({ items, openSimulator }: TabBarProps) => {
+export const TabBar: React.FC<TabBarProps> = ({
+  items,
+  openSimulator,
+  openDeclaration,
+}: TabBarProps) => {
   const router = useRouter();
   const { pathname } = router;
   const splitPath = pathname.split('/');
 
-  const renderTabBarItem = ({ icon, title, path, simulator }: TabItem, index: number) => {
+  const renderTabBarItem = (
+    { icon, title, path, simulator, declaration }: TabItem,
+    index: number,
+  ) => {
     const activeTab = splitPath[1] === path?.split('/')[1];
 
     const onClickMenu = () => {
       if (simulator) {
         openSimulator();
+      } else if (declaration) {
+        openDeclaration();
       } else if (path) {
         router.push(path);
       }

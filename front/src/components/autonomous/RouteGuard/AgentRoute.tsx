@@ -39,7 +39,7 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
   const disconnect = () => {
     clearUser();
     clearTokens();
-    router.push(RoutingAuthentication.login);
+    router.replace(RoutingAuthentication.login);
   };
 
   useEffect(() => {

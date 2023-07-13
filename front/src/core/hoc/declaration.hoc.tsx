@@ -13,9 +13,8 @@ export const declaration = (Component: React.FC) => {
   const CheckDeclaration = (props: any) => {
     const router = useRouter();
 
-    const { declarationRequest, simulatorRequest } = useStore((state) => ({
+    const { declarationRequest } = useStore((state) => ({
       declarationRequest: state.declaration.appState.declarationRequest,
-      simulatorRequest: state.simulator.appState.simulatorRequest,
     }));
     const path = router.pathname;
     const defaultComponent = <Component {...props} />;
@@ -27,7 +26,7 @@ export const declaration = (Component: React.FC) => {
         return;
       }
 
-      const maxLevel = getLevelWithData(declarationRequest, simulatorRequest);
+      const maxLevel = getLevelWithData(declarationRequest);
       const currentLevel = getCurrentLevelPath(path);
 
       if (maxLevel < currentLevel) {

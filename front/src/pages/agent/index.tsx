@@ -127,6 +127,7 @@ const Index = () => {
         <ModalResumeDeclaration
           open={openModalResumeDeclaration}
           onClose={() => setOpenModalResumeDeclaration(false)}
+          templateRole="agent"
         />
       </MainAgent>
     </AgentRoute>
