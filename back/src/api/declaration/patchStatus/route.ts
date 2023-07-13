@@ -4,6 +4,7 @@ import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
 
 import { DeclarationRepository } from '../../../repositories/declaration.repository';
 import { AppDataSource } from '../../../loader/database';
+import { ProductRepository } from '../../../repositories/product.repository';
 import serializer from './serializer';
 import { service } from './service';
 import { PatchStatusRequest } from './validator';
@@ -23,6 +24,7 @@ export default async (
       declarationId,
       status,
       declarationRepository: AppDataSource.manager.withRepository(DeclarationRepository),
+      productRepository: AppDataSource.manager.withRepository(ProductRepository),
     });
 
     const response = serializer();

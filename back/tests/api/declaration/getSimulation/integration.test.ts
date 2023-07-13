@@ -170,7 +170,6 @@ describe('test simulator API', () => {
       shoppingProducts,
     });
     expect(status).toBe(200);
-    console.log(body);
 
     expect(body.valueProducts.length).toBe(3);
     expect(body.customProducts.length).toBe(3);

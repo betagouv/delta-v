@@ -11,6 +11,11 @@ interface InitDetailedShoppingProductsOptions {
   currencyRepository: CurrencyRepositoryInterface;
 }
 
+interface InitDetailedShoppingProductsWithoutCurrenciesOptions {
+  shoppingProducts: ShoppingProduct[];
+  productRepository: ProductRepositoryInterface;
+}
+
 export const initDetailedShoppingProducts = async ({
   shoppingProducts,
   productRepository,
@@ -21,5 +26,16 @@ export const initDetailedShoppingProducts = async ({
 
   return shoppingProducts.map((shoppingProduct) =>
     createDetailedShoppingProduct({ shoppingProduct, products, currencies }),
+  );
+};
+
+export const initDetailedShoppingProductsWithoutCurrencies = async ({
+  shoppingProducts,
+  productRepository,
+}: InitDetailedShoppingProductsWithoutCurrenciesOptions): Promise<DetailedShoppingProduct[]> => {
+  const products = await getAllMatchingProducts({ shoppingProducts, productRepository });
+
+  return shoppingProducts.map((shoppingProduct) =>
+    createDetailedShoppingProduct({ shoppingProduct, products, currencies: [] }),
   );
 };
