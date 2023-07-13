@@ -2,7 +2,7 @@ import { CustomEventEmitterInterface } from '../../../../core/eventManager/event
 import { generateValidationToken } from '../../../../core/jwt/generateToken';
 import { User } from '../../../../entities/user.entity';
 import { config } from '../../../../loader/config';
-import { buildAskEmailValidationUrl } from '../../../../utils/frontUrls.enum';
+import { buildAskEmailValidationUrl } from '../../../../utils/frontUrls.util';
 import { buildAskEmailValidationEmailRenderer } from '../../askEmailValidation/emailRenderer';
 
 export interface SaveAndSendValidationEmailTokenOptions {

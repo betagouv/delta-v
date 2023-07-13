@@ -2,7 +2,7 @@ import { UserRepositoryInterface } from '../../../repositories/user.repository';
 import { CustomEventEmitterInterface } from '../../../core/eventManager/eventManager';
 import { generateResetPasswordToken } from '../../../core/jwt/generateToken';
 import { config } from '../../../loader/config';
-import { buildAskResetPasswordUrl } from '../../../utils/frontUrls.enum';
+import { buildAskResetPasswordUrl } from '../../../utils/frontUrls.util';
 import { buildAskResetPasswordEmailRenderer } from './emailRenderer';
 
 interface IValidationEmailServiceOptions {

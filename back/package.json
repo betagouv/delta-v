@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node dist/index.js",
-    "build": "tsc -p ./tsconfig.build.json",
+    "build": "tsc -p ./tsconfig.build.json && yarn mjml2html && yarn copy-templates",
     "install": "sh ./build.sh",
     "lint": "eslint --ext .ts src/ tests/",
     "lint:fix": "yarn lint --fix",
@@ -22,6 +22,7 @@
     "migration:create": "yarn typeorm-ts-node-commonjs migration:create",
     "fixtures:load": "fixtures-ts-node-commonjs load ./fixtures --dataSource=./src/loader/ormconfig.ts --debug",
     "cron:syncCurrencies": "node ./dist/scripts/syncCurrency",
+    "copy-templates": "yarn copyfiles -w -u 1  './src/**/*.hbs' ./dist",
     "mjml2html": "./node_modules/.bin/mjml -r ./mjml/templates/base.template.mjml -o ./src/static/templates/base.template.hbs"
   },
   "dependencies": {
@@ -67,6 +68,7 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "5.59.11",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "2.27.5",
