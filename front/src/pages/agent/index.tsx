@@ -82,27 +82,29 @@ const Index = () => {
           </div>
           {mode === 'tools' ? (
             <div className="mb-1 flex flex-col gap-5 mt-4">
-              {MENU_AGENT_ITEMS.map((item) => (
-                <div
-                  onClick={() => {
-                    if (item.openDeclarationResumeModal) {
-                      openDeclaration();
-                    }
-                  }}
-                  key={item.title}
-                >
-                  <LinkWithIcon
-                    href={item.path}
+              {MENU_AGENT_ITEMS.map((item) => {
+                return (
+                  <div
+                    onClick={() => {
+                      if (item.openDeclarationResumeModal) {
+                        openDeclaration();
+                      }
+                    }}
                     key={item.title}
-                    svgName={item.svgIcon}
-                    name={item.title}
-                    withBgColor={item.id === 'declaration'}
-                    disabled={item.disabled}
                   >
-                    {item.title}
-                  </LinkWithIcon>
-                </div>
-              ))}
+                    <LinkWithIcon
+                      href={item.path}
+                      key={item.title}
+                      svgName={item.svgIcon}
+                      name={item.title}
+                      withBgColor={item.id === 'declaration'}
+                      disabled={item.disabled}
+                    >
+                      {item.title}
+                    </LinkWithIcon>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="flex flex-col gap-3">
