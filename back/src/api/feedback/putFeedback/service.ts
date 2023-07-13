@@ -2,6 +2,7 @@ import { CustomEventEmitterInterface } from '../../../core/eventManager/eventMan
 import { Feedback } from '../../../entities/feedback.entity';
 import { config } from '../../../loader/config';
 import { FeedbackRepositoryInterface } from '../../../repositories/feedback.repository';
+import { buildPutFeedbackEmailRenderer } from './emailRenderer';
 
 interface FeedbackOptions {
   feedbackId: string;
@@ -29,9 +30,16 @@ export const service = async ({
 
   await feedbackRepository.createOne(feedback);
 
+  const putFeedbackHtml = await buildPutFeedbackEmailRenderer({
+    siteUrl: config.URL_FRONTEND,
+    agentEmail: email,
+    comment,
+    agentId: userId,
+  });
+
   eventEmitter.emitSendEmail({
     to: config.WHITE_LIST_AGENT_EMAIL,
-    html: `Email message de l'agent: ${email} <br/> Message: ${comment}`,
+    html: putFeedbackHtml,
     subject: 'Veuillez répondre à ce message',
   });
 };

@@ -3,7 +3,6 @@ import { emailRenderer } from '../../../emailRenderer';
 
 export interface IEmailParams {
   siteUrl: string;
-  email: string;
   emailAskResetPasswordUrl: string;
 }
 

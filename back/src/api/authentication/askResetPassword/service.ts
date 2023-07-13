@@ -28,7 +28,6 @@ export default async ({
 
   const askResetPasswordHtml = await buildAskResetPasswordEmailRenderer({
     siteUrl: config.URL_FRONTEND,
-    email: user.email,
     emailAskResetPasswordUrl: buildAskResetPasswordUrl(token),
   });
 

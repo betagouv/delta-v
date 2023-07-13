@@ -10,6 +10,11 @@
         font-family: Roboto, sans-serif;
         font-weight: 400;
       }
+
+      p {
+        font-size: 16px;
+        line-height: 20px;
+      }
       
       .delta-v-button {
         display: inline-block;
@@ -46,6 +51,7 @@
         -moz-hyphens: auto;
         -webkit-hyphens: auto;
         hyphens: auto;
+        line-height: 20px;
       }
 
       .template {
@@ -61,7 +67,7 @@
         max-width: 640px;
       }
 
-      @media only screen and (max-width:480px) {
+      @media only screen and (max-width:712px) {
         .template {
       	  padding: 16px;
         }
