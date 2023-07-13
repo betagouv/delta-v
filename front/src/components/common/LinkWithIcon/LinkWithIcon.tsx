@@ -22,7 +22,6 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
   withBgColor,
   disabled,
 }: LinkWithIconProps) => {
-  console.log('🚀 ~ file: LinkWithIcon.tsx:25 ~ href:', href);
   return (
     <>
       {href && !disabled ? (
