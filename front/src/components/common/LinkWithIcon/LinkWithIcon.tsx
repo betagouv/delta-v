@@ -25,19 +25,20 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
   return (
     <>
       {href && !disabled ? (
-        <NextLink
-          href={href}
-          className={classNames({
-            'border border-secondary-200 py-4 px-5 rounded-md flex flex-row items-center justify-between':
-              true,
-            'bg-primary-400': withBgColor,
-          })}
-        >
-          <div className="flex flex-row gap-4 items-center">
-            <SvgIcon name={svgName} />
-            <Typography color={withBgColor ? 'white' : 'black'}>{name}</Typography>
+        <NextLink href={href}>
+          <div
+            className={classNames({
+              'border border-secondary-200 py-4 px-5 rounded-md flex flex-row items-center justify-between':
+                true,
+              'bg-primary-400': withBgColor,
+            })}
+          >
+            <div className="flex flex-row gap-4 items-center">
+              <SvgIcon name={svgName} />
+              <Typography color={withBgColor ? 'white' : 'black'}>{name}</Typography>
+            </div>
+            <Icon name="chevron-right" size="base" />
           </div>
-          <Icon name="chevron-right" size="base" />
         </NextLink>
       ) : (
         <div
