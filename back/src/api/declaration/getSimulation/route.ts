@@ -18,7 +18,7 @@ export default async (
   try {
     const { shoppingProducts, border, age, country, meanOfTransport } = req.body;
 
-    const { valueProducts, customProducts, amountProducts, franchiseAmount } = await service({
+    const responseService = await service({
       shoppingProducts,
       border,
       age,
@@ -28,12 +28,7 @@ export default async (
       currencyRepository: AppDataSource.manager.withRepository(CurrencyRepository),
     });
 
-    const response = serializeSimulator({
-      valueProducts,
-      franchiseAmount,
-      amountProducts,
-      customProducts,
-    });
+    const response = serializeSimulator(responseService);
 
     return res.send(response).status(HttpStatuses.OK);
   } catch (error) {

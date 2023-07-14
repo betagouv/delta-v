@@ -106,7 +106,18 @@ export class Declaration {
     return productTaxes;
   }
 
+  private hasUncompletedProduct(): boolean {
+    return !!this.detailedShoppingProducts.find((detailedShoppingProduct) =>
+      detailedShoppingProduct.isUncompletedProduct(),
+    );
+  }
+
   private getUncompletedProductTaxes(): ProductTaxesInterface[] {
+    if (!this.canCalculateTaxes()) {
+      return this.detailedShoppingProducts.map((detailedShoppingProduct) => {
+        return new ProductTaxes({}).setFromDetailedShoppingProduct(detailedShoppingProduct);
+      });
+    }
     return this.detailedShoppingProducts
       .filter((detailedShoppingProduct) => detailedShoppingProduct.isUncompletedProduct())
       .map((detailedShoppingProduct) => {
@@ -142,6 +153,9 @@ export class Declaration {
   }
 
   getRealProductsTaxes(): ProductTaxesInterface[] {
+    if (!this.canCalculateTaxes()) {
+      return [];
+    }
     const usualProductTaxes = this.getUsualProductTaxes();
     if (this.total > LIMIT_UNIQUE_CUSTOM_DUTY) {
       return usualProductTaxes;
@@ -154,4 +168,16 @@ export class Declaration {
     }
     return uniqueRateProductTaxes;
   }
+
+  canCalculateTaxes = (): boolean => {
+    if (this.total <= this.franchiseAmount) {
+      return true;
+    }
+
+    if (this.hasUncompletedProduct()) {
+      return false;
+    }
+
+    return true;
+  };
 }

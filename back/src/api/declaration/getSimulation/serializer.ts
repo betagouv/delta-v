@@ -39,6 +39,7 @@ interface SerializedSimulatorOptions {
   customProducts: ProductTaxesInterface[];
   amountProducts: AmountGroup[];
   franchiseAmount: number;
+  canCalculateTaxes: boolean;
 }
 
 interface SerializedSimulatorResponse {
@@ -50,6 +51,7 @@ interface SerializedSimulatorResponse {
   totalVat: number;
   totalTaxes: number;
   franchiseAmount: number | string;
+  canCalculateTaxes: boolean;
 }
 
 const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedValueProduct => ({
@@ -86,6 +88,7 @@ export const serializeSimulator = ({
   customProducts,
   amountProducts,
   franchiseAmount,
+  canCalculateTaxes,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
   const totalCustomDuty = valueProducts.reduce(
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitCustomDuty()).value,
@@ -107,5 +110,6 @@ export const serializeSimulator = ({
     totalVat,
     totalTaxes: currency(totalCustomDuty).add(totalVat).value,
     franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
+    canCalculateTaxes,
   };
 };
