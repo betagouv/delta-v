@@ -62,6 +62,7 @@ export interface SimulatorResponse {
   totalVat: number;
   totalTaxes: number;
   franchiseAmount: number;
+  canCalculateTaxes: boolean;
 }
 
 export interface SimulatorRequest {

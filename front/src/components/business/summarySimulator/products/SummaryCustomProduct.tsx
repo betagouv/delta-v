@@ -5,18 +5,17 @@ import dayjs from 'dayjs';
 
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
-import { ContentValueProduct } from '@/components/common/ValueProductBasket/ContentValueProduct';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
-interface SummarySimulatorProps {
+interface SummaryCustomProductProps {
   product: DetailedProduct;
   hideDetails?: boolean;
 }
 
-export const SummaryValueProduct: React.FC<SummarySimulatorProps> = ({
+export const SummaryCustomProduct: React.FC<SummaryCustomProductProps> = ({
   product,
   hideDetails = false,
-}: SummarySimulatorProps) => {
+}: SummaryCustomProductProps) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="mt-2 mb-4" onClick={() => setOpen(!open)}>
@@ -31,9 +30,7 @@ export const SummaryValueProduct: React.FC<SummarySimulatorProps> = ({
           <div className="flex flex-1 flex-row">
             <Typography color="secondary">{product.unitPrice} €</Typography>
             <div className="flex-1" />
-            <Typography color={product.unitTaxes === 0 ? 'success' : 'primary'}>
-              {product.unitTaxes} €
-            </Typography>
+            <Typography color={'primary'}>non renseignée</Typography>
           </div>
           <div
             className={classNames({
@@ -57,7 +54,6 @@ export const SummaryValueProduct: React.FC<SummarySimulatorProps> = ({
               </p>
               <div className="ml-1"></div>
             </div>
-            <ContentValueProduct detailedCalculation={product} displaySmall />
           </div>
         </div>
         <div className="flex-1" />

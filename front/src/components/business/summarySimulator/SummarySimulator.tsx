@@ -3,17 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { getName } from 'i18n-iso-countries';
 import { QRCodeSVG } from 'qrcode.react';
 
-import { SummaryValueProduct } from './SummaryValueProduct';
+import { SummaryCustomProduct } from './products/SummaryCustomProduct';
+import { SummaryGroupedAmountProduct } from './products/SummaryGroupedAmountProduct';
+import { SummaryValueProduct } from './products/SummaryValueProduct';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
-import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Color } from '@/components/common/Typography/style/typography.style';
-import {
-  getAmountCategoryName,
-  getAmountProductType,
-  getMessageOverMaximumAmount,
-  getUnit,
-} from '@/model/amount';
+import { getAmountProductType } from '@/model/amount';
 import { AmountProduct } from '@/model/product';
 import { SimulatorRequest, SimulatorResponse } from '@/stores/simulator/appState.store';
 import { getMeanOfTransport } from '@/utils/meansOfTransport.util';
@@ -52,6 +48,10 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
       setOpenModal(true);
     }, 150);
   };
+
+  const hasValueProducts = (simulatorResponse?.valueProducts?.length ?? 0) > 0;
+  const hasCustomProducts = (simulatorResponse?.customProducts?.length ?? 0) > 0;
+  const hasAmountProduct = (simulatorResponse?.amountProducts?.length ?? 0) > 0;
 
   return (
     <div className="rounded-xl border border-secondary-600 p-4">
@@ -111,75 +111,31 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
         </Typography>
       </div>
       <div className="-mx-4 my-4 border-b-2 border-dashed" />
-      {(simulatorResponse?.amountProducts?.length ?? 0) > 0 && (
+      {hasAmountProduct && (
         <>
           {simulatorResponse?.amountProducts?.map((groupedAmount) => (
-            <div key={groupedAmount.group}>
-              <Typography color="light-gray" size="text-2xs">
-                {getAmountCategoryName(groupedAmount.group)}
-              </Typography>
-              {groupedAmount.products.map((product) => (
-                <div key={product.customId} className="mt-1 mb-4 ">
-                  <div className="flex flex-row">
-                    <div>
-                      <Typography
-                        color={groupedAmount.isOverMaximum ? 'error' : 'secondary'}
-                        weight="bold"
-                      >
-                        {product.name}
-                      </Typography>
-                      <Typography
-                        color={groupedAmount.isOverMaximum ? 'error' : 'secondary'}
-                        italic
-                      >
-                        {product.customName}
-                      </Typography>
-                    </div>
-                    <div className="flex-1" />
-                    <div className="flex min-w-[75px] flex-row-reverse">
-                      <Typography color={groupedAmount.isOverMaximum ? 'error' : 'secondary'}>
-                        {product.amount} {getUnit(product.amountProduct)}
-                      </Typography>
-                    </div>
-                  </div>
-                  {groupedAmount.isOverMaximum && (
-                    <div className="mt-2 flex flex-row gap-1 text-red-700">
-                      <div className="h-4 w-4">
-                        <Icon name="error" />
-                      </div>
-                      <p className="flex-1 text-2xs">
-                        Vous dépassez la limite légale d'unités{' '}
-                        {getMessageOverMaximumAmount(groupedAmount.group)}. Pour connaître les
-                        quantités maximales autorisées{' '}
-                        <span
-                          className="text-link"
-                          onClick={() => {
-                            openModalProductType(groupedAmount.products[0]?.amountProduct);
-                          }}
-                        >
-                          cliquez ici
-                        </span>
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+            <SummaryGroupedAmountProduct
+              key={groupedAmount.group}
+              groupedAmount={groupedAmount}
+              openModalProductType={openModalProductType}
+            />
           ))}
           <div className="-mx-4 my-4 border-b-2 border-dashed" />
         </>
       )}
-      {(simulatorResponse?.valueProducts?.length ?? 0) > 0 && (
+      {(hasValueProducts || hasCustomProducts) && (
+        <div className="mt-4 flex flex-row">
+          <Typography color="light-gray" size="text-2xs">
+            Marchandises
+          </Typography>
+          <div className="flex-1" />
+          <Typography color="light-gray" size="text-2xs">
+            Droits et taxes
+          </Typography>
+        </div>
+      )}
+      {hasValueProducts && (
         <>
-          <div className="mt-4 flex flex-row">
-            <Typography color="light-gray" size="text-2xs">
-              Marchandises
-            </Typography>
-            <div className="flex-1" />
-            <Typography color="light-gray" size="text-2xs">
-              Droits et taxes
-            </Typography>
-          </div>
           <div>
             {simulatorResponse?.valueProducts?.map((product, index) => (
               <div key={index}>
@@ -187,20 +143,37 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
               </div>
             ))}
           </div>
-          <div className="-mx-4 my-4 border-b-2 border-dashed" />
         </>
       )}
+      {hasCustomProducts && (
+        <div>
+          {simulatorResponse?.customProducts?.map((product, index) => (
+            <div key={index}>
+              <SummaryCustomProduct product={product} hideDetails={hideDetails} />
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="-mx-4 my-4 border-b-2 border-dashed" />
 
       <div className="mt-4 flex flex-row">
         <div className="flex-1" />
         <Typography color="secondary">Total (en €)</Typography>
       </div>
-      <div className="flex flex-row">
-        <div className="flex-1" />
-        <Typography color={color} size="text-xl">
-          {totalTaxes} €
-        </Typography>
-      </div>
+      {simulatorResponse?.canCalculateTaxes ? (
+        <div className="flex flex-row justify-end">
+          <Typography color={color} size="text-xl">
+            {totalTaxes} €
+          </Typography>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center">
+          <Typography color="primary" size="text-lg">
+            Rapprochez vous d’un agent <br />
+            pour déterminer vos droits € *
+          </Typography>
+        </div>
+      )}
       {(productType === 'alcohol' || productType === 'tobacco') && (
         <ModalMaximumAmount
           open={openModal}
