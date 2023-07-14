@@ -102,7 +102,7 @@ export const serializeSimulator = ({
     valueProducts: valueProducts.map(serializeValueProduct),
     customProducts: customProducts.map(serializeValueProduct),
     amountProducts: amountProducts.map(serializeAmountProduct),
-    total: valueProducts.reduce(
+    total: [...valueProducts, ...customProducts].reduce(
       (total, productTaxes) => currency(total).add(productTaxes.unitPrice).value,
       0,
     ),

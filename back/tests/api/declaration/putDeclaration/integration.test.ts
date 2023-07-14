@@ -154,6 +154,69 @@ describe('test put declaration API', () => {
         originalValue: 500,
         currency: 'EUR',
       },
+    ];
+
+    const { body, status } = await simulateEndpoint({
+      declarationId,
+      products,
+      shoppingProducts,
+      age,
+      border,
+      country,
+      meanOfTransport,
+      accessToken,
+    });
+
+    expect(status).toBe(200);
+    expect(body.code).toBe(ResponseCodes.DECLARATION_UPDATED);
+
+    const dbDeclarations = await testDb.getDeclarations();
+    expect(dbDeclarations.length).toBe(1);
+    expect(dbDeclarations[0]).toMatchObject({
+      id: declarationId,
+      totalVatAmount: 121.17,
+      totalCustomDutyAmount: 64.17,
+      totalTaxesAmount: 185.34,
+      franchiseAmount: 300,
+      totalAmount: 841.67,
+      declarantBorder: border,
+      declarantAge: age,
+      declarantCountry: country,
+      declarantMeanOfTransport: meanOfTransport,
+      authorEmail: user.email,
+      authorId: user.id,
+    });
+  });
+  it('should put declaration', async () => {
+    const { accessToken, user } = await prepareContextUser({ testDb });
+    const products = await prepareContext();
+    const declarationId = faker.string.uuid();
+    const age = faker.number.int({ min: 15, max: 100 });
+    const country = 'US';
+    const meanOfTransport = MeansOfTransport.CAR;
+    const border = false;
+    const shoppingProducts: ShoppingProduct[] = [
+      {
+        id: products[0].id,
+        customName: 'product1',
+        customId: faker.string.uuid(),
+        originalValue: 50,
+        currency: 'USD',
+      },
+      {
+        id: products[1].id,
+        customName: 'product2',
+        customId: faker.string.uuid(),
+        originalValue: 300,
+        currency: 'EUR',
+      },
+      {
+        id: products[1].id,
+        customName: 'product3',
+        customId: faker.string.uuid(),
+        originalValue: 500,
+        currency: 'EUR',
+      },
       {
         customName: 'cproduct1',
         customId: faker.string.uuid(),
@@ -192,9 +255,9 @@ describe('test put declaration API', () => {
     expect(dbDeclarations.length).toBe(1);
     expect(dbDeclarations[0]).toMatchObject({
       id: declarationId,
-      totalVatAmount: 121.17,
-      totalCustomDutyAmount: 64.17,
-      totalTaxesAmount: 185.34,
+      totalVatAmount: 0,
+      totalCustomDutyAmount: 0,
+      totalTaxesAmount: 0,
       franchiseAmount: 300,
       totalAmount: 900,
       declarantBorder: border,

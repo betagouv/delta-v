@@ -41,6 +41,7 @@ describe('test serializer', () => {
       valueProducts: [product1, product2],
       customProducts: [],
       amountProducts: [group3],
+      canCalculateTaxes: true,
     });
 
     expect(serializedData).toMatchObject({
@@ -85,6 +86,7 @@ describe('test serializer', () => {
       totalVat: 40.04,
       totalTaxes: 55.24,
       franchiseAmount: 500,
+      canCalculateTaxes: true,
     });
   });
 });

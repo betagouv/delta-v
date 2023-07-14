@@ -121,7 +121,69 @@ describe('test simulator API', () => {
   afterAll(async () => {
     await testDb.disconnect();
   });
-  it('should simulate declaration', async () => {
+  it('should simulate declaration - under franchise', async () => {
+    const products = await prepareContext();
+    const shoppingProducts: ShoppingProduct[] = [
+      {
+        id: products[0].id,
+        customName: 'product1',
+        customId: faker.string.uuid(),
+        originalValue: 50,
+        currency: 'USD',
+      },
+      {
+        id: products[1].id,
+        customName: 'product2',
+        customId: faker.string.uuid(),
+        originalValue: 100,
+        currency: 'EUR',
+      },
+      {
+        id: products[1].id,
+        customName: 'product3',
+        customId: faker.string.uuid(),
+        originalValue: 100,
+        currency: 'EUR',
+      },
+      {
+        customName: 'cproduct1',
+        customId: faker.string.uuid(),
+        originalValue: 10,
+        currency: 'USD',
+      },
+      {
+        customName: 'cproduct2',
+        customId: faker.string.uuid(),
+        originalValue: 20,
+        currency: 'EUR',
+      },
+      {
+        customName: 'cproduct3',
+        customId: faker.string.uuid(),
+        originalValue: 30,
+        currency: 'EUR',
+      },
+    ];
+
+    const { body, status } = await simulateEndpoint({
+      products,
+      shoppingProducts,
+    });
+    expect(status).toBe(200);
+
+    expect(body.valueProducts.length).toBe(3);
+    expect(body.customProducts.length).toBe(3);
+
+    expect(body).toMatchObject({
+      total: 300,
+      totalCustomDuty: 0,
+      totalVat: 0,
+      totalTaxes: 0,
+      franchiseAmount: 300,
+      canCalculateTaxes: true,
+    });
+  });
+  it('should simulate declaration - over franchise', async () => {
     const products = await prepareContext();
     const shoppingProducts: ShoppingProduct[] = [
       {
@@ -171,39 +233,16 @@ describe('test simulator API', () => {
     });
     expect(status).toBe(200);
 
-    expect(body.valueProducts.length).toBe(3);
-    expect(body.customProducts.length).toBe(3);
+    expect(body.valueProducts.length).toBe(0);
+    expect(body.customProducts.length).toBe(6);
 
     expect(body).toMatchObject({
-      total: 841.67,
-      totalCustomDuty: 64.17,
-      totalVat: 121.17,
-      totalTaxes: 185.34,
+      total: 900,
+      totalCustomDuty: 0,
+      totalVat: 0,
+      totalTaxes: 0,
       franchiseAmount: 300,
-    });
-
-    expect(body.valueProducts[1]).toMatchObject({
-      unitPrice: 41.67,
-      originalPrice: 50,
-      originalCurrency: 'USD',
-      rateCurrency: 1.2,
-      customDuty: 10,
-      vat: 20,
-      unitCustomDuty: 4.17,
-      unitVat: 9.17,
-      unitTaxes: 13.34,
-    });
-
-    expect(body.customProducts[0]).toMatchObject({
-      unitPrice: 8.33,
-      originalPrice: 10,
-      originalCurrency: 'USD',
-      rateCurrency: 1.2,
-      customDuty: 0,
-      vat: 0,
-      unitCustomDuty: 0,
-      unitVat: 0,
-      unitTaxes: 0,
+      canCalculateTaxes: false,
     });
   });
   test.each([
