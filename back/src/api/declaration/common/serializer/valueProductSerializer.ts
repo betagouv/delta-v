@@ -1,7 +1,10 @@
-import { ProductDeclaration } from '../../../../entities/declaration.entity';
+import { ProductDeclaration, ProductStatus } from '../../../../entities/declaration.entity';
+import { AmountProduct } from '../../../common/services/amountProducts/globalAmount.service';
 
 export interface SerializedValueProduct {
   id?: string;
+  status: ProductStatus;
+  amountProduct?: AmountProduct;
   name?: string;
   customId: string;
   customName?: string;
@@ -20,6 +23,8 @@ export const serializeValueProduct = (
   productTaxes: ProductDeclaration,
 ): SerializedValueProduct => ({
   id: productTaxes.id,
+  status: productTaxes.status,
+  amountProduct: productTaxes.amountProduct,
   name: productTaxes.name,
   customId: productTaxes.customId,
   customName: productTaxes.customName,

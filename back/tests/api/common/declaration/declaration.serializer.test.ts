@@ -28,7 +28,6 @@ describe('Declaration serializer', () => {
           unitTaxes: oneDeclaration.products[0].calculatedTaxes,
         },
       ],
-      history: oneDeclaration.history,
       versionDate: oneDeclaration.versionDate,
       authorType: oneDeclaration.authorType,
       authorEmail: oneDeclaration.authorEmail,

@@ -1,4 +1,4 @@
-import { ProductDeclaration } from '../../../../entities/declaration.entity';
+import { ProductDeclaration, ProductStatus } from '../../../../entities/declaration.entity';
 import { ProductTaxesInterface } from '../../../../entities/productTaxes.entity';
 import { AmountGroup } from '../../../common/services/amountProducts/globalAmount.service';
 import { Declaration } from '../../../common/services/declaration';
@@ -6,8 +6,10 @@ import { DetailedShoppingProduct } from '../../../common/services/detailedShoppi
 
 const getProductDeclarationFromProductTaxes = (
   productTaxes: ProductTaxesInterface,
+  status: ProductStatus,
 ): ProductDeclaration => ({
   id: productTaxes.id,
+  status,
   customId: productTaxes.customId,
   name: productTaxes.name,
   value: productTaxes.unitPrice,
@@ -24,8 +26,11 @@ const getProductDeclarationFromProductTaxes = (
 
 const getProductsDeclarationFromDetailedShoppingProduct = (
   detailedShoppingProduct: DetailedShoppingProduct,
+  status: ProductStatus,
 ): ProductDeclaration => ({
   id: detailedShoppingProduct.product?.id,
+  status,
+  amountProduct: detailedShoppingProduct.product?.amountProduct,
   customId: detailedShoppingProduct.shoppingProduct.customId,
   customName: detailedShoppingProduct.shoppingProduct.customName,
   customDuty: 0,
@@ -41,7 +46,12 @@ const getProductsDeclarationFromDetailedShoppingProduct = (
 });
 
 const getProductsDeclarationsFromAmountGroup = (amountGroup: AmountGroup): ProductDeclaration[] =>
-  amountGroup.detailedShoppingProducts.map(getProductsDeclarationFromDetailedShoppingProduct);
+  amountGroup.detailedShoppingProducts.map((detailedShoppingProduct) =>
+    getProductsDeclarationFromDetailedShoppingProduct(
+      detailedShoppingProduct,
+      ProductStatus.AMOUNT_PRODUCT,
+    ),
+  );
 
 const getProductDeclarationFromAmountGroups = (amountGroups: AmountGroup[]): ProductDeclaration[] =>
   amountGroups.reduce(
@@ -60,8 +70,12 @@ export const getProductsDeclarationFromDeclaration = (
   const amountProducts = declaration.getAmountProductsGrouped();
 
   const products: ProductDeclaration[] = [
-    ...valueProducts.map(getProductDeclarationFromProductTaxes),
-    ...customProducts.map(getProductDeclarationFromProductTaxes),
+    ...valueProducts.map((valueProduct) =>
+      getProductDeclarationFromProductTaxes(valueProduct, ProductStatus.VALUE_PRODUCT),
+    ),
+    ...customProducts.map((customProducts) =>
+      getProductDeclarationFromProductTaxes(customProducts, ProductStatus.CUSTOM_PRODUCT),
+    ),
     ...getProductDeclarationFromAmountGroups(amountProducts),
   ];
 

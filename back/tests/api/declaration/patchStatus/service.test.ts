@@ -2,7 +2,7 @@
 import { faker } from '@faker-js/faker';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 import { service } from '../../../../src/api/declaration/patchStatus/service';
-import { DeclarationStatus } from '../../../../src/entities/declaration.entity';
+import { DeclarationStatus, ProductStatus } from '../../../../src/entities/declaration.entity';
 import { declarationRepositoryMock } from '../../../mocks/declaration.repository.mock';
 import { productRepositoryMock } from '../../../mocks/product.repository.mock';
 import { prepareContext } from './prepareContext';
@@ -90,6 +90,7 @@ describe('test patchStatus service', () => {
     const notManagedProduct = faker.datatype.boolean();
     const declarationProduct = {
       id: notManagedProduct ? faker.string.uuid() : undefined,
+      status: notManagedProduct ? ProductStatus.CUSTOM_PRODUCT : ProductStatus.VALUE_PRODUCT,
       name: faker.commerce.productName(),
       value: faker.number.float(),
       calculatedCustomDuty: 0,
@@ -130,6 +131,7 @@ describe('test patchStatus service', () => {
     const notManagedProduct = faker.datatype.boolean();
     const declarationProduct = {
       id: undefined,
+      status: notManagedProduct ? ProductStatus.CUSTOM_PRODUCT : ProductStatus.VALUE_PRODUCT,
       name: faker.commerce.productName(),
       value: faker.number.float(),
       calculatedCustomDuty: 0,
@@ -177,6 +179,7 @@ describe('test patchStatus service', () => {
       const notManagedProduct = faker.datatype.boolean();
       const declarationProduct = {
         id: undefined,
+        status: notManagedProduct ? ProductStatus.CUSTOM_PRODUCT : ProductStatus.VALUE_PRODUCT,
         name: faker.commerce.productName(),
         value: faker.number.float(),
         calculatedCustomDuty: 0,

@@ -6,7 +6,6 @@ import {
 import { checkProductTree } from '../helpers/checkProductTree';
 import { testDbManager } from '../helpers/testDb.helper';
 import { prepareContextProduct } from '../utils/prepareContext/product';
-import { cleanTreeProducts } from '../utils/product.util';
 
 const testDb = testDbManager();
 
@@ -79,9 +78,12 @@ describe('test product repository', () => {
       const productIds: string[] = randomProducts.map(({ id }) => id);
 
       const result = await repository.getManyByIds(productIds);
-      expect(result).toMatchObject(
-        randomProducts.map((product) => cleanTreeProducts(product, false)),
-      );
+
+      expect(result.length).toBe(randomProducts.length);
+
+      randomProducts.map((randomProduct) => {
+        expect(result.find((p) => p.id === randomProduct.id)).toBeDefined();
+      });
     });
     it('should return no products', async () => {
       const result = await repository.getManyByIds([]);

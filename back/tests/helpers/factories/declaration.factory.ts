@@ -12,6 +12,7 @@ import {
 } from '../../../src/entities/declaration.entity';
 import { DetailedShoppingProductFactory } from './detailedShoppingProduct.factory';
 import { ShoppingProductFactory } from './shoppingProduct.factory';
+import { productDeclarationFactory } from './productDeclaration.factory';
 
 interface DeclarationFactoryOptions {
   travelerData?: Partial<TravelerData>;
@@ -41,6 +42,7 @@ export const DeclarationFactory = ({
 const buildSchema = (): DeclarationEntityInterface => {
   return {
     id: faker.string.uuid(),
+    canCalculateTaxes: faker.datatype.boolean(),
     publicId: faker.string.nanoid(10),
     versionDate: faker.date.past(),
     authorEmail: faker.internet.email(),
@@ -63,23 +65,7 @@ const buildSchema = (): DeclarationEntityInterface => {
     franchiseAmount: faker.number.float({ precision: 0.01 }),
     totalAmount: faker.number.float({ precision: 0.01 }),
     authorType: AuthorType.user,
-    products: [
-      {
-        id: faker.string.uuid(),
-        name: faker.commerce.product(),
-        customId: faker.string.uuid(),
-        customName: faker.commerce.product(),
-        originalValue: faker.number.float({ precision: 0.01 }),
-        currency: faker.finance.currencyCode(),
-        rateCurrency: faker.number.float({ precision: 0.01 }),
-        calculatedCustomDuty: faker.number.float({ precision: 0.01 }),
-        calculatedVat: faker.number.float({ precision: 0.01 }),
-        calculatedTaxes: faker.number.float({ precision: 0.01 }),
-        customDuty: faker.number.float({ precision: 0.01 }),
-        value: faker.number.float({ precision: 0.01 }),
-        vat: faker.number.float({ precision: 0.01 }),
-      },
-    ],
+    products: [productDeclarationFactory({})],
   };
 };
 

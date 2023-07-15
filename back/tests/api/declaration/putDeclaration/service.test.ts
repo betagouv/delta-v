@@ -72,6 +72,7 @@ describe('test put declaration service', () => {
 
     const expectedDeclaration: DeclarationEntityInterface = {
       authorEmail,
+      canCalculateTaxes: true,
       authorType: declarationData.authorType,
       authorId,
       declarantAddressStreet: declarationData.declarantAddressStreet,

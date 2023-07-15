@@ -2,7 +2,6 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import {
   DeclarationEntityInterface,
   DeclarationStatus,
-  DeclarationVersion,
 } from '../../../../entities/declaration.entity';
 import { Product, ProductDisplayTypes, ProductType } from '../../../../entities/product.entity';
 import { sortProducts } from '../../../../utils/product.util';
@@ -53,7 +52,6 @@ export interface SerializedDeclaration {
   id: string;
   publicId: string;
   products: SerializedValueProduct[];
-  history?: DeclarationVersion[];
   versionDate: Date;
   authorType: AuthorType;
   authorEmail: string;
@@ -75,6 +73,7 @@ export interface SerializedDeclaration {
   totalTaxesAmount: number;
   franchiseAmount: number;
   totalAmount: number;
+  canCalculateTaxes: boolean;
 }
 
 export const declarationSerializer = (
@@ -83,7 +82,6 @@ export const declarationSerializer = (
   id: declaration.id,
   publicId: declaration.publicId,
   products: declaration.products.map(serializeValueProduct),
-  history: declaration.history,
   versionDate: declaration.versionDate,
   authorType: declaration.authorType,
   authorEmail: declaration.authorEmail,
@@ -105,4 +103,5 @@ export const declarationSerializer = (
   totalTaxesAmount: declaration.totalTaxesAmount,
   franchiseAmount: declaration.franchiseAmount,
   totalAmount: declaration.totalAmount,
+  canCalculateTaxes: declaration.canCalculateTaxes,
 });

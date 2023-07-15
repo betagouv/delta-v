@@ -174,6 +174,7 @@ describe('test put declaration API', () => {
     expect(dbDeclarations.length).toBe(1);
     expect(dbDeclarations[0]).toMatchObject({
       id: declarationId,
+      canCalculateTaxes: true,
       totalVatAmount: 121.17,
       totalCustomDutyAmount: 64.17,
       totalTaxesAmount: 185.34,
@@ -187,7 +188,7 @@ describe('test put declaration API', () => {
       authorId: user.id,
     });
   });
-  it('should put declaration', async () => {
+  it('should put declaration - with custom product and under franchise', async () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
     const products = await prepareContext();
     const declarationId = faker.string.uuid();
@@ -255,6 +256,7 @@ describe('test put declaration API', () => {
     expect(dbDeclarations.length).toBe(1);
     expect(dbDeclarations[0]).toMatchObject({
       id: declarationId,
+      canCalculateTaxes: false,
       totalVatAmount: 0,
       totalCustomDutyAmount: 0,
       totalTaxesAmount: 0,

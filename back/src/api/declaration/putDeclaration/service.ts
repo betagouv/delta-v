@@ -70,6 +70,7 @@ export const service = async ({
 
   const declarationEntity: DeclarationEntityInterface = {
     id: declarationId,
+    canCalculateTaxes: declaration.canCalculateTaxes(),
     publicId,
     products: getProductsDeclarationFromDeclaration(declaration),
     authorEmail,

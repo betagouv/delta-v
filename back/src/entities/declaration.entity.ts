@@ -2,6 +2,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { Column, Entity, PrimaryColumn, Unique } from 'typeorm';
 import { AuthorType } from '../api/common/enums/author.enum';
 import { MeansOfTransport } from '../api/common/enums/meansOfTransport.enum';
+import { AmountProduct } from '../api/common/services/amountProducts/globalAmount.service';
 
 export enum DeclarationStatus {
   DRAFT = 'draft',
@@ -12,12 +13,19 @@ export enum DeclarationStatus {
   REFUSED_LITIGATION = 'refused-litigation',
 }
 
+export enum ProductStatus {
+  VALUE_PRODUCT = 'value-product',
+  AMOUNT_PRODUCT = 'amount-product',
+  CUSTOM_PRODUCT = 'custom-product',
+}
+
 export interface VersionData {
   versionDate: Date;
   authorType: AuthorType;
   authorEmail: string;
   authorId?: string;
   status: DeclarationStatus;
+  canCalculateTaxes: boolean;
 }
 
 export interface DeclarantData {
@@ -50,6 +58,8 @@ export interface DeclarationVersion extends VersionData {
 
 export interface ProductDeclaration {
   id?: string;
+  status: ProductStatus;
+  amountProduct?: AmountProduct;
   customId: string;
   name?: string;
   customName?: string;
@@ -111,6 +121,9 @@ export class DeclarationEntity implements DeclarationEntityInterface {
     enum: DeclarationStatus,
   })
   status: DeclarationStatus;
+
+  @Column({ type: 'boolean', default: true })
+  canCalculateTaxes: boolean;
 
   @Column({ type: 'varchar' })
   declarantFirstName: string;

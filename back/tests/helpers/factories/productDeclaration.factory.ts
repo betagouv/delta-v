@@ -1,10 +1,15 @@
 import { faker } from '@faker-js/faker';
-import { ProductDeclaration } from '../../../src/entities/declaration.entity';
+import { ProductDeclaration, ProductStatus } from '../../../src/entities/declaration.entity';
 import { buildFactory } from '../../../src/core/testHelpers';
 
 const buildSchema = (): ProductDeclaration => {
   return {
     id: faker.string.uuid(),
+    status: faker.helpers.arrayElement([
+      ProductStatus.VALUE_PRODUCT,
+      ProductStatus.AMOUNT_PRODUCT,
+      ProductStatus.CUSTOM_PRODUCT,
+    ]),
     name: faker.commerce.product(),
     customId: faker.string.uuid(),
     customName: faker.commerce.product(),

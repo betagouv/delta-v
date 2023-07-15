@@ -87,9 +87,11 @@ export class Declaration {
   }
 
   private getTotalProducts(): number {
-    return this.detailedShoppingProducts.reduce((total, shoppingProduct) => {
-      return currency(shoppingProduct.getDefaultCurrencyValue()).add(total).value;
-    }, 0);
+    return this.detailedShoppingProducts
+      .filter((detailedShoppingProduct) => !detailedShoppingProduct.isAmountProduct())
+      .reduce((total, shoppingProduct) => {
+        return currency(shoppingProduct.getDefaultCurrencyValue()).add(total).value;
+      }, 0);
   }
 
   private getDefaultProductTaxes(): ProductTaxesInterface[] {
@@ -114,9 +116,11 @@ export class Declaration {
 
   private getUncompletedProductTaxes(): ProductTaxesInterface[] {
     if (!this.canCalculateTaxes()) {
-      return this.detailedShoppingProducts.map((detailedShoppingProduct) => {
-        return new ProductTaxes({}).setFromDetailedShoppingProduct(detailedShoppingProduct);
-      });
+      return this.detailedShoppingProducts
+        .filter((detailedShoppingProduct) => !detailedShoppingProduct.isAmountProduct())
+        .map((detailedShoppingProduct) => {
+          return new ProductTaxes({}).setFromDetailedShoppingProduct(detailedShoppingProduct);
+        });
     }
     return this.detailedShoppingProducts
       .filter((detailedShoppingProduct) => detailedShoppingProduct.isUncompletedProduct())
