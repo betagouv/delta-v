@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 import ReactToPrint from 'react-to-print';
 
-import { SummarySimulator } from '../summarySimulator';
+import { SummarySimulator } from '../SummarySimulator';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { SimulatorRequest, SimulatorResponse } from '@/stores/simulator/appState.store';
 

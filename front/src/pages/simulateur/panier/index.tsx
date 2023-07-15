@@ -26,22 +26,18 @@ import { Main } from '@/templates/Main';
 const Panier = () => {
   const router = useRouter();
 
-  const {
-    simulatorRequest,
-    valueProducts: detailedProducts,
-    customProducts,
-    amountProducts,
-    removeProduct,
-  } = useStore(
+  const { simulatorRequest, simulatorResponse, removeProduct } = useStore(
     (state) => ({
       simulatorRequest: state.simulator.appState.simulatorRequest,
-      valueProducts: state.simulator.appState.simulatorResponse?.valueProducts ?? [],
-      amountProducts: state.simulator.appState.simulatorResponse?.amountProducts ?? [],
-      customProducts: state.simulator.appState.simulatorResponse?.customProducts ?? [],
+      simulatorResponse: state.simulator.appState.simulatorResponse,
       removeProduct: state.removeProduct,
     }),
     shallow,
   );
+  const detailedProducts = simulatorResponse?.valueProducts || [];
+  const customProducts = simulatorResponse?.customProducts || [];
+  const amountProducts = simulatorResponse?.amountProducts || [];
+
   const [openActionModal, setOpenActionModal] = useState(false);
   const idToDelete = useRef('');
 
@@ -95,7 +91,7 @@ const Panier = () => {
           {customProducts.map((detailedProduct) => (
             <div key={detailedProduct.customId}>
               <ValueProductBasket
-                customProduct
+                customProduct={!simulatorResponse?.canCalculateTaxes}
                 detailedProduct={detailedProduct}
                 onDeleteProduct={() => {
                   idToDelete.current = detailedProduct.customId;

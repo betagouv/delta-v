@@ -29,9 +29,7 @@ const Panier = () => {
 
   const {
     declarationRequest,
-    valueProducts: detailedProducts,
-    customProducts,
-    amountProducts,
+    declarationResponse,
     declarationId,
     removeProductCartDeclaration,
     resetAllRequests,
@@ -39,14 +37,16 @@ const Panier = () => {
     (state) => ({
       declarationRequest: state.declaration.appState.declarationRequest,
       declarationId: state.declaration.appState.declarationRequest.declarationId,
-      valueProducts: state.declaration.appState.declarationResponse?.valueProducts ?? [],
-      amountProducts: state.declaration.appState.declarationResponse?.amountProducts ?? [],
-      customProducts: state.declaration.appState.declarationResponse?.customProducts ?? [],
+      declarationResponse: state.declaration.appState.declarationResponse,
       removeProductCartDeclaration: state.removeProductCartDeclaration,
       resetAllRequests: state.resetAllRequests,
     }),
     shallow,
   );
+
+  const detailedProducts = declarationResponse?.valueProducts || [];
+  const customProducts = declarationResponse?.customProducts || [];
+  const amountProducts = declarationResponse?.amountProducts || [];
 
   const [openActionModal, setOpenActionModal] = useState(false);
   const idToDelete = useRef('');
@@ -120,7 +120,7 @@ const Panier = () => {
           {customProducts.map((detailedProduct) => (
             <div key={detailedProduct.customId}>
               <ValueProductBasket
-                customProduct
+                customProduct={!declarationResponse?.canCalculateTaxes}
                 detailedProduct={detailedProduct}
                 onDeleteProduct={() => {
                   idToDelete.current = detailedProduct.customId;

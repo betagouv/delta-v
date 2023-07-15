@@ -77,6 +77,7 @@ export interface DeclarationResponse {
   declarantMeanOfTransport: MeansOfTransport;
   franchiseAmount: number;
   id: string;
+  canCalculateTaxes: boolean;
   publicId: string;
   status: DeclarationStatus;
   totalAmount: number;

@@ -134,27 +134,25 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
           </Typography>
         </div>
       )}
-      {hasValueProducts && (
-        <>
-          <div>
-            {simulatorResponse?.valueProducts?.map((product, index) => (
-              <div key={index}>
-                <SummaryValueProduct product={product} hideDetails={hideDetails} />
-              </div>
-            ))}
+      <div>
+        {simulatorResponse?.valueProducts?.map((product, index) => (
+          <div key={index}>
+            <SummaryValueProduct product={product} hideDetails={hideDetails} />
           </div>
-        </>
-      )}
-      {hasCustomProducts && (
-        <div>
-          {simulatorResponse?.customProducts?.map((product, index) => (
-            <div key={index}>
+        ))}
+        {simulatorResponse?.customProducts?.map((product, index) => (
+          <div key={index}>
+            {simulatorResponse.canCalculateTaxes ? (
+              <SummaryValueProduct product={product} hideDetails={hideDetails} />
+            ) : (
               <SummaryCustomProduct product={product} hideDetails={hideDetails} />
-            </div>
-          ))}
-        </div>
+            )}
+          </div>
+        ))}
+      </div>
+      {(hasValueProducts || hasCustomProducts) && (
+        <div className="-mx-4 my-4 border-b-2 border-dashed" />
       )}
-      <div className="-mx-4 my-4 border-b-2 border-dashed" />
 
       <div className="mt-4 flex flex-row">
         <div className="flex-1" />

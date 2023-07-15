@@ -119,7 +119,7 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
   searchProducts: (searchValue: string) => {
     const products = get().products.appState.flattenProducts;
     return advancedSearch({
-      minRankAllowed: 2,
+      minRankAllowed: 0.15,
       searchValue,
       searchList: products,
       searchKey: ['relatedWords'],

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -18,15 +18,10 @@ const DeclarationSearch = () => {
   const router = useRouter();
   const query = router.query as { id: string };
   const id = isUUIDRegex(query.id) ? query.id : '';
-  const [validateDeclarationResponse, setValidateDeclarationResponse] = useState<any>();
 
-  const getDeclarationMutation = useDeclarationMutation({
-    onSuccess: (data) => {
-      setValidateDeclarationResponse(data);
-    },
-  });
+  const getDeclarationMutation = useDeclarationMutation({});
 
-  const { isLoading } = getDeclarationMutation;
+  const { isLoading, data: validateDeclarationResponse } = getDeclarationMutation;
 
   useEffect(() => {
     getDeclarationMutation.mutate(id);

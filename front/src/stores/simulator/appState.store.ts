@@ -12,6 +12,12 @@ export enum MeansOfTransport {
   OTHER = 'other',
 }
 
+export enum ProductStatus {
+  VALUE_PRODUCT = 'value-product',
+  AMOUNT_PRODUCT = 'amount-product',
+  CUSTOM_PRODUCT = 'custom-product',
+}
+
 export interface ShoppingProduct {
   id: string;
   productId?: string;
@@ -24,6 +30,8 @@ export interface ShoppingProduct {
 
 export interface DetailedProduct {
   id: string;
+  status: ProductStatus;
+  amountProduct?: AmountProduct;
   name: string;
   customId: string;
   customName?: string;

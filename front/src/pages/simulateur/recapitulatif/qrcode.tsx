@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import shallow from 'zustand/shallow';
 
-import { SummarySimulator } from '@/components/business/summarySimulator';
+import { SummarySimulator } from '@/components/business/SummarySimulator';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';

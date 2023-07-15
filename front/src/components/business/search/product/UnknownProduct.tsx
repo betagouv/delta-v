@@ -28,7 +28,7 @@ export const UnknownProduct: React.FC<UnknownProductProps> = ({
 
       <div className=" flex w-full flex-col items-center">
         <div className="flex w-60 flex-col gap-4">
-          <Link to={`/simulateur/produits/ajout?searchValue=${searchValue}`}>
+          <Link to={`./ajout?searchValue=${searchValue}`}>
             <Button fullWidth>Enregistrer le produit</Button>
           </Link>
           <Link to="/simulateur/produits">

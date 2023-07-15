@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { ModalDeclareSimulation } from '@/components/autonomous/ModalDeclareSimulation';
-import { SummarySimulator } from '@/components/business/summarySimulator';
+import { SummarySimulator } from '@/components/business/SummarySimulator';
 import { Button } from '@/components/common/Button';
 import { Link } from '@/components/common/Link';
 import { TextLink } from '@/components/common/TextLink';
