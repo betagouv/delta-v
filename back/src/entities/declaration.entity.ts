@@ -11,6 +11,7 @@ export enum DeclarationStatus {
   PAID = 'paid',
   REFUSED_ERROR = 'refused-error',
   REFUSED_LITIGATION = 'refused-litigation',
+  SWITCH_PAPER = 'switch-paper',
 }
 
 export enum ProductStatus {

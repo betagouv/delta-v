@@ -7,12 +7,14 @@ const ALLOWED_STATUS_CHANGES_FROM_DRAFT = [
   DeclarationStatus.PAID,
   DeclarationStatus.REFUSED_ERROR,
   DeclarationStatus.REFUSED_LITIGATION,
+  DeclarationStatus.SWITCH_PAPER,
 ];
 const ALLOWED_STATUS_CHANGES_FROM_SUBMITTED = [
   DeclarationStatus.VALIDATED,
   DeclarationStatus.PAID,
   DeclarationStatus.REFUSED_ERROR,
   DeclarationStatus.REFUSED_LITIGATION,
+  DeclarationStatus.SWITCH_PAPER,
 ];
 
 const ALLOWED_STATUS_CHANGES_FROM_VALIDATED = [DeclarationStatus.PAID];
@@ -20,6 +22,7 @@ const ALLOWED_STATUS_CHANGES_FROM_VALIDATED = [DeclarationStatus.PAID];
 const ALLOWED_STATUS_CHANGES_FROM_PAID: DeclarationStatus[] = [];
 const ALLOWED_STATUS_CHANGES_FROM_REFUSED_ERROR: DeclarationStatus[] = [];
 const ALLOWED_STATUS_CHANGES_FROM_REFUSED_LITIGATION: DeclarationStatus[] = [];
+const ALLOWED_STATUS_CHANGES_FROM_SWITCH_PAPER: DeclarationStatus[] = [];
 
 interface CheckStatusChangeOptions {
   initialStatus: DeclarationStatus;
@@ -45,6 +48,9 @@ export const checkStatusChange = ({ initialStatus, newStatus }: CheckStatusChang
       break;
     case DeclarationStatus.REFUSED_LITIGATION:
       checkForbiddenStatusChange(newStatus, ALLOWED_STATUS_CHANGES_FROM_REFUSED_LITIGATION);
+      break;
+    case DeclarationStatus.SWITCH_PAPER:
+      checkForbiddenStatusChange(newStatus, ALLOWED_STATUS_CHANGES_FROM_SWITCH_PAPER);
       break;
     default:
       throw DeclarationStatusChangeForbiddenError();

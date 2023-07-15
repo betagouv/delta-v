@@ -24,13 +24,8 @@ export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
   href,
 }: TitleHeaderProps) => {
   return (
-    <div
-      className={cs(
-        'grid grid-cols-[40px_1fr_40px] w-full flex-row items-center h-14',
-        bgColorClass,
-      )}
-    >
-      <div className="mx-auto">
+    <div className={cs('grid grid-cols-[40px_1fr_40px] w-full flex-row h-14 mt-4', bgColorClass)}>
+      <div className="mx-auto mt-1.5">
         <Link back={!href} href={href}>
           <Icon name="chevron-left" size="base" />
         </Link>

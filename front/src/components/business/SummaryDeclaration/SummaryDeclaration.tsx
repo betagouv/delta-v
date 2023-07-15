@@ -195,15 +195,6 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
       <div className="-mx-4 my-4 border-b-2 border-dashed" />
       {(declarationResponse.products?.length ?? 0) > 0 && (
         <>
-          <div className="mt-4 flex flex-row">
-            <Typography color="light-gray" size="text-2xs">
-              Marchandises
-            </Typography>
-            <div className="flex-1" />
-            <Typography color="light-gray" size="text-2xs">
-              Droits et taxes
-            </Typography>
-          </div>
           <div>
             {hasAmountProduct && (
               <>

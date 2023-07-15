@@ -8,6 +8,7 @@ import {
 } from '@/api/hooks/useAPIDeclaration';
 import { ModalPaidDeclaration } from '@/components/autonomous/ModalPaidDeclaration';
 import { ModalRejectedDeclaration } from '@/components/autonomous/ModalRejectedDeclaration';
+import { ModalSwitchPaperDeclaration } from '@/components/autonomous/ModalSwitchPaperDeclaration';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { ModalValidateDeclaration } from '@/components/autonomous/ModalValidateDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -30,22 +31,19 @@ const DeclarationSearch = () => {
   const [openValidateDeclarationModal, setOpenValidateDeclarationModal] = useState(false);
   const [openPayDeclarationModal, setOpenPayDeclarationModal] = useState(false);
   const [openRejectDeclarationModal, setOpenRejectDeclarationModal] = useState(false);
-  const [validateDeclarationResponse, setValidateDeclarationResponse] = useState<any>();
+  const [openSwitchPaperDeclarationModal, setOpenSwitchPaperDeclarationModal] = useState(false);
 
   const onClose = () => {
     setOpenDownModal(false);
     setOpenValidateDeclarationModal(false);
     setOpenPayDeclarationModal(false);
     setOpenRejectDeclarationModal(false);
+    setOpenSwitchPaperDeclarationModal(false);
   };
 
-  const getDeclarationMutation = useDeclarationMutation({
-    onSuccess: (data) => {
-      setValidateDeclarationResponse(data);
-    },
-  });
+  const getDeclarationMutation = useDeclarationMutation({});
 
-  const { isLoading } = getDeclarationMutation;
+  const { isLoading, data: declarationResponse } = getDeclarationMutation;
 
   useEffect(() => {
     getDeclarationMutation.mutate(id);
@@ -59,39 +57,47 @@ const DeclarationSearch = () => {
   });
 
   const onValidateDeclaration = () => {
-    if (!validateDeclarationResponse) return;
+    if (!declarationResponse) return;
     changeStatusOfDeclarationMutation.mutate({
-      declarationId: validateDeclarationResponse.id,
+      declarationId: declarationResponse.id,
       status: DeclarationStatus.VALIDATED,
     });
   };
 
   const onPayDeclaration = () => {
-    if (!validateDeclarationResponse) return;
+    if (!declarationResponse) return;
     changeStatusOfDeclarationMutation.mutate({
-      declarationId: validateDeclarationResponse.id,
+      declarationId: declarationResponse.id,
       status: DeclarationStatus.PAID,
     });
   };
 
   const onRejectForErrorDeclaration = () => {
-    if (!validateDeclarationResponse) return;
+    if (!declarationResponse) return;
     changeStatusOfDeclarationMutation.mutate({
-      declarationId: validateDeclarationResponse.id,
+      declarationId: declarationResponse.id,
       status: DeclarationStatus.ERROR,
     });
   };
 
   const onRejectForLitigationDeclaration = () => {
-    if (!validateDeclarationResponse) return;
+    if (!declarationResponse) return;
     changeStatusOfDeclarationMutation.mutate({
-      declarationId: validateDeclarationResponse.id,
+      declarationId: declarationResponse.id,
       status: DeclarationStatus.LITIGATION,
     });
   };
 
-  const renderValidateDeclarationModal = (status: DeclarationStatus) => {
-    switch (status) {
+  const onSwitchPaperDeclaration = () => {
+    if (!declarationResponse) return;
+    changeStatusOfDeclarationMutation.mutate({
+      declarationId: declarationResponse.id,
+      status: DeclarationStatus.SWITCH_PAPER,
+    });
+  };
+
+  const renderValidateDeclarationModal = () => {
+    switch (declarationResponse?.status) {
       case DeclarationStatus.VALIDATED:
         return (
           <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
@@ -108,12 +114,17 @@ const DeclarationSearch = () => {
       case DeclarationStatus.PAID:
       case DeclarationStatus.ERROR:
       case DeclarationStatus.LITIGATION:
+      case DeclarationStatus.SWITCH_PAPER:
         return <></>;
       default:
         return (
           <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
             <div className="flex flex-col gap-2">
-              <Button fullWidth onClick={() => setOpenValidateDeclarationModal(true)}>
+              <Button
+                fullWidth
+                onClick={() => setOpenValidateDeclarationModal(true)}
+                disabled={declarationResponse?.canCalculateTaxes === false}
+              >
                 Valider la déclaration
               </Button>
               <Button
@@ -122,6 +133,13 @@ const DeclarationSearch = () => {
                 onClick={() => setOpenRejectDeclarationModal(true)}
               >
                 Déclaration non conforme
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={() => setOpenSwitchPaperDeclarationModal(true)}
+              >
+                Passage en déclaration papier
               </Button>
             </div>
           </div>
@@ -140,29 +158,29 @@ const DeclarationSearch = () => {
         }
         withTitle
       >
-        {!isLoading && validateDeclarationResponse && (
+        {!isLoading && declarationResponse && (
           <div className="flex flex-1 flex-col">
             <div className="flex w-full flex-col gap-4 border-b border-white px-4 pb-7 pt-0">
               <DeclarationStatusDetails
-                status={validateDeclarationResponse.status}
-                declarationId={validateDeclarationResponse.publicId}
-                date={validateDeclarationResponse.versionDate}
+                status={declarationResponse.status}
+                declarationId={declarationResponse.publicId}
+                date={declarationResponse.versionDate}
               />
             </div>
             <div className="flex w-full flex-col gap-4 border-b-4 border-white">
               <DeclarationContactDetails
-                address={validateDeclarationResponse.declarantAddressStreet}
-                city={validateDeclarationResponse.declarantAddressCity}
-                postalCode={validateDeclarationResponse.declarantAddressPostalCode}
-                age={validateDeclarationResponse.declarantAge}
-                firstName={validateDeclarationResponse.declarantFirstName}
-                lastName={validateDeclarationResponse.declarantLastName}
-                email={validateDeclarationResponse.declarantEmail}
-                phoneNumber={validateDeclarationResponse.declarantPhoneNumber}
+                address={declarationResponse.declarantAddressStreet}
+                city={declarationResponse.declarantAddressCity}
+                postalCode={declarationResponse.declarantAddressPostalCode}
+                age={declarationResponse.declarantAge}
+                firstName={declarationResponse.declarantFirstName}
+                lastName={declarationResponse.declarantLastName}
+                email={declarationResponse.declarantEmail}
+                phoneNumber={declarationResponse.declarantPhoneNumber}
               />
             </div>
             <div className="py-7 bg-secondary-100 flex flex-col justify-center">
-              <TaxTable declarationResponse={validateDeclarationResponse} />
+              <TaxTable declarationResponse={declarationResponse} />
               <button
                 onClick={() => setOpenDownModal(true)}
                 className="bg-primary-400 px-8 py-3 text-white rounded-full self-center"
@@ -170,27 +188,27 @@ const DeclarationSearch = () => {
                 <Typography color="white">Ajouter un commentaire</Typography>
               </button>
             </div>
-            {renderValidateDeclarationModal(validateDeclarationResponse.status)}
+            {renderValidateDeclarationModal()}
             <ModalUnderConstruction open={openDownModal} onClose={() => setOpenDownModal(false)} />
           </div>
         )}
       </MainAgent>
 
-      {validateDeclarationResponse && (
+      {declarationResponse && (
         <>
           <ModalValidateDeclaration
             open={openValidateDeclarationModal}
             onClose={() => setOpenValidateDeclarationModal(false)}
             isLoading={false}
             onValidate={onValidateDeclaration}
-            declarationId={validateDeclarationResponse.publicId}
+            declarationId={declarationResponse.publicId}
           />
           <ModalPaidDeclaration
             open={openPayDeclarationModal}
             onClose={() => setOpenPayDeclarationModal(false)}
             isLoading={false}
             onPaid={onPayDeclaration}
-            declarationId={validateDeclarationResponse.publicId}
+            declarationId={declarationResponse.publicId}
           />
         </>
       )}
@@ -200,6 +218,12 @@ const DeclarationSearch = () => {
         isLoading={false}
         onRejectedForError={onRejectForErrorDeclaration}
         onRejectedForLitigation={onRejectForLitigationDeclaration}
+      />
+      <ModalSwitchPaperDeclaration
+        open={openSwitchPaperDeclarationModal}
+        onClose={() => setOpenSwitchPaperDeclarationModal(false)}
+        isLoading={false}
+        onSwitchPaperDeclaration={onSwitchPaperDeclaration}
       />
     </AgentRoute>
   );

@@ -5,6 +5,7 @@ export enum DeclarationStatus {
   PAID = 'paid',
   ERROR = 'refused-error',
   LITIGATION = 'refused-litigation',
+  SWITCH_PAPER = 'switch-paper',
 }
 
 export const getDeclarationStatusLabel = (status: DeclarationStatus): string => {
@@ -21,6 +22,8 @@ export const getDeclarationStatusLabel = (status: DeclarationStatus): string => 
       return 'Non conforme pour erreur';
     case DeclarationStatus.LITIGATION:
       return 'Non conforme pour contentieux';
+    case DeclarationStatus.SWITCH_PAPER:
+      return 'Déclaration papier';
     default:
       return '';
   }
@@ -39,6 +42,8 @@ export const getDeclarationStatusColor = (status: DeclarationStatus): string => 
     case DeclarationStatus.ERROR:
       return 'bg-[#7A54DE]';
     case DeclarationStatus.LITIGATION:
+      return 'bg-[#7A54DE]';
+    case DeclarationStatus.SWITCH_PAPER:
       return 'bg-[#7A54DE]';
     default:
       return '';
@@ -59,6 +64,8 @@ export const getDeclarationStatusIcon = (status: DeclarationStatus): string => {
       return 'loop2';
     case DeclarationStatus.LITIGATION:
       return 'cancel-circle';
+    case DeclarationStatus.SWITCH_PAPER:
+      return 'loop2';
     default:
       return '';
   }

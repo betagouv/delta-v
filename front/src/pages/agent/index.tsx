@@ -59,7 +59,7 @@ const Index = () => {
                   'bg-primary-600 text-white': mode === 'scanner',
                   'text-disabled-text': mode === 'tools',
                 })}
-                disabled
+                onClick={() => setMode('scanner')}
               >
                 Scanner
               </button>
