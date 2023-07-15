@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FieldErrors, useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import { FormAddProduct } from '../formAddProduct';
+import { FormAddProduct } from '../FormAddProduct';
 import { getSchema } from './schema';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IOptions } from '@/components/input/StandardInputs/Select';

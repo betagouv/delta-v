@@ -5,7 +5,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import { Role } from '../formSelectProduct/utils';
+import { Role } from '../FormSelectProduct/utils';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
 import { Info } from '@/components/common/Info';

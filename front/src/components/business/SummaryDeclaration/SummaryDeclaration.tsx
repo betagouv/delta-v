@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { getName } from 'i18n-iso-countries';
 import { QRCodeSVG } from 'qrcode.react';
 
-import { SummaryAmountProduct } from '../SummarySimulator/products/SummaryAmountProduct';
-import { SummaryCustomProduct } from '../SummarySimulator/products/SummaryCustomProduct';
+import { SummaryAmountProduct } from '@/components/business/SummarySimulator/products/SummaryAmountProduct';
+import { SummaryCustomProduct } from '@/components/business/SummarySimulator/products/SummaryCustomProduct';
 import { SummaryValueProduct } from '@/components/business/SummarySimulator/products/SummaryValueProduct';
 import { Typography } from '@/components/common/Typography';
 import { Color } from '@/components/common/Typography/style/typography.style';

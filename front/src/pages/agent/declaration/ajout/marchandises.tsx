@@ -16,7 +16,7 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import {
   DefaultValuesUpdateProduct,
   OnAddProductOptions,
-} from '@/components/business/formSelectProduct';
+} from '@/components/business/FormSelectProduct';
 import { ValueAgentProductBasket } from '@/components/business/ValueAgentProductBasket';
 import { AmountAgentProductBasketGroup } from '@/components/common/AmountAgentProductBasket/AmountAgentProductBasketGroup';
 import { Button } from '@/components/common/Button';

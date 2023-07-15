@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
-import { FormAddProduct } from '../formAddProduct';
-import { StepsFormProduct } from '../stepsFormProduct/StepsFormProduct';
+import { FormAddProduct } from '../FormAddProduct';
+import { StepsFormProduct } from '../StepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
 import { getSchema } from './schema';
 import { FormSelectProductData, Role, getDefaultValues } from './utils';

@@ -7,7 +7,7 @@ import shallow from 'zustand/shallow';
 
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { OnAddProductOptions } from '@/components/business/formSelectProduct';
+import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
 import { Typography } from '@/components/common/Typography';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';

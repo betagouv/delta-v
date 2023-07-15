@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { FilterHistoryItemProps } from '../FilterHistory';
 import { FilterHistory } from '../FilterHistory/FilterHistory';
-import { SearchDisplayType } from '../search';
+import { SearchDisplayType } from '../Search';
 import { FilterGroup } from './FilterGroup';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';

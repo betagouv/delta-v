@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
-import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
+import { FormSelectProduct, OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList } from '@/components/common/CategoryList';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';

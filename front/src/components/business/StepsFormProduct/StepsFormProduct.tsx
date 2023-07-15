@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 
-import { getRadioCardProductForm, getRadioProductForm, getSteps } from '../formSelectProduct/utils';
+import { getRadioCardProductForm, getRadioProductForm, getSteps } from '../FormSelectProduct/utils';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
 interface EventChangeRadio {

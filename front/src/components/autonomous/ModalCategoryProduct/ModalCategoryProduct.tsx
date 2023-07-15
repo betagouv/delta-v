@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { AddProductCartDeclaration } from '../AddProductCartDeclaration';
-import { OnAddProductOptions } from '@/components/business/formSelectProduct';
+import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
 import { SvgNames } from '@/components/common/SvgIcon';

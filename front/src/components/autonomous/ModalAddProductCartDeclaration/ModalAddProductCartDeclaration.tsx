@@ -4,7 +4,7 @@ import { AddProductCartDeclaration } from '../AddProductCartDeclaration';
 import {
   DefaultValuesUpdateProduct,
   OnAddProductOptions,
-} from '@/components/business/formSelectProduct';
+} from '@/components/business/FormSelectProduct';
 import DownModal from '@/components/common/DownModal';
 import { Product } from '@/model/product';
 

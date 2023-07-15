@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SearchProduct } from '@/components/business/searchProduct';
+import { SearchProduct } from '@/components/business/SearchProduct';
 import DownModal from '@/components/common/DownModal';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';

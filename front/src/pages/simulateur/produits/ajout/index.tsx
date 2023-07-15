@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
-import { AddNewProductForm, FormNewProduct } from '@/components/business/formNewProduct';
+import { AddNewProductForm, FormNewProduct } from '@/components/business/FormNewProduct';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';

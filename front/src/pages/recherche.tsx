@@ -1,6 +1,6 @@
 import shallow from 'zustand/shallow';
 
-import { Search } from '@/components/business/search';
+import { Search } from '@/components/business/Search';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { simulator } from '@/core/hoc/simulator.hoc';
