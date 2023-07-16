@@ -79,7 +79,7 @@ const ProductSearch = () => {
       linkSearch="/declaration/produits/recherche"
       withTitle
       titleValue={currentProduct?.name}
-      titleIcon="categoryDouanier"
+      titleIcon="douanier"
       method="declaration"
     >
       <div className="flex flex-1 flex-col gap-6">

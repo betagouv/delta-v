@@ -23,6 +23,7 @@ export interface IRadioOptions {
   control: any;
   rules?: any;
   onChange?: () => void;
+  bigSize?: boolean;
 }
 
 export const RadioCard: React.FC<IRadioOptions> = ({
@@ -31,6 +32,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({
   name,
   rules,
   littleCard,
+  bigSize,
 }) => {
   const { field } = useController({
     control,
@@ -66,6 +68,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               value={radioCardValue.value}
               disabled={radioCardValue.disabled}
               checked={radioCardValue.id === field.value}
+              bigSize={bigSize}
               onClick={() => {
                 field.onChange(radioCardValue.id);
               }}

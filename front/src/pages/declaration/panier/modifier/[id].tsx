@@ -76,7 +76,7 @@ const UpdateProductBasket = () => {
       withSearch
       withTitle
       titleValue={currentProduct?.name}
-      titleIcon="categoryDouanier"
+      titleIcon="douanier"
       method="declaration"
     >
       <div className="flex flex-col gap-6">

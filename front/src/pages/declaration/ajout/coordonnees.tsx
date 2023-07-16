@@ -148,7 +148,7 @@ const Declaration = () => {
       linkButton="/declaration/ajout/age"
     >
       <div className="flex flex-col gap-4">
-        <div className="w5/6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mb-4">
           <div className="w-56">
             <InputGroup
               type="text"
@@ -176,78 +176,77 @@ const Declaration = () => {
             />
           </div>
         </div>
-        <InputGroup
-          type="text"
-          name="address"
-          label="Adresse"
-          fullWidth={true}
-          placeholder="Adresse"
-          register={register('address')}
-          control={control}
-          error={errors?.address?.message}
-          required
-        />
-        <div className="flex flex-row gap-4 w-full">
-          <div className="w-28">
-            <InputGroup
-              type="text"
-              name="postalCode"
-              label="Code postal"
-              fullWidth={true}
-              placeholder="Code postal"
-              register={register('postalCode')}
-              control={control}
-              error={errors?.postalCode?.message}
-              required
-            />
+        <div className="flex flex-col gap-4 mb-4">
+          <InputGroup
+            type="text"
+            name="address"
+            label="Adresse"
+            fullWidth={true}
+            placeholder="Adresse"
+            register={register('address')}
+            control={control}
+            error={errors?.address?.message}
+            required
+          />
+          <div className="flex flex-row gap-4 w-full">
+            <div className="w-28">
+              <InputGroup
+                type="text"
+                name="postalCode"
+                label="Code postal"
+                fullWidth={true}
+                placeholder="Code postal"
+                register={register('postalCode')}
+                control={control}
+                error={errors?.postalCode?.message}
+                required
+              />
+            </div>
+            <div className="flex-1">
+              <InputGroup
+                type="text"
+                name="city"
+                label="Ville"
+                fullWidth={true}
+                placeholder="Ville"
+                register={register('city')}
+                control={control}
+                error={errors?.city?.message}
+                required
+              />
+            </div>
           </div>
-          <div className="flex-1">
-            <InputGroup
-              type="text"
-              name="city"
-              label="Ville"
-              fullWidth={true}
-              placeholder="Ville"
-              register={register('city')}
-              control={control}
-              error={errors?.city?.message}
-              required
-            />
-          </div>
+        </div>
+        <div className="flex flex-col gap-4 mb-4">
+          <InputGroup
+            type="text"
+            name="mail"
+            fullWidth={true}
+            placeholder="Email"
+            label="Email"
+            register={register('email')}
+            control={control}
+            error={errors?.email?.message}
+            required
+          />
+          <InputGroup
+            type="text"
+            name="phone"
+            label="Téléphone"
+            fullWidth={false}
+            placeholder="Téléphone"
+            register={register('phoneNumber')}
+            control={control}
+            error={errors?.phoneNumber?.message}
+            required
+          />
         </div>
       </div>
 
-      <div className="mt-5 flex flex-col gap-4">
-        <InputGroup
-          type="text"
-          name="mail"
-          fullWidth={true}
-          placeholder="Email"
-          label="Email"
-          register={register('email')}
-          control={control}
-          error={errors?.email?.message}
-          required
-        />
-        <InputGroup
-          type="text"
-          name="phone"
-          label="Téléphone"
-          fullWidth={false}
-          placeholder="Téléphone"
-          register={register('phoneNumber')}
-          control={control}
-          error={errors?.phoneNumber?.message}
-          required
-        />
-      </div>
-
       <div className="mb-8 flex-1" />
-      <div className="w-40 self-center">
-        <Button fullWidth={true} type="submit" disabled={!isValid}>
-          Valider
-        </Button>
-      </div>
+      <Button fullWidth={true} type="submit" disabled={!isValid}>
+        Valider
+      </Button>
     </DeclarationSteps>
   );
 };

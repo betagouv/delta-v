@@ -139,6 +139,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             control={control}
             trailingAddons={getUnit(product?.amountProduct)}
             error={errors.value?.message as string | undefined}
+            newLabel={false}
           />
           <Info>
             <div className="leading-tight">
@@ -161,14 +162,12 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           })}
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="value" className="text-base" data-testid="label-element">
-              Saisissez le montant
-            </label>
             <InputGroup
               disabled={disabled}
               placeholder="Montant"
               type="number"
               fullWidth={false}
+              label="Saisissez le montant"
               name="value"
               register={register('value', { required: false })}
               control={control}
@@ -177,14 +176,12 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="currency" className="text-base" data-testid="label-element">
-              Choisissez une devise
-            </label>
             <InputGroup
               disabled={disabled}
               type="select"
               fullWidth={true}
               name="currency"
+              label="Choisissez une devise"
               options={selectOptions}
               register={register('currency', { required: true })}
               control={control}
@@ -196,17 +193,16 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
       )}
       {templateRole === 'agent' && (
         <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="text-base" data-testid="label-element">
-            Ajouter une dénomination
-          </label>
           <InputGroup
             type="text"
             fullWidth
             name="name"
+            label="Ajouter une dénomination"
             placeholder="Exemple : Jeans, pantalon noir, slim..."
             register={register('name', { required: false })}
             error={errors.name?.message as string | undefined}
             withBorder={false}
+            newLabel
           />
         </div>
       )}

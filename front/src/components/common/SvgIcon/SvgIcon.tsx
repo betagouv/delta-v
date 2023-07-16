@@ -41,7 +41,6 @@ import CategoryCreateDeclaration from '@/assets/icons/categories/Create-Declarat
 import CategoryCrystal from '@/assets/icons/categories/Crystal.svg';
 import CategoryDecoration from '@/assets/icons/categories/Decoration.svg';
 import CategoryDishes from '@/assets/icons/categories/Dishes.svg';
-import CategoryDouanier from '@/assets/icons/categories/Douanier.svg';
 import CategoryDVDPlayer from '@/assets/icons/categories/DVD-Player.svg';
 import CategoryDVD from '@/assets/icons/categories/DVD.svg';
 import CategoryEarthenware from '@/assets/icons/categories/Earthenware.svg';
@@ -118,6 +117,7 @@ import HauteSavoieIcon from '@/assets/icons/City-Haute-Savoie.svg';
 import Coffee from '@/assets/icons/Coffee.svg';
 import CompleteBasket from '@/assets/icons/Complete-Basket.svg';
 import Dairy from '@/assets/icons/Dairy.svg';
+import Douanier from '@/assets/icons/Douanier.svg';
 import Download from '@/assets/icons/Download.svg';
 import Folder from '@/assets/icons/Folder.svg';
 import Forbidden from '@/assets/icons/Forbidden.svg';
@@ -231,7 +231,6 @@ export type SvgNames =
   | 'categoryCreateDeclaration'
   | 'categoryDecoration'
   | 'categoryDishes'
-  | 'categoryDouanier'
   | 'categoryDVDPlayer'
   | 'categoryDVD'
   | 'categoryEarthenware'
@@ -303,6 +302,7 @@ export type SvgNames =
   | 'categoryWindsurf'
   | 'categoryWine'
   | 'categoryWood'
+  | 'douanier'
   | 'visibilityOff'
   | 'visibilityOn'
   | 'star'
@@ -432,8 +432,6 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryContact;
     case 'categoryCreateDeclaration':
       return CategoryCreateDeclaration;
-    case 'categoryDouanier':
-      return CategoryDouanier;
     case 'categoryShoes':
       return CategoryShoes;
     case 'categoryBeautyProducts':
@@ -614,6 +612,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryWood;
     case 'categoryWoodenFloor':
       return CategoryWoodenFloor;
+    case 'douanier':
+      return Douanier;
     case 'visibilityOff':
       return VisibilityOff;
     case 'visibilityOn':

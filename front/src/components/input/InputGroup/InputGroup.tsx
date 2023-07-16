@@ -58,6 +58,7 @@ export interface IInputGroupProps {
   rows?: number;
   specificClassName?: string;
   fullWidth?: boolean;
+  bigSize?: boolean;
   trailingIcon?: string;
   trailingSvgIcon?: SvgNames;
   leadingIcon?: string;
@@ -87,6 +88,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   rows,
   specificClassName,
   fullWidth,
+  bigSize,
   trailingIcon,
   trailingSvgIcon,
   leadingIcon,
@@ -196,6 +198,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               register={register}
               control={control}
               littleCard={littleCard}
+              bigSize={bigSize}
             />
           )}
           {type !== 'select' &&

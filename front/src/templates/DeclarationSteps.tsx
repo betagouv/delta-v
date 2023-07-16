@@ -38,7 +38,7 @@ const DeclarationSteps = ({ children, handleSubmit, onSubmit, linkButton }: IMai
           mes achats
         </>
       }
-      titleIcon="categoryDouanier"
+      titleIcon="douanier"
       method="declaration"
       linkButton={linkButton}
     >

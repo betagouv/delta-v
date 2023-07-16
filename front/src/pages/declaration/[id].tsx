@@ -21,7 +21,7 @@ const DeclarationSearch = () => {
 
   const getDeclarationMutation = useDeclarationMutation({});
 
-  const { isLoading, data: validateDeclarationResponse } = getDeclarationMutation;
+  const { isLoading, data: declarationResponse } = getDeclarationMutation;
 
   useEffect(() => {
     getDeclarationMutation.mutate(id);
@@ -38,9 +38,9 @@ const DeclarationSearch = () => {
         }
         method="declaration"
       >
-        {!isLoading && validateDeclarationResponse && (
+        {!isLoading && declarationResponse && (
           <div className="flex flex-col gap-4 pb-4">
-            <SummaryDeclaration declarationResponse={validateDeclarationResponse} qrCodeVersion />
+            <SummaryDeclaration declarationResponse={declarationResponse} qrCodeVersion />
             <div className="flex flex-col">
               <Typography weight="bold" color="black" lineHeight="leading-loose">
                 Merci d’avoir déclarer vos achats !
@@ -48,7 +48,7 @@ const DeclarationSearch = () => {
               <div className="flex flex-col gap-2">
                 <Typography color="black">
                   Une copie de votre déclaration a été envoyé sur votre adresse mail : <br />
-                  <b>michel.legrand@gmail.com</b>
+                  <b>{declarationResponse.declarantEmail}</b>
                 </Typography>
                 <Typography color="black">
                   En cas de contrôle, présentez le QR code à nos agents.
@@ -60,10 +60,7 @@ const DeclarationSearch = () => {
               </div>
             </div>
             <div className="mt-2">
-              <SummaryDeclarationExport
-                declarationResponse={validateDeclarationResponse}
-                qrCodeVersion
-              />
+              <SummaryDeclarationExport declarationResponse={declarationResponse} qrCodeVersion />
             </div>
             <div className="mb-2">
               <Link to={Routing.home}>

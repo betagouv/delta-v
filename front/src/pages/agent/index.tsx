@@ -115,7 +115,9 @@ const Index = () => {
                   onClick={() => router.push(RoutingAgent.qrCodeManuel)}
                   type="button"
                 >
-                  <SvgIcon name="keyboard" />
+                  <div>
+                    <SvgIcon name="keyboard" />
+                  </div>
                   <Typography size="text-sm" color="black">
                     saisir manuellement
                   </Typography>

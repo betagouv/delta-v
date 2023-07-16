@@ -34,8 +34,12 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
             })}
           >
             <div className="flex flex-row gap-4 items-center">
-              <SvgIcon name={svgName} />
-              <Typography color={withBgColor ? 'white' : 'black'}>{name}</Typography>
+              <div>
+                <SvgIcon name={svgName} />
+              </div>
+              <Typography color={withBgColor ? 'white' : 'black'} tag="div">
+                {name}
+              </Typography>
             </div>
             <Icon name="chevron-right" size="base" />
           </div>
@@ -50,7 +54,9 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
           })}
         >
           <div className="flex flex-row gap-4 h-4 items-center">
-            <SvgIcon name={svgName} />
+            <div>
+              <SvgIcon name={svgName} />
+            </div>
             <Typography color={withBgColor ? 'white' : 'black'}>{name}</Typography>
           </div>
           <Icon name="chevron-right" size="base" />

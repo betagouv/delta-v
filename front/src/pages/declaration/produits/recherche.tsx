@@ -26,7 +26,7 @@ const SearchProduct = () => {
           mes achats
         </>
       }
-      titleIcon="categoryDouanier"
+      titleIcon="douanier"
       method="declaration"
     >
       <div className="flex flex-1 flex-col gap-6">

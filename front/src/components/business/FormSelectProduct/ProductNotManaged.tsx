@@ -14,14 +14,14 @@ export const ProductNotManaged: React.FC<ProductNotManagedProps> = ({
   return (
     <div className="flex flex-col gap-6" data-testid="product-not-managed">
       <div className="flex flex-col gap-6 px-4">
-        <Typography color="secondary" size="text-lg">
+        <Typography color="secondary" size="text-base">
           Malheureusement, ce produit ne peut pas être ajouté au calcul de la déclaration pour le
           moment.
         </Typography>
-        <Typography color="secondary" size="text-lg">
+        <Typography color="secondary" size="text-base">
           Certains produit nécessite un calcul de la part d’un Agent Douanier.
         </Typography>
-        <Typography color="secondary" size="text-lg">
+        <Typography color="secondary" size="text-base">
           Nous vous proposons d’ajouter le produit à titre indicatif et de vous rapprocher d’un
           Agent pour le calcul définitif de vos droits.
         </Typography>

@@ -98,7 +98,7 @@ export const MENU_ITEMS: TabItem[] = [
   {
     title: 'Déclarer mes achats',
     path: Routing.createDeclaration,
-    icon: 'categoryDouanier',
+    icon: 'douanier',
     declaration: true,
   },
   {
@@ -147,7 +147,7 @@ export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
     id: 'declarationList',
     title: 'Déclarations',
     path: RoutingAgent.declarations,
-    svgIcon: 'categoryDouanier' as SvgNames,
+    svgIcon: 'douanier' as SvgNames,
   },
   {
     id: 'actualities',

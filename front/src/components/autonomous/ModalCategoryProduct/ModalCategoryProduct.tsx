@@ -137,7 +137,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
                   title="Filtrer par catégories"
                   displayType="card"
                   onClick={onParentCategoryClick}
-                  fullWidth
+                  bigSize
                 />
               </div>
             )}

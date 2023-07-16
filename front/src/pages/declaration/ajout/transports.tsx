@@ -181,6 +181,7 @@ const Declaration = () => {
           <InputGroup
             type="radioCard"
             label="Sélectionner le moyen de transport"
+            fullWidth
             name="meansOfTransport"
             radioCardValues={meansOfTransports}
             register={register('meansOfTransport', { required: true })}

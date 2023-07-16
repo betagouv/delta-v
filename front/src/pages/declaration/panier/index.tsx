@@ -98,7 +98,7 @@ const Panier = () => {
       withCart
       withTitle
       titleValue="Mes achats"
-      titleIcon="categoryDouanier"
+      titleIcon="douanier"
       method="declaration"
     >
       <div className="flex flex-1 flex-col">

@@ -8,7 +8,6 @@ import shallow from 'zustand/shallow';
 import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
-import { Radio } from '@/components/input/StandardInputs/Radio';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
@@ -103,21 +102,17 @@ const Declaration = () => {
     >
       <div className="mt-4">
         <div>
-          <label htmlFor="adult" className={`mb-2 block text-sm`} data-testid="label-element">
-            L’usager a-t-il plus de 18 ans ?
-          </label>
-          <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
-            <Radio
-              id="adult"
-              name="adult"
-              error={errors?.adult?.message}
-              radioValues={[
-                { id: 'true', value: 'Oui' },
-                { id: 'false', value: 'Non' },
-              ]}
-              register={register('adult')}
-            />
-          </div>
+          <InputGroup
+            name="adult"
+            type="radio"
+            label="L’usager a-t-il plus de 18 ans ?"
+            error={errors?.adult?.message}
+            radioValues={[
+              { id: 'true', value: 'Oui' },
+              { id: 'false', value: 'Non' },
+            ]}
+            register={register('adult')}
+          />
           {errors?.adult?.message && (
             <div data-testid="error-element" className="flex pl-2 pt-1">
               <span className="pl-1" id="input-error">
@@ -135,7 +130,7 @@ const Declaration = () => {
           </Typography>
         </div>
         {displayNotAdult && (
-          <div className="mt-4 w-44">
+          <div className="mt-6 w-60">
             <InputGroup
               type="select"
               name="notAdultAge"
@@ -157,7 +152,7 @@ const Declaration = () => {
       </div>
 
       <div className="mb-8 flex-1" />
-      <div className="w-40 self-center">
+      <div className="self-center w-full">
         {errors?.adult && <div className="text-red-500">{errors.adult.message}</div>}
 
         <Button fullWidth={true} type="submit" disabled={!age || !isValid}>

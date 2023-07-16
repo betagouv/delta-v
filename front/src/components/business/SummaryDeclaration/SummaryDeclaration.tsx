@@ -66,9 +66,12 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
             <Typography size="text-2xl" color="secondary" weight="bold">
               Récapitulatif
             </Typography>
-            <div className="my-8 h-44 flex justify-center">
+            <div className="mt-8 h-44 flex justify-center">
               <QRCodeSVG value={declarationResponse.id} size={176} />
             </div>
+            <Typography size="text-lg" weight="bold" color="black">
+              {declarationResponse.publicId}
+            </Typography>
           </div>
         ) : (
           <Typography size="text-2xl" color="secondary" weight="bold">

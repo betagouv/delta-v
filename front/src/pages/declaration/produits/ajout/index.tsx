@@ -46,7 +46,7 @@ const AddNewProduct = () => {
       withSearch
       linkSearch="/declaration/produits/recherche"
       withTitle
-      titleIcon="categoryDouanier"
+      titleIcon="douanier"
       method="declaration"
       titleValue={
         <>
