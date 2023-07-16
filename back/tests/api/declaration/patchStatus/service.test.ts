@@ -2,7 +2,11 @@
 import { faker } from '@faker-js/faker';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 import { service } from '../../../../src/api/declaration/patchStatus/service';
-import { DeclarationStatus, ProductStatus } from '../../../../src/entities/declaration.entity';
+import {
+  DeclarationStatus,
+  ProductDeclaration,
+  ProductStatus,
+} from '../../../../src/entities/declaration.entity';
 import { declarationRepositoryMock } from '../../../mocks/declaration.repository.mock';
 import { productRepositoryMock } from '../../../mocks/product.repository.mock';
 import { prepareContext } from './prepareContext';
@@ -101,7 +105,7 @@ describe('test patchStatus service', () => {
     [DeclarationStatus.SUBMITTED, DeclarationStatus.SWITCH_PAPER],
   ])('should patch status - contain custom product', async (initialStatus, newStatus) => {
     const notManagedProduct = faker.datatype.boolean();
-    const declarationProduct = {
+    const declarationProduct: ProductDeclaration = {
       id: notManagedProduct ? faker.string.uuid() : undefined,
       status: notManagedProduct ? ProductStatus.CUSTOM_PRODUCT : ProductStatus.VALUE_PRODUCT,
       name: faker.commerce.productName(),
@@ -115,6 +119,7 @@ describe('test patchStatus service', () => {
       customId: faker.string.uuid(),
       originalValue: faker.number.float(),
       rateCurrency: 1,
+      notManagedProduct,
     };
     const { declarationRepository, productRepository, currentDeclaration } = prepareContext({
       initialStatus,
@@ -156,6 +161,7 @@ describe('test patchStatus service', () => {
       customId: faker.string.uuid(),
       originalValue: faker.number.float(),
       rateCurrency: 1,
+      notManagedProduct,
     };
     const { declarationRepository, productRepository, currentDeclaration } = prepareContext({
       initialStatus,
@@ -204,6 +210,7 @@ describe('test patchStatus service', () => {
         customId: faker.string.uuid(),
         originalValue: faker.number.float(),
         rateCurrency: 1,
+        notManagedProduct,
       };
       const { declarationRepository, productRepository, currentDeclaration } = prepareContext({
         initialStatus,

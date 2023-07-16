@@ -22,6 +22,7 @@ const buildSchema = (): ProductDeclaration => {
     customDuty: faker.number.float({ precision: 0.01 }),
     value: faker.number.float({ precision: 0.01 }),
     vat: faker.number.float({ precision: 0.01 }),
+    notManagedProduct: faker.datatype.boolean(),
   };
 };
 

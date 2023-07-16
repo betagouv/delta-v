@@ -73,6 +73,7 @@ export interface ProductDeclaration {
   calculatedCustomDuty: number;
   calculatedVat: number;
   calculatedTaxes: number;
+  notManagedProduct: boolean;
 }
 
 export interface DeclarationEntityInterface extends VersionData, DeclarantData, TaxesData {

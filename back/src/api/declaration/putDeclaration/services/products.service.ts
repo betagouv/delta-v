@@ -22,6 +22,7 @@ const getProductDeclarationFromProductTaxes = (
   customName: productTaxes.customName,
   customDuty: productTaxes.customDuty,
   vat: productTaxes.vat,
+  notManagedProduct: productTaxes.notManagedProduct,
 });
 
 const getProductsDeclarationFromDetailedShoppingProduct = (
@@ -43,6 +44,7 @@ const getProductsDeclarationFromDetailedShoppingProduct = (
   calculatedVat: 0,
   calculatedTaxes: 0,
   name: detailedShoppingProduct.product?.name,
+  notManagedProduct: detailedShoppingProduct.isNotManagedShoppingProduct(),
 });
 
 const getProductsDeclarationsFromAmountGroup = (amountGroup: AmountGroup): ProductDeclaration[] =>

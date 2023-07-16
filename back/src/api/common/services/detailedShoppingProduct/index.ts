@@ -42,6 +42,13 @@ export class DetailedShoppingProduct {
 
     return currency(this.shoppingProduct.originalValue).divide(this.currency.value).value;
   }
+
+  isNotManagedShoppingProduct(): boolean {
+    return (
+      this.product === undefined ||
+      this.product?.productDisplayTypes === ProductDisplayTypes.notManaged
+    );
+  }
 }
 
 interface CreateDetailedShoppingProductOptions {
