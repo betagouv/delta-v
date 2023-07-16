@@ -179,7 +179,7 @@ const DeclarationSearch = () => {
                 phoneNumber={declarationResponse.declarantPhoneNumber}
               />
             </div>
-            <div className="py-7 bg-secondary-100 flex flex-col justify-center">
+            <div className="py-7 bg-secondary-bg flex flex-col justify-center">
               <TaxTable declarationResponse={declarationResponse} />
               <button
                 onClick={() => setOpenDownModal(true)}

@@ -36,7 +36,7 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
         disabled={disabled}
         className={`${
           specificClassName ??
-          `bg-secondary-100 focus:outline-none placeholder:text-disabled-text border-none resize-none min-h-[288px] ${
+          `bg-secondary-bg focus:outline-none placeholder:text-disabled-text border-none resize-none min-h-[288px] ${
             error
               ? 'border-error text-error placeholder:text-red-300 focus:border-error focus:outline-none focus:ring-error'
               : ''

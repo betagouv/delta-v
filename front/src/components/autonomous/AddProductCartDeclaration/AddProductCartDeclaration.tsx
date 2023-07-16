@@ -56,7 +56,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
             </div>
           </div>
         </div>
-        <div className="flex flex-1 flex-col gap-6 bg-secondary-100 px-4 py-5">
+        <div className="flex flex-1 flex-col gap-6 bg-secondary-bg px-4 py-5">
           {currentProduct && (
             <FormSelectProduct
               currentProduct={currentProduct}

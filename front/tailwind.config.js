@@ -25,7 +25,7 @@ module.exports = {
           800: '#000057',
           900: '#00003a',
         },
-        secondary: colors.gray,
+        secondary: { bg: '#f6f6f6', ...colors.gray },
         disabled: {
           bg: '#D9D9D9',
           text: '#929292',

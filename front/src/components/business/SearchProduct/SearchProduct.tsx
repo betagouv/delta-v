@@ -44,7 +44,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
 
   return (
     <div data-testid="search-element" className="items-between flex flex-col h-full">
-      <div className={`flex flex-col p-5 pb-6 bg-secondary-100 rounded-md`}>
+      <div className={`flex flex-col p-5 pb-6 bg-secondary-bg rounded-md`}>
         <div className="text-black flex flex-row items-center gap-2 ml-5">
           <Icon name="search" size="base" />
           <Typography color="black" size="text-base" weight="bold">

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FieldErrors, useForm } from 'react-hook-form';
-import shallow from 'zustand/shallow';
 
 import { FormAddProduct } from '../FormAddProduct';
 import { getSchema } from './schema';
@@ -15,6 +14,7 @@ interface FormSelectProductProps {
   productName?: string;
   openModal: () => void;
   addNewProduct: (data: AddNewProductForm) => void;
+  defaultCurrency?: string;
 }
 
 export interface AddNewProductForm {
@@ -28,16 +28,13 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
   productName,
   openModal,
   addNewProduct,
+  defaultCurrency,
 }: FormSelectProductProps) => {
   const { trackEvent } = useMatomo();
   const defaultCategory = { id: '', value: 'Catégorie' };
-  const { products, defaultCurrency } = useStore(
-    (state) => ({
-      products: state.products.appState.products,
-      defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
-    }),
-    shallow,
-  );
+  const { products } = useStore((state) => ({
+    products: state.products.appState.products,
+  }));
 
   const [categoryOptions, setCategoryOptions] = useState<IOptions[]>([]);
   const [submitted, setSubmitted] = useState(false);

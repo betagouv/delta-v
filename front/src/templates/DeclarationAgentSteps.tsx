@@ -62,7 +62,7 @@ const DeclarationAgentSteps = ({
         className={classNames({
           'flex flex-1 flex-col h-full p-5 mt-4': true,
           'bg-white': simpleBg,
-          'bg-secondary-100': !simpleBg,
+          'bg-secondary-bg': !simpleBg,
         })}
       >
         {children}

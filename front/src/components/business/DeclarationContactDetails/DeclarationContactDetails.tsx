@@ -32,7 +32,7 @@ export const DeclarationContactDetails = ({
   city,
 }: DeclarationContactDetailsProps) => {
   return (
-    <div className="flex flex-col bg-secondary-100 px-4 py-7 gap-4">
+    <div className="flex flex-col bg-secondary-bg px-4 py-7 gap-4">
       <Typography size="text-base" weight="bold" color="black">
         Coordonnées
       </Typography>

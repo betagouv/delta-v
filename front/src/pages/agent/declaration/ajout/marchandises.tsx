@@ -176,7 +176,7 @@ const Declaration = () => {
         linkButton={DECLARATION_STEP_PAGE[2]}
         simpleBg
       >
-        <div className="p-5 bg-secondary-100 rounded-md">
+        <div className="p-5 bg-secondary-bg rounded-md">
           <div className="mt-1" onClick={() => setOpenSearchDownModal(true)}>
             <div className={`flex flex-col`}>
               <div className="text-black flex flex-row items-center gap-2">

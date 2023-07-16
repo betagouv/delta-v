@@ -11,7 +11,7 @@ type IMainAgentProps = {
 
 const MainAuth = ({ children, meta, withPadding = true, bgColor = 'none' }: IMainAgentProps) => {
   return (
-    <div className={cs({ 'h-full antialiased': true, 'bg-secondary-100': bgColor === 'gray' })}>
+    <div className={cs({ 'h-full antialiased': true, 'bg-secondary-bg': bgColor === 'gray' })}>
       {meta}
 
       <div

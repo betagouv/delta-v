@@ -119,7 +119,7 @@ const LoginPage = () => {
           </div>
         </form>
       </section>
-      <section className="absolute bottom-0 flex h-1/4 w-full flex-col items-center justify-center gap-4 bg-secondary-100">
+      <section className="absolute bottom-0 flex h-1/4 w-full flex-col items-center justify-center gap-4 bg-secondary-bg">
         <Typography color="black" weight="bold" size="text-xs">
           Vous n'avez pas de compte ?
         </Typography>

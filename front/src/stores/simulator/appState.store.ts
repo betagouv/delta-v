@@ -44,6 +44,7 @@ export interface DetailedProduct {
   unitTaxes: number;
   customDuty: number;
   vat: number;
+  notManagedProduct: boolean;
 }
 
 export interface AmountProductInterface {
