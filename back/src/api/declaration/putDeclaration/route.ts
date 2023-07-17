@@ -5,6 +5,7 @@ import { CurrencyRepository } from '../../../repositories/currency.repository';
 import { DeclarationRepository } from '../../../repositories/declaration.repository';
 import { ProductRepository } from '../../../repositories/product.repository';
 import { AppDataSource } from '../../../loader/database';
+import { eventEmitter } from '../../../core/eventManager/eventManager';
 import { serializeSimulator } from './serializer';
 import { service } from './service';
 import { PutDeclarationRequest } from './validator';
@@ -57,6 +58,7 @@ export default async (
       declarantPhoneNumber,
       declarantFirstName,
       declarantLastName,
+      eventEmitter,
     });
 
     const response = serializeSimulator();
