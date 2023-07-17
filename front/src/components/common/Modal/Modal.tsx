@@ -66,7 +66,7 @@ export const Modal: React.FC<IModalProps> = ({
           >
             <div className="my-largeBase inline-block w-full rounded-lg bg-white p-modal text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle">
               {!preventClose && (
-                <div className="absolute top-4 right-4 flex h-4 w-4 items-center">
+                <div className="absolute top-4 right-4 flex h-7 w-7 items-center">
                   <Icon name="clear" onClick={onClose} />
                 </div>
               )}
@@ -80,7 +80,7 @@ export const Modal: React.FC<IModalProps> = ({
                 </div>
               )}
               {subtitle && (
-                <div className="mt-2 text-center">
+                <div className="mt-5 text-center">
                   <Typography size="text-sm" color="secondary" lineHeight="leading-4">
                     {subtitle}
                   </Typography>

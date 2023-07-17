@@ -44,7 +44,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
 
   return (
     <div data-testid="search-element" className="items-between flex flex-col h-full">
-      <div className={`flex flex-col p-5 pb-6 bg-secondary-bg rounded-md`}>
+      <div className={`flex flex-col p-5 pb-6 bg-secondary-bg rounded-t-3xl`}>
         <div className="text-black flex flex-row items-center gap-2 ml-5">
           <Icon name="search" size="base" />
           <Typography color="black" size="text-base" weight="bold">
@@ -56,7 +56,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
           placeholder={placeholder}
           disabled={disabled}
           enterKeyHint="search"
-          className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2"
+          className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2 border-none"
           onChange={(event) => {
             setSearchValue(event.target.value);
             onSearch(event.target.value);

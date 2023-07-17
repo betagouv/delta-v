@@ -84,6 +84,9 @@ const RegisterPage = () => {
       <TitleHeaderAgent title="Créer votre compte" bgColorClass="bg-white" />
       <section className="my-auto flex flex-col items-center self-center px-4">
         <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-2">
+            <Typography color="black">Saisissez vos coordonnées</Typography>
+          </div>
           <InputGroup
             type="email"
             name="adult"
