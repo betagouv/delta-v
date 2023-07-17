@@ -139,6 +139,6 @@ export const DECLARATION_EMPTY_STATE: DeclarationData = {
 
 export const createDeclarationAppStateSlice: StoreSlice<DeclarationAppStateSlice> = () => ({
   declaration: {
-    appState: DECLARATION_EMPTY_STATE,
+    appState: { ...DECLARATION_EMPTY_STATE },
   },
 });

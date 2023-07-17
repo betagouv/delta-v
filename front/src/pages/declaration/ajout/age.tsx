@@ -130,7 +130,7 @@ const Declaration = () => {
           </Typography>
         </div>
         {displayNotAdult && (
-          <div className="mt-6 w-60">
+          <div className="mt-6 w-56">
             <InputGroup
               type="select"
               name="notAdultAge"

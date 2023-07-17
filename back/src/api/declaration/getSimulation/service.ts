@@ -23,6 +23,7 @@ interface SimulateServiceResponse {
   amountProducts: AmountGroup[];
   franchiseAmount: number;
   canCalculateTaxes: boolean;
+  canCreateDeclaration: boolean;
 }
 
 export const service = async ({
@@ -49,5 +50,6 @@ export const service = async ({
     amountProducts: declaration.getAmountProductsGrouped(),
     franchiseAmount: declaration.franchiseAmount,
     canCalculateTaxes: declaration.canCalculateTaxes(),
+    canCreateDeclaration: declaration.canCreateDeclaration(),
   };
 };

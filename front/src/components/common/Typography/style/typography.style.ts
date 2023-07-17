@@ -12,6 +12,7 @@ export type TextSize =
 export type Color =
   | 'primary'
   | 'secondary'
+  | 'defaultText'
   | 'red'
   | 'white'
   | 'middle-gray'

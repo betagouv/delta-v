@@ -11,6 +11,7 @@ import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 import { generateDeclaration } from '../../common/services/declaration';
 import { getTaxesDataFromDeclaration } from '../../common/services/declaration/getTaxesDataFromDeclaration.service';
 import { ShoppingProduct } from '../../common/services/shoppingProducts';
+import declarationCreateForbiddenError from '../../common/errors/declarationCreateForbidden.error';
 import { getProductsDeclarationFromDeclaration } from './services/products.service';
 import { generatePublicId } from './services/publicId.service';
 
@@ -67,6 +68,10 @@ export const service = async ({
     country,
     meanOfTransport,
   });
+
+  if (!declaration.canCreateDeclaration()) {
+    throw declarationCreateForbiddenError();
+  }
 
   const declarationEntity: DeclarationEntityInterface = {
     id: declarationId,

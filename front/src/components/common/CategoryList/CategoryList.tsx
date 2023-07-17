@@ -36,11 +36,13 @@ export const CategoryList: React.FC<CategoryListProps> = ({
 }: CategoryListProps) => {
   return (
     <ul role="list">
-      {title && (
+      {title && bigSize && (
         <li className="flex py-1 text-sm">
           <TitleAgent title={title} />
         </li>
       )}
+
+      {title && !bigSize && <li className="flex py-1 text-sm">{title}</li>}
 
       {productTree && productTree.length > 0 && (
         <div className="mt-7">

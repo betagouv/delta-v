@@ -195,7 +195,7 @@ const Declaration = () => {
                 name="postalCode"
                 label="Code postal"
                 fullWidth={true}
-                placeholder="Code postal"
+                placeholder="CP"
                 register={register('postalCode')}
                 control={control}
                 error={errors?.postalCode?.message}
@@ -222,8 +222,8 @@ const Declaration = () => {
             type="text"
             name="mail"
             fullWidth={true}
-            placeholder="Email"
-            label="Email"
+            placeholder="Mail"
+            label="Mail"
             register={register('email')}
             control={control}
             error={errors?.email?.message}
@@ -234,7 +234,7 @@ const Declaration = () => {
             name="phone"
             label="Téléphone"
             fullWidth={false}
-            placeholder="Téléphone"
+            placeholder="06..."
             register={register('phoneNumber')}
             control={control}
             error={errors?.phoneNumber?.message}

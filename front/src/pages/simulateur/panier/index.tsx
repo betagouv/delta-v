@@ -22,6 +22,7 @@ import {
 import { AmountProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const Panier = () => {
   const router = useRouter();
@@ -71,6 +72,7 @@ const Panier = () => {
       withTitle
       titleValue="Mes achats"
       titleIcon="calculator"
+      linkButton={Routing.simulatorProduct}
     >
       <div className="flex flex-1 flex-col">
         <div className="flex flex-col gap-3">

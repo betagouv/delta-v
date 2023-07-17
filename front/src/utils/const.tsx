@@ -12,6 +12,11 @@ export enum Routing {
   prepareMyTripConfig = '/preparer-mon-voyage/configuration',
   about = '/a-propos',
   tuto = '/tuto',
+  simulatorBasket = '/simulateur/panier',
+  simulatorProduct = '/simulateur/produits',
+  simulatorStep3 = '/simulateur/configuration/etape3',
+  declarationProducts = '/declaration/produits',
+  declarationTransport = '/declaration/ajout/transports',
 }
 
 export enum RoutingAgent {

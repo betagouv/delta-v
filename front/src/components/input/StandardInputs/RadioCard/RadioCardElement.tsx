@@ -29,10 +29,10 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
         bigSize ? 'text-base' : 'text-sm',
         disabled
           ? 'opacity-50 cursor-not-allowed'
-          : 'active:bg-gray-50 active:p-[15px] active:border-4',
-        checked ? 'font-bold border-4 p-[15px]' : 'font-normal border',
+          : 'active:bg-gray-50 active:py-[14px] px-2 active:border-4',
+        checked ? 'font-bold border-4 py-[14px] px-2' : 'font-normal border',
         bigSize ? 'p-[18px] h-[130px] w-[104px]' : 'h-[88px] w-[85px]',
-        'border-gray-200 rounded-xl p-[18px] flex items-center justify-center text-sm sm:flex-1',
+        'border-gray-200 rounded-xl py-[18px] px-4 flex items-center justify-center text-sm sm:flex-1',
       )}
       onClick={(e) => {
         if (disabled) {
@@ -45,7 +45,8 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
         <div className="flex-1 flex-col flex h-8 w-auto justify-start">
           <SvgIcon name={svgIcon} />
         </div>
-        <div className="flex-1 flex-col flex justify-start mt-4">
+        <div className="h-2" />
+        <div className="flex-1 flex-col flex justify-start">
           <Typography color="secondary" size="text-xs">
             {value.length > 30 ? `${value.slice(0, 30)}...` : value}
           </Typography>

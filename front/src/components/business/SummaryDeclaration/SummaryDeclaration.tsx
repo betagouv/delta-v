@@ -255,12 +255,21 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          <Typography color="primary" size="text-lg">
+          <Typography color="primary" size="text-lg" textPosition="text-center">
             Rapprochez vous d’un agent <br />
-            pour déterminer vos droits € *
+            pour déterminer vos droits
           </Typography>
         </div>
       )}
+      <div className="mt-4">
+        <Typography color="middle-gray" size="text-2xs">
+          *Les informations proposées par DéclareDouane et les montants de droit et taxes
+          potentiellement dus suite à une déclaration restent soumis à l'approbation d'un agent des
+          douanes au moment du passage de la frontière. Si vous estimez que votre déclaration
+          contient une ou des erreurs, rapprochez vous des agents douaniers à votre arrivée en
+          France métropolitaine.
+        </Typography>
+      </div>
     </div>
   );
 };

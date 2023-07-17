@@ -23,6 +23,7 @@ import {
 import { AmountProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const Panier = () => {
   const router = useRouter();
@@ -43,6 +44,7 @@ const Panier = () => {
     }),
     shallow,
   );
+  console.log(declarationRequest);
 
   const detailedProducts = declarationResponse?.valueProducts || [];
   const customProducts = declarationResponse?.customProducts || [];
@@ -100,6 +102,7 @@ const Panier = () => {
       titleValue="Mes achats"
       titleIcon="douanier"
       method="declaration"
+      linkButton={Routing.declarationProducts}
     >
       <div className="flex flex-1 flex-col">
         <div className="flex flex-col gap-3">
@@ -189,7 +192,12 @@ const Panier = () => {
           </Link>
         </div>
         <div className="mb-8 flex-1" />
-        <Button fullWidth size="xl" onClick={onValidateDeclaration}>
+        <Button
+          fullWidth
+          size="xl"
+          onClick={onValidateDeclaration}
+          disabled={!declarationResponse?.canCreateDeclaration}
+        >
           Valider ma declaration
         </Button>
       </div>

@@ -53,6 +53,7 @@ const Summary = () => {
       }
       withHeader
       withPrint
+      linkButton={Routing.simulatorBasket}
     >
       <div className="flex flex-col gap-4 pb-4">
         <SummarySimulator
@@ -81,7 +82,7 @@ const Summary = () => {
           </div>
         </div>
         <div className="mt-2">
-          <Button fullWidth onClick={onDeclare}>
+          <Button fullWidth onClick={onDeclare} disabled={!simulatorResponse?.canCreateDeclaration}>
             Je déclare
           </Button>
         </div>

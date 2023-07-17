@@ -8,6 +8,7 @@ import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const Index = () => {
   const { products, setProductsToDisplay } = useStore((state) => ({
@@ -51,6 +52,7 @@ const Index = () => {
         </>
       }
       titleIcon="calculator"
+      linkButton={Routing.simulatorStep3}
     >
       <div className="flex flex-1 flex-col gap-6">
         <Input

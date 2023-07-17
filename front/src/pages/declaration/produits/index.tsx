@@ -8,6 +8,7 @@ import { declaration } from '@/core/hoc/declaration.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const Index = () => {
   const { products, setProductsDeclarationToDisplay } = useStore((state) => ({
@@ -52,6 +53,7 @@ const Index = () => {
       }
       titleIcon="douanier"
       method="declaration"
+      linkButton={Routing.declarationTransport}
     >
       <div className="flex flex-1 flex-col gap-6">
         <Input

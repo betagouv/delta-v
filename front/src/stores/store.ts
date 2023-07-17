@@ -132,7 +132,7 @@ export const useStore = create<StoreState>(
         }
 
         if (version < 5) {
-          newPersistedState.declaration.appState = DECLARATION_EMPTY_STATE;
+          newPersistedState.declaration.appState = { ...DECLARATION_EMPTY_STATE };
         }
 
         return newPersistedState;

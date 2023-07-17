@@ -37,6 +37,8 @@ const DeclarationSearch = () => {
           />
         }
         method="declaration"
+        withHeader
+        linkButton={Routing.home}
       >
         {!isLoading && declarationResponse && (
           <div className="flex flex-col gap-4 pb-4">

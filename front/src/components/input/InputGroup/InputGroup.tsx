@@ -108,15 +108,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   return (
     <div>
       <>
-        {error && (
-          <div data-testid="error-element" className="flex pl-2 pt-1">
-            <span className="px-3 flex mb-1.5" id="input-error">
-              <Typography size="text-2xs" color="error">
-                {error}
-              </Typography>
-            </span>
-          </div>
-        )}
         <>
           {label && (
             <label
@@ -245,6 +236,15 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
           <span className="pl-1" id="input-error">
             <Typography size="text-2xs" color="light-gray">
               {helperText}
+            </Typography>
+          </span>
+        </div>
+      )}
+      {error && (
+        <div data-testid="error-element" className="flex pl-2 pt-1">
+          <span className="px-3 flex mb-1.5" id="input-error">
+            <Typography size="text-2xs" color="error">
+              {error}
             </Typography>
           </span>
         </div>

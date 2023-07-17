@@ -184,4 +184,19 @@ export class Declaration {
 
     return true;
   };
+
+  canCreateDeclaration = (): boolean => {
+    if (this.detailedShoppingProducts.length <= 0) {
+      return false;
+    }
+
+    const hasOverMaximumAmountProduct = this.getAmountProductsGrouped().find(
+      (amountGroup) => amountGroup.isOverMaximum,
+    );
+    if (hasOverMaximumAmountProduct) {
+      return false;
+    }
+
+    return true;
+  };
 }

@@ -65,7 +65,7 @@ export const Select: React.FC<ISelectOptions> = ({
               data-testid="select-element"
               className={twMerge(
                 classNames({
-                  'bg-white relative rounded-full pl-3 pr-10 py-3 text-left cursor-default focus:outline-none text-base w-auto border-0 focus:ring-0':
+                  'bg-white relative rounded-full pl-5 pr-10 py-3 text-left cursor-default focus:outline-none text-base w-auto border-0 focus:ring-0':
                     true,
                   'w-full': fullWidth,
                   'bg-secondary-200 text-secondary-400': disabled,
@@ -78,11 +78,11 @@ export const Select: React.FC<ISelectOptions> = ({
               <span className="block truncate ml-2">
                 {options.find((option) => option.id === field.value)?.value ?? placeholder}
               </span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5 items-center">
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5 pr-5 items-center">
                 {open ? (
-                  <Icon name="chevron-thin-up" size="sm" />
+                  <Icon name="chevron-thin-up" size="xl" />
                 ) : (
-                  <Icon name="chevron-thin-down" size="sm" />
+                  <Icon name="chevron-thin-down" size="xl" />
                 )}
               </span>
             </Listbox.Button>

@@ -129,7 +129,7 @@ const styleManager: IButtonStyle = {
       classes: {
         'px-5': true,
         'py-2.5': true,
-        'text-sm': true,
+        'text-base': true,
       },
     },
     lg: {

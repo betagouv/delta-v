@@ -72,6 +72,7 @@ export interface SimulatorResponse {
   totalTaxes: number;
   franchiseAmount: number;
   canCalculateTaxes: boolean;
+  canCreateDeclaration: boolean;
 }
 
 export interface SimulatorRequest {
@@ -115,6 +116,6 @@ export const SIMULATOR_EMPTY_STATE = {
 
 export const createSimulatorAppStateSlice: StoreSlice<SimulatorAppStateSlice> = () => ({
   simulator: {
-    appState: SIMULATOR_EMPTY_STATE,
+    appState: { ...SIMULATOR_EMPTY_STATE },
   },
 });

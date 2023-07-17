@@ -178,16 +178,21 @@ const Declaration = () => {
     >
       <div className="flex flex-col justify-between flex-1">
         <div className="flex flex-col flex-1">
+          <label
+            htmlFor="meansOfTransport"
+            className="mb-3 block text-base font-bold leading-tight"
+          >
+            Quel est votre moyen <br />
+            de transport ?
+          </label>
           <InputGroup
             type="radioCard"
-            label="Sélectionner le moyen de transport"
             fullWidth
             name="meansOfTransport"
             radioCardValues={meansOfTransports}
             register={register('meansOfTransport', { required: true })}
             control={control}
             error={errors?.meansOfTransport?.message}
-            newLabel
           />
           {transportChosen && (
             <div className="mt-4">
@@ -206,12 +211,12 @@ const Declaration = () => {
           )}
           {isPlane && (
             <div className="mt-4 flex flex-row items-center">
-              <div className="w-52">
+              <div className="w-56">
                 <InputGroup
                   type="text"
                   name="phone"
                   fullWidth={true}
-                  placeholder="Numéro de vol  : A36WJB..."
+                  placeholder="Numéro de vol : A36WJB..."
                   register={register('flightNumber')}
                   control={control}
                   error={errors?.flightNumber?.message}
@@ -246,7 +251,7 @@ const Declaration = () => {
             )}
           </div>
         </div>
-        <div className="w-40 self-center">
+        <div className="mt-5">
           <Button fullWidth={true} type="submit" disabled={!isValid}>
             Valider
           </Button>

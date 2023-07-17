@@ -25,11 +25,12 @@ module.exports = {
           800: '#000057',
           900: '#00003a',
         },
-        secondary: { bg: '#f6f6f6', ...colors.gray },
+        secondary: { bg: '#f6f6f6', ...colors.gray, 600: '#161616' },
         disabled: {
           bg: '#D9D9D9',
           text: '#929292',
         },
+        defaultText: '#161616',
         lightBlue: '#E3E3FD',
         cancel: colors.red,
         link: '#6A6AF4',
