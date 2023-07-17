@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import cs from 'classnames';
 import dayjs from 'dayjs';
@@ -17,12 +17,6 @@ export type NomenclatureCardProps = {
 };
 
 export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const onFavoriteClick = () => {
-    // setIsFavorite(!isFavorite);
-  };
-
   return (
     <div
       className={cs(
@@ -51,9 +45,6 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
             {product.relatedWords.map((item) => item).join(', ')}
           </Typography>
         </div>
-      </div>
-      <div className="absolute top-2.5 right-2.5 h-5 w-5 cursor-pointer" onClick={onFavoriteClick}>
-        {isFavorite ? <SvgIcon name="starFull" /> : <SvgIcon name="star" />}
       </div>
     </div>
   );
