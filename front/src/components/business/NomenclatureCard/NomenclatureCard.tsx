@@ -20,7 +20,7 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
   const [isFavorite, setIsFavorite] = useState(false);
 
   const onFavoriteClick = () => {
-    setIsFavorite(!isFavorite);
+    // setIsFavorite(!isFavorite);
   };
 
   return (
@@ -30,7 +30,7 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
       )}
       onClick={onClick ? () => onClick(product) : undefined}
     >
-      <div className="justify-center flex items-center">
+      <div className="justify-center flex items-center z-10">
         <SvgIcon name={product.icon ?? 'categoryOther'} />
       </div>
 
