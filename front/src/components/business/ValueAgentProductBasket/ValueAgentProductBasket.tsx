@@ -13,43 +13,33 @@ require('dayjs/locale/fr');
 
 dayjs.locale('fr');
 
-const getValueAgentProductBasketColor = (deletable: boolean): string => {
-  if (deletable === true) {
-    return 'bg-[#FFE8E5]';
-  }
-
-  return 'bg-[#E3E3FD]';
-};
-
 export type ValueAgentProductBasketProps = {
   product: DetailedProduct;
   nomenclatures: string[];
   detailsButton?: boolean;
-  deletable?: boolean;
+  editable?: boolean;
   onDelete: (id: string) => void;
+  onEditClick?: (id: string) => void;
 };
 
 export const ValueAgentProductBasket = ({
   product,
   nomenclatures,
   detailsButton,
-  deletable = false,
+  editable = false,
   onDelete,
+  onEditClick,
 }: ValueAgentProductBasketProps) => {
   const [open, setOpen] = useState(false);
-  const color = getValueAgentProductBasketColor(deletable);
+
   return (
-    <div className={cs('relative flex flex-col rounded-md w-full ', color)}>
-      {deletable && (
-        <div className="absolute right-2 top-2 cursor-pointer">
-          <Typography
-            color={deletable ? 'red' : 'primary'}
-            onClick={() => onDelete(product.customId)}
-          >
-            <Icon name="cross-thin" size="sm" />
-          </Typography>
-        </div>
-      )}
+    <div className={cs('relative flex flex-col rounded-md w-full bg-[#E3E3FD]')}>
+      <div className="absolute right-2 top-2 cursor-pointer">
+        <Typography onClick={() => onDelete(product.customId)}>
+          <Icon name="cross-thin" size="sm" />
+        </Typography>
+      </div>
+
       <div className="flex flex-col gap-2 p-5">
         <div className="flex flex-col">
           {nomenclatures && (
@@ -61,12 +51,7 @@ export const ValueAgentProductBasket = ({
               ))}
             </span>
           )}
-          <Typography
-            color={deletable ? 'red' : 'primary'}
-            transform="sentence-case"
-            size="text-sm"
-            weight="bold"
-          >
+          <Typography transform="sentence-case" size="text-sm" weight="bold">
             {product.customName}
           </Typography>
           <Typography color="black" transform="sentence-case" size="text-xs">
@@ -90,16 +75,10 @@ export const ValueAgentProductBasket = ({
               </Typography>
             </div>
             <div className="grid grid-cols-2 pt-2">
-              <Typography
-                color={deletable ? 'red' : 'primary'}
-                transform="sentence-case"
-                size="text-sm"
-                weight="bold"
-              >
+              <Typography transform="sentence-case" size="text-sm" weight="bold">
                 Taxes dues
               </Typography>
               <Typography
-                color={deletable ? 'red' : 'primary'}
                 transform="sentence-case"
                 size="text-sm"
                 textPosition="text-right"
@@ -110,20 +89,28 @@ export const ValueAgentProductBasket = ({
             </div>
           </div>
         )}
-        {detailsButton && (
+        {detailsButton && !editable && (
+          <span className="flex justify-center">
+            <Button color="tertiary" variant="outlined" size="sm" onClick={() => setOpen(!open)}>
+              <span className="flex gap-1.5 items-center">
+                Voir calcul
+                {open ? (
+                  <Icon name="chevron-thin-up" size="base" />
+                ) : (
+                  <Icon name="chevron-thin-down" size="base" />
+                )}
+              </span>
+            </Button>
+          </span>
+        )}
+        {editable && (
           <span className="flex justify-center">
             <Button
-              variant="outlined"
-              color={deletable ? 'red' : 'primary'}
               size="sm"
-              onClick={() => setOpen(!open)}
+              color="tertiary"
+              onClick={() => onEditClick && onEditClick(product.customId)}
             >
-              <span>Voir calcul </span>
-              {open ? (
-                <Icon name="chevron-thin-up" size="xs" />
-              ) : (
-                <Icon name="chevron-thin-down" size="xs" />
-              )}
+              <span>Modifier</span>
             </Button>
           </span>
         )}
@@ -138,10 +125,7 @@ export const ValueAgentProductBasket = ({
           })}
         >
           <div>
-            <DetailedValueCalculation
-              detailedProduct={product}
-              rateTextColor={deletable ? 'red' : undefined}
-            />
+            <DetailedValueCalculation detailedProduct={product} />
           </div>
         </div>
       </div>

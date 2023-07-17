@@ -20,7 +20,7 @@ interface AmountAgentProductBasketGroupProps {
   border?: boolean;
   onModifyClick: (id: string) => void;
   onDelete: (id: string) => void;
-  deletable: boolean;
+  editable: boolean;
 }
 
 export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGroupProps> = ({
@@ -29,7 +29,7 @@ export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGro
   country,
   border = false,
   onDelete,
-  deletable,
+  editable,
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [productType, setProductType] = useState<
@@ -57,7 +57,7 @@ export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGro
           product={product}
           onProductClick={onModifyClick}
           onDelete={onDelete}
-          deletable={deletable}
+          editable={editable}
         />
       ))}
       {amountProductGroup.isOverMaximum && (

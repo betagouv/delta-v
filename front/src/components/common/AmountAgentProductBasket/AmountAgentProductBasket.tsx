@@ -13,7 +13,7 @@ interface AmountAgentProductBasketProps {
   product: AmountProductInterface;
   nomenclatures?: string[];
   containError?: boolean;
-  deletable?: boolean;
+  editable?: boolean;
   onDelete: (id: string) => void;
   onButtonClick?: () => void;
   onProductClick?: (id: string) => void;
@@ -23,7 +23,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
   product,
   nomenclatures,
   containError = false,
-  deletable = false,
+  editable = false,
   onDelete,
   onButtonClick,
   onProductClick,
@@ -38,30 +38,14 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
         cs({
           'relative flex flex-col rounded-md w-full bg-[#E3E3FD]': true,
           'bg-[#FFE8E5] border border-[#CE0500]': containError,
-          'bg-[#FFE8E5]': deletable,
         }),
       )}
     >
-      {deletable && (
-        <div className="absolute right-2 top-2 cursor-pointer">
-          <Typography
-            color={deletable ? 'red' : 'primary'}
-            onClick={() => onDelete(product.customId)}
-          >
-            <Icon name="cross-thin" size="sm" />
-          </Typography>
-        </div>
-      )}
-      {deletable && (
-        <div className="absolute right-2 top-2 cursor-pointer">
-          <Typography
-            color={deletable ? 'red' : 'primary'}
-            onClick={() => onDelete(product.customId)}
-          >
-            <Icon name="cross-thin" size="sm" />
-          </Typography>
-        </div>
-      )}
+      <div className="absolute right-2 top-2 cursor-pointer">
+        <Typography onClick={() => onDelete(product.customId)}>
+          <Icon name="cross-thin" size="sm" />
+        </Typography>
+      </div>
       <div className="flex flex-col gap-5 p-5">
         <div className="flex flex-col gap-2.5">
           {nomenclatures && (
@@ -74,7 +58,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
             </span>
           )}
           <Typography
-            color={containError || deletable ? 'red' : 'primary'}
+            color={containError ? 'red' : 'primary'}
             transform="sentence-case"
             size="text-sm"
             weight="bold"
@@ -103,7 +87,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
             </div>
             <div className="grid grid-cols-2 pt-2">
               <Typography
-                color={containError || deletable ? 'red' : 'primary'}
+                color={containError ? 'red' : 'primary'}
                 transform="sentence-case"
                 size="text-sm"
                 weight="bold"
@@ -111,7 +95,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
                 {unit}
               </Typography>
               <Typography
-                color={containError || deletable ? 'red' : 'primary'}
+                color={containError ? 'red' : 'primary'}
                 transform="sentence-case"
                 size="text-sm"
                 textPosition="text-right"
@@ -122,22 +106,25 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
             </div>
           </div>
         )}
-        <span className="flex justify-center">
-          <Button
-            color={containError || deletable ? 'red' : 'primary'}
-            size="sm"
-            onClick={() => {
-              if (onButtonClick) {
-                onButtonClick();
-              }
-              if (onProductClick) {
-                onProductClick(product.customId);
-              }
-            }}
-          >
-            <span>Modifier</span>
-          </Button>
-        </span>
+
+        {editable && (
+          <span className="flex justify-center">
+            <Button
+              size="sm"
+              color={containError ? 'red' : 'tertiary'}
+              onClick={() => {
+                if (onButtonClick) {
+                  onButtonClick();
+                }
+                if (onProductClick) {
+                  onProductClick(product.customId);
+                }
+              }}
+            >
+              <span>Modifier</span>
+            </Button>
+          </span>
+        )}
       </div>
     </div>
   );
