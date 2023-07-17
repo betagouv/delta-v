@@ -232,12 +232,12 @@ svg {
 }
 
 .react-datepicker {
-    font-family: inherit;
-    font-weight: normal;
-    font-size: 14px !important;
-    color: #c7c7c7 !important;
-    border: 0;
-  }
+  font-family: inherit;
+  font-weight: normal;
+  font-size: 14px !important;
+  color: #c7c7c7 !important;
+  border: 0;
+}
   
 .react-datepicker__header {
   background-color: white;
