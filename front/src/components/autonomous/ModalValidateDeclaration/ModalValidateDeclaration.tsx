@@ -61,7 +61,7 @@ export const ModalValidateDeclaration: React.FC<ModalValidateDeclarationProps> =
               {declarationId}
             </Typography>
           </div>
-          <div className="mt-5 w-[190px]">
+          <div className="px-7 flex mt-5">
             <Typography size="text-xs" color="secondary" textPosition="text-center">
               Êtes-vous sur de vouloir valider la déclaration ?
             </Typography>

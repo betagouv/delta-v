@@ -119,28 +119,21 @@ const DeclarationSearch = () => {
       default:
         return (
           <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-5 items-center">
               <Button
-                fullWidth
                 onClick={() => setOpenValidateDeclarationModal(true)}
                 disabled={declarationResponse?.canCalculateTaxes === false}
               >
                 Valider la déclaration
               </Button>
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => setOpenRejectDeclarationModal(true)}
-              >
-                Déclaration non conforme
-              </Button>
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => setOpenSwitchPaperDeclarationModal(true)}
-              >
-                Passage en déclaration papier
-              </Button>
+              <div className="flex flex-col gap-2.5 items-center">
+                <Button variant="outlined" onClick={() => setOpenRejectDeclarationModal(true)}>
+                  Déclaration non conforme
+                </Button>
+                <Button variant="outlined" onClick={() => setOpenSwitchPaperDeclarationModal(true)}>
+                  Passage en déclaration papier
+                </Button>
+              </div>
             </div>
           </div>
         );
@@ -157,6 +150,7 @@ const DeclarationSearch = () => {
           />
         }
         withTitle
+        titleHeader="Récapitulatif"
       >
         {!isLoading && declarationResponse && (
           <div className="flex flex-1 flex-col">

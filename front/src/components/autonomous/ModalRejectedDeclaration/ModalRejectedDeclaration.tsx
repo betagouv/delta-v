@@ -28,7 +28,7 @@ export const ModalRejectedDeclaration: React.FC<ModalRejectedDeclarationProps> =
     <>
       <Modal open={open} onClose={onClose} withMargin={false}>
         <div className="flex flex-col items-center">
-          <div className="w-[190px]">
+          <div className="px-7 flex mt-5">
             <Typography size="text-xs" color="secondary" textPosition="text-center">
               La déclaration est non conforme pour cause de :
             </Typography>

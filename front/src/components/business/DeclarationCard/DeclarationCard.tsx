@@ -79,6 +79,7 @@ export const DeclarationCard = ({
           value={`${publicId.slice(0, 10)} ${publicId.slice(10)}`}
           labelSize="text-2xs"
           valueSize="text-sm"
+          isBold
         />
         <div></div>
         <DataInfoItem
@@ -86,6 +87,7 @@ export const DeclarationCard = ({
           value={dayjs(date).format('DD/MM/YYYY')}
           labelSize="text-2xs"
           valueSize="text-sm"
+          isBold
         />
       </div>
       <div className="grid w-full grid-cols-[140px_52px_1fr] md:grid-cols-[140px_52px_1fr] mb-4">
@@ -94,6 +96,7 @@ export const DeclarationCard = ({
           value={`${firstName} ${lastName}`}
           labelSize="text-2xs"
           valueSize="text-sm"
+          isBold
         />
         <div></div>
         <DataInfoItem
@@ -101,6 +104,7 @@ export const DeclarationCard = ({
           value={transportLabel}
           labelSize="text-2xs"
           valueSize="text-sm"
+          isBold
         />
       </div>
       <DataInfoItem

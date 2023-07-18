@@ -70,7 +70,7 @@ const Declaration = () => {
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
-  const [isAvailableToRemove, setIsAvailableToRemove] = useState<boolean>(false);
+  const [isAvailableToEdit, setIsAvailableToEdit] = useState<boolean>(false);
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const [openModalDeleteProduct, setOpenModalDeleteProduct] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
@@ -84,7 +84,7 @@ const Declaration = () => {
   }, []);
 
   useEffect(() => {
-    if (valueProducts && valueProducts.length === 0) setIsAvailableToRemove(false);
+    if (valueProducts && valueProducts.length === 0) setIsAvailableToEdit(false);
   }, [valueProducts]);
 
   const onClickProductToRemove = (id: string) => {
@@ -232,12 +232,14 @@ const Declaration = () => {
                   </Typography>
                   {(valueProducts?.length ?? 0) + (amountProducts?.length ?? 0) > 0 && (
                     <Typography
-                      color={isAvailableToRemove ? 'black' : 'primary'}
+                      color={isAvailableToEdit ? 'black' : 'primary'}
                       colorGradient="400"
                       size="text-xs"
-                      onClick={() => setIsAvailableToRemove(!isAvailableToRemove)}
+                      onClick={() => setIsAvailableToEdit(!isAvailableToEdit)}
                     >
-                      {isAvailableToRemove ? 'Annuler' : 'Supprimer'}
+                      <span className="cursor-pointer">
+                        {isAvailableToEdit ? 'Annuler' : 'Modifier'}
+                      </span>
                     </Typography>
                   )}
                 </div>
@@ -246,12 +248,13 @@ const Declaration = () => {
                     product={product}
                     nomenclatures={[]}
                     key={`${product.id}-${index}`}
-                    deletable={isAvailableToRemove}
+                    editable={isAvailableToEdit}
                     onDelete={(id) => {
                       setDeletedProductId(id);
                       setOpenModalDeleteProduct(true);
                     }}
                     detailsButton
+                    onEditClick={onModifyClick}
                   />
                 ))}
                 {amountProducts &&
@@ -264,7 +267,7 @@ const Declaration = () => {
                         setDeletedProductId(id);
                         setOpenModalDeleteProduct(true);
                       }}
-                      deletable={isAvailableToRemove}
+                      editable={isAvailableToEdit}
                       onModifyClick={onModifyClick}
                       key={`${amountProduct.group}-${index}`}
                     />

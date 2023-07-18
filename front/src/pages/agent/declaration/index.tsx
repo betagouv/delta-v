@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import cs from 'classnames';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 
@@ -89,7 +90,7 @@ const QuittancePage = () => {
             <>
               <div className="mb-5">
                 <FilterBar
-                  title="Déclarations"
+                  title="Plus de filtres"
                   searchType="global"
                   onValidateFilter={onValidateFilter}
                   open={openFilterBar}
@@ -100,21 +101,22 @@ const QuittancePage = () => {
               </div>
               <div className="flex flex-col gap-2.5">
                 {declarations &&
-                  !openFilterBar &&
                   declarations?.map((declaration, index) => (
-                    <DeclarationCard
-                      key={declaration.id}
-                      {...declaration}
-                      date={declaration.versionDate}
-                      id={declaration.id}
-                      publicId={declaration.publicId}
-                      onClick={() => router.push(`/agent/declaration/${declaration.id}`)}
-                      firstName={declaration.declarantFirstName}
-                      lastName={declaration.declarantLastName}
-                      transport={declaration.declarantMeanOfTransport}
-                      newLimit={apiDeclarations && apiDeclarations.length ? newLimit : undefined}
-                      isLast={index === declarations.length - 1}
-                    />
+                    <span className={cs({ 'opacity-40': openFilterBar })}>
+                      <DeclarationCard
+                        key={declaration.id}
+                        {...declaration}
+                        date={declaration.versionDate}
+                        id={declaration.id}
+                        publicId={declaration.publicId}
+                        onClick={() => router.push(`/agent/declaration/${declaration.id}`)}
+                        firstName={declaration.declarantFirstName}
+                        lastName={declaration.declarantLastName}
+                        transport={declaration.declarantMeanOfTransport}
+                        newLimit={apiDeclarations && apiDeclarations.length ? newLimit : undefined}
+                        isLast={index === declarations.length - 1}
+                      />
+                    </span>
                   ))}
               </div>
             </>
