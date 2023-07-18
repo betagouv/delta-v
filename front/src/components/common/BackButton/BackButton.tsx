@@ -6,10 +6,11 @@ import { Link } from '@/components/common/Link';
 
 type Props = {
   href?: string;
+  onClick?: () => void;
 };
-export const BackButton = ({ href }: Props) => {
+export const BackButton = ({ href, onClick }: Props) => {
   return (
-    <Link back={!href} href={href}>
+    <Link back={!href} href={href} onClick={onClick}>
       <div className="flex flex-row items-center">
         <div className="mr-4 h-5 w-5">
           <Icon name="chevron-left" />

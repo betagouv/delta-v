@@ -1,5 +1,7 @@
 /* eslint-disable no-nested-ternary */
 
+import { useState } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
@@ -7,11 +9,13 @@ import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
+import { ModalCancelDeclaration } from '@/components/autonomous/ModalCancelDeclaration';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
+import { Routing } from '@/utils/const';
 
 export interface FormDeclarationData {
   lastName: string;
@@ -26,6 +30,7 @@ export interface FormDeclarationData {
 const Declaration = () => {
   const router = useRouter();
   const { from } = router.query;
+  const [openModalCancelDeclaration, setOpenModalCancelDeclaration] = useState(false);
 
   const {
     validateDeclarationStep2,
@@ -141,11 +146,15 @@ const Declaration = () => {
     });
   };
 
+  console.log('from', from === 'simulateur');
+
   return (
     <DeclarationSteps
       handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={from === 'simulateur' ? onSubmitSimulation : onSubmit}
-      linkButton="/declaration/ajout/age"
+      linkButton={
+        from === 'simulateur' ? Routing.simulatorSummary : Routing.declarationContactDetails
+      }
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 mb-4">
@@ -247,6 +256,10 @@ const Declaration = () => {
       <Button fullWidth={true} type="submit" disabled={!isValid}>
         Valider
       </Button>
+      <ModalCancelDeclaration
+        open={openModalCancelDeclaration}
+        onClose={() => setOpenModalCancelDeclaration(false)}
+      />
     </DeclarationSteps>
   );
 };

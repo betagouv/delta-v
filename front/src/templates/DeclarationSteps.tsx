@@ -12,6 +12,7 @@ type IMainProps = {
   onSubmit: (data: any) => void;
   simpleBg?: boolean;
   linkButton?: string;
+  onClickBack?: () => void;
 };
 
 export type ProgressBarAgentItemType = {
@@ -20,7 +21,13 @@ export type ProgressBarAgentItemType = {
   stepNumber: number;
 };
 
-const DeclarationSteps = ({ children, handleSubmit, onSubmit, linkButton }: IMainProps) => {
+const DeclarationSteps = ({
+  children,
+  handleSubmit,
+  onSubmit,
+  linkButton,
+  onClickBack,
+}: IMainProps) => {
   return (
     <Main
       meta={
@@ -41,6 +48,7 @@ const DeclarationSteps = ({ children, handleSubmit, onSubmit, linkButton }: IMai
       titleIcon="douanier"
       method="declaration"
       linkButton={linkButton}
+      onClickBack={onClickBack}
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
