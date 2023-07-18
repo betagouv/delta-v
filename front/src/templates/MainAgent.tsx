@@ -34,7 +34,11 @@ const MainAgent = ({
         {withHeader && (
           <CustomHeader withLogo={withLogo} title={titleHeader} templateRole="agent" />
         )}
-        {withTitle && <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />}
+        {withTitle && (
+          <div className="p-4">
+            <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />
+          </div>
+        )}
         {children}
       </div>
     </div>

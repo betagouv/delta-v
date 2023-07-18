@@ -29,8 +29,6 @@ const ManualQRCodePage = () => {
 
   register('search', {
     onChange: (e) => {
-      console.log('ici');
-
       const searchValue = e.target.value;
       if (searchValue.length === 0) {
         setSearchPublicId(null);

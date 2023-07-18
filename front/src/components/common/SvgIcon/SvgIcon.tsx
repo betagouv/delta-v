@@ -137,6 +137,7 @@ import Pet from '@/assets/icons/Pet.svg';
 import Phone from '@/assets/icons/Phone.svg';
 import Plane from '@/assets/icons/Plane.svg';
 import Plants from '@/assets/icons/Plants.svg';
+import QrCode from '@/assets/icons/QrCode.svg';
 import Question from '@/assets/icons/Question.svg';
 import Search from '@/assets/icons/Search.svg';
 import Star from '@/assets/icons/Star.svg';
@@ -169,6 +170,7 @@ export type SvgNames =
   | 'car'
   | 'plane'
   | 'plants'
+  | 'qrCode'
   | 'train'
   | 'traveler'
   | 'other'
@@ -348,6 +350,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return Plane;
     case 'plants':
       return Plants;
+    case 'qrCode':
+      return QrCode;
     case 'train':
       return Train;
     case 'traveler':

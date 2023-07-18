@@ -9,6 +9,7 @@ import { Typography } from '../Typography';
 
 interface LinkWithIconProps {
   href?: string;
+  onClick?: () => void;
   name: string;
   svgName: SvgNames;
   withBgColor?: boolean;
@@ -17,6 +18,7 @@ interface LinkWithIconProps {
 
 export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
   href,
+  onClick,
   name,
   svgName,
   withBgColor,
@@ -41,7 +43,7 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
                 {name}
               </Typography>
             </div>
-            <Icon name="chevron-right" size="base" />
+            <Icon name="chevron-right" size="base" color={withBgColor ? 'white' : 'black'} />
           </div>
         </NextLink>
       ) : (
@@ -52,6 +54,7 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
             'bg-primary-400': withBgColor,
             'bg-disabled-bg border-none opacity-40': disabled,
           })}
+          onClick={onClick}
         >
           <div className="flex flex-row gap-4 h-4 items-center">
             <div>

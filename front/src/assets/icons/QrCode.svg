@@ -1,0 +1,24 @@
+<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 162">
+<path id="Vector 25" d="M6.5 5.5C6.5 4.80841 6.5 3.88792 6.5 3.24977C6.5 2.83556 6.83579 2.5 7.25 2.5V2.5C7.66421 2.5 8 2.16421 8 1.75V1" stroke="black" stroke-linecap="round"/>
+<g id="Rectangle 671">
+<rect y="4.5" width="14" height="10" rx="1" fill="#B8C4D2"/>
+<rect x="0.5" y="5" width="13" height="9" rx="0.5" stroke="white" stroke-opacity="0.2"/>
+</g>
+<path id="Line 335" d="M2 6.5H3" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 339" d="M2 8.5H3" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 343" d="M2 10.5H3" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 347" d="M2 12.5H3" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 336" d="M5 6.5H6" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 340" d="M5 8.5H6" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 344" d="M5 10.5H6" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 348" d="M5 12.5H9" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 337" d="M8 6.5H9" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 341" d="M8 8.5H9" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 345" d="M8 10.5H9" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 338" d="M11 6.5H12" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 342" d="M11 8.5H12" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 346" d="M11 10.5H12" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+<path id="Line 350" d="M11 12.5H12" stroke="white" stroke-opacity="0.7" stroke-linecap="round"/>
+</g>
+</svg>
