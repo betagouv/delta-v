@@ -313,12 +313,12 @@ describe('test put declaration API', () => {
     expect(dbDeclarations.length).toBe(1);
     expect(dbDeclarations[0]).toMatchObject({
       id: declaration.id,
-      canCalculateTaxes: false,
+      canCalculateTaxes: true,
       totalVatAmount: 0,
       totalCustomDutyAmount: 0,
       totalTaxesAmount: 0,
       franchiseAmount: 300,
-      totalAmount: 900,
+      totalAmount: 41.67,
       declarantBorder: border,
       declarantAge: age,
       declarantCountry: country,
