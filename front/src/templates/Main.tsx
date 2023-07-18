@@ -28,6 +28,7 @@ type IMainProps = {
   titleIcon?: SvgNames;
   linkButton?: string;
   method?: 'declaration' | 'simulateur';
+  onClickBack?: () => void;
 };
 
 const Main = ({
@@ -40,6 +41,7 @@ const Main = ({
   withLogo = false,
   linkSearch,
   withTitle = false,
+  onClickBack,
   method,
   titleValue,
   titleIcon,
@@ -66,7 +68,7 @@ const Main = ({
   };
 
   const openDeclaration = () => {
-    if (getDeclarationLevelWithData(declarationRequest) === 1) {
+    if (getDeclarationLevelWithData(declarationRequest, simulatorRequest) === 1) {
       router.push(Routing.createDeclaration);
     } else {
       setOpenModalResumeDeclaration(true);
@@ -86,6 +88,7 @@ const Main = ({
             withLogo={withLogo}
             linkButton={linkButton}
             method={method}
+            onClick={onClickBack}
           />
         )}
         {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}

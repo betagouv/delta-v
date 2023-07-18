@@ -23,6 +23,7 @@ interface HeaderProps {
   templateRole?: Role;
   linkButton?: string;
   method?: 'declaration' | 'simulateur';
+  onClick?: () => void;
 }
 
 export const CustomHeader: React.FC<HeaderProps> = ({
@@ -34,6 +35,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
   linkSearch = '/simulateur/produits/recherche',
   templateRole = 'user',
   method = 'simulateur',
+  onClick,
   linkButton,
 }: HeaderProps) => {
   const { shoppingProducts, simulatorRequest, simulatorResponse } = useStore(
@@ -67,9 +69,9 @@ export const CustomHeader: React.FC<HeaderProps> = ({
   const leftButtons = (
     <>
       {title ? (
-        <BackButtonWithTitle title={title} href={linkButton} />
+        <BackButtonWithTitle title={title} href={linkButton} onClick={onClick} />
       ) : (
-        <BackButton href={linkButton} />
+        <BackButton href={linkButton} onClick={onClick} />
       )}
     </>
   );
