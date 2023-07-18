@@ -20,6 +20,7 @@ export type FilterBarProps = {
   noSearchBar?: boolean;
   noPeriodInput?: boolean;
   filterHistories?: FilterHistoryItemProps[];
+  filtersCount?: number;
   onValidateFilter: (data: FilterBarForm) => void;
   withMeanOfTransportFilter?: boolean;
   withStatusFilter?: boolean;
@@ -42,6 +43,7 @@ export const FilterBar = ({
   noSearchBar = false,
   noPeriodInput = false,
   filterHistories = [],
+  filtersCount = 0,
   withMeanOfTransportFilter = false,
   withStatusFilter = false,
   withNewsTagsFilter = false,
@@ -72,8 +74,15 @@ export const FilterBar = ({
         onClick={() => setOpen(!open)}
       >
         <SvgIcon name="filter" className="h-4 w-4" />
-        <span className="justify-self-start">
+        <span className="items-center gap-1 justify-self-start flex">
           <Typography color="black">{title}</Typography>
+          {!open && filtersCount > 0 && (
+            <div className="flex justify-center items-center h-5 w-5 rounded-full bg-primary-600 ">
+              <Typography color="white" size="sm" weight="bold">
+                {filtersCount}
+              </Typography>
+            </div>
+          )}
         </span>
         <span className="self-end">
           {open ? (

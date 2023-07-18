@@ -16,8 +16,29 @@ import { Constants } from '@/utils/enums';
 const QuittancePage = () => {
   const router = useRouter();
   const [page, setPage] = useState<number>(0);
+  const [counter, setCounter] = useState<number>(0);
   const [declarations, setDeclarations] = useState<DeclarationResponse[]>([]);
   const [openFilterBar, setOpenFilterBar] = useState(false);
+
+  const getFiltersCount = (data: FilterBarForm) => {
+    let filtersCount = 0;
+    if (data.search && data.search !== '') {
+      filtersCount += 1;
+    }
+    if (data.startDate || data.endDate) {
+      filtersCount += 1;
+    }
+    if (data.meanOfTransport && data.meanOfTransport.length > 0) {
+      filtersCount += data.meanOfTransport.length;
+    }
+    if (data.status && data.status.length > 0) {
+      filtersCount += data.status.length;
+    }
+    if (data.newsTags && data.newsTags.length > 0) {
+      filtersCount += data.newsTags.length;
+    }
+    return filtersCount;
+  };
 
   const addDeclarations = (apiDeclarationsData: DeclarationResponse[]): void => {
     const tmpDeclarations = [...declarations, ...apiDeclarationsData];
@@ -52,6 +73,7 @@ const QuittancePage = () => {
       endDate: data.endDate ? dayjs(data.endDate).add(1, 'day').toDate() : undefined,
       onSuccess: (dataSuccess) => setDeclarations(dataSuccess),
     });
+    setCounter(getFiltersCount(data));
   };
 
   const newLimit = () => {
@@ -97,6 +119,7 @@ const QuittancePage = () => {
                   setOpen={setOpenFilterBar}
                   withMeanOfTransportFilter
                   withStatusFilter
+                  filtersCount={counter}
                 />
               </div>
               <div className="flex flex-col gap-2.5">
