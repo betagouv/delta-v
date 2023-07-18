@@ -44,7 +44,6 @@ const Panier = () => {
     }),
     shallow,
   );
-  console.log(declarationRequest);
 
   const detailedProducts = declarationResponse?.valueProducts || [];
   const customProducts = declarationResponse?.customProducts || [];

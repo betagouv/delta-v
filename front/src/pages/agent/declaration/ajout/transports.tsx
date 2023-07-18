@@ -171,8 +171,6 @@ const Declaration = () => {
     return finalCountriesOptions;
   }, []);
 
-  console.log('control', control);
-
   return (
     <AgentRoute>
       <DeclarationAgentSteps

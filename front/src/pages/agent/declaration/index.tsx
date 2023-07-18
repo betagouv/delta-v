@@ -75,7 +75,6 @@ const QuittancePage = () => {
     });
     setCounter(getFiltersCount(data));
   };
-  console.log('counter', counter);
 
   const newLimit = () => {
     if (!apiDeclarations || apiDeclarations.length === 0) {
