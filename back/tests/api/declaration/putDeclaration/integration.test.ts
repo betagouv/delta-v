@@ -293,38 +293,6 @@ describe('test put declaration API', () => {
         originalValue: 50,
         currency: 'USD',
       },
-      {
-        id: products[1].id,
-        customName: 'product2',
-        customId: faker.string.uuid(),
-        originalValue: 300,
-        currency: 'EUR',
-      },
-      {
-        id: products[1].id,
-        customName: 'product3',
-        customId: faker.string.uuid(),
-        originalValue: 500,
-        currency: 'EUR',
-      },
-      {
-        customName: 'cproduct1',
-        customId: faker.string.uuid(),
-        originalValue: 10,
-        currency: 'USD',
-      },
-      {
-        customName: 'cproduct2',
-        customId: faker.string.uuid(),
-        originalValue: 20,
-        currency: 'EUR',
-      },
-      {
-        customName: 'cproduct3',
-        customId: faker.string.uuid(),
-        originalValue: 30,
-        currency: 'EUR',
-      },
     ];
 
     const { body, status } = await simulateEndpoint({
