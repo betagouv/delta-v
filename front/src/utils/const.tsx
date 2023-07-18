@@ -14,8 +14,10 @@ export enum Routing {
   tuto = '/tuto',
   simulatorBasket = '/simulateur/panier',
   simulatorProduct = '/simulateur/produits',
+  simulatorSummary = '/simulateur/recapitulatif',
   simulatorStep3 = '/simulateur/configuration/etape3',
   declarationProducts = '/declaration/produits',
+  declarationContactDetails = '/declaration/coordonnees',
   declarationTransport = '/declaration/ajout/transports',
 }
 

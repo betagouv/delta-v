@@ -15,6 +15,7 @@ import { InputGroup } from '@/components/input/InputGroup';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
+import { Routing } from '@/utils/const';
 
 export interface FormDeclarationData {
   lastName: string;
@@ -145,16 +146,15 @@ const Declaration = () => {
     });
   };
 
-  const onCancelDeclaration = () => {
-    setOpenModalCancelDeclaration(true);
-  };
+  console.log('from', from === 'simulateur');
 
   return (
     <DeclarationSteps
       handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
       onSubmit={from === 'simulateur' ? onSubmitSimulation : onSubmit}
-      linkButton={from !== 'simulator' ? '/declaration/ajout/age' : undefined}
-      onClickBack={from === 'simulator' ? onCancelDeclaration : undefined}
+      linkButton={
+        from === 'simulateur' ? Routing.simulatorSummary : Routing.declarationContactDetails
+      }
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 mb-4">
