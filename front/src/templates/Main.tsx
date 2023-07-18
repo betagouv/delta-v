@@ -76,7 +76,7 @@ const Main = ({
     <div className="h-full antialiased">
       {meta}
 
-      <div className="flex min-h-[calc(100%-74px)] flex-col gap-6 p-4">
+      <div className="flex min-h-[calc(100%-72px)] flex-col gap-6 p-4">
         {withHeader && (
           <CustomHeader
             withCart={withCart}
@@ -91,6 +91,7 @@ const Main = ({
         {withTitle && <TitleHeader title={titleValue} icon={titleIcon} />}
         {children}
       </div>
+      <div className="h-[72px]" />
       <TabBar items={MENU_ITEMS} openSimulator={openSimulator} openDeclaration={openDeclaration} />
       <ModalResumeSimulator
         open={openModalResumeSimulator}

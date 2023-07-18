@@ -60,7 +60,7 @@ export const TabBar: React.FC<TabBarProps> = ({
   };
 
   return (
-    <div className="sticky bottom-0 z-30 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
+    <div className="fixed bottom-0 z-30 flex w-full flex-row border-t-4 border-primary-600 bg-white py-2">
       {items.map((item, index) => renderTabBarItem(item, index))}
     </div>
   );
