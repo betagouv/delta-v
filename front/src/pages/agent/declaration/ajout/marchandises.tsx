@@ -237,7 +237,9 @@ const Declaration = () => {
                       size="text-xs"
                       onClick={() => setIsAvailableToEdit(!isAvailableToEdit)}
                     >
-                      {isAvailableToEdit ? 'Annuler' : 'Modifier'}
+                      <span className="cursor-pointer">
+                        {isAvailableToEdit ? 'Annuler' : 'Modifier'}
+                      </span>
                     </Typography>
                   )}
                 </div>

@@ -119,6 +119,7 @@ import CompleteBasket from '@/assets/icons/Complete-Basket.svg';
 import Dairy from '@/assets/icons/Dairy.svg';
 import Douanier from '@/assets/icons/Douanier.svg';
 import Download from '@/assets/icons/Download.svg';
+import Filter from '@/assets/icons/Filter.svg';
 import Folder from '@/assets/icons/Folder.svg';
 import Forbidden from '@/assets/icons/Forbidden.svg';
 import Home from '@/assets/icons/Home.svg';
@@ -195,6 +196,7 @@ export type SvgNames =
   | 'completeBasket'
   | 'dairy'
   | 'download'
+  | 'filter'
   | 'folder'
   | 'forbidden'
   | 'keyboard'
@@ -622,6 +624,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return Star;
     case 'starFull':
       return StarFull;
+    case 'filter':
+      return Filter;
     default:
       return CategoryOther;
   }

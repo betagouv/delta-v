@@ -9,6 +9,7 @@ import { SearchDisplayType } from '../Search';
 import { FilterGroup } from './FilterGroup';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
+import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { PeriodInput } from '@/components/input/StandardInputs/PeriodInput';
 import { FILTER_MEANS_OF_TRANSPORT, FILTER_NEWS_TAGS, FILTER_STATUS } from '@/utils/filters';
@@ -70,7 +71,7 @@ export const FilterBar = ({
         className="grid cursor-pointer grid-cols-[20px_1fr_20px] items-center justify-items-center gap-2"
         onClick={() => setOpen(!open)}
       >
-        <Icon name="list2" size="base" />
+        <SvgIcon name="filter" className="h-4 w-4" />
         <span className="justify-self-start">
           <Typography color="black">{title}</Typography>
         </span>
@@ -97,7 +98,7 @@ export const FilterBar = ({
                 data-testid="input-search-element"
                 enterKeyHint="search"
                 placeholder="Thèmes, mots-clés..."
-                className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2"
+                className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none focus:ring-transparent mt-2 border-none"
                 {...register('search')}
               />
             )}

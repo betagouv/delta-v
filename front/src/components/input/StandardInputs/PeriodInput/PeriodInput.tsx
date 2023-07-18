@@ -30,7 +30,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
     name: endDateName,
   });
   return (
-    <div className="flex w-full flex-row gap-[2px] justify-center z-50">
+    <div className="flex w-full gap-1 justify-center z-50">
       <DatePicker
         selectsStart
         dateFormat={'dd/MM/yyyy'}
@@ -45,7 +45,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
         }
         placeholderText="Du: jj/mm/aaaa"
         className={cs({
-          'justify-center max-w-[157px] rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:italic placeholder:text-secondary-400':
+          'justify-center w-full rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:italic placeholder:text-secondary-400':
             true,
           'border-none': noBorder,
         })}
@@ -65,14 +65,22 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
             className="flex justify-between items-center"
           >
             <button type="button" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-              <Icon name="chevron-left" size="base" color="black" />
+              <Icon
+                name="chevron-left"
+                size="base"
+                color={prevMonthButtonDisabled ? 'slate' : 'black'}
+              />
             </button>
             <Typography color="primary" size="text-lg">
               {dayjs(date).format('MMMM YYYY')}
             </Typography>
 
             <button type="button" onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-              <Icon name="chevron-right" size="base" color="black" />
+              <Icon
+                name="chevron-right"
+                size="base"
+                color={nextMonthButtonDisabled ? 'slate' : 'black'}
+              />
             </button>
           </header>
         )}
@@ -93,7 +101,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
         minDate={dayjs(startDateField.value).add(1, 'day').toDate()}
         maxDate={dayjs(new Date()).toDate()}
         className={cs({
-          'justify-center max-w-[157px] rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:italic placeholder:text-secondary-400':
+          'justify-center w-full rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:italic placeholder:text-secondary-400':
             true,
           'border-none': noBorder,
         })}
@@ -113,14 +121,22 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
             className="flex justify-between items-center"
           >
             <button type="button" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-              <Icon name="chevron-left" size="base" color="black" />
+              <Icon
+                name="chevron-left"
+                size="base"
+                color={prevMonthButtonDisabled ? 'slate' : 'black'}
+              />
             </button>
             <Typography color="primary" size="text-lg">
               {dayjs(date).format('MMMM YYYY')}
             </Typography>
 
             <button type="button" onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-              <Icon name="chevron-right" size="base" color="black" />
+              <Icon
+                name="chevron-right"
+                size="base"
+                color={nextMonthButtonDisabled ? 'slate' : 'black'}
+              />
             </button>
           </header>
         )}
