@@ -55,8 +55,10 @@
       }
 
       .template {
-        background-color: #cd1446;
-        background: linear-gradient(to right, #cd1446, #2f0380);
+        background:url('https://storage.googleapis.com/declare-douane/background-mail-light.jpg') center top / cover no-repeat;
+        background-position:center top;
+        background-repeat:no-repeat;
+        background-size:cover;
       	padding: 100px 16px;
       }
 
@@ -83,11 +85,11 @@
 
     </mj-style>
   </mj-head>
-  <mj-body css-class="template">
+  <mj-body css-class="template" >
     <mj-wrapper text-align="left" css-class="template-body" padding="0">
     <mj-section padding="0">
       <mj-column padding="0">
-        <mj-image href="{{siteUrl}}" alt="Déclare Douane" width="100px" src="https://declare-douane.beta.gouv.fr/_next/static/media/Step-One-Tuto.53c8a3e6.png"></mj-image>
+        <mj-image href="{{siteUrl}}" alt="Déclare Douane" width="100px" src="https://storage.googleapis.com/declare-douane/logo-declare-douane-agent.png"></mj-image>
       </mj-column>
     </mj-section>
      <mj-section>

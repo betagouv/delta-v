@@ -5,3 +5,6 @@ export function buildAskResetPasswordUrl(token: string): string {
 export function buildAskEmailValidationUrl(token: string): string {
   return `${config.URL_FRONTEND}${config.ROUTE_FRONTEND_VALIDATE_ACCOUNT}?token=${token}`;
 }
+export function buildDeclarationUrl(declarationId: string): string {
+  return `${config.URL_FRONTEND}${config.ROUTE_FRONTEND_CHECK_DECLARATION}/${declarationId}`;
+}

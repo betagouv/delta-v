@@ -11,6 +11,8 @@ import { testDbManager } from '../../../helpers/testDb.helper';
 import { prepareContextProduct } from '../../../utils/prepareContext/product';
 import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
+import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
+import { prepareContextDeclaration } from '../../../helpers/prepareContext/declaration';
 
 const testApp = buildTestApp(api);
 const testDb = testDbManager();
@@ -119,6 +121,7 @@ describe('test put declaration API', () => {
 
   beforeEach(async () => {
     await testDb.clear();
+    clearEventEmitterMock();
   });
 
   afterAll(async () => {
@@ -187,6 +190,8 @@ describe('test put declaration API', () => {
       authorEmail: user.email,
       authorId: user.id,
     });
+
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
   it('should put declaration - with custom product and under franchise', async () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
@@ -269,6 +274,60 @@ describe('test put declaration API', () => {
       authorEmail: user.email,
       authorId: user.id,
     });
+
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
+  });
+  it('should put declaration - declaration already exist', async () => {
+    const { accessToken, user } = await prepareContextUser({ testDb });
+    const declaration = await prepareContextDeclaration({ testDb });
+    const products = await prepareContext();
+    const age = faker.number.int({ min: 15, max: 100 });
+    const country = 'US';
+    const meanOfTransport = MeansOfTransport.CAR;
+    const border = false;
+    const shoppingProducts: ShoppingProduct[] = [
+      {
+        id: products[0].id,
+        customName: 'product1',
+        customId: faker.string.uuid(),
+        originalValue: 50,
+        currency: 'USD',
+      },
+    ];
+
+    const { body, status } = await simulateEndpoint({
+      declarationId: declaration.id,
+      products,
+      shoppingProducts,
+      age,
+      border,
+      country,
+      meanOfTransport,
+      accessToken,
+    });
+
+    expect(status).toBe(200);
+    expect(body.code).toBe(ResponseCodes.DECLARATION_UPDATED);
+
+    const dbDeclarations = await testDb.getDeclarations();
+    expect(dbDeclarations.length).toBe(1);
+    expect(dbDeclarations[0]).toMatchObject({
+      id: declaration.id,
+      canCalculateTaxes: true,
+      totalVatAmount: 0,
+      totalCustomDutyAmount: 0,
+      totalTaxesAmount: 0,
+      franchiseAmount: 300,
+      totalAmount: 41.67,
+      declarantBorder: border,
+      declarantAge: age,
+      declarantCountry: country,
+      declarantMeanOfTransport: meanOfTransport,
+      authorEmail: user.email,
+      authorId: user.id,
+    });
+
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
   it('should put declaration - with custom products', async () => {
     const { accessToken } = await prepareContextUser({ testDb });
@@ -326,5 +385,7 @@ describe('test put declaration API', () => {
       originalValue: shoppingProducts[2].originalValue,
       currency: shoppingProducts[2].currency,
     });
+
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 });

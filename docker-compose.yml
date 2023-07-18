@@ -19,6 +19,7 @@ x-envs: &common-envs
   URL_FRONTEND: http://localhost:3000
   ROUTE_FRONTEND_VALIDATE_ACCOUNT: /agent/authentification/validation
   ROUTE_FRONTEND_RESET_PASSWORD: /agent/authentification/mot-de-passe-oublie/reinitialiser
+  ROUTE_FRONTEND_CHECK_DECLARATION: /declaration
   FROM_EMAIL: test@test.fr
   SMTP_URL: smtp://username:password@mailhog:1025
   WHITE_LIST_AGENT_EMAIL: "s.sabalot@gmail.com,sbergeot.pro@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"

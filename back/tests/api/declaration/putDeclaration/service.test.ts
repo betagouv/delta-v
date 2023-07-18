@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker';
-import { service } from '../../../../src/api/declaration/putDeclaration/service';
 import {
   DeclarationEntityInterface,
   DeclarationStatus,
@@ -11,6 +10,8 @@ import { prepareDeclarationData } from '../../../helpers/prepareContext/declarat
 import { currencyRepositoryMock } from '../../../mocks/currency.repository.mock';
 import { declarationRepositoryMock } from '../../../mocks/declaration.repository.mock';
 import { productRepositoryMock } from '../../../mocks/product.repository.mock';
+import { eventEmitterMock } from '../../../mocks/eventEmitter.mock';
+import { service } from '../../../../src/api/declaration/putDeclaration/service';
 
 describe('test put declaration service', () => {
   it('should save declaration', async () => {
@@ -68,6 +69,7 @@ describe('test put declaration service', () => {
       productRepository,
       currencyRepository,
       declarationRepository,
+      eventEmitter: eventEmitterMock,
     });
 
     const expectedDeclaration: DeclarationEntityInterface = {
