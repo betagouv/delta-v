@@ -9,7 +9,7 @@ export interface ApiSuccessProps {
 
 export const ApiSuccess: React.FC<ApiSuccessProps> = ({ apiSuccess }: ApiSuccessProps) => {
   return (
-    <Typography color="success" size="text-2xs">
+    <Typography color="success" size="text-2xs" textPosition="text-center">
       {apiSuccess.message}
     </Typography>
   );

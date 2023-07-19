@@ -19,6 +19,7 @@ interface SerializedValueProduct {
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
+  notManagedProduct: boolean;
 }
 
 interface SerializedAmountProduct {
@@ -70,6 +71,7 @@ const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedV
   unitCustomDuty: productTaxes.getUnitCustomDuty(),
   unitVat: productTaxes.getUnitVat(),
   unitTaxes: productTaxes.getUnitTaxes(),
+  notManagedProduct: productTaxes.notManagedProduct,
 });
 
 const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProduct => ({

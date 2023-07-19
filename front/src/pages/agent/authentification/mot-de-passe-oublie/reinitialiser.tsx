@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
 
-import { useValidationEmailMutation } from '@/api/hooks/useAPIAuth';
-import { ApiError } from '@/components/common/ApiError';
-import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
@@ -12,14 +9,6 @@ import { RoutingAuthentication } from '@/utils/const';
 const RegisterValidationPage = () => {
   const router = useRouter();
   const { token } = router.query;
-
-  const onSuccess = () => {
-    router.push(RoutingAuthentication.login);
-  };
-
-  const validationEmailMutation = useValidationEmailMutation({ onSuccess });
-  const apiError = validationEmailMutation.error;
-  const { data: apiSuccess } = validationEmailMutation;
 
   const handleValidate = () => {
     router.push(`${RoutingAuthentication.resetPasswordChange}?token=${token}`);
@@ -59,14 +48,9 @@ const RegisterValidationPage = () => {
           </Typography>
         </div>
         <div className="flex flex-col self-center items-center w-56 gap-2 mt-7">
-          {apiError && <ApiError apiError={apiError} />}
-          {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
           <Button onClick={handleValidate} fullWidth={true} type="submit" size="sm">
             Modifier mon mot de passe
           </Button>
-          <Typography textPosition="text-center" color="primary" size="text-2xs">
-            Attention, ce lien est actif XX heures
-          </Typography>
         </div>
       </div>
     </MainAuth>

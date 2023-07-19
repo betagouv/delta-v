@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import cs from 'classnames';
 import dayjs from 'dayjs';
 
+import { TaxItemCalculation } from '../TaxTable/TaxItemCalculation';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
-import { DetailedValueCalculation } from '@/components/common/ValueProductBasket/DetailedValueCalculation';
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 require('dayjs/locale/fr');
@@ -20,6 +20,7 @@ export type ValueAgentProductBasketProps = {
   editable?: boolean;
   onDelete: (id: string) => void;
   onEditClick?: (id: string) => void;
+  withCalculation?: boolean;
 };
 
 export const ValueAgentProductBasket = ({
@@ -29,8 +30,10 @@ export const ValueAgentProductBasket = ({
   editable = false,
   onDelete,
   onEditClick,
+  withCalculation = true,
 }: ValueAgentProductBasketProps) => {
   const [open, setOpen] = useState(false);
+  console.log(product);
 
   return (
     <div className={cs('relative flex flex-col rounded-md w-full bg-[#E3E3FD]')}>
@@ -84,7 +87,7 @@ export const ValueAgentProductBasket = ({
                 textPosition="text-right"
                 weight="bold"
               >
-                {`${product.unitTaxes} €`}
+                {withCalculation ? `${product.unitTaxes} €` : 'non renseignée'}
               </Typography>
             </div>
           </div>
@@ -125,7 +128,7 @@ export const ValueAgentProductBasket = ({
           })}
         >
           <div>
-            <DetailedValueCalculation detailedProduct={product} />
+            <TaxItemCalculation detailedProduct={product} withCalculation={withCalculation} />
           </div>
         </div>
       </div>

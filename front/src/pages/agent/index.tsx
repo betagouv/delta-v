@@ -11,7 +11,6 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { LinkWithIcon } from '@/components/common/LinkWithIcon';
 import { Typography } from '@/components/common/Typography';
 import { QrCodeScanner } from '@/components/input/StandardInputs/QrCodeScanner';
-import { DisplayTuto } from '@/core/hoc/displayTuto.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
@@ -23,7 +22,12 @@ const SCAN_WIDTH = '326px';
 
 const Index = () => {
   const router = useRouter();
-  const [mode, setMode] = useState<'scanner' | 'tools'>('tools');
+  const queryParams = router.query;
+  const defaultMode =
+    queryParams?.mode === 'scanner' || queryParams?.mode === 'tools'
+      ? queryParams?.mode
+      : 'scanner';
+  const [mode, setMode] = useState<'scanner' | 'tools'>(defaultMode);
   const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
   const [dataScan, setDataScan] = useState<string>();
   const [scanner, setScanner] = useState<QrScanner>();
@@ -58,7 +62,7 @@ const Index = () => {
   };
 
   const getDeclarationMutation = useDeclarationMutation({
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       router.push(`/agent/declaration/${data.id}`);
       stopCamera();
     },
@@ -185,7 +189,7 @@ const Index = () => {
           ) : (
             <div
               className={classNames({
-                'flex flex-col gap-3 mt-8': true,
+                'flex flex-col gap-3 mt-8 items-center': true,
                 '[&>.scan-region-highlight]:hidden': dataScan,
               })}
             >
@@ -228,4 +232,4 @@ const Index = () => {
   );
 };
 
-export default DisplayTuto(Index);
+export default Index;

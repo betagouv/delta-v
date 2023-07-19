@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IRadioType {
@@ -14,9 +15,16 @@ export interface IRadioOptions {
   register?: UseFormRegisterReturn;
   control?: any;
   rules?: any;
+  newRadio?: boolean;
 }
 
-export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) => {
+export const Radio: React.FC<IRadioOptions> = ({
+  radioValues,
+  register,
+  name,
+  error,
+  newRadio = false,
+}) => {
   return (
     <div className="flex items-center space-y-0 space-x-6">
       {radioValues.map((radioValue, index) => (
@@ -27,12 +35,19 @@ export const Radio: React.FC<IRadioOptions> = ({ radioValues, register, name }) 
             id={index.toString()}
             value={radioValue.id}
             type="radio"
-            className="form-radio h-4 w-4 border-gray-300 text-primary-600 focus:ring-transparent disabled:text-disabled-text"
+            className={classNames({
+              'form-radio h-5 w-5 border-gray-300 text-primary-600 focus:ring-transparent disabled:text-disabled-text':
+                true,
+              'border-error': newRadio && error,
+            })}
             {...register}
           />
           <label
             htmlFor={index.toString()}
-            className="ml-2.5 block text-base text-black disabled:text-disabled-text"
+            className={classNames({
+              'ml-2.5 block text-base text-black disabled:text-disabled-text': true,
+              'text-error': newRadio && error,
+            })}
           >
             {radioValue.value}
           </label>

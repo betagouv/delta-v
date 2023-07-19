@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useAskResetPasswordMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
@@ -36,15 +37,14 @@ const AskResetPasswordPage = () => {
   });
   const router = useRouter();
 
-  const onSuccess = () => {
-    const { email } = getValues();
+  const askResetPasswordMutation = useAskResetPasswordMutation({
+    onSuccess: () => {
+      const { email } = getValues();
+      router.push(`${RoutingAuthentication.forgetPasswordLinkSent}?email=${email}`);
+    },
+  });
 
-    router.push(`${RoutingAuthentication.forgetPasswordLinkSent}?email=${email}`);
-  };
-
-  const askResetPasswordMutation = useAskResetPasswordMutation({ onSuccess });
   const apiError = askResetPasswordMutation.error ?? undefined;
-  const { data: apiSuccess } = askResetPasswordMutation;
 
   const onSubmit = async (data: FormForgetPasswordData) => {
     askResetPasswordMutation.mutate(data.email);
@@ -80,17 +80,8 @@ const AskResetPasswordPage = () => {
             register={register('email')}
             error={errors?.email?.message ?? getErrorFields('email', apiError)}
           />
-          <div className="flex flex-col gap-4 w-36 pt-10 self-center">
-            {apiError && (
-              <Typography color="error" textPosition="text-center">
-                {apiError.message}
-              </Typography>
-            )}
-            {apiSuccess && (
-              <Typography color="success" textPosition="text-center">
-                {apiSuccess.message}
-              </Typography>
-            )}
+          <div className="pt-10 pb-2 flex">{apiError && <ApiError apiError={apiError} />}</div>
+          <div className="flex flex-col gap-4 w-36 self-center">
             <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
               Envoyer
             </Button>

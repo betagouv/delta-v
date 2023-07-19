@@ -86,8 +86,17 @@ export const useAskResetPasswordMutation = ({
   });
 };
 
-export const useResetPasswordMutation = () => {
+export const useResetPasswordMutation = ({
+  onSuccess,
+}: MutationSuccessCallback<ICommonResponse>) => {
   return useMutation<ICommonResponse, IErrorResponse, ResetPasswordRequestOptions>(
     resetPasswordRequest,
+    {
+      onSuccess: (data: ICommonResponse) => {
+        if (onSuccess) {
+          onSuccess(data);
+        }
+      },
+    },
   );
 };

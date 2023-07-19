@@ -40,6 +40,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
                 .slice(0)
                 .reverse()
                 .map((product) => product.name)}
+              limit={3}
             />
           </div>
           <div className="flex flex-col gap-2 pt-5 pb-2">

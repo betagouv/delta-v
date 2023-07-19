@@ -24,7 +24,7 @@ export enum Routing {
 }
 
 export enum RoutingAgent {
-  home = '/',
+  home = '/agent',
   createDeclaration = '/agent/declaration/ajout/coordonnees',
   nomenclature = '/agent/nomenclature',
   declarations = '/agent/declaration',
@@ -105,7 +105,12 @@ export const MENU_ITEMS: TabItem[] = [
     path: Routing.prepareMyTripConfig,
   },
   {
-    title: 'Déclarer mes achats',
+    title: (
+      <>
+        Déclarer <br />
+        mes achats
+      </>
+    ),
     path: Routing.createDeclaration,
     icon: 'douanier',
     declaration: true,
@@ -142,7 +147,6 @@ export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
     id: 'declaration',
     title: 'Créer une déclaration',
     svgIcon: 'categoryCreateDeclaration' as SvgNames,
-    path: RoutingAgent.createDeclaration,
     openDeclarationResumeModal: true,
   },
   {

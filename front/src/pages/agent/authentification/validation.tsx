@@ -14,7 +14,9 @@ const RegisterValidationPage = () => {
   const { token } = router.query;
 
   const onSuccess = () => {
-    router.push(RoutingAuthentication.login);
+    setTimeout(() => {
+      router.push(RoutingAuthentication.login);
+    }, 1000);
   };
 
   const validationEmailMutation = useValidationEmailMutation({ onSuccess });
@@ -67,16 +69,15 @@ const RegisterValidationPage = () => {
             Pour activer celui-ci, il vous suffit de cliquer sur le lien ci-dessous et profiter de
             l’application dès à présent !
           </Typography>
+          <div className="pt-6 pb-2 flex">
+            {apiError && <ApiError apiError={apiError} />}
+            {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
+          </div>
         </div>
-        <div className="flex flex-col self-center items-center w-48 gap-2 mt-7">
-          {apiError && <ApiError apiError={apiError} />}
-          {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
+        <div className="flex flex-col self-center items-center w-48 gap-2">
           <Button onClick={handleValidate} fullWidth={true} type="submit" size="sm">
             J'active mon compte
           </Button>
-          <Typography textPosition="text-center" color="primary" size="text-2xs">
-            Attention, ce lien est actif XX heures
-          </Typography>
         </div>
       </div>
     </MainAuth>

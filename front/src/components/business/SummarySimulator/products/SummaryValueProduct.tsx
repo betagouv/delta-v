@@ -20,12 +20,14 @@ export const SummaryValueProduct: React.FC<SummaryValueProductProps> = ({
   const [open, setOpen] = useState(false);
   return (
     <div className="mt-2 mb-4" onClick={() => setOpen(!open)}>
-      <Typography color="secondary" weight="bold">
-        {product.name}
-      </Typography>
-      <Typography color="secondary" italic>
-        {product.customName}
-      </Typography>
+      <div className="flex flex-col">
+        <Typography color="secondary" weight="bold" lineHeight="leading-tight">
+          {product.name}
+        </Typography>
+        <Typography color="secondary" italic lineHeight="leading-tight">
+          {product.customName}
+        </Typography>
+      </div>
       <div className="mt-1 flex flex-row">
         <div className="flex w-full flex-col">
           <div className="flex flex-1 flex-row">

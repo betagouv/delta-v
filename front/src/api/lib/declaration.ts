@@ -9,6 +9,7 @@ import {
   SimulatorRequest,
   SimulatorResponse,
 } from '@/stores/simulator/appState.store';
+import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 interface RequestShoppingProduct {
   id?: string;
@@ -116,7 +117,16 @@ export const createDeclarationRequest = async (
   return data;
 };
 
-export const getDeclaration = async (id: string): Promise<DeclarationResponse> => {
+interface GetDeclarationOptions {
+  id: string;
+  fromNewStatus?: DeclarationStatus;
+}
+
+export const getDeclaration = async ({
+  id,
+  fromNewStatus,
+}: GetDeclarationOptions): Promise<DeclarationResponse> => {
+  console.log('getDeclaration', id, fromNewStatus);
   const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}/`);
   return data.declaration;
 };

@@ -1,5 +1,6 @@
 import { ContactDetails, MeansOfTransportAndCountry } from '@/stores/declaration/appState.store';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
+import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export type TAgeCategory = 0 | 10 | 12 | 16 | 18 | null;
 
@@ -60,7 +61,7 @@ export type CreateDeclarationParams = {
 
 export type ChangeStatusOfDeclarationParams = {
   declarationId: string;
-  status: string;
+  status: DeclarationStatus;
 };
 
 export type GetOneDeclarationParams = {

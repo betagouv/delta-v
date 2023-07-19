@@ -33,7 +33,6 @@ interface FormSelectProductProps {
   defaultCurrency?: string;
   defaultName?: string;
   defaultValues?: DefaultValuesUpdateProduct;
-  allowNotManagedProduct?: boolean;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
@@ -43,15 +42,22 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   defaultCurrency = 'EUR',
   defaultName = '',
   defaultValues,
-  allowNotManagedProduct = false,
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
+  const [allowNotManagedProduct, setAllowNotManagedProduct] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentProduct) {
       setSteps([currentProduct]);
     }
+    setAllowNotManagedProduct(false);
   }, [currentProduct]);
+
+  useEffect(() => {
+    if (defaultValues?.customId) {
+      setAllowNotManagedProduct(true);
+    }
+  }, [defaultValues]);
 
   const {
     handleSubmit,
@@ -143,6 +149,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       )}
     </form>
   ) : (
-    <ProductNotManaged currentProduct={currentProduct} />
+    <ProductNotManaged addProduct={() => setAllowNotManagedProduct(true)} />
   );
 };

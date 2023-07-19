@@ -96,7 +96,7 @@ const RegisterPage = () => {
             error={errors?.email?.message ?? getErrorFields('email', apiError)}
           />
 
-          <div className="flex flex-col gap-1 py-4">
+          <div className="flex flex-col gap-1 pt-4">
             <InputGroup
               type={!passwordVisible ? 'password' : 'text'}
               name="adult"
@@ -113,17 +113,11 @@ const RegisterPage = () => {
               </Typography>
             </div>
           </div>
-          {apiError && (
-            <div className="pt-8 ml-3">
-              <ApiError apiError={apiError} />
-            </div>
-          )}
-          {apiSuccess && (
-            <div className="pt-8 ml-3">
-              <ApiSuccess apiSuccess={apiSuccess} />
-            </div>
-          )}
-          <div className="flex flex-col gap-2 w-40 mx-auto ">
+          <div className="pt-10 pb-2 flex">
+            {apiError && <ApiError apiError={apiError} />}
+            {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
+          </div>
+          <div className="flex flex-col gap-2 w-40 mx-auto">
             <Button
               fullWidth={true}
               type="submit"

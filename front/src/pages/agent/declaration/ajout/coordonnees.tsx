@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
-import { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import * as yup from 'yup';
@@ -15,10 +15,11 @@ import { Radio } from '@/components/input/StandardInputs/Radio';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
+import { RoutingAgent } from '@/utils/const';
 
 export interface FormDeclarationData {
   adult?: string;
-  notAdultAge?: number;
+  age?: number | null;
   lastName: string;
   firstName: string;
   address: string;
@@ -68,6 +69,17 @@ const Declaration = () => {
       .min(5, 'Le code postal doit contenir 5 chiffres')
       .max(5, 'Le code postal doit contenir 5 chiffres')
       .matches(/^[0-9]{5}$/, "Le code postal n'est pas valide"),
+    adult: yup.string().oneOf(['true', 'false'], "L'age est requis").required("L'age est requis"),
+    age: yup
+      .number()
+      .when('adult', {
+        is: 'false',
+        then: yup.number().typeError("L'age est requis").required("L'age est requis"),
+      })
+      .when('adult', {
+        is: 'true',
+        then: yup.number().typeError("L'age est requis").default(18).required("L'age est requis"),
+      }),
     email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
     phoneNumber: yup
       .string()
@@ -81,7 +93,7 @@ const Declaration = () => {
 
   const checkIsAdult = (age: number | undefined) => {
     if (age === undefined) {
-      return undefined;
+      return '';
     }
     return age >= 18 ? 'true' : 'false';
   };
@@ -90,14 +102,15 @@ const Declaration = () => {
     handleSubmit,
     register,
     control,
-    formState: { errors, isValid },
-    getValues,
+    formState: { errors },
+    setValue,
+    watch,
   } = useForm<FormDeclarationData>({
-    mode: 'onBlur',
+    mode: 'onSubmit',
     resolver: yupResolver(schema),
     defaultValues: {
       adult: checkIsAdult(contactDetails?.age),
-      notAdultAge: contactDetails?.age,
+      age: contactDetails?.age ?? null,
       lastName: contactDetails?.lastName,
       firstName: contactDetails?.firstName,
       address: contactDetails?.address,
@@ -108,41 +121,24 @@ const Declaration = () => {
     },
   });
 
-  const [displayNotAdult, setDisplayNotAdult] = useState(getValues('adult') === 'false');
-  const [age, setAge] = useState<number | undefined>(getValues('notAdultAge'));
+  const watchNotAdultSelect = watch('adult') === 'false';
 
   register('adult', {
     onChange: ({ target: { value } }: EventChangeRadio) => {
       if (typeof value === 'string') {
         const isAdult = value === 'true';
         if (isAdult) {
-          setAge(18);
-          setDisplayNotAdult(false);
+          setValue('age', 18);
         } else {
-          setDisplayNotAdult(true);
-          setAge(undefined);
+          setValue('age', null);
         }
-      }
-    },
-  });
-
-  register('notAdultAge', {
-    onChange: ({ type, target: { name, value } }: EventChangeRadio) => {
-      const notResetDeclarationAgentSteps = !name || type !== 'change';
-      if (notResetDeclarationAgentSteps) {
-        return;
-      }
-      if (typeof value === 'number') {
-        setAge(value);
-      } else {
-        setAge(undefined);
       }
     },
   });
 
   const onSubmit = (data: FormDeclarationData) => {
     validateDeclarationAgentStep1({
-      age: age ?? 0,
+      age: data.age ?? 0,
       lastName: data.lastName,
       firstName: data.firstName,
       address: data.address,
@@ -160,7 +156,7 @@ const Declaration = () => {
         currentStep={1}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
-        linkButton="/agent/"
+        linkButton={`${RoutingAgent.home}?mode=tools`}
       >
         <div className="flex flex-col gap-4">
           <div className="w5/6 flex flex-col gap-4">
@@ -202,7 +198,7 @@ const Declaration = () => {
             required
             withBorder={false}
           />
-          <div className="flex items-end gap-4">
+          <div className="flex items-start gap-4">
             <div className="w-32">
               <InputGroup
                 type="text"
@@ -233,10 +229,22 @@ const Declaration = () => {
         </div>
         <div className="mt-4 flex flex-col w-fit">
           <div>
-            <label htmlFor="adult" className={`mb-2 block text-base`} data-testid="label-element">
+            <label
+              htmlFor="adult"
+              className={classNames({
+                'mb-2 block text-base': true,
+                'text-error': errors?.adult?.message,
+              })}
+              data-testid="label-element"
+            >
               L’usager a-t-il plus de 18 ans ?
             </label>
-            <div className="bg-white px-5 py-2.5 rounded-full flex justify-center">
+            <div
+              className={classNames({
+                'bg-white px-5 py-2.5 rounded-full flex justify-center': true,
+                'border border-error': errors?.adult?.message,
+              })}
+            >
               <Radio
                 id="adult"
                 name="adult"
@@ -246,6 +254,7 @@ const Declaration = () => {
                   { id: 'false', value: 'Non' },
                 ]}
                 register={register('adult')}
+                newRadio
               />
             </div>
             {errors?.adult?.message && (
@@ -258,26 +267,24 @@ const Declaration = () => {
               </div>
             )}
           </div>
-          {displayNotAdult && (
-            <div className="mt-4">
-              <InputGroup
-                type="select"
-                name="notAdultAge"
-                fullWidth={true}
-                placeholder="Sélectionnez l’âge"
-                register={register('notAdultAge')}
-                control={control}
-                error={errors?.notAdultAge?.message}
-                options={[
-                  { id: 14, value: 'Moins de 15 ans' },
-                  { id: 15, value: '15 ans' },
-                  { id: 16, value: '16 ans' },
-                  { id: 17, value: '17 ans' },
-                ]}
-                withBorder={false}
-              />
-            </div>
-          )}
+          <div className={classNames({ 'mt-4 w-56': true, hidden: !watchNotAdultSelect })}>
+            <InputGroup
+              type="select"
+              name="age"
+              fullWidth={true}
+              placeholder="Sélectionnez l’âge"
+              register={register('age')}
+              control={control}
+              error={errors?.age?.message}
+              options={[
+                { id: 14, value: 'Moins de 15 ans' },
+                { id: 15, value: '15 ans' },
+                { id: 16, value: '16 ans' },
+                { id: 17, value: '17 ans' },
+              ]}
+              withBorder={false}
+            />
+          </div>
         </div>
 
         <div className="mt-5 flex flex-col gap-4">
@@ -309,9 +316,7 @@ const Declaration = () => {
 
         <div className="mb-8 flex-1" />
         <div className="w-40 self-center">
-          {errors?.adult && <div className="text-red-500">{errors.adult.message}</div>}
-
-          <Button fullWidth={true} type="submit" disabled={!age || !isValid}>
+          <Button fullWidth={true} type="submit">
             Valider
           </Button>
         </div>

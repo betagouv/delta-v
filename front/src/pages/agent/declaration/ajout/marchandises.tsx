@@ -45,8 +45,7 @@ const Declaration = () => {
     declarationAgentRequest,
     meansOfTransportAndCountry,
     defaultCurrency,
-    valueProducts,
-    amountProducts,
+    declarationAgentResponse,
   } = useStore(
     (state) => ({
       setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
@@ -56,8 +55,7 @@ const Declaration = () => {
       findProduct: state.findProduct,
       findDeclarationShoppingProductAgent: state.findDeclarationShoppingProductAgent,
       declarationId: state.declaration.appState.declarationAgentRequest?.declarationId,
-      valueProducts: state.declaration.appState.declarationAgentResponse?.valueProducts,
-      amountProducts: state.declaration.appState.declarationAgentResponse?.amountProducts,
+      declarationAgentResponse: state.declaration.appState.declarationAgentResponse,
       declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
       meansOfTransportAndCountry:
         state.declaration.appState.declarationAgentRequest.meansOfTransportAndCountry,
@@ -65,6 +63,9 @@ const Declaration = () => {
     }),
     shallow,
   );
+  const amountProducts = declarationAgentResponse?.amountProducts;
+  const valueProducts = declarationAgentResponse?.valueProducts;
+  const customProducts = declarationAgentResponse?.customProducts;
   const { trackEvent } = useMatomo();
   const router = useRouter();
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
@@ -78,6 +79,8 @@ const Declaration = () => {
   const [defaultValuesProduct, setDefaultValuesProduct] = useState<
     DefaultValuesUpdateProduct | undefined
   >();
+  const totalProducts =
+    (valueProducts?.length ?? 0) + (amountProducts?.length ?? 0) + (customProducts?.length ?? 0);
 
   useEffect(() => {
     setProductsDeclarationToDisplayAgent();
@@ -227,10 +230,9 @@ const Declaration = () => {
               <div className="w-full flex flex-col gap-4">
                 <div className="w-full flex flex-row justify-between items-center mb-1">
                   <Typography color="black" size="text-xs">
-                    Marchandises{' '}
-                    <b>{(valueProducts?.length ?? 0) + (amountProducts?.length ?? 0)}</b>
+                    Marchandises <b>{totalProducts}</b>
                   </Typography>
-                  {(valueProducts?.length ?? 0) + (amountProducts?.length ?? 0) > 0 && (
+                  {totalProducts > 0 && (
                     <Typography
                       color={isAvailableToEdit ? 'black' : 'primary'}
                       colorGradient="400"
@@ -255,6 +257,22 @@ const Declaration = () => {
                     }}
                     detailsButton
                     onEditClick={onModifyClick}
+                    withCalculation={declarationAgentResponse.canCalculateTaxes}
+                  />
+                ))}
+                {customProducts?.map((product, index) => (
+                  <ValueAgentProductBasket
+                    product={product}
+                    nomenclatures={[]}
+                    key={`${product.id}-${index}`}
+                    editable={isAvailableToEdit}
+                    onDelete={(id) => {
+                      setDeletedProductId(id);
+                      setOpenModalDeleteProduct(true);
+                    }}
+                    detailsButton
+                    onEditClick={onModifyClick}
+                    withCalculation={declarationAgentResponse.canCalculateTaxes}
                   />
                 ))}
                 {amountProducts &&
@@ -277,10 +295,7 @@ const Declaration = () => {
               <Button
                 type="submit"
                 onClick={() => onSubmit}
-                disabled={
-                  (!valueProducts?.length && !amountProducts?.length) ||
-                  !!amountProducts?.find((amountProduct) => amountProduct.isOverMaximum)
-                }
+                disabled={!declarationAgentResponse.canCreateDeclaration}
                 className={{ 'self-center': true }}
               >
                 Valider les marchandises

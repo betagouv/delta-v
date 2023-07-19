@@ -59,7 +59,13 @@ const ResetPasswordPage = () => {
     },
   });
 
-  const resetPasswordMutation = useResetPasswordMutation();
+  const resetPasswordMutation = useResetPasswordMutation({
+    onSuccess: () => {
+      setTimeout(() => {
+        router.push(RoutingAuthentication.login);
+      }, 1000);
+    },
+  });
   const apiError = resetPasswordMutation.error ?? undefined;
   const { data: apiSuccess } = resetPasswordMutation;
 
@@ -69,7 +75,6 @@ const ResetPasswordPage = () => {
         token: token as string,
         password: data.password,
       });
-      router.push(RoutingAuthentication.login);
     }
   };
 
@@ -135,18 +140,11 @@ const ResetPasswordPage = () => {
               </div>
             )}
           </div>
-
-          {apiError && (
-            <div className="ml-3">
-              <ApiError apiError={apiError} />
-            </div>
-          )}
-          {apiSuccess && (
-            <div className="ml-3">
-              <ApiSuccess apiSuccess={apiSuccess} />
-            </div>
-          )}
-          <div className="flex flex-col gap-4 w-36 pt-10 self-center pb-2">
+          <div className="pt-10 pb-2 flex">
+            {apiError && <ApiError apiError={apiError} />}
+            {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
+          </div>
+          <div className="flex flex-col gap-4 w-40 self-center pb-2">
             <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
               Valider
             </Button>

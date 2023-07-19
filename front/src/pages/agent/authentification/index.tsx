@@ -108,16 +108,16 @@ const LoginPage = () => {
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>
           <div className="mt-5 flex flex-col items-center gap-2">
-            <span>
-              <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
-                Valider
-              </Button>
-            </span>
             {apiError?.message && (
               <div className="ml-3">
                 <ApiError apiError={apiError} />
               </div>
             )}
+            <div className="w-40">
+              <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
+                Valider
+              </Button>
+            </div>
           </div>
         </form>
       </section>

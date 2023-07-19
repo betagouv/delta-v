@@ -29,7 +29,7 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
       })}
       key={detailedProduct.id}
     >
-      <div className="pt-5 px-5">
+      <div className="flex flex-col pt-5 px-5">
         <Typography color="black" size="text-xs" weight="bold">
           {detailedProduct.customName}
         </Typography>

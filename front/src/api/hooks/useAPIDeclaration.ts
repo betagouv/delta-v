@@ -15,6 +15,7 @@ import {
   ErrorResponse,
 } from '../lib/types';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
+import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export type UseDeclarationParams = {
   limit?: number;
@@ -45,19 +46,29 @@ export const useCreateDeclarationMutation = ({
   );
 };
 
+interface OnSuccessChangeStatusOptions {
+  data: ChangeStatusOfDeclarationResponse;
+  newStatus: DeclarationStatus;
+}
+
+interface OnSuccessGetDeclarationOptions {
+  data: DeclarationResponse;
+  newStatus?: DeclarationStatus;
+}
+
 export const useChangeStatusOfDeclarationMutation = ({
   onSuccess,
 }: {
-  onSuccess?: (data: ChangeStatusOfDeclarationResponse) => void;
+  onSuccess?: ({ data, newStatus }: OnSuccessChangeStatusOptions) => void;
 }) => {
   return useMutation<
     ChangeStatusOfDeclarationResponse,
     ErrorResponse,
     ChangeStatusOfDeclarationParams
   >(changeStatusOfDeclarationRequest, {
-    onSuccess: (data: ChangeStatusOfDeclarationResponse) => {
+    onSuccess: (data: ChangeStatusOfDeclarationResponse, params) => {
       if (onSuccess) {
-        onSuccess(data);
+        onSuccess({ data, newStatus: params.status });
       }
     },
   });
@@ -66,12 +77,16 @@ export const useChangeStatusOfDeclarationMutation = ({
 export const useDeclarationMutation = ({
   onSuccess,
 }: {
-  onSuccess?: (data: DeclarationResponse) => void;
+  onSuccess?: ({ data, newStatus }: OnSuccessGetDeclarationOptions) => void;
 }) => {
-  return useMutation<DeclarationResponse, ErrorResponse, string>(getDeclaration, {
-    onSuccess: (data: DeclarationResponse) => {
+  return useMutation<
+    DeclarationResponse,
+    ErrorResponse,
+    { id: string; fromNewStatus?: DeclarationStatus }
+  >(getDeclaration, {
+    onSuccess: (data: DeclarationResponse, params) => {
       if (onSuccess) {
-        onSuccess(data);
+        onSuccess({ data, newStatus: params.fromNewStatus });
       }
     },
   });

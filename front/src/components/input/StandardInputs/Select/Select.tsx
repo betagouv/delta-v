@@ -43,7 +43,7 @@ export const Select: React.FC<ISelectOptions> = ({
   });
 
   const getSelectedOption = () => {
-    return options.find((option) => option.id === field.value);
+    return options.find((option) => option.id === field.value) ?? null;
   };
 
   let classNameOptions =
@@ -71,14 +71,20 @@ export const Select: React.FC<ISelectOptions> = ({
                   'bg-secondary-200 text-secondary-400': disabled,
                   'border border-secondary-300 focus:ring-1 focus:ring-primary-600 focus:border-primary-600 border-solid':
                     withBorder,
-                  'border-red-300 focus:ring-red-500 focus:border-red-500': error,
+                  'border border-red-300 focus:ring-red-500 focus:border-red-500': error,
                 }),
               )}
             >
-              <span className="block truncate ml-2">
+              <span className={classNames({ 'block truncate ml-2': true, 'text-error': error })}>
                 {options.find((option) => option.id === field.value)?.value ?? placeholder}
               </span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex p-2.5 pr-5 items-center">
+              <span
+                className={classNames({
+                  'pointer-events-none absolute inset-y-0 right-0 flex p-2.5 pr-5 items-center':
+                    true,
+                  'text-error': error,
+                })}
+              >
                 {open ? (
                   <Icon name="chevron-thin-up" size="xl" />
                 ) : (

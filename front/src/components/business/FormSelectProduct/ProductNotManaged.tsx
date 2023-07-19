@@ -2,14 +2,13 @@ import { Button } from '@/components/common/Button';
 import { Card } from '@/components/common/Card';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
-import { Product } from '@/model/product';
 
 interface ProductNotManagedProps {
-  currentProduct: Product;
+  addProduct: () => void;
 }
 
 export const ProductNotManaged: React.FC<ProductNotManagedProps> = ({
-  currentProduct,
+  addProduct,
 }: ProductNotManagedProps) => {
   return (
     <div className="flex flex-col gap-6" data-testid="product-not-managed">
@@ -29,9 +28,9 @@ export const ProductNotManaged: React.FC<ProductNotManagedProps> = ({
 
       <div className=" flex w-full flex-col items-center">
         <div className="flex w-60 flex-col gap-4">
-          <Link to={`./${currentProduct.id}?allowNotManagedProduct=true`}>
-            <Button fullWidth>Enregistrer la marchandise</Button>
-          </Link>
+          <Button fullWidth onClick={addProduct}>
+            Enregistrer la marchandise
+          </Button>
         </div>
       </div>
 

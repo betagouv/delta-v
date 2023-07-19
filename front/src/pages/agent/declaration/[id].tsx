@@ -46,13 +46,18 @@ const DeclarationSearch = () => {
   const { isLoading, data: declarationResponse } = getDeclarationMutation;
 
   useEffect(() => {
-    getDeclarationMutation.mutate(id);
+    getDeclarationMutation.mutate({ id });
   }, [id]);
 
   const changeStatusOfDeclarationMutation = useChangeStatusOfDeclarationMutation({
-    onSuccess: () => {
+    onSuccess: ({ newStatus }) => {
       onClose();
-      getDeclarationMutation.mutate(id);
+      getDeclarationMutation.mutate({ id });
+      if (newStatus === DeclarationStatus.VALIDATED) {
+        setTimeout(() => {
+          setOpenPayDeclarationModal(true);
+        }, 250);
+      }
     },
   });
 

@@ -24,7 +24,7 @@ const DeclarationSearch = () => {
   const { isLoading, data: declarationResponse } = getDeclarationMutation;
 
   useEffect(() => {
-    getDeclarationMutation.mutate(id);
+    getDeclarationMutation.mutate({ id });
   }, [id]);
 
   return (

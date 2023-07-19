@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
+import classNames from 'classnames';
 
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
@@ -12,6 +13,7 @@ export interface IDownModalProps {
   bgColor?: string;
   children?: any;
   withoutMargin?: boolean;
+  defaultHeight?: boolean;
 }
 
 export const DownModal: React.FC<IDownModalProps> = ({
@@ -21,6 +23,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
   bgColor = 'bg-white',
   children,
   withoutMargin = false,
+  defaultHeight: fixedHeight = false,
 }: IDownModalProps) => {
   const handleOnClose = (): void => {
     if (onClose) {
@@ -32,11 +35,31 @@ export const DownModal: React.FC<IDownModalProps> = ({
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed bottom-0 z-40 h-auto w-full justify-center"
+        className={classNames({
+          'fixed bottom-0 z-40 w-full justify-center': true,
+          'h-[calc(100vh-50px)]': fixedHeight,
+          'h-auto': !fixedHeight,
+        })}
         onClose={handleOnClose}
       >
-        <Dialog.Overlay className="fixed inset-0 z-0 h-auto bg-black/60 transition-opacity" />
-        <div className="flex h-auto w-full text-center">
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black/60" />
+        </Transition.Child>
+        <div
+          className={classNames({
+            'flex w-full text-center': true,
+            'h-full': fixedHeight,
+            'h-auto': !fixedHeight,
+          })}
+        >
           {/* This element is to trick the browser into centering the Downmodal contents. */}
           <span className="hidden sm:inline-block sm:align-middle" aria-hidden="true">
             &#8203;
@@ -44,11 +67,11 @@ export const DownModal: React.FC<IDownModalProps> = ({
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
-            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            enterFrom="opacity-100 translate-y-full sm:translate-y-0 sm:scale-95"
             enterTo="opacity-100 translate-y-0 sm:scale-100"
             leave="ease-in duration-200"
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            leaveTo="opacity-100 translate-y-full sm:translate-y-0 sm:scale-95"
           >
             <div
               className={`inline-block h-full w-full rounded-t-3xl ${bgColor} ${
@@ -67,7 +90,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
                   </Dialog.Title>
                 </div>
               )}
-              {children && <div className="w-full">{children}</div>}
+              {children && <div className="w-full h-full">{children}</div>}
             </div>
           </Transition.Child>
         </div>

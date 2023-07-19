@@ -119,9 +119,9 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
 
   return (
     <>
-      <DownModal bgColor="bg-white" open={open} onClose={onCloseModal} withoutMargin>
-        <div className="h-[calc(100vh-50px)] flex flex-1 flex-col gap-6">
-          <div className="flex flex-1 flex-col gap-6 h-full">
+      <DownModal bgColor="bg-white" open={open} onClose={onCloseModal} withoutMargin defaultHeight>
+        <div className="min-h-[50vh] flex h-full flex-1 flex-col gap-6">
+          <div className="flex flex-1 flex-col gap-6">
             {currentProduct?.finalProduct ? (
               <AddProductCartDeclaration
                 currentProduct={currentProduct}
@@ -129,7 +129,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
                 onAddProduct={onAddProduct}
               />
             ) : (
-              <div className="px-4 py-5 h-full">
+              <div className="px-4 py-5">
                 <CategoryList
                   onSelectProduct={onSelectProduct}
                   productTree={productTree}

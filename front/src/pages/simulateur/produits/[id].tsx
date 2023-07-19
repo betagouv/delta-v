@@ -33,9 +33,6 @@ const ProductSearch = () => {
   const customName =
     typeof queryParams.customName === 'string' ? queryParams.customName : undefined;
   const id = typeof queryParams.id === 'string' ? queryParams.id : undefined;
-  const allowNotManagedProduct =
-    typeof queryParams.allowNotManagedProduct === 'string' &&
-    queryParams.allowNotManagedProduct === 'true';
   const currentProduct = findProduct(id as string);
   const onRedirectProduct = (idRedirect: string) => {
     router.push(`/simulateur/produits/${idRedirect}`);
@@ -90,7 +87,6 @@ const ProductSearch = () => {
             onAddProduct={onAddProduct}
             defaultCurrency={defaultCurrency}
             defaultName={customName}
-            allowNotManagedProduct={allowNotManagedProduct}
           />
         ) : (
           <CategoryList
