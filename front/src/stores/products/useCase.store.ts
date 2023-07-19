@@ -129,4 +129,8 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
     const products = get().products.appState.flattenAllProducts;
     return advancedSearch({ searchValue, searchList: products, searchKey: ['relatedWords'] });
   },
+  searchAllProducts: (searchValue: string) => {
+    const products = get().products.appState.flattenAllProducts;
+    return advancedSearch({ searchValue, searchList: products, searchKey: ['relatedWords'] });
+  },
 });
