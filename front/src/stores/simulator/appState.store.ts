@@ -1,3 +1,4 @@
+import clone from 'clone';
 import { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
@@ -116,6 +117,6 @@ export const SIMULATOR_EMPTY_STATE = {
 
 export const createSimulatorAppStateSlice: StoreSlice<SimulatorAppStateSlice> = () => ({
   simulator: {
-    appState: { ...SIMULATOR_EMPTY_STATE },
+    appState: clone(SIMULATOR_EMPTY_STATE),
   },
 });

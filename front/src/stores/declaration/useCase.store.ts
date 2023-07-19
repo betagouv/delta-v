@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import axios from 'axios';
+import clone from 'clone';
 import { countries } from 'countries-list';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -238,7 +239,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       const newProducts = newState.declaration.appState.declarationRequest.shoppingProducts.filter(
         (product: ShoppingProduct) => product.id !== id,
       );
-      newState.declaration.appState.declarationRequest.shoppingProducts = newProducts;
+      newState.declaration.appState.declarationRequest.shoppingProducts = [...newProducts];
       return newState;
     });
     get().declare();
@@ -303,26 +304,31 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
   resetDeclaration: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState.declarationRequest = {
-        ...DECLARATION_EMPTY_STATE.declarationRequest,
-      };
+      newState.declaration.appState.declarationRequest = clone(
+        DECLARATION_EMPTY_STATE.declarationRequest,
+      );
       return newState;
     });
   },
   resetDeclarationAgent: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState.declarationAgentRequest = {
-        ...DECLARATION_EMPTY_STATE.declarationAgentRequest,
-      };
+      newState.declaration.appState.declarationAgentRequest = clone(
+        DECLARATION_EMPTY_STATE.declarationAgentRequest,
+      );
       return newState;
     });
   },
   resetAllRequests: () => {
     set((state: any) => {
       const newState = { ...state };
-      newState.declaration.appState = { ...DECLARATION_EMPTY_STATE };
-      newState.simulator.appState = { ...SIMULATOR_EMPTY_STATE };
+      newState.declaration.appState.declarationRequest = clone(
+        DECLARATION_EMPTY_STATE.declarationRequest,
+      );
+      newState.declaration.appState.declarationResponse = clone(
+        DECLARATION_EMPTY_STATE.declarationResponse,
+      );
+      newState.simulator.appState = clone(SIMULATOR_EMPTY_STATE);
       return newState;
     });
   },

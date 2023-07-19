@@ -1,15 +1,15 @@
 /* eslint-disable no-nested-ternary */
 
-import { FieldErrors } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
+import { getSchema } from './schema';
 import { Button } from '@/components/common/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 
 interface FormContactDetailsProps {
-  register: any;
-  control: any;
-  validData?: boolean;
-  errors: FieldErrors;
+  onSubmit: (data: FormDeclarationData) => void;
+  defaultValues?: Partial<FormDeclarationData>;
 }
 
 export interface FormDeclarationData {
@@ -22,14 +22,20 @@ export interface FormDeclarationData {
   phoneNumber: string;
 }
 
-export const FormContactDetails = ({
-  register,
-  control,
-  errors,
-  validData,
-}: FormContactDetailsProps) => {
+export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetailsProps) => {
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors, isValid },
+  } = useForm<FormDeclarationData>({
+    mode: 'onBlur',
+    resolver: yupResolver(getSchema()),
+    defaultValues,
+  });
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 mb-4">
           <div className="w-56">
@@ -127,9 +133,9 @@ export const FormContactDetails = ({
       </div>
 
       <div className="mb-8 flex-1" />
-      <Button fullWidth={true} type="submit" disabled={!validData}>
+      <Button fullWidth={true} type="submit" disabled={!isValid}>
         Valider
       </Button>
-    </>
+    </form>
   );
 };

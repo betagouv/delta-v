@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 
 import { SummaryDeclaration } from './SummaryDeclaration';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
-import { MeansOfTransport } from '@/stores/simulator/appState.store';
+import { MeansOfTransport, ProductStatus } from '@/stores/simulator/appState.store';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
@@ -35,36 +35,23 @@ const declarationResponse: DeclarationResponse = {
   totalTaxesAmount: faker.datatype.number(),
   totalVatAmount: faker.datatype.number(),
   versionDate: faker.date.recent(),
+  canCalculateTaxes: true,
   products: [
     {
-      id: 'test',
-      name: 'Vètements Adulte',
-      customName: 'Jean Levis',
-      customId: '12',
-      customDuty: 0.05,
-      vat: 0.1,
-      unitPrice: 400,
-      originalCurrency: 'EUR',
-      originalPrice: 400,
-      rateCurrency: 1,
-      unitCustomDuty: 0,
-      unitVat: 0,
-      unitTaxes: 0,
-    },
-    {
-      id: 'test2',
-      name: 'Smartphone',
-      customName: 'Iphone 11',
-      customId: '13',
-      customDuty: 0.05,
-      vat: 0.1,
-      unitPrice: 200,
-      originalCurrency: 'EUR',
-      originalPrice: 200,
-      rateCurrency: 1,
-      unitCustomDuty: 10,
-      unitVat: 20,
-      unitTaxes: 30,
+      id: faker.datatype.uuid(),
+      status: ProductStatus.AMOUNT_PRODUCT,
+      name: faker.commerce.productName(),
+      customDuty: faker.datatype.number(),
+      customId: faker.datatype.uuid(),
+      notManagedProduct: false,
+      originalCurrency: faker.finance.currencyCode(),
+      originalPrice: faker.datatype.number(),
+      rateCurrency: faker.datatype.number(),
+      unitCustomDuty: faker.datatype.number(),
+      unitTaxes: faker.datatype.number(),
+      unitVat: faker.datatype.number(),
+      vat: faker.datatype.number(),
+      unitPrice: faker.datatype.number(),
     },
   ],
 };

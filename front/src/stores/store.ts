@@ -1,5 +1,7 @@
 /* eslint-disable import/no-cycle */
+import clone from 'clone';
 import { countries } from 'countries-list';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -132,7 +134,7 @@ export const useStore = create<StoreState>(
         }
 
         if (version < 5) {
-          newPersistedState.declaration.appState = { ...DECLARATION_EMPTY_STATE };
+          newPersistedState.declaration.appState = clone(DECLARATION_EMPTY_STATE);
         }
 
         return newPersistedState;
@@ -140,6 +142,10 @@ export const useStore = create<StoreState>(
     },
   ),
 );
+
+if (process.env.NODE_ENV === 'development') {
+  mountStoreDevtool('Store', useStore);
+}
 
 export const clearStore = () => {
   localStorage.removeItem('app-storage');

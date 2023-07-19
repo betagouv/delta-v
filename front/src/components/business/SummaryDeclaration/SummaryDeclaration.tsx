@@ -220,7 +220,6 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
                     ))}
                   </div>
                 </div>
-                <div className="-mx-4 my-4 border-b-2 border-dashed" />
               </>
             )}
             {hasTobaccoProducts && (
@@ -237,8 +236,10 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
                     ))}
                   </div>
                 </div>
-                <div className="-mx-4 my-4 border-b-2 border-dashed" />
               </>
+            )}
+            {(hasAlcoholProducts || hasTobaccoProducts) && (
+              <div className="-mx-4 my-4 border-b-2 border-dashed" />
             )}
             {(hasValueProducts || hasCustomProducts) && (
               <div className="mt-4 flex flex-row">

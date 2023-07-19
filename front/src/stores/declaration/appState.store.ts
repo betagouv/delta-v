@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import clone from 'clone';
 import { Alpha2Code } from 'i18n-iso-countries';
 
 import { DetailedProduct, ShoppingProduct, SimulatorResponse } from '../simulator/appState.store';
@@ -139,6 +140,6 @@ export const DECLARATION_EMPTY_STATE: DeclarationData = {
 
 export const createDeclarationAppStateSlice: StoreSlice<DeclarationAppStateSlice> = () => ({
   declaration: {
-    appState: { ...DECLARATION_EMPTY_STATE },
+    appState: clone(DECLARATION_EMPTY_STATE),
   },
 });

@@ -153,6 +153,7 @@ const Panier = () => {
                   onUpdateProduct={() => {
                     router.push(`/declaration/panier/modifier/${product.customId}`);
                   }}
+                  key={product.customId}
                 />
               ))}
               {amountProduct.isOverMaximum && (

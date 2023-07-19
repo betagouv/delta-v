@@ -2,15 +2,12 @@
 
 import { useState } from 'react';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
-import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { ModalCancelDeclaration } from '@/components/autonomous/ModalCancelDeclaration';
 import { FormContactDetails } from '@/components/business/FormContactDetails';
-import { getSchema } from '@/components/business/FormContactDetails/schema';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 
@@ -36,17 +33,6 @@ const SimulatorDeclaration = () => {
     }),
     shallow,
   );
-
-  const {
-    handleSubmit,
-    register,
-    control,
-    formState: { errors, isValid },
-  } = useForm<FormDeclarationData>({
-    mode: 'onBlur',
-    resolver: yupResolver(getSchema()),
-    defaultValues: {},
-  });
 
   const createDeclarationMutation = useCreateDeclarationMutation({
     onSuccess: () => {
@@ -83,17 +69,8 @@ const SimulatorDeclaration = () => {
   };
 
   return (
-    <DeclarationSteps
-      handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
-      onSubmit={onSubmitSimulation}
-      onClickBack={onCancelDeclaration}
-    >
-      <FormContactDetails
-        register={register}
-        control={control}
-        errors={errors}
-        validData={isValid}
-      />
+    <DeclarationSteps onClickBack={onCancelDeclaration}>
+      <FormContactDetails onSubmit={onSubmitSimulation} />
       <ModalCancelDeclaration
         open={openModalCancelDeclaration}
         onClose={() => setOpenModalCancelDeclaration(false)}

@@ -30,6 +30,7 @@
     "@tailwindcss/line-clamp": "0.4.2",
     "axios": "^0.26.1",
     "classnames": "^2.3.1",
+    "clone": "^2.1.2",
     "countries-list": "^2.6.1",
     "currency.js": "2.0.4",
     "currency-symbol-map": "^5.1.0",
@@ -61,7 +62,8 @@
     "tailwind-merge": "^1.13.2",
     "uuid": "8.3.2",
     "yup": "0.32.11",
-    "zustand": "3.7.2"
+    "zustand": "3.7.2",
+    "simple-zustand-devtools": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.18.5",
@@ -79,6 +81,7 @@
     "@svgr/webpack": "6.5.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
+    "@types/clone": "^2.1.1",
     "@types/jest": "29.1.2",
     "@types/js-cookie": "^3.0.3",
     "@types/jwt-decode": "^3.1.0",
@@ -112,7 +115,6 @@
     "jest-environment-jsdom": "29.5.0",
     "js-flipper": "0.153.0",
     "lint-staged": "13.0.2",
-    "lodash": "^4.17.21",
     "npm-run-all": "4.1.5",
     "postcss": "8.4.14",
     "postcss-100vh-fix": "1.0.2",
