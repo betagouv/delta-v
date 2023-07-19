@@ -8,6 +8,7 @@ import { SummaryCustomProduct } from '@/components/business/SummarySimulator/pro
 import { SummaryValueProduct } from '@/components/business/SummarySimulator/products/SummaryValueProduct';
 import { Typography } from '@/components/common/Typography';
 import { Color } from '@/components/common/Typography/style/typography.style';
+import { isAlcoholProductType, isTobaccoProductType } from '@/model/amount';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { DetailedProduct, ProductStatus } from '@/stores/simulator/appState.store';
 import { getMeanOfTransport } from '@/utils/meansOfTransport.util';
@@ -54,9 +55,15 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
     declarationResponse?.products,
   );
 
+  const alcoholProducts =
+    amountProducts?.filter((product: DetailedProduct) => isAlcoholProductType(product)) ?? [];
+  const tobaccoProducts =
+    amountProducts?.filter((product: DetailedProduct) => isTobaccoProductType(product)) ?? [];
+
   const hasValueProducts = (valueProducts?.length ?? 0) > 0;
   const hasCustomProducts = (customProducts?.length ?? 0) > 0;
-  const hasAmountProduct = (amountProducts?.length ?? 0) > 0;
+  const hasAlcoholProducts = (alcoholProducts?.length ?? 0) > 0;
+  const hasTobaccoProducts = (tobaccoProducts?.length ?? 0) > 0;
 
   return (
     <div className="rounded-xl border border-secondary-600 p-4">
@@ -199,13 +206,37 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
       {(declarationResponse.products?.length ?? 0) > 0 && (
         <>
           <div>
-            {hasAmountProduct && (
+            {hasAlcoholProducts && (
               <>
-                {amountProducts.map((product, index) => (
-                  <div key={index}>
-                    <SummaryAmountProduct product={product} hideDetails={hideDetails} />
+                <div className="flex flex-col">
+                  <Typography color="light-gray" size="text-2xs">
+                    Alcool
+                  </Typography>
+                  <div className="flex flex-col gap-4">
+                    {alcoholProducts.map((product, index) => (
+                      <div key={index}>
+                        <SummaryAmountProduct product={product} hideDetails={hideDetails} />
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+                <div className="-mx-4 my-4 border-b-2 border-dashed" />
+              </>
+            )}
+            {hasTobaccoProducts && (
+              <>
+                <div className="flex flex-col">
+                  <Typography color="light-gray" size="text-2xs">
+                    Tabac
+                  </Typography>
+                  <div className="flex flex-col gap-4">
+                    {tobaccoProducts.map((product, index) => (
+                      <div key={index}>
+                        <SummaryAmountProduct product={product} hideDetails={hideDetails} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div className="-mx-4 my-4 border-b-2 border-dashed" />
               </>
             )}

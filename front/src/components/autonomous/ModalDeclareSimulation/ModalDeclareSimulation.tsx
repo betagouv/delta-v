@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Button } from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
+import { Routing } from '@/utils/const';
 
 interface ModalDeclareSimulationProps {
   open: boolean;
@@ -16,7 +17,7 @@ export const ModalDeclareSimulation: React.FC<ModalDeclareSimulationProps> = ({
 }) => {
   const router = useRouter();
   const onDeclare = (): void => {
-    router.push('/declaration/ajout/coordonnees?from=simulateur');
+    router.push(Routing.simulatorDeclaration);
     if (onClose) {
       onClose();
     }

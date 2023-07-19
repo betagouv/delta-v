@@ -1,17 +1,12 @@
 /* eslint-disable no-nested-ternary */
 
-import { useState } from 'react';
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
-import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
-import { ModalCancelDeclaration } from '@/components/autonomous/ModalCancelDeclaration';
-import { Button } from '@/components/common/Button';
-import { InputGroup } from '@/components/input/InputGroup';
+import { FormContactDetails } from '@/components/business/FormContactDetails';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
@@ -29,23 +24,11 @@ export interface FormDeclarationData {
 
 const Declaration = () => {
   const router = useRouter();
-  const { from } = router.query;
-  const [openModalCancelDeclaration, setOpenModalCancelDeclaration] = useState(false);
 
-  const {
-    validateDeclarationStep2,
-    contactDetails,
-    simulatorRequest,
-    declarationId,
-    resetAllRequests,
-  } = useStore(
+  const { validateDeclarationStep2, contactDetails } = useStore(
     (state) => ({
       validateDeclarationStep2: state.validateDeclarationStep2,
-      contactDetails:
-        from === 'simulateur' ? {} : state.declaration.appState.declarationRequest?.contactDetails,
-      declarationId: state.simulator.appState.simulatorRequest?.declarationId,
-      simulatorRequest: state.simulator.appState.simulatorRequest,
-      resetAllRequests: state.resetAllRequests,
+      contactDetails: state.declaration.appState.declarationRequest?.contactDetails,
     }),
     shallow,
   );
@@ -116,149 +99,17 @@ const Declaration = () => {
     router.push(`/declaration/ajout/transports`);
   };
 
-  const createDeclarationMutation = useCreateDeclarationMutation({
-    onSuccess: () => {
-      resetAllRequests();
-      router.push(`/declaration/${declarationId}`);
-    },
-  });
-
-  const onSubmitSimulation = (data: FormDeclarationData) => {
-    if (!declarationId) return;
-    createDeclarationMutation.mutate({
-      declarationId,
-      contactDetails: {
-        lastName: data.lastName,
-        firstName: data.firstName,
-        address: data.address,
-        city: data.city,
-        postalCode: data.postalCode,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-        age: simulatorRequest.age,
-      },
-      shoppingProducts: simulatorRequest.shoppingProducts,
-      border: simulatorRequest.border,
-      meansOfTransportAndCountry: {
-        meansOfTransport: simulatorRequest.meanOfTransport,
-        country: simulatorRequest.country,
-      },
-    });
-  };
-
-  console.log('from', from === 'simulateur');
-
   return (
     <DeclarationSteps
       handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
-      onSubmit={from === 'simulateur' ? onSubmitSimulation : onSubmit}
-      linkButton={
-        from === 'simulateur' ? Routing.simulatorSummary : Routing.declarationContactDetails
-      }
+      onSubmit={onSubmit}
+      linkButton={Routing.declarationAge}
     >
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4 mb-4">
-          <div className="w-56">
-            <InputGroup
-              type="text"
-              name="lastName"
-              label="Nom"
-              fullWidth={true}
-              placeholder="Nom"
-              register={register('lastName')}
-              control={control}
-              error={errors?.lastName?.message}
-              required
-            />
-          </div>
-          <div className="w-56">
-            <InputGroup
-              type="text"
-              name="firstName"
-              label="Prénom"
-              fullWidth={true}
-              placeholder="Prénom"
-              register={register('firstName')}
-              control={control}
-              error={errors?.firstName?.message}
-              required
-            />
-          </div>
-        </div>
-        <div className="flex flex-col gap-4 mb-4">
-          <InputGroup
-            type="text"
-            name="address"
-            label="Adresse"
-            fullWidth={true}
-            placeholder="Adresse"
-            register={register('address')}
-            control={control}
-            error={errors?.address?.message}
-            required
-          />
-          <div className="flex flex-row gap-4 w-full">
-            <div className="w-28">
-              <InputGroup
-                type="text"
-                name="postalCode"
-                label="Code postal"
-                fullWidth={true}
-                placeholder="CP"
-                register={register('postalCode')}
-                control={control}
-                error={errors?.postalCode?.message}
-                required
-              />
-            </div>
-            <div className="flex-1">
-              <InputGroup
-                type="text"
-                name="city"
-                label="Ville"
-                fullWidth={true}
-                placeholder="Ville"
-                register={register('city')}
-                control={control}
-                error={errors?.city?.message}
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-4 mb-4">
-          <InputGroup
-            type="text"
-            name="mail"
-            fullWidth={true}
-            placeholder="Mail"
-            label="Mail"
-            register={register('email')}
-            control={control}
-            error={errors?.email?.message}
-            required
-          />
-          <InputGroup
-            type="text"
-            name="phone"
-            label="Téléphone"
-            fullWidth={false}
-            placeholder="06..."
-            register={register('phoneNumber')}
-            control={control}
-            error={errors?.phoneNumber?.message}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="mb-8 flex-1" />
-      <Button fullWidth={true} type="submit" disabled={!isValid}>
-        Valider
-      </Button>
-      <ModalCancelDeclaration
-        open={openModalCancelDeclaration}
-        onClose={() => setOpenModalCancelDeclaration(false)}
+      <FormContactDetails
+        register={register}
+        control={control}
+        errors={errors}
+        validData={isValid}
       />
     </DeclarationSteps>
   );

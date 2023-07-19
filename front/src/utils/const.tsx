@@ -15,9 +15,11 @@ export enum Routing {
   simulatorBasket = '/simulateur/panier',
   simulatorProduct = '/simulateur/produits',
   simulatorSummary = '/simulateur/recapitulatif',
+  simulatorDeclaration = '/simulateur/declaration',
   simulatorStep3 = '/simulateur/configuration/etape3',
   declarationProducts = '/declaration/produits',
-  declarationContactDetails = '/declaration/coordonnees',
+  declarationAge = '/declaration/ajout/age',
+  declarationContactDetails = '/declaration/ajout/coordonnees',
   declarationTransport = '/declaration/ajout/transports',
 }
 

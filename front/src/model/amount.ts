@@ -1,4 +1,5 @@
 import { AmountProduct } from './product';
+import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 export const getAmountCategoryName = (key: string): string => {
   switch (key) {
@@ -67,6 +68,33 @@ export const getAmountProductType = (amountProduct: AmountProduct): 'alcohol' | 
     default:
       return 'alcohol';
   }
+};
+
+export const isAlcoholProductType = (detailedProduct: DetailedProduct): boolean => {
+  if (
+    detailedProduct.amountProduct === AmountProduct.softAlcohol ||
+    detailedProduct.amountProduct === AmountProduct.alcoholIntermediate ||
+    detailedProduct.amountProduct === AmountProduct.strongAlcohol ||
+    detailedProduct.amountProduct === AmountProduct.spiritDrink ||
+    detailedProduct.amountProduct === AmountProduct.beer ||
+    detailedProduct.amountProduct === AmountProduct.wine ||
+    detailedProduct.amountProduct === AmountProduct.sparklingWine
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export const isTobaccoProductType = (detailedProduct: DetailedProduct): boolean => {
+  if (
+    detailedProduct.amountProduct === AmountProduct.cigarette ||
+    detailedProduct.amountProduct === AmountProduct.cigarillos ||
+    detailedProduct.amountProduct === AmountProduct.cigar ||
+    detailedProduct.amountProduct === AmountProduct.tobacco
+  ) {
+    return true;
+  }
+  return false;
 };
 
 export const getUnit = (amountProduct?: AmountProduct): string | undefined => {

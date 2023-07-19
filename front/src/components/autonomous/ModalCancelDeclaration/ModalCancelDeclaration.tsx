@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Button } from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
+import { Routing } from '@/utils/const';
 
 interface ModalCancelDeclarationProps {
   open: boolean;
@@ -16,7 +17,7 @@ export const ModalCancelDeclaration: React.FC<ModalCancelDeclarationProps> = ({
 }) => {
   const router = useRouter();
   const onDeclare = (): void => {
-    router.push('/simulation/recapitulatif');
+    router.push(Routing.simulatorSummary);
     if (onClose) {
       onClose();
     }
