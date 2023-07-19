@@ -77,8 +77,7 @@ jobs:
 
   deploy-back-production:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.job == 'prod-deploy'}}
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || ${{ github.event.inputs.job == 'prod-deploy'}}
     needs: test-back
     steps:
       - uses: actions/checkout@v3
