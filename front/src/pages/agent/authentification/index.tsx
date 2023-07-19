@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { useLoginMutation } from '@/api/hooks/useAPIAuth';
+import { useAskEmailValidationMutation, useLoginMutation } from '@/api/hooks/useAPIAuth';
 import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
 import { Link } from '@/components/common/Link';
@@ -35,6 +35,7 @@ const LoginPage = () => {
     register,
     formState: { errors },
     formState: { isDirty, isValid },
+    getValues,
   } = useForm<FormLoginData>({
     defaultValues: {
       email: undefined,
@@ -56,10 +57,24 @@ const LoginPage = () => {
     },
   });
 
+  const resendEmailMutation = useAskEmailValidationMutation({
+    onSuccess: () => {
+      router.push(`${RoutingAuthentication.registerSuccess}?email=${getValues('email')}`);
+    },
+  });
+
   const apiError = loginMutation.error ?? undefined;
+  const isNotValidatedAccountError = apiError?.code === 'user-not-enabled-unauthorized';
 
   const onSubmit = async (data: FormLoginData) => {
     loginMutation.mutate(data);
+  };
+
+  const handleResend = () => {
+    const email = getValues('email');
+    if (email) {
+      resendEmailMutation.mutate(email);
+    }
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -109,9 +124,20 @@ const LoginPage = () => {
           </TextLink>
           <div className="mt-5 flex flex-col items-center gap-2">
             {apiError?.message && (
-              <div className="ml-3">
-                <ApiError apiError={apiError} />
-              </div>
+              <>
+                <div className="ml-3">
+                  <ApiError apiError={apiError} />
+                </div>
+                {isNotValidatedAccountError && (
+                  <div className="my-2">
+                    <Typography textPosition="text-center" color="primary" size="text-xs" underline>
+                      <span className="cursor-pointer" onClick={handleResend}>
+                        Renvoyer le lien
+                      </span>
+                    </Typography>
+                  </div>
+                )}
+              </>
             )}
             <div className="w-40">
               <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
