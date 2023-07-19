@@ -1,6 +1,4 @@
-import { Routing } from './const';
 import { DeclarationRequest } from '@/stores/declaration/appState.store';
-import { SimulatorRequest } from '@/stores/simulator/appState.store';
 
 export interface RouteLevel {
   path: string;
@@ -30,11 +28,8 @@ export const routes: RouteLevel[] = [
   },
 ];
 
-export const getLevelWithData = (
-  declarationRequest: DeclarationRequest,
-  simulatorRequest: SimulatorRequest,
-): number => {
-  if (declarationRequest.contactDetails.age === undefined && simulatorRequest.age === undefined) {
+export const getLevelWithData = (declarationRequest: DeclarationRequest): number => {
+  if (declarationRequest.contactDetails.age === undefined) {
     return 1;
   }
   if (
@@ -62,12 +57,4 @@ export const getLevelWithData = (
 
 export const getCurrentLevelPath = (path: string): number => {
   return routes.find((route) => path.startsWith(route.path))?.level ?? 1;
-};
-
-export const getCurrentPath = (
-  declarationRequest: DeclarationRequest,
-  simulatorRequest: SimulatorRequest,
-): string => {
-  const currentLevel = getLevelWithData(declarationRequest, simulatorRequest);
-  return routes.find((route) => route.level === currentLevel)?.path ?? Routing.home;
 };

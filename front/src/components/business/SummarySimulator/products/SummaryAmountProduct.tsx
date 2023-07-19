@@ -13,9 +13,9 @@ export const SummaryAmountProduct: React.FC<SummaryAmountProductProps> = ({
   product,
 }: SummaryAmountProductProps) => {
   return (
-    <div key={product.customId} className="mt-1 mb-4 ">
+    <div key={product.customId} className="mb-4 ">
       <div className="flex flex-row">
-        <div>
+        <div className="flex flex-col gap-0">
           <Typography color="secondary" weight="bold">
             {product.name}
           </Typography>

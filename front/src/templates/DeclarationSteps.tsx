@@ -8,8 +8,8 @@ import { Meta } from '@/layout/Meta';
 
 type IMainProps = {
   children: ReactNode;
-  handleSubmit: UseFormHandleSubmit<any>;
-  onSubmit: (data: any) => void;
+  handleSubmit?: UseFormHandleSubmit<any>;
+  onSubmit?: (data: any) => void;
   simpleBg?: boolean;
   linkButton?: string;
   onClickBack?: () => void;
@@ -50,14 +50,25 @@ const DeclarationSteps = ({
       linkButton={linkButton}
       onClickBack={onClickBack}
     >
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={classNames({
-          'flex flex-1 flex-col h-full': true,
-        })}
-      >
-        {children}
-      </form>
+      {handleSubmit && onSubmit && (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={classNames({
+            'flex flex-1 flex-col h-full': true,
+          })}
+        >
+          {children}
+        </form>
+      )}
+      {(!handleSubmit || !onSubmit) && (
+        <div
+          className={classNames({
+            'flex flex-1 flex-col h-full': true,
+          })}
+        >
+          {children}
+        </div>
+      )}
     </Main>
   );
 };

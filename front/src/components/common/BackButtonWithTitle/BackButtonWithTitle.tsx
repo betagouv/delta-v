@@ -11,8 +11,9 @@ type Props = {
 };
 
 export const BackButtonWithTitle = ({ title, href, onClick }: Props) => {
+  const Component = onClick ? Link : 'div';
   return (
-    <Link back={!href} href={href} onClick={onClick}>
+    <Component back={!href} href={href} onClick={onClick}>
       <div className="flex flex-row items-center">
         <div className="mr-4 items-center justify-center rounded-full bg-secondary-500 p-1 px-2">
           <Icon name="chevron-thin-left" size="base" />
@@ -21,6 +22,6 @@ export const BackButtonWithTitle = ({ title, href, onClick }: Props) => {
           {title}
         </Typography>
       </div>
-    </Link>
+    </Component>
   );
 };
