@@ -17,7 +17,7 @@ const RegisterSuccessPage = () => {
   const router = useRouter();
   const { email } = router.query;
 
-  const resendEmailMutation = useAskEmailValidationMutation();
+  const resendEmailMutation = useAskEmailValidationMutation({});
 
   const handleResend = () => {
     if (typeof email === 'string') {

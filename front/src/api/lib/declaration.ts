@@ -124,9 +124,7 @@ interface GetDeclarationOptions {
 
 export const getDeclaration = async ({
   id,
-  fromNewStatus,
 }: GetDeclarationOptions): Promise<DeclarationResponse> => {
-  console.log('getDeclaration', id, fromNewStatus);
   const { data } = await axios.get<{ declaration: DeclarationResponse }>(`/declaration/${id}/`);
   return data.declaration;
 };

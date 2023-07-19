@@ -33,7 +33,6 @@ export const ValueAgentProductBasket = ({
   withCalculation = true,
 }: ValueAgentProductBasketProps) => {
   const [open, setOpen] = useState(false);
-  console.log(product);
 
   return (
     <div className={cs('relative flex flex-col rounded-md w-full bg-[#E3E3FD]')}>

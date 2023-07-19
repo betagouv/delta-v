@@ -1,6 +1,7 @@
+import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/router';
 
-import { useValidationEmailMutation } from '@/api/hooks/useAPIAuth';
+import { useAskEmailValidationMutation, useValidationEmailMutation } from '@/api/hooks/useAPIAuth';
 import { ApiError } from '@/components/common/ApiError';
 import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
@@ -12,6 +13,7 @@ import { RoutingAuthentication } from '@/utils/const';
 const RegisterValidationPage = () => {
   const router = useRouter();
   const { token } = router.query;
+  const { email: emailFromToken } = jwtDecode<{ email: string }>(token as string);
 
   const onSuccess = () => {
     setTimeout(() => {
@@ -21,10 +23,23 @@ const RegisterValidationPage = () => {
 
   const validationEmailMutation = useValidationEmailMutation({ onSuccess });
   const apiError = validationEmailMutation.error;
+  const isNotValidatedAccountError = apiError?.code === 'user-not-enabled-unauthorized';
   const { data: apiSuccess } = validationEmailMutation;
+
+  const resendEmailMutation = useAskEmailValidationMutation({
+    onSuccess: () => {
+      router.push(`${RoutingAuthentication.registerSuccess}?email=${emailFromToken}`);
+    },
+  });
 
   const handleValidate = () => {
     validationEmailMutation.mutate(token as string);
+  };
+
+  const handleResend = () => {
+    if (emailFromToken) {
+      resendEmailMutation.mutate(emailFromToken);
+    }
   };
 
   return (
@@ -70,7 +85,20 @@ const RegisterValidationPage = () => {
             l’application dès à présent !
           </Typography>
           <div className="pt-6 pb-2 flex">
-            {apiError && <ApiError apiError={apiError} />}
+            {apiError && (
+              <>
+                <ApiError apiError={apiError} />
+                {isNotValidatedAccountError && (
+                  <div className="my-2">
+                    <Typography textPosition="text-center" color="primary" size="text-xs" underline>
+                      <span className="cursor-pointer" onClick={handleResend}>
+                        Renvoyer le lien
+                      </span>
+                    </Typography>
+                  </div>
+                )}
+              </>
+            )}
             {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
           </div>
         </div>
