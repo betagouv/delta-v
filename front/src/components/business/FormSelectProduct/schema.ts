@@ -13,7 +13,6 @@ const getValue = (amountProduct: boolean): any => {
       if (!originalValue) {
         return undefined;
       }
-      console.log('originalValue', originalValue);
 
       return Number(originalValue.toString().replace(/,/, '.'));
     })

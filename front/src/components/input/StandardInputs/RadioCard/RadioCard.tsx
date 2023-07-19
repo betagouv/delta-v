@@ -10,6 +10,7 @@ export interface IRadioCardType {
   value: string;
   disabled?: boolean;
   svgIcon: SvgNames;
+  selected?: boolean;
 }
 
 export interface IRadioOptions {
@@ -58,7 +59,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               disabled={radioCardValue.disabled}
               checked={radioCardValue.id === field.value}
               onClick={() => {
-                field.onChange(radioCardValue.id);
+                field.onChange(field.value === radioCardValue.id ? undefined : radioCardValue.id);
               }}
             />
           ) : (
@@ -70,7 +71,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               checked={radioCardValue.id === field.value}
               bigSize={bigSize}
               onClick={() => {
-                field.onChange(radioCardValue.id);
+                field.onChange(field.value === radioCardValue.id ? undefined : radioCardValue.id);
               }}
             />
           ),

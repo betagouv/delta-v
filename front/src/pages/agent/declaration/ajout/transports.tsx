@@ -32,26 +32,31 @@ const meansOfTransports: IRadioCardType[] = [
     id: 'car',
     value: 'Voiture',
     svgIcon: 'car',
+    selected: false,
   },
   {
     id: 'plane',
     value: 'Avion',
     svgIcon: 'plane',
+    selected: false,
   },
   {
     id: 'train',
     value: 'Train',
     svgIcon: 'train',
+    selected: false,
   },
   {
     id: 'boat',
     value: 'Bateau',
     svgIcon: 'boat',
+    selected: false,
   },
   {
     id: 'other',
     value: 'Autre',
     svgIcon: 'other',
+    selected: false,
   },
 ];
 
@@ -99,7 +104,6 @@ const Declaration = () => {
     getValues('meansOfTransport'),
   );
 
-  const [isPlane, setIsPlane] = useState(getValues('meansOfTransport') === 'plane');
   const [isFrontalier, setIsFrontalier] = useState(getValues('country') === 'CH');
 
   const onSubmit = (data: MeansOfTransportAndCountryData) => {
@@ -117,12 +121,7 @@ const Declaration = () => {
 
   register('meansOfTransport', {
     onChange: (e) => {
-      setTransportChosen(e.target.value);
-      if (e.target.value === 'plane') {
-        setIsPlane(true);
-      } else {
-        setIsPlane(false);
-      }
+      setTransportChosen(e.target.value === transportChosen ? undefined : e.target.value);
     },
   });
 
@@ -206,7 +205,7 @@ const Declaration = () => {
             />
           </div>
         )}
-        {isPlane && (
+        {transportChosen === 'plane' && (
           <div className="mt-4 flex flex-row items-center">
             <div className="w-52">
               <InputGroup
