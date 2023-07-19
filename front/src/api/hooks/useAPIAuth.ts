@@ -68,9 +68,18 @@ export const useValidationEmailMutation = ({
   });
 };
 
-export const useAskEmailValidationMutation = () => {
+export const useAskEmailValidationMutation = ({
+  onSuccess,
+}: MutationSuccessCallback<ICommonResponse>) => {
   return useMutation<ICommonResponse, IErrorResponse, string | undefined>(
     askEmailValidationRequest,
+    {
+      onSuccess: (data: ICommonResponse) => {
+        if (onSuccess) {
+          onSuccess(data);
+        }
+      },
+    },
   );
 };
 
