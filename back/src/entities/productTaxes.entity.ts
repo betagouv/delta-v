@@ -29,6 +29,7 @@ export interface ProductTaxesInterface {
   rateCurrency: number;
   customDuty: number;
   vat: number;
+  notManagedProduct: boolean;
   setFromProductTaxes(productTaxes: ProductTaxesInterface): ProductTaxesInterface;
   setFromDetailedShoppingProduct(
     detailedShoppingProduct: DetailedShoppingProduct,
@@ -51,6 +52,7 @@ export interface ProductTaxesConstructorOptions {
   originalCurrency?: string;
   rateCurrency?: number;
   vat?: number;
+  notManagedProduct?: boolean;
 }
 
 export const LIMIT_UNIQUE_CUSTOM_DUTY = 700;
@@ -67,6 +69,7 @@ export class ProductTaxes implements ProductTaxesInterface {
   private _rateCurrency: number;
   private _vat: number;
   private _customDuty: number;
+  private _notManagedProduct: boolean;
 
   constructor({
     id,
@@ -90,6 +93,7 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._originalCurrency = originalCurrency ?? 'EUR';
     this._rateCurrency = rateCurrency ?? 1;
     this._vat = vat ?? 0;
+    this._notManagedProduct = false;
 
     return this;
   }
@@ -105,6 +109,7 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._rateCurrency = productTaxes.rateCurrency;
     this._customDuty = productTaxes.customDuty;
     this._vat = productTaxes.vat;
+    this._notManagedProduct = productTaxes.notManagedProduct;
 
     return this;
   };
@@ -129,6 +134,7 @@ export class ProductTaxes implements ProductTaxesInterface {
     this._rateCurrency = detailedShoppingProduct.currency?.value ?? 1;
     this._customDuty = detailedShoppingProduct.product?.customDuty ?? 0;
     this._vat = detailedShoppingProduct.product?.vat ?? 0;
+    this._notManagedProduct = detailedShoppingProduct.isNotManagedShoppingProduct();
 
     return this;
   };
@@ -171,6 +177,10 @@ export class ProductTaxes implements ProductTaxesInterface {
 
   get vat(): number {
     return this._vat;
+  }
+
+  get notManagedProduct(): boolean {
+    return this._notManagedProduct;
   }
 
   getUnitCustomDuty = (): number => {

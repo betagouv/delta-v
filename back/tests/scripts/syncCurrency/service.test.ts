@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { service } from '../../../src/scripts/syncCurrency/service';
-import { RawCurrency } from '../../../src/scripts/syncCurrency/services/currencySerializer.service';
+import { RawCurrency } from '../../../src/api/currency/common/services/currencySerializer.service';
 import { currencyRepositoryMock } from '../../mocks/currency.repository.mock';
 
 jest.mock('axios');

@@ -1,5 +1,5 @@
 import { DataElement } from '..';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 
 export const Declaration: DataElement[] = [
   {
@@ -8,8 +8,10 @@ export const Declaration: DataElement[] = [
     answer: (
       <p>
         Une déclaration est la formalité où vous indiquez à l’administration des douanes les
-        marchandises que vous transportez sur vous et dans vos bagages personnels.\n\nCes produits
-        peuvent avoir été achetés ou vous avoir été offerts à l’étranger.
+        marchandises que vous transportez sur vous et dans vos bagages personnels.
+        <br />
+        <br />
+        Ces produits peuvent avoir été achetés ou vous avoir été offerts à l’étranger.
       </p>
     ),
   },
@@ -22,13 +24,12 @@ export const Declaration: DataElement[] = [
         votre arrivée sur le territoire français (dans le port, l'aéroport, dans la gare ou au point
         de passage routier que vous empruntez). Si vous ne croisez pas d’agents des douanes à votre
         passage de la frontière, vous pouvez également vous rapprocher des{' '}
-        <Link
+        <ExternalLink
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"
-          external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
-        </Link>
+        </ExternalLink>
         .
       </p>
     ),
@@ -53,13 +54,12 @@ export const Declaration: DataElement[] = [
       <p>
         Je peux déclarer à mon arrivée sur le territoire français. Si je ne croise pas de douaniers
         à l’occasion de mon retour, je peux également me rapprocher des{' '}
-        <Link
+        <ExternalLink
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"
-          external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
-        </Link>
+        </ExternalLink>
         .
       </p>
     ),
@@ -70,15 +70,16 @@ export const Declaration: DataElement[] = [
     answer: (
       <p>
         Je dois effectuer ma déclaration auprès des services douaniers dès mon arrivée sur le
-        territoire français.\n\n Si je ne croise pas d’agents des douanes au passage de la
-        frontière, je peux également me rapprocher des{' '}
-        <Link
+        territoire français.
+        <br />
+        <br /> Si je ne croise pas d’agents des douanes au passage de la frontière, je peux
+        également me rapprocher des{' '}
+        <ExternalLink
           href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
           tag="span"
-          external
         >
           <span className="text-link">services douaniers les plus proches de chez vous</span>
-        </Link>
+        </ExternalLink>
         .
       </p>
     ),
@@ -96,13 +97,12 @@ export const Declaration: DataElement[] = [
         <p>
           Si vous ne croisez pas d’agents des douanes au passage de la frontière, vous pouvez
           également vous rapprocher des{' '}
-          <Link
+          <ExternalLink
             href="https://www.douane.gouv.fr/service-en-ligne/annuaire-des-services-douaniers"
             tag="span"
-            external
           >
             <span className="text-link">services douaniers les plus proches de chez vous</span>
-          </Link>
+          </ExternalLink>
           .
         </p>
       </div>

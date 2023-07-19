@@ -1,6 +1,3 @@
-import { ConnectionOptions } from 'typeorm';
-import { buildConnectionOptions } from './database';
+import { AppDataSource } from './database';
 
-const options: ConnectionOptions = buildConnectionOptions();
-
-export = options;
+export default AppDataSource;

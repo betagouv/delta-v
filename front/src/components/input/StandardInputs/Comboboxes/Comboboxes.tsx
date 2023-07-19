@@ -38,7 +38,6 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
 }) => {
   const [query, setQuery] = useState('');
   const [filteredOptions, setFilteredOptions] = useState<Options[]>([]);
-  const [selectedOption, setSelectedOption] = useState<Options>({ id: null, value: '' });
   const { field } = useController({
     control,
     name,
@@ -75,10 +74,12 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
         <input
           className={classNames(fullWidth ? 'w-full' : 'w-fit', classNameCombobox)}
           enterKeyHint="search"
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => {
+            setQuery(event.target.value);
+          }}
           disabled={disabled}
           placeholder={placeholder}
-          value={query}
+          value={field.value}
         />
         {trailingIcon && (
           <div className="absolute inset-y-0 right-0 z-10 flex h-full w-9 items-center pr-4">
@@ -98,9 +99,6 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
                 key={option.id}
                 className="flex cursor-pointer flex-row py-2 px-3"
                 onClick={() => {
-                  const wasAlreadyChecked = option.id === selectedOption.id;
-                  const newSelectedOption = wasAlreadyChecked ? { id: null, value: '' } : option;
-                  setSelectedOption(newSelectedOption);
                   field.onChange(option.id);
                   setTimeout(() => {
                     setFilteredOptions([]);
@@ -110,7 +108,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
                 <span
                   className={classNames(
                     'block truncate flex-1',
-                    option.id === selectedOption.id && 'font-semibold',
+                    option.id === field.value && 'font-semibold',
                   )}
                 >
                   {option.value}
@@ -122,7 +120,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
                   name="candidates"
                   type="checkbox"
                   className="h-6 w-6 items-center rounded border-gray-500 pr-4 text-primary-600 focus:ring-transparent"
-                  checked={option.id === selectedOption.id}
+                  checked={option.id === field.value}
                   onChange={() => {}}
                 />
               </div>

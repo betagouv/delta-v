@@ -3,17 +3,18 @@ import React from 'react';
 import cn from 'classnames';
 
 import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
-import { Color, getActiveColor, getColor, getFontWeight, Weight } from './style/typography.style';
-
-type TextSize =
-  | 'text-2xs'
-  | 'text-xs'
-  | 'text-sm'
-  | 'text-base'
-  | 'text-lg'
-  | 'text-xl'
-  | 'text-2xl'
-  | 'text-3xl';
+import {
+  Color,
+  getActiveColor,
+  getColor,
+  getFontWeight,
+  getIncreasedTextSize,
+  getTextTransform,
+  getTruncate,
+  TextSize,
+  Transform,
+  Weight,
+} from './style/typography.style';
 
 type LineHeight =
   | 'leading-3'
@@ -38,11 +39,14 @@ export interface ITypographyProps {
   lineHeight?: LineHeight;
   variant?: Variant;
   color?: Color;
+  colorGradient?: string;
   weight?: Weight;
   italic?: boolean;
+  transform?: Transform;
   underline?: boolean;
   activeColor?: Color;
   textPosition?: 'text-left' | 'text-center' | 'text-right';
+  truncate?: boolean;
   onClick?: () => void;
 }
 
@@ -50,6 +54,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   variant,
   tag,
   color = 'primary',
+  colorGradient = '600',
   size = 'text-sm',
   lineHeight = 'leading-normal',
   children,
@@ -58,6 +63,8 @@ export const Typography: React.FC<ITypographyProps> = ({
   underline = false,
   activeColor,
   textPosition,
+  truncate = false,
+  transform,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -67,16 +74,20 @@ export const Typography: React.FC<ITypographyProps> = ({
 
   const className = cn({
     // [`${usedVariant}`]: true,
+    // hidden: true,
     [getFontWeight(weight)]: true,
-    [getColor(color)]: true,
+    [getColor(color, colorGradient)]: true,
     [getActiveColor(activeColor)]: activeColor,
-    [size]: true,
+    // [size]: true,
+    [getIncreasedTextSize(size)]: true,
     [lineHeight]: true,
     italic,
     underline,
     [`${textPosition}`]: true,
+    [getTruncate(truncate)]: truncate,
+    [getTextTransform(transform)]: transform,
   });
-  const CustomTag = tag ?? 'p';
+  const CustomTag = tag ?? 'span';
 
   return (
     <CustomTag onClick={onClick} className={className} data-testid="typography-element">

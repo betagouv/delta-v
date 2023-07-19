@@ -18,31 +18,27 @@ import {
   getAmountCategoryName,
   getAmountProductType,
   getMessageOverMaximumAmount,
-  getUnit,
 } from '@/model/amount';
 import { AmountProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const Panier = () => {
   const router = useRouter();
 
-  const {
-    simulatorRequest,
-    valueProducts: detailedProducts,
-    customProducts,
-    amountProducts,
-    removeProduct,
-  } = useStore(
+  const { simulatorRequest, simulatorResponse, removeProduct } = useStore(
     (state) => ({
       simulatorRequest: state.simulator.appState.simulatorRequest,
-      valueProducts: state.simulator.appState.simulatorResponse?.valueProducts ?? [],
-      amountProducts: state.simulator.appState.simulatorResponse?.amountProducts ?? [],
-      customProducts: state.simulator.appState.simulatorResponse?.customProducts ?? [],
+      simulatorResponse: state.simulator.appState.simulatorResponse,
       removeProduct: state.removeProduct,
     }),
     shallow,
   );
+  const detailedProducts = simulatorResponse?.valueProducts || [];
+  const customProducts = simulatorResponse?.customProducts || [];
+  const amountProducts = simulatorResponse?.amountProducts || [];
+
   const [openActionModal, setOpenActionModal] = useState(false);
   const idToDelete = useRef('');
 
@@ -76,6 +72,7 @@ const Panier = () => {
       withTitle
       titleValue="Mes achats"
       titleIcon="calculator"
+      linkButton={Routing.simulatorProduct}
     >
       <div className="flex flex-1 flex-col">
         <div className="flex flex-col gap-3">
@@ -96,7 +93,7 @@ const Panier = () => {
           {customProducts.map((detailedProduct) => (
             <div key={detailedProduct.customId}>
               <ValueProductBasket
-                customProduct
+                customProduct={!simulatorResponse?.canCalculateTaxes}
                 detailedProduct={detailedProduct}
                 onDeleteProduct={() => {
                   idToDelete.current = detailedProduct.customId;
@@ -119,12 +116,7 @@ const Panier = () => {
               {amountProduct.products.map((product) => (
                 <AmountProductBasket
                   containError={amountProduct.isOverMaximum}
-                  dataBasket={{
-                    unit: getUnit(product.amountProduct) ?? '',
-                    amount: product.amount,
-                    customName: product.customName,
-                    name: product.name,
-                  }}
+                  product={product}
                   onDeleteProduct={() => {
                     idToDelete.current = product.customId;
                     setOpenActionModal(true);

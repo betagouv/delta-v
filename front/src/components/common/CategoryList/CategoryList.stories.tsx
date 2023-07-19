@@ -11,34 +11,53 @@ const items: Item[] = [
   {
     title: 'Vêtements',
     svgNames: 'categoryClothes',
-    to: '/test/',
+    id: '/test/',
   },
   {
     title: 'Tissus',
     svgNames: 'categoryFabrics',
-    to: '/',
+    id: '/',
   },
   {
     title: 'Chaussures',
     svgNames: 'categoryShoes',
-    to: '/',
+    id: '/',
   },
   {
     title: 'Maroquinerie',
     svgNames: 'categoryLeatherGoods',
-    to: '/',
+    id: '/',
   },
   {
     title: 'Accessoires',
     svgNames: 'categoryAccessory',
-    to: '/',
+    id: '/',
   },
 ];
 
-export const withVariant = (): JSX.Element => (
+export const listDisplay = (): JSX.Element => (
   <div className="p-3">
     <br />
-    <CategoryList items={items} title="Catégories" />
+    <CategoryList
+      items={items}
+      title="Catégories"
+      onSelectProduct={() => console.log('clicked')}
+      onClick={() => console.log('clicked')}
+    />
+    <br />
+  </div>
+);
+
+export const cardDisplay = (): JSX.Element => (
+  <div className="p-3">
+    <br />
+    <CategoryList
+      items={items}
+      title="Catégories"
+      displayType="card"
+      onSelectProduct={() => console.log('clicked')}
+      onClick={() => console.log('clicked')}
+    />
     <br />
   </div>
 );

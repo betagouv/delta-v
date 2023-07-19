@@ -12,6 +12,7 @@ export default {
 
 const iconNames: SvgNames[] = [
   'logo',
+  'logoAgent',
   'logoFrenchRepublic',
   'logoFrenchDouane',
   'logoDouane',
@@ -36,6 +37,7 @@ const iconNames: SvgNames[] = [
   'completeBasket',
   'dairy',
   'download',
+  'douanier',
   'phone',
   'mail',
   'meat',

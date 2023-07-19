@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { FieldErrors, useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import { FormAddProduct } from '@/components/business/formAddProduct';
+import { FormAddProduct } from '@/components/business/FormAddProduct';
 import { Input } from '@/components/input/StandardInputs/Input';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -103,6 +103,7 @@ const UpdateProductBasket = () => {
                 control={control}
                 register={register}
                 errors={errors as FieldErrors}
+                templateRole="user"
               />
             </div>
           </form>

@@ -1,4 +1,4 @@
-import { productSerializer } from '../../../../src/api/product/common/serializer';
+import { productSerializer } from '../../../../src/api/declaration/common/serializer/declarationSerializer';
 import { getRankFromPosition } from '../../../../src/utils/rank.util';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 

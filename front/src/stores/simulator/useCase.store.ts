@@ -1,17 +1,14 @@
 import { countries } from 'countries-list';
 import { Alpha2Code } from 'i18n-iso-countries';
+import { v4 as uuidv4 } from 'uuid';
 
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';
 // eslint-disable-next-line import/no-cycle
-import {
-  MeansOfTransport,
-  ShoppingProduct,
-  SimulatorResponse,
-  SIMULATOR_EMPTY_STATE,
-} from './appState.store';
-import axios from '@/config/axios';
+import { MeansOfTransport, ShoppingProduct, SIMULATOR_EMPTY_STATE } from './appState.store';
+import { checkSimulatorDataRequest, simulateRequest } from '@/api/lib/declaration';
 import { Currencies } from '@/model/currencies';
+import { isAxiosError, isError } from '@/utils/error';
 
 export interface SimulatorUseCaseSlice {
   validateStep0: (displayInfo: boolean) => void;
@@ -48,6 +45,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     set((state: any) => {
       const newState = { ...state };
       newState.simulator.appState.simulatorRequest.age = age;
+      newState.simulator.appState.simulatorRequest.declarationId = uuidv4();
       return newState;
     });
   },
@@ -99,6 +97,8 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       if (step <= 3) {
         newState.simulator.appState.simulatorRequest.country =
           SIMULATOR_EMPTY_STATE.simulatorRequest.country;
+        newState.simulator.appState.simulatorRequest.defaultCurrency =
+          SIMULATOR_EMPTY_STATE.simulatorRequest.defaultCurrency;
       }
       if (step <= 2) {
         newState.simulator.appState.simulatorRequest.meanOfTransport =
@@ -170,31 +170,25 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
   simulate: async () => {
     try {
       const simulatorData = get().simulator.appState;
-      const data = {
-        age: simulatorData.simulatorRequest.age,
-        meanOfTransport: simulatorData.simulatorRequest.meanOfTransport,
-        country: simulatorData.simulatorRequest.country,
-        border: simulatorData.simulatorRequest.border,
-        shoppingProducts: simulatorData.simulatorRequest.shoppingProducts.map(
-          (shoppingProduct: ShoppingProduct) => ({
-            id: shoppingProduct.productId,
-            customName: shoppingProduct.name,
-            customId: shoppingProduct.id,
-            originalValue: shoppingProduct.value,
-            currency: shoppingProduct.currency,
-          }),
-        ),
-      };
-      const response = (await axios.post('/api/simulator', data)).data as SimulatorResponse;
+      const simulateRequestData = checkSimulatorDataRequest(simulatorData.simulatorRequest);
+      const response = await simulateRequest(simulateRequestData);
       set((state: any) => {
         const newState = { ...state };
         newState.simulator.appState.simulatorResponse = response;
         return newState;
       });
-    } catch (error: any) {
+    } catch (error) {
+      let dataError: any;
+      if (isAxiosError<any>(error)) {
+        dataError = error.response?.data;
+      } else if (isError(error)) {
+        dataError = error.message;
+      } else {
+        dataError = 'unknown error';
+      }
       set((state: any) => {
         const newState = { ...state };
-        newState.simulator.appState.error = error?.response?.data;
+        newState.simulator.appState.error = dataError;
         return newState;
       });
     }

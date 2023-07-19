@@ -1,23 +1,37 @@
-version: '3.8'
+version: "3.8"
 
 x-envs: &common-envs
   PORT: 8080
-  DB_HOST: 'database-delta-v'
   DB_PORT: 5432
-  DB_USERNAME: postgres
-  DB_PASSWORD: pass
-  DB_DATABASE: postgres
   LOG_LEVEL: info
-  TEST: testos
+  DB_USERNAME: ${DB_USERNAME:-postgres}
+  DB_PASSWORD: ${DB_PASSWORD:-pass}
+  DB_DATABASE: ${DB_DATABASE:-postgres}
+  DB_HOST: ${DB_HOST:-database-delta-v}
+  ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET:-accessTokenSecretLocalDev}
+  ACCESS_TOKEN_LIFE: ${ACCESS_TOKEN_LIFE:-30m}
+  REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-refreshTokenSecretLocalDev}
+  REFRESH_TOKEN_LIFE: ${REFRESH_TOKEN_LIFE:-1h}
+  VALIDATION_TOKEN_SECRET: ${VALIDATION_TOKEN_SECRET:-validationTokenSecretLocalDev}
+  VALIDATION_TOKEN_LIFE: ${VALIDATION_TOKEN_LIFE:-3d}
+  RESET_PASSWORD_TOKEN_SECRET: ${RESET_PASSWORD_TOKEN_SECRET:-resetPasswordTokenSecretLocalDev}
+  RESET_PASSWORD_TOKEN_LIFE: ${RESET_PASSWORD_TOKEN_LIFE:-3d}
+  URL_FRONTEND: http://localhost:3000
+  ROUTE_FRONTEND_VALIDATE_ACCOUNT: /agent/authentification/validation
+  ROUTE_FRONTEND_RESET_PASSWORD: /agent/authentification/mot-de-passe-oublie/reinitialiser
+  ROUTE_FRONTEND_CHECK_DECLARATION: /declaration
+  FROM_EMAIL: test@test.fr
+  SMTP_URL: smtp://username:password@mailhog:1025
+  WHITE_LIST_AGENT_EMAIL: "s.sabalot@gmail.com,sbergeot.pro@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
-  DB_HOST: 'e2e-test-database-delta-v'
+  DB_HOST: e2e-test-database-delta-v
   LOG_LEVEL: fatal
 
 services:
   backend-api: &backend_default
-    image: node:16
+    image: node:18
     restart: unless-stopped
     volumes:
       - ./back/:/usr/app:delegated
@@ -49,15 +63,15 @@ services:
 
   database: &database_default
     image: postgres:13.4
-    restart: always
+    restart: unless-stopped
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
       - backend
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: postgres
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pass}
+      POSTGRES_DB: ${DB_DATABASE:-postgres}
       PGDATA: /var/lib/postgresql/data/db-files/
 
   database-delta-v:
@@ -75,24 +89,23 @@ services:
       - 5532:5432
     volumes:
       - e2e-test-db-data:/var/lib/postgresql/data
+
   adminer:
-    image: michalhosna/adminer
-    restart: always
+    image: adminer
+    restart: unless-stopped
     ports:
       - 8081:8080
     networks:
       - backend
+    volumes:
+      - ./adminerPlugins/:/var/www/html/plugins-enabled:delegated
     environment:
-      ADMINER_DRIVER: pgsql
-      ADMINER_SERVER: database-delta-v
-      ADMINER_DB: postgres
-      ADMINER_USERNAME: postgres
-      ADMINER_PASSWORD: pass
-      ADMINER_AUTOLOGIN: 1
-      ADMINER_NAME: Delta V - local
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-pass}
+      DB_DATABASE: ${DB_DATABASE:-postgres}
+      DB_HOST: ${DB_HOST:-database-delta-v}
+      DB_HOST_E2E: e2e-test-database-delta-v
 
-
-    
   frontend-web-delta-v:
     container_name: frontend-web-delta-v
     image: node:16
@@ -106,6 +119,8 @@ services:
       - backend
     working_dir: /usr/app
     command: yarn dev
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=/api
 
   storybook-delta-v:
     container_name: storybook-delta-v
@@ -119,6 +134,18 @@ services:
     working_dir: /usr/app
     command: yarn storybook
 
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog
+    platform: linux/x86_64
+    restart: unless-stopped
+    logging:
+      driver: none # disable saving logs
+    networks:
+      - backend
+    ports:
+      - 1025:1025
+      - 8025:8025
 
 networks:
   backend:

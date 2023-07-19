@@ -7,7 +7,7 @@ describe('Typography', () => {
     const wrapper = render(<Typography>Test</Typography>);
     const typography = wrapper.getByTestId('typography-element');
     expect(typography).toBeVisible();
-    expect(typography.nodeName).toEqual('P');
+    expect(typography.nodeName).toEqual('SPAN');
   });
   it('should render Typography - type H2', () => {
     const wrapper = render(<Typography tag="h2">Test</Typography>);

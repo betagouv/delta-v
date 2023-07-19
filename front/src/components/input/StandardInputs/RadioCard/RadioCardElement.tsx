@@ -1,13 +1,15 @@
 import classNames from 'classnames';
 
 import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
+import { Typography } from '@/components/common/Typography';
 
 export interface IRadioCardElementOptions {
   value: string;
   disabled?: boolean;
   checked?: boolean;
   svgIcon: SvgNames;
-  onClick: () => void;
+  onClick: (transport?: string) => void;
+  bigSize?: boolean;
 }
 
 export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
@@ -15,32 +17,40 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
   value,
   disabled,
   checked,
+  bigSize = false,
   onClick,
 }) => {
   return (
     <button
       data-testid="radio-card-element"
+      type="button"
       disabled={disabled}
       className={classNames(
-        'text-sm',
+        bigSize ? 'text-base' : 'text-sm',
         disabled
           ? 'opacity-50 cursor-not-allowed'
-          : 'active:bg-gray-50 active:p-[15px] active:border-4',
-        checked ? 'font-bold border-4 p-[15px]' : 'font-normal border',
-        'border-gray-200 rounded-xl p-[18px] h-[88px] w-[85px] flex items-center justify-center text-sm sm:flex-1',
+          : 'active:bg-gray-50 active:py-[14px] px-2 active:border-4',
+        checked ? 'font-bold border-4 py-[14px] px-2' : 'font-normal border',
+        bigSize ? 'p-[18px] h-[130px] w-[104px]' : 'h-[88px] w-[85px]',
+        'border-gray-200 rounded-xl py-[18px] px-4 flex items-center justify-center text-sm sm:flex-1',
       )}
-      onClick={() => {
+      onClick={(e) => {
         if (disabled) {
           return;
         }
-        onClick();
+        onClick(e.currentTarget.value);
       }}
     >
-      <div className="flex flex-col items-center">
-        <div className="h-8 w-auto">
+      <div className="h-16 flex flex-col items-center">
+        <div className="flex-1 flex-col flex h-8 w-auto justify-start">
           <SvgIcon name={svgIcon} />
         </div>
-        <label className="text-center">{value}</label>
+        <div className="h-2" />
+        <div className="flex-1 flex-col flex justify-start">
+          <Typography color="secondary" size="text-xs">
+            {value.length > 30 ? `${value.slice(0, 30)}...` : value}
+          </Typography>
+        </div>
       </div>
     </button>
   );

@@ -10,6 +10,7 @@ import Calculator from '@/assets/icons/Calculator.svg';
 import Car from '@/assets/icons/Car.svg';
 import CategoryAccessory from '@/assets/icons/categories/Accessory.svg';
 import CategoryAccordions from '@/assets/icons/categories/Accordions.svg';
+import CategoryActualities from '@/assets/icons/categories/Actualities.svg';
 import CategoryAdultClothes from '@/assets/icons/categories/Adult-Clothes.svg';
 import CategoryAdvertisingCatalog from '@/assets/icons/categories/Advertising-Catalog.svg';
 import CategoryAlcohol from '@/assets/icons/categories/Alcohol.svg';
@@ -33,8 +34,10 @@ import CategoryCigarillos from '@/assets/icons/categories/Cigarillos.svg';
 import CategoryClothes from '@/assets/icons/categories/Clothes.svg';
 import CategoryCologne from '@/assets/icons/categories/Cologne.svg';
 import CategoryCommonGround from '@/assets/icons/categories/Common-Ground.svg';
+import CategoryContact from '@/assets/icons/categories/Contact.svg';
 import CategoryCopper from '@/assets/icons/categories/Copper.svg';
 import CategoryCotton from '@/assets/icons/categories/Cotton.svg';
+import CategoryCreateDeclaration from '@/assets/icons/categories/Create-Declaration.svg';
 import CategoryCrystal from '@/assets/icons/categories/Crystal.svg';
 import CategoryDecoration from '@/assets/icons/categories/Decoration.svg';
 import CategoryDishes from '@/assets/icons/categories/Dishes.svg';
@@ -84,6 +87,7 @@ import CategoryShoes from '@/assets/icons/categories/Shoes.svg';
 import CategorySilk from '@/assets/icons/categories/Silk.svg';
 import CategorySki from '@/assets/icons/categories/Ski.svg';
 import CategorySmartphone from '@/assets/icons/categories/Smartphone.svg';
+import CategorySmiley from '@/assets/icons/categories/Smiley.svg';
 import CategorySocks from '@/assets/icons/categories/Socks.svg';
 import CategorySoftAlcohol from '@/assets/icons/categories/SoftAlcohol.svg';
 import CategorySpiritDrink from '@/assets/icons/categories/SpiritDrink.svg';
@@ -99,6 +103,7 @@ import CategoryTie from '@/assets/icons/categories/Tie.svg';
 import CategoryTire from '@/assets/icons/categories/Tire.svg';
 import CategoryTobacco from '@/assets/icons/categories/Tobacco.svg';
 import CategoryVarious from '@/assets/icons/categories/Various.svg';
+import CategoryVetements from '@/assets/icons/categories/Vetements.svg';
 import CategoryVideoGame from '@/assets/icons/categories/VideoGame.svg';
 import CategoryViolins from '@/assets/icons/categories/Violins.svg';
 import CategoryWatches from '@/assets/icons/categories/Watches.svg';
@@ -112,11 +117,14 @@ import HauteSavoieIcon from '@/assets/icons/City-Haute-Savoie.svg';
 import Coffee from '@/assets/icons/Coffee.svg';
 import CompleteBasket from '@/assets/icons/Complete-Basket.svg';
 import Dairy from '@/assets/icons/Dairy.svg';
+import Douanier from '@/assets/icons/Douanier.svg';
 import Download from '@/assets/icons/Download.svg';
+import Filter from '@/assets/icons/Filter.svg';
 import Folder from '@/assets/icons/Folder.svg';
 import Forbidden from '@/assets/icons/Forbidden.svg';
 import Home from '@/assets/icons/Home.svg';
 import Info from '@/assets/icons/Info.svg';
+import Keyboard from '@/assets/icons/Keyboard.svg';
 import LiteSearch from '@/assets/icons/Lite-Search.svg';
 import Luggages from '@/assets/icons/Luggages.svg';
 import Mail from '@/assets/icons/Mail.svg';
@@ -130,20 +138,27 @@ import Pet from '@/assets/icons/Pet.svg';
 import Phone from '@/assets/icons/Phone.svg';
 import Plane from '@/assets/icons/Plane.svg';
 import Plants from '@/assets/icons/Plants.svg';
+import QrCode from '@/assets/icons/QrCode.svg';
 import Question from '@/assets/icons/Question.svg';
 import Search from '@/assets/icons/Search.svg';
+import Star from '@/assets/icons/Star.svg';
+import StarFull from '@/assets/icons/StarFull.svg';
 import Sweets from '@/assets/icons/Sweets.svg';
 import Tea from '@/assets/icons/Tea.svg';
 import Train from '@/assets/icons/Train.svg';
 import Traveler from '@/assets/icons/Traveler.svg';
 import Watch from '@/assets/icons/Watch.svg';
+import LogoAgent from '@/assets/images/Logo-Agent.svg';
 import LogoDouane from '@/assets/images/Logo-Douane.svg';
 import LogoFrenchDouane from '@/assets/images/Logo-French-Douane.svg';
 import LogoFrenchRepublic from '@/assets/images/Logo-French-Republic.svg';
 import Logo from '@/assets/images/Logo.svg';
+import VisibilityOff from '@/assets/images/VisibilityOff.svg';
+import VisibilityOn from '@/assets/images/VisibilityOn.svg';
 
 export type SvgNames =
   | 'logo'
+  | 'logoAgent'
   | 'logoFrenchRepublic'
   | 'logoFrenchDouane'
   | 'logoDouane'
@@ -156,6 +171,7 @@ export type SvgNames =
   | 'car'
   | 'plane'
   | 'plants'
+  | 'qrCode'
   | 'train'
   | 'traveler'
   | 'other'
@@ -182,11 +198,14 @@ export type SvgNames =
   | 'completeBasket'
   | 'dairy'
   | 'download'
+  | 'filter'
   | 'folder'
   | 'forbidden'
+  | 'keyboard'
   | 'watch'
   | 'categoryAccessory'
   | 'categoryAccordions'
+  | 'categoryActualities'
   | 'categoryAdultClothes'
   | 'categoryAdvertisingCatalog'
   | 'categoryAlcohol'
@@ -212,6 +231,8 @@ export type SvgNames =
   | 'categoryCopper'
   | 'categoryCotton'
   | 'categoryCrystal'
+  | 'categoryContact'
+  | 'categoryCreateDeclaration'
   | 'categoryDecoration'
   | 'categoryDishes'
   | 'categoryDVDPlayer'
@@ -261,6 +282,7 @@ export type SvgNames =
   | 'categorySilk'
   | 'categorySki'
   | 'categorySmartphone'
+  | 'categorySmiley'
   | 'categorySocks'
   | 'categorySoftAlcohol'
   | 'categorySpiritDrink'
@@ -276,6 +298,7 @@ export type SvgNames =
   | 'categoryTie'
   | 'categoryTire'
   | 'categoryVarious'
+  | 'categoryVetements'
   | 'categoryVideoGame'
   | 'categoryViolins'
   | 'categoryWatches'
@@ -283,16 +306,24 @@ export type SvgNames =
   | 'categoryWindsurf'
   | 'categoryWine'
   | 'categoryWood'
+  | 'douanier'
+  | 'visibilityOff'
+  | 'visibilityOn'
+  | 'star'
+  | 'starFull'
   | 'categoryWoodenFloor';
 
 export interface ISvgIconProps {
   name: SvgNames;
+  className?: string;
 }
 
 const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
     case 'logo':
       return Logo;
+    case 'logoAgent':
+      return LogoAgent;
     case 'logoFrenchRepublic':
       return LogoFrenchRepublic;
     case 'logoFrenchDouane':
@@ -321,6 +352,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return Plane;
     case 'plants':
       return Plants;
+    case 'qrCode':
+      return QrCode;
     case 'train':
       return Train;
     case 'traveler':
@@ -373,12 +406,16 @@ const getSvgFromName = (name: SvgNames): any => {
       return Folder;
     case 'forbidden':
       return Forbidden;
+    case 'keyboard':
+      return Keyboard;
     case 'watch':
       return Watch;
     case 'categoryAccessory':
       return CategoryAccessory;
     case 'categoryAccordions':
       return CategoryAccordions;
+    case 'categoryActualities':
+      return CategoryActualities;
     case 'categoryAdultClothes':
       return CategoryAdultClothes;
     case 'categoryAdvertisingCatalog':
@@ -397,6 +434,10 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryCologne;
     case 'categoryCommonGround':
       return CategoryCommonGround;
+    case 'categoryContact':
+      return CategoryContact;
+    case 'categoryCreateDeclaration':
+      return CategoryCreateDeclaration;
     case 'categoryShoes':
       return CategoryShoes;
     case 'categoryBeautyProducts':
@@ -527,6 +568,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategorySmartphone;
     case 'categorySki':
       return CategorySki;
+    case 'categorySmiley':
+      return CategorySmiley;
     case 'categorySocks':
       return CategorySocks;
     case 'categorySoftAlcohol':
@@ -557,6 +600,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryTire;
     case 'categoryVarious':
       return CategoryVarious;
+    case 'categoryVetements':
+      return CategoryVetements;
     case 'categoryVideoGame':
       return CategoryVideoGame;
     case 'categoryViolins':
@@ -573,12 +618,24 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryWood;
     case 'categoryWoodenFloor':
       return CategoryWoodenFloor;
+    case 'douanier':
+      return Douanier;
+    case 'visibilityOff':
+      return VisibilityOff;
+    case 'visibilityOn':
+      return VisibilityOn;
+    case 'star':
+      return Star;
+    case 'starFull':
+      return StarFull;
+    case 'filter':
+      return Filter;
     default:
       return CategoryOther;
   }
 };
 
-export const SvgIcon: React.FC<ISvgIconProps> = ({ name }: ISvgIconProps) => {
+export const SvgIcon: React.FC<ISvgIconProps> = ({ name, className }: ISvgIconProps) => {
   const Svg = getSvgFromName(name);
-  return <Svg data-testid="svg-element" />;
+  return <Svg data-testid="svg-element" className={className} />;
 };

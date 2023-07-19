@@ -6,7 +6,7 @@ on:
       job:
         description: "Job to run."
         required: true
-        default: "prod-deploy"
+        default: "stage-deploy"
   pull_request:
     paths:
       - back/**
@@ -30,13 +30,22 @@ jobs:
       DB_USERNAME: postgres
       DB_PASSWORD: pass
       DB_DATABASE: postgres
+      ACCESS_TOKEN_SECRET: accessTokenSecretPipeline
+      REFRESH_TOKEN_SECRET: refreshTokenSecretPipeline
+      VALIDATION_TOKEN_SECRET: validationTokenSecretPipeline
+      RESET_PASSWORD_TOKEN_SECRET: resetPasswordTokenSecretPipeline
+      URL_FRONTEND: http://localhost:3000
+      ROUTE_FRONTEND_VALIDATE_ACCOUNT: /validate-account
+      ROUTE_FRONTEND_RESET_PASSWORD: /reset-password
+      ROUTE_FRONTEND_CHECK_DECLARATION: /check-declaration
       LOG_LEVEL: fatal
+      WHITE_LIST_AGENT_EMAIL: "test@gmail.com"
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "18"
       - name: Setup PostgreSQL
         uses: Harmon758/postgresql-action@v1
         with:
@@ -45,21 +54,23 @@ jobs:
           postgresql user: postgres
           postgresql password: pass
       - run: "yarn install --ignore-scripts"
+      - run: "npm rebuild bcrypt --build-from-source"
       - run: yarn migration:run
       - run: yarn lint
       - run: yarn test
 
   deploy-back-staging:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || ${{ github.event.inputs.job == 'stage-deploy'}}
     needs: test-back
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: git fetch --prune --unshallow
-      - uses: 47ng/actions-clever-cloud@v1.1
+      - uses: 47ng/actions-clever-cloud@v1.3.1
         with:
           timeout: 1800
           alias: delta-v-back-stage
+          force: true
         env:
           CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
           CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
@@ -70,12 +81,13 @@ jobs:
     # if: github.ref == 'refs/heads/master'
     needs: test-back
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: git fetch --prune --unshallow
-      - uses: 47ng/actions-clever-cloud@v1
+      - uses: 47ng/actions-clever-cloud@v1.3.1
         with:
           timeout: 1800
           alias: delta-v-back-prod
+          force: true
         env:
           CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
           CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}

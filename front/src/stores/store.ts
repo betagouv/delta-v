@@ -1,5 +1,7 @@
 /* eslint-disable import/no-cycle */
+import clone from 'clone';
 import { countries } from 'countries-list';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -8,6 +10,15 @@ import {
   CurrenciesAppStateSlice,
 } from './currencies/appState.store';
 import { createUseCaseCurrencySlice, CurrenciesUseCaseSlice } from './currencies/useCase.store';
+import {
+  createDeclarationAppStateSlice,
+  DECLARATION_EMPTY_STATE,
+  DeclarationAppStateSlice,
+} from './declaration/appState.store';
+import {
+  createUseCaseDeclarationSlice,
+  DeclarationUseCaseSlice,
+} from './declaration/useCase.store';
 import { createFaqAppStateSlice, FaqAppStateSlice } from './faq/appState.store';
 import { createUseCaseFaqSlice, FaqUseCaseSlice } from './faq/useCase.store';
 import { createGlobalAppStateSlice, GlobalAppStateSlice } from './global/appState.store';
@@ -28,9 +39,13 @@ import {
   SimulatorAppStateSlice,
 } from './simulator/appState.store';
 import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/useCase.store';
+import { createUsersAppStateSlice, UsersAppStateSlice } from './users/appState.store';
+import { createUseCaseUserSlice, UsersUseCaseSlice } from './users/useCase.store';
 
 export type StoreState = SimulatorUseCaseSlice &
   SimulatorAppStateSlice &
+  DeclarationAppStateSlice &
+  DeclarationUseCaseSlice &
   ProductsUseCaseSlice &
   ProductsAppStateSlice &
   CurrenciesUseCaseSlice &
@@ -40,7 +55,9 @@ export type StoreState = SimulatorUseCaseSlice &
   FaqAppStateSlice &
   FaqUseCaseSlice &
   PrepareMyTripAppStateSlice &
-  PrepareMyTripUseCaseSlice;
+  PrepareMyTripUseCaseSlice &
+  UsersAppStateSlice &
+  UsersUseCaseSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -63,6 +80,8 @@ export const useStore = create<StoreState>(
     (set, get, api) => ({
       ...createSimulatorAppStateSlice(set, get, api),
       ...createUseCaseSimulatorSlice(set, get, api),
+      ...createDeclarationAppStateSlice(set, get, api),
+      ...createUseCaseDeclarationSlice(set, get, api),
       ...createUseCaseProductSlice(set, get, api),
       ...createProductsAppStateSlice(set, get, api),
       ...createCurrenciesAppStateSlice(set, get, api),
@@ -73,18 +92,24 @@ export const useStore = create<StoreState>(
       ...createUseCaseFaqSlice(set, get, api),
       ...createPrepareMyTripAppStateSlice(set, get, api),
       ...createUseCasePrepareMyTripSlice(set, get, api),
+      ...createUsersAppStateSlice(set, get, api),
+      ...createUseCaseUserSlice(set, get, api),
     }),
 
     {
       name: 'app-storage',
       getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
-      version: 4,
-      partialize: (state) => ({
-        simulator: state.simulator,
-        products: state.products,
-        currencies: state.currencies,
-        global: state.global,
-      }),
+      version: 5,
+      partialize: (state) => {
+        return {
+          simulator: state.simulator,
+          declaration: state.declaration,
+          products: state.products,
+          currencies: state.currencies,
+          global: state.global,
+          users: state.users,
+        };
+      },
       migrate(persistedState: StoreState, version) {
         const newPersistedState = { ...persistedState };
         if (version < 3) {
@@ -108,11 +133,19 @@ export const useStore = create<StoreState>(
             ].currency;
         }
 
+        if (version < 5) {
+          newPersistedState.declaration.appState = clone(DECLARATION_EMPTY_STATE);
+        }
+
         return newPersistedState;
       },
     },
   ),
 );
+
+if (process.env.NODE_ENV === 'development') {
+  mountStoreDevtool('Store', useStore);
+}
 
 export const clearStore = () => {
   localStorage.removeItem('app-storage');

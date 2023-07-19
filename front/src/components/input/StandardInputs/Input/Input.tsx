@@ -1,6 +1,8 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
 
 import { Icon } from '@/components/common/Icon';
 import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
@@ -32,6 +34,9 @@ export interface IInputOptions {
   register?: UseFormRegisterReturn;
   autoFocus?: boolean;
   onClick?: () => void;
+  onTrailingIconClick?: () => void;
+  onTrailingSvgIconClick?: () => void;
+  withBorder?: boolean;
 }
 
 export const Input: React.FC<IInputOptions> = ({
@@ -50,26 +55,28 @@ export const Input: React.FC<IInputOptions> = ({
   leadingAddons,
   register,
   autoFocus = false,
+  withBorder = true,
   onClick = () => {},
+  onTrailingIconClick = () => {},
+  onTrailingSvgIconClick = () => {},
 }: IInputOptions) => {
-  let parentClassName = 'mt-1 relative';
+  let parentClassName = 'relative';
   if (fullWidth) {
     parentClassName += ' w-full';
   } else {
     parentClassName += ' w-fit';
   }
-  let className =
-    'block w-full border-secondary-300 px-4 py-2 border border-solid text-base rounded-full focus:outline-none focus:ring-transparent focus:border-secondary-300 placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
-  if (error) {
-    className += ' border-red-300 text-red-900 placeholder-red-300 focus:border-red-500';
-  }
+  const className = twMerge(
+    classNames({
+      'border-0 focus:outline-none focus:ring-0 text-base block w-full px-5 py-2 border-solid rounded-full focus:placeholder-transparent focus:outline-none focus:ring-transparent placeholder:italic placeholder:text-secondary-400 placeholder:font-light':
+        true,
+      'border border-secondary-300 focus:border-secondary-300 ': withBorder,
+      'text-error border border-red-300 focus:border-red-500 placeholder:text-red-300': error,
+      'pr-11': trailingIcon || trailingAddons || trailingSvgIcon,
+      'pl-11': leadingIcon || leadingAddons,
+    }),
+  );
 
-  if (trailingIcon || trailingAddons || trailingSvgIcon) {
-    className += ' pr-11';
-  }
-  if (leadingIcon || leadingAddons) {
-    className += ' pl-11';
-  }
   return (
     <div className={parentClassName} onClick={onClick}>
       {leadingIcon && (
@@ -115,12 +122,30 @@ export const Input: React.FC<IInputOptions> = ({
       )}
 
       {trailingIcon && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
-          <Icon name={trailingIcon} />
+        <div
+          className={twMerge(
+            classNames({
+              'pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4':
+                true,
+              'pointer-events-auto cursor-pointer': onTrailingIconClick,
+            }),
+          )}
+        >
+          <Icon name={trailingIcon} onClick={onTrailingIconClick} />
         </div>
       )}
+
       {trailingSvgIcon && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full w-9 items-center pr-4">
+        <div
+          className={twMerge(
+            classNames({
+              'pointer-events-none absolute inset-y-0 right-0 flex h-fit w-5 items-center mr-4 mt-auto mb-auto':
+                true,
+              'pointer-events-auto cursor-pointer': onTrailingSvgIconClick,
+            }),
+          )}
+          onClick={onTrailingSvgIconClick}
+        >
           <SvgIcon name={trailingSvgIcon} />
         </div>
       )}

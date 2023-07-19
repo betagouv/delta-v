@@ -5,9 +5,9 @@ export const productTaxesEntityFactory = (
   args: Partial<ProductTaxesInterface>,
 ): ProductTaxesInterface => {
   return new ProductTaxes({
-    id: args.id ?? faker.datatype.uuid(),
+    id: args.id ?? faker.string.uuid(),
     name: args.id ?? faker.commerce.productName(),
-    customId: args.customId ?? faker.datatype.uuid(),
+    customId: args.customId ?? faker.string.uuid(),
     customName: args.customName,
     customDuty: args.customDuty ?? 5,
     vat: args.vat ?? 20,

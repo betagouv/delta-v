@@ -6,7 +6,7 @@ on:
       job:
         description: "Job to run."
         required: true
-        default: "prod-deploy"
+        default: "stage-deploy"
   pull_request:
     paths:
       - front/**
@@ -24,8 +24,8 @@ jobs:
       run:
         working-directory: front
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "16"
       - run: "yarn install --ignore-scripts"
@@ -35,15 +35,16 @@ jobs:
 
   deploy-front-staging:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || ${{ github.event.inputs.job == 'stage-deploy'}}
     needs: test-front
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: git fetch --prune --unshallow
-      - uses: 47ng/actions-clever-cloud@v1.1
+      - uses: 47ng/actions-clever-cloud@v1.3.1
         with:
           timeout: 1800
           alias: delta-v-front-stage
+          force: true
         env:
           CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
           CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
@@ -54,12 +55,13 @@ jobs:
     # if: github.ref == 'refs/heads/master'
     needs: test-front
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: git fetch --prune --unshallow
-      - uses: 47ng/actions-clever-cloud@master
+      - uses: 47ng/actions-clever-cloud@v1.3.1
         with:
           timeout: 1800
           alias: delta-v-front-prod
+          force: true
         env:
           CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
           CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}

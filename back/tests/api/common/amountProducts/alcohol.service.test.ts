@@ -77,9 +77,9 @@ describe('AlcoholGroup', () => {
             });
             detailedShoppingProduct.shoppingProduct = {
               originalValue: dataProduct.value,
-              id: faker.datatype.uuid(),
-              customId: faker.datatype.uuid(),
-              customName: faker.random.word(),
+              id: faker.string.uuid(),
+              customId: faker.string.uuid(),
+              customName: faker.lorem.word(),
               currency: 'EUR',
             };
             detailedShoppingProduct.currency = currencyEntityFactory({ value: 1 });
@@ -156,9 +156,9 @@ describe('AlcoholGroup', () => {
             });
             detailedShoppingProduct.shoppingProduct = {
               originalValue: dataProduct.value,
-              id: faker.datatype.uuid(),
-              customId: faker.datatype.uuid(),
-              customName: faker.random.word(),
+              id: faker.string.uuid(),
+              customId: faker.string.uuid(),
+              customName: faker.lorem.word(),
               currency: 'EUR',
             };
             detailedShoppingProduct.currency = currencyEntityFactory({ value: 1 });

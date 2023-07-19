@@ -1,8 +1,5 @@
 cd back
-yarn install --production=false
-# yarn typeorm:drop
-yarn migration:run
-yarn fixtures:load
+yarn install --production=false --ignore-scripts
 yarn build
-yarn install --production=true
+yarn install --production=true --ignore-scripts
 cd ..

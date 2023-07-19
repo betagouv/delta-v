@@ -1,11 +1,11 @@
-import { getCustomRepository } from 'typeorm';
 import { Product } from '../../src/entities/product.entity';
-import ProductRepository, {
+import {
+  ProductRepository,
   ProductRepositoryInterface,
 } from '../../src/repositories/product.repository';
+import { checkProductTree } from '../helpers/checkProductTree';
 import { testDbManager } from '../helpers/testDb.helper';
 import { prepareContextProduct } from '../utils/prepareContext/product';
-import { cleanTreeProducts } from '../utils/product.util';
 
 const testDb = testDbManager();
 
@@ -45,7 +45,7 @@ describe('test product repository', () => {
 
   beforeAll(async () => {
     await testDb.connect();
-    repository = getCustomRepository(ProductRepository);
+    repository = testDb.getConnection().manager.withRepository(ProductRepository);
   });
 
   beforeEach(async () => {
@@ -60,7 +60,12 @@ describe('test product repository', () => {
       const { allProducts } = await prepareContext();
 
       const result = await repository.getAll();
-      expect(result).toMatchObject(allProducts.map((product) => cleanTreeProducts(product)));
+      allProducts.forEach((product) => {
+        checkProductTree(
+          product,
+          result.find((p) => p.id === product.id),
+        );
+      });
     });
     it('should return no products', async () => {
       const result = await repository.getAll();
@@ -73,9 +78,12 @@ describe('test product repository', () => {
       const productIds: string[] = randomProducts.map(({ id }) => id);
 
       const result = await repository.getManyByIds(productIds);
-      expect(result).toMatchObject(
-        randomProducts.map((product) => cleanTreeProducts(product, false)),
-      );
+
+      expect(result.length).toBe(randomProducts.length);
+
+      randomProducts.map((randomProduct) => {
+        expect(result.find((p) => p.id === randomProduct.id)).toBeDefined();
+      });
     });
     it('should return no products', async () => {
       const result = await repository.getManyByIds([]);

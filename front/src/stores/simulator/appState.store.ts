@@ -1,3 +1,4 @@
+import clone from 'clone';
 import { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
@@ -12,6 +13,12 @@ export enum MeansOfTransport {
   OTHER = 'other',
 }
 
+export enum ProductStatus {
+  VALUE_PRODUCT = 'value-product',
+  AMOUNT_PRODUCT = 'amount-product',
+  CUSTOM_PRODUCT = 'custom-product',
+}
+
 export interface ShoppingProduct {
   id: string;
   productId?: string;
@@ -24,6 +31,8 @@ export interface ShoppingProduct {
 
 export interface DetailedProduct {
   id: string;
+  status: ProductStatus;
+  amountProduct?: AmountProduct;
   name: string;
   customId: string;
   customName?: string;
@@ -36,18 +45,21 @@ export interface DetailedProduct {
   unitTaxes: number;
   customDuty: number;
   vat: number;
+  notManagedProduct: boolean;
 }
 
-interface GroupedAmountProduct {
+export interface AmountProductInterface {
+  id: string;
+  name: string;
+  amountProduct: AmountProduct;
+  customName?: string;
+  customId: string;
+  amount: number;
+}
+
+export interface GroupedAmountProduct {
   group: string;
-  products: {
-    id: string;
-    name: string;
-    amountProduct: AmountProduct;
-    customName?: string;
-    customId: string;
-    amount: number;
-  }[];
+  products: AmountProductInterface[];
   isOverMaximum: boolean;
 }
 
@@ -60,9 +72,12 @@ export interface SimulatorResponse {
   totalVat: number;
   totalTaxes: number;
   franchiseAmount: number;
+  canCalculateTaxes: boolean;
+  canCreateDeclaration: boolean;
 }
 
 export interface SimulatorRequest {
+  declarationId?: string;
   age?: number;
   meanOfTransport?: MeansOfTransport;
   country?: Alpha2Code;
@@ -86,6 +101,7 @@ export interface SimulatorAppStateSlice {
 
 export const SIMULATOR_EMPTY_STATE = {
   simulatorRequest: {
+    declarationId: undefined,
     age: undefined,
     meanOfTransport: undefined,
     country: undefined,
@@ -101,6 +117,6 @@ export const SIMULATOR_EMPTY_STATE = {
 
 export const createSimulatorAppStateSlice: StoreSlice<SimulatorAppStateSlice> = () => ({
   simulator: {
-    appState: SIMULATOR_EMPTY_STATE,
+    appState: clone(SIMULATOR_EMPTY_STATE),
   },
 });

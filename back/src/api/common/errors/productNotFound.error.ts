@@ -5,7 +5,7 @@ import { ErrorCodes } from '../enums/errorCodes.enum';
 export default (id?: string): IAppError =>
   buildError({
     message: 'Product not found',
-    publicMessage: 'Product not found',
+    publicMessage: 'Produit introuvable',
     code: ErrorCodes.PRODUCT_NOT_FOUND,
     statusCode: HttpStatuses.NOT_FOUND,
     context: {

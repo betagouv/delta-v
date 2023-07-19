@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
-import { FormSelectProduct, OnAddProductOptions } from '@/components/business/formSelectProduct';
+import { FormSelectProduct, OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList } from '@/components/common/CategoryList';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
@@ -18,21 +18,29 @@ import { Main } from '@/templates/Main';
 const ProductSearch = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { findProduct, addProduct } = useStore(
+  const { findProduct, addProduct, defaultCurrency } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       addProduct: state.addProduct,
+      defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
     }),
     shallow,
   );
+
   const router = useRouter();
-  const { id } = router.query;
+  const queryParams = router.query;
+
+  const customName =
+    typeof queryParams.customName === 'string' ? queryParams.customName : undefined;
+  const id = typeof queryParams.id === 'string' ? queryParams.id : undefined;
   const currentProduct = findProduct(id as string);
-  const selectedProduct = currentProduct;
+  const onRedirectProduct = (idRedirect: string) => {
+    router.push(`/simulateur/produits/${idRedirect}`);
+  };
   const displayedProducts =
     currentProduct?.subProducts.map((product) => {
       return {
-        to: `/simulateur/produits/${product.id}`,
+        id: product.id,
         svgNames: product.icon ?? 'categoryOther',
         title: product.name,
       };
@@ -73,10 +81,19 @@ const ProductSearch = () => {
       titleIcon="calculator"
     >
       <div className="flex flex-1 flex-col gap-6">
-        {selectedProduct?.finalProduct ? (
-          <FormSelectProduct currentProduct={currentProduct} onAddProduct={onAddProduct} />
+        {currentProduct?.finalProduct ? (
+          <FormSelectProduct
+            currentProduct={currentProduct}
+            onAddProduct={onAddProduct}
+            defaultCurrency={defaultCurrency}
+            defaultName={customName}
+          />
         ) : (
-          <CategoryList items={displayedProducts} title="Catégories" />
+          <CategoryList
+            onSelectProduct={onRedirectProduct}
+            items={displayedProducts}
+            title="Catégories"
+          />
         )}
       </div>
       <ModalAddProduct open={openModalAddProduct} onClose={() => setOpenModalAddProduct(false)} />

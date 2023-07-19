@@ -8,6 +8,7 @@ import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
+import { Routing } from '@/utils/const';
 
 const Index = () => {
   const { products, setProductsToDisplay } = useStore((state) => ({
@@ -20,9 +21,13 @@ const Index = () => {
     setProductsToDisplay();
   }, []);
 
+  const onRedirectProduct = (idRedirect: string) => {
+    router.push(`/simulateur/produits/${idRedirect}`);
+  };
+
   const displayedProducts = products?.map((product): Item => {
     return {
-      to: `/simulateur/produits/${product.id}`,
+      id: product.id,
       svgNames: product.icon ?? 'categoryOther',
       title: product.name,
     };
@@ -47,6 +52,7 @@ const Index = () => {
         </>
       }
       titleIcon="calculator"
+      linkButton={Routing.simulatorStep3}
     >
       <div className="flex flex-1 flex-col gap-6">
         <Input
@@ -57,7 +63,11 @@ const Index = () => {
           trailingIcon="search"
           onClick={() => router.push('/simulateur/produits/recherche')}
         />
-        <CategoryList items={displayedProducts} title="Catégories" />
+        <CategoryList
+          onSelectProduct={onRedirectProduct}
+          items={displayedProducts}
+          title="Catégories"
+        />
       </div>
     </Main>
   );

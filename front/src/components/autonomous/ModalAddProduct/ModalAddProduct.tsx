@@ -8,18 +8,23 @@ import Modal from '@/components/common/Modal';
 interface ModalAddProductProps {
   open: boolean;
   onClose?: () => void;
+  method?: 'declaration' | 'simulateur';
 }
 
-export const ModalAddProduct: React.FC<ModalAddProductProps> = ({ onClose, open }) => {
+export const ModalAddProduct: React.FC<ModalAddProductProps> = ({
+  onClose,
+  open,
+  method = 'simulateur',
+}) => {
   const router = useRouter();
   const onRedirectBasket = (): void => {
-    router.push('/simulateur/panier');
+    router.push(`/${method === 'simulateur' ? 'simulateur' : 'declaration'}/panier`);
     if (onClose) {
       onClose();
     }
   };
   const onRedirectProducts = (): void => {
-    router.push('/simulateur/produits');
+    router.push(`/${method === 'simulateur' ? 'simulateur' : 'declaration'}/produits`);
     if (onClose) {
       onClose();
     }
@@ -33,7 +38,7 @@ export const ModalAddProduct: React.FC<ModalAddProductProps> = ({ onClose, open 
             <br />
             d'autres produits ou
             <br />
-            terminer votre simulation ?
+            terminer votre {method === 'simulateur' ? 'simulation' : 'déclaration'} ?
           </>
         }
         open={open}
@@ -44,7 +49,7 @@ export const ModalAddProduct: React.FC<ModalAddProductProps> = ({ onClose, open 
             Ajouter un produit
           </Button>
           <Button size="lg" fullWidth onClick={onRedirectBasket}>
-            Terminer ma simulation
+            Terminer ma {method === 'simulateur' ? 'simulation' : 'déclaration'}
           </Button>
         </div>
       </Modal>

@@ -1,6 +1,6 @@
-export type ButtonSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl';
+export type ButtonSize = '2xs' | 'xs' | 'sm' | 'base' | 'lg' | 'xl';
 export type ButtonVariant = 'normal' | 'outlined' | 'ghost';
-export type ButtonColor = 'primary' | 'secondary';
+export type ButtonColor = 'primary' | 'secondary' | 'card' | 'red' | 'tertiary';
 export type IconPosition = 'left' | 'right';
 export type ButtonRounded = 'full' | 'lg' | 'md' | 'base' | 'none';
 
@@ -74,7 +74,6 @@ const styleManager: IButtonStyle = {
       'disabled:cursor-not-allowed': true,
       'disabled:shadow-none': true,
       'disabled:bg-disabled-bg': true,
-      'disabled:text-disabled-text': true,
       'disabled:border-transparent': true,
     },
   },
@@ -105,6 +104,13 @@ const styleManager: IButtonStyle = {
     classes: {
       'font-normal': true,
     },
+    '2xs': {
+      classes: {
+        'px-2': true,
+        'text-2xs': true,
+        'h-5': true,
+      },
+    },
     xs: {
       classes: {
         'px-2.5': true,
@@ -121,9 +127,9 @@ const styleManager: IButtonStyle = {
     },
     base: {
       classes: {
-        'px-4': true,
+        'px-5': true,
         'py-2.5': true,
-        'text-sm': true,
+        'text-base': true,
       },
     },
     lg: {
@@ -161,12 +167,22 @@ const styleManager: IButtonStyle = {
           'disabled:bg-secondary-600': true,
         },
       },
+      tertiary: {
+        classes: {
+          'bg-primary-400': true,
+          'hover:bg-primary-700': true,
+          'disabled:bg-primary-600': true,
+        },
+      },
+      red: {
+        classes: {
+          'bg-red-600': true,
+          'hover:bg-red-700': true,
+          'disabled:bg-red-600': true,
+        },
+      },
     },
     outlined: {
-      classes: {
-        'bg-white': true,
-        'disabled:bg-white': true,
-      },
       primary: {
         classes: {
           'text-primary-600': true,
@@ -185,6 +201,35 @@ const styleManager: IButtonStyle = {
           'active:bg-gray-300': true,
           'active:border-secondary-500': true,
           'disabled:text-secondary-600': true,
+        },
+      },
+      tertiary: {
+        classes: {
+          'text-primary-400': true,
+          'border-primary-400': true,
+          'active:bg-gray-100': true,
+          'active:text-primary-300': true,
+          'active:border-primary-300': true,
+          'disabled:text-primary-400': true,
+        },
+      },
+      red: {
+        classes: {
+          'text-red-600': true,
+          'border-red-600': true,
+          'active:text-red-500': true,
+          'active:bg-gray-300': true,
+          'active:border-red-500': true,
+          'disabled:text-red-600': true,
+        },
+      },
+      card: {
+        classes: {
+          'text-black': true,
+          'border-gray-300': true,
+          'active:bg-gray-300': true,
+          'active:border-gray-500': true,
+          'disabled:text-gray-600': true,
         },
       },
     },

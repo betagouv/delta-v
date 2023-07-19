@@ -11,6 +11,8 @@ export interface IModalProps {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
   children?: any;
+  preventClose?: boolean;
+  withMargin?: boolean;
 }
 
 export const Modal: React.FC<IModalProps> = ({
@@ -19,8 +21,11 @@ export const Modal: React.FC<IModalProps> = ({
   title,
   children,
   subtitle,
+  preventClose = false,
+  withMargin = true,
 }: IModalProps) => {
   const handleOnClose = (): void => {
+    if (preventClose) return;
     if (onClose) {
       onClose();
     }
@@ -60,9 +65,11 @@ export const Modal: React.FC<IModalProps> = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="my-largeBase inline-block w-full rounded-lg bg-white p-modal text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle">
-              <div className="absolute top-4 right-4 flex h-4 w-4 items-center">
-                <Icon name="clear" onClick={onClose} />
-              </div>
+              {!preventClose && (
+                <div className="absolute top-4 right-4 flex h-7 w-7 items-center">
+                  <Icon name="clear" onClick={onClose} />
+                </div>
+              )}
               {title && (
                 <div className="text-center">
                   <Dialog.Title>
@@ -73,13 +80,15 @@ export const Modal: React.FC<IModalProps> = ({
                 </div>
               )}
               {subtitle && (
-                <div className="mt-2 text-center">
+                <div className="mt-5 text-center">
                   <Typography size="text-sm" color="secondary" lineHeight="leading-4">
                     {subtitle}
                   </Typography>
                 </div>
               )}
-              {children && <div className="mt-base flex justify-center">{children}</div>}
+              {children && (
+                <div className={`flex ${withMargin && 'mt-base'} justify-center`}>{children}</div>
+              )}
             </div>
           </Transition.Child>
         </div>

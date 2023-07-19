@@ -1,5 +1,5 @@
 cd front
-yarn install --production=false
+yarn install --production=false --ignore-scripts
 yarn build
-yarn install --production=true
+yarn install --production=true --ignore-scripts
 cd ..

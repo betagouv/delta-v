@@ -99,14 +99,6 @@
 }
 
 @font-face {
-    font-family: "Marianne";
-    font-style: italic;
-    font-weight: 100;
-    src: url("/fonts/Marianne/Marianne-Thin_Italic.woff2") format("woff2");
-    font-display: optional;
-}
-
-@font-face {
     font-family: 'icomoon';
     src: url("/fonts/Marianne/icomoon.woff") format("woff");
     font-weight: 300;
@@ -115,8 +107,106 @@
 }
 
 
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 500;
+  src: url("/fonts/Roboto/Roboto-MediumItalic.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/Roboto/Roboto-Medium.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/fonts/Roboto/Roboto-Italic.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+  font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    src: url("/fonts/Roboto/Roboto-Bold.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 700;
+    src: url("/fonts/Roboto/Roboto-BoldItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 800;
+    src: url("/fonts/Roboto/Roboto-Black.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 800;
+    src: url("/fonts/Roboto/Roboto-BlackItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 300;
+    src: url("/fonts/Roboto/Roboto-Light.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 300;
+    src: url("/fonts/Roboto/Roboto-LightItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 100;
+    src: url("/fonts/Roboto/Roboto-Thin.ttf") format("truetype");
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 100;
+    src: url("/fonts/Roboto/Roboto-ThinItalic.ttf") format("truetype");
+    font-display: optional;
+}
+
+
 body {
-    font-family: "Marianne", sans-serif;
+    font-family: "Roboto", "Marianne", sans-serif;
     font-size: 14px;
 }
 
@@ -125,7 +215,7 @@ body {
 }
 
 svg {
-    width: auto;
+    width: 100%;
     height: 100%;
 }
 
@@ -141,6 +231,135 @@ svg {
     animation: AnimationName 1.5s ease;
 }
 
+.react-datepicker {
+  font-family: inherit;
+  font-weight: normal;
+  font-size: 14px !important;
+  color: #c7c7c7 !important;
+  border: 0;
+}
+  
+.react-datepicker__header {
+  background-color: white;
+  >header {
+    margin-bottom: 10px !important;
+  }
+}
+
+.react-datepicker__day--outside-month {
+  visibility: hidden;
+}
+
+.react-datepicker__header--custom {
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  } 
+.react-datepicker__month-container {
+    border-radius: 10px !important;
+    position: fixed;
+    background: white;
+    width: 318px;
+    top: 4px;
+  } 
+.react-datepicker__day-names {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  } 
+.react-datepicker__day-name {
+    margin-left: 0;
+    margin-right: 0;
+    color: var(--dark-text-mention-grey, #929292);
+    font-size: 8px;
+    line-height: 18px;
+    letter-spacing: -0.176px;
+    flex: 1;
+  } 
+.react-datepicker__month  {
+    border: 0 !important;
+    margin-left: 0;
+    margin-right: 0;
+  } 
+.react-datepicker-wrapper  {
+    color: var(--light-text-title-grey, #161616);
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.264px;
+  } 
+.react-datepicker-wrapper::placeholder  {
+    color: var(--light-text-disabled-grey, #929292);
+    font-size: 12px;
+    font-style: italic;
+    line-height: 18px;
+    letter-spacing: -0.264px;
+  } 
+.react-datepicker__week  {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  } 
+.react-datepicker__day  {
+    margin-left: 0;
+    margin-right: 0;
+    color: var(--dark-text-inverted-grey, #161616);
+    font-size: 10px;
+    line-height: 26px;
+    letter-spacing: -0.22px;
+    flex: 1;
+  } 
+.react-datepicker__day--today  {
+  border-radius: 25px !important;
+  background: white !important;
+  color: black !important;
+  font-weight: bold !important;
+  }
+.react-datepicker__day--selected  {
+  border-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+  background: #000091 !important;
+  color: white !important;
+  }
+
+.react-datepicker__close-icon  {
+  width: 27px;
+  &::after {
+    background-color: #000091;
+    height: 20px;
+    width: 20px;
+    padding-bottom: 3px;
+  }
+  } 
+.react-datepicker__day--in-selecting-range  {
+    border-radius: 0% !important;
+    background: white !important;
+  } 
+.react-datepicker__day--disabled  {
+    color: rgb(186, 183, 183) !important;
+  } 
+.react-datepicker__day--in-range  {
+    border-radius: 0% !important;
+    background: #6A6AF4 !important;
+  } 
+.react-datepicker__day--range-end {
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+    background: #000091 !important;
+    color: white !important;
+  } 
+.react-datepicker__day--range-start {
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+    border: white solid 1px !important;
+    color: white !important;
+  } 
+
+.react-datepicker__triangle {
+      display: none;
+    }
+
+
+
 @keyframes AnimationName {
     0% {
         background-position: 100% 25%;
@@ -150,3 +369,6 @@ svg {
         background-position: 0% 0%;
     }
 }
+
+/* react-datepicker__day react-datepicker__day--003 react-datepicker__day--in-range react-datepicker__day--in-selecting-range */
+/* react-datepicker__day react-datepicker__day--003 react-datepicker__day--in-selecting-range */

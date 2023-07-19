@@ -1,5 +1,5 @@
 # delta-v
-Projet Delta V - Déclarer des marchandises achetées à l'étranger en arrivant en France
+Projet Delta V (Déclare Douane) - Déclarer des marchandises achetées à l'étranger en arrivant en France
 
 [En savoir plus](https://beta.gouv.fr/startups/delta.v.html)
 

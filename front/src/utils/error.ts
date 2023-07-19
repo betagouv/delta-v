@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 export const formatValidationsErrors = (
   data: Record<string, any> = {},
 ): { name: string; message: string; type: string }[] => {
@@ -9,4 +11,15 @@ export const formatValidationsErrors = (
   }));
 
   return formattedErrors;
+};
+
+export const isError = (error: unknown): error is Error => {
+  return error instanceof Error;
+};
+
+export const isAxiosError = <T>(error: unknown): error is AxiosError<T> => {
+  if (error instanceof Error) {
+    return 'isAxiosError' in error;
+  }
+  return false;
 };

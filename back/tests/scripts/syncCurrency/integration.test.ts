@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { syncCurrency } from '../../../src/scripts/syncCurrency/script';
-import { RawCurrency } from '../../../src/scripts/syncCurrency/services/currencySerializer.service';
+import { RawCurrency } from '../../../src/api/currency/common/services/currencySerializer.service';
 import { testDbManager } from '../../helpers/testDb.helper';
 
 const testDb = testDbManager();

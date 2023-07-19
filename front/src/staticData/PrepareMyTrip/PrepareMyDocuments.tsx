@@ -1,7 +1,7 @@
 import { DataElement } from '..';
 import Declaration from '@/assets/images/Declaration.jpg';
 import Identification from '@/assets/images/Identification.jpg';
-import { Link } from '@/components/common/Link';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import { Typography } from '@/components/common/Typography';
 
 export const PrepareMyDocuments: DataElement[] = [
@@ -24,19 +24,18 @@ export const PrepareMyDocuments: DataElement[] = [
         <div>
           Pour toute question relative aux documents d’identité, aux visas ou aux autorisation de
           sortie du territoire pour les mineurs, consultez le site{' '}
-          <Link href="https://www.service-public.fr/" tag="span" external>
+          <ExternalLink href="https://www.service-public.fr/" tag="span">
             <span className="text-link underline">Internet service-public.fr</span>
-          </Link>{' '}
+          </ExternalLink>{' '}
           et celui du{' '}
-          <Link
+          <ExternalLink
             href="https://www.gouvernement.fr/ministere-de-l-europe-et-des-affaires-etrangeres"
             tag="span"
-            external
           >
             <span className="text-link underline">
               ministère de l’Europe et des affaires étrangères
             </span>
-          </Link>
+          </ExternalLink>
           .
         </div>
         <Typography weight="bold" color="secondary">

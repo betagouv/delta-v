@@ -120,6 +120,7 @@ const Configuration = () => {
       {displayNotAdult && (
         <div className="mt-4">
           <InputGroup
+            withBorder
             label="Sélectionnez votre âge"
             type="select"
             name="notAdultAge"

@@ -12,6 +12,7 @@ interface LinkProps {
   external?: boolean;
   underline?: boolean;
   children: React.ReactNode;
+  withBorder?: boolean;
   tag?: 'div' | 'span';
 }
 
@@ -45,9 +46,9 @@ export const Link: React.FC<LinkProps> = ({
   underline = false,
   children,
   tag,
+  withBorder = false,
 }: LinkProps) => {
   const router = useRouter();
-
   const handleClick = () => {
     if (back) {
       router.back();
@@ -61,7 +62,11 @@ export const Link: React.FC<LinkProps> = ({
   const linkType = getLinkType(to, back, href, onClick);
 
   return (
-    <CustomTag>
+    <CustomTag
+      className={classNames({
+        'rounded-md border border-black p-2': withBorder,
+      })}
+    >
       {linkType === LinkType.to && (to || back) && (
         <CustomTag
           onClick={handleClick}
@@ -71,8 +76,8 @@ export const Link: React.FC<LinkProps> = ({
         </CustomTag>
       )}
       {linkType === LinkType.href && href && (
-        <NextLink href={href}>
-          <a target={external ? '_blank' : '_self'}>{children}</a>
+        <NextLink href={href} target={external ? '_blank' : '_self'}>
+          {children}
         </NextLink>
       )}
       {linkType === LinkType.onClick && onClick && <div onClick={onClick}>{children}</div>}

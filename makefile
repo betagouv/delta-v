@@ -1,4 +1,4 @@
-DOCKER_COMPOSE  = docker-compose
+DOCKER_COMPOSE  = docker-compose --env-file ../.env.local.declareDouane
 USER =  --user $$(id -u):$$(id -g)
 DOCKER_COMPOSE_RUN  = $(DOCKER_COMPOSE) run $(USER)
 
@@ -7,12 +7,13 @@ STORYBOOK_CONTAINER =  storybook-delta-v
 BACK_CONTAINER =  backend-api-delta-v
 DATABASE_CONTAINER = database-delta-v
 ADMIN_DATABASE_CONTAINER = adminer
+MAILHOG_CONTAINER = mailhog
 
 TEST_BACK_CONTAINER =  e2e-test-backend-api-delta-v
 TEST_DATABASE_CONTAINER =  e2e-test-database-delta-v
 
 DATABASE_CONTAINERS =  $(DATABASE_CONTAINER) $(ADMIN_DATABASE_CONTAINER)
-BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS)
+BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS) $(MAILHOG_CONTAINER)
 
 ##
 ## -------------------------
@@ -23,6 +24,18 @@ BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS)
 ##
 ## -- DOCKER MANAGER --
 ##
+
+
+.PHONY: init
+init: pull y-i-back y-i-front db-fixtures-clear-load db-migrate-run-e2e ## init all project
+	
+.PHONY: pull
+pull: ## Download the latest version of the images
+	$(DOCKER_COMPOSE) pull
+	
+.PHONY: start
+start: ## Start the backend containers
+	$(DOCKER_COMPOSE) up --remove-orphans $(BACK_CONTAINERS) $(FRONT_CONTAINER)
 	
 .PHONY: start-back
 start-back: ## Start the backend containers
@@ -63,7 +76,7 @@ run-front: ## Run command in the frontend container
 
 .PHONY: build-front
 build-front: ## build the frontend container
-	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn build-prod
+	$(DOCKER_COMPOSE) run --rm $(FRONT_CONTAINER) yarn build
 
 .PHONY: start-build-front
 start-build-front: ## start the build the frontend container
@@ -83,6 +96,7 @@ start-build-back: ## start the build the frontend container
 .PHONY: y-i-back
 y-i-back: ## Install dependencies for the backend
 	$(DOCKER_COMPOSE) run --rm --no-deps $(BACK_CONTAINER) yarn install --ignore-scripts
+	$(DOCKER_COMPOSE) run --rm --no-deps $(BACK_CONTAINER) npm rebuild bcrypt --build-from-source
 
 .PHONY: y-i-front
 y-i-front: ## Install dependencies for the frontend
@@ -94,12 +108,12 @@ y-i-front: ## Install dependencies for the frontend
 
 .PHONY: test-back
 test-back: ## Run the tests for the backend
-	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest tests/$(filter-out $@,$(MAKECMDGOALS)) --color
+	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest $(filter-out $@,$(MAKECMDGOALS)) --color
 	$(DOCKER_COMPOSE) stop $(TEST_DATABASE_CONTAINER)
 
 .PHONY: test-back-watch
 test-back-watch: ## Run the tests for the backend with watch
-	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest:watch tests/$(filter-out $@,$(MAKECMDGOALS)) --color
+	$(DOCKER_COMPOSE) run --rm $(TEST_BACK_CONTAINER) yarn jest:watch $(filter-out $@,$(MAKECMDGOALS)) --color
 	$(DOCKER_COMPOSE) stop $(TEST_DATABASE_CONTAINER)
 
 .PHONY: test-front
@@ -132,7 +146,7 @@ db-drop-e2e: ## drop e2e database
 	
 .PHONY: db-generate-migration
 db-generate-migration: ## generate migration, put YOUR_NAME in this command to custom the migration name
-	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) yarn migration:generate -n $(filter-out $@,$(MAKECMDGOALS))
+	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) yarn migration:generate ./src/migrations/$(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: db-migrate-run
 db-migrate-run: ## run migrations for dev database

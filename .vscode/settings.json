@@ -8,5 +8,8 @@
       "directory": "front",
       "changeProcessCWD": true
     }
+  ],
+  "cSpell.words": [
+    "dayjs"
   ]
 }

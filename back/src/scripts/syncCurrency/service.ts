@@ -1,6 +1,6 @@
 import { CurrencyRepositoryInterface } from '../../repositories/currency.repository';
-import { serializeCurrency } from './services/currencySerializer.service';
-import { getRawCurrencies } from './services/getRawCurrencies.service';
+import { serializeCurrency } from '../../api/currency/common/services/currencySerializer.service';
+import { getRawCurrencies } from '../../api/currency/common/services/getRawCurrencies.service';
 
 export const service = async (currencyRepository: CurrencyRepositoryInterface): Promise<void> => {
   const rawCurrencies = await getRawCurrencies();

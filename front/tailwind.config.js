@@ -7,6 +7,7 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   mode: 'jit',
   content: [path.join(__dirname, './src/**/*.(js|jsx|ts|tsx)')],
+  safelist: ['truncate'],
   theme: {
     extend: {
       fontSize: {
@@ -17,21 +18,25 @@ module.exports = {
           100: '#ecf1fa',
           200: '#b3b3de',
           300: '#9999d3',
-          400: '#6666bd',
+          400: '#6A6AF4',
           500: '#0C0CCF',
           600: '#000091',
           700: '#000074',
           800: '#000057',
           900: '#00003a',
         },
-        secondary: colors.gray,
+        secondary: { bg: '#f6f6f6', ...colors.gray, 600: '#161616' },
         disabled: {
-          bg: '#E5E5E5',
+          bg: '#D9D9D9',
           text: '#929292',
         },
+        defaultText: '#161616',
+        lightBlue: '#E3E3FD',
         cancel: colors.red,
         link: '#6A6AF4',
-        success: '#27A658',
+        error: '#CE0500',
+        success: '#18753C',
+        note: '#FFEA79',
       },
       spacing: {
         extraSmall: '0.75rem',
@@ -46,11 +51,20 @@ module.exports = {
       },
       fontFamily: {
         marianne: ['Marianne', 'sans-serif'],
+        roboto: ['Roboto', 'Marianne', 'sans-serif'],
       },
     },
   },
   variants: {
     extend: {},
+  },
+  corePlugins: {
+    textOpacity: false,
+    backgroundOpacity: false,
+    borderOpacity: false,
+    divideOpacity: false,
+    placeholderOpacity: false,
+    ringOpacity: false,
   },
   plugins: [
     require('@tailwindcss/forms'),
@@ -62,5 +76,7 @@ module.exports = {
       addVariant('child', '& > *');
       addVariant('child-hover', '& > *:hover');
     }),
+
+    require('@tailwindcss/line-clamp'),
   ],
 };

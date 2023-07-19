@@ -22,29 +22,29 @@ export const ContentValueProduct: React.FC<ContentValueProductProps> = ({
   return (
     <>
       <div className="mt-2">
-        <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
+        <Typography weight="bold" color="black" size={displaySmall ? 'text-xs' : 'text-sm'}>
           Calcul des droits de douane
         </Typography>
       </div>
       <p
         className={classNames({
-          'w-full text-primary-700': true,
-          'text-base': !displaySmall,
-          'text-sm': displaySmall,
+          'w-full text-black': true,
+          'text-sm': !displaySmall,
+          'text-xs': displaySmall,
         })}
       >
         {unitPrice} <span className="text-secondary-900">x {customDuty}% =</span> {unitCustomDuty} €
       </p>
       <div className="mt-2">
-        <Typography color="primary" size={displaySmall ? 'text-sm' : 'text-base'}>
+        <Typography weight="bold" color="black" size={displaySmall ? 'text-xs' : 'text-sm'}>
           Calcul de la TVA
         </Typography>
       </div>
       <p
         className={classNames({
-          'w-full text-primary-700': true,
-          'text-base': !displaySmall,
-          'text-sm': displaySmall,
+          'w-full text-black': true,
+          'text-sm': !displaySmall,
+          'text-xs': displaySmall,
         })}
       >
         ({unitPrice} + {unitCustomDuty}) <span className="text-secondary-900">x {vat}% =</span>{' '}

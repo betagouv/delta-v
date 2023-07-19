@@ -87,9 +87,11 @@ export class Declaration {
   }
 
   private getTotalProducts(): number {
-    return this.detailedShoppingProducts.reduce((total, shoppingProduct) => {
-      return currency(shoppingProduct.getDefaultCurrencyValue()).add(total).value;
-    }, 0);
+    return this.detailedShoppingProducts
+      .filter((detailedShoppingProduct) => !detailedShoppingProduct.isAmountProduct())
+      .reduce((total, shoppingProduct) => {
+        return currency(shoppingProduct.getDefaultCurrencyValue()).add(total).value;
+      }, 0);
   }
 
   private getDefaultProductTaxes(): ProductTaxesInterface[] {
@@ -106,7 +108,20 @@ export class Declaration {
     return productTaxes;
   }
 
+  private hasUncompletedProduct(): boolean {
+    return !!this.detailedShoppingProducts.find((detailedShoppingProduct) =>
+      detailedShoppingProduct.isUncompletedProduct(),
+    );
+  }
+
   private getUncompletedProductTaxes(): ProductTaxesInterface[] {
+    if (!this.canCalculateTaxes()) {
+      return this.detailedShoppingProducts
+        .filter((detailedShoppingProduct) => !detailedShoppingProduct.isAmountProduct())
+        .map((detailedShoppingProduct) => {
+          return new ProductTaxes({}).setFromDetailedShoppingProduct(detailedShoppingProduct);
+        });
+    }
     return this.detailedShoppingProducts
       .filter((detailedShoppingProduct) => detailedShoppingProduct.isUncompletedProduct())
       .map((detailedShoppingProduct) => {
@@ -142,6 +157,9 @@ export class Declaration {
   }
 
   getRealProductsTaxes(): ProductTaxesInterface[] {
+    if (!this.canCalculateTaxes()) {
+      return [];
+    }
     const usualProductTaxes = this.getUsualProductTaxes();
     if (this.total > LIMIT_UNIQUE_CUSTOM_DUTY) {
       return usualProductTaxes;
@@ -154,4 +172,31 @@ export class Declaration {
     }
     return uniqueRateProductTaxes;
   }
+
+  canCalculateTaxes = (): boolean => {
+    if (this.total <= this.franchiseAmount) {
+      return true;
+    }
+
+    if (this.hasUncompletedProduct()) {
+      return false;
+    }
+
+    return true;
+  };
+
+  canCreateDeclaration = (): boolean => {
+    if (this.detailedShoppingProducts.length <= 0) {
+      return false;
+    }
+
+    const hasOverMaximumAmountProduct = this.getAmountProductsGrouped().find(
+      (amountGroup) => amountGroup.isOverMaximum,
+    );
+    if (hasOverMaximumAmountProduct) {
+      return false;
+    }
+
+    return true;
+  };
 }

@@ -1,5 +1,5 @@
 import redact from 'redact-object';
-import pino, { Logger as PinoLogger } from 'pino';
+import pino from 'pino';
 import { Request } from 'express';
 
 const DEFAULT_LOG_LEVEL = 'info';
@@ -50,7 +50,8 @@ const silentLog = (silent = false): boolean => silent && isProduction;
  * App logger. Based on pino and wired with sentry.
  */
 export class Logger implements ILogger {
-  public pinoLogger: PinoLogger;
+  public pinoLogger: any;
+
   private request: Request;
 
   constructor() {

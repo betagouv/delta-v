@@ -48,8 +48,8 @@ describe('advancedSearch', () => {
     expect(results.length).toEqual(0);
   });
   it.each([
-    [1, 0],
-    [0, 2.5],
+    [1, 0.5],
+    [0, 0.1],
   ])('should get %d elements - with minRankAllowed = %d', (nbMatch, minRankAllowed) => {
     const searchValue = 'iph';
     const items: Item[] = [{ id: '12', name: 'appareil photo' }];

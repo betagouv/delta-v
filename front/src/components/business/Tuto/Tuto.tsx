@@ -39,7 +39,7 @@ export const Tuto: React.FC<TutoProps> = ({
             <Icon name="clear" size="lg" />
           ) : (
             <Typography tag="div" color="secondary">
-              Ignorer <Icon name="chevron-thin-right" size="lg" />
+              Ignorer <Icon name="chevron-right" size="lg" />
             </Typography>
           )}
         </div>

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import expressPino from 'express-pino-logger';
+import pinoHttp from 'pino-http';
 import { ILogger, Logger } from '../logger';
 
 export interface RequestWithLogger extends Request {
@@ -22,7 +22,11 @@ const logMiddleware = (
     return next();
   }
 
-  return next(expressPino({ logger: logger.pinoLogger })(req, res));
+  const pinoMiddleware = pinoHttp({
+    logger: logger.pinoLogger,
+  });
+
+  pinoMiddleware(req, res, next);
 };
 
 /**

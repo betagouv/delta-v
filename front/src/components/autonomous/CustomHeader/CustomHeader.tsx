@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
-import { SummaryExport } from '../../business/summaryExport';
+import { Role } from '@/components/business/FormSelectProduct/utils';
+import { SummaryExport } from '@/components/business/SummaryExport';
 import { BackButton } from '@/components/common/BackButton';
+import { BackButtonWithTitle } from '@/components/common/BackButtonWithTitle';
 import { Header } from '@/components/common/Header';
 import { Link } from '@/components/common/Link';
 import Modal from '@/components/common/Modal';
@@ -15,18 +17,33 @@ interface HeaderProps {
   withCart?: boolean;
   withSearch?: boolean;
   withPrint?: boolean;
+  withLogo?: boolean;
+  title?: string;
   linkSearch?: string;
+  templateRole?: Role;
+  linkButton?: string;
+  method?: 'declaration' | 'simulateur';
+  onClick?: () => void;
 }
 
 export const CustomHeader: React.FC<HeaderProps> = ({
   withCart = false,
   withSearch = false,
   withPrint = false,
+  withLogo = false,
+  title,
   linkSearch = '/simulateur/produits/recherche',
+  templateRole = 'user',
+  method = 'simulateur',
+  onClick,
+  linkButton,
 }: HeaderProps) => {
   const { shoppingProducts, simulatorRequest, simulatorResponse } = useStore(
     (state) => ({
-      shoppingProducts: state.simulator.appState.simulatorRequest.shoppingProducts,
+      shoppingProducts:
+        method === 'simulateur'
+          ? state.simulator.appState.simulatorRequest.shoppingProducts
+          : state.declaration.appState.declarationRequest.shoppingProducts,
       simulatorRequest: state.simulator.appState.simulatorRequest,
       simulatorResponse: state.simulator.appState.simulatorResponse,
     }),
@@ -43,7 +60,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
 
   const onClickBasket = () => {
     if (nbCartItems > 0) {
-      router.push('/simulateur/panier');
+      router.push(`/${method}/panier`);
       return;
     }
     setOpenBasketModal(true);
@@ -51,7 +68,11 @@ export const CustomHeader: React.FC<HeaderProps> = ({
 
   const leftButtons = (
     <>
-      <BackButton />
+      {title ? (
+        <BackButtonWithTitle title={title} href={linkButton} onClick={onClick} />
+      ) : (
+        <BackButton href={linkButton} onClick={onClick} />
+      )}
     </>
   );
 
@@ -67,7 +88,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({
       {withCart && (
         <>
           <div className="flex flex-row" onClick={onClickBasket}>
-            <div className="mt-1 mr-1  h-7 w-7 ">
+            <div className="mt-1 mr-1 h-7 w-7 ">
               <SvgIcon name="basket" />
             </div>
             {nbCartItems > 0 && (
@@ -83,14 +104,21 @@ export const CustomHeader: React.FC<HeaderProps> = ({
           />
         </>
       )}
-      {withPrint && (
+      {withPrint && method === 'simulateur' && (
         <SummaryExport simulatorRequest={simulatorRequest} simulatorResponse={simulatorResponse} />
+      )}
+      {withLogo && (
+        <Link to={linkSearch}>
+          <div className="h-6 ">
+            <SvgIcon name="logo" />
+          </div>
+        </Link>
       )}
     </>
   );
   return (
-    <>
+    <div className={templateRole === 'agent' ? 'px-5 pt-6 pb-0' : ''}>
       <Header leftButtons={leftButtons} rightButtons={rightButtons} />
-    </>
+    </div>
   );
 };

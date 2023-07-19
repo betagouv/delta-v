@@ -5,18 +5,12 @@ import { Product, ProductDisplayTypes, ProductType } from '../../../src/entities
 
 const buildSchema = (): Product => {
   return {
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     name: faker.commerce.productName(),
     info: faker.lorem.paragraph(),
     childrenQuestion: faker.lorem.sentence(),
     finalProduct: faker.datatype.boolean(),
-    productDisplayTypes: faker.helpers.arrayElement([
-      ProductDisplayTypes.addable,
-      ProductDisplayTypes.category,
-      ProductDisplayTypes.notManaged,
-      ProductDisplayTypes.radio,
-      ProductDisplayTypes.radioCard,
-    ]),
+    productDisplayTypes: ProductDisplayTypes.addable,
     relatedWords: [],
     positionRank: LexoRank.middle().toString(),
     countries: [],

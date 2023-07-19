@@ -1,19 +1,18 @@
-import { EntityRepository, TreeRepository } from 'typeorm';
+import { TreeRepository } from 'typeorm';
 import { Product, ProductEntity } from '../entities/product.entity';
+import { AppDataSource } from '../loader/database';
 
-export interface ProductRepositoryInterface extends TreeRepository<ProductEntity> {
+export type ProductRepositoryInterface = {
   getAll(): Promise<Product[]>;
   getManyByIds(ids: string[]): Product[] | Promise<Product[]>;
-}
+} & TreeRepository<ProductEntity>;
 
-@EntityRepository(ProductEntity)
-export default class ProductRepository
-  extends TreeRepository<ProductEntity>
-  implements ProductRepositoryInterface
-{
+export const ProductRepository: ProductRepositoryInterface = AppDataSource.getTreeRepository(
+  ProductEntity,
+).extend({
   getAll(): Promise<Product[]> {
     return this.findTrees();
-  }
+  },
   getManyByIds(ids: string[]): Product[] | Promise<Product[]> {
     if (!ids.length) {
       return [];
@@ -24,5 +23,5 @@ export default class ProductRepository
         ids,
       })
       .getMany();
-  }
-}
+  },
+});

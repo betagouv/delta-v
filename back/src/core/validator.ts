@@ -1,15 +1,7 @@
-import Joi, { Root, StringSchema } from 'joi';
+import Joi from 'joi';
 import sanitizeHtml from 'sanitize-html';
 
-interface ExtendedStringSchema extends StringSchema {
-  htmlStrip(): this;
-}
-
-interface ExtendedJoi extends Root {
-  string(): ExtendedStringSchema;
-}
-
-export const validator: ExtendedJoi = Joi.extend((joi) => ({
+export const validator: Joi.Root = Joi.extend((joi) => ({
   base: joi.string(),
   type: 'string',
   rules: {

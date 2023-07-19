@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/router';
+import shallow from 'zustand/shallow';
 
+import { ModalResumeDeclaration } from '@/components/autonomous/ModalResumeDeclaration';
 import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
 import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { Card } from '@/components/common/Card';
@@ -16,16 +18,22 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
+import { getLevelWithData as getDeclarationLevelWithData } from '@/utils/declaration';
 import { getLevelWithData } from '@/utils/simulator';
 
 const Index = () => {
   const [openModalUnderConstruction, setOpenModalUnderConstruction] = useState<boolean>(false);
   const [openModalResumeSimulator, setOpenModalResumeSimulator] = useState<boolean>(false);
+  const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
   const router = useRouter();
 
-  const { simulatorRequest } = useStore((state) => ({
-    simulatorRequest: state.simulator.appState.simulatorRequest,
-  }));
+  const { simulatorRequest, declarationRequest } = useStore(
+    (state) => ({
+      simulatorRequest: state.simulator.appState.simulatorRequest,
+      declarationRequest: state.declaration.appState.declarationRequest,
+    }),
+    shallow,
+  );
 
   const openSimulator = () => {
     if (getLevelWithData(simulatorRequest) === 1) {
@@ -34,6 +42,15 @@ const Index = () => {
       setOpenModalResumeSimulator(true);
     }
   };
+
+  const openDeclaration = () => {
+    if (getDeclarationLevelWithData(declarationRequest) === 1) {
+      router.push(Routing.createDeclaration);
+    } else {
+      setOpenModalResumeDeclaration(true);
+    }
+  };
+
   return (
     <Main
       meta={
@@ -84,6 +101,16 @@ const Index = () => {
         </div>
 
         <div className="flex flex-col gap-4">
+          <div className="cursor-pointer">
+            <Card
+              title="Déclarer mes achats"
+              description="Déclarer vos achats et créer en quelques clics votre déclaration"
+              svgName="douanier"
+              rounded="lg"
+              fullWidth
+              onClick={() => openDeclaration()}
+            />
+          </div>
           <Link to={Routing.prepareMyTripConfig}>
             <Card
               title="Préparer mon voyage"
@@ -282,6 +309,11 @@ const Index = () => {
         open={openModalResumeSimulator}
         onClose={() => setOpenModalResumeSimulator(false)}
         simulatorRequest={simulatorRequest}
+      />
+      <ModalResumeDeclaration
+        open={openModalResumeDeclaration}
+        onClose={() => setOpenModalResumeDeclaration(false)}
+        templateRole="user"
       />
       <ModalUnderConstruction
         open={openModalUnderConstruction}
