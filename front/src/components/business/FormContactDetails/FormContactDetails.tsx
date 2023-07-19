@@ -27,9 +27,9 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
     handleSubmit,
     register,
     control,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormDeclarationData>({
-    mode: 'onBlur',
+    mode: 'onSubmit',
     resolver: yupResolver(getSchema()),
     defaultValues,
   });
@@ -133,7 +133,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
       </div>
 
       <div className="mb-8 flex-1" />
-      <Button fullWidth={true} type="submit" disabled={!isValid}>
+      <Button fullWidth={true} type="submit">
         Valider
       </Button>
     </form>

@@ -44,7 +44,7 @@ const Index = () => {
   };
 
   const openDeclaration = () => {
-    if (getDeclarationLevelWithData(declarationRequest, simulatorRequest) === 1) {
+    if (getDeclarationLevelWithData(declarationRequest) === 1) {
       router.push(Routing.createDeclaration);
     } else {
       setOpenModalResumeDeclaration(true);

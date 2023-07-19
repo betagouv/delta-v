@@ -73,12 +73,9 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
             <Typography size="text-2xl" color="secondary" weight="bold">
               Récapitulatif
             </Typography>
-            <div className="mt-8 h-44 flex justify-center">
+            <div className="my-8 h-44 flex justify-center">
               <QRCodeSVG value={declarationResponse.id} size={176} />
             </div>
-            <Typography size="text-lg" weight="bold" color="black">
-              {declarationResponse.publicId}
-            </Typography>
           </div>
         ) : (
           <Typography size="text-2xl" color="secondary" weight="bold">
@@ -88,6 +85,16 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
       </div>
       <div className="-mx-4 my-4 border-b-2 border-dashed" />
       <div className="flex flex-col gap-[10px]">
+        <div className="flex flex-row justify-start">
+          <div className="flex flex-col flex-1 justify-start">
+            <Typography color="black" weight="bold" size="sm">
+              Numéro de déclaration
+            </Typography>
+            <Typography size="text-base" color="black">
+              {declarationResponse.publicId}
+            </Typography>
+          </div>
+        </div>
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
             <Typography color="black" weight="bold" size="xs">

@@ -69,7 +69,7 @@ const Index = () => {
   });
 
   const getIdByQRCode = (qrCode: string) => {
-    getDeclarationMutation.mutate(qrCode);
+    getDeclarationMutation.mutate({ id: qrCode });
   };
 
   const handleClickTools = () => {
