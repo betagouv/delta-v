@@ -13,6 +13,7 @@ import shallow from 'zustand/shallow';
 
 import { configureAxios } from '@/api/base';
 import { SvgIcon } from '@/components/common/SvgIcon';
+import { Typography } from '@/components/common/Typography';
 import { Config } from '@/config';
 import { useStore } from '@/stores/store';
 import { RoutingAuthentication } from '@/utils/const';
@@ -98,14 +99,18 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         {!hideLoading && (
           <div
             className={classNames({
-              'fixed z-50 flex h-full w-full items-center bg-white transition-[opacity] ease-out duration-300':
+              'fixed z-50 flex flex-col h-full w-full bg-white transition-[opacity] ease-out duration-300':
                 true,
               'opacity-100': loading,
               'opacity-0': !loading,
             })}
           >
-            <div className="w-40 mx-auto h-40">
+            <div className="h-1/3" />
+            <div className="flex flex-col w-40 mx-auto h-40">
               <SvgIcon name={path.startsWith('/agent') ? 'logoAgent' : 'logo'} />
+              <Typography textPosition="text-center" weight="bold" size="text-2xs">
+                Chargement
+              </Typography>
             </div>
           </div>
         )}
