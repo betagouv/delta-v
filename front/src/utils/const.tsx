@@ -150,17 +150,17 @@ export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
     openDeclarationResumeModal: true,
   },
   {
+    id: 'declarationList',
+    title: 'Déclarations',
+    path: RoutingAgent.declarations,
+    svgIcon: 'douanier' as SvgNames,
+  },
+  {
     id: 'nomenclature',
     title: 'Nomenclature',
     path: RoutingAgent.nomenclature,
     svgIcon: 'categoryVetements' as SvgNames,
     disabled: true,
-  },
-  {
-    id: 'declarationList',
-    title: 'Déclarations',
-    path: RoutingAgent.declarations,
-    svgIcon: 'douanier' as SvgNames,
   },
   {
     id: 'actualities',

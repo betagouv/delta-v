@@ -110,6 +110,7 @@ const Configuration = () => {
           { id: 'true', value: 'Oui' },
           { id: 'false', value: 'Non' },
         ]}
+        withBorder
       />
       <div className="mt-2">
         <Typography italic color="light-gray">

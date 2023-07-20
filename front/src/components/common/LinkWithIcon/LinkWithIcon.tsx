@@ -30,13 +30,13 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
         <NextLink href={href}>
           <div
             className={classNames({
-              'border border-secondary-200 py-4 px-5 rounded-md flex flex-row items-center justify-between':
+              'border border-secondary-200 py-4 px-5 rounded-md flex flex-row items-center justify-between h-14':
                 true,
               'bg-primary-400': withBgColor,
             })}
           >
             <div className="flex flex-row gap-4 items-center">
-              <div>
+              <div className="w-5 h-5 flex items-center justify-items-center">
                 <SvgIcon name={svgName} />
               </div>
               <Typography color={withBgColor ? 'white' : 'black'} tag="div">
@@ -49,15 +49,15 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
       ) : (
         <div
           className={classNames({
-            'border border-secondary-500 py-4 px-5 rounded-md flex flex-row items-center justify-between':
+            'border border-secondary-500 py-4 px-5 rounded-md flex flex-row items-center justify-between h-14':
               true,
             'bg-primary-400': withBgColor,
             'bg-disabled-bg border-none opacity-40': disabled,
           })}
           onClick={onClick}
         >
-          <div className="flex flex-row gap-4 h-4 items-center">
-            <div>
+          <div className="flex flex-row gap-4 items-center">
+            <div className="w-5 h-5 flex items-center justify-items-center">
               <SvgIcon name={svgName} />
             </div>
             <Typography color={withBgColor ? 'white' : 'black'}>{name}</Typography>

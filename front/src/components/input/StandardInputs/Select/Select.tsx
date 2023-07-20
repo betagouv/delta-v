@@ -34,7 +34,7 @@ export const Select: React.FC<ISelectOptions> = ({
   name,
   rules,
   fullWidth,
-  withBorder = true,
+  withBorder = false,
 }: ISelectOptions) => {
   const { field } = useController({
     control,
@@ -86,9 +86,9 @@ export const Select: React.FC<ISelectOptions> = ({
                 })}
               >
                 {open ? (
-                  <Icon name="chevron-thin-up" size="xl" />
+                  <Icon name="chevron-thin-up" size="base" />
                 ) : (
-                  <Icon name="chevron-thin-down" size="xl" />
+                  <Icon name="chevron-thin-down" size="base" />
                 )}
               </span>
             </Listbox.Button>

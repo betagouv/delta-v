@@ -97,6 +97,7 @@ const Index = () => {
             placeholder="Que recherchez-vous ?"
             trailingIcon="search"
             onClick={() => router.push(`/recherche`)}
+            withBorder
           />
         </div>
 

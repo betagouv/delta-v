@@ -72,13 +72,15 @@ const AskResetPasswordPage = () => {
       <section className="self-center w-full flex flex-col items-center px-10">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
           <InputGroup
-            label="Saisissez votre adresse email *"
+            label="Saisissez votre adresse email"
             type="email"
             name="adult"
             fullWidth={true}
             placeholder="Email"
             register={register('email')}
             error={errors?.email?.message ?? getErrorFields('email', apiError)}
+            withBorder
+            required
           />
           <div className="pt-10 pb-2 flex">{apiError && <ApiError apiError={apiError} />}</div>
           <div className="flex flex-col gap-4 w-36 self-center">

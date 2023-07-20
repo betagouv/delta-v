@@ -98,6 +98,7 @@ const UpdateProductBasket = () => {
                   type="text"
                   placeholder="Exemple : Jeans, pantalon noir, slim..."
                   register={register('name', { required: false })}
+                  withBorder
                 />
               </div>
               <FormAddProduct

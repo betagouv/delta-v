@@ -1,5 +1,5 @@
 export type ButtonSize = '2xs' | 'xs' | 'sm' | 'base' | 'lg' | 'xl';
-export type ButtonVariant = 'normal' | 'outlined' | 'ghost';
+export type ButtonVariant = 'normal' | 'outlined' | 'outlinedBgWhite' | 'ghost';
 export type ButtonColor = 'primary' | 'secondary' | 'card' | 'red' | 'tertiary';
 export type IconPosition = 'left' | 'right';
 export type ButtonRounded = 'full' | 'lg' | 'md' | 'base' | 'none';
@@ -225,6 +225,62 @@ const styleManager: IButtonStyle = {
       },
       card: {
         classes: {
+          'text-black': true,
+          'border-gray-300': true,
+          'active:bg-gray-300': true,
+          'active:border-gray-500': true,
+          'disabled:text-gray-600': true,
+        },
+      },
+    },
+    outlinedBgWhite: {
+      primary: {
+        classes: {
+          'bg-white': true,
+          'text-primary-600': true,
+          'border-primary-600': true,
+          'active:bg-gray-300': true,
+          'active:text-primary-500': true,
+          'active:border-primary-500': true,
+          'disabled:text-primary-600': true,
+        },
+      },
+      secondary: {
+        classes: {
+          'bg-white': true,
+          'text-secondary-600': true,
+          'border-secondary-600': true,
+          'active:text-secondary-500': true,
+          'active:bg-gray-300': true,
+          'active:border-secondary-500': true,
+          'disabled:text-secondary-600': true,
+        },
+      },
+      tertiary: {
+        classes: {
+          'bg-white': true,
+          'text-primary-400': true,
+          'border-primary-400': true,
+          'active:bg-gray-100': true,
+          'active:text-primary-300': true,
+          'active:border-primary-300': true,
+          'disabled:text-primary-400': true,
+        },
+      },
+      red: {
+        classes: {
+          'bg-white': true,
+          'text-red-600': true,
+          'border-red-600': true,
+          'active:text-red-500': true,
+          'active:bg-gray-300': true,
+          'active:border-red-500': true,
+          'disabled:text-red-600': true,
+        },
+      },
+      card: {
+        classes: {
+          'bg-white': true,
           'text-black': true,
           'border-gray-300': true,
           'active:bg-gray-300': true,

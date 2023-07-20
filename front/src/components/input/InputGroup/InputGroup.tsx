@@ -99,12 +99,14 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   control,
   rules,
   littleCard = false,
-  withBorder,
+  withBorder = false,
   newLabel = false,
   onTrailingIconClick,
   onTrailingSvgIconClick,
+  required,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
+
   return (
     <div>
       <>
@@ -119,6 +121,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               data-testid="label-element"
             >
               {label}
+              {required && <span className="text-primary-600">&nbsp;*</span>}
             </label>
           )}
           {type === 'select' && (

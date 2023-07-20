@@ -100,23 +100,25 @@ const LoginPage = () => {
           <div className="my-5">
             <InputGroup
               type="text"
-              name="adult"
+              name="email"
               fullWidth={true}
               placeholder="Email"
               register={register('email')}
               error={errors?.email?.message ?? getErrorFields('email', apiError)}
+              withBorder
             />
           </div>
           <div className="my-2.5">
             <InputGroup
               type={!passwordVisible ? 'password' : 'text'}
-              name="adult"
+              name="password"
               fullWidth={true}
               placeholder="Mot de passe"
               register={register('password')}
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
               trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
               onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
+              withBorder
             />
           </div>
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
@@ -152,9 +154,11 @@ const LoginPage = () => {
           Vous n'avez pas de compte ?
         </Typography>
         <Link to={RoutingAuthentication.register}>
-          <Button fullWidth={false} size="sm" variant="outlined">
-            <Typography weight="bold">Créer mon compte</Typography>
-          </Button>
+          <div className="w-40">
+            <Button fullWidth={true} size="sm" variant="outlinedBgWhite">
+              Créer mon compte
+            </Button>
+          </div>
         </Link>
       </section>
     </MainAuth>
