@@ -9,6 +9,7 @@ import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
+import { resendEmailValidationEmailLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
 
 const testDb = testDbManager();
 
@@ -23,6 +24,7 @@ describe('askEmailValidationRouter route', () => {
   beforeEach(async () => {
     await testDb.clear();
     clearEventEmitterMock();
+    resendEmailValidationEmailLimiter.resetKey('::ffff:127.0.0.1');
   });
 
   afterAll(async () => {
@@ -103,5 +105,24 @@ describe('askEmailValidationRouter route', () => {
     expect(body.code).toEqual(ErrorCodes.USER_ALREADY_ENABLED_UNAUTHORIZED);
 
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
+  });
+
+  test('should return error with code 429 - too many request', async () => {
+    const { accessToken } = await prepareContextUser({
+      testDb,
+      enabled: false,
+    });
+
+    await request(testApp)
+      .post('/api/email/validate/ask')
+      .set('Authorization', `Bearer ${accessToken}`);
+
+    const { status, body } = await request(testApp)
+      .post('/api/email/validate/ask')
+      .set('Authorization', `Bearer ${accessToken}`);
+
+    expect(body.code).toEqual(ErrorCodes.TOO_MANY_REQUESTS_EMAIL_SEND);
+    expect(status).toBe(HttpStatuses.TOO_MANY_REQUESTS);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 });

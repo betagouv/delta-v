@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useAskEmailValidationMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
@@ -18,6 +19,7 @@ const RegisterSuccessPage = () => {
   const { email } = router.query;
 
   const resendEmailMutation = useAskEmailValidationMutation({});
+  const apiError = resendEmailMutation.error ?? undefined;
 
   const handleResend = () => {
     if (typeof email === 'string') {
@@ -61,6 +63,11 @@ const RegisterSuccessPage = () => {
             <br /> votre compte à partir de votre mail !
           </Typography>
           <br />
+          {apiError?.message && (
+            <div className="ml-3">
+              <ApiError apiError={apiError} />
+            </div>
+          )}
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>
             <span className="cursor-pointer" onClick={handleResend}>
               Renvoyer le lien
