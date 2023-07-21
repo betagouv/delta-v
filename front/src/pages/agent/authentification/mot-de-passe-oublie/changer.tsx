@@ -101,7 +101,7 @@ const ResetPasswordPage = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
           <div className="flex flex-col gap-1 pb-12">
             <InputGroup
-              label="Mon nouveau mot de passe *"
+              label="Mon nouveau mot de passe"
               type={!passwordVisible ? 'password' : 'text'}
               name="password"
               fullWidth={true}
@@ -110,16 +110,18 @@ const ResetPasswordPage = () => {
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
               trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
               onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
+              withBorder
+              required
             />
-            <div className="ml-3">
-              <Typography color="light-gray" size="text-2xs">
+            <div className="ml-3  leading-none">
+              <Typography color="light-gray" size="text-3xs">
                 <PasswordHelperText password={password} />
               </Typography>
             </div>
           </div>
           <div className="flex flex-col gap-1">
             <InputGroup
-              label="Confirmer le mot de passe *"
+              label="Confirmer le mot de passe"
               type={!confirmPasswordVisible ? 'password' : 'text'}
               name="confirmPassword"
               fullWidth={true}
@@ -128,6 +130,8 @@ const ResetPasswordPage = () => {
               error={errors?.password?.message ?? getErrorFields('password', apiError)}
               trailingSvgIcon={!confirmPasswordVisible ? 'visibilityOff' : 'visibilityOn'}
               onTrailingSvgIconClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+              withBorder
+              required
             />
             {password && confirmPassword && (
               <div className="ml-3">

@@ -126,6 +126,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
             placeholder="Exemple : Jeans, pantalon noir, slim..."
             register={register('name', { required: false })}
             error={errors.name?.message as string | undefined}
+            withBorder
           />
         </div>
       )}

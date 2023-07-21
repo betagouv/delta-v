@@ -59,6 +59,7 @@ const ManualQRCodePage = () => {
             placeholder="Numéro de déclaration : XV56HJL..."
             fullWidth
             register={register('search')}
+            withBorder
           />
           {!isLoading &&
             data &&

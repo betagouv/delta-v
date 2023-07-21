@@ -49,6 +49,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
               control={control}
               error={errors?.lastName?.message as string | undefined}
               required
+              withBorder
             />
           </div>
           <div className="w-56">
@@ -62,6 +63,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
               control={control}
               error={errors?.firstName?.message as string | undefined}
               required
+              withBorder
             />
           </div>
         </div>
@@ -76,6 +78,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
             control={control}
             error={errors?.address?.message as string | undefined}
             required
+            withBorder
           />
           <div className="flex flex-row gap-4 w-full">
             <div className="w-28">
@@ -89,6 +92,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
                 control={control}
                 error={errors?.postalCode?.message as string | undefined}
                 required
+                withBorder
               />
             </div>
             <div className="flex-1">
@@ -102,6 +106,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
                 control={control}
                 error={errors?.city?.message as string | undefined}
                 required
+                withBorder
               />
             </div>
           </div>
@@ -117,6 +122,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
             control={control}
             error={errors?.email?.message as string | undefined}
             required
+            withBorder
           />
           <InputGroup
             type="text"
@@ -128,6 +134,7 @@ export const FormContactDetails = ({ onSubmit, defaultValues }: FormContactDetai
             control={control}
             error={errors?.phoneNumber?.message as string | undefined}
             required
+            withBorder
           />
         </div>
       </div>

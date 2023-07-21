@@ -65,7 +65,9 @@ const ResetLinkSentPage = () => {
           )}
           <br />
           <Typography textPosition="text-center" size="text-xs" color="black">
-            Suivez le guide pour renouveler votre mot de passe.
+            Suivez le guide pour renouveler
+            <br />
+            votre mot de passe.
           </Typography>
           <br />
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>

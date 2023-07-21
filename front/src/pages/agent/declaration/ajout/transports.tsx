@@ -202,7 +202,6 @@ const Declaration = () => {
               register={register('country', { required: true })}
               control={control}
               error={errors?.country?.message}
-              withBorder={false}
             />
           </div>
         )}
@@ -218,7 +217,6 @@ const Declaration = () => {
                 control={control}
                 error={errors?.flightNumber?.message}
                 required
-                withBorder={false}
               />
             </div>
             <div className="ml-2.5">

@@ -90,6 +90,7 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
           register={register('name', { required: true })}
           error={errors.name?.message}
           fullWidth
+          withBorder
         />
         <InputGroup
           name="category"
