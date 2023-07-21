@@ -35,7 +35,7 @@ jobs:
 
   deploy-front-staging:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' || ${{ github.event.inputs.job == 'stage-deploy'}}
+    if: github.ref == 'refs/heads/develop'
     needs: test-front
     steps:
       - uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
 
   deploy-front-production:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' || ${{ github.event.inputs.job == 'prod-deploy'}}
+    if: github.ref == 'refs/heads/master'
     needs: test-front
     steps:
       - uses: actions/checkout@v3
