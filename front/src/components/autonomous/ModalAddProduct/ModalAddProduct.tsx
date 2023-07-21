@@ -8,8 +8,21 @@ import Modal from '@/components/common/Modal';
 interface ModalAddProductProps {
   open: boolean;
   onClose?: () => void;
-  method?: 'declaration' | 'simulateur';
+  method?: 'declaration' | 'simulateur' | 'agent';
 }
+
+const getLink = (method: 'declaration' | 'simulateur' | 'agent'): string => {
+  switch (method) {
+    case 'agent':
+      return '/agent/declaration/ajout/marchandises';
+    case 'declaration':
+      return '/declaration/panier';
+    case 'simulateur':
+      return '/simulateur/panier';
+    default:
+      return '/simulateur/panier';
+  }
+};
 
 export const ModalAddProduct: React.FC<ModalAddProductProps> = ({
   onClose,
@@ -18,7 +31,7 @@ export const ModalAddProduct: React.FC<ModalAddProductProps> = ({
 }) => {
   const router = useRouter();
   const onRedirectBasket = (): void => {
-    router.push(`/${method === 'simulateur' ? 'simulateur' : 'declaration'}/panier`);
+    router.push(getLink(method));
     if (onClose) {
       onClose();
     }

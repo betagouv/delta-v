@@ -84,7 +84,7 @@ const ContactPage = () => {
               textPosition="text-left"
             />
             <Typography size="text-xs" color="black">
-              Vous souhaitez nous faire parvenir une remarque, une optimisation, une demande
+              Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une demande
               particulière ?
             </Typography>
             <div className="mt-4">

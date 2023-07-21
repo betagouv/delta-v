@@ -38,7 +38,7 @@ const Declaration = () => {
     setProductsDeclarationToDisplayAgent,
     removeProductDeclaration,
     updateProductCartDeclarationAgent,
-    resetDeclaration,
+    resetDeclarationAgent,
     findProduct,
     findDeclarationShoppingProductAgent,
     declarationId,
@@ -51,7 +51,7 @@ const Declaration = () => {
       setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
       updateProductCartDeclarationAgent: state.updateProductCartDeclarationAgent,
       removeProductDeclaration: state.removeProductCartDeclarationAgent,
-      resetDeclaration: state.resetDeclaration,
+      resetDeclarationAgent: state.resetDeclarationAgent,
       findProduct: state.findProduct,
       findDeclarationShoppingProductAgent: state.findDeclarationShoppingProductAgent,
       declarationId: state.declaration.appState.declarationAgentRequest?.declarationId,
@@ -106,7 +106,7 @@ const Declaration = () => {
 
   const createDeclarationMutation = useCreateDeclarationMutation({
     onSuccess: () => {
-      resetDeclaration();
+      resetDeclarationAgent();
       router.push(`/agent/declaration/${declarationId}`);
     },
   });

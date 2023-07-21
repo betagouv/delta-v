@@ -36,14 +36,17 @@ export const ModalPaidDeclaration: React.FC<ModalPaidDeclarationProps> = ({
               {declarationId}
             </Typography>
           </div>
-          <div className="mt-5 w-[190px]">
+          <div className="mt-5">
             <Typography size="text-xs" color="secondary" textPosition="text-center" tag="p">
-              La déclaration est validée, vous pouvez procéder à l’encaissement de la déclaration.
+              La déclaration est validée, <br /> vous pouvez procéder à l’encaissement de la
+              déclaration.
             </Typography>
           </div>
           <div className="flex flex-1 flex-col items-center mt-4 gap-4">
-            <Button onClick={onPaid} disabled={isLoading}>
-              Déclaration payée
+            <Button onClick={onPaid} disabled={isLoading} className={{ 'w-[190px]': true }}>
+              <Typography color="white" weight="thin">
+                Déclaration payée
+              </Typography>
             </Button>
             <Typography
               size="text-xs"

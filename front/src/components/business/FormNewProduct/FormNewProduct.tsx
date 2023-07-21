@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FieldErrors, useForm } from 'react-hook-form';
 
 import { FormAddProduct } from '../FormAddProduct';
+import { Role } from '../FormSelectProduct/utils';
 import { getSchema } from './schema';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IOptions } from '@/components/input/StandardInputs/Select';
@@ -15,6 +16,7 @@ interface FormSelectProductProps {
   openModal: () => void;
   addNewProduct: (data: AddNewProductForm) => void;
   defaultCurrency?: string;
+  templateRole?: Role;
 }
 
 export interface AddNewProductForm {
@@ -29,6 +31,7 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
   openModal,
   addNewProduct,
   defaultCurrency,
+  templateRole,
 }: FormSelectProductProps) => {
   const { trackEvent } = useMatomo();
   const defaultCategory = { id: '', value: 'Catégorie' };
@@ -107,7 +110,7 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
           register={register}
           errors={errors as FieldErrors}
           submitted={submitted}
-          templateRole="user"
+          templateRole={templateRole}
         />
       </div>
     </form>

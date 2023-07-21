@@ -41,13 +41,12 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
         onClick(e.currentTarget.value);
       }}
     >
-      <div className="h-16 flex flex-col items-center">
-        <div className="flex-1 flex-col flex h-8 w-auto justify-start">
+      <div className="h-auto flex flex-col items-center gap-3">
+        <div className=" flex-col flex h-7 w-auto">
           <SvgIcon name={svgIcon} />
         </div>
-        <div className="h-2" />
-        <div className="flex-1 flex-col flex justify-start">
-          <Typography color="secondary" size="text-xs">
+        <div className="flex-col flex">
+          <Typography color="secondary" size="text-xs" lineHeight="leading-none">
             {value.length > 30 ? `${value.slice(0, 30)}...` : value}
           </Typography>
         </div>

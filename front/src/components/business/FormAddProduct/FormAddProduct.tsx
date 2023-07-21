@@ -140,7 +140,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             trailingAddons={getUnit(product?.amountProduct)}
             error={errors.value?.message as string | undefined}
             newLabel={false}
-            withBorder
+            withBorder={templateRole !== 'agent'}
           />
           <Info>
             <div className="leading-tight">

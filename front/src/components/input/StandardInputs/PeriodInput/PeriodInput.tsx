@@ -13,6 +13,8 @@ export interface IPeriodInputOptions {
   control?: any;
   startDateName: string;
   endDateName: string;
+  isStartFocused?: (isFocused: boolean) => void;
+  isEndFocused?: (isFocused: boolean) => void;
 }
 
 export const PeriodInput: React.FC<IPeriodInputOptions> = ({
@@ -20,6 +22,8 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
   control,
   startDateName,
   endDateName,
+  isStartFocused,
+  isEndFocused,
 }: IPeriodInputOptions) => {
   const { field: startDateField } = useController({
     control,
@@ -30,14 +34,17 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
     name: endDateName,
   });
   return (
-    <div className="flex w-full gap-1 justify-center z-50">
+    <div className="flex w-full justify-center z-50">
       <DatePicker
         selectsStart
         dateFormat={'dd/MM/yyyy'}
-        selected={startDateField.value}
+        selected={startDateField.value ?? endDateField.value}
         onChange={(date) => startDateField.onChange(date)}
         startDate={startDateField.value}
         endDate={endDateField.value}
+        shouldCloseOnSelect={false}
+        onCalendarClose={() => isStartFocused && isStartFocused(false)}
+        onCalendarOpen={() => isStartFocused && isStartFocused(true)}
         maxDate={
           endDateField.value
             ? dayjs(endDateField.value).subtract(1, 'day').toDate()
@@ -45,7 +52,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
         }
         placeholderText="Du: jj/mm/aaaa"
         className={cs({
-          'justify-center w-full rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:italic placeholder:text-secondary-400':
+          'justify-center w-full rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:italic placeholder:text-secondary-400 mr-[2px]':
             true,
           'border-none': noBorder,
         })}
@@ -93,15 +100,18 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
       <DatePicker
         selectsEnd
         dateFormat={'dd/MM/yyyy'}
-        selected={endDateField.value}
+        selected={endDateField.value ?? startDateField.value}
         onChange={(date) => endDateField.onChange(date)}
         endDate={endDateField.value}
         startDate={startDateField.value}
+        onCalendarClose={() => isEndFocused && isEndFocused(false)}
+        onCalendarOpen={() => isEndFocused && isEndFocused(true)}
         placeholderText="Au : jj/mm/aaaa"
+        shouldCloseOnSelect={false}
         minDate={dayjs(startDateField.value).add(1, 'day').toDate()}
         maxDate={dayjs(new Date()).toDate()}
         className={cs({
-          'justify-center w-full rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:italic placeholder:text-secondary-400':
+          'justify-center w-full rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:italic placeholder:text-secondary-400 ml-[2px]':
             true,
           'border-none': noBorder,
         })}
