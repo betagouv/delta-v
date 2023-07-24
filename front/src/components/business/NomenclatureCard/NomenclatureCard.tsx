@@ -14,9 +14,32 @@ dayjs.locale('fr');
 export type NomenclatureCardProps = {
   product: Product;
   onClick?: (product: Product) => void;
+  searchValue?: string;
 };
 
-export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) => {
+export const renderMatchedWithSearch = (stringToChange: string, search: string): any => {
+  if (!stringToChange.includes(search.toLocaleLowerCase())) {
+    // return <span className="text-xs text-black">{product.rankedValue}</span>;
+    return (
+      <Typography color="black" size="text-base">
+        {stringToChange}
+      </Typography>
+    );
+  }
+
+  const numberOccurrence = stringToChange.match(new RegExp(`(${search})`, 'gi')) ?? [];
+  const matchValue = stringToChange.replace(new RegExp(`(${search})`, 'gi'), '_');
+  const matchValues = matchValue.split('_');
+  return numberOccurrence.map((item, i) => (
+    <Typography color="black" size="text-base">
+      {matchValues[i]}
+      <span className="bg-primary-400 text-white">{item}</span>
+      {matchValues[i + 1]}
+    </Typography>
+  ));
+};
+
+export const NomenclatureCard = ({ product, onClick, searchValue }: NomenclatureCardProps) => {
   return (
     <div
       className={cs(
@@ -29,9 +52,15 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
       </div>
 
       <div>
-        <Typography color="black" transform="sentence-case" size="text-xs">
-          {product.name}
-        </Typography>
+        {searchValue ? (
+          <Typography color="black" transform="sentence-case" size="text-xs">
+            {renderMatchedWithSearch(product.name, searchValue)}
+          </Typography>
+        ) : (
+          <Typography color="black" transform="sentence-case" size="text-xs">
+            {product.name}
+          </Typography>
+        )}
         <div className="flex flex-row gap-2.5">
           {product.nomenclatures &&
             product.nomenclatures.map((item, index) => (
@@ -41,9 +70,18 @@ export const NomenclatureCard = ({ product, onClick }: NomenclatureCardProps) =>
             ))}
         </div>
         <div className="flex flex-col line-clamp-2">
-          <Typography color="black" transform="sentence-case" size="text-sm">
-            {product.relatedWords.map((item) => item).join(', ')}
-          </Typography>
+          {searchValue ? (
+            <Typography color="black" transform="sentence-case" size="text-sm">
+              {renderMatchedWithSearch(
+                product.relatedWords.map((item) => item).join(', '),
+                searchValue,
+              )}
+            </Typography>
+          ) : (
+            <Typography color="black" transform="sentence-case" size="text-sm">
+              {product.relatedWords.map((item) => item).join(', ')}
+            </Typography>
+          )}
         </div>
       </div>
     </div>

@@ -22,25 +22,42 @@ export const DeclarationStatusDetails = ({
   date,
 }: DeclarationStatusDetailsProps) => {
   return (
-    <div className="grid h-full w-full grid-cols-2 gap-y-5">
-      <div className="flex flex-col gap-2">
-        <Typography size="text-2xs" color="light-gray" transform="uppercase">
-          Numéro de déclaration
-        </Typography>
-        <Typography size="text-lg" weight="bold">
-          {declarationId.slice(0, 10)}
-        </Typography>
+    <div className="flex flex-col gap-5">
+      <div className="grid h-full w-full grid-cols-2">
+        <div className="flex flex-col gap-1.5">
+          <Typography
+            size="text-3xs"
+            color="light-gray"
+            transform="uppercase"
+            lineHeight="leading-none"
+          >
+            Numéro de déclaration
+          </Typography>
+          <Typography size="text-lg" weight="bold" lineHeight="leading-none">
+            {declarationId.slice(0, 10)}
+          </Typography>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Typography
+            size="text-3xs"
+            color="light-gray"
+            transform="uppercase"
+            lineHeight="leading-none"
+          >
+            Date de la déclaration
+          </Typography>
+          <Typography size="text-2xs" color="black" lineHeight="leading-none">
+            {dayjs(date).format('DD/MM/YYYY')}
+          </Typography>
+        </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <Typography size="text-2xs" color="light-gray" transform="uppercase">
-          Date de la déclaration
-        </Typography>
-        <Typography size="text-sm" color="black">
-          {dayjs(date).format('DD/MM/YYYY')}
-        </Typography>
-      </div>
-      <div className="flex flex-col gap-2">
-        <Typography size="text-2xs" color="light-gray" transform="uppercase">
+      <div className="flex flex-col gap-1.5">
+        <Typography
+          size="text-3xs"
+          color="light-gray"
+          transform="uppercase"
+          lineHeight="leading-none"
+        >
           Status
         </Typography>
         <DeclarationBadgeStatus status={status} />

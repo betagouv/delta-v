@@ -90,7 +90,12 @@ const SearchProduct = () => {
           </div>
           <div className="flex flex-1 flex-col gap-4 mt-2">
             {(productsThatMatch as SearchType<Product>[])?.map((product) => (
-              <NomenclatureCard key={product.id} product={product} onClick={onClickProduct} />
+              <NomenclatureCard
+                key={product.id}
+                product={product}
+                onClick={onClickProduct}
+                searchValue={search as string}
+              />
             ))}
           </div>
         </div>

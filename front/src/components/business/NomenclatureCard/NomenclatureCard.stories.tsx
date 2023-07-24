@@ -14,6 +14,6 @@ export default meta;
 
 export const Base = () => (
   <div>
-    <NomenclatureCard product={product} />
+    <NomenclatureCard product={product} searchValue="jeans" />
   </div>
 );
