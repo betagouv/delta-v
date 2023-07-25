@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { getEmojiFlag } from 'countries-list';
 import dayjs from 'dayjs';
 
 import { NewDataInfoItem } from '../NewDataInfoItem';
@@ -32,19 +31,39 @@ export const DeclarationContactDetails = ({
   city,
 }: DeclarationContactDetailsProps) => {
   return (
-    <div className="flex flex-col bg-secondary-bg px-4 py-7 gap-4">
+    <div className="flex flex-col bg-secondary-bg px-4 py-7">
       <Typography size="text-base" weight="bold" color="black">
         Coordonnées
       </Typography>
-      <NewDataInfoItem label="NOM" value={lastName} />
-      <NewDataInfoItem label="Prénom" value={firstName} />
-      <NewDataInfoItem label="Àge" value={age.toString()} />
-      <NewDataInfoItem label="Mail" value={email} />
-      <NewDataInfoItem label="Numéro de téléphone" value={phoneNumber} />
-      <NewDataInfoItem label="Adresse" value={address} />
-      <NewDataInfoItem label="Code Postal" value={postalCode} />
-      <NewDataInfoItem label="Ville" value={city} />
-      <NewDataInfoItem label="Pays" value={`${getEmojiFlag('FR')} France`} />
+      <div className="mt-[30px] selection:flex flex-row gap-4 w-full">
+        <NewDataInfoItem label="Nom" value={lastName} />
+        <NewDataInfoItem label="Prénom" value={firstName} />
+      </div>
+      <div className="mt-[30px]">
+        <NewDataInfoItem label="Adresse" value={address} />
+      </div>
+      <div className="mt-4 grid grid-cols-2 gap-4">
+        <NewDataInfoItem label="Code Postal" value={postalCode} />
+        <NewDataInfoItem label="Ville" value={city} />
+      </div>
+      <div className="mt-[30px]">
+        <div className="flex flex-col flex-1">
+          <div className="px-5 py-3 bg-white text-black rounded-full mt-[6px] flex flex-row justify-between w-[281px] items-center">
+            <Typography color="black" size="text-xs" weight="normal" lineHeight="leading-none">
+              L’usager a-t-il plus de 18 ans ?
+            </Typography>
+            <Typography size="text-sm" weight="normal" lineHeight="leading-none">
+              {age >= 18 ? 'Oui' : 'Non'}
+            </Typography>
+          </div>
+        </div>
+      </div>
+      <div className="mt-[30px]">
+        <NewDataInfoItem label="Adresse Mail" value={email} />
+      </div>
+      <div className="mt-[30px]">
+        <NewDataInfoItem label="Numéro de téléphone" value={phoneNumber} />
+      </div>
     </div>
   );
 };

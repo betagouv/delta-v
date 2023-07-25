@@ -17,6 +17,7 @@ interface ModalCategoryProductProps {
   open: boolean;
   onClose?: () => void;
   defaultCurrency?: string;
+  defaultProduct?: Product;
 }
 
 interface DisplayedProduct {
@@ -29,6 +30,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   onClose,
   open,
   defaultCurrency,
+  defaultProduct,
 }) => {
   const { findProduct, products, addProductCartDeclarationAgent, findProductTree } = useStore(
     (state) => ({
@@ -41,6 +43,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   );
   const { trackEvent } = useMatomo();
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
+
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const [productTree, setProductTree] = useState<Product[]>([]);
 
@@ -117,16 +120,21 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
     setCurrentId(productTree?.[1]?.id);
   };
 
+  const isFinalProduct = currentProduct
+    ? currentProduct.finalProduct
+    : defaultProduct?.finalProduct ?? false;
+
   return (
     <>
-      <DownModal bgColor="bg-white" open={open} onClose={onCloseModal} withoutMargin defaultHeight>
-        <div className="min-h-[50vh] flex h-full flex-1 flex-col gap-6">
+      <DownModal bgColor="bg-white" open={open} onClose={onCloseModal} withoutMargin>
+        <div className="min-h-[50vh] flex flex-1 flex-col gap-6">
           <div className="flex flex-1 flex-col gap-6">
-            {currentProduct?.finalProduct ? (
+            {isFinalProduct ? (
               <AddProductCartDeclaration
-                currentProduct={currentProduct}
+                currentProduct={currentProduct ?? defaultProduct}
                 defaultCurrency={defaultCurrency}
                 onAddProduct={onAddProduct}
+                onSelectProduct={onSelectProduct}
               />
             ) : (
               <div className="px-4 py-5">

@@ -307,6 +307,9 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       newState.declaration.appState.declarationRequest = clone(
         DECLARATION_EMPTY_STATE.declarationRequest,
       );
+      newState.declaration.appState.declarationResponse = clone(
+        DECLARATION_EMPTY_STATE.declarationResponse,
+      );
       return newState;
     });
   },
@@ -315,6 +318,9 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       const newState = { ...state };
       newState.declaration.appState.declarationAgentRequest = clone(
         DECLARATION_EMPTY_STATE.declarationAgentRequest,
+      );
+      newState.declaration.appState.declarationAgentResponse = clone(
+        DECLARATION_EMPTY_STATE.declarationAgentResponse,
       );
       return newState;
     });

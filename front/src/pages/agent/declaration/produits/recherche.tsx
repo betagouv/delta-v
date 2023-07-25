@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
+import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
@@ -43,6 +44,7 @@ const SearchProduct = () => {
     searchProducts((search as string) ?? '').map((product) => productsThatMatch.push(product));
   }
   const [selectedProduct, setSelectedProduct] = useState<Product>();
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
@@ -61,8 +63,9 @@ const SearchProduct = () => {
   };
 
   const onClickProduct = (product: Product) => {
+    console.log('🚀 ~ file: recherche.tsx:66 ~ onClickProduct ~ product:', product);
     setSelectedProduct(product);
-    setOpenModalAddProduct(true);
+    setOpenCategoryDownModal(true);
   };
 
   return (
@@ -87,10 +90,21 @@ const SearchProduct = () => {
           </div>
           <div className="flex flex-1 flex-col gap-4 mt-2">
             {(productsThatMatch as SearchType<Product>[])?.map((product) => (
-              <NomenclatureCard key={product.id} product={product} onClick={onClickProduct} />
+              <NomenclatureCard
+                key={product.id}
+                product={product}
+                onClick={onClickProduct}
+                searchValue={search as string}
+              />
             ))}
           </div>
         </div>
+        <ModalCategoryProduct
+          open={openCategoryDownModal}
+          onClose={() => setOpenCategoryDownModal(false)}
+          defaultCurrency={defaultCurrency}
+          defaultProduct={selectedProduct}
+        />
         <ModalAddProductCartDeclaration
           open={openModalAddProduct}
           onClose={() => setOpenModalAddProduct(false)}

@@ -106,12 +106,16 @@ const DeclarationSearch = () => {
       case DeclarationStatus.VALIDATED:
         return (
           <div className="flex flex-col gap-4 py-8 px-10 justify-center text-center">
-            <div className="flex flex-col gap-2 w-[230px] self-center">
+            <div className="flex flex-col gap-2  self-center">
               <Typography size="text-sm" color="black">
-                Voulez-vous valider le paiement cette déclaration ?
+                La déclaration est validée, vous pouvez procéder à l’encaissement de la déclaration.
               </Typography>
-              <Button fullWidth onClick={() => setOpenPayDeclarationModal(true)}>
-                Valider
+              <Button
+                fullWidth
+                onClick={() => setOpenPayDeclarationModal(true)}
+                className={{ 'w-[230px] self-center': true }}
+              >
+                Déclaration payée
               </Button>
             </div>
           </div>

@@ -54,7 +54,7 @@ export const ModalValidateDeclaration: React.FC<ModalValidateDeclarationProps> =
       <Modal open={open} onClose={onClose} withMargin={false}>
         <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-center gap-1 justify-center">
-            <Typography size="text-2xs" color="secondary">
+            <Typography size="text-2xs" color="light-gray" transform="uppercase">
               Numéro de quittance
             </Typography>
             <Typography size="text-sm" color="black" weight="bold">
