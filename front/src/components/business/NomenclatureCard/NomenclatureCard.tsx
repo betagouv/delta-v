@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
+import { searchRegex } from '@/utils/regex';
 
 require('dayjs/locale/fr');
 
@@ -27,8 +28,8 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
     );
   }
 
-  const numberOccurrence = stringToChange.match(new RegExp(`(${search})`, 'gi')) ?? [];
-  const matchValue = stringToChange.replace(new RegExp(`(${search})`, 'gi'), '_');
+  const numberOccurrence = stringToChange.match(searchRegex(search)) ?? [];
+  const matchValue = stringToChange.replace(searchRegex(search), '_');
   const matchValues = matchValue.split('_');
   return numberOccurrence.map((item, i) => (
     <Typography color="black" size="text-base">
