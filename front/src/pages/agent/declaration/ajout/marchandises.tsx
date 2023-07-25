@@ -151,6 +151,7 @@ const Declaration = () => {
       shoppingProducts: declarationAgentRequest.shoppingProducts,
       border: declarationAgentRequest.border,
       meansOfTransportAndCountry: declarationAgentRequest.meansOfTransportAndCountry,
+      authorType: 'agent',
     });
   };
 

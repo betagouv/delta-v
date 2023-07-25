@@ -57,6 +57,7 @@ export type CreateDeclarationParams = {
   meansOfTransportAndCountry: MeansOfTransportAndCountry;
   shoppingProducts: ShoppingProduct[];
   border?: boolean;
+  authorType?: 'agent' | 'user';
 };
 
 export type ChangeStatusOfDeclarationParams = {

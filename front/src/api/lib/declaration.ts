@@ -102,7 +102,7 @@ export const createDeclarationRequest = async (
     age: params.contactDetails.age,
     country: params.meansOfTransportAndCountry.country,
     meanOfTransport: params.meansOfTransportAndCountry.meansOfTransport,
-    authorType: 'agent',
+    authorType: params.authorType ?? 'agent',
     declarantAddressStreet: params.contactDetails.address,
     declarantAddressCity: params.contactDetails.city,
     declarantAddressPostalCode: params.contactDetails.postalCode,

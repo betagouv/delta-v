@@ -84,6 +84,7 @@ const Panier = () => {
       shoppingProducts: declarationRequest.shoppingProducts,
       border: declarationRequest.border,
       meansOfTransportAndCountry: declarationRequest.meansOfTransportAndCountry,
+      authorType: 'user',
     });
   };
 
