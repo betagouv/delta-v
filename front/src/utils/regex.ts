@@ -1,3 +1,6 @@
+import { escapeRegExp } from 'lodash';
+
 export const searchRegex = (search: string) => {
-  return new RegExp(`(${search})`, 'gi');
+  const safeKey = escapeRegExp(search);
+  return new RegExp(`(${safeKey})`, 'gi');
 };
