@@ -24,7 +24,7 @@ export const connectAndSendEmail: MailerFunction = async (
   await transporter.sendMail({
     from: {
       address: config.FROM_EMAIL,
-      name: config.FROM_SENDER_NAME,
+      name: config.FROM_SENDER_NAME || 'Déclare Douane',
     },
     to: options.to,
     subject: options.subject,
