@@ -1,5 +1,6 @@
 export interface ISesMailerConfig {
   FROM_EMAIL: string;
+  FROM_SENDER_NAME: string;
   SMTP_URL: string;
 }
 
@@ -17,6 +18,7 @@ export function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
 function parseConfig(config: any): ISesMailerConfig {
   return {
     FROM_EMAIL: config.FROM_EMAIL,
+    FROM_SENDER_NAME: config.FROM_SENDER_NAME,
     SMTP_URL: config.SMTP_URL,
   };
 }

@@ -22,7 +22,10 @@ export const connectAndSendEmail: MailerFunction = async (
   });
 
   await transporter.sendMail({
-    from: config.FROM_EMAIL,
+    from: {
+      address: config.FROM_EMAIL,
+      name: config.FROM_SENDER_NAME,
+    },
     to: options.to,
     subject: options.subject,
     html: options.html,
