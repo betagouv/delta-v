@@ -41,7 +41,6 @@
     "js-cookie": "3.0.5",
     "jsx-to-string": "1.4.0",
     "jwt-decode": "3.1.2",
-    "lodash/escapeRegExp": "^4.4.0",
     "match-sorter": "6.3.1",
     "next": "13.4.9",
     "next-seo": "^5.1.0",
