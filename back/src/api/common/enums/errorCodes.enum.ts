@@ -16,4 +16,6 @@ export enum ErrorCodes {
   DECLARATION_CUSTOM_PRODUCT_STATUS_CHANGE_FORBIDDEN = 'declaration-custom-product-status-change-forbidden',
   DECLARATION_STATUS_CHANGE_FORBIDDEN = 'declaration-status-change-forbidden',
   DECLARATION_CREATION_FORBIDDEN = 'declaration-creation-forbidden',
+  NOT_GOOD_PASSWORD = 'not-good-password',
+  PASSWORD_UPDATE_ERROR = 'password-update-error',
 }
