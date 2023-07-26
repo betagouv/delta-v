@@ -11,4 +11,5 @@ export enum ResponseCodes {
   DECLARATION_UPDATED = 'declaration-updated',
   CURRENCIES_UPDATED = 'currency-updated',
   FEEDBACK_UPDATED = 'feedback-updated',
+  PASSWORD_UPDATED = 'password-updated',
 }

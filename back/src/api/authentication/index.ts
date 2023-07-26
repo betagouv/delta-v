@@ -6,6 +6,7 @@ import { askEmailValidation } from './askEmailValidation';
 import { resetPassword } from './resetPassword';
 import { askResetPassword } from './askResetPassword';
 import { refresh } from './refresh';
+import { updatePassword } from './updatePassword';
 
 export default Router()
   .use(login)
@@ -14,4 +15,5 @@ export default Router()
   .use(validateEmail)
   .use(askResetPassword)
   .use(askEmailValidation)
+  .use(updatePassword)
   .use(resetPassword);
