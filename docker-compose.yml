@@ -22,7 +22,7 @@ x-envs: &common-envs
   ROUTE_FRONTEND_CHECK_DECLARATION: /declaration
   FROM_EMAIL: test@test.fr
   FROM_SENDER_NAME: Declare Douane
-  PHONE_NUMBER_SAV: 0123456789
+  PHONE_NUMBER_SAV: "+33612345678"
   EMAIL_SAV: test@test.fr
   SMTP_URL: smtp://username:password@mailhog:1025
   WHITE_LIST_AGENT_EMAIL: "s.sabalot@gmail.com,sbergeot.pro@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"

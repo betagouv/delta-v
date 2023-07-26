@@ -38,6 +38,8 @@ jobs:
       ROUTE_FRONTEND_VALIDATE_ACCOUNT: /validate-account
       ROUTE_FRONTEND_RESET_PASSWORD: /reset-password
       ROUTE_FRONTEND_CHECK_DECLARATION: /check-declaration
+      PHONE_NUMBER_SAV: "+33612345678"
+      EMAIL_SAV: test@test.fr
       LOG_LEVEL: fatal
       WHITE_LIST_AGENT_EMAIL: "test@gmail.com"
 
