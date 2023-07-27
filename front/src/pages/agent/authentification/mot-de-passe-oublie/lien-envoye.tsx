@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useAskResetPasswordMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
@@ -21,6 +22,7 @@ const ResetLinkSentPage = () => {
   };
 
   const resendEmailMutation = useAskResetPasswordMutation({ onSuccess });
+  const apiError = resendEmailMutation.error ?? undefined;
 
   const handleResend = () => {
     if (typeof email === 'string') {
@@ -70,6 +72,11 @@ const ResetLinkSentPage = () => {
             votre mot de passe.
           </Typography>
           <br />
+          {apiError?.message && (
+            <div className="ml-3">
+              <ApiError apiError={apiError} />
+            </div>
+          )}
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>
             <span className="cursor-pointer" onClick={handleResend}>
               Renvoyer le lien

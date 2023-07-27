@@ -16,4 +16,6 @@ export enum ErrorCodes {
   DECLARATION_CUSTOM_PRODUCT_STATUS_CHANGE_FORBIDDEN = 'declaration-custom-product-status-change-forbidden',
   DECLARATION_STATUS_CHANGE_FORBIDDEN = 'declaration-status-change-forbidden',
   DECLARATION_CREATION_FORBIDDEN = 'declaration-creation-forbidden',
+  TOO_MANY_REQUESTS = 'too-many-requests',
+  TOO_MANY_REQUESTS_EMAIL_SEND = 'too-many-requests-email-send',
 }

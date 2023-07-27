@@ -3,11 +3,13 @@ import request from 'supertest';
 
 import { testDbManager } from '../../../helpers/testDb.helper';
 import buildTestApp from '../../../helpers/testApp.helper';
-import { askResetPassword } from '../../../../src/api/authentication/askResetPassword';
+import api from '../../../../src/api';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.enum';
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
+import { sendEmailResetPasswordLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
+import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
 
 const testDb = testDbManager();
 
@@ -16,12 +18,13 @@ describe('askResetPassword route', () => {
 
   beforeAll(async () => {
     await testDb.connect();
-    testApp = buildTestApp(askResetPassword);
+    testApp = buildTestApp(api);
   });
 
   beforeEach(async () => {
     await testDb.clear();
     clearEventEmitterMock();
+    sendEmailResetPasswordLimiter.resetKey('::ffff:127.0.0.1');
   });
 
   afterAll(async () => {
@@ -74,5 +77,19 @@ describe('askResetPassword route', () => {
     expect(status).toBe(HttpStatuses.OK);
     expect(body.code).toEqual(ResponseCodes.USER_ASK_RESET_PASSWORD);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
+  });
+
+  test('should return error with code 429 - too many request', async () => {
+    const { user } = await prepareContextUser({ testDb });
+
+    await request(testApp).post('/api/password/ask').send({ email: user.email });
+
+    const { status, body } = await request(testApp)
+      .post('/api/password/ask')
+      .send({ email: user.email });
+
+    expect(body.code).toEqual(ErrorCodes.TOO_MANY_REQUESTS_EMAIL_SEND);
+    expect(status).toBe(HttpStatuses.TOO_MANY_REQUESTS);
+    expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 });
