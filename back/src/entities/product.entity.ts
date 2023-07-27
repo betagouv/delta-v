@@ -1,5 +1,15 @@
-import { Column, Entity, PrimaryColumn, Tree, TreeChildren, TreeParent } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryColumn,
+  Tree,
+  TreeChildren,
+  TreeParent,
+} from 'typeorm';
 import { AmountProduct } from '../api/common/services/amountProducts/globalAmount.service';
+import { FavoriteEntity, FavoriteEntityInterface } from './favorite.entity';
 
 export interface Product {
   id: string;
@@ -40,9 +50,13 @@ export enum ProductType {
   value = 'value',
 }
 
+export interface ProductEntityInterface extends Product {
+  favorites?: FavoriteEntity[];
+}
+
 @Entity('product')
 @Tree('closure-table')
-export class ProductEntity implements Product {
+export class ProductEntity implements ProductEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
   @Column({ type: 'uuid', nullable: true })
@@ -98,4 +112,8 @@ export class ProductEntity implements Product {
 
   @TreeParent()
   parentProduct?: Product;
+
+  @OneToMany(() => FavoriteEntity, (favorite) => favorite.product)
+  @JoinColumn()
+  favorites?: FavoriteEntityInterface[];
 }

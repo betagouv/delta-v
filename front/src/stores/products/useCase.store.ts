@@ -1,5 +1,7 @@
 /* eslint-disable import/no-cycle */
 
+import { Alpha2Code } from 'i18n-iso-countries';
+
 import { StoreSlice } from '../store';
 import { getAllProductRequest } from '@/api/lib/products';
 import { Product } from '@/model/product';
@@ -10,9 +12,12 @@ export interface ProductsUseCaseSlice {
   findProduct: (id: string) => Product | undefined;
   findProductTree: (id: string) => Product[];
   searchProducts: (searchValue: string) => SearchType<Product>[];
+  searchNomenclatureProducts: (searchValue: string) => SearchType<Product>[];
   searchAllProducts: (searchValue: string) => SearchType<Product>[];
   getProductsResponse: () => Promise<void>;
-  setProductsToDisplay: () => void;
+  setProductsSimulatorToDisplay: () => void;
+  setProductsNomenclatureToDisplay: (country: Alpha2Code) => void;
+  setCountryForProductsNomenclature: (country: Alpha2Code) => void;
   setProductsDeclarationToDisplay: () => void;
   setProductsDeclarationToDisplayAgent: () => void;
 }
@@ -57,7 +62,7 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
       return newState;
     });
   },
-  setProductsToDisplay: () => {
+  setProductsSimulatorToDisplay: () => {
     const { age, country } = get().simulator.appState.simulatorRequest;
     const { allProducts } = get().products.appState;
 
@@ -71,6 +76,30 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
       newState.products.appState.flattenProducts = getFlattenProducts(
         newState.products.appState.products,
       );
+      return newState;
+    });
+  },
+  setProductsNomenclatureToDisplay: (country: Alpha2Code) => {
+    const { allProducts } = get().products.appState;
+
+    set((state: any) => {
+      const newState = { ...state };
+      newState.products.appState.nomenclatureProducts = setupProductsToDisplay(
+        allProducts,
+        18,
+        country,
+      );
+
+      newState.products.appState.flattenNomenclatureProducts = getFlattenProducts(
+        newState.products.appState.nomenclatureProducts ?? [],
+      );
+      return newState;
+    });
+  },
+  setCountryForProductsNomenclature: (country: Alpha2Code) => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.products.appState.countryForProductsNomenclature = country;
       return newState;
     });
   },
@@ -118,6 +147,15 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
   },
   searchProducts: (searchValue: string) => {
     const products = get().products.appState.flattenProducts;
+    return advancedSearch({
+      minRankAllowed: 0.15,
+      searchValue,
+      searchList: products,
+      searchKey: ['relatedWords'],
+    });
+  },
+  searchNomenclatureProducts: (searchValue: string) => {
+    const products = get().products.appState.flattenNomenclatureProducts;
     return advancedSearch({
       minRankAllowed: 0.15,
       searchValue,

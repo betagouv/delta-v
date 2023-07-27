@@ -162,7 +162,6 @@ export const MAIN_MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Nomenclature',
     path: RoutingAgent.nomenclature,
     svgIcon: 'categoryVetements' as SvgNames,
-    disabled: true,
   },
   {
     id: 'actualities',
