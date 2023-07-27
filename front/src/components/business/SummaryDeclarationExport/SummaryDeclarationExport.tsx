@@ -2,26 +2,21 @@ import React, { useRef } from 'react';
 
 import ReactToPrint from 'react-to-print';
 
-import { SummaryDeclaration } from '../SummaryDeclaration/SummaryDeclaration';
+import { SummaryDeclaration } from './SummaryDeclaration';
 import { Button } from '@/components/common/Button';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 
 interface SummaryDeclarationProps {
   declarationResponse: DeclarationResponse;
-  qrCodeVersion?: boolean;
 }
 
 export const SummaryDeclarationExport: React.FC<SummaryDeclarationProps> = ({
   declarationResponse,
-  qrCodeVersion = false,
 }: SummaryDeclarationProps) => {
   const componentRef = useRef<HTMLDivElement>(null);
-  const nbProducts = declarationResponse?.products?.length ?? 0;
-  const baseHeight = 100 + (nbProducts > 0 ? 20 : 0) + (nbProducts > 0 ? 20 : 0);
-  const height = baseHeight + nbProducts * 28;
   const pageStyle = `
   @page {
-    size: 100mm ${height}mm;
+    size: 2.5in 4in
     margin: 16px;
   }
 `;
@@ -38,12 +33,8 @@ export const SummaryDeclarationExport: React.FC<SummaryDeclarationProps> = ({
         pageStyle={pageStyle}
       />
       <div className="hidden">
-        <div ref={componentRef} className="p-0">
-          <SummaryDeclaration
-            declarationResponse={declarationResponse}
-            qrCodeVersion={qrCodeVersion}
-            hideDetails
-          />
+        <div ref={componentRef} className="p-4 m-auto">
+          <SummaryDeclaration declarationResponse={declarationResponse} />
         </div>
       </div>
     </>
