@@ -46,7 +46,7 @@
     "pino-pretty": "^10.0.0",
     "redact-object": "^3.0.1",
     "sanitize-html": "^2.7.0",
-    "typeorm": "^0.3.16",
+    "typeorm": "^0.3.17",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
