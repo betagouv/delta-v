@@ -11,6 +11,7 @@ import { FilterBar, FilterBarForm } from '@/components/business/FilterGroup/Filt
 import { Meta } from '@/layout/Meta';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { MainAgent } from '@/templates/MainAgent';
+import { RoutingAgent } from '@/utils/const';
 import { Constants } from '@/utils/enums';
 
 const QuittancePage = () => {
@@ -104,6 +105,7 @@ const QuittancePage = () => {
         }
         withTitle
         titleHeader="Déclaration"
+        linkButton={`${RoutingAgent.home}?mode=tools`}
       >
         <div className="flex flex-col px-4 pb-4">
           {isLoading ? (

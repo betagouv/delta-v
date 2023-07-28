@@ -14,6 +14,7 @@ import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
+import { RoutingAgent } from '@/utils/const';
 
 export interface FormContactUsData {
   comment: string;
@@ -40,7 +41,7 @@ const ContactPage = () => {
 
   const onClickToRedirectToHome = () => {
     setOpenValidateFeedbackInfo(false);
-    router.push('/agent');
+    router.push(`${RoutingAgent.home}?mode=tools`);
   };
 
   const feedbackId = uuidv4();
