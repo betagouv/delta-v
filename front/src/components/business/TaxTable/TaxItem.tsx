@@ -60,7 +60,7 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
       </div>
       {!isAmountProduct && (
         <div
-          className="flex flex-col w-full justify-center py-2 px-5 bg-[#EEEEFE] rounded-b-xl"
+          className="flex flex-col w-full justify-center py-2 px-5 bg-[#EEEEFE] rounded-b-xl cursor-pointer"
           onClick={() => setOpenDetail(!openDetail)}
         >
           <Typography size="text-xs" textPosition="text-center">

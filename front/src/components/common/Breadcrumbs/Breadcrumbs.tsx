@@ -1,5 +1,7 @@
 import React from 'react';
 
+import cs from 'classnames';
+
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 import { Product } from '@/model/product';
@@ -26,7 +28,10 @@ export const Breadcrumbs: React.FC<IBreadcrumbsProps> = ({
           <>
             <div
               key={index}
-              className="max-w-[85px] flex flex-row items-center gap-[10px] line-clamp-1"
+              className={cs({
+                'max-w-[85px] flex flex-row items-center gap-[10px] line-clamp-1': true,
+                'cursor-pointer': onClickLink,
+              })}
               onClick={() => onClickLink && onClickLink(item.id)}
             >
               <Typography color="middle-gray" size="text-2xs">

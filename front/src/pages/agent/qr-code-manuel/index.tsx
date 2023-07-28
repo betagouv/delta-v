@@ -61,23 +61,25 @@ const ManualQRCodePage = () => {
             register={register('search')}
             withBorder
           />
-          {!isLoading &&
-            data &&
-            data.length === 1 &&
-            searchPublicId &&
-            data.map((item: any) => (
-              <DeclarationCard
-                firstName={item.declarantFirstName}
-                lastName={item.declarantLastName}
-                id={item.id}
-                status={item.status}
-                date={item.versionDate}
-                transport={item.declarantMeanOfTransport}
-                key={item.publicId}
-                publicId={item.publicId}
-                onClick={() => router.push(`/agent/declaration/${item.id}`)}
-              />
-            ))}
+          <div className="flex flex-col gap-2.5 w-max place-self-center">
+            {!isLoading &&
+              data &&
+              data.length === 1 &&
+              searchPublicId &&
+              data.map((item: any) => (
+                <DeclarationCard
+                  firstName={item.declarantFirstName}
+                  lastName={item.declarantLastName}
+                  id={item.id}
+                  status={item.status}
+                  date={item.versionDate}
+                  transport={item.declarantMeanOfTransport}
+                  key={item.publicId}
+                  publicId={item.publicId}
+                  onClick={() => router.push(`/agent/declaration/${item.id}`)}
+                />
+              ))}
+          </div>
         </div>
       </MainAgent>
     </AgentRoute>

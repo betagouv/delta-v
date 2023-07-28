@@ -174,6 +174,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               control={control}
               error={errors.value?.message as string | undefined}
               withBorder={templateRole !== 'agent'}
+              newLabel
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -188,6 +189,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               control={control}
               error={errors.currency?.message as string | undefined}
               withBorder={templateRole !== 'agent'}
+              newLabel
             />
           </div>
         </div>

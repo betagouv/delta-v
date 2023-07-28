@@ -33,8 +33,9 @@ export const ModalSwitchPaperDeclaration: React.FC<ModalSwitchPaperDeclarationPr
           <div className="flex mt-2">
             <Typography size="text-xs" color="secondary" textPosition="text-center">
               La déclaration n’est pas complète : <br />
-              usager n’a pas pu ajouter une <br />
-              marchandise, un taux n’est pas le bon....
+              L'usager n’a pas pu ajouter une marchandise
+              <br />
+              Un des taux n’est pas le bon
             </Typography>
           </div>
           <div className="flex flex-1 flex-col items-center mt-6 gap-3">

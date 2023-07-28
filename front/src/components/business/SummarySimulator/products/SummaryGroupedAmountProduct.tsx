@@ -48,7 +48,7 @@ export const SummaryGroupedAmountProduct: React.FC<SummaryGroupedAmountProductPr
                 {getMessageOverMaximumAmount(groupedAmount.group)}. Pour connaître les quantités
                 maximales autorisées{' '}
                 <span
-                  className="text-link"
+                  className="text-link cursor-pointer"
                   onClick={() => {
                     openModalProductType(groupedAmount.products[0]?.amountProduct);
                   }}

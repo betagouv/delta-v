@@ -66,6 +66,7 @@ export interface IInputGroupProps {
   leadingAddons?: string;
   control?: any;
   rules?: any;
+  barGroupedRadio?: boolean;
   littleCard?: boolean;
   withBorder?: boolean;
   newLabel?: boolean;
@@ -98,6 +99,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   register,
   control,
   rules,
+  barGroupedRadio = false,
   littleCard = false,
   withBorder = false,
   newLabel = false,
@@ -182,7 +184,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               register={register}
             />
           )}
-          {type === 'radio' && (
+          {type === 'radio' && !barGroupedRadio && (
             <Radio
               id={name}
               name={name}
@@ -191,6 +193,24 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               radioValues={radioValues ?? []}
               register={register}
             />
+          )}
+          {type === 'radio' && barGroupedRadio && (
+            <div
+              className={classNames({
+                'bg-white rounded-full mt-2 flex h-10 gap-5 px-5 w-fit': true,
+                'border border-error': error,
+              })}
+            >
+              <Radio
+                id={name}
+                name={name}
+                disabled={inputDisabled}
+                error={error}
+                radioValues={radioValues ?? []}
+                register={register}
+                newRadio
+              />
+            </div>
           )}
           {type === 'radioCard' && (
             <RadioCard
