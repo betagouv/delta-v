@@ -62,7 +62,7 @@ const DeclarationSearch = () => {
               </div>
             </div>
             <div className="mt-2">
-              <SummaryDeclarationExport declarationResponse={declarationResponse} qrCodeVersion />
+              <SummaryDeclarationExport declarationResponse={declarationResponse} />
             </div>
             <div className="mb-2">
               <Link to={Routing.home}>
