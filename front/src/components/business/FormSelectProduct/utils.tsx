@@ -67,6 +67,8 @@ export const getRadioProductForm = (product: Product, register: any): ReactNode 
       radioValues={radioValues}
       type="radio"
       label={product.childrenQuestion ?? undefined}
+      barGroupedRadio
+      newLabel
     />
   );
 };

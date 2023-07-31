@@ -106,7 +106,8 @@ const styleManager: IButtonStyle = {
     },
     '2xs': {
       classes: {
-        'px-2': true,
+        'px-2.5': true,
+        'py-2.5': true,
         'text-2xs': true,
         'h-5': true,
       },

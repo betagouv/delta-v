@@ -43,7 +43,7 @@ export const RadioCardMin: React.FC<IRadioCardMinOptions> = ({
         <Icon name={checked ? 'cross-thin' : 'add_circle'} size={checked ? 'xs' : 'lg'} />
         <label
           className={classNames({
-            'ml-1': true,
+            'ml-1 cursor-pointer': true,
             'ml-2.5': checked,
           })}
         >

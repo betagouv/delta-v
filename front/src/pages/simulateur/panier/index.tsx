@@ -136,7 +136,7 @@ const Panier = () => {
                     {getMessageOverMaximumAmount(amountProduct.group)}. Pour connaître les quantités
                     maximales autorisées{' '}
                     <span
-                      className="text-link"
+                      className="text-link cursor-pointer"
                       onClick={() => {
                         openModalProductType(amountProduct.products[0]?.amountProduct);
                       }}

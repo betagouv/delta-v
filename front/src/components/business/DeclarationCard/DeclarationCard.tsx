@@ -61,7 +61,8 @@ export const DeclarationCard = ({
   return (
     <div
       className={cs({
-        'flex flex-col rounded-xl border border-gray-300 px-5 py-5 w-full md:w-80': true,
+        'flex flex-col rounded-xl border border-gray-300 px-5 py-5 cursor-pointer w-full md:max-w-none max-w-[288px]':
+          true,
       })}
       ref={cardRef}
       onClick={() => onClick(id)}
@@ -73,7 +74,7 @@ export const DeclarationCard = ({
           </Button>
         </span>
       )}
-      <div className="grid w-full grid-cols-[140px_52px_1fr] md:grid-cols-[140px_52px_1fr] mb-4">
+      <div className="grid w-full grid-cols-2 mb-4">
         <DataInfoItem
           label="Numéro de déclaration"
           value={`${publicId.slice(0, 10)} ${publicId.slice(10)}`}
@@ -81,16 +82,17 @@ export const DeclarationCard = ({
           valueSize="text-sm"
           isBold
         />
-        <div></div>
-        <DataInfoItem
-          label="Date de déclaration"
-          value={dayjs(date).format('DD/MM/YYYY')}
-          labelSize="text-2xs"
-          valueSize="text-sm"
-          isBold
-        />
+        <span className="flex flex-row-reverse">
+          <DataInfoItem
+            label="Date de déclaration"
+            value={dayjs(date).format('DD/MM/YYYY')}
+            labelSize="text-2xs"
+            valueSize="text-sm"
+            isBold
+          />
+        </span>
       </div>
-      <div className="grid w-full grid-cols-[140px_52px_1fr] md:grid-cols-[140px_52px_1fr] mb-4">
+      <div className="grid w-full grid-cols-2 mb-4">
         <DataInfoItem
           label="Nom Prénom"
           value={`${firstName} ${lastName}`}
@@ -98,14 +100,15 @@ export const DeclarationCard = ({
           valueSize="text-sm"
           isBold
         />
-        <div></div>
-        <DataInfoItem
-          label="Moyen de transport"
-          value={transportLabel}
-          labelSize="text-2xs"
-          valueSize="text-sm"
-          isBold
-        />
+        <span className="flex flex-row-reverse">
+          <DataInfoItem
+            label="Moyen de transport"
+            value={transportLabel}
+            labelSize="text-2xs"
+            valueSize="text-sm"
+            isBold
+          />
+        </span>
       </div>
       <DataInfoItem
         label="Statut"

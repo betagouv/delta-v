@@ -65,10 +65,10 @@ export const Select: React.FC<ISelectOptions> = ({
               data-testid="select-element"
               className={twMerge(
                 classNames({
-                  'bg-white relative rounded-full pl-5 pr-10 py-3 text-left cursor-default focus:outline-none text-base w-auto border-0 focus:ring-0':
+                  'bg-white relative rounded-full pl-5 pr-10 py-2.5 text-left focus:outline-none w-auto border-0 focus:ring-0':
                     true,
                   'w-full': fullWidth,
-                  'bg-secondary-200 text-secondary-400': disabled,
+                  'bg-secondary-200 text-secondary-400 cursor-default': disabled,
                   'border border-secondary-300 focus:ring-1 focus:ring-primary-600 focus:border-primary-600 border-solid':
                     withBorder,
                   'border border-red-300 focus:ring-red-500 focus:border-red-500': error,

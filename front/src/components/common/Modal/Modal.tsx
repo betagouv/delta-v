@@ -66,7 +66,7 @@ export const Modal: React.FC<IModalProps> = ({
           >
             <div className="my-largeBase inline-block w-full rounded-lg bg-white p-modal text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle">
               {!preventClose && (
-                <div className="absolute top-4 right-4 flex h-7 w-7 items-center">
+                <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
                   <Icon name="clear" onClick={onClose} />
                 </div>
               )}
