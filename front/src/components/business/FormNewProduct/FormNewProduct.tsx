@@ -95,16 +95,21 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
           fullWidth
           withBorder
         />
-        <InputGroup
-          name="category"
-          type="simple-select"
-          options={categoryOptions}
-          placeholder="Catégorie"
-          label="Choisissez la catégorie"
-          register={register('category', { required: true })}
-          error={errors.category?.message}
-          control={control}
-        />
+        <div className="w-52">
+          <InputGroup
+            name="category"
+            type="select"
+            options={categoryOptions}
+            placeholder="Catégorie"
+            label="Choisissez la catégorie"
+            register={register('category', { required: true })}
+            error={errors.category?.message}
+            control={control}
+            withBorder
+            fullWidth
+            newLabel
+          />
+        </div>
         <FormAddProduct
           control={control}
           register={register}

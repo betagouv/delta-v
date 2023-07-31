@@ -71,9 +71,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({
               />
             </div>
           ) : (
-            <>
+            <div key={index}>
               <li
-                key={index}
                 className="flex cursor-pointer flex-row items-center gap-2 py-3"
                 onClick={() => onSelectProduct(item.id)}
               >
@@ -86,7 +85,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
                 </div>
               </li>
               <div className="border-b border-b-gray-200" />
-            </>
+            </div>
           ),
         )}
       </div>

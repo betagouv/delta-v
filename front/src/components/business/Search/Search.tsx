@@ -21,14 +21,14 @@ interface SearchProps<T> {
   autoFocus?: boolean;
   searchType?: SearchDisplayType;
   disabled?: boolean;
-  method?: 'declaration' | 'simulator';
+  method?: 'declaration' | 'simulateur';
 }
 
 interface GetSearchResultOptions<T extends unknown> {
   searchType: SearchDisplayType;
   resultSearch: SearchType<T>[];
   searchValue: string;
-  method?: 'declaration' | 'simulator';
+  method?: 'declaration' | 'simulateur';
 }
 
 const getSearchResult = <T extends unknown>({
