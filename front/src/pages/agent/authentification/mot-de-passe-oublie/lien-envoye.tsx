@@ -6,7 +6,6 @@ import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
-import { RoutingAuthentication } from '@/utils/const';
 
 export interface FormRegisterData {
   email: string;
@@ -17,11 +16,7 @@ const ResetLinkSentPage = () => {
   const router = useRouter();
   const { email } = router.query;
 
-  const onSuccess = () => {
-    router.push(RoutingAuthentication.login);
-  };
-
-  const resendEmailMutation = useAskResetPasswordMutation({ onSuccess });
+  const resendEmailMutation = useAskResetPasswordMutation({});
   const apiError = resendEmailMutation.error ?? undefined;
 
   const handleResend = () => {

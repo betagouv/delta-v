@@ -9,6 +9,7 @@ import { DeclarationCard } from '@/components/business/DeclarationCard';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
+import { RoutingAgent } from '@/utils/const';
 import { Constants } from '@/utils/enums';
 
 const ManualQRCodePage = () => {
@@ -48,7 +49,7 @@ const ManualQRCodePage = () => {
           />
         }
         withTitle
-        linkButton="/agent"
+        linkButton={`${RoutingAgent.home}?mode=scanner`}
         titleHeader="Saisissez votre numéro de déclaration"
       >
         <div className="mb-1 flex flex-col justify-center gap-6 p-4 mt-9">
