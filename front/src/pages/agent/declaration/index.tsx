@@ -109,7 +109,7 @@ const QuittancePage = () => {
       >
         <div className="flex flex-col px-4 pb-4">
           {isLoading ? (
-            <div>Loading...</div>
+            <div>Chargement...</div>
           ) : (
             <>
               <div className="mb-5">
@@ -124,7 +124,7 @@ const QuittancePage = () => {
                   filtersCount={counter}
                 />
               </div>
-              <div className="flex flex-col gap-2.5 w-max place-self-center">
+              <div className="flex flex-col gap-2.5 md:items-center">
                 {declarations &&
                   declarations?.map((declaration, index) => (
                     <span className={cs({ 'opacity-40': openFilterBar })} key={declaration.id}>

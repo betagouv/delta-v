@@ -12,13 +12,13 @@ import { SearchType } from '@/utils/search';
 interface SearchResultProductsProps {
   searchValue: string;
   resultSearch: SearchType<Product>[];
-  method?: 'declaration' | 'simulator';
+  method?: 'declaration' | 'simulateur';
 }
 
 export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
   searchValue,
   resultSearch,
-  method = 'simulator',
+  method = 'simulateur',
 }: SearchResultProductsProps) => {
   const router = useRouter();
   const { trackEvent } = useMatomo();

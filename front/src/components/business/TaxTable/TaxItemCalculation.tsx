@@ -12,15 +12,13 @@ interface TaxItemCalculationProps {
 
 const DisplayRate = ({ detailedProduct }: { detailedProduct: DetailedProduct }) => {
   const customDuty = detailedProduct.notManagedProduct
-    ? 'Non renseignées'
+    ? 'Non renseigné'
     : `${detailedProduct?.customDuty ?? 0}%`;
 
-  const vat = detailedProduct.notManagedProduct
-    ? 'Non renseignées'
-    : `${detailedProduct?.vat ?? 0}%`;
+  const vat = detailedProduct.notManagedProduct ? 'Non renseigné' : `${detailedProduct?.vat ?? 0}%`;
   return (
     <>
-      <div className="p-2 text-center">
+      <div className="p-1 text-center">
         <Typography weight="bold" size="text-xs" tag="div">
           Taux de droits de douane
         </Typography>
@@ -28,7 +26,7 @@ const DisplayRate = ({ detailedProduct }: { detailedProduct: DetailedProduct }) 
           {customDuty}
         </Typography>
       </div>
-      <div className="p-2 text-center">
+      <div className="p-1 text-center">
         <Typography weight="bold" size="text-xs">
           Taux de TVA
         </Typography>
@@ -45,7 +43,7 @@ const DisplayRate = ({ detailedProduct }: { detailedProduct: DetailedProduct }) 
 const DisplayCalculation = ({ detailedProduct }: { detailedProduct: DetailedProduct }) => {
   return (
     <>
-      <div className="p-2 text-center">
+      <div className="p-1 text-center">
         <Typography weight="bold" size="text-xs" tag="div">
           Calcul de droits de douane
         </Typography>
@@ -54,7 +52,7 @@ const DisplayCalculation = ({ detailedProduct }: { detailedProduct: DetailedProd
           {detailedProduct.unitCustomDuty} €
         </Typography>
       </div>
-      <div className="p-2 text-center">
+      <div className="p-1 text-center">
         <Typography weight="bold" size="text-xs">
           Calcul de TVA
         </Typography>

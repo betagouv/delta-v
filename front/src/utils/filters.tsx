@@ -12,6 +12,7 @@ const declarationStatus = [
   { id: DeclarationStatus.PAID, value: 'Quittance' },
   { id: DeclarationStatus.SUBMITTED, value: 'En attente de validation' },
   { id: DeclarationStatus.VALIDATED, value: 'En attente de paiement' },
+  { id: DeclarationStatus.SWITCH_PAPER, value: 'Déclaration papier' },
   { id: DeclarationStatus.ERROR, value: 'Non conforme pour erreur' },
   { id: DeclarationStatus.LITIGATION, value: 'Non conforme pour contentieux' },
 ];
