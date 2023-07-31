@@ -29,7 +29,9 @@ const useTokenValidity = () => {
     const isExpiredRefreshToken = exp && dayjs().isAfter(dayjs.unix(exp));
     const shouldShowExpirationPopup = exp && dayjs.unix(exp).diff(dayjs(), 'minutes') < 5;
 
-    if (!isAgent || isExpiredRefreshToken) {
+    if (!isAgent) {
+      setTokenValidity(TokenValidity.INVALID);
+    } else if (isExpiredRefreshToken) {
       setTokenValidity(TokenValidity.INVALID);
     } else if (shouldShowExpirationPopup) {
       setTokenValidity(TokenValidity.SOON_EXPIRED);
