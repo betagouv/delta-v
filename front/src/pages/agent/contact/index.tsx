@@ -71,6 +71,7 @@ const ContactPage = () => {
         }
         withTitle
         titleHeader="Contact"
+        linkButton={`${RoutingAgent.home}?mode=tools`}
       >
         <form
           className="flex flex-col gap-4 py-6 px-4 justify-between flex-1"

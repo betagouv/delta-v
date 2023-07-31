@@ -49,7 +49,7 @@ const ManualQRCodePage = () => {
           />
         }
         withTitle
-        linkButton={`${RoutingAgent.home}?mode=tools`}
+        linkButton={`${RoutingAgent.home}?mode=scanner`}
         titleHeader="Saisissez votre numéro de déclaration"
       >
         <div className="mb-1 flex flex-col justify-center gap-6 p-4 mt-9">

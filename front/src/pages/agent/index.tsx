@@ -15,7 +15,6 @@ import useTokenValidity, { TokenValidity } from '@/hooks/useTokenValidity';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { hasToken } from '@/utils/auth';
 import { MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
 import { getLevelWithData } from '@/utils/declarationAgent';
 
@@ -115,7 +114,7 @@ const Index = () => {
 
   return (
     <AgentRoute>
-      {hasToken() && tokenValidity !== TokenValidity.INVALID && (
+      {tokenValidity !== TokenValidity.INVALID && (
         <MainAgent
           meta={
             <Meta
