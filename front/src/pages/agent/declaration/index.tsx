@@ -127,9 +127,8 @@ const QuittancePage = () => {
               <div className="flex flex-col gap-2.5 w-max place-self-center">
                 {declarations &&
                   declarations?.map((declaration, index) => (
-                    <span className={cs({ 'opacity-40': openFilterBar })}>
+                    <span className={cs({ 'opacity-40': openFilterBar })} key={declaration.id}>
                       <DeclarationCard
-                        key={declaration.id}
                         {...declaration}
                         date={declaration.versionDate}
                         id={declaration.id}
