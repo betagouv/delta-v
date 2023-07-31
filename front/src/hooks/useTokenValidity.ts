@@ -12,7 +12,7 @@ export enum TokenValidity {
 }
 
 const useTokenValidity = () => {
-  const [tokenValidity, setTokenValidity] = useState(TokenValidity.VALID);
+  const [tokenValidity, setTokenValidity] = useState<TokenValidity | undefined>(undefined);
   const { isAgent, exp } = useStore(
     (state) => ({
       isAgent: state.users.appState.user.isAgent,
@@ -26,8 +26,8 @@ const useTokenValidity = () => {
       return;
     }
 
-    const isExpiredRefreshToken = exp && dayjs().isAfter(dayjs.unix(exp));
-    const shouldShowExpirationPopup = exp && dayjs.unix(exp).diff(dayjs(), 'minutes') < 5;
+    const isExpiredRefreshToken = !!exp && dayjs().isAfter(dayjs.unix(exp));
+    const shouldShowExpirationPopup = !!exp && dayjs.unix(exp).diff(dayjs(), 'minutes') < 5;
 
     if (!isAgent) {
       setTokenValidity(TokenValidity.INVALID);
@@ -54,6 +54,16 @@ const useTokenValidity = () => {
   }, [isAgent, exp]);
 
   return tokenValidity;
+};
+
+export const isConnected = (tokenValidity?: TokenValidity): boolean => {
+  switch (tokenValidity) {
+    case TokenValidity.VALID:
+    case TokenValidity.SOON_EXPIRED:
+      return true;
+    default:
+      return false;
+  }
 };
 
 export default useTokenValidity;

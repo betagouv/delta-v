@@ -39,8 +39,12 @@ const initAxios = (
 const initSplashScreen = (
   setLoading: (loading: boolean) => void,
   setHideLoading: (hideLoading: boolean) => void,
+  setShowContent: (showContent: boolean) => void,
 ) => {
   if (typeof window !== 'undefined') {
+    setTimeout(() => {
+      setShowContent(true);
+    }, 300);
     setTimeout(() => {
       setLoading(false);
     }, 1200);
@@ -69,6 +73,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   });
   const router = useRouter();
   const path = router.pathname;
+  const [showContent, setShowContent] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hideLoading, setHideLoading] = useState(false);
   const { getCurrenciesResponse, getProductsResponse, clearUser, setUserFromToken } = useStore(
@@ -82,7 +87,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   );
 
   useEffect(() => {
-    initSplashScreen(setLoading, setHideLoading);
+    initSplashScreen(setLoading, setHideLoading, setShowContent);
     initAxios(clearUser, setUserFromToken, router);
     return initLoadingData(getProductsResponse, getCurrenciesResponse);
   }, []);
@@ -114,7 +119,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             </div>
           </div>
         )}
-        {!loading && <Component {...pageProps} />}
+        {showContent && <Component {...pageProps} />}
       </MatomoProvider>
       {!Config.isProduction && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>

@@ -34,7 +34,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
     name: endDateName,
   });
   return (
-    <div className="flex w-full justify-center z-50">
+    <div className="flex w-full justify-center z-40">
       <DatePicker
         selectsStart
         dateFormat={'dd/MM/yyyy'}
