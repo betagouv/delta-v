@@ -23,7 +23,7 @@ export const SummaryGroupedAmountProduct: React.FC<SummaryGroupedAmountProductPr
       {groupedAmount.products.map((product) => (
         <div key={product.customId} className="mt-1 mb-4 ">
           <div className="flex flex-row">
-            <div>
+            <div className="flex flex-col">
               <Typography color={groupedAmount.isOverMaximum ? 'error' : 'secondary'} weight="bold">
                 {product.name}
               </Typography>
