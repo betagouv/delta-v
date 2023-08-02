@@ -62,6 +62,7 @@ const Index = () => {
           placeholder="Recherchez un produit"
           trailingIcon="search"
           onClick={() => router.push('/simulateur/produits/recherche')}
+          withBorder
         />
         <CategoryList
           onSelectProduct={onRedirectProduct}

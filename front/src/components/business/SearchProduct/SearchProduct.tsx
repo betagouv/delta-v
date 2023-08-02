@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { SearchResultProducts } from './product/SearchResultProducts';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
+import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
@@ -76,9 +77,30 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
         )}
       </div>
       <div className="my-5 self-center">
-        <Button onClick={() => onSearchAll(searchValue)} disabled={resultSearch.length === 0}>
-          {`Voir les ${resultSearch.length} résultats`}
-        </Button>
+        {searchValue.length > 0 &&
+          (resultSearch.length > 0 ? (
+            <Button onClick={() => onSearchAll(searchValue)} disabled={resultSearch.length === 0}>
+              {`Voir les ${resultSearch.length} résultats`}
+            </Button>
+          ) : (
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 px-4">
+                <Typography color="secondary" size="text-lg">
+                  Aucun résultat ne semble correspondre à votre recherche.
+                </Typography>
+                <Typography color="secondary" size="text-lg">
+                  Ajouter votre achat en cliquant sur le bouton ci-dessous.
+                </Typography>
+              </div>
+              <div className=" flex w-full flex-col items-center">
+                <div className="flex w-60 flex-col">
+                  <Link to={`/agent/declaration/produits/ajout?searchValue=${searchValue}`}>
+                    <Button fullWidth>Enregistrer votre produit</Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );

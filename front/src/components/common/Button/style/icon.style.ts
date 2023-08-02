@@ -29,6 +29,24 @@ const styleManager: IIconStyle = {
     },
   },
   size: {
+    '2xs': {
+      size: 4,
+      classes: {
+        'h-3': true,
+      },
+      position: {
+        left: {
+          classes: {
+            'mr-1': true,
+          },
+        },
+        right: {
+          classes: {
+            'ml-1': true,
+          },
+        },
+      },
+    },
     xs: {
       size: 8,
       classes: {

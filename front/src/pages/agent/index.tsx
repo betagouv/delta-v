@@ -11,6 +11,7 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { LinkWithIcon } from '@/components/common/LinkWithIcon';
 import { Typography } from '@/components/common/Typography';
 import { QrCodeScanner } from '@/components/input/StandardInputs/QrCodeScanner';
+import useTokenValidity, { isConnected } from '@/hooks/useTokenValidity';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
@@ -21,6 +22,7 @@ const SCAN_HEIGHT = '184px';
 const SCAN_WIDTH = '326px';
 
 const Index = () => {
+  const tokenValidity = useTokenValidity();
   const router = useRouter();
   const queryParams = router.query;
   const defaultMode =
@@ -35,6 +37,9 @@ const Index = () => {
   const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
 
   const startCamera = (ref: HTMLVideoElement) => {
+    if (!isConnected(tokenValidity)) {
+      return;
+    }
     setVideoRef(ref);
     const qrScanner = new QrScanner(
       ref,
@@ -125,7 +130,7 @@ const Index = () => {
             <div className="border border-secondary-300 flex flex-row justify-around rounded-full px-[20px] py-[8px] text-center gap-7">
               <button
                 className={classNames({
-                  'z-50 text-base': true,
+                  'z-10 text-base': true,
                   'text-white': mode === 'scanner',
                   'text-disabled-text': mode === 'tools',
                 })}
@@ -135,7 +140,7 @@ const Index = () => {
               </button>
               <button
                 className={classNames({
-                  'z-50 text-base': true,
+                  'z-10 text-base': true,
                   'text-white': mode === 'tools',
                   'text-disabled-text': mode === 'scanner',
                 })}

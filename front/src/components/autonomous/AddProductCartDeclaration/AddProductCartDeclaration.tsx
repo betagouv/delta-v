@@ -15,6 +15,7 @@ type OnAddProduct = (options: OnAddProductOptions) => void;
 interface AddProductCartDeclarationProps {
   currentProduct?: Product;
   onAddProduct: OnAddProduct;
+  onSelectProduct?: (id: string) => void;
   defaultCurrency?: string;
   defaultValues?: DefaultValuesUpdateProduct;
 }
@@ -22,6 +23,7 @@ interface AddProductCartDeclarationProps {
 export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps> = ({
   currentProduct,
   onAddProduct,
+  onSelectProduct,
   defaultCurrency,
   defaultValues,
 }) => {
@@ -39,22 +41,24 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
               categoryProducts={productTree
                 .slice(0)
                 .reverse()
-                .map((product) => product.name)}
+                .map((product) => product)}
               limit={3}
+              onClickLink={onSelectProduct}
             />
           </div>
           <div className="flex flex-col gap-2 pt-5 pb-2">
-            <Typography color="black" size="text-xl" weight="bold">
+            <Typography color="black" size="text-xl" weight="bold" lineHeight="leading-none">
               {currentProduct?.name}
             </Typography>
-            <div className="flex flex-row gap-2">
-              {currentProduct?.nomenclatures &&
-                currentProduct.nomenclatures.map((nomenclature) => (
+            {currentProduct?.nomenclatures && (
+              <div className="flex flex-row gap-2">
+                {currentProduct.nomenclatures.map((nomenclature) => (
                   <Typography color="primary" size="text-2xs">
                     {nomenclature}
                   </Typography>
                 ))}
-            </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-1 flex-col gap-6 bg-secondary-bg px-4 py-5">

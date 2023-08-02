@@ -66,6 +66,7 @@ export interface IInputGroupProps {
   leadingAddons?: string;
   control?: any;
   rules?: any;
+  barGroupedRadio?: boolean;
   littleCard?: boolean;
   withBorder?: boolean;
   newLabel?: boolean;
@@ -98,13 +99,16 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   register,
   control,
   rules,
+  barGroupedRadio = false,
   littleCard = false,
-  withBorder,
+  withBorder = false,
   newLabel = false,
   onTrailingIconClick,
   onTrailingSvgIconClick,
+  required,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
+
   return (
     <div>
       <>
@@ -113,12 +117,13 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
             <label
               htmlFor={name}
               className={classNames({
-                'mb-2 block text-base font-bold': !newLabel,
+                'mb-2 block text-sm font-bold': !newLabel,
                 'mb-5 block text-sm font-normal': newLabel,
               })}
               data-testid="label-element"
             >
               {label}
+              {required && <span className="text-primary-600">&nbsp;*</span>}
             </label>
           )}
           {type === 'select' && (
@@ -179,7 +184,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               register={register}
             />
           )}
-          {type === 'radio' && (
+          {type === 'radio' && !barGroupedRadio && (
             <Radio
               id={name}
               name={name}
@@ -188,6 +193,24 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               radioValues={radioValues ?? []}
               register={register}
             />
+          )}
+          {type === 'radio' && barGroupedRadio && (
+            <div
+              className={classNames({
+                'bg-white rounded-full mt-2 flex h-10 gap-5 px-5 w-fit': true,
+                'border border-error': error,
+              })}
+            >
+              <Radio
+                id={name}
+                name={name}
+                disabled={inputDisabled}
+                error={error}
+                radioValues={radioValues ?? []}
+                register={register}
+                newRadio
+              />
+            </div>
           )}
           {type === 'radioCard' && (
             <RadioCard

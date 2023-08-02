@@ -13,6 +13,7 @@ import shallow from 'zustand/shallow';
 
 import { configureAxios } from '@/api/base';
 import { SvgIcon } from '@/components/common/SvgIcon';
+import { Typography } from '@/components/common/Typography';
 import { Config } from '@/config';
 import { useStore } from '@/stores/store';
 import { RoutingAuthentication } from '@/utils/const';
@@ -38,8 +39,12 @@ const initAxios = (
 const initSplashScreen = (
   setLoading: (loading: boolean) => void,
   setHideLoading: (hideLoading: boolean) => void,
+  setShowContent: (showContent: boolean) => void,
 ) => {
   if (typeof window !== 'undefined') {
+    setTimeout(() => {
+      setShowContent(true);
+    }, 300);
     setTimeout(() => {
       setLoading(false);
     }, 1200);
@@ -67,6 +72,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     siteId: 1,
   });
   const router = useRouter();
+  const path = router.pathname;
+  const [showContent, setShowContent] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hideLoading, setHideLoading] = useState(false);
   const { getCurrenciesResponse, getProductsResponse, clearUser, setUserFromToken } = useStore(
@@ -80,7 +87,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   );
 
   useEffect(() => {
-    initSplashScreen(setLoading, setHideLoading);
+    initSplashScreen(setLoading, setHideLoading, setShowContent);
     initAxios(clearUser, setUserFromToken, router);
     return initLoadingData(getProductsResponse, getCurrenciesResponse);
   }, []);
@@ -90,34 +97,29 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       queries: undefined,
     },
   });
+
   return (
     <QueryClientProvider client={queryClient}>
       <MatomoProvider value={instance}>
         {!hideLoading && (
           <div
             className={classNames({
-              'fixed z-50 flex h-full w-full items-center bg-white transition-[opacity] ease-out duration-300':
+              'fixed z-50 flex flex-col h-full w-full bg-white transition-[opacity] ease-out duration-300':
                 true,
               'opacity-100': loading,
               'opacity-0': !loading,
             })}
           >
-            <span className="flex-1" />
-            <div className="flex flex-row gap-1">
-              <div className="h-16 w-auto">
-                <SvgIcon name="logoDouane" />
-              </div>
-              <div
-                className="logo-animate bg-gradient-to-br from-[#ED1639] to-[#000091] bg-clip-text text-4xl font-bold leading-8 
-    text-transparent"
-              >
-                Déclare <br /> Douane
-              </div>
+            <div className="h-1/3" />
+            <div className="flex flex-col w-40 mx-auto h-40">
+              <SvgIcon name={path.startsWith('/agent') ? 'logoAgent' : 'logo'} />
+              <Typography textPosition="text-center" weight="bold" size="text-2xs">
+                Chargement
+              </Typography>
             </div>
-            <span className="flex-1" />
           </div>
         )}
-        {!loading && <Component {...pageProps} />}
+        {showContent && <Component {...pageProps} />}
       </MatomoProvider>
       {!Config.isProduction && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>

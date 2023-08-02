@@ -93,15 +93,14 @@ export const ValueAgentProductBasket = ({
         )}
         {detailsButton && !editable && (
           <span className="flex justify-center">
-            <Button color="tertiary" variant="outlined" size="sm" onClick={() => setOpen(!open)}>
-              <span className="flex gap-1.5 items-center">
-                Voir calcul
-                {open ? (
-                  <Icon name="chevron-thin-up" size="base" />
-                ) : (
-                  <Icon name="chevron-thin-down" size="base" />
-                )}
-              </span>
+            <Button
+              color="tertiary"
+              variant="outlined"
+              size="2xs"
+              onClick={() => setOpen(!open)}
+              icon={open ? 'chevron-thin-up' : 'chevron-thin-down'}
+            >
+              Voir calcul
             </Button>
           </span>
         )}

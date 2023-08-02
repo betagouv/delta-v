@@ -42,7 +42,7 @@ export const QrCodeScanner = ({
         ></video>
       )}
       {!scanningStarted && !data && (
-        <div className="relative bottom-[176px] z-50 mb-[-176px]">
+        <div className="relative bottom-[176px] z-10 mb-[-176px]">
           <Skeleton height={height} width={width} />
         </div>
       )}

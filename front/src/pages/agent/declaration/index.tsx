@@ -11,6 +11,7 @@ import { FilterBar, FilterBarForm } from '@/components/business/FilterGroup/Filt
 import { Meta } from '@/layout/Meta';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { MainAgent } from '@/templates/MainAgent';
+import { RoutingAgent } from '@/utils/const';
 import { Constants } from '@/utils/enums';
 
 const QuittancePage = () => {
@@ -104,10 +105,11 @@ const QuittancePage = () => {
         }
         withTitle
         titleHeader="Déclaration"
+        linkButton={`${RoutingAgent.home}?mode=tools`}
       >
         <div className="flex flex-col px-4 pb-4">
           {isLoading ? (
-            <div>Loading...</div>
+            <div>Chargement...</div>
           ) : (
             <>
               <div className="mb-5">
@@ -122,12 +124,11 @@ const QuittancePage = () => {
                   filtersCount={counter}
                 />
               </div>
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col gap-2.5 md:items-center">
                 {declarations &&
                   declarations?.map((declaration, index) => (
-                    <span className={cs({ 'opacity-40': openFilterBar })}>
+                    <span className={cs({ 'opacity-40': openFilterBar })} key={declaration.id}>
                       <DeclarationCard
-                        key={declaration.id}
                         {...declaration}
                         date={declaration.versionDate}
                         id={declaration.id}

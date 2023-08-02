@@ -107,8 +107,8 @@ const RegisterPage = () => {
               trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
               onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
             />
-            <div className="ml-3">
-              <Typography color="light-gray" size="text-2xs">
+            <div className="ml-3 leading-none">
+              <Typography color="light-gray" size="text-3xs">
                 <PasswordHelperText password={password} />
               </Typography>
             </div>

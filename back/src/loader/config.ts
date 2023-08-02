@@ -14,6 +14,7 @@ export interface IAppConfig {
   ROUTE_FRONTEND_RESET_PASSWORD: string;
   ROUTE_FRONTEND_CHECK_DECLARATION: string;
   WHITE_LIST_AGENT_EMAIL: string[];
+  DISABLE_RATE_LIMIT: boolean;
 }
 
 const REQUIRED_VARIABLES: string[] = [
@@ -35,6 +36,13 @@ export function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
   });
 }
 
+const getBoolean = (value: string | undefined): boolean => {
+  if (value === undefined) {
+    return false;
+  }
+  return value.toLowerCase() === 'true';
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseConfig(config: any): IAppConfig {
   return {
@@ -55,6 +63,7 @@ function parseConfig(config: any): IAppConfig {
     WHITE_LIST_AGENT_EMAIL: config.WHITE_LIST_AGENT_EMAIL
       ? config.WHITE_LIST_AGENT_EMAIL.split(',')
       : [],
+    DISABLE_RATE_LIMIT: getBoolean(config.DISABLE_RATE_LIMIT) ?? false,
   };
 }
 

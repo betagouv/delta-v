@@ -15,6 +15,7 @@ export interface FormSelectProductData extends FormStepsProductData {
   name?: string;
   value?: number;
   currency?: string;
+  templateRole?: Role;
 }
 
 export const getDefaultValues = (steps: Product[]): FormStepsProductData => {
@@ -66,6 +67,8 @@ export const getRadioProductForm = (product: Product, register: any): ReactNode 
       radioValues={radioValues}
       type="radio"
       label={product.childrenQuestion ?? undefined}
+      barGroupedRadio
+      newLabel
     />
   );
 };
@@ -74,6 +77,7 @@ export const getRadioCardProductForm = (
   product: Product,
   register: any,
   control: any,
+  templateRole?: Role,
 ): ReactNode => {
   const radioCardValues: IRadioCardType[] = product.subProducts.map(
     (subProduct): IRadioCardType => {
@@ -84,7 +88,16 @@ export const getRadioCardProductForm = (
       };
     },
   );
-  return (
+  return templateRole === 'agent' ? (
+    <InputGroup
+      control={control}
+      register={register}
+      name={product.id}
+      radioCardValues={radioCardValues}
+      type="radioCard"
+      label={product.childrenQuestion ?? undefined}
+    />
+  ) : (
     <InputGroup
       control={control}
       register={register}

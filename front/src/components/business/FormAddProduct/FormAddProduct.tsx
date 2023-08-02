@@ -140,6 +140,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             trailingAddons={getUnit(product?.amountProduct)}
             error={errors.value?.message as string | undefined}
             newLabel={false}
+            withBorder={templateRole !== 'agent'}
           />
           <Info>
             <div className="leading-tight">
@@ -173,6 +174,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               control={control}
               error={errors.value?.message as string | undefined}
               withBorder={templateRole !== 'agent'}
+              newLabel
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -187,6 +189,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               control={control}
               error={errors.currency?.message as string | undefined}
               withBorder={templateRole !== 'agent'}
+              newLabel
             />
           </div>
         </div>
@@ -201,7 +204,6 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             placeholder="Exemple : Jeans, pantalon noir, slim..."
             register={register('name', { required: false })}
             error={errors.name?.message as string | undefined}
-            withBorder={false}
             newLabel
           />
         </div>

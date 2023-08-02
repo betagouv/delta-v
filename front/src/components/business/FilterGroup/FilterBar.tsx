@@ -66,6 +66,16 @@ export const FilterBar = ({
     setOpen(false);
     onValidateFilter(data);
   };
+  const [startFocused, setStartFocused] = React.useState<boolean>(false);
+  const [endFocused, setEndFocused] = React.useState<boolean>(false);
+
+  const onFocusedStartPeriodInput = (isFocused: boolean) => {
+    setStartFocused(isFocused);
+  };
+
+  const onFocusedEndPeriodInput = (isFocused: boolean) => {
+    setEndFocused(isFocused);
+  };
 
   return (
     <div className="flex flex-col rounded-xl bg-gray-100 px-5 py-4">
@@ -117,8 +127,11 @@ export const FilterBar = ({
                 endDateName="endDate"
                 startDateName="startDate"
                 control={control}
+                isStartFocused={onFocusedStartPeriodInput}
+                isEndFocused={onFocusedEndPeriodInput}
               />
             )}
+            {(startFocused || endFocused) && <div className="h-[260px]" />}
             {withMeanOfTransportFilter && (
               <FilterGroup
                 title="Moyen de transport"

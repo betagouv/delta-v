@@ -25,6 +25,7 @@ const Index = () => {
   const [openModalUnderConstruction, setOpenModalUnderConstruction] = useState<boolean>(false);
   const [openModalResumeSimulator, setOpenModalResumeSimulator] = useState<boolean>(false);
   const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
+
   const router = useRouter();
 
   const { simulatorRequest, declarationRequest } = useStore(
@@ -97,6 +98,7 @@ const Index = () => {
             placeholder="Que recherchez-vous ?"
             trailingIcon="search"
             onClick={() => router.push(`/recherche`)}
+            withBorder
           />
         </div>
 

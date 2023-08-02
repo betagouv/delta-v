@@ -23,11 +23,11 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
 
   return (
     <div
+      key={detailedProduct.customId}
       className={classNames({
         'border border-secondary-100 bg-white rounded-xl flex flex-col justify-start gap-2': true,
         'pb-5': isAmountProduct,
       })}
-      key={detailedProduct.id}
     >
       <div className="flex flex-col pt-5 px-5">
         <Typography color="black" size="text-xs" weight="bold">
@@ -60,7 +60,7 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
       </div>
       {!isAmountProduct && (
         <div
-          className="flex flex-col w-full justify-center py-2 px-5 bg-[#EEEEFE] rounded-b-xl"
+          className="flex flex-col w-full justify-center py-2 px-5 bg-[#EEEEFE] rounded-b-xl cursor-pointer"
           onClick={() => setOpenDetail(!openDetail)}
         >
           <Typography size="text-xs" textPosition="text-center">

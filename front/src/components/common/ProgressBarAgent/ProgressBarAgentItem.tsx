@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 import { ProgressBarAgentItemType } from '@/templates/DeclarationAgentSteps';
@@ -26,20 +24,18 @@ export const ProgressBarAgentItem: React.FC<IProgressBarAgentItemProps> = ({
     <div className="flex flex-col items-center">
       <>
         <div>
-          <div
-            className={classNames({
-              'flex flex-row items-center justify-center': true,
-              'font-bold': isActive,
-              'font-bold text-primary-600': !isActive && !isFutureStep,
-              'font-medium': !isActive && isFutureStep,
-            })}
-          >
+          <div className="flex flex-row items-center justify-center">
             <Icon
               // eslint-disable-next-line no-nested-ternary
               name={isActive ? 'circle-check' : isFutureStep ? 'circle-empty' : 'circle-full'}
               size="base"
             />
-            <Typography textPosition="text-center" size="text-2xs" color="black">
+            <Typography
+              textPosition="text-center"
+              size="text-2xs"
+              color={isActive ? 'primary' : 'black'}
+              weight={!isFutureStep ? 'bold' : 'normal'}
+            >
               <span className="ml-2">{link.name}</span>
             </Typography>
           </div>

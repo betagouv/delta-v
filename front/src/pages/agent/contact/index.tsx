@@ -14,6 +14,7 @@ import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
+import { RoutingAgent } from '@/utils/const';
 
 export interface FormContactUsData {
   comment: string;
@@ -40,7 +41,7 @@ const ContactPage = () => {
 
   const onClickToRedirectToHome = () => {
     setOpenValidateFeedbackInfo(false);
-    router.push('/agent');
+    router.push(`${RoutingAgent.home}?mode=tools`);
   };
 
   const feedbackId = uuidv4();
@@ -70,6 +71,7 @@ const ContactPage = () => {
         }
         withTitle
         titleHeader="Contact"
+        linkButton={`${RoutingAgent.home}?mode=tools`}
       >
         <form
           className="flex flex-col gap-4 py-6 px-4 justify-between flex-1"
@@ -84,7 +86,7 @@ const ContactPage = () => {
               textPosition="text-left"
             />
             <Typography size="text-xs" color="black">
-              Vous souhaitez nous faire parvenir une remarque, une optimisation, une demande
+              Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une demande
               particulière ?
             </Typography>
             <div className="mt-4">

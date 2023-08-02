@@ -61,6 +61,7 @@ const SimulatorDeclaration = () => {
         meansOfTransport: simulatorRequest.meanOfTransport,
         country: simulatorRequest.country,
       },
+      authorType: 'user',
     });
   };
 

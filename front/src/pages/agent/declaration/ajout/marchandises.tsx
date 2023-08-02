@@ -38,7 +38,7 @@ const Declaration = () => {
     setProductsDeclarationToDisplayAgent,
     removeProductDeclaration,
     updateProductCartDeclarationAgent,
-    resetDeclaration,
+    resetDeclarationAgent,
     findProduct,
     findDeclarationShoppingProductAgent,
     declarationId,
@@ -51,7 +51,7 @@ const Declaration = () => {
       setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
       updateProductCartDeclarationAgent: state.updateProductCartDeclarationAgent,
       removeProductDeclaration: state.removeProductCartDeclarationAgent,
-      resetDeclaration: state.resetDeclaration,
+      resetDeclarationAgent: state.resetDeclarationAgent,
       findProduct: state.findProduct,
       findDeclarationShoppingProductAgent: state.findDeclarationShoppingProductAgent,
       declarationId: state.declaration.appState.declarationAgentRequest?.declarationId,
@@ -106,7 +106,7 @@ const Declaration = () => {
 
   const createDeclarationMutation = useCreateDeclarationMutation({
     onSuccess: () => {
-      resetDeclaration();
+      resetDeclarationAgent();
       router.push(`/agent/declaration/${declarationId}`);
     },
   });
@@ -151,6 +151,7 @@ const Declaration = () => {
       shoppingProducts: declarationAgentRequest.shoppingProducts,
       border: declarationAgentRequest.border,
       meansOfTransportAndCountry: declarationAgentRequest.meansOfTransportAndCountry,
+      authorType: 'agent',
     });
   };
 
@@ -189,7 +190,7 @@ const Declaration = () => {
                 </Typography>
               </div>
               <div className="px-5 py-3 border border-secondary-100 bg-white rounded-full mt-[10px]">
-                <Typography color="light-gray" size="text-sm">
+                <Typography color="light-gray" size="text-sm" italic>
                   Type de marchandises, marques...
                 </Typography>
               </div>

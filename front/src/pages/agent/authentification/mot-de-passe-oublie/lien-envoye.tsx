@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 
 import { useAskResetPasswordMutation } from '@/api/hooks/useAPIAuth';
+import { ApiError } from '@/components/common/ApiError';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
-import { RoutingAuthentication } from '@/utils/const';
 
 export interface FormRegisterData {
   email: string;
@@ -16,11 +16,8 @@ const ResetLinkSentPage = () => {
   const router = useRouter();
   const { email } = router.query;
 
-  const onSuccess = () => {
-    router.push(RoutingAuthentication.login);
-  };
-
-  const resendEmailMutation = useAskResetPasswordMutation({ onSuccess });
+  const resendEmailMutation = useAskResetPasswordMutation({});
+  const apiError = resendEmailMutation.error ?? undefined;
 
   const handleResend = () => {
     if (typeof email === 'string') {
@@ -65,9 +62,16 @@ const ResetLinkSentPage = () => {
           )}
           <br />
           <Typography textPosition="text-center" size="text-xs" color="black">
-            Suivez le guide pour renouveler votre mot de passe.
+            Suivez le guide pour renouveler
+            <br />
+            votre mot de passe.
           </Typography>
           <br />
+          {apiError?.message && (
+            <div className="ml-3">
+              <ApiError apiError={apiError} />
+            </div>
+          )}
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>
             <span className="cursor-pointer" onClick={handleResend}>
               Renvoyer le lien

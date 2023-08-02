@@ -77,7 +77,7 @@ const ActualitiesPage = () => {
       >
         <div className="flex flex-col px-4 pb-4">
           {isLoading ? (
-            <div>Loading...</div>
+            <div>Chargement...</div>
           ) : (
             <>
               <div className="mb-5">

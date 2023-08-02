@@ -61,13 +61,11 @@ const Summary = () => {
           simulatorResponse={simulatorResponse}
         />
         <div>
-          <Typography weight="bold" color="secondary" lineHeight="leading-loose">
+          <Typography weight="bold" color="secondary" lineHeight="leading-loose" tag="div">
             Merci d’avoir utilisé le simulateur !
           </Typography>
           <Typography color="secondary">
-            Les informations sont fournies par
-            <br />
-            le simulateur à titre indicatif.
+            Les informations sont fournies par le simulateur à titre indicatif.
           </Typography>
           <div className="mt-4">
             <div>

@@ -78,7 +78,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
                 withoutMargin ? '' : 'px-4 py-5'
               } text-left shadow-xl transition-all sm:max-w-lg sm:align-middle lg:rounded-b-3xl`}
             >
-              <div className="absolute top-4 right-4 flex h-7 w-7 items-center">
+              <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
                 <Icon name="clear" onClick={onClose} />
               </div>
               {title && (

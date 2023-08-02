@@ -1,4 +1,5 @@
 export type TextSize =
+  | 'text-3xs'
   | 'text-2xs'
   | 'text-xs'
   | 'text-sm'
@@ -152,6 +153,8 @@ export const getTextTransform = (transform?: Transform): string => {
 
 export const getIncreasedTextSize = (size: TextSize): string => {
   switch (size) {
+    case 'text-3xs':
+      return 'text-2xs';
     case 'text-2xs':
       return 'text-xs';
     case 'text-xs':

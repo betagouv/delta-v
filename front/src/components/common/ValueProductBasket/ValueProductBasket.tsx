@@ -71,13 +71,8 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
           })}
         >
           <div className="w-full px-4 py-5">
-            <div className="flex">
-              <div className="flex-1 text-left">
-                <Typography weight="normal" color="secondary" size="text-base">
-                  Conversion en €
-                </Typography>
-              </div>
-              <div className="mt-[2px] ml-3">
+            <div className="relative">
+              <div className="absolute right-0">
                 <Icon size="xl" name="chevron-thin-up" />
               </div>
             </div>
@@ -87,16 +82,33 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
                 customProduct={customProduct}
               />
             )}
-            <div className="flex items-end">
-              <div className="flex-1" />
-              <div className="mb-[2px]">
-                <Typography color="secondary" size="text-base">
-                  TOTAL
+            <div className="flex gap-5 justify-center">
+              <div className="flex flex-col gap-2">
+                <Typography color="secondary" size="text-base" lineHeight="leading-6">
+                  CONVERSION EN €
+                </Typography>
+                <Typography color="secondary" size="text-base" lineHeight="leading-6">
+                  TOTAL TAXES
                 </Typography>
               </div>
-              <div className="ml-5 content-end">
-                <Typography color="primary" size="text-xl">
+              <div className="flex flex-col gap-2">
+                <Typography
+                  color="primary"
+                  size="text-lg"
+                  textPosition="text-right"
+                  lineHeight="leading-6"
+                >
                   {detailedProduct ? `${detailedProduct.unitPrice}€` : 'non renseigné'}
+                </Typography>
+                <Typography
+                  color="primary"
+                  size="text-lg"
+                  textPosition="text-right"
+                  lineHeight="leading-6"
+                >
+                  {detailedProduct && !customProduct
+                    ? `${detailedProduct.unitTaxes}€`
+                    : 'non renseigné'}
                 </Typography>
               </div>
             </div>
@@ -105,21 +117,21 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
         <div className="flex p-3">
           {!open ? (
             <>
-              <div className="flex-1 text-left">
-                <Typography weight="normal" color="secondary">
-                  Conversion en €
-                </Typography>
-              </div>
               {detailedProduct && !customProduct && (
-                <Typography weight="normal" color="primary" size="text-lg">
-                  {detailedProduct?.unitPrice} €
-                </Typography>
+                <>
+                  <div className="text-left">
+                    <Typography weight="normal" color="secondary">
+                      Conversion en €
+                    </Typography>
+                  </div>
+                </>
               )}
-              {customProduct && (
-                <Typography weight="normal" color="primary" size="text-lg">
-                  non renseignée
-                </Typography>
-              )}
+              <div className="flex-1" />
+              <Typography weight="normal" color="primary" size="text-lg">
+                {detailedProduct && !customProduct
+                  ? `${detailedProduct?.unitPrice} €`
+                  : 'non renseigné'}
+              </Typography>
               <div className="mt-[2px] ml-3">
                 <Icon size="xl" name="chevron-thin-down" />
               </div>

@@ -158,8 +158,8 @@ const Declaration = () => {
         onSubmit={onSubmit}
         linkButton={`${RoutingAgent.home}?mode=tools`}
       >
-        <div className="flex flex-col gap-4">
-          <div className="w5/6 flex flex-col gap-4">
+        <div className="flex flex-col gap-5">
+          <div className="w5/6 flex flex-col gap-5">
             <div className="w-56">
               <InputGroup
                 type="text"
@@ -170,7 +170,6 @@ const Declaration = () => {
                 control={control}
                 error={errors?.lastName?.message}
                 required
-                withBorder={false}
               />
             </div>
             <div className="w-56">
@@ -183,7 +182,6 @@ const Declaration = () => {
                 control={control}
                 error={errors?.firstName?.message}
                 required
-                withBorder={false}
               />
             </div>
           </div>
@@ -196,9 +194,8 @@ const Declaration = () => {
             control={control}
             error={errors?.address?.message}
             required
-            withBorder={false}
           />
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-5">
             <div className="w-32">
               <InputGroup
                 type="text"
@@ -209,7 +206,6 @@ const Declaration = () => {
                 control={control}
                 error={errors?.postalCode?.message}
                 required
-                withBorder={false}
               />
             </div>
             <div className="flex-1">
@@ -222,7 +218,6 @@ const Declaration = () => {
                 control={control}
                 error={errors?.city?.message}
                 required
-                withBorder={false}
               />
             </div>
           </div>
@@ -241,7 +236,7 @@ const Declaration = () => {
             </label>
             <div
               className={classNames({
-                'bg-white px-5 py-2.5 rounded-full flex justify-center': true,
+                'bg-white px-5 py-2.5 rounded-full flex justify-center h-10': true,
                 'border border-error': errors?.adult?.message,
               })}
             >
@@ -282,12 +277,11 @@ const Declaration = () => {
                 { id: 16, value: '16 ans' },
                 { id: 17, value: '17 ans' },
               ]}
-              withBorder={false}
             />
           </div>
         </div>
 
-        <div className="mt-5 flex flex-col gap-4">
+        <div className="mt-5 flex flex-col gap-5">
           <InputGroup
             type="text"
             name="mail"
@@ -297,7 +291,6 @@ const Declaration = () => {
             control={control}
             error={errors?.email?.message}
             required
-            withBorder={false}
           />
           <div className="w-56">
             <InputGroup
@@ -309,7 +302,6 @@ const Declaration = () => {
               control={control}
               error={errors?.phoneNumber?.message}
               required
-              withBorder={false}
             />
           </div>
         </div>

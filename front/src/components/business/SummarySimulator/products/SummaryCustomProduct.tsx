@@ -32,7 +32,7 @@ export const SummaryCustomProduct: React.FC<SummaryCustomProductProps> = ({
           <div className="flex flex-1 flex-row">
             <Typography color="secondary">{product.unitPrice} €</Typography>
             <div className="flex-1" />
-            <Typography color={'primary'}>non renseignée</Typography>
+            <Typography color={'primary'}>non renseignés</Typography>
           </div>
           <div
             className={classNames({
