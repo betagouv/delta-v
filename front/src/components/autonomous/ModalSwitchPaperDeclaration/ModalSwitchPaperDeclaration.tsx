@@ -40,7 +40,7 @@ export const ModalSwitchPaperDeclaration: React.FC<ModalSwitchPaperDeclarationPr
           </div>
           <div className="flex flex-1 flex-col items-center mt-6 gap-3">
             <Button onClick={onSwitchPaperDeclaration} disabled={isLoading} fullWidth>
-              Je passe en déclaratoin papier
+              Je passe en déclaration papier
             </Button>
             <Typography
               size="text-xs"

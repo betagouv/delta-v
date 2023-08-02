@@ -58,7 +58,7 @@ export const DeclarationStatusDetails = ({
           transform="uppercase"
           lineHeight="leading-none"
         >
-          Status
+          Statut
         </Typography>
         <DeclarationBadgeStatus status={status} />
       </div>

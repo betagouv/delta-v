@@ -78,7 +78,7 @@ export const ValueAgentProductBasket = ({
             </div>
             <div className="grid grid-cols-2 pt-2">
               <Typography transform="sentence-case" size="text-sm" weight="bold">
-                Taxes dues
+                Droits et taxes dues
               </Typography>
               <Typography
                 transform="sentence-case"
@@ -86,7 +86,7 @@ export const ValueAgentProductBasket = ({
                 textPosition="text-right"
                 weight="bold"
               >
-                {withCalculation ? `${product.unitTaxes} €` : 'non renseignée'}
+                {withCalculation ? `${product.unitTaxes} €` : 'non renseignés'}
               </Typography>
             </div>
           </div>
