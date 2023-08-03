@@ -196,7 +196,7 @@ const Declaration = () => {
               type="select"
               fullWidth={true}
               name="country"
-              placeholder="Sélectionner le pays d’où vous arrivez"
+              placeholder="Sélectionner le pays d'où arrive l'usager"
               trailingIcon="search"
               options={countriesOptions}
               register={register('country', { required: true })}

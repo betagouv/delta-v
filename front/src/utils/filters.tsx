@@ -9,7 +9,7 @@ export interface FilterOptions {
 }
 
 const declarationStatus = [
-  { id: DeclarationStatus.PAID, value: 'Quittance' },
+  { id: DeclarationStatus.PAID, value: 'Payée/validée' },
   { id: DeclarationStatus.SUBMITTED, value: 'En attente de validation' },
   { id: DeclarationStatus.VALIDATED, value: 'En attente de paiement' },
   { id: DeclarationStatus.SWITCH_PAPER, value: 'Déclaration papier' },
