@@ -55,7 +55,7 @@ export const ModalValidateDeclaration: React.FC<ModalValidateDeclarationProps> =
         <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-center gap-1 justify-center">
             <Typography size="text-2xs" color="light-gray" transform="uppercase">
-              Numéro de quittance
+              Numéro de déclaration
             </Typography>
             <Typography size="text-sm" color="black" weight="bold">
               {declarationId}
@@ -79,7 +79,7 @@ export const ModalValidateDeclaration: React.FC<ModalValidateDeclarationProps> =
                 value=""
                 className="w-4 h-4 text-primary-600 bg-white border-black focus:ring-0 rounded-[2px]"
               />
-              <label className="text-xs text-primary-600 ">Les informations sont validées</label>
+              <label className="text-xs text-primary-600 ">Les informations sont valides</label>
             </div>
             <div className="flex flex-1 flex-row items-center text-start gap-2">
               <input
@@ -93,7 +93,9 @@ export const ModalValidateDeclaration: React.FC<ModalValidateDeclarationProps> =
                 value=""
                 className="w-4 h-4 text-primary-600 bg-white border-black focus:ring-0 rounded-[2px]"
               />
-              <label className="text-xs text-primary-600 ">Les documents sont validés</label>
+              <label className="text-xs text-primary-600 ">
+                Les documents présentés sont valides
+              </label>
             </div>
             <div className="flex flex-1 flex-row items-center text-start gap-2">
               <input

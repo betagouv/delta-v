@@ -50,12 +50,10 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
       </div>
       <div className="px-5 flex flex-row justify-between w-full">
         <Typography size="text-xs" weight="bold">
-          Taxes dues
+          Droits et taxes dues
         </Typography>
         <Typography size="text-xs" weight="bold">
-          {withCalculation || isAmountProduct
-            ? `${detailedProduct.unitTaxes} €`
-            : 'Non renseignées'}
+          {withCalculation || isAmountProduct ? `${detailedProduct.unitTaxes} €` : 'Non renseignés'}
         </Typography>
       </div>
       {!isAmountProduct && (
