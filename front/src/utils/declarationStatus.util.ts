@@ -17,7 +17,7 @@ export const getDeclarationStatusLabel = (status: DeclarationStatus): string => 
     case DeclarationStatus.VALIDATED:
       return 'En attente de paiement';
     case DeclarationStatus.PAID:
-      return 'Payée';
+      return 'Payée/validée';
     case DeclarationStatus.ERROR:
       return 'Non conforme pour erreur';
     case DeclarationStatus.LITIGATION:
