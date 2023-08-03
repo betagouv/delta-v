@@ -35,7 +35,7 @@ import { createProductsAppStateSlice, ProductsAppStateSlice } from './products/a
 import { createUseCaseProductSlice, ProductsUseCaseSlice } from './products/useCase.store';
 import {
   createSimulatorAppStateSlice,
-  MeansOfTransport,
+  SIMULATOR_EMPTY_STATE,
   SimulatorAppStateSlice,
 } from './simulator/appState.store';
 import { createUseCaseSimulatorSlice, SimulatorUseCaseSlice } from './simulator/useCase.store';
@@ -113,17 +113,7 @@ export const useStore = create<StoreState>(
       migrate(persistedState: StoreState, version) {
         const newPersistedState = { ...persistedState };
         if (version < 3) {
-          newPersistedState.simulator.appState.simulatorRequest.age =
-            newPersistedState.simulator.appState.simulatorRequest.age ?? 0;
-          newPersistedState.simulator.appState.simulatorRequest.meanOfTransport =
-            newPersistedState.simulator.appState.simulatorRequest.meanOfTransport ??
-            MeansOfTransport.PLANE;
-          newPersistedState.simulator.appState.simulatorRequest.country =
-            newPersistedState.simulator.appState.simulatorRequest.country ?? 'DE';
-          newPersistedState.simulator.appState.simulatorRequest.border =
-            newPersistedState.simulator.appState.simulatorRequest.border ?? false;
-          newPersistedState.simulator.appState.simulatorRequest.shoppingProducts = [];
-          newPersistedState.simulator.appState.simulatorResponse = undefined;
+          newPersistedState.simulator.appState = clone(SIMULATOR_EMPTY_STATE);
         }
 
         if (version < 4) {

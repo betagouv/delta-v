@@ -50,8 +50,7 @@ module.exports = {
         '4xl': '2rem',
       },
       fontFamily: {
-        marianne: ['Marianne', 'sans-serif'],
-        roboto: ['Roboto', 'Marianne', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
       },
     },
   },
