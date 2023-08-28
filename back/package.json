@@ -84,7 +84,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.5.0",
     "typeorm-fixtures-cli": "^3.1.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.2.2"
   },
   "repository": "git@github.com:sabalot/test-circle-ci-clever-cloud.git",
   "author": "Sabalot <s.sabalot@gmail.com>",
