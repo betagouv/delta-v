@@ -60,7 +60,7 @@
     "@types/express-pino-logger": "^4.0.3",
     "@types/jest": "^29.5.3",
     "@types/jsonwebtoken": "^9.0.2",
-    "@types/node": "^20.3.0",
+    "@types/node": "^20.6.2",
     "@types/nodemailer": "^6.4.8",
     "@types/pino": "^7.0.5",
     "@types/pino-http": "^5.8.1",
