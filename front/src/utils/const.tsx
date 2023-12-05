@@ -31,6 +31,7 @@ export enum RoutingAgent {
   actualities = '/agent/actualites',
   account = '/agent/mon-compte',
   changePassword = '/agent/mon-compte/changer-mot-de-passe',
+  changePasswordSuccess = '/agent/mon-compte/changer-mot-de-passe/validation',
   contactUs = '/agent/contact',
   qrCodeManuel = '/agent/qr-code-manuel',
 }

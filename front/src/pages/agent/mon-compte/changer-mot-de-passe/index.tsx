@@ -16,7 +16,7 @@ import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
-import { RoutingAuthentication } from '@/utils/const';
+import { RoutingAgent, RoutingAuthentication } from '@/utils/const';
 import { getErrorFields } from '@/utils/errorFields';
 
 export interface ChangePasswordFormData {
@@ -71,9 +71,7 @@ const ChangePasswordPage = () => {
 
   const changePasswordMutation = useChangePasswordMutation({
     onSuccess: () => {
-      setTimeout(() => {
-        router.push(RoutingAuthentication.login);
-      }, 1000);
+      router.push(RoutingAgent.changePasswordSuccess);
     },
   });
   const apiError = changePasswordMutation.error ?? undefined;
