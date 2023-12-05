@@ -1,12 +1,14 @@
 import { useMutation, useQueryClient } from 'react-query';
 
 import {
+  ChangePasswordRequestOptions,
   LoginRequestOptions,
   LoginResponse,
   RegisterRequestOptions,
   ResetPasswordRequestOptions,
   askEmailValidationRequest,
   askResetPasswordRequest,
+  changePasswordRequest,
   loginRequest,
   refreshRequest,
   registerRequest,
@@ -100,6 +102,21 @@ export const useResetPasswordMutation = ({
 }: MutationSuccessCallback<ICommonResponse>) => {
   return useMutation<ICommonResponse, IErrorResponse, ResetPasswordRequestOptions>(
     resetPasswordRequest,
+    {
+      onSuccess: (data: ICommonResponse) => {
+        if (onSuccess) {
+          onSuccess(data);
+        }
+      },
+    },
+  );
+};
+
+export const useChangePasswordMutation = ({
+  onSuccess,
+}: MutationSuccessCallback<ICommonResponse>) => {
+  return useMutation<ICommonResponse, IErrorResponse, ChangePasswordRequestOptions>(
+    changePasswordRequest,
     {
       onSuccess: (data: ICommonResponse) => {
         if (onSuccess) {

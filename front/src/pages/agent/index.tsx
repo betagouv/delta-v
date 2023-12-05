@@ -15,7 +15,7 @@ import useTokenValidity, { isConnected } from '@/hooks/useTokenValidity';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
+import { MAIN_MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
 import { getLevelWithData } from '@/utils/declarationAgent';
 
 const SCAN_HEIGHT = '184px';
@@ -167,7 +167,7 @@ const Index = () => {
                 '[&>.scan-region-highlight]:hidden mb-1 flex flex-col gap-5 mt-4': true,
               })}
             >
-              {MENU_AGENT_ITEMS.map((item) => {
+              {MAIN_MENU_AGENT_ITEMS.map((item) => {
                 return (
                   <div
                     onClick={() => {

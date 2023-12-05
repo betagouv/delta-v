@@ -30,6 +30,7 @@ export enum RoutingAgent {
   declarations = '/agent/declaration',
   actualities = '/agent/actualites',
   account = '/agent/mon-compte',
+  changePassword = '/agent/mon-compte/changer-mot-de-passe',
   contactUs = '/agent/contact',
   qrCodeManuel = '/agent/qr-code-manuel',
 }
@@ -142,7 +143,7 @@ interface MenuAgentItem {
   disabled?: boolean;
 }
 
-export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
+export const MAIN_MENU_AGENT_ITEMS: MenuAgentItem[] = [
   {
     id: 'declaration',
     title: 'Créer une déclaration',
@@ -181,6 +182,16 @@ export const MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Mon compte',
     path: RoutingAgent.account,
     svgIcon: 'categorySmiley' as SvgNames,
-    disabled: true,
+    disabled: false,
+  },
+];
+
+export const MY_ACCOUNT_MENU_AGENT_ITEMS: MenuAgentItem[] = [
+  {
+    id: 'change-password',
+    title: 'Modifier mon mot de passe',
+    path: RoutingAgent.changePassword,
+    svgIcon: 'lock' as SvgNames,
+    openDeclarationResumeModal: true,
   },
 ];
