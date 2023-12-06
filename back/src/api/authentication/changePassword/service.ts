@@ -5,7 +5,7 @@ import { getAndCheckUserById } from '../common/services/getAndCheckUser.service'
 import { hashPassword } from '../common/services/password.service';
 import badCredentialsError from '../../common/errors/badCredentials.error';
 
-interface ILoginServiceOptions {
+export interface IChangePasswordServiceOptions {
   oldPassword: string;
   newPassword: string;
   userId: string;
@@ -17,7 +17,7 @@ export default async ({
   newPassword,
   userId,
   userRepository,
-}: ILoginServiceOptions): Promise<void> => {
+}: IChangePasswordServiceOptions): Promise<void> => {
   const user = await getAndCheckUserById({
     userId,
     userRepository,
