@@ -7,7 +7,6 @@ import * as yup from 'yup';
 
 import { useChangePasswordMutation } from '@/api/hooks/useAPIAuth';
 import { ApiError } from '@/components/common/ApiError';
-import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
 import { PasswordHelperText } from '@/components/common/PasswordHelperText';
 import { TextLink } from '@/components/common/TextLink';
@@ -33,6 +32,7 @@ const schema = yup.object({
 
 const ChangePasswordPage = () => {
   const {
+    reset,
     handleSubmit,
     register,
     getValues,
@@ -75,7 +75,6 @@ const ChangePasswordPage = () => {
     },
   });
   const apiError = changePasswordMutation.error ?? undefined;
-  const { data: apiSuccess } = changePasswordMutation;
 
   const onSubmit = async (data: ChangePasswordFormData) => {
     if (!apiError && isValid && data.password === data.confirmPassword) {
@@ -89,6 +88,13 @@ const ChangePasswordPage = () => {
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [submitClickCount, setSubmitClickCount] = useState(0);
+
+  const handleOnReturnClick = () => {
+    reset();
+    setOldPassword(undefined);
+    setSubmitClickCount(0);
+  };
 
   return (
     <MainAuth
@@ -106,7 +112,7 @@ const ChangePasswordPage = () => {
         switchWordPosition={1}
         colorClassnameOne="text-black"
         colorClassnameTwo="text-primary-600"
-        onReturnClick={oldPassword ? () => setOldPassword(undefined) : undefined}
+        onReturnClick={oldPassword ? handleOnReturnClick : undefined}
       />
       <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10 ">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
@@ -185,23 +191,36 @@ const ChangePasswordPage = () => {
                   withBorder
                   required
                 />
-                {password && confirmPassword && (
-                  <div className="ml-3">
-                    <Typography
-                      color={password === confirmPassword ? 'success' : 'error'}
-                      size="text-2xs"
-                    >
-                      Les deux mots de passe doivent être identiques
-                    </Typography>
-                  </div>
-                )}
+                {password &&
+                  confirmPassword &&
+                  password !== confirmPassword &&
+                  submitClickCount > 0 && (
+                    <div className="ml-3">
+                      <Typography
+                        color={password === confirmPassword ? 'success' : 'error'}
+                        size="text-3xs"
+                      >
+                        Les deux mots de passe doivent être identiques
+                      </Typography>
+                    </div>
+                  )}
               </div>
-              <div className="pt-10 pb-2 flex">
-                {apiError && <ApiError apiError={apiError} />}
-                {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
-              </div>
+              <div className="pt-10 pb-2 flex">{apiError && <ApiError apiError={apiError} />}</div>
               <div className="flex flex-col gap-4 w-40 self-center pb-2">
-                <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
+                <Button
+                  fullWidth={true}
+                  type="submit"
+                  disabled={
+                    !isDirty ||
+                    !isValid ||
+                    !oldPassword ||
+                    !password ||
+                    !confirmPassword ||
+                    (submitClickCount > 0 && password !== confirmPassword)
+                  }
+                  size="sm"
+                  onClick={() => setSubmitClickCount(submitClickCount + 1)}
+                >
                   Valider
                 </Button>
               </div>
