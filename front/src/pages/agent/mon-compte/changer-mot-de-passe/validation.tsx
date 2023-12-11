@@ -7,11 +7,6 @@ import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAgent } from '@/utils/const';
 
-export interface FormRegisterData {
-  email: string;
-  password: string;
-}
-
 const ResetLinkSentPage = () => {
   const router = useRouter();
 

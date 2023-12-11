@@ -8,7 +8,7 @@ describe('change password validator', () => {
   const { isValid } = validatorHelper(validator);
   const validData = {
     body: {
-      oldPassword: faker.helpers.fromRegExp(passwordRegex),
+      oldPassword: faker.string.alphanumeric(),
       newPassword: faker.helpers.fromRegExp(passwordRegex),
     },
   };

@@ -69,3 +69,10 @@ export const shorten = (
     worldPosition: [start, end],
   };
 };
+
+export const getStringOrUndefined = (text: string): string | undefined => {
+  if (text === '') {
+    return undefined;
+  }
+  return text;
+};

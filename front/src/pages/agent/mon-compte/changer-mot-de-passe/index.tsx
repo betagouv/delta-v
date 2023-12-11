@@ -17,6 +17,7 @@ import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAgent, RoutingAuthentication } from '@/utils/const';
 import { getErrorFields } from '@/utils/errorFields';
+import { getStringOrUndefined } from '@/utils/string';
 
 export interface ChangePasswordFormData {
   oldPassword: string;
@@ -27,17 +28,18 @@ export interface ChangePasswordFormData {
 const schema = yup.object({
   oldPassword: yup.string().required('Le mot de passe est requis'),
   password: yup.string().required('Le mot de passe est requis'),
-  confirmPassword: yup.string().required('Le mot de passe est requis'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Les deux mots de passe doivent être identiques')
+    .required('Le mot de passe est requis'),
 });
 
 const ChangePasswordPage = () => {
   const {
-    reset,
+    watch,
     handleSubmit,
+    formState: { isDirty, isValid, errors },
     register,
-    getValues,
-    formState: { errors },
-    formState: { isDirty, isValid },
   } = useForm<ChangePasswordFormData>({
     defaultValues: {
       oldPassword: undefined,
@@ -49,25 +51,13 @@ const ChangePasswordPage = () => {
 
   const router = useRouter();
 
-  const [oldPassword, setOldPassword] = useState<string | undefined>(undefined);
-  const [password, setPassword] = useState<string | undefined>(undefined);
-  const [confirmPassword, setConfirmPassword] = useState<string | undefined>(undefined);
-
-  register('password', {
-    onChange: (event: any) => {
-      setPassword(event.target.value);
-    },
-  });
-
-  register('confirmPassword', {
-    onChange: (event: any) => {
-      setConfirmPassword(event.target.value);
-    },
-  });
-
+  const [isCurrentStepOne, setIsCurrentStepOne] = useState<boolean>(true);
   const onOldPasswordSubmit = () => {
-    setOldPassword(getValues('oldPassword'));
+    setIsCurrentStepOne(false);
   };
+
+  const password = getStringOrUndefined(watch('password'));
+  const confirmPassword = getStringOrUndefined(watch('confirmPassword'));
 
   const changePasswordMutation = useChangePasswordMutation({
     onSuccess: () => {
@@ -90,11 +80,12 @@ const ChangePasswordPage = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [submitClickCount, setSubmitClickCount] = useState(0);
 
-  const handleOnReturnClick = () => {
-    reset();
-    setOldPassword(undefined);
+  const handleReturnFromStepTwo = () => {
+    setIsCurrentStepOne(true);
     setSubmitClickCount(0);
   };
+
+  const confirmPasswordError = submitClickCount > 0 ? errors?.confirmPassword?.message : undefined;
 
   return (
     <MainAuth
@@ -112,11 +103,11 @@ const ChangePasswordPage = () => {
         switchWordPosition={1}
         colorClassnameOne="text-black"
         colorClassnameTwo="text-primary-600"
-        onReturnClick={oldPassword ? handleOnReturnClick : undefined}
+        onReturnClick={!isCurrentStepOne ? handleReturnFromStepTwo : undefined}
       />
       <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10 ">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
-          {!oldPassword && (
+          {isCurrentStepOne && (
             <>
               <div className="my-2.5">
                 <InputGroup
@@ -155,7 +146,7 @@ const ChangePasswordPage = () => {
               </div>
             </>
           )}
-          {oldPassword && (
+          {!isCurrentStepOne && (
             <>
               <div className="flex flex-col gap-1 pb-12">
                 <InputGroup
@@ -165,7 +156,7 @@ const ChangePasswordPage = () => {
                   fullWidth={true}
                   placeholder="Nouveau mot de passe"
                   register={register('password')}
-                  error={errors?.password?.message ?? getErrorFields('password', apiError)}
+                  error={getErrorFields('password', apiError)}
                   trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
                   onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
                   withBorder
@@ -185,25 +176,12 @@ const ChangePasswordPage = () => {
                   fullWidth={true}
                   placeholder="Nouveau mot de passe"
                   register={register('confirmPassword')}
-                  error={errors?.password?.message ?? getErrorFields('password', apiError)}
+                  error={confirmPasswordError ?? getErrorFields('password', apiError)}
                   trailingSvgIcon={!confirmPasswordVisible ? 'visibilityOff' : 'visibilityOn'}
                   onTrailingSvgIconClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
                   withBorder
                   required
                 />
-                {password &&
-                  confirmPassword &&
-                  password !== confirmPassword &&
-                  submitClickCount > 0 && (
-                    <div className="ml-3">
-                      <Typography
-                        color={password === confirmPassword ? 'success' : 'error'}
-                        size="text-3xs"
-                      >
-                        Les deux mots de passe doivent être identiques
-                      </Typography>
-                    </div>
-                  )}
               </div>
               <div className="pt-10 pb-2 flex">{apiError && <ApiError apiError={apiError} />}</div>
               <div className="flex flex-col gap-4 w-40 self-center pb-2">
@@ -213,7 +191,6 @@ const ChangePasswordPage = () => {
                   disabled={
                     !isDirty ||
                     !isValid ||
-                    !oldPassword ||
                     !password ||
                     !confirmPassword ||
                     (submitClickCount > 0 && password !== confirmPassword)

@@ -29,14 +29,7 @@ const MyAccountPage = () => {
       >
         {MY_ACCOUNT_MENU_AGENT_ITEMS.map((item) => {
           return (
-            <div
-              // onClick={() => {
-              //   if (item.openDeclarationResumeModal) {
-              //     openDeclaration();
-              //   }
-              // }}
-              key={item.title}
-            >
+            <div key={item.title}>
               <LinkWithIcon
                 href={item.path}
                 key={item.title}
