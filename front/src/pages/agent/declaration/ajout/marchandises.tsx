@@ -10,8 +10,8 @@ import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalDeleteProductCartDeclaration } from '@/components/autonomous/ModalDeleteProductCartDeclaration';
+import { ModalFavorites } from '@/components/autonomous/ModalFavorites';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
-import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import {
   DefaultValuesUpdateProduct,
@@ -317,10 +317,6 @@ const Declaration = () => {
         onClose={handleCloseDownModal}
         defaultCurrency={defaultCurrency}
       />
-      <ModalUnderConstruction
-        open={openFavoriteDownModal}
-        onClose={() => setOpenFavoriteDownModal(false)}
-      />
 
       <ModalAddProductCartDeclaration
         open={openModalAddProduct}
@@ -340,6 +336,12 @@ const Declaration = () => {
           }
           handleCloseDownModal();
         }}
+      />
+
+      <ModalFavorites
+        open={openFavoriteDownModal}
+        onClose={() => setOpenFavoriteDownModal(false)}
+        onClickFavorite={onClickProduct}
       />
     </AgentRoute>
   );

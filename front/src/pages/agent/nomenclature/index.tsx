@@ -3,16 +3,19 @@ import { useState } from 'react';
 import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 
+import { useFavorites } from '@/api/hooks/useAPIFavorite';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
+import { ModalFavorites } from '@/components/autonomous/ModalFavorites';
 import { ModalSearchNomenclatureProduct } from '@/components/autonomous/ModalSearchNomenclatureProduct';
 import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
-import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { Product } from '@/model/product';
+import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
+import { findProduct } from '@/utils/product.util';
 
 export interface FormDeclarationData {
   country?: Alpha2Code;
@@ -23,6 +26,24 @@ const Nomenclature = () => {
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
+  const { nomenclatureProducts, setFavoriteProducts } = useStore((state) => ({
+    setFavoriteProducts: state.setFavoriteProducts,
+    nomenclatureProducts: state.products.appState.nomenclatureProducts,
+    defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
+  }));
+
+  const onSuccess = (data: string[]) => {
+    const tmpFavorites: Product[] = [];
+    data.forEach((id) => {
+      const product = findProduct(nomenclatureProducts, id);
+      if (product) {
+        tmpFavorites.push(product);
+      }
+    });
+    setFavoriteProducts(tmpFavorites);
+  };
+
+  useFavorites({ onSuccess });
 
   const handleCloseDownModal = () => {
     setOpenSearchDownModal(false);
@@ -32,6 +53,7 @@ const Nomenclature = () => {
 
   const onClickProduct = (product: Product) => {
     setOpenSearchDownModal(false);
+    setOpenFavoriteDownModal(false);
     router.push({
       pathname: '/agent/nomenclature/recherche',
       query: { id: product.id },
@@ -117,9 +139,10 @@ const Nomenclature = () => {
           open={openCategoryDownModal}
           onClose={handleCloseDownModal}
         />
-        <ModalUnderConstruction
+        <ModalFavorites
           open={openFavoriteDownModal}
           onClose={() => setOpenFavoriteDownModal(false)}
+          onClickFavorite={onClickProduct}
         />
       </MainAgent>
     </AgentRoute>

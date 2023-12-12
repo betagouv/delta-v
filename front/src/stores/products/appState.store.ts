@@ -11,6 +11,7 @@ export interface ProductsAppStateSlice {
       allProducts: Product[];
       products: Product[];
       nomenclatureProducts: Product[];
+      favoriteProducts: Product[];
       flattenProducts: Product[];
       flattenNomenclatureProducts: Product[];
       flattenAllProducts: Product[];
@@ -22,6 +23,7 @@ export interface ProductsAppStateSlice {
 export const PRODUCT_EMPTY_STATE = {
   allProducts: [],
   products: [],
+  favoriteProducts: [],
   nomenclatureProducts: [],
   flattenNomenclatureProducts: [],
   flattenProducts: [],

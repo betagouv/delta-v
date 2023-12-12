@@ -2,10 +2,14 @@ import React from 'react';
 
 import cs from 'classnames';
 import dayjs from 'dayjs';
+import shallow from 'zustand/shallow';
 
+import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { Icon } from '@/components/common/Icon';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
+import { useStore } from '@/stores/store';
 import { searchRegex } from '@/utils/regex';
 
 require('dayjs/locale/fr');
@@ -41,6 +45,31 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
 };
 
 export const NomenclatureCard = ({ product, onClick, searchValue }: NomenclatureCardProps) => {
+  const { favoriteProducts, addFavoriteProducts, removeFavoriteProducts } = useStore(
+    (state) => ({
+      addFavoriteProducts: state.addFavoriteProducts,
+      favoriteProducts: state.products.appState.favoriteProducts,
+      removeFavoriteProducts: state.removeFavoriteProducts,
+    }),
+    shallow,
+  );
+
+  const createFavoriteMutation = useCreateFavoriteMutation({});
+
+  const removeFavoriteMutation = useRemoveFavoriteMutation({});
+  const isInFavorite = favoriteProducts ? favoriteProducts.find((p) => p.id === product.id) : false;
+
+  const onRemove = (id: string) => {
+    removeFavoriteProducts(id);
+    removeFavoriteMutation.mutate(id);
+  };
+
+  const onAddProduct = (productFavorite: Product) => {
+    addFavoriteProducts(productFavorite);
+    createFavoriteMutation.mutate({
+      productId: product.id,
+    });
+  };
   return (
     <div
       className={cs(
@@ -50,6 +79,32 @@ export const NomenclatureCard = ({ product, onClick, searchValue }: Nomenclature
     >
       <div className="justify-center flex items-center z-10">
         <SvgIcon name={product.icon ?? 'categoryOther'} />
+      </div>
+
+      <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer z-50">
+        {isInFavorite ? (
+          <button
+            name="star-full"
+            color="yellow"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove(product.id);
+            }}
+          >
+            <Icon name={isInFavorite ? 'star-full' : 'star-empty'} color="yellow" />
+          </button>
+        ) : (
+          <button
+            name="star-empty"
+            color="gray"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddProduct(product);
+            }}
+          >
+            <Icon name={isInFavorite ? 'star-full' : 'star-empty'} color="yellow" />
+          </button>
+        )}
       </div>
 
       <div>

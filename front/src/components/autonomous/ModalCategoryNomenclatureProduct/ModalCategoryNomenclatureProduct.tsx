@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import shallow from 'zustand/shallow';
 
 import { AddProductToFavorites } from '../AddProductToFavorites';
+import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
 import { SvgNames } from '@/components/common/SvgIcon';
@@ -27,16 +29,27 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   open,
   defaultProduct,
 }) => {
-  const { products } = useStore(
+  const { products, addFavoriteProducts } = useStore(
     (state) => ({
       products: state.products.appState.nomenclatureProducts,
+      setFavoriteProducts: state.setFavoriteProducts,
+      addFavoriteProducts: state.addFavoriteProducts,
     }),
     shallow,
   );
+
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
 
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const [productTree, setProductTree] = useState<Product[]>([]);
+
+  const createFavoriteMutation = useCreateFavoriteMutation({
+    onSuccess: () => {
+      if (onClose) {
+        onClose();
+      }
+    },
+  });
 
   const defaultDisplayedProducts: DisplayedProduct[] = products?.map((product): Item => {
     return {
@@ -93,12 +106,11 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
     setCurrentId(productTree?.[1]?.id);
   };
 
-  const onAddProduct = (data: any) => {
-    console.log('🚀 ~ file: ModalCategoryNomenclatureProduct.tsx:97 ~ onAddProduct ~ data:', data);
-
-    if (onClose) {
-      onClose();
-    }
+  const onAddProduct = ({ product }: OnAddProductOptions) => {
+    addFavoriteProducts(product);
+    createFavoriteMutation.mutate({
+      productId: product.id,
+    });
   };
 
   const isFinalProduct = currentProduct

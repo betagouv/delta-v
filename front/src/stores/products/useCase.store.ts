@@ -20,6 +20,9 @@ export interface ProductsUseCaseSlice {
   setCountryForProductsNomenclature: (country: Alpha2Code) => void;
   setProductsDeclarationToDisplay: () => void;
   setProductsDeclarationToDisplayAgent: () => void;
+  setFavoriteProducts: (favorites: Product[]) => void;
+  addFavoriteProducts: (favorite: Product) => void;
+  removeFavoriteProducts: (id: string) => void;
 }
 
 const getFlattenProducts = (products: Product[]): Product[] => {
@@ -44,6 +47,7 @@ const getFlattenProducts = (products: Product[]): Product[] => {
 
 export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set, get) => ({
   findProduct: (id: string) => {
+    console.log('findProduct', get().products.appState.products);
     return findProduct(get().products.appState.products, id);
   },
   findProductTree: (id: string) => {
@@ -142,6 +146,32 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
       newState.products.appState.flattenProducts = getFlattenProducts(
         newState.products.appState.products,
       );
+      return newState;
+    });
+  },
+  setFavoriteProducts: (favorites: Product[]) => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.products.appState.favoriteProducts = favorites;
+      return newState;
+    });
+  },
+  addFavoriteProducts: (favorite: Product) => {
+    set((state: any) => {
+      const newState = { ...state };
+
+      newState.products.appState.favoriteProducts.push(favorite);
+      return newState;
+    });
+  },
+  removeFavoriteProducts: (id: string) => {
+    set((state: any) => {
+      const newState = { ...state };
+
+      const newFavoriteProducts = newState.products.appState.favoriteProducts.filter(
+        (favorite: Product) => favorite.id !== id,
+      );
+      newState.products.appState.favoriteProducts = newFavoriteProducts;
       return newState;
     });
   },

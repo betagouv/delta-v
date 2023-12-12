@@ -22,7 +22,7 @@ x-envs: &common-envs
   ROUTE_FRONTEND_CHECK_DECLARATION: /declaration
   FROM_EMAIL: test@test.fr
   FROM_SENDER_NAME: Test
-  SMTP_URL: smtp://username:password@mailhog:1025
+  SMTP_URL: smtp://username:password@mailhog:8025
   WHITE_LIST_AGENT_EMAIL: "s.sabalot@gmail.com,sbergeot.pro@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"
   DISABLE_RATE_LIMIT: "true"
 

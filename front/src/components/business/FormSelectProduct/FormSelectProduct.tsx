@@ -4,11 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
 import { FormAddProduct } from '../FormAddProduct';
+import { FormAddProductToFavorite } from '../FormAddProductToFavorite';
 import { StepsFormProduct } from '../StepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
 import { getSchema } from './schema';
 import { FormSelectProductData, Role, getDefaultValues } from './utils';
-import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
@@ -75,12 +75,14 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       value: null,
       currency: defaultCurrency,
     },
-    resolver: yupResolver(
-      getSchema({
-        amountProduct: !!currentProduct.amountProduct,
-        withName: templateRole === 'agent',
-      }),
-    ),
+    resolver: !isAddAbleToFavorites
+      ? yupResolver(
+          getSchema({
+            amountProduct: !!currentProduct.amountProduct,
+            withName: templateRole === 'agent',
+          }),
+        )
+      : undefined,
   });
 
   useEffect(() => {
@@ -152,36 +154,16 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         />
       )}
       {isAddAbleToFavorites && (
-        <div className="flex flex-col gap-[10px] ml-2">
-          {isAddAble && (
-            <div className="flex flex-col gap-1 ml-2 flex-1 justify-between">
-              <div className="w-full bg-primary-100 text-primary-600 h-[76px] flex justify-center items-center">
-                <Typography size="text-2xs" weight="bold">
-                  Taux de DD : {currentProduct.id}
-                </Typography>
-              </div>
-              <div className="flex flex-col gap-1 ml-2 justify-start">
-                <Typography size="text-2xs" color="black">
-                  Prix d'achat : 12,00€
-                </Typography>
-                <Typography size="text-2xs" color="black">
-                  Prix de vente : 12,00€
-                </Typography>
-              </div>
-              <div className="flex flex-col gap-1 mt-[20px]">
-                <Typography size="text-2xs" weight="bold" textPosition="text-center" underline>
-                  Ajouter aux favoris
-                </Typography>
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col gap-1  mt-[77px]">
-            <Typography size="text-3xs" color="middle-gray" textPosition="text-center">
-              Vous souhaitez nous faire parvenir une remarque, une optimisation,
-              <br /> une demande particulière ? <a>Cliquez ici</a>
-            </Typography>
-          </div>
-        </div>
+        <FormAddProductToFavorite
+          productId={currentProduct.id}
+          disabled={!isAddAble}
+          control={control}
+          register={register}
+          errors={errors}
+          defaultCurrency={defaultCurrency}
+          templateRole={templateRole}
+          isAddAble={isAddAble}
+        />
       )}
     </form>
   ) : (
