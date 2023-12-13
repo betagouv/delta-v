@@ -33,8 +33,7 @@ const LoginPage = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
-    formState: { isDirty, isValid },
+    formState: { errors, isDirty, isValid },
     getValues,
   } = useForm<FormLoginData>({
     defaultValues: {

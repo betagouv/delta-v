@@ -126,6 +126,7 @@ import Home from '@/assets/icons/Home.svg';
 import Info from '@/assets/icons/Info.svg';
 import Keyboard from '@/assets/icons/Keyboard.svg';
 import LiteSearch from '@/assets/icons/Lite-Search.svg';
+import Lock from '@/assets/icons/Lock.svg';
 import Luggages from '@/assets/icons/Luggages.svg';
 import Mail from '@/assets/icons/Mail.svg';
 import Meat from '@/assets/icons/Meat.svg';
@@ -157,6 +158,7 @@ import VisibilityOff from '@/assets/images/VisibilityOff.svg';
 import VisibilityOn from '@/assets/images/VisibilityOn.svg';
 
 export type SvgNames =
+  | 'lock'
   | 'logo'
   | 'logoAgent'
   | 'logoFrenchRepublic'
@@ -320,6 +322,8 @@ export interface ISvgIconProps {
 
 const getSvgFromName = (name: SvgNames): any => {
   switch (name) {
+    case 'lock':
+      return Lock;
     case 'logo':
       return Logo;
     case 'logoAgent':

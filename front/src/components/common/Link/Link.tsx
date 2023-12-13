@@ -80,7 +80,11 @@ export const Link: React.FC<LinkProps> = ({
           {children}
         </NextLink>
       )}
-      {linkType === LinkType.onClick && onClick && <div onClick={onClick}>{children}</div>}
+      {linkType === LinkType.onClick && onClick && (
+        <div className="cursor-pointer" onClick={onClick}>
+          {children}
+        </div>
+      )}
     </CustomTag>
   );
 };

@@ -137,7 +137,7 @@ const ResetPasswordPage = () => {
               <div className="ml-3">
                 <Typography
                   color={password === confirmPassword ? 'success' : 'error'}
-                  size="text-2xs"
+                  size="text-3xs"
                 >
                   Les deux mots de passe doivent être identiques
                 </Typography>

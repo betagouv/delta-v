@@ -24,6 +24,11 @@ export interface ResetPasswordRequestOptions {
   token: string;
 }
 
+export interface ChangePasswordRequestOptions {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
@@ -67,6 +72,13 @@ export const resetPasswordRequest = async (
   resetPasswordData: ResetPasswordRequestOptions,
 ): Promise<ICommonResponse> => {
   const response = await axios.post('/password/reset/', resetPasswordData);
+  return response.data;
+};
+
+export const changePasswordRequest = async (
+  changePasswordData: ChangePasswordRequestOptions,
+): Promise<ICommonResponse> => {
+  const response = await axios.post('/password/change/', changePasswordData);
   return response.data;
 };
 
