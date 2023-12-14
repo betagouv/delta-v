@@ -9,7 +9,7 @@ interface ModalSearchProductProps {
   open: boolean;
   onClose?: () => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: Product) => void;
+  onClickProduct?: (product: Partial<Product>) => void;
 }
 
 export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({

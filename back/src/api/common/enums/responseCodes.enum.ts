@@ -8,6 +8,7 @@ export enum ResponseCodes {
   USER_PASSWORD_RESET = 'user-password-reset',
   USER_PASSWORD_UPDATED = 'user-password-updated',
   DECLARATION_STATUS_UPDATED = 'declaration-status-updated',
+  SEARCH_PRODUCT_HISTORY_UPDATED = 'search-product-history-updated',
   DECLARATION_UPDATED = 'declaration-updated',
   CURRENCIES_UPDATED = 'currency-updated',
   FEEDBACK_UPDATED = 'feedback-updated',

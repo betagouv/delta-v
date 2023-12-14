@@ -7,6 +7,7 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
+import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalDeleteProductCartDeclaration } from '@/components/autonomous/ModalDeleteProductCartDeclaration';
@@ -104,6 +105,8 @@ const Declaration = () => {
 
   const { handleSubmit } = useForm();
 
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
+
   const createDeclarationMutation = useCreateDeclarationMutation({
     onSuccess: () => {
       resetDeclarationAgent();
@@ -155,12 +158,15 @@ const Declaration = () => {
     });
   };
 
-  const onClickProduct = (product: Product) => {
+  const onClickProduct = (product: Partial<Product>) => {
     setOpenSearchDownModal(false);
-    router.push({
-      pathname: '/agent/declaration/produits/recherche',
-      query: { id: product.id },
-    });
+    if (product.id) {
+      updateSearchProductHistory.mutate({ productId: product.id });
+      router.push({
+        pathname: '/agent/declaration/produits/recherche',
+        query: { id: product.id },
+      });
+    }
   };
 
   const onSearchAll = (searchValue: string) => {

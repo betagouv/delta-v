@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
+import { SearchHistoryProducts } from './product/SearchHistoryProducts';
 import { SearchResultProducts } from './product/SearchResultProducts';
+import { useGetSearchProductHistory } from '@/api/hooks/useAPIProducts';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
+import { getStringOrUndefined } from '@/utils/string';
 
 type SearchDisplayType = 'product' | 'global';
 interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: Product) => void;
+  onClickProduct?: (product: Partial<Product>) => void;
   placeholder?: string;
   withSearchIcon?: boolean;
   autoFocus?: boolean;
@@ -30,18 +33,25 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
   disabled = false,
   placeholder = '',
 }: SearchProductProps<T>) => {
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useEffect(() => {
-    const productsThatMatch = onSearch(searchValue);
+    const productsThatMatch = onSearch(searchValue ?? '');
     setResultSearch(productsThatMatch);
   }, [searchValue]);
 
   useEffect(() => {
-    const displayResults = searchValue.length > 0;
+    const displayResults = !!searchValue;
     onChange(displayResults);
   }, [resultSearch]);
+
+  const { data: history } = useGetSearchProductHistory();
+
+  const isFocusedEmpty = isFocused && !searchValue;
+  const showSearchResults = !!searchValue && resultSearch.length > 0;
+  const showSearchHistory = !!history && (isFocusedEmpty || !!searchValue);
 
   return (
     <div data-testid="search-element" className="items-between flex flex-col h-full">
@@ -59,25 +69,33 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
           enterKeyHint="search"
           className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2 border-none"
           onChange={(event) => {
-            setSearchValue(event.target.value);
+            setSearchValue(getStringOrUndefined(event.target.value));
             onSearch(event.target.value);
           }}
           autoFocus={autoFocus}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() =>
+            setTimeout(() => {
+              setIsFocused(false);
+            }, 100)
+          }
         />
       </div>
       <div className="p-5 flex-1">
-        {searchValue.length === 0 ? (
-          <></>
-        ) : (
+        {showSearchResults && (
           <SearchResultProducts
             resultSearch={resultSearch as unknown as SearchType<Product>[]}
             search={searchValue}
             onClickProduct={onClickProduct}
           />
         )}
+        {showSearchResults && showSearchHistory && <div className="border-t my-8" />}
+        {showSearchHistory && (
+          <SearchHistoryProducts history={history} onClickProduct={onClickProduct} />
+        )}
       </div>
       <div className="my-5 self-center">
-        {searchValue.length > 0 &&
+        {!!searchValue &&
           (resultSearch.length > 0 ? (
             <Button onClick={() => onSearchAll(searchValue)} disabled={resultSearch.length === 0}>
               {`Voir les ${resultSearch.length} résultats`}

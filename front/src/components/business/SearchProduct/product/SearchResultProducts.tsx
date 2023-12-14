@@ -39,37 +39,43 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
   onClickProduct,
 }: SearchResultProductsProps) => {
   return (
-    <ul className="w-full text-base">
-      {resultSearch.map((resultElement) => {
-        return (
-          <li
-            key={resultElement.id}
-            className="flex cursor-default select-none items-center px-3 pt-3 leading-3"
-            data-testid="result-product-search-element"
-            onClick={() => onClickProduct(resultElement)}
-          >
-            <div className="flex items-center gap-3">
-              <span className="mb-1 text-blue-700">
-                <Icon name="search" size="base" />
-              </span>
-              <span>
-                {renderMatchedWithSearch(resultElement, search)}
-                {resultElement.name && (
-                  <React.Fragment>
-                    <Typography color="light-gray" size="text-base">
-                      {' '}
-                      dans{' '}
-                    </Typography>
-                    <Typography size="text-base">
-                      <span className="text-blue-700">{resultElement.name}</span>
-                    </Typography>
-                  </React.Fragment>
-                )}
-              </span>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      {resultSearch.length > 0 ? (
+        <ul className="w-full text-base">
+          {resultSearch.map((resultElement) => {
+            return (
+              <li
+                key={resultElement.id}
+                className="flex cursor-default select-none items-center px-3 pt-3 leading-3"
+                data-testid="result-product-search-element"
+                onClick={() => onClickProduct(resultElement)}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="mb-1 text-blue-700">
+                    <Icon name="search" size="base" />
+                  </span>
+                  <span>
+                    {renderMatchedWithSearch(resultElement, search)}
+                    {resultElement.name && (
+                      <React.Fragment>
+                        <Typography color="light-gray" size="text-base">
+                          {' '}
+                          dans{' '}
+                        </Typography>
+                        <Typography size="text-base">
+                          <span className="text-blue-700">{resultElement.name}</span>
+                        </Typography>
+                      </React.Fragment>
+                    )}
+                  </span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
