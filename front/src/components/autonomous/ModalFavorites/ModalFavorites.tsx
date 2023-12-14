@@ -10,6 +10,7 @@ import { TitleAgent } from '@/components/common/TitleAgent';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
+import { haveAgeRestriction } from '@/utils/product.util';
 
 interface ModalFavoritesProps {
   onClose: () => void;
@@ -24,13 +25,13 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
 }: ModalFavoritesProps) => {
   const [openModalDeleteFavorite, setOpenModalDeleteFavorite] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
-  const { removeFavoriteProducts, favoriteProducts } = useStore((state) => ({
+  const { removeFavoriteProducts, favoriteProducts, findProduct } = useStore((state) => ({
     removeFavoriteProducts: state.removeFavoriteProducts,
+    findProduct: state.findProduct,
     favoriteProducts: state.products.appState.favoriteProducts,
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
   }));
-
   const [isAvailableToEdit, setIsAvailableToEdit] = useState<boolean>(false);
 
   const removeFavoriteMutation = useRemoveFavoriteMutation({});
@@ -58,14 +59,26 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
     setOpenModalDeleteFavorite(false);
   };
 
+  const flattenFavoriteProducts: Product[] = [];
+  const ageRestrictionFavoriteProducts: Product[] = [];
+
+  favoriteProducts.forEach((favoriteProduct) => {
+    const product = findProduct(favoriteProduct.id);
+    if (product) {
+      flattenFavoriteProducts.push(product);
+    } else if (haveAgeRestriction(favoriteProduct)) {
+      ageRestrictionFavoriteProducts.push(favoriteProduct);
+    }
+  });
+
   return (
     <DownModal bgColor="bg-white" open={open} onClose={onCloseModal}>
       <div className="flex flex-col gap-6 justify-start">
         <TitleAgent title="Mes favoris" textPosition="text-left" />
         <div className="flex flex-row gap-[10px] w-full flex-wrap">
-          {favoriteProducts && favoriteProducts.length ? (
+          {flattenFavoriteProducts && flattenFavoriteProducts.length ? (
             <>
-              {favoriteProducts.map((favoriteProduct) => (
+              {flattenFavoriteProducts.map((favoriteProduct) => (
                 <>
                   <FavoriteBadge
                     product={favoriteProduct}
@@ -76,6 +89,19 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
                   />
                 </>
               ))}
+              {ageRestrictionFavoriteProducts &&
+                ageRestrictionFavoriteProducts.map((favoriteProduct) => (
+                  <>
+                    <FavoriteBadge
+                      product={favoriteProduct}
+                      onClick={() => console.log('click')}
+                      onDeleteClick={onClickDelete}
+                      isAvailableToEdit={isAvailableToEdit}
+                      key={favoriteProduct.id}
+                      disabled
+                    />
+                  </>
+                ))}
 
               <div className="w-full text-center mt-5 mb-[14px]">
                 <button

@@ -24,7 +24,7 @@ interface GetProductByTypeOptions {
   customProducts: DetailedProduct[];
 }
 
-const getProductByType = (products?: DetailedProduct[]): GetProductByTypeOptions => {
+export const getProductByType = (products?: DetailedProduct[]): GetProductByTypeOptions => {
   const valueProducts =
     products?.filter((product) => product.status === ProductStatus.VALUE_PRODUCT) ?? [];
   const amountProducts =

@@ -47,7 +47,6 @@ const getFlattenProducts = (products: Product[]): Product[] => {
 
 export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set, get) => ({
   findProduct: (id: string) => {
-    console.log('findProduct', get().products.appState.products);
     return findProduct(get().products.appState.products, id);
   },
   findProductTree: (id: string) => {
