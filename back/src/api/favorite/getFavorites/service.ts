@@ -6,7 +6,7 @@ export interface IGetOneFavoriteServiceOptions {
   favoriteRepository: FavoriteRepositoryInterface;
 }
 
-export default async ({
+export const service = async ({
   userId,
   favoriteRepository,
 }: IGetOneFavoriteServiceOptions): Promise<FavoriteEntityInterface[]> => {

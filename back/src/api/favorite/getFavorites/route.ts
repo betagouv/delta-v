@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { HttpStatuses } from '../../../core/httpStatuses';
 import { AppDataSource } from '../../../loader/database';
 import { FavoriteRepository } from '../../../repositories/favorite.repository';
-import service from './service';
+import { service } from './service';
 import serializer from './serializer';
 
 export default async (
