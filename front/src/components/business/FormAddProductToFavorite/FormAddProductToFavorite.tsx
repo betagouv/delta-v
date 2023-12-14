@@ -35,7 +35,6 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
     shallow,
   );
 
-
   const product = productId ? findProduct(nomenclatureProducts, productId) : undefined;
 
   const isInFavorite = favoriteProducts.find((p) => p.id === productId);
