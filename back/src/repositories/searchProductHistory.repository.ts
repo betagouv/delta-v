@@ -26,6 +26,7 @@ export const SearchProductHistoryRepository: SearchProductHistoryRepositoryInter
         return this.createQueryBuilder('search_product_history')
           .leftJoinAndSelect('search_product_history.product', 'product')
           .where({ userId: agentId })
+          .orderBy('search_product_history.searchDate', 'DESC')
           .getMany();
       }
       return this.createQueryBuilder('search_product_history').where({ userId: agentId }).getMany();
@@ -39,10 +40,11 @@ export const SearchProductHistoryRepository: SearchProductHistoryRepositoryInter
         .limit(3)
         .getQuery();
 
-      await this.createQueryBuilder()
+      await this.createQueryBuilder('search_product_history')
         .delete()
         .from(SearchProductHistoryEntity)
         .where(`productId NOT IN (${subRequest})`)
+        .andWhere('userId = :userId')
         .setParameter('userId', userId)
         .execute();
     },

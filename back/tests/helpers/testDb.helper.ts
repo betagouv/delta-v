@@ -8,6 +8,7 @@ import { Product, ProductEntity } from '../../src/entities/product.entity';
 import { AppDataSource, initDatabase } from '../../src/loader/database';
 import UserEntity, { User } from '../../src/entities/user.entity';
 import { News, NewsEntity } from '../../src/entities/news.entity';
+import { SearchProductHistoryEntity } from '../../src/entities/searchProductHistory.entity';
 
 export interface ITestDbManager {
   getConnection: () => DataSource;
@@ -25,7 +26,14 @@ export interface ITestDbManager {
   clear: () => Promise<void>;
 }
 
-const ENTITIES = [DeclarationEntity, ProductEntity, CurrencyEntity, UserEntity, NewsEntity];
+const ENTITIES = [
+  SearchProductHistoryEntity,
+  DeclarationEntity,
+  ProductEntity,
+  CurrencyEntity,
+  UserEntity,
+  NewsEntity,
+];
 
 export const testDbManager = (): ITestDbManager => {
   const connection = AppDataSource;

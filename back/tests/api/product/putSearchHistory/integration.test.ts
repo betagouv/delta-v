@@ -31,8 +31,9 @@ describe('put search product history integration', () => {
     const product = productEntityFactory({});
 
     await testDb.persistProduct(product);
+
     const { status } = await request(testApp)
-      .put(`api/product/history`)
+      .put(`/api/product/history`)
       .send({ productId: product.id })
       .set('Authorization', `Bearer ${accessToken}`);
 

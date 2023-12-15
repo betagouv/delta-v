@@ -72,6 +72,7 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
 
   history.forEach((historyItem) => {
     const product = findProduct(historyItem.id);
+    console.log('product', product);
     if (product) {
       if (haveAgeRestriction(product)) {
         disabledHistoryProducts.push(product);
