@@ -1,16 +1,16 @@
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { validator } from '../../../core/validator';
 
-export interface PatchSearchProductHistoryRequest {
+export interface PutSearchProductHistoryRequest {
   body: {
     productId: string;
   };
 }
 
-export const patchSearchProductHistoryValidator = {
+export const putSearchProductHistoryValidator = {
   body: validator.object({
     productId: validator.string().uuid().required(),
   }),
 };
 
-export default buildValidationMiddleware(patchSearchProductHistoryValidator);
+export default buildValidationMiddleware(putSearchProductHistoryValidator);

@@ -8,12 +8,12 @@ import { UserRepository } from '../../../repositories/user.repository';
 import { SearchProductHistoryRepository } from '../../../repositories/searchProductHistory.repository';
 import serializer from './serializer';
 import { service } from './service';
-import { PatchSearchProductHistoryRequest } from './validator';
+import { PutSearchProductHistoryRequest } from './validator';
 
-type PatchSearchProductHistory = ValidatedRequest<PatchSearchProductHistoryRequest>;
+type PutSearchProductHistory = ValidatedRequest<PutSearchProductHistoryRequest>;
 
 export default async (
-  req: PatchSearchProductHistory,
+  req: PutSearchProductHistory,
   res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {
