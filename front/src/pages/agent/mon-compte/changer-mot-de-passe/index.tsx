@@ -187,13 +187,13 @@ const ChangePasswordPage = () => {
                 <Button
                   fullWidth={true}
                   type="submit"
-                  // disabled={
-                  //   !isDirty ||
-                  //   !isValid ||
-                  //   !password ||
-                  //   !confirmPassword ||
-                  //   (submitClickCount > 0 && password !== confirmPassword)
-                  // }
+                  disabled={
+                    !isDirty ||
+                    !isValid ||
+                    !password ||
+                    !confirmPassword ||
+                    (submitClickCount > 0 && password !== confirmPassword)
+                  }
                   size="sm"
                   onClick={() => setSubmitClickCount(submitClickCount + 1)}
                 >
