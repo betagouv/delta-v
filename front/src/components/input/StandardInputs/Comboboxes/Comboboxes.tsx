@@ -64,7 +64,7 @@ export const Comboboxes: React.FC<ComboboxesOptions> = ({
   let classNameCombobox =
     'w-full border py-2 pl-3 pr-10 focus:outline-none rounded-full placeholder:italic placeholder:text-secondary-400 placeholder:font-light';
   classNameCombobox += error
-    ? ' border-red-300 focus:ring-red-500 focus:border-red-500'
+    ? ' border-red-500 focus:ring-red-500 focus:border-red-500'
     : ' border-secondary-300';
   classNameCombobox += disabled ? ' bg-secondary-200 text-secondary-400' : '';
 

@@ -71,7 +71,7 @@ export const Input: React.FC<IInputOptions> = ({
       'border-0 focus:outline-none focus:ring-0 text-base block w-full px-5 py-2 border-solid rounded-full focus:placeholder-transparent focus:outline-none focus:ring-transparent placeholder:italic placeholder:text-secondary-500 placeholder:font-light':
         true,
       'border border-secondary-300 focus:border-secondary-300 ': withBorder,
-      'text-error border border-red-300 focus:border-red-500 placeholder:text-red-300': error,
+      'text-error border border-red-500 focus:border-red-500 placeholder:text-red-300': error,
       'pr-11': trailingIcon || trailingAddons || trailingSvgIcon,
       'pl-11': leadingIcon || leadingAddons,
     }),

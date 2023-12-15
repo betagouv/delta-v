@@ -9,13 +9,12 @@ import { useChangePasswordMutation } from '@/api/hooks/useAPIAuth';
 import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
 import { PasswordHelperText } from '@/components/common/PasswordHelperText';
-import { TextLink } from '@/components/common/TextLink';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
-import { RoutingAgent, RoutingAuthentication } from '@/utils/const';
+import { RoutingAgent } from '@/utils/const';
 import { getErrorFields } from '@/utils/errorFields';
 import { getStringOrUndefined } from '@/utils/string';
 
@@ -105,7 +104,7 @@ const ChangePasswordPage = () => {
         colorClassnameTwo="text-primary-600"
         onReturnClick={!isCurrentStepOne ? handleReturnFromStepTwo : undefined}
       />
-      <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10 ">
+      <section className="my-auto h-3/4 flex flex-col items-center w-full px-10 ">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
           {isCurrentStepOne && (
             <>
@@ -114,7 +113,7 @@ const ChangePasswordPage = () => {
                   type={!oldPasswordVisible ? 'password' : 'text'}
                   name="oldPassword"
                   fullWidth={true}
-                  placeholder="Mot de passe"
+                  placeholder="Ancien mot de passe"
                   register={register('oldPassword')}
                   error={errors?.oldPassword?.message ?? getErrorFields('password', apiError)}
                   trailingSvgIcon={!oldPasswordVisible ? 'visibilityOff' : 'visibilityOn'}
@@ -123,16 +122,13 @@ const ChangePasswordPage = () => {
                   label="Saisissez votre ancien mot de passe"
                 />
               </div>
-              <TextLink underline to={RoutingAuthentication.forgetPassword}>
-                <Typography size="text-2xs">Mot de passe oublié ?</Typography>
-              </TextLink>
               <div className="mt-5 flex flex-col items-center gap-2">
                 {apiError?.message && (
                   <div className="ml-3">
                     <ApiError apiError={apiError} />
                   </div>
                 )}
-                <div className="w-40">
+                <div className="w-40 flex flex-col items-center gap-2">
                   <Button
                     fullWidth={true}
                     type="button"
@@ -142,6 +138,9 @@ const ChangePasswordPage = () => {
                   >
                     Valider
                   </Button>
+                  <Typography size="text-2xs" color="black" textPosition="text-center">
+                    Champs obligatoires *
+                  </Typography>
                 </div>
               </div>
             </>
@@ -188,13 +187,13 @@ const ChangePasswordPage = () => {
                 <Button
                   fullWidth={true}
                   type="submit"
-                  disabled={
-                    !isDirty ||
-                    !isValid ||
-                    !password ||
-                    !confirmPassword ||
-                    (submitClickCount > 0 && password !== confirmPassword)
-                  }
+                  // disabled={
+                  //   !isDirty ||
+                  //   !isValid ||
+                  //   !password ||
+                  //   !confirmPassword ||
+                  //   (submitClickCount > 0 && password !== confirmPassword)
+                  // }
                   size="sm"
                   onClick={() => setSubmitClickCount(submitClickCount + 1)}
                 >
