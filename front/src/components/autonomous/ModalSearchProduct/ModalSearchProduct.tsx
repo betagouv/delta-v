@@ -21,7 +21,6 @@ export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({
   const { searchProducts } = useStore((state) => ({
     searchProducts: state.searchProducts,
   }));
-  console.log('searchProducts', searchProducts);
 
   return (
     <>
