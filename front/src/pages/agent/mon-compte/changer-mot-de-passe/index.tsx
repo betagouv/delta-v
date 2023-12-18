@@ -110,7 +110,7 @@ const ChangePasswordPage = () => {
             <>
               <div className="my-2.5">
                 <InputGroup
-                  type={!oldPasswordVisible ? 'password' : 'text'}
+                  type={oldPasswordVisible ? 'text' : 'password'}
                   name="oldPassword"
                   fullWidth={true}
                   placeholder="Ancien mot de passe"
@@ -150,7 +150,7 @@ const ChangePasswordPage = () => {
               <div className="flex flex-col gap-1 pb-12">
                 <InputGroup
                   label="Mon nouveau mot de passe"
-                  type={!passwordVisible ? 'password' : 'text'}
+                  type={passwordVisible ? 'text' : 'password'}
                   name="password"
                   fullWidth={true}
                   placeholder="Nouveau mot de passe"
@@ -170,7 +170,7 @@ const ChangePasswordPage = () => {
               <div className="flex flex-col gap-1">
                 <InputGroup
                   label="Confirmer le mot de passe"
-                  type={!confirmPasswordVisible ? 'password' : 'text'}
+                  type={confirmPasswordVisible ? 'text' : 'password'}
                   name="confirmPassword"
                   fullWidth={true}
                   placeholder="Nouveau mot de passe"
