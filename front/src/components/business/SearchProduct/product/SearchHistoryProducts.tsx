@@ -7,14 +7,13 @@ import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
-import { haveAgeRestriction } from '@/utils/product.util';
 
 interface SearchHistoryProductsProps {
   history: SearchProductHistoryItem[];
   onClickProduct: (product: Partial<Product>) => void;
 }
 interface ProductHistoryItemProps {
-  product: Product;
+  product: Partial<Product>;
   onClick?: (product: Partial<Product>) => void;
   disabled?: boolean;
 }
@@ -68,16 +67,13 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
 }: SearchHistoryProductsProps) => {
   const { findProduct } = useStore((state) => ({ findProduct: state.findProduct }));
   const enabledHistoryProducts: Product[] = [];
-  const disabledHistoryProducts: Product[] = [];
+  const disabledHistoryProducts: Partial<Product>[] = [];
 
   history.forEach((historyItem) => {
     const product = findProduct(historyItem.id);
-    console.log('product', product);
     if (product) {
-      if (haveAgeRestriction(product)) {
-        disabledHistoryProducts.push(product);
-      } else enabledHistoryProducts.push(product);
-    }
+      enabledHistoryProducts.push(product);
+    } else disabledHistoryProducts.push(historyItem);
   });
   return (
     <>

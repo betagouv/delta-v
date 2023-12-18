@@ -89,19 +89,3 @@ export const setupProductsToDisplay = (
       return newProduct;
     });
 };
-
-export const haveAgeRestriction = (product: Product): boolean => {
-  return (
-    product.amountProduct === AmountProduct.cigarette ||
-    product.amountProduct === AmountProduct.cigarillos ||
-    product.amountProduct === AmountProduct.cigar ||
-    product.amountProduct === AmountProduct.tobacco ||
-    product.amountProduct === AmountProduct.softAlcohol ||
-    product.amountProduct === AmountProduct.alcoholIntermediate ||
-    product.amountProduct === AmountProduct.strongAlcohol ||
-    product.amountProduct === AmountProduct.spiritDrink ||
-    product.amountProduct === AmountProduct.beer ||
-    product.amountProduct === AmountProduct.wine ||
-    product.amountProduct === AmountProduct.sparklingWine
-  );
-};
