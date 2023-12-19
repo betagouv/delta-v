@@ -1,5 +1,7 @@
 import Fuse from 'fuse.js';
 
+import { AGENT_PRODUCT_SEARCH_RESULTS_LIMIT } from '@/config/productSearch';
+
 interface AdvancedSearchOptions<T> {
   searchValue: string;
   searchList: T[];
@@ -18,7 +20,7 @@ export const advancedSearch = <T>({
   searchValue,
   searchList,
   searchKey,
-  limit = 10,
+  limit = AGENT_PRODUCT_SEARCH_RESULTS_LIMIT,
   minRankAllowed = 0.2,
 }: AdvancedSearchOptions<T>): SearchType<T>[] => {
   if (searchValue.length === 0) {

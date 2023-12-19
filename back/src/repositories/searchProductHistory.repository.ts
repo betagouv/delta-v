@@ -36,7 +36,7 @@ export const SearchProductHistoryRepository: SearchProductHistoryRepositoryInter
         .select('search_product_history.productId')
         .where('search_product_history.userId = :userId', { userId })
         .orderBy('search_product_history.searchDate', 'DESC')
-        .limit(3)
+        .limit(10)
         .getQuery();
 
       await this.createQueryBuilder('search_product_history')

@@ -5,6 +5,7 @@ import cs from 'classnames';
 import { SearchProductHistoryItem } from '@/api/lib/products';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
+import { AGENT_PRODUCT_SEARCH_HISTORY_LIMIT } from '@/config/productSearch';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 
@@ -66,15 +67,17 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   onClickProduct,
 }: SearchHistoryProductsProps) => {
   const { findProduct } = useStore((state) => ({ findProduct: state.findProduct }));
-  const enabledHistoryProducts: Product[] = [];
-  const disabledHistoryProducts: IdRequiredProduct[] = [];
+  const historyProductToShow: Product[] = [];
 
   history.forEach((historyItem) => {
     const product = findProduct(historyItem.id);
     if (product) {
-      enabledHistoryProducts.push(product);
-    } else disabledHistoryProducts.push(historyItem);
+      historyProductToShow.push(product);
+    }
   });
+  console.log('history', history);
+
+  historyProductToShow.splice(AGENT_PRODUCT_SEARCH_HISTORY_LIMIT);
   return (
     <>
       {history.length > 0 ? (
@@ -82,11 +85,10 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
           <Typography color="black" size="text-base">
             Historique des recherches
           </Typography>
-          {enabledHistoryProducts.map((product) => {
-            return <ProductHistoryItem product={product} onClick={onClickProduct} />;
-          })}
-          {disabledHistoryProducts.map((product) => {
-            return <ProductHistoryItem product={product} disabled />;
+          {historyProductToShow.map((product) => {
+            return (
+              <ProductHistoryItem product={product} onClick={onClickProduct} key={product.id} />
+            );
           })}
         </ul>
       ) : (

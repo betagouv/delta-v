@@ -46,7 +46,7 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
             return (
               <li
                 key={resultElement.id}
-                className="flex cursor-default select-none items-center px-3 pt-3 leading-3"
+                className="flex cursor-default select-none items-center px-3 pt-2 leading-3"
                 data-testid="result-product-search-element"
                 onClick={() => onClickProduct(resultElement)}
               >
