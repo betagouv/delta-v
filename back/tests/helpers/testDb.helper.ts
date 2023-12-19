@@ -8,13 +8,17 @@ import { Product, ProductEntity } from '../../src/entities/product.entity';
 import { AppDataSource, initDatabase } from '../../src/loader/database';
 import UserEntity, { User } from '../../src/entities/user.entity';
 import { News, NewsEntity } from '../../src/entities/news.entity';
-import { SearchProductHistoryEntity } from '../../src/entities/searchProductHistory.entity';
+import {
+  SearchProductHistory,
+  SearchProductHistoryEntity,
+} from '../../src/entities/searchProductHistory.entity';
 
 export interface ITestDbManager {
   getConnection: () => DataSource;
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   persistProduct: (args: Product) => Promise<Product>;
+  persistSearchProductHistory: (args: SearchProductHistory) => Promise<SearchProductHistory>;
   persistCurrency: (args: Currency) => Promise<Currency>;
   persistUser: (args: User) => Promise<User>;
   persistDeclaration: (args: DeclarationEntityInterface) => Promise<DeclarationEntityInterface>;
@@ -23,6 +27,10 @@ export interface ITestDbManager {
   getDeclarations: () => Promise<DeclarationEntityInterface[]>;
   getDeclaration: (id: string) => Promise<DeclarationEntityInterface | null>;
   getUser: (id: string) => Promise<User | null>;
+  getSearchProductHistory: (
+    productId: string,
+    userId: string,
+  ) => Promise<SearchProductHistory | null>;
   clear: () => Promise<void>;
 }
 
@@ -48,6 +56,9 @@ export const testDbManager = (): ITestDbManager => {
     },
     persistProduct: async (args: Product): Promise<Product> =>
       connection.manager.save(ProductEntity, args),
+    persistSearchProductHistory: async (
+      args: SearchProductHistory,
+    ): Promise<SearchProductHistory> => connection.manager.save(SearchProductHistoryEntity, args),
     persistCurrency: async (args: Currency): Promise<Currency> =>
       connection.manager.save(CurrencyEntity, args),
     persistUser: async (args: User): Promise<User> => connection.manager.save(UserEntity, args),
@@ -67,6 +78,11 @@ export const testDbManager = (): ITestDbManager => {
         .getOne(),
     getUser: async (id: string): Promise<User | null> =>
       connection.manager.findOne(UserEntity, { where: { id } }),
+    getSearchProductHistory: async (
+      productId: string,
+      userId: string,
+    ): Promise<SearchProductHistory | null> =>
+      connection.manager.findOne(SearchProductHistoryEntity, { where: { productId, userId } }),
     clear: async (): Promise<void> => {
       await Promise.all(
         ENTITIES.map(async (entity) => {

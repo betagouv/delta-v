@@ -22,17 +22,16 @@ export const SearchProductHistoryRepository: SearchProductHistoryRepositoryInter
       return this.save(searchProductHistory);
     },
     getByAgentId(agentId: string, withProducts?: boolean) {
+      const query = this.createQueryBuilder('search_product_history')
+        .where({ userId: agentId })
+        .orderBy('search_product_history.searchDate', 'DESC');
       if (withProducts) {
-        return this.createQueryBuilder('search_product_history')
-          .leftJoinAndSelect('search_product_history.product', 'product')
-          .where({ userId: agentId })
-          .orderBy('search_product_history.searchDate', 'DESC')
-          .getMany();
+        query.leftJoinAndSelect('search_product_history.product', 'product');
       }
-      return this.createQueryBuilder('search_product_history').where({ userId: agentId }).getMany();
+      return query.getMany();
     },
     async removeOld(userId: string) {
-      const subRequest = AppDataSource.getRepository(SearchProductHistoryEntity)
+      const mostRecentInHistorySubRequest = AppDataSource.getRepository(SearchProductHistoryEntity)
         .createQueryBuilder('search_product_history')
         .select('search_product_history.productId')
         .where('search_product_history.userId = :userId', { userId })
@@ -43,9 +42,8 @@ export const SearchProductHistoryRepository: SearchProductHistoryRepositoryInter
       await this.createQueryBuilder('search_product_history')
         .delete()
         .from(SearchProductHistoryEntity)
-        .where(`productId NOT IN (${subRequest})`)
-        .andWhere('userId = :userId')
-        .setParameter('userId', userId)
+        .where(`productId NOT IN (${mostRecentInHistorySubRequest})`)
+        .andWhere('userId = :userId', { userId })
         .execute();
     },
   });

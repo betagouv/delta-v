@@ -1,14 +1,14 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddSearchProductHistory1702473254153 implements MigrationInterface {
-  name = 'AddSearchProductHistory1702473254153';
+export class AddSearchProductHistory1702915140336 implements MigrationInterface {
+  name = 'AddSearchProductHistory1702915140336';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
             CREATE TABLE "search_product_history" (
                 "productId" uuid NOT NULL,
                 "userId" uuid NOT NULL,
-                "searchDate" TIMESTAMP NOT NULL DEFAULT now(),
+                "searchDate" TIMESTAMP NOT NULL,
                 CONSTRAINT "PK_a009baec55604699983a449f003" PRIMARY KEY ("productId", "userId")
             )
         `);

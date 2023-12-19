@@ -5,16 +5,16 @@ import cs from 'classnames';
 import { SearchProductHistoryItem } from '@/api/lib/products';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
-import { Product } from '@/model/product';
+import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 
 interface SearchHistoryProductsProps {
   history: SearchProductHistoryItem[];
-  onClickProduct: (product: Partial<Product>) => void;
+  onClickProduct: (product: IdRequiredProduct) => void;
 }
 interface ProductHistoryItemProps {
-  product: Partial<Product>;
-  onClick?: (product: Partial<Product>) => void;
+  product: IdRequiredProduct;
+  onClick?: (product: IdRequiredProduct) => void;
   disabled?: boolean;
 }
 
@@ -67,7 +67,7 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
 }: SearchHistoryProductsProps) => {
   const { findProduct } = useStore((state) => ({ findProduct: state.findProduct }));
   const enabledHistoryProducts: Product[] = [];
-  const disabledHistoryProducts: Partial<Product>[] = [];
+  const disabledHistoryProducts: IdRequiredProduct[] = [];
 
   history.forEach((historyItem) => {
     const product = findProduct(historyItem.id);

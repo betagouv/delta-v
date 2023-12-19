@@ -7,7 +7,7 @@ import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Link } from '@/components/common/Link';
 import { Typography } from '@/components/common/Typography';
-import { Product } from '@/model/product';
+import { IdRequiredProduct, Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 import { getStringOrUndefined } from '@/utils/string';
 
@@ -16,7 +16,7 @@ interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: Partial<Product>) => void;
+  onClickProduct?: (product: IdRequiredProduct) => void;
   placeholder?: string;
   withSearchIcon?: boolean;
   autoFocus?: boolean;

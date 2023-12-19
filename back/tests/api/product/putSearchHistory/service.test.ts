@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 
 import {
-  PutSearchProductHistoryOptions,
+  PutSearchProductHistoryServiceOptions,
   service,
 } from '../../../../src/api/product/putSearchHistory/service';
 import { productRepositoryMock } from '../../../mocks/product.repository.mock';
@@ -13,7 +13,7 @@ import productNotFoundError from '../../../../src/api/common/errors/productNotFo
 import userNotFoundError from '../../../../src/api/common/errors/userNotFound.error';
 
 interface PrepareValidContextResponse {
-  serviceOptions: PutSearchProductHistoryOptions;
+  serviceOptions: PutSearchProductHistoryServiceOptions;
 }
 
 const prepareValidContext = (): PrepareValidContextResponse => {

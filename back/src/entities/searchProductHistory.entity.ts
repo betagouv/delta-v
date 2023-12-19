@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Product, ProductEntity } from './product.entity';
 import UserEntity, { User } from './user.entity';
 
@@ -21,11 +21,7 @@ export class SearchProductHistoryEntity implements SearchProductHistory {
   @PrimaryColumn({ type: 'uuid' })
   userId: string;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
+  @Column({ type: 'timestamp' })
   searchDate: Date;
 
   @ManyToOne(() => ProductEntity)

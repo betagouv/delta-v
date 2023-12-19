@@ -1,4 +1,7 @@
-import { User } from '../../src/entities/user.entity';
+import {
+  SearchProductHistory,
+  SearchProductHistoryEntityInterface,
+} from '../../src/entities/searchProductHistory.entity';
 import { AppDataSource } from '../../src/loader/database';
 import {
   SearchProductHistoryRepository,
@@ -6,11 +9,11 @@ import {
 } from '../../src/repositories/searchProductHistory.repository';
 
 interface SearchProductHistoryRepositoryMockOptions {
-  getByAgentId?: User | null;
+  getByAgentId?: SearchProductHistory[] | SearchProductHistoryEntityInterface[] | null;
 }
 
 export const searchProductHistoryRepositoryMock = ({
-  getByAgentId = null,
+  getByAgentId,
 }: SearchProductHistoryRepositoryMockOptions): SearchProductHistoryRepositoryInterface => {
   const searchProductHistoryRepository = AppDataSource.manager.withRepository(
     SearchProductHistoryRepository,

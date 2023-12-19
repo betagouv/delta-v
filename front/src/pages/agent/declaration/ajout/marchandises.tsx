@@ -24,7 +24,7 @@ import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
-import { Product } from '@/model/product';
+import { IdRequiredProduct, Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
@@ -158,15 +158,13 @@ const Declaration = () => {
     });
   };
 
-  const onClickProduct = (product: Partial<Product>) => {
+  const onClickProduct = (product: IdRequiredProduct) => {
     setOpenSearchDownModal(false);
-    if (product.id) {
-      updateSearchProductHistory.mutate({ productId: product.id });
-      router.push({
-        pathname: '/agent/declaration/produits/recherche',
-        query: { id: product.id },
-      });
-    }
+    updateSearchProductHistory.mutate({ productId: product.id });
+    router.push({
+      pathname: '/agent/declaration/produits/recherche',
+      query: { id: product.id },
+    });
   };
 
   const onSearchAll = (searchValue: string) => {

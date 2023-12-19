@@ -3,7 +3,6 @@ import { HttpStatuses } from '../../../core/httpStatuses';
 import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
 
 import { AppDataSource } from '../../../loader/database';
-import { UserRepository } from '../../../repositories/user.repository';
 import { SearchProductHistoryRepository } from '../../../repositories/searchProductHistory.repository';
 import { service } from './service';
 import { serializer } from './serializer';
@@ -20,7 +19,6 @@ export default async (
 
     const searchProductHistory = await service({
       userId,
-      userRepository: AppDataSource.manager.withRepository(UserRepository),
       searchProductHistoryRepository: AppDataSource.manager.withRepository(
         SearchProductHistoryRepository,
       ),

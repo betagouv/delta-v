@@ -6,6 +6,7 @@ import buildTestApp from '../../../helpers/testApp.helper';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
 import { putSearchHistory } from '../../../../src/api/product/putSearchHistory';
+import { searchProductHistoryEntityFactory } from '../../../helpers/factories/searchProductHistory.factory';
 
 const testDb = testDbManager();
 
@@ -25,17 +26,49 @@ describe('put search product history integration', () => {
     await testDb.disconnect();
   });
 
-  test('should create search product history with success', async () => {
-    const { accessToken } = await prepareContextUser({ testDb });
+  test('should put new product history with success', async () => {
+    const { accessToken, user } = await prepareContextUser({ testDb });
 
     const product = productEntityFactory({});
-
     await testDb.persistProduct(product);
 
     const { status } = await request(testApp)
       .put(`/api/product/history`)
       .send({ productId: product.id })
       .set('Authorization', `Bearer ${accessToken}`);
+
+    const newSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);
+
+    expect(newSearchProductHistory).toBeDefined();
+
+    expect(status).toBe(HttpStatuses.OK);
+  });
+
+  test('should update product history with success', async () => {
+    const { accessToken, user } = await prepareContextUser({ testDb });
+
+    const product = productEntityFactory({});
+    await testDb.persistProduct(product);
+
+    const initialSearchProductHistory = searchProductHistoryEntityFactory({
+      productId: product.id,
+      userId: user.id,
+    });
+
+    const { status } = await request(testApp)
+      .put(`/api/product/history`)
+      .send({ productId: product.id })
+      .set('Authorization', `Bearer ${accessToken}`);
+
+    const updatedSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);
+
+    expect(initialSearchProductHistory).toBeDefined();
+    expect(updatedSearchProductHistory).toBeDefined();
+    expect(updatedSearchProductHistory?.userId).toEqual(initialSearchProductHistory.userId);
+    expect(updatedSearchProductHistory?.productId).toEqual(initialSearchProductHistory.productId);
+    expect(updatedSearchProductHistory?.searchDate.getTime()).toBeGreaterThan(
+      initialSearchProductHistory.searchDate.getTime(),
+    );
 
     expect(status).toBe(HttpStatuses.OK);
   });

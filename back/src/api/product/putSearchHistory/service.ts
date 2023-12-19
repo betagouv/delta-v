@@ -4,7 +4,7 @@ import { UserRepositoryInterface } from '../../../repositories/user.repository';
 import productNotFoundError from '../../common/errors/productNotFound.error';
 import userNotFoundError from '../../common/errors/userNotFound.error';
 
-export interface PutSearchProductHistoryOptions {
+export interface PutSearchProductHistoryServiceOptions {
   productId: string;
   userId: string;
   productRepository: ProductRepositoryInterface;
@@ -18,7 +18,7 @@ export const service = async ({
   productRepository,
   userRepository,
   searchProductHistoryRepository,
-}: PutSearchProductHistoryOptions): Promise<void> => {
+}: PutSearchProductHistoryServiceOptions): Promise<void> => {
   const product = await productRepository.getOneById(productId);
   if (!product) {
     throw productNotFoundError();
