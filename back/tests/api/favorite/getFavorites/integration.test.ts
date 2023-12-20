@@ -33,8 +33,10 @@ describe('getFavorite route', () => {
 
     const productId = faker.string.uuid();
     const productId2 = faker.string.uuid();
+    const productId3 = faker.string.uuid();
     const product = await prepareContextProduct({ testDb, dataProduct: { id: productId } });
     const product2 = await prepareContextProduct({ testDb, dataProduct: { id: productId2 } });
+    const product3 = await prepareContextProduct({ testDb, dataProduct: { id: productId3 } });
     await prepareContextFavorite({
       testDb,
       dataFavorite: { userId: user.id, productId: product.id },
@@ -49,5 +51,6 @@ describe('getFavorite route', () => {
 
     expect(status).toBe(HttpStatuses.OK);
     expect(body.favorites).toMatchObject([product.id, product2.id]);
+    expect(body.favorites).not.toContain(product3.id);
   });
 });

@@ -1,4 +1,3 @@
-import { Favorite } from '../../../entities/favorite.entity';
 import { FavoriteRepositoryInterface } from '../../../repositories/favorite.repository';
 
 interface FavoriteOptions {
@@ -11,17 +10,8 @@ export const service = async ({
   userId,
   productId,
   favoriteRepository,
-}: FavoriteOptions): Promise<void> => {
-  const favoriteExists = await favoriteRepository.getOneByUserIdAndProductId(productId, userId);
-
-  if (favoriteExists) {
-    throw new Error('Favorite already exists');
-  }
-
-  const favorite: Favorite = {
+}: FavoriteOptions): Promise<void> =>
+  await favoriteRepository.createOne({
     userId,
     productId,
-  };
-
-  await favoriteRepository.createOne(favorite);
-};
+  });

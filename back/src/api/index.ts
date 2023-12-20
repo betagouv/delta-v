@@ -13,6 +13,5 @@ export default Router()
   .use(feedbackRouter)
   .use(actualityRouter)
   .use(favoriteRouter)
-  .use(actualityRouter)
   .use(declaration)
   .use(authentication);

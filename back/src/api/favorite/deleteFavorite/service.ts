@@ -1,5 +1,6 @@
 import { Favorite } from '../../../entities/favorite.entity';
 import { FavoriteRepositoryInterface } from '../../../repositories/favorite.repository';
+import favoriteNotFoundError from '../../common/errors/favoriteNotFound.error';
 
 interface FavoriteOptions {
   userId: string;
@@ -15,7 +16,7 @@ export const service = async ({
   const favoriteExists = await favoriteRepository.getOneByUserIdAndProductId(productId, userId);
 
   if (!favoriteExists) {
-    throw new Error('Favorite not found');
+    throw favoriteNotFoundError();
   }
 
   const favorite: Favorite = {

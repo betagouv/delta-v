@@ -14,7 +14,6 @@ describe('putFavorite service', () => {
       userId,
       favoriteRepository,
     });
-    expect(favoriteRepository.getOneByUserIdAndProductId).toBeCalledWith(productId, userId);
     expect(favoriteRepository.createOne).toBeCalled();
   });
 });

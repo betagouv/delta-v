@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
 import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct';
 import { useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
@@ -23,6 +24,10 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
   open,
   onClickFavorite,
 }: ModalFavoritesProps) => {
+  const router = useRouter();
+  const { pathname } = router;
+  const splitPath = pathname.split('/');
+  const isInNomenclature = splitPath.includes('nomenclature');
   const [openModalDeleteFavorite, setOpenModalDeleteFavorite] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const { removeFavoriteProducts, favoriteProducts, findProduct } = useStore((state) => ({
@@ -63,7 +68,7 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
   const ageRestrictionFavoriteProducts: Product[] = [];
 
   favoriteProducts.forEach((favoriteProduct) => {
-    const product = findProduct(favoriteProduct.id);
+    const product = isInNomenclature ? favoriteProduct : findProduct(favoriteProduct.id);
     if (product) {
       flattenFavoriteProducts.push(product);
     } else if (haveAgeRestriction(favoriteProduct)) {
@@ -117,9 +122,16 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
             </>
           ) : (
             <div className="flex flex-col items-center justify-center w-full mb-5">
-              <Typography size="text-lg" color="black">
-                Vous n'avez pas encore de favoris
-              </Typography>
+              {ageRestrictionFavoriteProducts && ageRestrictionFavoriteProducts.length > 0 ? (
+                <Typography size="text-sm" color="black" textPosition="text-center">
+                  Vous n'avez que des favoris avec restriction d'âge et ils ne sont pas disponibles
+                  pour ce déclarant
+                </Typography>
+              ) : (
+                <Typography size="text-sm" color="black" textPosition="text-center">
+                  Vous n'avez pas encore de favoris
+                </Typography>
+              )}
             </div>
           )}
         </div>
