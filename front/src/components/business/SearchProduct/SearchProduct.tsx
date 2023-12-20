@@ -54,52 +54,60 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
   const showSearchHistory = !!history && (isFocusedEmpty || !!searchValue);
 
   return (
-    <div data-testid="search-element" className="items-between flex flex-col h-full">
-      <div className={`flex flex-col p-5 pb-6 bg-secondary-bg rounded-t-3xl`}>
-        <div className="text-black flex flex-row items-center gap-2 ml-5">
-          <Icon name="search" size="base" />
-          <Typography color="black" size="text-base" weight="bold">
-            Recherche
-          </Typography>
-        </div>
-        <input
-          data-testid="input-search-element"
-          placeholder={placeholder}
-          disabled={disabled}
-          enterKeyHint="search"
-          className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2 border-none"
-          onChange={(event) => {
-            setSearchValue(getStringOrUndefined(event.target.value));
-            onSearch(event.target.value);
-          }}
-          autoFocus={autoFocus}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() =>
-            setTimeout(() => {
-              setIsFocused(false);
-            }, 100)
-          }
-        />
-      </div>
-      <div className="p-5 flex-1">
-        {showSearchResults && (
-          <SearchResultProducts
-            resultSearch={resultSearch as unknown as SearchType<Product>[]}
-            search={searchValue}
-            onClickProduct={onClickProduct}
+    <>
+      <div
+        data-testid="search-element"
+        className="items-between flex flex-col h-full overflow-y-auto"
+      >
+        <div className={`flex flex-col p-5 pb-6 bg-secondary-bg rounded-t-3xl`}>
+          <div className="text-black flex flex-row items-center gap-2 ml-5">
+            <Icon name="search" size="base" />
+            <Typography color="black" size="text-base" weight="bold">
+              Recherche
+            </Typography>
+          </div>
+          <input
+            data-testid="input-search-element"
+            placeholder={placeholder}
+            disabled={disabled}
+            enterKeyHint="search"
+            className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2 border-none"
+            onChange={(event) => {
+              setSearchValue(getStringOrUndefined(event.target.value));
+              onSearch(event.target.value);
+            }}
+            autoFocus={autoFocus}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() =>
+              setTimeout(() => {
+                setIsFocused(false);
+              }, 100)
+            }
           />
-        )}
-        {showSearchResults && showSearchHistory && <div className="border-t my-8" />}
-        {showSearchHistory && (
-          <SearchHistoryProducts history={history} onClickProduct={onClickProduct} />
-        )}
+        </div>
+        <div className="p-5 flex-1">
+          {showSearchResults && (
+            <SearchResultProducts
+              resultSearch={resultSearch as unknown as SearchType<Product>[]}
+              search={searchValue}
+              onClickProduct={onClickProduct}
+            />
+          )}
+          {showSearchResults && showSearchHistory && <div className="border-t my-8" />}
+          {showSearchHistory && (
+            <SearchHistoryProducts history={history} onClickProduct={onClickProduct} />
+          )}
+        </div>
       </div>
-      <div className="my-5 self-center">
+      <div className="py-5 relative w-full">
+        <div className="-top-5 absolute h-5 w-full bg-gradient-to-t from-white" />
         {!!searchValue &&
           (resultSearch.length > 0 ? (
-            <Button onClick={() => onSearchAll(searchValue)} disabled={resultSearch.length === 0}>
-              {`Voir les ${resultSearch.length} résultats`}
-            </Button>
+            <div className="text-center">
+              <Button onClick={() => onSearchAll(searchValue)} disabled={resultSearch.length === 0}>
+                {`Voir les ${resultSearch.length} résultats`}
+              </Button>
+            </div>
           ) : (
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-6 px-4">
@@ -120,6 +128,6 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
             </div>
           ))}
       </div>
-    </div>
+    </>
   );
 };
