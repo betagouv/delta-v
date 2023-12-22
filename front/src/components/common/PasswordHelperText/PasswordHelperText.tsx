@@ -20,19 +20,30 @@ export const checkPasswordRequirements = (password: string): PasswordRequirement
   };
 };
 
+const RuleContainer: React.FC<{ successRule: boolean; children: string }> = ({
+  successRule,
+  children,
+}) => {
+  return (
+    <span
+      className={cs({
+        'text-success': successRule,
+      })}
+    >
+      {children}
+    </span>
+  );
+};
+
 export const PasswordHelperText: React.FC<{ password: string }> = ({ password }) => {
   const passwordRequirements = checkPasswordRequirements(password);
   return (
-    <>
-      <span className={cs({ 'text-success': passwordRequirements.uppercase })}>1 majuscule, </span>
-      <span className={cs({ 'text-success': passwordRequirements.lowercase })}>1 minuscule, </span>
-      <span className={cs({ 'text-success': passwordRequirements.number })}>1 chiffre, </span>
-      <span className={cs({ 'text-success': passwordRequirements.special })}>
-        1 caractère spécial,{' '}
-      </span>
-      <span className={cs({ 'text-success': passwordRequirements.length })}>
-        8 caractères minimum
-      </span>
-    </>
+    <div className="flex flex-wrap gap-x-[2px] [&>*]:whitespace-nowrap">
+      <RuleContainer successRule={passwordRequirements.uppercase}>1 majuscule,</RuleContainer>
+      <RuleContainer successRule={passwordRequirements.lowercase}>1 minuscule,</RuleContainer>
+      <RuleContainer successRule={passwordRequirements.number}>1 chiffre,</RuleContainer>
+      <RuleContainer successRule={passwordRequirements.special}>1 caractère spécial,</RuleContainer>
+      <RuleContainer successRule={passwordRequirements.length}>8 caractères minimum</RuleContainer>
+    </div>
   );
 };

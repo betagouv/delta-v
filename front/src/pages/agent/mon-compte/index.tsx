@@ -12,19 +12,20 @@ const MyAccountPage = () => {
       withPadding={false}
       meta={
         <Meta
-          title="Déclare Douanes - Mot de passe oublié"
+          title="Déclare Douanes - Mon compte"
           description="Page de demande de création d'un nouveau mot de passe"
         />
       }
     >
       <TitleHeaderAgent
-        title="Mot de passe oublié"
+        title="Mon compte"
         bgColorClass="bg-white"
-        switchWordPosition={3}
+        colorClassnameOne="text-black"
+        colorClassnameTwo="text-primary-600"
       />
       <div
         className={cs({
-          '[&>.scan-region-highlight]:hidden mb-1 flex flex-col gap-5 mt-4 px-8 pt-9': true,
+          '[&>.scan-region-highlight]:hidden mb-1 flex flex-col gap-5 mt-4 px-8 ': true,
         })}
       >
         {MY_ACCOUNT_MENU_AGENT_ITEMS.map((item) => {

@@ -71,7 +71,7 @@ export const Select: React.FC<ISelectOptions> = ({
                   'bg-secondary-200 text-secondary-400 cursor-default': disabled,
                   'border border-secondary-300 focus:ring-1 focus:ring-primary-600 focus:border-primary-600 border-solid':
                     withBorder,
-                  'border border-red-300 focus:ring-red-500 focus:border-red-500': error,
+                  'border border-red-500 focus:ring-red-500 focus:border-red-500': error,
                 }),
               )}
             >
