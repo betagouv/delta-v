@@ -15,7 +15,7 @@ import { Meta } from '@/layout/Meta';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { findProduct } from '@/utils/product.util';
+import { findProduct, haveAgeRestriction } from '@/utils/product.util';
 
 export interface FormDeclarationData {
   country?: Alpha2Code;
@@ -26,10 +26,10 @@ const Nomenclature = () => {
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
-  const { nomenclatureProducts, setFavoriteProducts } = useStore((state) => ({
+  const { nomenclatureProducts, setFavoriteProducts, favoriteProducts } = useStore((state) => ({
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
-    defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
+    favoriteProducts: state.products.appState.favoriteProducts,
   }));
 
   const onSuccess = (data: string[]) => {
@@ -68,6 +68,21 @@ const Nomenclature = () => {
     });
   };
 
+  const flattenFavoriteProducts: Product[] = [];
+  const ageRestrictionFavoriteProducts: Product[] = [];
+
+  favoriteProducts?.forEach((favoriteProduct) => {
+    const product = favoriteProduct;
+    if (product) {
+      flattenFavoriteProducts.push(product);
+    } else if (haveAgeRestriction(favoriteProduct)) {
+      ageRestrictionFavoriteProducts.push(favoriteProduct);
+    }
+  });
+
+  const withoutFavoriteProducts =
+    flattenFavoriteProducts.length === 0 && ageRestrictionFavoriteProducts.length === 0;
+
   return (
     <AgentRoute>
       <MainAgent
@@ -103,7 +118,10 @@ const Nomenclature = () => {
           <button
             type="button"
             onClick={() => setOpenFavoriteDownModal(true)}
-            className="gap-3 bg-primary-400 rounded-full px-5 py-2 text-white"
+            disabled={withoutFavoriteProducts}
+            className={`gap-3 ${
+              withoutFavoriteProducts ? 'bg-disabled-bg' : 'bg-primary-400'
+            } rounded-full px-5 py-2 text-white`}
           >
             <div className="flex flex-row items-center gap-3">
               <Typography color="white" size="text-xs">

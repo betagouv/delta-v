@@ -28,6 +28,7 @@ import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
 import { DECLARATION_STEP_PAGE } from '@/utils/const';
+import { haveAgeRestriction } from '@/utils/product.util';
 
 export interface FormDeclarationData {
   country?: Alpha2Code;
@@ -46,6 +47,7 @@ const Declaration = () => {
     meansOfTransportAndCountry,
     defaultCurrency,
     declarationAgentResponse,
+    favoriteProducts,
   } = useStore(
     (state) => ({
       setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
@@ -60,6 +62,7 @@ const Declaration = () => {
       meansOfTransportAndCountry:
         state.declaration.appState.declarationAgentRequest.meansOfTransportAndCountry,
       defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
+      favoriteProducts: state.products.appState.favoriteProducts,
     }),
     shallow,
   );
@@ -171,6 +174,25 @@ const Declaration = () => {
     });
   };
 
+  const flattenFavoriteProducts: Product[] = [];
+  const ageRestrictionFavoriteProducts: Product[] = [];
+
+  favoriteProducts?.forEach((favoriteProduct) => {
+    const product = findProduct(favoriteProduct.id);
+    if (product) {
+      flattenFavoriteProducts.push(product);
+    } else if (haveAgeRestriction(favoriteProduct)) {
+      ageRestrictionFavoriteProducts.push(favoriteProduct);
+    }
+  });
+
+  const withoutFavoriteProducts =
+    flattenFavoriteProducts.length === 0 && ageRestrictionFavoriteProducts.length === 0;
+
+  console.log(
+    '🚀 ~ file: marchandises.tsx:190 ~ Declaration ~ withoutFavoriteProducts:',
+    withoutFavoriteProducts,
+  );
   return (
     <AgentRoute>
       <DeclarationAgentSteps
@@ -201,8 +223,11 @@ const Declaration = () => {
         <div className="flex flex-row justify-center gap-3 w-full mt-5">
           <button
             type="button"
-            onClick={() => setOpenFavoriteDownModal(true)}
-            className="gap-3 bg-primary-400 rounded-full px-5 py-2 text-white"
+            onClick={withoutFavoriteProducts ? () => {} : () => setOpenFavoriteDownModal(true)}
+            disabled={withoutFavoriteProducts}
+            className={`gap-3 ${
+              withoutFavoriteProducts ? 'bg-disabled-bg' : 'bg-primary-400'
+            } rounded-full px-5 py-2 text-white`}
           >
             <div className="flex flex-row items-center gap-3">
               <Typography color="white" size="text-xs">

@@ -67,7 +67,7 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
   const flattenFavoriteProducts: Product[] = [];
   const ageRestrictionFavoriteProducts: Product[] = [];
 
-  favoriteProducts.forEach((favoriteProduct) => {
+  favoriteProducts?.forEach((favoriteProduct) => {
     const product = isInNomenclature ? favoriteProduct : findProduct(favoriteProduct.id);
     if (product) {
       flattenFavoriteProducts.push(product);
