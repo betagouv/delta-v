@@ -1,6 +1,10 @@
 import { IProcessor } from 'typeorm-fixtures-cli';
 import { faker } from '@faker-js/faker';
-import { DeclarationEntity, DeclarationStatus } from '../../src/entities/declaration.entity';
+import {
+  DeclarationEntity,
+  DeclarationStatus,
+  ProductStatus,
+} from '../../src/entities/declaration.entity';
 import { AuthorType } from '../../src/api/common/enums/author.enum';
 import { MeansOfTransport } from '../../src/api/common/enums/meansOfTransport.enum';
 
@@ -50,6 +54,12 @@ const preProcessDeclarationFixture = (fields: DeclarationEntity): Partial<Declar
         customDuty: faker.number.float({ precision: 0.01 }),
         value: faker.number.float({ precision: 0.01 }),
         vat: faker.number.float({ precision: 0.01 }),
+        status: faker.helpers.arrayElement([
+          ProductStatus.AMOUNT_PRODUCT,
+          ProductStatus.CUSTOM_PRODUCT,
+          ProductStatus.VALUE_PRODUCT,
+        ]),
+        notManagedProduct: faker.datatype.boolean(),
       },
     ],
   };

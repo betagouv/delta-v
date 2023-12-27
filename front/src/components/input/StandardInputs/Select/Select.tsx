@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
@@ -23,6 +24,7 @@ export interface ISelectOptions {
   rules?: any;
   fullWidth?: boolean;
   withBorder?: boolean;
+  withListBoxEffect?: boolean;
 }
 
 export const Select: React.FC<ISelectOptions> = ({
@@ -35,6 +37,7 @@ export const Select: React.FC<ISelectOptions> = ({
   rules,
   fullWidth,
   withBorder = false,
+  withListBoxEffect = false,
 }: ISelectOptions) => {
   const { field } = useController({
     control,
@@ -60,7 +63,7 @@ export const Select: React.FC<ISelectOptions> = ({
     >
       {({ open }) => (
         <>
-          <div className="relative mt-1">
+          <div className="relative mt-1 flex-col">
             <Listbox.Button
               data-testid="select-element"
               className={twMerge(
@@ -127,6 +130,18 @@ export const Select: React.FC<ISelectOptions> = ({
                 ))}
               </Listbox.Options>
             </Transition>
+
+            {withListBoxEffect && (
+              <motion.div
+                initial={{
+                  height: '0px',
+                }}
+                animate={{
+                  height: open ? '240px' : '0px',
+                }}
+                transition={{ duration: 0.1 }}
+              />
+            )}
           </div>
         </>
       )}

@@ -12,4 +12,6 @@ export enum ResponseCodes {
   DECLARATION_UPDATED = 'declaration-updated',
   CURRENCIES_UPDATED = 'currency-updated',
   FEEDBACK_UPDATED = 'feedback-updated',
+  FAVORITE_ADDED = 'favorite-added',
+  FAVORITE_DELETED = 'favorite-deleted',
 }

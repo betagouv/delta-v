@@ -1,4 +1,5 @@
-import { Column, Entity, Index, PrimaryColumn, Unique } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToMany, PrimaryColumn, Unique } from 'typeorm';
+import { FavoriteEntity, FavoriteEntityInterface } from './favorite.entity';
 
 export interface User {
   id: string;
@@ -8,9 +9,13 @@ export interface User {
   blocked?: boolean;
 }
 
+export interface UserEntityInterface extends User {
+  favorites?: FavoriteEntity[];
+}
+
 @Entity('user')
 @Unique(['email'])
-export default class UserEntity implements User {
+export default class UserEntity implements UserEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
 
@@ -26,4 +31,8 @@ export default class UserEntity implements User {
 
   @Column({ default: false })
   blocked?: boolean;
+
+  @OneToMany(() => FavoriteEntity, (favorite) => favorite.user)
+  @JoinColumn()
+  favorites?: FavoriteEntityInterface[];
 }

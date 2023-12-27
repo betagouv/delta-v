@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
 import { FormAddProduct } from '../FormAddProduct';
+import { FormAddProductToFavorite } from '../FormAddProductToFavorite';
 import { StepsFormProduct } from '../StepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
 import { getSchema } from './schema';
@@ -33,6 +34,7 @@ interface FormSelectProductProps {
   defaultCurrency?: string;
   defaultName?: string;
   defaultValues?: DefaultValuesUpdateProduct;
+  isAddAbleToFavorites?: boolean;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
@@ -42,6 +44,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   defaultCurrency = 'EUR',
   defaultName = '',
   defaultValues,
+  isAddAbleToFavorites = false,
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>([]);
   const [allowNotManagedProduct, setAllowNotManagedProduct] = useState<boolean>(false);
@@ -72,12 +75,14 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       value: null,
       currency: defaultCurrency,
     },
-    resolver: yupResolver(
-      getSchema({
-        amountProduct: !!currentProduct.amountProduct,
-        withName: templateRole === 'agent',
-      }),
-    ),
+    resolver: !isAddAbleToFavorites
+      ? yupResolver(
+          getSchema({
+            amountProduct: !!currentProduct.amountProduct,
+            withName: templateRole === 'agent',
+          }),
+        )
+      : undefined,
   });
 
   useEffect(() => {
@@ -137,7 +142,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         setSteps={setSteps}
         steps={steps}
       />
-      {isAddAble && (
+      {isAddAble && !isAddAbleToFavorites && (
         <FormAddProduct
           productId={currentProduct.id}
           disabled={!isAddAble}
@@ -146,6 +151,18 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           errors={errors}
           defaultCurrency={defaultCurrency}
           templateRole={templateRole}
+        />
+      )}
+      {isAddAbleToFavorites && (
+        <FormAddProductToFavorite
+          productId={currentProduct.id}
+          disabled={!isAddAble}
+          control={control}
+          register={register}
+          errors={errors}
+          defaultCurrency={defaultCurrency}
+          templateRole={templateRole}
+          isAddAble={isAddAble}
         />
       )}
     </form>

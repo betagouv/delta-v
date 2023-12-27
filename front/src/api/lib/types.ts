@@ -51,6 +51,10 @@ export type CreateFeedbackParams = {
   comment: string;
 };
 
+export type CreateFavoriteParams = {
+  productId: string;
+};
+
 export type CreateDeclarationParams = {
   declarationId: string;
   contactDetails: ContactDetails;

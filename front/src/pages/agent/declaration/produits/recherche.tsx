@@ -63,7 +63,6 @@ const SearchProduct = () => {
   };
 
   const onClickProduct = (product: Product) => {
-    console.log('🚀 ~ file: recherche.tsx:66 ~ onClickProduct ~ product:', product);
     setSelectedProduct(product);
     setOpenCategoryDownModal(true);
   };

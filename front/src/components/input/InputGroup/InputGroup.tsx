@@ -73,6 +73,7 @@ export interface IInputGroupProps {
   onTrailingIconClick?: () => void;
   onTrailingSvgIconClick?: () => void;
   onChange?: () => void;
+  withListBoxEffect?: boolean;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -105,6 +106,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   newLabel = false,
   onTrailingIconClick,
   onTrailingSvgIconClick,
+  withListBoxEffect = false,
   required,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
@@ -137,6 +139,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               rules={rules}
               fullWidth={fullWidth}
               withBorder={withBorder}
+              withListBoxEffect={withListBoxEffect}
             />
           )}
           {type === 'comboboxes' && (

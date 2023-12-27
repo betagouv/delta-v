@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import UserEntity, { User } from '../entities/user.entity';
 import { AppDataSource } from '../loader/database';
 
-export type UserRepositoryInterface = Repository<User> & {
+export type UserRepositoryInterface = Repository<UserEntity> & {
   getOneByEmail(email: string): Promise<User | null>;
   getOneById(id: string): Promise<User | null>;
   createUser(user: User): Promise<void>;
