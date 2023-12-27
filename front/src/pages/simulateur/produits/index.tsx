@@ -11,14 +11,14 @@ import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
 
 const Index = () => {
-  const { products, setProductsToDisplay } = useStore((state) => ({
+  const { products, setProductsSimulatorToDisplay } = useStore((state) => ({
     products: state.products.appState.products,
-    setProductsToDisplay: state.setProductsToDisplay,
+    setProductsSimulatorToDisplay: state.setProductsSimulatorToDisplay,
   }));
   const router = useRouter();
 
   useEffect(() => {
-    setProductsToDisplay();
+    setProductsSimulatorToDisplay();
   }, []);
 
   const onRedirectProduct = (idRedirect: string) => {

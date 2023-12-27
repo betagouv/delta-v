@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { getEmojiFlag } from 'countries-list';
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 
 export const euCountries: Alpha2Code[] = [
@@ -62,6 +63,7 @@ export type MemoizedCountry = {
 export const memoizedCountriesOptions = (
   countriesAlternatives: CountryAlternative[],
   disabledCountries: Alpha2Code[],
+  withFlag?: boolean,
 ): MemoizedCountry[] => {
   const memoizedCountries = useMemo(() => {
     const countries = getNames('fr', { select: 'official' });
@@ -70,7 +72,9 @@ export const memoizedCountriesOptions = (
     return enabledKeys.map((key) => {
       const countryAlternative = countriesAlternatives.find((country) => country.id === key);
       return {
-        value: countries[key] ?? '',
+        value: withFlag
+          ? `${countries[key]} ${getEmojiFlag(key).toString()} `
+          : countries[key] ?? '',
         id: key,
         alternatives: countryAlternative?.alternatives ?? [],
       };

@@ -15,6 +15,7 @@ type IMainAgentProps = {
   linkSearch?: string;
   withTitle?: boolean;
   linkButton?: string;
+  withPadding?: boolean;
 };
 
 const MainAgent = ({
@@ -24,6 +25,7 @@ const MainAgent = ({
   withLogo = false,
   titleHeader,
   withTitle = false,
+  withPadding = false,
   linkButton,
 }: IMainAgentProps) => {
   return (
@@ -39,7 +41,7 @@ const MainAgent = ({
             <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />
           </div>
         )}
-        {children}
+        {withPadding ? <div className="px-4">{children}</div> : <div>{children}</div>}
       </div>
     </div>
   );
