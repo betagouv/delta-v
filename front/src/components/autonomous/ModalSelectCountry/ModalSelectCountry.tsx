@@ -52,9 +52,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = () => {
 
   register('country', {
     onChange: (e: any) => {
-      const country = e.target.value
-        ? `${countries[e.target.value]} ${getEmojiFlag(e.target.value).toString()}`
-        : 'France 🇫🇷';
+      const country = `${countries[e.target.value]} ${getEmojiFlag(e.target.value).toString()}`;
       setSelectedCountry(country);
       setCountryForProductsNomenclature(e.target.value);
       setProductsNomenclatureToDisplay(e.target.value);
