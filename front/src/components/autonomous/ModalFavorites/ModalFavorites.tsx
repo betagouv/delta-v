@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
 
 import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct';
 import { useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
@@ -17,17 +16,15 @@ interface ModalFavoritesProps {
   onClose: () => void;
   open: boolean;
   onClickFavorite: (product: Product) => void;
+  isInNomenclature?: boolean;
 }
 
 export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
   onClose,
   open,
   onClickFavorite,
+  isInNomenclature = false,
 }: ModalFavoritesProps) => {
-  const router = useRouter();
-  const { pathname } = router;
-  const splitPath = pathname.split('/');
-  const isInNomenclature = splitPath.includes('nomenclature');
   const [openModalDeleteFavorite, setOpenModalDeleteFavorite] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const { removeFavoriteProducts, favoriteProducts, findProduct } = useStore((state) => ({

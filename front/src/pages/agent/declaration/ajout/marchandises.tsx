@@ -189,10 +189,6 @@ const Declaration = () => {
   const withoutFavoriteProducts =
     flattenFavoriteProducts.length === 0 && ageRestrictionFavoriteProducts.length === 0;
 
-  console.log(
-    '🚀 ~ file: marchandises.tsx:190 ~ Declaration ~ withoutFavoriteProducts:',
-    withoutFavoriteProducts,
-  );
   return (
     <AgentRoute>
       <DeclarationAgentSteps

@@ -1,4 +1,3 @@
-import { Favorite } from '../../../entities/favorite.entity';
 import { FavoriteRepositoryInterface } from '../../../repositories/favorite.repository';
 import favoriteNotFoundError from '../../common/errors/favoriteNotFound.error';
 
@@ -19,10 +18,8 @@ export const service = async ({
     throw favoriteNotFoundError();
   }
 
-  const favorite: Favorite = {
+  await favoriteRepository.deleteOne({
     userId,
     productId,
-  };
-
-  await favoriteRepository.deleteOne(favorite);
+  });
 };

@@ -161,6 +161,7 @@ const Nomenclature = () => {
           open={openFavoriteDownModal}
           onClose={() => setOpenFavoriteDownModal(false)}
           onClickFavorite={onClickProduct}
+          isInNomenclature
         />
       </MainAgent>
     </AgentRoute>
