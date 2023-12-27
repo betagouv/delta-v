@@ -1,16 +1,13 @@
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction, Request } from 'express';
 import { HttpStatuses } from '../../../core/httpStatuses';
-import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
 
 import { AppDataSource } from '../../../loader/database';
 import { SearchProductHistoryRepository } from '../../../repositories/searchProductHistory.repository';
 import { service } from './service';
 import { serializer } from './serializer';
 
-type GetSearchProductHistory = ValidatedRequest<object>;
-
 export default async (
-  req: GetSearchProductHistory,
+  req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {

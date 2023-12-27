@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { SearchProductHistoryEntityInterface } from '../../../entities/searchProductHistory.entity';
 import { SerializedProduct } from '../../declaration/common/serializer/declarationSerializer';
 
@@ -14,7 +15,7 @@ export const serializer = (
     productsHistory: history.map((search) => {
       return {
         id: search.productId,
-        name: search.product.name,
+        name: search.product!.name,
       };
     }),
   };

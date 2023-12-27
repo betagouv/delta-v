@@ -9,8 +9,8 @@ export interface SearchProductHistory {
 }
 
 export interface SearchProductHistoryEntityInterface extends SearchProductHistory {
-  product: Product;
-  user: User;
+  product?: Product;
+  user?: User;
 }
 
 @Entity('search_product_history')

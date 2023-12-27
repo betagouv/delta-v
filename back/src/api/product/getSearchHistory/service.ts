@@ -10,8 +10,5 @@ export const service = async ({
   userId,
   searchProductHistoryRepository,
 }: GetSearchProductHistoryServiceOptions): Promise<SearchProductHistoryEntityInterface[]> => {
-  return (await searchProductHistoryRepository.getByAgentId(
-    userId,
-    true,
-  )) as SearchProductHistoryEntityInterface[];
+  return searchProductHistoryRepository.getByAgentId(userId, true);
 };

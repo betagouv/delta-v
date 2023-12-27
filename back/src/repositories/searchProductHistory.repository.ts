@@ -12,7 +12,7 @@ export type SearchProductHistoryRepositoryInterface = {
   getByAgentId(
     agentId: string,
     withProducts?: boolean,
-  ): Promise<SearchProductHistory[] | SearchProductHistoryEntityInterface[]>;
+  ): Promise<SearchProductHistoryEntityInterface[]>;
   removeOld(userId: string): Promise<void>;
 } & Repository<SearchProductHistoryEntity>;
 
