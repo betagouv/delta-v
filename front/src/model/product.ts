@@ -22,10 +22,7 @@ export interface Product {
   related?: string;
 }
 
-export interface HistoryProduct {
-  name: string;
-  category: ProductType;
-}
+export type IdRequiredProduct = Partial<Product> & Pick<Product, 'id'>;
 
 export enum AmountProduct {
   tobaccoCategory = 'tobaccoCategory',

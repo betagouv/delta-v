@@ -1,0 +1,21 @@
+meta {
+  name: putSearchHistory
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{base_url}}/product/history
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYmEyZTg1Yy00M2U2LTQ3YzItYTA4ZS1jNTUxNjQwYzE3YzEiLCJlbWFpbCI6ImFudGhvbnkuaG9hbmdAZG91YW5lLmZpbmFuY2VzLmdvdXYuZnIiLCJpc0FnZW50Ijp0cnVlLCJpYXQiOjE3MDI0NzUwOTYsImV4cCI6MTcwMjQ3Njg5Nn0.o1ogpHjoU12xUNJ21w0R9WEj2YQcKGWmaXpc0cnPa_E
+}
+
+body:json {
+  {
+    "productId": "7efa75b6-5667-4fe4-a866-88d9e243c0bd"
+  }
+}

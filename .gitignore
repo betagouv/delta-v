@@ -17,3 +17,5 @@ build/
 !.vscode/settings.json
 
 .env
+
+.DS_Store

@@ -6,13 +6,15 @@ import {
 } from '../../src/repositories/product.repository';
 
 interface IProductMockOptions {
-  getAll?: Product[];
+  getAll?: Product[] | null;
   getManyByIds?: Product[];
+  getOneById?: Product | null;
 }
 
 export const productRepositoryMock = (options: IProductMockOptions): ProductRepositoryInterface => {
   const productRepository = AppDataSource.manager.withRepository(ProductRepository);
   productRepository.getAll = jest.fn().mockResolvedValue(options.getAll);
   productRepository.getManyByIds = jest.fn().mockResolvedValue(options.getManyByIds);
+  productRepository.getOneById = jest.fn().mockResolvedValue(options.getOneById);
   return productRepository;
 };

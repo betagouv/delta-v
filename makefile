@@ -155,6 +155,13 @@ db-migrate-run: ## run migrations for dev database
 db-migrate-run-e2e: ## run migrations for e2e database
 	$(DOCKER_COMPOSE_RUN) --rm $(TEST_BACK_CONTAINER) yarn migration:run
 
+.PHONY: db-revert-run
+db-revert-run: ## revert migrations for dev database
+	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) yarn migration:revert
+.PHONY: db-revert-run-e2e
+db-revert-run-e2e: ## revert migrations for e2e database
+	$(DOCKER_COMPOSE_RUN) --rm $(TEST_BACK_CONTAINER) yarn migration:revert
+
 .PHONY: db-fixtures-load
 db-fixtures-load: ## load fixtures
 	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) yarn fixtures:load

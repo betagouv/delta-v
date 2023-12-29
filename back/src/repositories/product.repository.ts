@@ -5,6 +5,7 @@ import { AppDataSource } from '../loader/database';
 export type ProductRepositoryInterface = {
   getAll(): Promise<Product[]>;
   getManyByIds(ids: string[]): Product[] | Promise<Product[]>;
+  getOneById(id: string): Promise<Product | null>;
 } & TreeRepository<ProductEntity>;
 
 export const ProductRepository: ProductRepositoryInterface = AppDataSource.getTreeRepository(
@@ -23,5 +24,8 @@ export const ProductRepository: ProductRepositoryInterface = AppDataSource.getTr
         ids,
       })
       .getMany();
+  },
+  async getOneById(id: string): Promise<Product | null> {
+    return await this.createQueryBuilder('product').where('product.id = :id', { id }).getOne();
   },
 });

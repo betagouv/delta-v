@@ -2,14 +2,14 @@ import React from 'react';
 
 import { SearchProduct } from '@/components/business/SearchProduct';
 import DownModal from '@/components/common/DownModal';
-import { Product } from '@/model/product';
+import { IdRequiredProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
 
 interface ModalSearchProductProps {
   open: boolean;
   onClose?: () => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: Product) => void;
+  onClickProduct?: (product: IdRequiredProduct) => void;
 }
 
 export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({
@@ -25,7 +25,7 @@ export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({
   return (
     <>
       <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
-        <div className="flex h-[calc(100vh-50px)] flex-1 flex-col gap-6 w-full">
+        <div className="flex h-[calc(100vh-50px)] flex-1 flex-col w-full">
           <SearchProduct
             onSearch={searchProducts}
             autoFocus

@@ -55,7 +55,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
         </Transition.Child>
         <div
           className={classNames({
-            'flex w-full text-center': true,
+            'flex w-full text-center place-content-center': true,
             'h-full': fixedHeight,
             'h-auto': !fixedHeight,
           })}
