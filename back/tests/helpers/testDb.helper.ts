@@ -39,16 +39,11 @@ export interface ITestDbManager {
 const ENTITIES = [
   SearchProductHistoryEntity,
   DeclarationEntity,
-
   ProductEntity,
-
   CurrencyEntity,
-
   UserEntity,
-
   NewsEntity,
   FavoriteEntity,
-  ,
 ];
 
 export const testDbManager = (): ITestDbManager => {
