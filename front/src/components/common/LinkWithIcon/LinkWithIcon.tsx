@@ -14,6 +14,8 @@ interface LinkWithIconProps {
   name: string;
   svgName: SvgNames;
   withBgColor?: boolean;
+  withBorder?: boolean;
+  withFullRound?: boolean;
   disabled?: boolean;
 }
 
@@ -23,6 +25,8 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
   name,
   svgName,
   withBgColor,
+  withBorder = true,
+  withFullRound,
   disabled,
 }: LinkWithIconProps) => {
   return (
@@ -31,9 +35,11 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
         <NextLink href={href}>
           <div
             className={classNames({
-              'border border-secondary-200 py-4 px-5 rounded-md flex flex-row items-center justify-between h-14 cursor-pointer':
+              'py-4 px-5 rounded-md flex flex-row items-center justify-between h-14 cursor-pointer':
                 true,
               'bg-primary-400': withBgColor,
+              'border border-secondary-200': withBorder,
+              'rounded-full': withFullRound,
             })}
           >
             <div className="flex flex-row gap-4 items-center">
@@ -54,6 +60,7 @@ export const LinkWithIcon: React.FC<LinkWithIconProps> = ({
               'border border-secondary-500 py-4 px-5 rounded-md flex flex-row items-center justify-between h-14 cursor-pointer':
                 true,
               'bg-primary-400': withBgColor,
+              'rounded-full': withFullRound,
               'bg-disabled-bg border-none opacity-40 cursor-default': disabled,
             }),
           )}

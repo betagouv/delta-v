@@ -8,6 +8,7 @@ export interface TitleAgentProps {
   colorClassnameOne?: string;
   colorClassnameTwo?: string;
   textPosition?: 'text-left' | 'text-center' | 'text-right';
+  size?: 'text-xl' | 'text-2xl' | 'text-3xl';
 }
 
 export const splitTitle = (item: string): string[] => {
@@ -26,13 +27,14 @@ export const TitleAgent: React.FC<TitleAgentProps> = ({
   colorClassnameOne = 'text-primary-600',
   colorClassnameTwo = 'text-black',
   textPosition = 'text-center',
+  size = 'text-xl',
 }: TitleAgentProps) => {
   const titleSplit = title.split(' ');
   const firstPart = titleSplit.slice(0, switchWordPosition).join(' ');
   const secondPart = titleSplit.slice(switchWordPosition).join(' ');
 
   return (
-    <Typography weight="bold" variant="h1" tag="h2" size="text-xl" textPosition={textPosition}>
+    <Typography weight="bold" variant="h1" tag="h2" size={size} textPosition={textPosition}>
       <span className={colorClassnameOne}>{firstPart}</span>
       &nbsp;
       <span className={colorClassnameTwo}>{secondPart}</span>

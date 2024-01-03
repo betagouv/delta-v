@@ -16,8 +16,10 @@ import { Constants } from '@/utils/enums';
 
 const QuittancePage = () => {
   const router = useRouter();
+
+  const { search } = router.query;
   const [page, setPage] = useState<number>(0);
-  const [counter, setCounter] = useState<number>(0);
+  const [counter, setCounter] = useState<number>(search ? 1 : 0);
   const [declarations, setDeclarations] = useState<DeclarationResponse[]>([]);
   const [openFilterBar, setOpenFilterBar] = useState(false);
 
@@ -50,7 +52,7 @@ const QuittancePage = () => {
   };
 
   const [queryData, setQueryData] = useState<UseDeclarationParams>({
-    search: null,
+    search: search as string | null,
     searchPublicId: null,
     limit: Constants.MINI_TABLE_LIMIT,
     offset: page * Constants.MINI_TABLE_LIMIT,
@@ -122,6 +124,7 @@ const QuittancePage = () => {
                   withMeanOfTransportFilter
                   withStatusFilter
                   filtersCount={counter}
+                  defaultSearchValue={search as string}
                 />
               </div>
               <div className="flex flex-col gap-2.5 md:items-center">

@@ -144,6 +144,13 @@ export const getTruncate = (truncate?: boolean): string => {
   return '';
 };
 
+export const getNoWrap = (noWrap?: boolean): string => {
+  if (noWrap) {
+    return 'whitespace-nowrap';
+  }
+  return '';
+};
+
 export const getTextTransform = (transform?: Transform): string => {
   if (transform === 'sentence-case') {
     return 'first-letter:uppercase';

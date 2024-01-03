@@ -9,6 +9,7 @@ import {
   getColor,
   getFontWeight,
   getIncreasedTextSize,
+  getNoWrap,
   getTextTransform,
   getTruncate,
   TextSize,
@@ -47,6 +48,7 @@ export interface ITypographyProps {
   activeColor?: Color;
   textPosition?: 'text-left' | 'text-center' | 'text-right';
   truncate?: boolean;
+  noWrap?: boolean;
   onClick?: () => void;
 }
 
@@ -65,6 +67,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   textPosition,
   truncate = false,
   transform,
+  noWrap = false,
   onClick,
 }) => {
   let usedVariant = variant;
@@ -86,6 +89,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     [`${textPosition}`]: true,
     [getTruncate(truncate)]: truncate,
     [getTextTransform(transform)]: transform,
+    [getNoWrap(noWrap)]: noWrap,
   });
   const CustomTag = tag ?? 'span';
 

@@ -161,6 +161,7 @@ export type SvgNames =
   | 'lock'
   | 'logo'
   | 'logoAgent'
+  | 'titleHeaderAgent'
   | 'logoFrenchRepublic'
   | 'logoFrenchDouane'
   | 'logoDouane'

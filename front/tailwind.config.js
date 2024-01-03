@@ -30,6 +30,9 @@ module.exports = {
           bg: '#D9D9D9',
           text: '#929292',
         },
+        navbar: {
+          bg: '#e8edff',
+        },
         defaultText: '#161616',
         lightBlue: '#E3E3FD',
         cancel: colors.red,

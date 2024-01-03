@@ -25,6 +25,7 @@ export type FilterBarProps = {
   withMeanOfTransportFilter?: boolean;
   withStatusFilter?: boolean;
   withNewsTagsFilter?: boolean;
+  defaultSearchValue?: string;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
@@ -47,6 +48,7 @@ export const FilterBar = ({
   withMeanOfTransportFilter = false,
   withStatusFilter = false,
   withNewsTagsFilter = false,
+  defaultSearchValue,
   onValidateFilter,
   open,
   setOpen,
@@ -58,7 +60,7 @@ export const FilterBar = ({
       newsTags: [],
       startDate: null,
       endDate: null,
-      search: null,
+      search: defaultSearchValue ?? null,
     },
   });
 
