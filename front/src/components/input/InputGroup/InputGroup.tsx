@@ -72,7 +72,6 @@ export interface IInputGroupProps {
   newLabel?: boolean;
   onTrailingIconClick?: () => void;
   onTrailingSvgIconClick?: () => void;
-  onChange?: () => void;
   withListBoxEffect?: boolean;
 }
 
@@ -201,7 +200,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
             <div
               className={classNames({
                 'bg-white rounded-full mt-2 flex h-10 gap-5 px-5 w-fit': true,
-                'border border-error': error,
+                'border border-error': !!error,
               })}
             >
               <Radio
@@ -260,7 +259,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
       {helperText && (
         <div data-testid="helper-element" className="flex pl-2 pt-1">
           <span className="pl-1" id="input-error">
-            <Typography size="text-2xs" color="light-gray">
+            <Typography size="text-3xs" color="light-gray">
               {helperText}
             </Typography>
           </span>
@@ -269,7 +268,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
       {error && (
         <div data-testid="error-element" className="flex pl-2 pt-1">
           <span className="px-3 flex mb-1.5" id="input-error">
-            <Typography size="text-2xs" color="error">
+            <Typography size="text-3xs" color="error">
               {error}
             </Typography>
           </span>
