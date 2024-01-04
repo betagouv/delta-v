@@ -12,6 +12,9 @@ export interface BlockHeaderAgentProps {
   searchValue: string;
 }
 
+const ARGUS_URL = 'https://pro.largus.fr/cote/';
+const RITA_URL = 'https://www.douane.gouv.fr/rita-encyclopedie/public/accueil/init.action';
+
 export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
   onSearchAll,
   onChangeSearch,
@@ -64,7 +67,7 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
               </Typography>
             </div>
             <div className="flex flex-row items-center gap-[10px]">
-              <NextLink href="/" target="_blank">
+              <NextLink href={RITA_URL} target="_blank">
                 <div
                   className={classNames({
                     'py-1 px-4 rounded-full bg-transparent inline-flex items-center justify-between cursor-pointer border border-primary-600 text-primary-600':
@@ -81,7 +84,7 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
                   </div>
                 </div>
               </NextLink>
-              <NextLink href="/" target="_blank">
+              <NextLink href={ARGUS_URL} target="_blank">
                 <div
                   className={classNames({
                     'py-1 px-4 rounded-full bg-transparent inline-flex items-center justify-between cursor-pointer border border-primary-600 text-primary-600':
@@ -94,24 +97,6 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
                     </div>
                     <Typography tag="div" size="text-2xs">
                       Argus
-                    </Typography>
-                  </div>
-                </div>
-              </NextLink>
-              <NextLink href="/" target="_blank">
-                <div
-                  className={classNames({
-                    'py-1 px-4 rounded-full bg-transparent inline-flex items-center justify-between cursor-pointer border border-primary-600 text-primary-600':
-                      true,
-                  })}
-                >
-                  <div className="flex flex-row gap-3 items-center">
-                    <div className="w-3 h-3 flex items-center justify-items-center text-primary-600">
-                      <Icon name="picto-export" />
-                    </div>
-                    <Typography tag="div" size="text-2xs">
-                      {' '}
-                      Garbo
                     </Typography>
                   </div>
                 </div>
