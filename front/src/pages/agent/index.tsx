@@ -1,14 +1,21 @@
-import useResponsive from '@/api/hooks/useResponsive';
+import React from 'react';
+
+import { useMediaQuery } from 'react-responsive';
+
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { Responsive } from '@/styles/responsive';
 import { HomepageAgentDesktop } from '@/templates/HomepageAgentDesktop';
 import { HomepageAgentMobile } from '@/templates/HomepageAgentMobile';
 
 const Index = () => {
-  const windowSize = useResponsive(window);
-  const isMobile = windowSize.width ? windowSize.width < Responsive.tablet : false;
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-width: 1121px)',
+  });
 
-  return <AgentRoute>{isMobile ? <HomepageAgentMobile /> : <HomepageAgentDesktop />}</AgentRoute>;
+  return (
+    <AgentRoute>
+      {isDesktopOrLaptop ? <HomepageAgentDesktop /> : <HomepageAgentMobile />}
+    </AgentRoute>
+  );
 };
 
 export default Index;
