@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import request from 'supertest';
+import { faker } from '@faker-js/faker';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import buildTestApp from '../../../helpers/testApp.helper';
@@ -9,6 +10,8 @@ import { putSearchHistory } from '../../../../src/api/product/putSearchHistory';
 import { searchProductHistoryEntityFactory } from '../../../helpers/factories/searchProductHistory.factory';
 
 const testDb = testDbManager();
+
+const searchValue = faker.helpers.maybe(() => faker.commerce.product());
 
 describe('put search product history integration', () => {
   let testApp: Express;
@@ -28,13 +31,15 @@ describe('put search product history integration', () => {
 
   test('should put new product history with success', async () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
-
     const product = productEntityFactory({});
     await testDb.persistProduct(product);
 
     const { status } = await request(testApp)
       .put(`/api/product/history`)
-      .send({ productId: product.id })
+      .send({
+        productId: product.id,
+        searchValue,
+      })
       .set('Authorization', `Bearer ${accessToken}`);
 
     const newSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);
@@ -57,7 +62,7 @@ describe('put search product history integration', () => {
 
     const { status } = await request(testApp)
       .put(`/api/product/history`)
-      .send({ productId: product.id })
+      .send({ productId: product.id, searchValue })
       .set('Authorization', `Bearer ${accessToken}`);
 
     const updatedSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);

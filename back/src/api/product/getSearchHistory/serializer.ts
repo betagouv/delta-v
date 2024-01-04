@@ -2,7 +2,9 @@
 import { SearchProductHistoryEntityInterface } from '../../../entities/searchProductHistory.entity';
 import { SerializedProduct } from '../../declaration/common/serializer/declarationSerializer';
 
-export type SearchProductHistoryItem = Pick<SerializedProduct, 'id' | 'name'>;
+export type SearchProductHistoryItem = Pick<SerializedProduct, 'id' | 'name'> & {
+  searchValue?: string;
+};
 
 export interface SerializedGetSearchProductHistory {
   productsHistory: SearchProductHistoryItem[];
@@ -16,6 +18,7 @@ export const serializer = (
       return {
         id: search.productId,
         name: search.product!.name,
+        searchValue: search.searchValue,
       };
     }),
   };

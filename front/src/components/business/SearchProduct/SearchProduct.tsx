@@ -16,7 +16,7 @@ interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: IdRequiredProduct) => void;
+  onClickProduct?: (product: IdRequiredProduct, search?: string) => void;
   placeholder?: string;
   withSearchIcon?: boolean;
   autoFocus?: boolean;
@@ -90,7 +90,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
             <SearchResultProducts
               resultSearch={resultSearch as unknown as SearchType<Product>[]}
               search={searchValue}
-              onClickProduct={onClickProduct}
+              onClickProduct={(product) => onClickProduct(product, searchValue)}
             />
           )}
           {showSearchResults && showSearchHistory && <div className="border-t my-8" />}

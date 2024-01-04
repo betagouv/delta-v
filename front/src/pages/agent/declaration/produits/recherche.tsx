@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -32,9 +33,18 @@ const SearchProduct = () => {
     shallow,
   );
 
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
+
   const router = useRouter();
 
-  const { id, search } = router.query;
+  const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
+    router.query;
+
+  let initialProduct: Product | undefined;
+
+  if (selectedId) {
+    initialProduct = findProduct(selectedId);
+  }
 
   const productsThatMatch: Product[] = [];
 
@@ -43,8 +53,12 @@ const SearchProduct = () => {
   } else {
     searchProducts((search as string) ?? '').map((product) => productsThatMatch.push(product));
   }
-  const [selectedProduct, setSelectedProduct] = useState<Product>();
-  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product>(
+    (initialProduct as Product) ?? undefined,
+  );
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(
+    !!initialProduct ?? false,
+  );
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
@@ -65,6 +79,7 @@ const SearchProduct = () => {
   const onClickProduct = (product: Product) => {
     setSelectedProduct(product);
     setOpenCategoryDownModal(true);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue: search });
   };
 
   return (

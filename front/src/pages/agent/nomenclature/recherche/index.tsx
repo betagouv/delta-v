@@ -30,7 +30,14 @@ const SearchProduct = () => {
 
   const router = useRouter();
 
-  const { id, search } = router.query;
+  const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
+    router.query;
+
+  let initialProduct: Product | undefined;
+
+  if (selectedId) {
+    initialProduct = findProduct(products, selectedId);
+  }
 
   const productsThatMatch: Product[] = [];
 
@@ -41,8 +48,12 @@ const SearchProduct = () => {
       productsThatMatch.push(product),
     );
   }
-  const [selectedProduct, setSelectedProduct] = useState<Product>();
-  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product>(
+    (initialProduct as Product) ?? undefined,
+  );
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(
+    !!initialProduct ?? false,
+  );
 
   const onClickProduct = (product: Product) => {
     setSelectedProduct(product);

@@ -5,6 +5,7 @@ import UserEntity, { User } from './user.entity';
 export interface SearchProductHistory {
   productId: string;
   userId: string;
+  searchValue?: string;
   searchDate: Date;
 }
 
@@ -20,6 +21,9 @@ export class SearchProductHistoryEntity implements SearchProductHistory {
 
   @PrimaryColumn({ type: 'uuid' })
   userId: string;
+
+  @Column({ type: 'text', nullable: true })
+  searchValue: string;
 
   @Column({ type: 'timestamp' })
   searchDate: Date;

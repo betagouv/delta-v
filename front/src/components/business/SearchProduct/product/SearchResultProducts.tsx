@@ -13,7 +13,6 @@ interface SearchResultProductsProps {
 
 export const renderMatchedWithSearch = (product: SearchType<Product>, search: string) => {
   if (!product.rankedValue.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
-    // return <span className="text-xs text-black">{product.rankedValue}</span>;
     return (
       <Typography color="black" size="text-base">
         {product.rankedValue}
