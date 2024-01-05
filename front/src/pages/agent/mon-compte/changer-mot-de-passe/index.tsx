@@ -6,10 +6,10 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useChangePasswordMutation } from '@/api/hooks/useAPIAuth';
+import { ConfirmPassword, FormFieldData } from '@/components/autonomous/ConfirmPassword';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
-import { PasswordHelperText } from '@/components/common/PasswordHelperText';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -18,7 +18,6 @@ import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAgent } from '@/utils/const';
 import { getErrorFields } from '@/utils/errorFields';
 import { passwordRegex } from '@/utils/regex';
-import { getStringOrUndefined } from '@/utils/string';
 
 export interface ChangePasswordFormData {
   oldPassword: string;
@@ -42,13 +41,7 @@ const schema = yup.object({
 });
 
 const ChangePasswordPage = () => {
-  const {
-    watch,
-    handleSubmit,
-    formState: { isDirty, isValid, errors },
-    register,
-    getValues,
-  } = useForm<ChangePasswordFormData>({
+  const reactForm = useForm<ChangePasswordFormData>({
     defaultValues: {
       oldPassword: undefined,
       password: undefined,
@@ -57,14 +50,20 @@ const ChangePasswordPage = () => {
     resolver: yupResolver(schema),
   });
 
+  const {
+    watch,
+    handleSubmit,
+    formState: { isDirty, isValid, errors },
+    register,
+    getValues,
+  } = reactForm;
+
   const router = useRouter();
 
   const [isCurrentStepOne, setIsCurrentStepOne] = useState<boolean>(true);
   const onOldPasswordSubmit = () => {
     setIsCurrentStepOne(false);
   };
-
-  const password = getStringOrUndefined(watch('password'));
 
   const changePasswordMutation = useChangePasswordMutation({
     onSuccess: () => {
@@ -84,11 +83,7 @@ const ChangePasswordPage = () => {
   };
 
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [submitClickCount, setSubmitClickCount] = useState(0);
-  const [showPasswordError, setShowPasswordError] = useState(false);
-  const [showConfirmPasswordError, setShowConfirmPasswordError] = useState(false);
   const [submittedPassword, setSubmittedPassword] = useState<string | undefined>(undefined);
   const [submittedConfirmPassword, setSubmittedConfirmPassword] = useState<string | undefined>(
     undefined,
@@ -103,23 +98,21 @@ const ChangePasswordPage = () => {
     setSubmitClickCount(submitClickCount + 1);
     setSubmittedPassword(getValues('password'));
     setSubmittedConfirmPassword(getValues('confirmPassword'));
-    setShowPasswordError(true);
-    setShowConfirmPasswordError(true);
   };
 
-  const passwordError = showPasswordError && errors.password ? '' : undefined;
+  const passwordFormFieldData: FormFieldData = {
+    register: register('password'),
+    error: errors.password,
+    watchedValue: watch('password'),
+    submittedValue: submittedPassword,
+  };
 
-  const confirmPasswordError = showConfirmPasswordError
-    ? errors?.confirmPassword?.message
-    : undefined;
-
-  if (showPasswordError && watch('password') !== submittedPassword) {
-    setShowPasswordError(false);
-  }
-
-  if (showConfirmPasswordError && watch('confirmPassword') !== submittedConfirmPassword) {
-    setShowConfirmPasswordError(false);
-  }
+  const confirmPasswordFormFieldData: FormFieldData = {
+    register: register('confirmPassword'),
+    error: errors.confirmPassword,
+    watchedValue: watch('confirmPassword'),
+    submittedValue: submittedConfirmPassword,
+  };
 
   return (
     <AgentRoute>
@@ -183,43 +176,11 @@ const ChangePasswordPage = () => {
             )}
             {!isCurrentStepOne && (
               <>
-                <div className="flex flex-col gap-1 pb-12">
-                  <InputGroup
-                    label="Mon nouveau mot de passe"
-                    type={passwordVisible ? 'text' : 'password'}
-                    name="password"
-                    fullWidth={true}
-                    placeholder="Nouveau mot de passe"
-                    register={register('password')}
-                    error={passwordError}
-                    trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
-                    onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
-                    withBorder
-                    required
-                  />
-                  <div className="ml-[20px] leading-none">
-                    <Typography color={showPasswordError ? 'error' : 'light-gray'} size="text-3xs">
-                      <PasswordHelperText password={password ?? ''} />
-                    </Typography>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <InputGroup
-                    label="Confirmer le mot de passe"
-                    type={confirmPasswordVisible ? 'text' : 'password'}
-                    name="confirmPassword"
-                    fullWidth={true}
-                    placeholder="Nouveau mot de passe"
-                    register={register('confirmPassword')}
-                    error={confirmPasswordError}
-                    trailingSvgIcon={!confirmPasswordVisible ? 'visibilityOff' : 'visibilityOn'}
-                    onTrailingSvgIconClick={() =>
-                      setConfirmPasswordVisible(!confirmPasswordVisible)
-                    }
-                    withBorder
-                    required
-                  />
-                </div>
+                <ConfirmPassword
+                  password={passwordFormFieldData}
+                  confirmPassword={confirmPasswordFormFieldData}
+                  submitCount={submitClickCount}
+                />
                 <div className="pt-10 pb-2 flex">
                   <Typography color="error" size="text-2xs">
                     {getErrorFields('newPassword', apiError)}

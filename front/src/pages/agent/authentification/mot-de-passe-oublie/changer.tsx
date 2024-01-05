@@ -6,17 +6,16 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useResetPasswordMutation } from '@/api/hooks/useAPIAuth';
+import { ConfirmPassword, FormFieldData } from '@/components/autonomous/ConfirmPassword';
 import { ApiError } from '@/components/common/ApiError';
 import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
-import { PasswordHelperText } from '@/components/common/PasswordHelperText/PasswordHelperText';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
-import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';
-import { getErrorFields } from '@/utils/errorFields';
+import { passwordRegex } from '@/utils/regex';
 
 export interface FormForgetPasswordData {
   password: string;
@@ -24,8 +23,17 @@ export interface FormForgetPasswordData {
 }
 
 const schema = yup.object({
-  password: yup.string().required('Le mot de passe est requis'),
-  confirmPassword: yup.string().required('Confirmez votre mot de passe'),
+  password: yup
+    .string()
+    .matches(
+      passwordRegex,
+      'Le mot de passe doit contenir 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial et 8 caractères minimum',
+    )
+    .required('Le mot de passe est requis'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Les deux mots de passe doivent être identiques')
+    .required('Le mot de passe est requis'),
 });
 
 const ResetPasswordPage = () => {
@@ -34,8 +42,10 @@ const ResetPasswordPage = () => {
   const {
     handleSubmit,
     register,
+    watch,
+    getValues,
     formState: { errors },
-    formState: { isDirty, isValid },
+    formState: { isValid },
   } = useForm<FormForgetPasswordData>({
     defaultValues: {
       password: undefined,
@@ -44,20 +54,11 @@ const ResetPasswordPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
-
-  register('password', {
-    onChange: (event: any) => {
-      setPassword(event.target.value);
-    },
-  });
-
-  register('confirmPassword', {
-    onChange: (event: any) => {
-      setConfirmPassword(event.target.value);
-    },
-  });
+  const [submittedPassword, setSubmittedPassword] = useState<string | undefined>(undefined);
+  const [submittedConfirmPassword, setSubmittedConfirmPassword] = useState<string | undefined>(
+    undefined,
+  );
+  const [submitClickCount, setSubmitClickCount] = useState(0);
 
   const resetPasswordMutation = useResetPasswordMutation({
     onSuccess: () => {
@@ -77,9 +78,25 @@ const ResetPasswordPage = () => {
       });
     }
   };
+  const passwordFormFieldData: FormFieldData = {
+    register: register('password'),
+    error: errors.password,
+    watchedValue: watch('password'),
+    submittedValue: submittedPassword,
+  };
 
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const confirmPasswordFormFieldData: FormFieldData = {
+    register: register('confirmPassword'),
+    error: errors.confirmPassword,
+    watchedValue: watch('confirmPassword'),
+    submittedValue: submittedConfirmPassword,
+  };
+
+  const handleSubmitClick = () => {
+    setSubmitClickCount(submitClickCount + 1);
+    setSubmittedPassword(getValues('password'));
+    setSubmittedConfirmPassword(getValues('confirmPassword'));
+  };
 
   return (
     <MainAuth
@@ -99,57 +116,17 @@ const ResetPasswordPage = () => {
       ></TitleHeaderAgent>
       <section className="self-center w-full flex flex-col items-center px-10">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
-          <div className="flex flex-col gap-1 pb-12">
-            <InputGroup
-              label="Mon nouveau mot de passe"
-              type={!passwordVisible ? 'password' : 'text'}
-              name="password"
-              fullWidth={true}
-              placeholder="Nouveau mot de passe"
-              register={register('password')}
-              error={errors?.password?.message ?? getErrorFields('password', apiError)}
-              trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
-              onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
-              withBorder
-              required
-            />
-            <div className="ml-3  leading-none">
-              <Typography color="light-gray" size="text-3xs">
-                <PasswordHelperText password={password} />
-              </Typography>
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <InputGroup
-              label="Confirmer le mot de passe"
-              type={!confirmPasswordVisible ? 'password' : 'text'}
-              name="confirmPassword"
-              fullWidth={true}
-              placeholder="Nouveau mot de passe"
-              register={register('confirmPassword')}
-              error={errors?.password?.message ?? getErrorFields('password', apiError)}
-              trailingSvgIcon={!confirmPasswordVisible ? 'visibilityOff' : 'visibilityOn'}
-              onTrailingSvgIconClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
-              withBorder
-              required
-            />
-            {password && confirmPassword && (
-              <div className="ml-3">
-                <Typography
-                  color={password === confirmPassword ? 'success' : 'error'}
-                  size="text-3xs"
-                >
-                  Les deux mots de passe doivent être identiques
-                </Typography>
-              </div>
-            )}
-          </div>
+          <ConfirmPassword
+            password={passwordFormFieldData}
+            confirmPassword={confirmPasswordFormFieldData}
+            submitCount={submitClickCount}
+          />
           <div className="pt-10 pb-2 flex">
             {apiError && <ApiError apiError={apiError} />}
             {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
           </div>
           <div className="flex flex-col gap-4 w-40 self-center pb-2">
-            <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
+            <Button fullWidth={true} type="submit" size="sm" onClick={handleSubmitClick}>
               Valider
             </Button>
           </div>

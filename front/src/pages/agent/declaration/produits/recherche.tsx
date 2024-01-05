@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { useRouter } from 'next/router';
@@ -40,12 +40,6 @@ const SearchProduct = () => {
   const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
     router.query;
 
-  let initialProduct: Product | undefined;
-
-  if (selectedId) {
-    initialProduct = findProduct(selectedId);
-  }
-
   const productsThatMatch: Product[] = [];
 
   if (id) {
@@ -53,12 +47,22 @@ const SearchProduct = () => {
   } else {
     searchProducts((search as string) ?? '').map((product) => productsThatMatch.push(product));
   }
-  const [selectedProduct, setSelectedProduct] = useState<Product>(
-    (initialProduct as Product) ?? undefined,
-  );
-  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(
-    !!initialProduct ?? false,
-  );
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!selectedId) {
+      return;
+    }
+
+    const initialProduct = findProduct(selectedId);
+    if (!initialProduct) {
+      return;
+    }
+
+    setSelectedProduct(initialProduct);
+    setOpenCategoryDownModal(true);
+  }, [selectedId]);
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {

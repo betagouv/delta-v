@@ -68,9 +68,12 @@ const ResetLinkSentPage = () => {
           </Typography>
           <br />
           {apiError?.message && (
-            <div className="ml-3">
-              <ApiError apiError={apiError} />
-            </div>
+            <>
+              <div className="ml-3">
+                <ApiError apiError={apiError} />
+              </div>
+              <br />
+            </>
           )}
           <Typography textPosition="text-center" color="primary" size="text-xs" underline>
             <span className="cursor-pointer" onClick={handleResend}>
