@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { useEffect, useState } from 'react';
 
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
@@ -5,13 +6,10 @@ import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { PasswordHelperText } from '@/components/common/PasswordHelperText';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
-import { getStringOrUndefined } from '@/utils/string';
 
 export interface FormFieldData {
   register: UseFormRegisterReturn;
   error?: FieldError;
-  watchedValue: string;
-  submittedValue?: string;
 }
 
 export interface ConfirmPasswordProps {
@@ -29,6 +27,7 @@ export const ConfirmPassword: React.FC<ConfirmPasswordProps> = ({
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [showPasswordError, setShowPasswordError] = useState(false);
   const [showConfirmPasswordError, setShowConfirmPasswordError] = useState(false);
+  const [typedPassword, setTypedPassword] = useState('');
 
   useEffect(() => {
     if (submitCount > 0) {
@@ -37,15 +36,14 @@ export const ConfirmPassword: React.FC<ConfirmPasswordProps> = ({
     }
   }, [submitCount]);
 
-  if (showPasswordError && password.watchedValue !== password.submittedValue) {
-    setShowPasswordError(false);
-  }
-
-  if (showConfirmPasswordError && confirmPassword.watchedValue !== confirmPassword.submittedValue) {
+  confirmPassword.register.onChange = async () => {
     setShowConfirmPasswordError(false);
-  }
+  };
 
-  const typedPassword = getStringOrUndefined(password.watchedValue);
+  password.register.onChange = async ({ target: { value } }) => {
+    setShowPasswordError(false);
+    setTypedPassword(value);
+  };
 
   const passwordError = showPasswordError && password.error ? '' : undefined;
 

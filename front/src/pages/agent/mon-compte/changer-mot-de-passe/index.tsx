@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -20,9 +20,9 @@ import { getErrorFields } from '@/utils/errorFields';
 import { passwordRegex } from '@/utils/regex';
 
 export interface ChangePasswordFormData {
-  oldPassword: string;
   password: string;
   confirmPassword: string;
+  oldPassword: string;
 }
 
 const schema = yup.object({
@@ -41,7 +41,11 @@ const schema = yup.object({
 });
 
 const ChangePasswordPage = () => {
-  const reactForm = useForm<ChangePasswordFormData>({
+  const {
+    handleSubmit,
+    formState: { isDirty, isValid, errors },
+    register,
+  } = useForm<ChangePasswordFormData>({
     defaultValues: {
       oldPassword: undefined,
       password: undefined,
@@ -49,14 +53,6 @@ const ChangePasswordPage = () => {
     },
     resolver: yupResolver(schema),
   });
-
-  const {
-    watch,
-    handleSubmit,
-    formState: { isDirty, isValid, errors },
-    register,
-    getValues,
-  } = reactForm;
 
   const router = useRouter();
 
@@ -83,36 +79,37 @@ const ChangePasswordPage = () => {
   };
 
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
-  const [submitClickCount, setSubmitClickCount] = useState(0);
-  const [submittedPassword, setSubmittedPassword] = useState<string | undefined>(undefined);
-  const [submittedConfirmPassword, setSubmittedConfirmPassword] = useState<string | undefined>(
-    undefined,
-  );
+  const [submitCount, setSubmitCount] = useState<number>(0);
+  const [passwordFormFieldData, setPasswordFormFieldData] = useState<FormFieldData>({
+    register: register('password'),
+    error: errors.password,
+  });
+  const [confirmPasswordFormFieldData, setConfirmPasswordFormFieldData] = useState<FormFieldData>({
+    register: register('confirmPassword'),
+    error: errors.confirmPassword,
+  });
 
   const handleReturnFromStepTwo = () => {
     setIsCurrentStepOne(true);
-    setSubmitClickCount(0);
   };
 
   const handleSubmitClick = () => {
-    setSubmitClickCount(submitClickCount + 1);
-    setSubmittedPassword(getValues('password'));
-    setSubmittedConfirmPassword(getValues('confirmPassword'));
+    setSubmitCount(submitCount + 1);
   };
 
-  const passwordFormFieldData: FormFieldData = {
-    register: register('password'),
-    error: errors.password,
-    watchedValue: watch('password'),
-    submittedValue: submittedPassword,
-  };
+  useEffect(() => {
+    setPasswordFormFieldData({
+      register: register('password'),
+      error: errors.password,
+    });
+  }, [errors.password]);
 
-  const confirmPasswordFormFieldData: FormFieldData = {
-    register: register('confirmPassword'),
-    error: errors.confirmPassword,
-    watchedValue: watch('confirmPassword'),
-    submittedValue: submittedConfirmPassword,
-  };
+  useEffect(() => {
+    setConfirmPasswordFormFieldData({
+      register: register('confirmPassword'),
+      error: errors.confirmPassword,
+    });
+  }, [errors.confirmPassword]);
 
   return (
     <AgentRoute>
@@ -171,7 +168,7 @@ const ChangePasswordPage = () => {
                 <ConfirmPassword
                   password={passwordFormFieldData}
                   confirmPassword={confirmPasswordFormFieldData}
-                  submitCount={submitClickCount}
+                  submitCount={submitCount}
                 />
                 <div className="pt-10 pb-2 flex">
                   <Typography color="error" size="text-2xs">
