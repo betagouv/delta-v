@@ -30,6 +30,7 @@ export interface DefaultValuesUpdateProduct {
 interface FormSelectProductProps {
   currentProduct: Product;
   onAddProduct: (options: OnAddProductOptions) => void;
+  onRemoveProduct?: (product: Product) => void;
   templateRole?: Role;
   defaultCurrency?: string;
   defaultName?: string;
@@ -40,6 +41,7 @@ interface FormSelectProductProps {
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   currentProduct,
   onAddProduct,
+  onRemoveProduct,
   templateRole = 'user',
   defaultCurrency = 'EUR',
   defaultName = '',
@@ -156,7 +158,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       {isAddAbleToFavorites && (
         <FormAddProductToFavorite
           productId={currentProduct.id}
-          disabled={!isAddAble}
+          onRemoveProduct={onRemoveProduct}
           control={control}
           register={register}
           errors={errors}

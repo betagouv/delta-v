@@ -81,7 +81,7 @@ export const NomenclatureCard = ({ product, onClick, searchValue }: Nomenclature
         <SvgIcon name={product.icon ?? 'categoryOther'} />
       </div>
 
-      <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer z-50">
+      <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
         {isInFavorite ? (
           <button
             name="star-full"

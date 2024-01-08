@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import shallow from 'zustand/shallow';
 
 import { AddProductToFavorites } from '../AddProductToFavorites';
-import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct';
+import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
@@ -29,16 +30,19 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   open,
   defaultProduct,
 }) => {
-  const { products, addFavoriteProducts } = useStore(
+  const { products, addFavoriteProducts, removeFavoriteProducts } = useStore(
     (state) => ({
       products: state.products.appState.nomenclatureProducts,
-      setFavoriteProducts: state.setFavoriteProducts,
       addFavoriteProducts: state.addFavoriteProducts,
+      removeFavoriteProducts: state.removeFavoriteProducts,
     }),
     shallow,
   );
 
+  const removeFavoriteMutation = useRemoveFavoriteMutation({});
+
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
+  const [openModalDeleteFavorite, setOpenModalDeleteFavorite] = useState(false);
 
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const [productTree, setProductTree] = useState<Product[]>([]);
@@ -101,6 +105,20 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
     setProductTree([]);
   };
 
+  const onClickDelete = (product: Product) => {
+    setCurrentProduct(product);
+    setOpenModalDeleteFavorite(true);
+  };
+
+  const onRemove = (product?: Product) => {
+    if (!product) {
+      return;
+    }
+    removeFavoriteProducts(product.id);
+    removeFavoriteMutation.mutate(product.id);
+    setOpenModalDeleteFavorite(false);
+  };
+
   const onParentCategoryClick = () => {
     // eslint-disable-next-line no-unsafe-optional-chaining
     setCurrentId(productTree?.[1]?.id);
@@ -126,6 +144,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
               <AddProductToFavorites
                 currentProduct={currentProduct ?? defaultProduct}
                 onAddProduct={onAddProduct}
+                onRemoveProduct={onClickDelete}
                 onSelectProduct={onSelectProduct}
               />
             ) : (
@@ -144,6 +163,11 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
           </div>
         </div>
       </DownModal>
+      <ModalDeleteFavoriteProduct
+        open={openModalDeleteFavorite}
+        onClose={() => setOpenModalDeleteFavorite(false)}
+        onDeleteProduct={() => onRemove(currentProduct)}
+      />
     </>
   );
 };

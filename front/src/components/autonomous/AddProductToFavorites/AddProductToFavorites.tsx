@@ -16,6 +16,7 @@ type OnAddProduct = (options: OnAddProductOptions) => void;
 interface AddProductToFavoritesProps {
   currentProduct?: Product;
   onAddProduct: OnAddProduct;
+  onRemoveProduct?: (product: Product) => void;
   onSelectProduct?: (id: string) => void;
   defaultCurrency?: string;
   defaultValues?: DefaultValuesUpdateProduct;
@@ -24,6 +25,7 @@ interface AddProductToFavoritesProps {
 export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
   currentProduct,
   onAddProduct,
+  onRemoveProduct,
   onSelectProduct,
   defaultCurrency,
   defaultValues,
@@ -70,6 +72,7 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
             <FormSelectProduct
               currentProduct={currentProduct}
               onAddProduct={onAddProduct}
+              onRemoveProduct={onRemoveProduct}
               defaultCurrency={defaultCurrency}
               defaultValues={defaultValues}
               isAddAbleToFavorites
