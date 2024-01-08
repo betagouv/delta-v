@@ -24,7 +24,7 @@ const RegisterValidationPage = () => {
         />
       }
     >
-      <div className="my-auto flex flex-col items-center self-center px-10">
+      <div className="my-auto flex flex-col items-center self-center px-10 pt-4">
         <div className="flex flex-col pb-16 px-7">
           <Typography
             variant="h1"
