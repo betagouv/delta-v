@@ -4,21 +4,13 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { LinkWithIcon } from '@/components/common/LinkWithIcon';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Meta } from '@/layout/Meta';
-import { MainAuth } from '@/templates/MainAuth';
+import { MainAgent } from '@/templates/MainAgent';
 import { MY_ACCOUNT_MENU_AGENT_ITEMS } from '@/utils/const';
 
 const MyAccountPage = () => {
   return (
     <AgentRoute>
-      <MainAuth
-        withPadding={false}
-        meta={
-          <Meta
-            title="Déclare Douanes - Mon compte"
-            description="Page de demande de création d'un nouveau mot de passe"
-          />
-        }
-      >
+      <MainAgent meta={<Meta title="Déclare Douane" description="Mon compte" />}>
         <TitleHeaderAgent
           title="Mon compte"
           bgColorClass="bg-white"
@@ -47,7 +39,7 @@ const MyAccountPage = () => {
             );
           })}
         </div>
-      </MainAuth>
+      </MainAgent>
     </AgentRoute>
   );
 };

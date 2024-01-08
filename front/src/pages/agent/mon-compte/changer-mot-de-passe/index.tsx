@@ -14,7 +14,7 @@ import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
-import { MainAuth } from '@/templates/MainAuth';
+import { MainAgent } from '@/templates/MainAgent';
 import { RoutingAgent } from '@/utils/const';
 import { getErrorFields } from '@/utils/errorFields';
 import { passwordRegex } from '@/utils/regex';
@@ -116,15 +116,7 @@ const ChangePasswordPage = () => {
 
   return (
     <AgentRoute>
-      <MainAuth
-        withPadding={false}
-        meta={
-          <Meta
-            title="Déclare Douanes - Modification du mot de passe"
-            description="Page de modification de mot de passe"
-          />
-        }
-      >
+      <MainAgent meta={<Meta title="Déclare Douane" description="Modification du mot de passe." />}>
         <TitleHeaderAgent
           title="Modifier mon mot de passe"
           bgColorClass="bg-white"
@@ -199,7 +191,7 @@ const ChangePasswordPage = () => {
             )}
           </form>
         </section>
-      </MainAuth>
+      </MainAgent>
     </AgentRoute>
   );
 };

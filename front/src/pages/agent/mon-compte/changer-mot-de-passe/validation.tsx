@@ -5,7 +5,7 @@ import { Button } from '@/components/common/Button';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
-import { MainAuth } from '@/templates/MainAuth';
+import { MainAgent } from '@/templates/MainAgent';
 import { RoutingAgent } from '@/utils/const';
 
 const ResetLinkSentPage = () => {
@@ -17,15 +17,7 @@ const ResetLinkSentPage = () => {
 
   return (
     <AgentRoute>
-      <MainAuth
-        withPadding={false}
-        meta={
-          <Meta
-            title="Déclare Douanes - Mot de passe modifié"
-            description="Confirmation de modification d'un mot de passe"
-          />
-        }
-      >
+      <MainAgent meta={<Meta title="Déclare Douane" description="Modification du mot de passe." />}>
         <TitleHeaderAgent
           title="Modifier mon mot de passe"
           bgColorClass="bg-white"
@@ -56,7 +48,7 @@ const ResetLinkSentPage = () => {
             </div>
           </div>
         </section>
-      </MainAuth>
+      </MainAgent>
     </AgentRoute>
   );
 };
