@@ -13,7 +13,7 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
-import { Product } from '@/model/product';
+import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
 import { findProduct, haveAgeRestriction } from '@/utils/product.util';
@@ -57,7 +57,7 @@ const Nomenclature = () => {
     setOpenFavoriteDownModal(false);
   };
 
-  const onClickProduct = (product: Product, searchValue?: string) => {
+  const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
     setOpenSearchDownModal(false);
     setOpenFavoriteDownModal(false);
     updateSearchProductHistory.mutate({ productId: product.id, searchValue });
@@ -169,7 +169,7 @@ const Nomenclature = () => {
         <ModalSearchNomenclatureProduct
           open={openSearchDownModal}
           onClose={handleCloseDownModal}
-          onClickProduct={onClickProduct}
+          onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
           onSearchAll={onSearchAll}
         />
         <ModalCategoryNomenclatureProduct

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useChangePasswordMutation } from '@/api/hooks/useAPIAuth';
-import { ConfirmPassword, FormFieldData } from '@/components/autonomous/ConfirmPassword';
+import { ConfirmPasswordInput, FormFieldData } from '@/components/autonomous/ConfirmPasswordInput';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
@@ -165,7 +165,7 @@ const ChangePasswordPage = () => {
             )}
             {!isCurrentStepOne && (
               <>
-                <ConfirmPassword
+                <ConfirmPasswordInput
                   password={passwordFormFieldData}
                   confirmPassword={confirmPasswordFormFieldData}
                   submitCount={submitCount}

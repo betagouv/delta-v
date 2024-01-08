@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useResetPasswordMutation } from '@/api/hooks/useAPIAuth';
-import { ConfirmPassword, FormFieldData } from '@/components/autonomous/ConfirmPassword';
+import { ConfirmPasswordInput, FormFieldData } from '@/components/autonomous/ConfirmPasswordInput';
 import { ApiError } from '@/components/common/ApiError';
 import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
@@ -117,7 +117,7 @@ const ResetPasswordPage = () => {
       ></TitleHeaderAgent>
       <section className="self-center w-full flex flex-col items-center px-10">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
-          <ConfirmPassword
+          <ConfirmPasswordInput
             password={passwordFormFieldData}
             confirmPassword={confirmPasswordFormFieldData}
             submitCount={submitClickCount}

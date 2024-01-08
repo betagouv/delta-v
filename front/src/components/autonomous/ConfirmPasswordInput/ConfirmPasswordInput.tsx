@@ -12,13 +12,13 @@ export interface FormFieldData {
   error?: FieldError;
 }
 
-export interface ConfirmPasswordProps {
+export interface ConfirmPasswordInputProps {
   password: FormFieldData;
   confirmPassword: FormFieldData;
   submitCount: number;
 }
 
-export const ConfirmPassword: React.FC<ConfirmPasswordProps> = ({
+export const ConfirmPasswordInput: React.FC<ConfirmPasswordInputProps> = ({
   password,
   confirmPassword,
   submitCount,

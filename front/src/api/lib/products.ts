@@ -4,8 +4,8 @@ import { ICommonResponse } from './types';
 import { Product } from '@/model/product';
 
 export type SearchProductHistoryItem = {
-  id?: string;
-  name?: string;
+  id: string;
+  name: string;
   searchValue?: string;
 };
 

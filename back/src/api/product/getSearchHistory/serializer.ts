@@ -1,29 +1,33 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { SearchProductHistoryEntityInterface } from '../../../entities/searchProductHistory.entity';
 
-export type SearchProductHistoryItem = {
-  id?: string;
+interface SearchProductHistoryItem {
+  id: string;
   name?: string;
   searchValue?: string;
-};
+}
+export interface SearchProductHistoryItemWithName extends SearchProductHistoryItem {
+  id: string;
+  name: string;
+  searchValue?: string;
+}
 
 export interface SerializedGetSearchProductHistory {
   productsHistory: SearchProductHistoryItem[];
 }
 
-export const serializer = (
-  history: SearchProductHistoryEntityInterface[],
-): SerializedGetSearchProductHistory => {
+export const serializer = (history: SearchProductHistoryEntityInterface[]): any => {
+  const serializedProducts: SearchProductHistoryItem[] = history.map((search) => {
+    return {
+      id: search.productId,
+      name: search.product?.name,
+      searchValue: search.searchValue,
+    };
+  });
+
   return {
-    productsHistory: history.map((search) => {
-      if (!search.product) {
-        return {};
-      }
-      return {
-        id: search.productId,
-        name: search.product.name,
-        searchValue: search.searchValue,
-      };
-    }),
+    productsHistory: serializedProducts.filter(
+      (serializedProduct): serializedProduct is SearchProductHistoryItemWithName =>
+        serializedProduct.name !== undefined,
+    ),
   };
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
@@ -33,26 +33,28 @@ const SearchProduct = () => {
   const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
     router.query;
 
-  let initialProduct: Product | undefined;
+  const [initialProduct, setInitialProduct] = useState<Product | undefined>(undefined);
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(!!initialProduct);
+  const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
 
-  if (selectedId) {
-    initialProduct = findProduct(products, selectedId);
-  }
+  useEffect(() => {
+    if (selectedId) {
+      setInitialProduct(findProduct(products, selectedId));
+      setOpenCategoryDownModal(true);
+    }
+  }, [selectedId]);
 
-  const productsThatMatch: Product[] = [];
+  useEffect(() => {
+    if (id) {
+      setProductsThatMatch([findProduct(products, id as string) as Product]);
+    }
+    if (search) {
+      setProductsThatMatch(searchNomenclatureProducts((search as string) ?? ''));
+    }
+  }, [id, search]);
 
-  if (id) {
-    productsThatMatch.push(findProduct(products, id as string) as Product);
-  } else {
-    searchNomenclatureProducts((search as string) ?? '').map((product) =>
-      productsThatMatch.push(product),
-    );
-  }
   const [selectedProduct, setSelectedProduct] = useState<Product>(
     (initialProduct as Product) ?? undefined,
-  );
-  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(
-    !!initialProduct ?? false,
   );
 
   const onClickProduct = (product: Product) => {
@@ -95,7 +97,7 @@ const SearchProduct = () => {
         <ModalCategoryNomenclatureProduct
           open={openCategoryDownModal}
           onClose={() => setOpenCategoryDownModal(false)}
-          defaultProduct={selectedProduct}
+          defaultProduct={initialProduct ?? selectedProduct}
         />
       </MainAgent>
     </AgentRoute>

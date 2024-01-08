@@ -5,13 +5,13 @@ import { Meta } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { ConfirmPassword, FormFieldData } from './ConfirmPassword';
+import { ConfirmPasswordInput, FormFieldData } from './ConfirmPassword';
 import { Button } from '@/components/common/Button';
 import { passwordRegex } from '@/utils/regex';
 
 export default {
   title: 'Components/Autonomous/ConfirmPassword',
-  component: ConfirmPassword,
+  component: ConfirmPasswordInput,
 } as Meta;
 
 export interface ChangePasswordFormData {
@@ -73,7 +73,7 @@ export const Base = () => {
   }, [errors.confirmPassword]);
   return (
     <form onSubmit={handleSubmit(handleSubmitClick)} className="flex flex-col w-full">
-      <ConfirmPassword
+      <ConfirmPasswordInput
         password={passwordFormFieldData}
         confirmPassword={confirmPasswordFormFieldData}
         submitCount={submitCount}

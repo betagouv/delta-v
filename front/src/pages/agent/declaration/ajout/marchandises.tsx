@@ -162,8 +162,6 @@ const Declaration = () => {
   };
 
   const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
-    console.log('searchValue', searchValue);
-
     setOpenSearchDownModal(false);
     updateSearchProductHistory.mutate({ productId: product.id, searchValue });
     router.push({
