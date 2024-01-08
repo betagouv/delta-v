@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { SearchProductHistoryEntityInterface } from '../../../entities/searchProductHistory.entity';
-import { SerializedProduct } from '../../declaration/common/serializer/declarationSerializer';
 
-export type SearchProductHistoryItem = Pick<SerializedProduct, 'id' | 'name'> & {
+export type SearchProductHistoryItem = {
+  id?: string;
+  name?: string;
   searchValue?: string;
 };
 
@@ -15,9 +16,12 @@ export const serializer = (
 ): SerializedGetSearchProductHistory => {
   return {
     productsHistory: history.map((search) => {
+      if (!search.product) {
+        return {};
+      }
       return {
         id: search.productId,
-        name: search.product!.name,
+        name: search.product.name,
         searchValue: search.searchValue,
       };
     }),

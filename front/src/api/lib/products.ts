@@ -3,7 +3,9 @@ import axios from 'axios';
 import { ICommonResponse } from './types';
 import { Product } from '@/model/product';
 
-export type SearchProductHistoryItem = Pick<Product, 'id' | 'name'> & {
+export type SearchProductHistoryItem = {
+  id?: string;
+  name?: string;
   searchValue?: string;
 };
 

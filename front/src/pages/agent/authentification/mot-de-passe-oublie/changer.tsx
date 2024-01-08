@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -42,8 +42,6 @@ const ResetPasswordPage = () => {
   const {
     handleSubmit,
     register,
-    watch,
-    getValues,
     formState: { errors },
     formState: { isValid },
   } = useForm<FormForgetPasswordData>({
@@ -54,10 +52,6 @@ const ResetPasswordPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const [submittedPassword, setSubmittedPassword] = useState<string | undefined>(undefined);
-  const [submittedConfirmPassword, setSubmittedConfirmPassword] = useState<string | undefined>(
-    undefined,
-  );
   const [submitClickCount, setSubmitClickCount] = useState(0);
 
   const resetPasswordMutation = useResetPasswordMutation({
@@ -78,25 +72,32 @@ const ResetPasswordPage = () => {
       });
     }
   };
-  const passwordFormFieldData: FormFieldData = {
-    register: register('password'),
-    error: errors.password,
-    watchedValue: watch('password'),
-    submittedValue: submittedPassword,
-  };
-
-  const confirmPasswordFormFieldData: FormFieldData = {
-    register: register('confirmPassword'),
-    error: errors.confirmPassword,
-    watchedValue: watch('confirmPassword'),
-    submittedValue: submittedConfirmPassword,
-  };
 
   const handleSubmitClick = () => {
     setSubmitClickCount(submitClickCount + 1);
-    setSubmittedPassword(getValues('password'));
-    setSubmittedConfirmPassword(getValues('confirmPassword'));
   };
+
+  const [passwordFormFieldData, setPasswordFormFieldData] = useState<FormFieldData>({
+    register: register('password'),
+    error: errors.password,
+  });
+  const [confirmPasswordFormFieldData, setConfirmPasswordFormFieldData] = useState<FormFieldData>({
+    register: register('confirmPassword'),
+    error: errors.confirmPassword,
+  });
+  useEffect(() => {
+    setPasswordFormFieldData({
+      register: register('password'),
+      error: errors.password,
+    });
+  }, [errors.password]);
+
+  useEffect(() => {
+    setConfirmPasswordFormFieldData({
+      register: register('confirmPassword'),
+      error: errors.confirmPassword,
+    });
+  }, [errors.confirmPassword]);
 
   return (
     <MainAuth
