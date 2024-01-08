@@ -81,6 +81,9 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   const historyProductToShow: ProductHistoryToShow[] = [];
 
   history.forEach((historyItem) => {
+    if (!historyItem.id) {
+      return;
+    }
     const product = findProduct(historyItem.id);
     if (product) {
       historyProductToShow.push({ product, searchValue: historyItem.searchValue });

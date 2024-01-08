@@ -90,7 +90,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
             <SearchResultProducts
               resultSearch={resultSearch as unknown as SearchType<Product>[]}
               search={searchValue}
-              onClickProduct={(product) => onClickProduct(product, searchValue)}
+              onClickProduct={onClickProduct}
             />
           )}
           {showSearchResults && showSearchHistory && <div className="border-t my-8" />}
