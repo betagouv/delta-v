@@ -5,13 +5,14 @@ import shallow from 'zustand/shallow';
 
 import { Role } from '../FormSelectProduct/utils';
 import { Typography } from '@/components/common/Typography';
+import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { findProduct } from '@/utils/product.util';
 
 interface FormAddProductToFavoriteProps {
   register: any;
+  onRemoveProduct?: (product: Product) => void;
   control: any;
-  disabled?: boolean;
   productId?: string;
   submitted?: boolean;
   errors: FieldErrors;
@@ -21,10 +22,10 @@ interface FormAddProductToFavoriteProps {
 }
 
 export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> = ({
-  disabled = false,
   submitted = false,
   productId,
   isAddAble = false,
+  onRemoveProduct,
 }: FormAddProductToFavoriteProps) => {
   const { nomenclatureProducts, favoriteProducts } = useStore(
     (state) => ({
@@ -64,13 +65,23 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
                 </Typography>
               </div>
             ) : (
-              <button
-                className={isInFavorite ? 'text-success' : 'text-primary-600 underline'}
-                type="submit"
-                disabled={disabled || !!isInFavorite}
-              >
-                {isInFavorite ? 'Produit déjà ajouté aux favoris' : 'Ajouter aux favoris'}
-              </button>
+              <>
+                {isInFavorite ? (
+                  <button
+                    className="underline text-error"
+                    type="button"
+                    onClick={
+                      onRemoveProduct && product ? () => onRemoveProduct(product) : undefined
+                    }
+                  >
+                    Retirer des favoris
+                  </button>
+                ) : (
+                  <button className="underline text-primary-600" type="submit">
+                    Ajouter aux favoris
+                  </button>
+                )}
+              </>
             )}
           </div>
         )}
