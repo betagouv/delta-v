@@ -6,12 +6,15 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useChangePasswordMutation } from '@/api/hooks/useAPIAuth';
-import { ConfirmPasswordInput, FormFieldData } from '@/components/autonomous/ConfirmPasswordInput';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { ApiError } from '@/components/common/ApiError';
 import { Button } from '@/components/common/Button';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
+import {
+  ConfirmPasswordInput,
+  FormFieldData,
+} from '@/components/input/custom/ConfirmPasswordInput';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';

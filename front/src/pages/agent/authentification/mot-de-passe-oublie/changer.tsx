@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useResetPasswordMutation } from '@/api/hooks/useAPIAuth';
-import { ConfirmPasswordInput, FormFieldData } from '@/components/autonomous/ConfirmPasswordInput';
+import { ConfirmPasswordInput, FormFieldData } from '@/components/input/custom/ConfirmPasswordInput';
 import { ApiError } from '@/components/common/ApiError';
 import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';

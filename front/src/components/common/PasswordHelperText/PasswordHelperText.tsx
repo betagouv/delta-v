@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import cs from 'classnames';
 
@@ -36,7 +36,18 @@ const RuleContainer: React.FC<{ successRule: boolean; children: string }> = ({
 };
 
 export const PasswordHelperText: React.FC<{ password: string }> = ({ password }) => {
-  const passwordRequirements = checkPasswordRequirements(password);
+  const [passwordRequirements, setPasswordRequirements] = useState<PasswordRequirements>({
+    length: false,
+    special: false,
+    lowercase: false,
+    uppercase: false,
+    number: false,
+  });
+
+  useEffect(() => {
+    setPasswordRequirements(checkPasswordRequirements(password));
+  }, [password]);
+
   return (
     <div className="flex flex-wrap gap-x-[2px] [&>*]:whitespace-nowrap">
       <RuleContainer successRule={passwordRequirements.uppercase}>1 majuscule,</RuleContainer>
