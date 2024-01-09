@@ -161,12 +161,12 @@ const Declaration = () => {
     });
   };
 
-  const onClickProduct = (product: IdRequiredProduct) => {
+  const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
     setOpenSearchDownModal(false);
-    updateSearchProductHistory.mutate({ productId: product.id });
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue });
     router.push({
       pathname: '/agent/declaration/produits/recherche',
-      query: { id: product.id },
+      query: { search: searchValue, selectedId: product.id },
     });
   };
 
@@ -334,7 +334,7 @@ const Declaration = () => {
       <ModalSearchProduct
         open={openSearchDownModal}
         onClose={handleCloseDownModal}
-        onClickProduct={onClickProduct}
+        onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
         onSearchAll={onSearchAll}
       />
       <ModalCategoryProduct

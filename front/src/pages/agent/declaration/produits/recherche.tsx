@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -32,9 +33,12 @@ const SearchProduct = () => {
     shallow,
   );
 
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
+
   const router = useRouter();
 
-  const { id, search } = router.query;
+  const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
+    router.query;
 
   const productsThatMatch: Product[] = [];
 
@@ -43,8 +47,22 @@ const SearchProduct = () => {
   } else {
     searchProducts((search as string) ?? '').map((product) => productsThatMatch.push(product));
   }
-  const [selectedProduct, setSelectedProduct] = useState<Product>();
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!selectedId) {
+      return;
+    }
+
+    const initialProduct = findProduct(selectedId);
+    if (!initialProduct) {
+      return;
+    }
+
+    setSelectedProduct(initialProduct);
+    setOpenCategoryDownModal(true);
+  }, [selectedId]);
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
@@ -65,6 +83,7 @@ const SearchProduct = () => {
   const onClickProduct = (product: Product) => {
     setSelectedProduct(product);
     setOpenCategoryDownModal(true);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue: search });
   };
 
   return (

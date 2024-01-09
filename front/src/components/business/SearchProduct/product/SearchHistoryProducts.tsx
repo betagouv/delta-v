@@ -11,18 +11,25 @@ import { useStore } from '@/stores/store';
 
 interface SearchHistoryProductsProps {
   history: SearchProductHistoryItem[];
-  onClickProduct: (product: IdRequiredProduct) => void;
+  onClickProduct: (product: IdRequiredProduct, searchValue?: string) => void;
 }
 interface ProductHistoryItemProps {
   product: IdRequiredProduct;
-  onClick?: (product: IdRequiredProduct) => void;
+  onClick?: (product: IdRequiredProduct, searchValue?: string) => void;
   disabled?: boolean;
+  searchValue?: string;
 }
+
+type ProductHistoryToShow = {
+  product: Product;
+  searchValue?: string;
+};
 
 const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
   product,
   onClick,
   disabled = false,
+  searchValue,
 }: ProductHistoryItemProps) => {
   return (
     <li
@@ -33,7 +40,7 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
         'cursor-not-allowed': disabled,
       })}
       data-testid="result-product-search-element"
-      onClick={onClick && (() => onClick(product))}
+      onClick={onClick && (() => onClick(product, searchValue))}
     >
       <div className="flex items-center gap-3">
         <span
@@ -44,13 +51,17 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
         <span>
           {product.name && (
             <React.Fragment>
-              <Typography color={disabled ? 'light-gray' : 'black'} size="text-base">
-                {product.name}
-              </Typography>
-              <Typography color="light-gray" size="text-base">
-                {' '}
-                dans{' '}
-              </Typography>
+              {searchValue && (
+                <>
+                  <Typography color={disabled ? 'light-gray' : 'black'} size="text-base">
+                    {searchValue}
+                  </Typography>
+                  <Typography color="light-gray" size="text-base">
+                    {' '}
+                    dans{' '}
+                  </Typography>
+                </>
+              )}
               <Typography size="text-base">
                 <span className={disabled ? 'text-gray-400' : 'text-blue-700'}>{product.name}</span>
               </Typography>
@@ -67,15 +78,14 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   onClickProduct,
 }: SearchHistoryProductsProps) => {
   const { findProduct } = useStore((state) => ({ findProduct: state.findProduct }));
-  const historyProductToShow: Product[] = [];
+  const historyProductToShow: ProductHistoryToShow[] = [];
 
   history.forEach((historyItem) => {
     const product = findProduct(historyItem.id);
     if (product) {
-      historyProductToShow.push(product);
+      historyProductToShow.push({ product, searchValue: historyItem.searchValue });
     }
   });
-  console.log('history', history);
 
   historyProductToShow.splice(AGENT_PRODUCT_SEARCH_HISTORY_LIMIT);
   return (
@@ -85,9 +95,14 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
           <Typography color="black" size="text-base">
             Historique des recherches
           </Typography>
-          {historyProductToShow.map((product) => {
+          {historyProductToShow.map((historyToShowItem) => {
             return (
-              <ProductHistoryItem product={product} onClick={onClickProduct} key={product.id} />
+              <ProductHistoryItem
+                product={historyToShowItem.product}
+                onClick={onClickProduct}
+                key={historyToShowItem.product.id}
+                searchValue={historyToShowItem.searchValue}
+              />
             );
           })}
         </ul>

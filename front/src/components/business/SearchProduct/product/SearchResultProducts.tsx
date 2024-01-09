@@ -2,18 +2,17 @@ import React from 'react';
 
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
-import { Product } from '@/model/product';
+import { IdRequiredProduct, Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
 interface SearchResultProductsProps {
   resultSearch: SearchType<Product>[];
   search: string;
-  onClickProduct: (product: Product) => void;
+  onClickProduct: (product: IdRequiredProduct, searchValue?: string) => void;
 }
 
 export const renderMatchedWithSearch = (product: SearchType<Product>, search: string) => {
   if (!product.rankedValue.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
-    // return <span className="text-xs text-black">{product.rankedValue}</span>;
     return (
       <Typography color="black" size="text-base">
         {product.rankedValue}
@@ -48,7 +47,9 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
                 key={resultElement.id}
                 className="flex cursor-default select-none items-center px-3 pt-2 leading-3"
                 data-testid="result-product-search-element"
-                onClick={() => onClickProduct(resultElement)}
+                onClick={
+                  onClickProduct && (() => onClickProduct(resultElement, resultElement.rankedValue))
+                }
               >
                 <div className="flex items-center gap-3">
                   <span className="mb-1 text-blue-700">

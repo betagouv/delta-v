@@ -74,7 +74,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
             leaveTo="opacity-100 translate-y-full sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`inline-block h-full w-full rounded-t-3xl ${bgColor} ${
+              className={`relative inline-block h-full w-full rounded-t-3xl z-10 ${bgColor} ${
                 withoutMargin ? '' : 'px-4 py-5'
               } text-left shadow-xl transition-all sm:max-w-lg sm:align-middle lg:rounded-b-3xl`}
             >

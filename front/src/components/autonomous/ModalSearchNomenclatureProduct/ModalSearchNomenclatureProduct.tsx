@@ -2,14 +2,14 @@ import React from 'react';
 
 import { SearchProduct } from '@/components/business/SearchProduct';
 import DownModal from '@/components/common/DownModal';
-import { Product } from '@/model/product';
+import { IdRequiredProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
 
 interface ModalSearchNomenclatureProductProps {
   open: boolean;
   onClose?: () => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: Product) => void;
+  onClickProduct?: (product: IdRequiredProduct, searchValue?: string) => void;
 }
 
 export const ModalSearchNomenclatureProduct: React.FC<ModalSearchNomenclatureProductProps> = ({

@@ -6,6 +6,7 @@ import userNotFoundError from '../../common/errors/userNotFound.error';
 
 export interface PutSearchProductHistoryServiceOptions {
   productId: string;
+  searchValue?: string;
   userId: string;
   productRepository: ProductRepositoryInterface;
   userRepository: UserRepositoryInterface;
@@ -14,6 +15,7 @@ export interface PutSearchProductHistoryServiceOptions {
 
 export const service = async ({
   productId,
+  searchValue,
   userId,
   productRepository,
   userRepository,
@@ -29,6 +31,11 @@ export const service = async ({
     throw userNotFoundError();
   }
 
-  await searchProductHistoryRepository.createOne({ productId, userId, searchDate: new Date() });
+  await searchProductHistoryRepository.createOne({
+    productId,
+    userId,
+    searchValue,
+    searchDate: new Date(),
+  });
   await searchProductHistoryRepository.removeOld(userId);
 };

@@ -8,10 +8,22 @@ describe('put one node validator', () => {
   const validData = {
     body: {
       productId: faker.string.uuid(),
+      searchValue: faker.commerce.product(),
     },
   };
-  it('should validate proper data', () => {
+
+  it('should validate proper data - searchValue provided', () => {
     expect(isValid(validData)).toBe(true);
+  });
+
+  it('should validate proper data - searchValue not provided', () => {
+    const data = {
+      body: {
+        ...validData.body,
+        searchValue: undefined,
+      },
+    };
+    expect(isValid(data)).toBe(true);
   });
 
   it('should be invalid - productId bad format', () => {
@@ -29,6 +41,16 @@ describe('put one node validator', () => {
       body: {
         ...validData.body,
         productId: undefined,
+      },
+    };
+    expect(isValid(data)).toBe(false);
+  });
+
+  it('should be invalid - searchValue bad format', () => {
+    const data = {
+      body: {
+        ...validData.body,
+        searchValue: 12,
       },
     };
     expect(isValid(data)).toBe(false);

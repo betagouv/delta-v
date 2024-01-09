@@ -4,6 +4,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 
 import { useFavorites } from '@/api/hooks/useAPIFavorite';
+import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
 import { ModalFavorites } from '@/components/autonomous/ModalFavorites';
 import { ModalSearchNomenclatureProduct } from '@/components/autonomous/ModalSearchNomenclatureProduct';
@@ -12,7 +13,7 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
-import { Product } from '@/model/product';
+import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
 import { findProduct, haveAgeRestriction } from '@/utils/product.util';
@@ -26,11 +27,16 @@ const Nomenclature = () => {
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
+  const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
+    undefined,
+  );
   const { nomenclatureProducts, setFavoriteProducts, favoriteProducts } = useStore((state) => ({
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
     favoriteProducts: state.products.appState.favoriteProducts,
   }));
+
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
   const onSuccess = (data: string[]) => {
     const tmpFavorites: Product[] = [];
@@ -51,13 +57,26 @@ const Nomenclature = () => {
     setOpenFavoriteDownModal(false);
   };
 
-  const onClickProduct = (product: Product) => {
+  const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
     setOpenSearchDownModal(false);
     setOpenFavoriteDownModal(false);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue });
     router.push({
       pathname: '/agent/nomenclature/recherche',
-      query: { id: product.id },
+      query: { search: searchValue, selectedId: product.id },
     });
+  };
+
+  const onClickFavorite = (product: Product) => {
+    setSelectedFavoriteProduct(product);
+    setOpenSearchDownModal(false);
+    setOpenFavoriteDownModal(false);
+    setOpenCategoryDownModal(true);
+  };
+
+  const onFilterByCategoryClick = () => {
+    setSelectedFavoriteProduct(undefined);
+    setOpenCategoryDownModal(true);
   };
 
   const onSearchAll = (searchValue: string) => {
@@ -131,7 +150,7 @@ const Nomenclature = () => {
             </div>
           </button>
           <button
-            onClick={() => setOpenCategoryDownModal(true)}
+            onClick={onFilterByCategoryClick}
             type="button"
             className="border gap-3 bg-white border-gray-300 rounded-full flex-1 flex justify-center items-center"
           >
@@ -150,17 +169,18 @@ const Nomenclature = () => {
         <ModalSearchNomenclatureProduct
           open={openSearchDownModal}
           onClose={handleCloseDownModal}
-          onClickProduct={onClickProduct}
+          onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
           onSearchAll={onSearchAll}
         />
         <ModalCategoryNomenclatureProduct
           open={openCategoryDownModal}
           onClose={handleCloseDownModal}
+          defaultProduct={selectedFavoriteProduct}
         />
         <ModalFavorites
           open={openFavoriteDownModal}
           onClose={() => setOpenFavoriteDownModal(false)}
-          onClickFavorite={onClickProduct}
+          onClickFavorite={onClickFavorite}
           isInNomenclature
         />
       </MainAgent>
