@@ -48,10 +48,13 @@ const SearchProduct = () => {
     if (id) {
       setProductsThatMatch([findProduct(products, id as string) as Product]);
     }
+  }, [id]);
+
+  useEffect(() => {
     if (search) {
       setProductsThatMatch(searchNomenclatureProducts((search as string) ?? ''));
     }
-  }, [id, search]);
+  }, [search]);
 
   const [selectedProduct, setSelectedProduct] = useState<Product>(
     (initialProduct as Product) ?? undefined,

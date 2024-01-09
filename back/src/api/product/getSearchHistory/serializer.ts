@@ -12,10 +12,12 @@ export interface SearchProductHistoryItemWithName extends SearchProductHistoryIt
 }
 
 export interface SerializedGetSearchProductHistory {
-  productsHistory: SearchProductHistoryItem[];
+  productsHistory: SearchProductHistoryItemWithName[];
 }
 
-export const serializer = (history: SearchProductHistoryEntityInterface[]): any => {
+export const serializer = (
+  history: SearchProductHistoryEntityInterface[],
+): SerializedGetSearchProductHistory => {
   const serializedProducts: SearchProductHistoryItem[] = history.map((search) => {
     return {
       id: search.productId,
