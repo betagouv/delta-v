@@ -12,9 +12,17 @@ export type FilterGroupProps = {
   control?: any;
   name: string;
   rules?: any;
+  isMobile?: boolean;
 };
 
-export const FilterGroup = ({ title, filters, control, name, rules }: FilterGroupProps) => {
+export const FilterGroup = ({
+  title,
+  filters,
+  control,
+  name,
+  rules,
+  isMobile,
+}: FilterGroupProps) => {
   const { field } = useController({
     control,
     name,
@@ -36,12 +44,12 @@ export const FilterGroup = ({ title, filters, control, name, rules }: FilterGrou
   };
 
   return (
-    <div>
+    <div className={`flex gap-2.5 ${!isMobile ? 'flex-row items-center' : 'flex-col'}`}>
       <Typography color="black" size="text-xs">
         {title}
       </Typography>
 
-      <div className="mt-2.5 flex flex-wrap gap-2.5 pr-6">
+      <div className="flex flex-wrap gap-2.5 pr-6">
         {filters.map((item, index) => (
           <FilterItem
             key={index}

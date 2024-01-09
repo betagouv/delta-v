@@ -77,7 +77,7 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
     <DownModal bgColor="bg-white" open={open} onClose={onCloseModal}>
       <div className="flex flex-col gap-6 justify-start">
         <TitleAgent title="Mes favoris" textPosition="text-left" />
-        <div className="flex flex-row gap-[10px] w-full flex-wrap">
+        <div className="flex flex-row gap-2.5 w-full flex-wrap">
           {flattenFavoriteProducts && flattenFavoriteProducts.length ? (
             <>
               {flattenFavoriteProducts.map((favoriteProduct) => (

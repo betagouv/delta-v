@@ -37,7 +37,7 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
           </Typography>
         </div>
         <div className="flex flex-col justify-center self-center gap-4 mt-5">
-          <div className="flex flex-row justify-start items-center gap-[10px]">
+          <div className="flex flex-row justify-start items-center gap-2.5">
             <input
               data-testid="input-search-element"
               placeholder="Numéro de déclaration, nom, prénom..."
@@ -66,7 +66,7 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
                 Raccourcis :
               </Typography>
             </div>
-            <div className="flex flex-row items-center gap-[10px]">
+            <div className="flex flex-row items-center gap-2.5">
               <NextLink href={RITA_URL} target="_blank">
                 <div
                   className={classNames({

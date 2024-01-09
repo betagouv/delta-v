@@ -64,7 +64,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = () => {
 
   return (
     <>
-      <div className="flex flex-row gap-[10px] items-center">
+      <div className="flex flex-row gap-2.5 items-center">
         <Typography color="black" size="2xs" weight="bold" onClick={() => setOpen(true)}>
           {selectedCountry}
         </Typography>
@@ -72,7 +72,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = () => {
       </div>
 
       <DownModal bgColor="bg-white" open={open} onClose={() => setOpen(false)}>
-        <motion.div className="mx-auto mb-[10px] mt-[30px] w-[250px] gap-5 flex flex-col h-auto">
+        <motion.div className="mx-auto mb-2.5 mt-[30px] w-[250px] gap-5 flex flex-col h-auto">
           <Typography color="black" size="xs" weight="bold" textPosition="text-center">
             Sélectionner le pays de provenance :
           </Typography>
