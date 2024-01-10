@@ -5,17 +5,14 @@ import { useMediaQuery } from 'react-responsive';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { HomepageAgentDesktop } from '@/templates/HomepageAgentDesktop';
 import { HomepageAgentMobile } from '@/templates/HomepageAgentMobile';
+import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 const Index = () => {
-  const isDesktopOrLaptop = useMediaQuery({
-    query: '(min-width: 1121px)',
+  const isMobile = useMediaQuery({
+    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
   });
 
-  return (
-    <AgentRoute>
-      {isDesktopOrLaptop ? <HomepageAgentDesktop /> : <HomepageAgentMobile />}
-    </AgentRoute>
-  );
+  return <AgentRoute>{isMobile ? <HomepageAgentMobile /> : <HomepageAgentDesktop />}</AgentRoute>;
 };
 
 export default Index;

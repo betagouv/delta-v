@@ -29,12 +29,12 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
   return (
     <div className="flex flex-col justify-start gap-[30px]">
       <TitleAgent title="Historique des déclarations" textPosition="text-left" size="text-3xl" />
-      <div className="flex flex-row items-center gap-10">
-        {!isSubmittedDeclarationsLoading && submittedDeclarations && (
-          <div className="flex flex-col gap-[30px] flex-1">
-            <Typography size="text-xs" color="black">
-              En attente de validation
-            </Typography>
+      <div className="flex flex-row items-start gap-10  md:overflow-scroll">
+        <div className="flex flex-col gap-[30px] flex-1">
+          <Typography size="text-xs" color="black">
+            En attente de validation
+          </Typography>
+          {!isSubmittedDeclarationsLoading && submittedDeclarations && (
             <div className="flex flex-col gap-5">
               {submittedDeclarations?.map((item) => (
                 <DeclarationCard
@@ -50,13 +50,13 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
                 />
               ))}
             </div>
-          </div>
-        )}
-        {!isPaidDeclarationsLoading && paidDeclarations && (
-          <div className="flex flex-col gap-[30px] flex-1">
-            <Typography size="text-xs" color="black">
-              Payée
-            </Typography>
+          )}
+        </div>
+        <div className="flex flex-col gap-[30px] flex-1">
+          <Typography size="text-xs" color="black">
+            Payée
+          </Typography>
+          {!isPaidDeclarationsLoading && paidDeclarations && (
             <div className="flex flex-col gap-5">
               {paidDeclarations?.map((item) => (
                 <DeclarationCard
@@ -72,13 +72,14 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
                 />
               ))}
             </div>
-          </div>
-        )}
-        {!isErrorDeclarationsLoading && errorDeclarations && (
-          <div className="flex flex-col gap-[30px] flex-1">
-            <Typography size="text-xs" color="black">
-              Non conforme
-            </Typography>
+          )}
+        </div>
+        <div className="flex flex-col gap-[30px] flex-1">
+          <Typography size="text-xs" color="black">
+            Non conforme
+          </Typography>
+
+          {!isErrorDeclarationsLoading && errorDeclarations && (
             <div className="flex flex-col gap-5">
               {errorDeclarations.map((item) => (
                 <DeclarationCard
@@ -94,18 +95,22 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
                 />
               ))}
             </div>
+          )}
+        </div>
+      </div>
+      {!isErrorDeclarationsLoading &&
+        !isPaidDeclarationsLoading &&
+        !isSubmittedDeclarationsLoading && (
+          <div className="flex justify-center">
+            <NextLink href="/agent/declaration">
+              <div className="flex flex-row items-center gap-2 border border-primary-600 py-2 px-9 rounded-full">
+                <Typography size="text-2xs" color="primary">
+                  Voir plus
+                </Typography>
+              </div>
+            </NextLink>
           </div>
         )}
-      </div>
-      <div className="flex justify-center">
-        <NextLink href="/agent/declaration">
-          <div className="flex flex-row items-center gap-2 border border-primary-600 py-2 px-9 rounded-full">
-            <Typography size="text-2xs" color="primary">
-              Voir plus
-            </Typography>
-          </div>
-        </NextLink>
-      </div>
     </div>
   );
 };

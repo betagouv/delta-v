@@ -74,7 +74,7 @@ const HomepageAgentDesktop = () => {
           isSubmittedDeclarationsLoading={isSubmittedDeclarationsLoading}
           isErrorDeclarationsLoading={isErrorDeclarationsLoading}
         />
-        <BlockActualities data={apiActualities} isLoading={isActualitiesLoading} />
+        <BlockActualities actualities={apiActualities} isLoading={isActualitiesLoading} />
       </div>
     </>
   );

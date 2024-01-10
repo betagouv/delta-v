@@ -101,6 +101,9 @@ const HomepageAgentMobile = () => {
     } else {
       stopCamera();
     }
+    return () => {
+      stopCamera();
+    };
   }, [videoRef, mode]);
 
   const { declarationAgentRequest } = useStore((state) => ({
