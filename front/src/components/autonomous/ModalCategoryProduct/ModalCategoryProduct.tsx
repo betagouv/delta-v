@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { AddProductCartDeclaration } from '../AddProductCartDeclaration';
+import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
@@ -56,6 +57,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   });
   const [displayedProducts, setDisplayedProducts] =
     useState<DisplayedProduct[]>(defaultDisplayedProducts);
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
   useEffect(() => {
     if (currentId) {
@@ -90,7 +92,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
     setCurrentId(idSelected);
   };
 
-  const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
@@ -101,6 +103,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
     };
 
     addProductCartDeclarationAgent(shoppingProduct);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue: customName });
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
 
     if (onClose) {

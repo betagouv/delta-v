@@ -16,7 +16,7 @@ interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: IdRequiredProduct, search?: string) => void;
+  onClickProduct?: (product: IdRequiredProduct, search: string) => void;
   placeholder?: string;
   withSearchIcon?: boolean;
   autoFocus?: boolean;

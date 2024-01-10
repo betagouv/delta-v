@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -32,8 +31,6 @@ const SearchProduct = () => {
     }),
     shallow,
   );
-
-  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
   const router = useRouter();
 
@@ -83,7 +80,6 @@ const SearchProduct = () => {
   const onClickProduct = (product: Product) => {
     setSelectedProduct(product);
     setOpenCategoryDownModal(true);
-    updateSearchProductHistory.mutate({ productId: product.id, searchValue: search });
   };
 
   return (
