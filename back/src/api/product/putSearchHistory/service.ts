@@ -6,7 +6,7 @@ import userNotFoundError from '../../common/errors/userNotFound.error';
 
 export interface PutSearchProductHistoryServiceOptions {
   productId: string;
-  searchValue?: string;
+  searchValue: string;
   userId: string;
   productRepository: ProductRepositoryInterface;
   userRepository: UserRepositoryInterface;

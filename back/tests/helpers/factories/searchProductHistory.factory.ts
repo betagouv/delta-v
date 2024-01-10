@@ -7,6 +7,7 @@ const buildSchema = (): SearchProductHistory => {
     productId: faker.string.uuid(),
     userId: faker.string.uuid(),
     searchDate: faker.date.past(),
+    searchValue: faker.commerce.product(),
   };
 };
 
