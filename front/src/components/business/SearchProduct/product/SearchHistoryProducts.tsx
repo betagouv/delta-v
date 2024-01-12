@@ -90,7 +90,7 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   historyProductToShow.splice(AGENT_PRODUCT_SEARCH_HISTORY_LIMIT);
   return (
     <>
-      {history.length > 0 ? (
+      {historyProductToShow.length > 0 ? (
         <ul className="w-full text-base">
           <Typography color="black" size="text-base">
             Historique des recherches
