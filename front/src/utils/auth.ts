@@ -21,8 +21,8 @@ export const setRefreshToken = (value: string) => {
   }
 };
 
-export const getAccessToken = () => getCookie('accessToken');
-export const getRefreshToken = () => getCookie('refreshToken');
+export const getAccessToken = (): string | undefined => getCookie('accessToken');
+export const getRefreshToken = (): string | undefined => getCookie('refreshToken');
 
 export const clearTokens = () => {
   removeCookie('accessToken');

@@ -195,3 +195,7 @@ export const MY_ACCOUNT_MENU_AGENT_ITEMS: MenuAgentItem[] = [
     openDeclarationResumeModal: true,
   },
 ];
+
+export const isRoutingAgent = (path: string): boolean => {
+  return Object.values(RoutingAgent).includes(path as RoutingAgent);
+};
