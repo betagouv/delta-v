@@ -14,7 +14,7 @@ import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
 import { findProduct } from '@/utils/product.util';
-import { SearchType } from '@/utils/search';
+import { SearchType, searchTypeToOriginal } from '@/utils/search';
 
 const SearchProduct = () => {
   const { searchNomenclatureProducts, products } = useStore(
@@ -36,29 +36,61 @@ const SearchProduct = () => {
   const [initialProduct, setInitialProduct] = useState<Product | undefined>(undefined);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(!!initialProduct);
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product>(
+    (initialProduct as Product) ?? undefined,
+  );
+  const [resultCount, setResultCount] = useState<number>(0);
 
   useEffect(() => {
-    if (selectedId) {
-      setInitialProduct(findProduct(products, selectedId));
-      setOpenCategoryDownModal(true);
-    }
-  }, [selectedId]);
-
-  useEffect(() => {
-    if (id) {
+    if (id && !selectedId) {
       setProductsThatMatch([findProduct(products, id as string) as Product]);
     }
   }, [id]);
 
   useEffect(() => {
-    if (search) {
+    if (search && !selectedId) {
       setProductsThatMatch(searchNomenclatureProducts((search as string) ?? ''));
     }
   }, [search]);
 
-  const [selectedProduct, setSelectedProduct] = useState<Product>(
-    (initialProduct as Product) ?? undefined,
-  );
+  useEffect(() => {
+    if (!selectedId) {
+      return;
+    }
+
+    setInitialProduct(findProduct(products, selectedId));
+    const reducedProductsThatMatch = searchNomenclatureProducts((search as string) ?? '').map(
+      (searchTypeProduct) => {
+        return searchTypeToOriginal(searchTypeProduct);
+      },
+    );
+
+    const selectedProductPosition = reducedProductsThatMatch.findIndex(
+      (product) => product.id === selectedId,
+    );
+
+    if (selectedProductPosition === undefined) {
+      setProductsThatMatch(reducedProductsThatMatch);
+      setOpenCategoryDownModal(true);
+      return;
+    }
+
+    reducedProductsThatMatch.splice(selectedProductPosition, 1);
+    setProductsThatMatch(reducedProductsThatMatch);
+    setOpenCategoryDownModal(true);
+  }, [selectedId, search]);
+
+  useEffect(() => {
+    if (!productsThatMatch && !selectedProduct) {
+      setResultCount(0);
+      return;
+    }
+    if (!productsThatMatch && selectedProduct) {
+      setResultCount(1);
+      return;
+    }
+    setResultCount(productsThatMatch.length + 1);
+  }, [productsThatMatch, selectedProduct]);
 
   const onClickProduct = (product: Product) => {
     setSelectedProduct(product);
@@ -80,13 +112,21 @@ const SearchProduct = () => {
         <div className="flex flex-1 flex-col border-t border-secondary-300 py-4 mx-5">
           <div className="flex flex-row justify-between items-center">
             <Typography size="text-sm" color="black">
-              {`${(productsThatMatch as Product[])?.length} résultat${
-                (productsThatMatch as SearchType<Product>[])?.length > 1 ? 's' : ''
-              } pour "${id ? productsThatMatch[0]?.name : search ?? ''}"`}
+              {`${resultCount} résultat${resultCount > 1 ? 's' : ''} pour "${
+                id ? productsThatMatch[0]?.name : search ?? ''
+              }"`}
             </Typography>
             <ModalSelectCountry />
           </div>
           <div className="flex flex-1 flex-col gap-4 mt-2">
+            {initialProduct && (
+              <NomenclatureCard
+                key={initialProduct.id}
+                product={initialProduct}
+                onClick={onClickProduct}
+                searchValue={search as string}
+              />
+            )}
             {(productsThatMatch as SearchType<Product>[])?.map((product) => (
               <NomenclatureCard
                 key={product.id}

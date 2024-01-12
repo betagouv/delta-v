@@ -16,6 +16,16 @@ export type SearchType<T> = T & {
   rankedPosition?: [number, number];
 };
 
+type OriginalSearchTypeObject<T> = Omit<SearchType<T>, 'rank' | 'rankedValue' | 'rankedPosition'>;
+
+export const searchTypeToOriginal = <T>(
+  searchResult: SearchType<T>,
+): OriginalSearchTypeObject<T> => {
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const { rank, rankedValue, rankedPosition, ...original } = searchResult;
+  return original;
+};
+
 export const advancedSearch = <T>({
   searchValue,
   searchList,

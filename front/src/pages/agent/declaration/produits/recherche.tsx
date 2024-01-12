@@ -17,7 +17,7 @@ import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { SearchType } from '@/utils/search';
+import { searchTypeToOriginal } from '@/utils/search';
 
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
@@ -37,29 +37,61 @@ const SearchProduct = () => {
   const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
     router.query;
 
-  const productsThatMatch: Product[] = [];
-
-  if (id) {
-    productsThatMatch.push(findProduct(id as string) as Product);
-  } else {
-    searchProducts((search as string) ?? '').map((product) => productsThatMatch.push(product));
-  }
-  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
+  const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
+  const [resultCount, setResultCount] = useState<number>(0);
+
+  useEffect(() => {
+    if (id && !selectedId) {
+      setProductsThatMatch([findProduct(id as string) as Product]);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (search && !selectedId) {
+      setProductsThatMatch(searchProducts((search as string) ?? ''));
+    }
+  }, [search]);
 
   useEffect(() => {
     if (!selectedId) {
       return;
     }
 
-    const initialProduct = findProduct(selectedId);
-    if (!initialProduct) {
+    setSelectedProduct(findProduct(selectedId));
+    const reducedProductsThatMatch = searchProducts((search as string) ?? '').map(
+      (searchTypeProduct) => {
+        return searchTypeToOriginal(searchTypeProduct);
+      },
+    );
+
+    const selectedProductPosition = reducedProductsThatMatch.findIndex(
+      (product) => product.id === selectedId,
+    );
+
+    if (selectedProductPosition === undefined) {
+      setProductsThatMatch(reducedProductsThatMatch);
+      setOpenCategoryDownModal(true);
       return;
     }
 
-    setSelectedProduct(initialProduct);
+    reducedProductsThatMatch.splice(selectedProductPosition, 1);
+    setProductsThatMatch(reducedProductsThatMatch);
     setOpenCategoryDownModal(true);
-  }, [selectedId]);
+  }, [selectedId, search]);
+
+  useEffect(() => {
+    if (!productsThatMatch && !selectedProduct) {
+      setResultCount(0);
+      return;
+    }
+    if (!productsThatMatch && selectedProduct) {
+      setResultCount(1);
+      return;
+    }
+    setResultCount(productsThatMatch.length + 1);
+  }, [productsThatMatch, selectedProduct]);
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
@@ -97,13 +129,21 @@ const SearchProduct = () => {
         <div className="flex flex-1 flex-col border-t border-secondary-300 py-4 mx-5">
           <div className="">
             <Typography size="text-sm" color="black">
-              {`${(productsThatMatch as Product[])?.length} résultat${
-                (productsThatMatch as SearchType<Product>[])?.length > 1 ? 's' : ''
-              } pour "${id ? productsThatMatch[0]?.name : search ?? ''}"`}
+              {`${resultCount} résultat${resultCount > 1 ? 's' : ''} pour "${
+                id ? productsThatMatch[0]?.name : search ?? ''
+              }"`}
             </Typography>
           </div>
           <div className="flex flex-1 flex-col gap-4 mt-2">
-            {(productsThatMatch as SearchType<Product>[])?.map((product) => (
+            {selectedProduct && (
+              <NomenclatureCard
+                key={selectedProduct.id}
+                product={selectedProduct}
+                onClick={onClickProduct}
+                searchValue={search as string}
+              />
+            )}
+            {productsThatMatch?.map((product) => (
               <NomenclatureCard
                 key={product.id}
                 product={product}
