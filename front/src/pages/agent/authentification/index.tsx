@@ -140,7 +140,7 @@ const LoginPage = () => {
                 )}
               </>
             )}
-            <div className="w-40">
+            <div className="w-40 mb-2">
               <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
                 Valider
               </Button>
