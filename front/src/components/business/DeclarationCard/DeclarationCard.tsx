@@ -61,7 +61,7 @@ export const DeclarationCard = ({
   return (
     <div
       className={cs({
-        'flex flex-col rounded-xl border border-gray-300 px-5 py-5 cursor-pointer w-full md:max-w-[288px] max-w-none ':
+        'flex flex-col rounded-xl border border-gray-300 px-5 py-5 cursor-pointer w-full md:w-[280px] max-w-none lg:w-full ':
           true,
       })}
       ref={cardRef}

@@ -135,7 +135,7 @@ export const MENU_ITEMS: TabItem[] = [
   },
 ];
 
-interface MenuAgentItem {
+export interface MenuAgentItem {
   id: string;
   title: string;
   path?: string;
@@ -172,14 +172,14 @@ export const MAIN_MENU_AGENT_ITEMS: MenuAgentItem[] = [
   },
   {
     id: 'contact',
-    title: 'Nous contacter',
+    title: 'Contact',
     path: RoutingAgent.contactUs,
     svgIcon: 'categoryContact' as SvgNames,
     disabled: false,
   },
   {
     id: 'account',
-    title: 'Mon compte',
+    title: 'Espace personnel',
     path: RoutingAgent.account,
     svgIcon: 'categorySmiley' as SvgNames,
     disabled: false,
