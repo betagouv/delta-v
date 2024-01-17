@@ -11,18 +11,18 @@ import { useStore } from '@/stores/store';
 
 interface SearchHistoryProductsProps {
   history: SearchProductHistoryItem[];
-  onClickProduct: (product: IdRequiredProduct, searchValue?: string) => void;
+  onClickProduct: (product: IdRequiredProduct, searchValue: string) => void;
 }
 interface ProductHistoryItemProps {
   product: IdRequiredProduct;
-  onClick?: (product: IdRequiredProduct, searchValue?: string) => void;
+  onClick?: (product: IdRequiredProduct, searchValue: string) => void;
   disabled?: boolean;
-  searchValue?: string;
+  searchValue: string;
 }
 
 type ProductHistoryToShow = {
   product: Product;
-  searchValue?: string;
+  searchValue: string;
 };
 
 const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
@@ -90,7 +90,7 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   historyProductToShow.splice(AGENT_PRODUCT_SEARCH_HISTORY_LIMIT);
   return (
     <>
-      {history.length > 0 ? (
+      {historyProductToShow.length > 0 ? (
         <ul className="w-full text-base">
           <Typography color="black" size="text-base">
             Historique des recherches

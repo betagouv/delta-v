@@ -79,6 +79,9 @@ const Declaration = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const [openModalDeleteProduct, setOpenModalDeleteProduct] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  const [categoryProductToShow, setCategoryProductToShow] = useState<Product | undefined>(
+    undefined,
+  );
   const [deletedProductId, setDeletedProductId] = useState<string | undefined>();
   const [defaultValuesProduct, setDefaultValuesProduct] = useState<
     DefaultValuesUpdateProduct | undefined
@@ -104,6 +107,9 @@ const Declaration = () => {
     setOpenFavoriteDownModal(false);
     setOpenModalAddProduct(false);
     setOpenModalDeleteProduct(false);
+    setTimeout(() => {
+      setCategoryProductToShow(undefined);
+    }, 250);
   };
 
   const { handleSubmit } = useForm();
@@ -161,13 +167,19 @@ const Declaration = () => {
     });
   };
 
-  const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
+  const onSearchProduct = (product: IdRequiredProduct, searchValue: string) => {
     setOpenSearchDownModal(false);
     updateSearchProductHistory.mutate({ productId: product.id, searchValue });
     router.push({
       pathname: '/agent/declaration/produits/recherche',
       query: { search: searchValue, selectedId: product.id },
     });
+  };
+
+  const onClickFavorite = (product: Product) => {
+    setOpenFavoriteDownModal(false);
+    setCategoryProductToShow(product);
+    setOpenCategoryDownModal(true);
   };
 
   const onSearchAll = (searchValue: string) => {
@@ -334,13 +346,14 @@ const Declaration = () => {
       <ModalSearchProduct
         open={openSearchDownModal}
         onClose={handleCloseDownModal}
-        onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
+        onClickProduct={(product, searchValue) => onSearchProduct(product, searchValue)}
         onSearchAll={onSearchAll}
       />
       <ModalCategoryProduct
         open={openCategoryDownModal}
         onClose={handleCloseDownModal}
         defaultCurrency={defaultCurrency}
+        defaultProduct={categoryProductToShow}
       />
 
       <ModalAddProductCartDeclaration
@@ -366,7 +379,7 @@ const Declaration = () => {
       <ModalFavorites
         open={openFavoriteDownModal}
         onClose={() => setOpenFavoriteDownModal(false)}
-        onClickFavorite={onClickProduct}
+        onClickFavorite={onClickFavorite}
       />
     </AgentRoute>
   );

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 
+import { faker } from '@faker-js/faker';
 import {
   PutSearchProductHistoryServiceOptions,
   service,
@@ -19,6 +20,7 @@ interface PrepareValidContextResponse {
 const prepareValidContext = (): PrepareValidContextResponse => {
   const product = productEntityFactory({});
   const user = userEntityFactory({});
+  const searchValue = faker.commerce.product();
   const productRepository = productRepositoryMock({ getOneById: product });
   const userRepository = userRepositoryMock({ getOneById: user });
   const searchProductHistoryRepository = searchProductHistoryRepositoryMock({ getByAgentId: null });
@@ -26,6 +28,7 @@ const prepareValidContext = (): PrepareValidContextResponse => {
   const serviceOptions = {
     productId: product.id,
     userId: user.id,
+    searchValue,
     productRepository,
     userRepository,
     searchProductHistoryRepository,
@@ -47,6 +50,7 @@ describe('put search product history service', () => {
       productId: serviceOptions.productId,
       userId: serviceOptions.userId,
       searchDate: expect.any(Date),
+      searchValue: serviceOptions.searchValue,
     });
     expect(serviceOptions.searchProductHistoryRepository.removeOld).toHaveBeenCalledWith(
       serviceOptions.userId,
