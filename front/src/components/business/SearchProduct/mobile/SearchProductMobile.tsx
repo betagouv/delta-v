@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { SearchHistoryProducts } from './product/SearchHistoryProducts';
-import { SearchResultProducts } from './product/SearchResultProducts';
+import { SearchHistoryProducts } from '../product/SearchHistoryProducts';
+import { SearchResultProducts } from '../product/SearchResultProducts';
 import { useGetSearchProductHistory } from '@/api/hooks/useAPIProducts';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
@@ -11,27 +11,24 @@ import { IdRequiredProduct, Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 import { getStringOrUndefined } from '@/utils/string';
 
-type SearchDisplayType = 'product' | 'global';
 interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
   onSearchAll?: (search: string) => void;
   onClickProduct?: (product: IdRequiredProduct, search?: string) => void;
   placeholder?: string;
-  withSearchIcon?: boolean;
   autoFocus?: boolean;
-  searchType?: SearchDisplayType;
   disabled?: boolean;
 }
 
-export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unknown>({
+export const SearchProductMobile: React.FC<SearchProductProps<any>> = <T extends unknown>({
   onSearch,
   onChange = () => {},
   onSearchAll = () => {},
   onClickProduct = () => {},
+  placeholder = '',
   autoFocus = false,
   disabled = false,
-  placeholder = '',
 }: SearchProductProps<T>) => {
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
@@ -93,7 +90,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
               onClickProduct={onClickProduct}
             />
           )}
-          {showSearchResults && showSearchHistory && <div className="border-t my-8" />}
+          {showSearchResults && showSearchHistory && <div className="border-t my-5" />}
           {showSearchHistory && (
             <SearchHistoryProducts history={history} onClickProduct={onClickProduct} />
           )}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SearchProduct } from '@/components/business/SearchProduct';
+import { SearchProductMobile } from '@/components/business/SearchProduct/mobile';
 import DownModal from '@/components/common/DownModal';
 import { IdRequiredProduct } from '@/model/product';
 import { useStore } from '@/stores/store';
@@ -26,10 +26,9 @@ export const ModalSearchProduct: React.FC<ModalSearchProductProps> = ({
     <>
       <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
         <div className="flex h-[calc(100vh-50px)] flex-1 flex-col w-full">
-          <SearchProduct
+          <SearchProductMobile
             onSearch={searchProducts}
             autoFocus
-            withSearchIcon
             onClickProduct={onClickProduct}
             onSearchAll={onSearchAll}
             placeholder="Saisissez votre recherche…"

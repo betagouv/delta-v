@@ -11,7 +11,7 @@ interface ModalDeleteProductCartDeclarationProps {
   onDeleteProduct: (product?: Product) => void;
 }
 
-export const ModalDeleteFavoriteProduct: React.FC<ModalDeleteProductCartDeclarationProps> = ({
+export const ModalDeleteFavoriteProductMobile: React.FC<ModalDeleteProductCartDeclarationProps> = ({
   onClose,
   open,
   onDeleteProduct,

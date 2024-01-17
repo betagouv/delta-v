@@ -10,9 +10,10 @@ import { MenuAgentItem } from '@/utils/const';
 
 interface NavBarProps {
   links: MenuAgentItem[];
+  activePath?: string;
 }
 
-export const NavBar: React.FC<NavBarProps> = ({ links }: NavBarProps) => {
+export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps) => {
   return (
     <div className="flex flex-row justify-between items-center">
       <div className="w-[86px] h-[45px]">
@@ -42,7 +43,12 @@ export const NavBar: React.FC<NavBarProps> = ({ links }: NavBarProps) => {
                 </NextLink>
               ) : (
                 <Link href={item.path} key={item.title}>
-                  <Typography size="text-2xs" color="black" noWrap>
+                  <Typography
+                    size="text-2xs"
+                    color="black"
+                    weight={activePath === item.path ? 'bold' : undefined}
+                    noWrap
+                  >
                     {item.title}
                   </Typography>
                 </Link>

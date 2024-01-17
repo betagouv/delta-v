@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import shallow from 'zustand/shallow';
 
 import { AddProductToFavorites } from '../AddProductToFavorites';
-import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct';
+import { ModalDeleteFavoriteProductMobile } from '../ModalDeleteFavoriteProduct/mobile';
 import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
@@ -163,7 +163,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
           </div>
         </div>
       </DownModal>
-      <ModalDeleteFavoriteProduct
+      <ModalDeleteFavoriteProductMobile
         open={openModalDeleteFavorite}
         onClose={() => setOpenModalDeleteFavorite(false)}
         onDeleteProduct={() => onRemove(currentProduct)}

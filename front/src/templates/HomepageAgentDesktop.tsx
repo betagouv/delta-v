@@ -54,6 +54,10 @@ const HomepageAgentDesktop = () => {
   const onChangeSearch = (value: string) => {
     setSearchValue(value);
   };
+  console.log('apiErrorDeclarations', apiErrorDeclarations);
+  console.log('apiPaidDeclarations', apiPaidDeclarations);
+  console.log('apiSubmittedDeclarations', apiSubmittedDeclarations);
+  console.log('apiActualities', apiActualities);
 
   return (
     <>

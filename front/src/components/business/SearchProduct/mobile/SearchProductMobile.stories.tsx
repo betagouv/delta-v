@@ -1,13 +1,13 @@
 import { Meta } from '@storybook/react';
 
-import { SearchProduct } from './SearchProduct';
+import { SearchProductMobile } from './SearchProductMobile';
 import { Product } from '@/model/product';
 import { productFactory } from '@/tests/factories/Product.factory';
 import { SearchType } from '@/utils/search';
 
 export default {
   title: 'Components/Business/SearchProduct',
-  component: SearchProduct,
+  component: SearchProductMobile,
 } as Meta;
 
 const arrayProducts: SearchType<Product>[] = [
@@ -26,7 +26,7 @@ const arrayProducts: SearchType<Product>[] = [
 export const base = (): JSX.Element => (
   <div className="p-3">
     <br />
-    <SearchProduct onSearch={() => arrayProducts} />
+    <SearchProductMobile onSearch={() => arrayProducts} />
     <br />
   </div>
 );
