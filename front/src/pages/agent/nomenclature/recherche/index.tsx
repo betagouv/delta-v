@@ -14,7 +14,7 @@ import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
 import { findProduct } from '@/utils/product.util';
-import { SearchType, searchTypeToOriginal } from '@/utils/search';
+import { SearchType } from '@/utils/search';
 
 const SearchProduct = () => {
   const { searchNomenclatureProducts, products } = useStore(
@@ -59,11 +59,7 @@ const SearchProduct = () => {
     }
 
     setInitialProduct(findProduct(products, selectedId));
-    const reducedProductsThatMatch = searchNomenclatureProducts((search as string) ?? '').map(
-      (searchTypeProduct) => {
-        return searchTypeToOriginal(searchTypeProduct);
-      },
-    );
+    const reducedProductsThatMatch = searchNomenclatureProducts((search as string) ?? '');
 
     const selectedProductPosition = reducedProductsThatMatch.findIndex(
       (product) => product.id === selectedId,

@@ -17,7 +17,6 @@ import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { searchTypeToOriginal } from '@/utils/search';
 
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
@@ -34,64 +33,44 @@ const SearchProduct = () => {
 
   const router = useRouter();
 
-  const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
+  const { search, selectedId }: { id?: string; search?: string; selectedId?: string } =
     router.query;
 
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
-  const [resultCount, setResultCount] = useState<number>(0);
 
-  useEffect(() => {
-    if (id && !selectedId) {
-      setProductsThatMatch([findProduct(id as string) as Product]);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (search && !selectedId) {
-      setProductsThatMatch(searchProducts((search as string) ?? ''));
-    }
-  }, [search]);
-
-  useEffect(() => {
+  const setupSearchProductResults = (): void => {
     if (!selectedId) {
+      setProductsThatMatch(searchProducts((search as string) ?? ''));
       return;
     }
 
-    setSelectedProduct(findProduct(selectedId));
-    const reducedProductsThatMatch = searchProducts((search as string) ?? '').map(
-      (searchTypeProduct) => {
-        return searchTypeToOriginal(searchTypeProduct);
-      },
+    const reducedProductsThatMatch = searchProducts((search as string) ?? '');
+    const searchProductsWithoutSelectedProduct = reducedProductsThatMatch.filter(
+      (product) => product.id !== selectedId,
     );
 
-    const selectedProductPosition = reducedProductsThatMatch.findIndex(
-      (product) => product.id === selectedId,
-    );
+    const productOnTop = findProduct(selectedId);
 
-    if (selectedProductPosition === undefined) {
-      setProductsThatMatch(reducedProductsThatMatch);
-      setOpenCategoryDownModal(true);
+    if (!productOnTop) {
+      setProductsThatMatch(searchProductsWithoutSelectedProduct);
       return;
     }
 
-    reducedProductsThatMatch.splice(selectedProductPosition, 1);
-    setProductsThatMatch(reducedProductsThatMatch);
-    setOpenCategoryDownModal(true);
-  }, [selectedId, search]);
+    setProductsThatMatch([productOnTop, ...searchProductsWithoutSelectedProduct]);
+  };
 
   useEffect(() => {
-    if (!productsThatMatch && !selectedProduct) {
-      setResultCount(0);
-      return;
+    if (selectedId) {
+      setSelectedProduct(findProduct(selectedId));
+      setOpenCategoryDownModal(true);
     }
-    if (!productsThatMatch && selectedProduct) {
-      setResultCount(1);
-      return;
-    }
-    setResultCount(productsThatMatch.length + 1);
-  }, [productsThatMatch, selectedProduct]);
+  }, [selectedId]);
+
+  useEffect(() => {
+    setupSearchProductResults();
+  }, [selectedId, search]);
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
@@ -129,20 +108,12 @@ const SearchProduct = () => {
         <div className="flex flex-1 flex-col border-t border-secondary-300 py-4 mx-5">
           <div className="">
             <Typography size="text-sm" color="black">
-              {`${resultCount} résultat${resultCount > 1 ? 's' : ''} pour "${
-                id ? productsThatMatch[0]?.name : search ?? ''
-              }"`}
+              {`${productsThatMatch.length} résultat${
+                productsThatMatch.length > 1 ? 's' : ''
+              } pour "${search}"`}
             </Typography>
           </div>
           <div className="flex flex-1 flex-col gap-4 mt-2">
-            {selectedProduct && (
-              <NomenclatureCard
-                key={selectedProduct.id}
-                product={selectedProduct}
-                onClick={onClickProduct}
-                searchValue={search as string}
-              />
-            )}
             {productsThatMatch?.map((product) => (
               <NomenclatureCard
                 key={product.id}
