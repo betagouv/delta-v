@@ -1,12 +1,15 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import { FieldErrors } from 'react-hook-form';
+import { useMediaQuery } from 'react-responsive';
 import shallow from 'zustand/shallow';
 
 import { Role } from '../FormSelectProduct/utils';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
+import { TailwindDefaultScreenSize } from '@/utils/enums';
 import { findProduct } from '@/utils/product.util';
 
 interface FormAddProductToFavoriteProps {
@@ -27,6 +30,9 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
   isAddAble = false,
   onRemoveProduct,
 }: FormAddProductToFavoriteProps) => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
+  });
   const { nomenclatureProducts, favoriteProducts } = useStore(
     (state) => ({
       currencies: state.currencies.appState.currencies,
@@ -42,55 +48,65 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
 
   return (
     <div className="flex flex-1 flex-col gap-6 w-full">
-      <div className="flex flex-col gap-[10px] ml-2">
+      <div className="flex flex-col gap-[10px]">
         {isAddAble && (
-          <div className="flex flex-col gap-1 ml-2 flex-1 justify-between">
+          <div className="flex flex-col gap-[10px] flex-1 justify-between">
             <div className="w-full bg-primary-100 text-primary-600 h-[76px] flex justify-center items-center">
-              <Typography size="text-2xs" weight="bold">
+              <Typography size={isMobile ? 'text-2xs' : 'text-xs'} weight="bold">
                 Taux de DD : {product?.id}
               </Typography>
             </div>
-            <div className="flex flex-col gap-1 ml-2 justify-start">
-              <Typography size="text-2xs" color="black">
-                Prix d'achat : 12,00€
-              </Typography>
-              <Typography size="text-2xs" color="black">
-                Prix de vente : 12,00€
-              </Typography>
-            </div>
-            {submitted ? (
-              <div className="flex justify-center">
-                <Typography color="link" size="text-xl" weight="bold">
-                  Merci !
+            <div
+              className={classNames({
+                'flex w-full': true,
+                'flex-col gap-[30px]': isMobile,
+                'justify-between': !isMobile,
+              })}
+            >
+              <div className="flex flex-col gap-1 justify-start">
+                <Typography size={isMobile ? 'text-2xs' : 'text-xs'} color="black">
+                  Prix d'achat : 12,00€
+                </Typography>
+                <Typography size={isMobile ? 'text-2xs' : 'text-xs'} color="black">
+                  Prix de vente : 12,00€
                 </Typography>
               </div>
-            ) : (
-              <>
-                {isInFavorite ? (
-                  <button
-                    className="underline text-error"
-                    type="button"
-                    onClick={
-                      onRemoveProduct && product ? () => onRemoveProduct(product) : undefined
-                    }
-                  >
-                    Retirer des favoris
-                  </button>
-                ) : (
-                  <button className="underline text-primary-600" type="submit">
-                    Ajouter aux favoris
-                  </button>
-                )}
-              </>
-            )}
+              {submitted ? (
+                <div className="flex justify-center">
+                  <Typography color="link" size="text-xl" weight="bold">
+                    Merci !
+                  </Typography>
+                </div>
+              ) : (
+                <>
+                  {isInFavorite ? (
+                    <button
+                      className={classNames({
+                        'underline text-error text-xs ': true,
+                        'self-start': !isMobile,
+                      })}
+                      type="button"
+                      onClick={
+                        onRemoveProduct && product ? () => onRemoveProduct(product) : undefined
+                      }
+                    >
+                      Retirer des favoris
+                    </button>
+                  ) : (
+                    <button
+                      className={classNames({
+                        'underline text-primary-600 text-xs': true,
+                        'self-start': !isMobile,
+                      })}
+                    >
+                      Ajouter aux favoris
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         )}
-        <div className="flex flex-col gap-1  mt-[77px]">
-          <Typography size="text-3xs" color="middle-gray" textPosition="text-center">
-            Vous souhaitez nous faire parvenir une remarque, une optimisation,
-            <br /> une demande particulière ? <a>Cliquez ici</a>
-          </Typography>
-        </div>
       </div>
     </div>
   );

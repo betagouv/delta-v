@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
+import { useMediaQuery } from 'react-responsive';
 
 import { FormAddProduct } from '../FormAddProduct';
 import { FormAddProductToFavorite } from '../FormAddProductToFavorite';
@@ -9,8 +11,10 @@ import { StepsFormProduct } from '../StepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
 import { getSchema } from './schema';
 import { FormSelectProductData, Role, getDefaultValues } from './utils';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
+import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 export interface OnAddProductOptions {
   product: Product;
@@ -48,6 +52,9 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   defaultValues,
   isAddAbleToFavorites = false,
 }: FormSelectProductProps) => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
+  });
   const [steps, setSteps] = useState<Product[]>([]);
   const [allowNotManagedProduct, setAllowNotManagedProduct] = useState<boolean>(false);
 
@@ -156,16 +163,28 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         />
       )}
       {isAddAbleToFavorites && (
-        <FormAddProductToFavorite
-          productId={currentProduct.id}
-          onRemoveProduct={onRemoveProduct}
-          control={control}
-          register={register}
-          errors={errors}
-          defaultCurrency={defaultCurrency}
-          templateRole={templateRole}
-          isAddAble={isAddAble}
-        />
+        <>
+          <FormAddProductToFavorite
+            productId={currentProduct.id}
+            onRemoveProduct={onRemoveProduct}
+            control={control}
+            register={register}
+            errors={errors}
+            defaultCurrency={defaultCurrency}
+            templateRole={templateRole}
+            isAddAble={isAddAble}
+          />
+          <div className={classNames({ 'flex flex-col gap-1': true, 'mt-[77px]': isMobile })}>
+            <Typography
+              size={isMobile ? 'text-2xs' : 'text-xs'}
+              color="middle-gray"
+              textPosition="text-center"
+            >
+              Vous souhaitez nous faire parvenir une remarque, une optimisation,
+              <br /> une demande particulière ? <a>Cliquez ici</a>
+            </Typography>
+          </div>
+        </>
       )}
     </form>
   ) : (

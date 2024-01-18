@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import classNames from 'classnames';
+
 import { SearchHistoryProducts } from '../product/SearchHistoryProducts';
 import { SearchResultProducts } from '../product/SearchResultProducts';
 import { useGetSearchProductHistory } from '@/api/hooks/useAPIProducts';
@@ -34,6 +36,7 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const productsThatMatch = onSearch(searchValue ?? '');
@@ -52,6 +55,12 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
   const isFocusedEmpty = isFocused && !searchValue;
   const showSearchResults = !!searchValue && resultSearch.length > 0;
   const showSearchHistory = !!history && (isFocusedEmpty || !!searchValue);
+  const handleFilterByCategoryClick = () => {
+    if (onFilterByCategoryClick) {
+      onFilterByCategoryClick();
+      setIsFiltersOpen(!isFiltersOpen);
+    }
+  };
 
   return (
     <div className="h-[40px] w-full flex items-center gap-[10px]">
@@ -92,7 +101,7 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
       </div>
       <div
         className="h-full flex items-center px-5 rounded-full bg-white gap-11"
-        onClick={onFilterByCategoryClick}
+        onClick={handleFilterByCategoryClick}
       >
         <div className="flex items-center gap-[10px]">
           <SvgIcon name="filter" className="h-3 w-3" />
@@ -100,7 +109,14 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
             Filtrer par catégories
           </Typography>
         </div>
-        <Icon name="chevron-down" size="sm" />
+        <span
+          className={classNames({
+            'rotate-180 transition-all': isFiltersOpen,
+            'rotate-0 transition-all': !isFiltersOpen,
+          })}
+        >
+          <Icon name="chevron-down" size="sm" />
+        </span>
       </div>
       <button
         className="bg-primary-600 w-[134px] h-[34px] rounded-full flex items-center px-5 justify-between ml-5"

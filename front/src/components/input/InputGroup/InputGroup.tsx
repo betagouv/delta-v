@@ -73,6 +73,7 @@ export interface IInputGroupProps {
   onTrailingIconClick?: () => void;
   onTrailingSvgIconClick?: () => void;
   withListBoxEffect?: boolean;
+  isMobile?: boolean;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({

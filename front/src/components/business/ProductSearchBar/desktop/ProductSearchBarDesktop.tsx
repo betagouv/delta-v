@@ -7,24 +7,22 @@ import { SearchProductDesktop } from '../../SearchProduct/desktop';
 import { ProductSearchBarStyle, getSearchPagePath } from '../enum';
 import { useFavorites, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
-import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
-import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalDeleteFavoriteProductDesktop } from '@/components/autonomous/ModalDeleteFavoriteProduct/desktop';
-import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { findProduct, haveAgeRestriction } from '@/utils/product.util';
 
 export interface ProductSearchBarProps {
   variant?: ProductSearchBarStyle;
+  onFilterByCategoryClick?: () => void;
 }
 
 export const ProductSearchBarDesktop = ({
   variant = ProductSearchBarStyle.DECLARATION,
+  onFilterByCategoryClick,
 }: ProductSearchBarProps) => {
   const router = useRouter();
   const [isDeleteFavoriteModalOpen, setIsDeleteFavoriteModalOpen] = useState(false);
-  const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
   const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
     undefined,
   );
@@ -65,10 +63,6 @@ export const ProductSearchBarDesktop = ({
 
   useFavorites({ onSuccess });
 
-  const handleCloseDownModal = () => {
-    setOpenCategoryDownModal(false);
-  };
-
   const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
     updateSearchProductHistory.mutate({ productId: product.id, searchValue });
     router.push({
@@ -79,7 +73,6 @@ export const ProductSearchBarDesktop = ({
 
   const onClickFavorite = (product: Product) => {
     setSelectedFavoriteProduct(product);
-    setOpenCategoryDownModal(true);
   };
 
   const onDeleteFavorite = (product: Product) => {
@@ -96,9 +89,11 @@ export const ProductSearchBarDesktop = ({
     setIsDeleteFavoriteModalOpen(false);
   };
 
-  const onFilterByCategoryClick = () => {
+  const onFilterClick = () => {
+    if (onFilterByCategoryClick) {
+      onFilterByCategoryClick();
+    }
     setSelectedFavoriteProduct(undefined);
-    setOpenCategoryDownModal(true);
   };
 
   const onSearchAll = (searchValue: string) => {
@@ -131,7 +126,7 @@ export const ProductSearchBarDesktop = ({
           }
           placeholder="Type de marchandises, marques..."
           onClickProduct={onClickProduct}
-          onFilterByCategoryClick={onFilterByCategoryClick}
+          onFilterByCategoryClick={onFilterClick}
           onSearchClick={onSearchAll}
         />
 
@@ -144,12 +139,6 @@ export const ProductSearchBarDesktop = ({
           />
         )}
       </div>
-
-      {variant === 'nomenclature' && (
-        <div className="flex flex-row justify-end w-full mt-[30px] border-t pt-5">
-          <ModalSelectCountry />
-        </div>
-      )}
 
       {selectedFavoriteProduct && (
         <ModalDeleteFavoriteProductDesktop
@@ -168,11 +157,11 @@ export const ProductSearchBarDesktop = ({
             onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
             onSearchAll={onSearchAll}
           /> */}
-          <ModalCategoryNomenclatureProduct
+          {/* <ModalCategoryNomenclatureProduct
             open={openCategoryDownModal}
             onClose={handleCloseDownModal}
             defaultProduct={selectedFavoriteProduct}
-          />
+          /> */}
         </>
       )}
 
@@ -184,11 +173,11 @@ export const ProductSearchBarDesktop = ({
             onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
             onSearchAll={onSearchAll}
           /> */}
-          <ModalCategoryProduct
+          {/* <ModalCategoryProduct
             open={openCategoryDownModal}
             onClose={handleCloseDownModal}
             defaultCurrency={defaultCurrency}
-          />
+          /> */}
         </>
       )}
     </>

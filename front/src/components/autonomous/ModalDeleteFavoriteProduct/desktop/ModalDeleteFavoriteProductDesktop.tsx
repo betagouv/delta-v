@@ -15,7 +15,7 @@ export const ModalDeleteFavoriteProductDesktop: React.FC<
 > = ({ productName, onClose, open, onDeleteProduct }) => {
   return (
     <>
-      <CenterModal bgColor="bg-white" open={open} onClose={onClose}>
+      <CenterModal bgColor="bg-white" open={open} onClose={onClose} centeredContent>
         <div className="flex-col flex items-center gap-4">
           <Typography color="secondary" textPosition="text-center" size="text-2xs">
             {`Êtes-vous sur de vouloir supprimer "${productName}"`}

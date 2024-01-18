@@ -1,10 +1,12 @@
 import React from 'react';
 
 import cs from 'classnames';
+import { useMediaQuery } from 'react-responsive';
 
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 import { Product } from '@/model/product';
+import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 export interface IBreadcrumbsProps {
   categoryProducts: Product[];
@@ -17,6 +19,9 @@ export const Breadcrumbs: React.FC<IBreadcrumbsProps> = ({
   limit,
   onClickLink,
 }: IBreadcrumbsProps) => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
+  });
   const displayedCategoryProducts =
     limit && categoryProducts.length > limit
       ? [...categoryProducts.slice(categoryProducts.length - limit, categoryProducts.length)]
@@ -34,7 +39,7 @@ export const Breadcrumbs: React.FC<IBreadcrumbsProps> = ({
               })}
               onClick={() => onClickLink && onClickLink(item.id)}
             >
-              <Typography color="middle-gray" size="text-2xs">
+              <Typography color="middle-gray" size={isMobile ? 'text-2xs' : 'text-xs'}>
                 {item.name}
               </Typography>
             </div>

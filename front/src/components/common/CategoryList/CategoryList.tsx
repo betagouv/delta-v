@@ -1,6 +1,7 @@
 import React from 'react';
 
 import cs from 'classnames';
+import { useMediaQuery } from 'react-responsive';
 
 import { Icon } from '../Icon';
 import { IconButtonWithTitle } from '../IconButtonWithTitle';
@@ -8,6 +9,7 @@ import { SvgIcon, SvgNames } from '../SvgIcon';
 import { TitleAgent } from '../TitleAgent';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
 import { Product } from '@/model/product';
+import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 export interface Item {
   title: string;
@@ -34,6 +36,9 @@ export const CategoryList: React.FC<CategoryListProps> = ({
   displayType = 'list',
   bigSize,
 }: CategoryListProps) => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
+  });
   return (
     <ul role="list">
       {title && bigSize && (
@@ -44,7 +49,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
 
       {title && !bigSize && <li className="flex py-1 text-sm">{title}</li>}
 
-      {productTree && productTree.length > 0 && (
+      {isMobile && productTree && productTree.length > 0 && (
         <div className="mt-7">
           <IconButtonWithTitle
             icon="chevron-left"
@@ -53,11 +58,23 @@ export const CategoryList: React.FC<CategoryListProps> = ({
           />
         </div>
       )}
+
+      {!isMobile && (
+        <div className="h-[46px]">
+          {productTree && productTree.length > 0 && (
+            <IconButtonWithTitle
+              icon="chevron-left"
+              title={productTree[0]?.name ?? ''}
+              onClick={onClick}
+            />
+          )}
+        </div>
+      )}
       <div
         className={cs({
-          'flex flex-row ': true,
-          'grid grid-cols-3 gap-2 mt-5': displayType === 'card',
-          'flex-col': displayType === 'list',
+          'grid grid-cols-3 gap-2 mt-5 justify-items-center': displayType === 'card' && isMobile,
+          'flex flex-wrap gap-5 ': displayType === 'card' && !isMobile,
+          'flex flex-col': displayType === 'list',
         })}
       >
         {items.map((item, index) =>

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
 import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
@@ -12,6 +13,8 @@ export interface ICenterModalProps {
   title?: React.ReactNode;
   bgColor?: string;
   children?: any;
+  centeredContent?: boolean;
+  noMargin?: boolean;
 }
 
 export const CenterModal: React.FC<ICenterModalProps> = ({
@@ -20,6 +23,8 @@ export const CenterModal: React.FC<ICenterModalProps> = ({
   title,
   bgColor = 'bg-white',
   children,
+  centeredContent = false,
+  noMargin = false,
 }: ICenterModalProps) => {
   const handleOnClose = (): void => {
     if (onClose) {
@@ -49,7 +54,8 @@ export const CenterModal: React.FC<ICenterModalProps> = ({
         </Transition.Child>
         <div
           className={classNames({
-            'flex text-center place-content-center': true,
+            flex: true,
+            'text-center place-content-center': centeredContent,
           })}
         >
           <Transition.Child
@@ -62,7 +68,16 @@ export const CenterModal: React.FC<ICenterModalProps> = ({
             leaveTo="opacity-100 translate-y-full sm:translate-y-0 sm:scale-95"
           >
             <div
-              className={`relative -translate-x-1/2 translate-y-1/2 inline-block h-full w-full rounded-[20px] z-10 ${bgColor} py-8 px-16`}
+              className={twMerge(
+                classNames(
+                  {
+                    'relative -translate-x-1/2 translate-y-1/2 inline-block h-full w-full rounded-[20px] z-10 py-8 px-16 overflow-hidden':
+                      true,
+                    'py-0 px-0': noMargin,
+                  },
+                  bgColor,
+                ),
+              )}
             >
               <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
                 <Icon name="clear" onClick={onClose} />

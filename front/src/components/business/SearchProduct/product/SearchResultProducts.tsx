@@ -57,7 +57,7 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
               <li
                 key={resultElement.id}
                 className={classNames({
-                  'flex select-none items-center px-3 leading-3 w-fit': true,
+                  'flex select-none items-center px-3 leading-3 border w-fit': true,
                   'cursor-pointer': onClickProduct,
                 })}
                 data-testid="result-product-search-element"
