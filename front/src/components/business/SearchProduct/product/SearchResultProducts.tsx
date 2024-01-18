@@ -12,7 +12,7 @@ import { SearchType } from '@/utils/search';
 interface SearchResultProductsProps {
   resultSearch: SearchType<Product>[];
   search: string;
-  onClickProduct: (product: IdRequiredProduct, searchValue?: string) => void;
+  onClickProduct: (product: IdRequiredProduct, searchValue: string) => void;
 }
 
 export const renderMatchedWithSearch = (

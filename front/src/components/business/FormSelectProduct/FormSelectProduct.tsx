@@ -22,6 +22,7 @@ export interface OnAddProductOptions {
   name: string;
   value: string;
   currency: string;
+  customName: string;
 }
 
 export interface DefaultValuesUpdateProduct {
@@ -76,6 +77,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     register,
     control,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
@@ -112,6 +114,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         product,
         value: data.value?.toString() ?? '1',
         currency: (data.currency as string) ?? 'EUR',
+        customName: getValues('name'),
       });
     }
   };

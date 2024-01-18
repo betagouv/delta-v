@@ -69,6 +69,9 @@ const Declaration = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const [openModalDeleteProduct, setOpenModalDeleteProduct] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  const [categoryProductToShow, setCategoryProductToShow] = useState<Product | undefined>(
+    undefined,
+  );
   const [deletedProductId, setDeletedProductId] = useState<string | undefined>();
   const [defaultValuesProduct, setDefaultValuesProduct] = useState<
     DefaultValuesUpdateProduct | undefined
@@ -91,6 +94,9 @@ const Declaration = () => {
   const handleCloseDownModal = () => {
     setOpenModalAddProduct(false);
     setOpenModalDeleteProduct(false);
+    setTimeout(() => {
+      setCategoryProductToShow(undefined);
+    }, 250);
   };
 
   const { handleSubmit } = useForm();

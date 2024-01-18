@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -18,7 +17,6 @@ import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { SearchType } from '@/utils/search';
 
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
@@ -33,36 +31,46 @@ const SearchProduct = () => {
     shallow,
   );
 
-  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
-
   const router = useRouter();
 
-  const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
+  const { search, selectedId }: { id?: string; search?: string; selectedId?: string } =
     router.query;
 
-  const productsThatMatch: Product[] = [];
-
-  if (id) {
-    productsThatMatch.push(findProduct(id as string) as Product);
-  } else {
-    searchProducts((search as string) ?? '').map((product) => productsThatMatch.push(product));
-  }
-  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
+  const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
+
+  const setupSearchProductResults = (): void => {
+    if (!selectedId) {
+      setProductsThatMatch(searchProducts((search as string) ?? ''));
+      return;
+    }
+
+    const reducedProductsThatMatch = searchProducts((search as string) ?? '');
+    const searchProductsWithoutSelectedProduct = reducedProductsThatMatch.filter(
+      (product) => product.id !== selectedId,
+    );
+
+    const productOnTop = findProduct(selectedId);
+
+    if (!productOnTop) {
+      setProductsThatMatch(searchProductsWithoutSelectedProduct);
+      return;
+    }
+
+    setProductsThatMatch([productOnTop, ...searchProductsWithoutSelectedProduct]);
+  };
 
   useEffect(() => {
-    if (!selectedId) {
-      return;
+    if (selectedId) {
+      setSelectedProduct(findProduct(selectedId));
+      setOpenCategoryDownModal(true);
     }
-
-    const initialProduct = findProduct(selectedId);
-    if (!initialProduct) {
-      return;
-    }
-
-    setSelectedProduct(initialProduct);
-    setOpenCategoryDownModal(true);
   }, [selectedId]);
+
+  useEffect(() => {
+    setupSearchProductResults();
+  }, [selectedId, search]);
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
@@ -83,7 +91,6 @@ const SearchProduct = () => {
   const onClickProduct = (product: Product) => {
     setSelectedProduct(product);
     setOpenCategoryDownModal(true);
-    updateSearchProductHistory.mutate({ productId: product.id, searchValue: search });
   };
 
   return (
@@ -101,13 +108,13 @@ const SearchProduct = () => {
         <div className="flex flex-1 flex-col border-t border-secondary-300 py-4 mx-5">
           <div className="">
             <Typography size="text-sm" color="black">
-              {`${(productsThatMatch as Product[])?.length} résultat${
-                (productsThatMatch as SearchType<Product>[])?.length > 1 ? 's' : ''
-              } pour "${id ? productsThatMatch[0]?.name : search ?? ''}"`}
+              {`${productsThatMatch.length} résultat${
+                productsThatMatch.length > 1 ? 's' : ''
+              } pour "${search}"`}
             </Typography>
           </div>
           <div className="flex flex-1 flex-col gap-4 mt-2">
-            {(productsThatMatch as SearchType<Product>[])?.map((product) => (
+            {productsThatMatch?.map((product) => (
               <NomenclatureCard
                 key={product.id}
                 product={product}

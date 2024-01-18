@@ -6,12 +6,12 @@ import { Product } from '@/model/product';
 export type SearchProductHistoryItem = {
   id: string;
   name: string;
-  searchValue?: string;
+  searchValue: string;
 };
 
 export type PutSearchProductHistoryParams = {
   productId: string;
-  searchValue?: string;
+  searchValue: string;
 };
 
 export const getAllProductRequest = async (): Promise<Product[]> => {
