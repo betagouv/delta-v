@@ -34,6 +34,7 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
   }));
+
   const [isAvailableToEdit, setIsAvailableToEdit] = useState<boolean>(false);
 
   const removeFavoriteMutation = useRemoveFavoriteMutation({});

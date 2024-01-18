@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-import { useMatomo } from '@datapunt/matomo-tracker-react';
-import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { AddProductCartDeclaration } from '../AddProductCartDeclaration';
-import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
 import { SvgNames } from '@/components/common/SvgIcon';
 import { Product } from '@/model/product';
-import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { checkIsFinalProduct } from '@/utils/product.util';
 
 interface ModalCategoryProductProps {
   open: boolean;
+  onAddProduct: (options: OnAddProductOptions) => void;
   onClose?: () => void;
   defaultCurrency?: string;
   defaultProduct?: Product;
@@ -30,20 +27,19 @@ interface DisplayedProduct {
 
 export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   onClose,
+  onAddProduct,
   open,
   defaultCurrency,
   defaultProduct,
 }) => {
-  const { findProduct, products, addProductCartDeclarationAgent, findProductTree } = useStore(
+  const { findProduct, products, findProductTree } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       products: state.products.appState.products,
-      addProductCartDeclarationAgent: state.addProductCartDeclarationAgent,
       findProductTree: state.findProductTree,
     }),
     shallow,
   );
-  const { trackEvent } = useMatomo();
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
 
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
@@ -58,7 +54,6 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   });
   const [displayedProducts, setDisplayedProducts] =
     useState<DisplayedProduct[]>(defaultDisplayedProducts);
-  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
   useEffect(() => {
     if (currentId) {
@@ -91,25 +86,6 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
 
   const onSelectProduct = (idSelected: string) => {
     setCurrentId(idSelected);
-  };
-
-  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
-    const shoppingProduct: ShoppingProduct = {
-      id: uuidv4(),
-      productId: product.id,
-      name,
-      value: parseFloat(value),
-      amount: 1,
-      currency: currency ?? 'EUR',
-    };
-
-    addProductCartDeclarationAgent(shoppingProduct);
-    updateSearchProductHistory.mutate({ productId: product.id, searchValue: customName });
-    trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
-
-    if (onClose) {
-      onClose();
-    }
   };
 
   const onCloseModal = () => {

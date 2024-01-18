@@ -7,6 +7,7 @@ describe('putFavorite validator', () => {
   const validData = {
     body: {
       productId: faker.string.uuid(),
+      name: faker.commerce.productName(),
     },
   };
   const { isValid } = validatorHelper(validator);

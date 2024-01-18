@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import shallow from 'zustand/shallow';
 
 import { AddProductToFavorites } from '../AddProductToFavorites';
+import { FormAddFavoriteData, ModalAddFavoriteProduct } from '../ModalAddFavoriteProduct';
 import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct';
 import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
@@ -43,9 +44,11 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
 
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
   const [openModalDeleteFavorite, setOpenModalDeleteFavorite] = useState(false);
+  const [openModalAddFavorite, setOpenModalAddFavorite] = useState(false);
 
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const [productTree, setProductTree] = useState<Product[]>([]);
+  const [value, setVlue] = useState('');
 
   const createFavoriteMutation = useCreateFavoriteMutation({
     onSuccess: () => {
@@ -126,10 +129,20 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   };
 
   const onAddProduct = ({ product }: OnAddProductOptions) => {
-    addFavoriteProducts(product);
+    setCurrentProduct(product);
+    setOpenModalAddFavorite(true);
+  };
+
+  const onSubmit = (data: FormAddFavoriteData) => {
+    if (!currentProduct) {
+      return;
+    }
+    addFavoriteProducts(currentProduct);
     createFavoriteMutation.mutate({
-      productId: product.id,
+      productId: currentProduct?.id,
+      name: data.name,
     });
+    setVlue(data.name);
   };
   const isFinalProduct = checkIsFinalProduct(currentProduct ?? defaultProduct);
 
@@ -165,6 +178,12 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
         open={openModalDeleteFavorite}
         onClose={() => setOpenModalDeleteFavorite(false)}
         onDeleteProduct={() => onRemove(currentProduct)}
+      />
+      <ModalAddFavoriteProduct
+        open={openModalAddFavorite}
+        onClose={() => setOpenModalAddFavorite(false)}
+        onSubmit={onSubmit}
+        value={value}
       />
     </>
   );

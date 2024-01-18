@@ -352,6 +352,7 @@ const Declaration = () => {
       <ModalCategoryProduct
         open={openCategoryDownModal}
         onClose={handleCloseDownModal}
+        onAddProduct={onUpdateProduct}
         defaultCurrency={defaultCurrency}
         defaultProduct={categoryProductToShow}
       />

@@ -5,6 +5,7 @@ import { CreateFavoriteParams } from './types';
 export const createFavoriteRequest = async (params: CreateFavoriteParams): Promise<void> => {
   const bodyParams = {
     productId: params.productId,
+    name: params.name,
   };
 
   await axios.put(`/favorite`, bodyParams);

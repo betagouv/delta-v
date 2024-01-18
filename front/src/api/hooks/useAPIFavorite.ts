@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 
 import { createFavoriteRequest, getFavorites, removeFavoriteRequest } from '../lib/favorite';
-import { CreateFavoriteParams, ErrorResponse } from '../lib/types';
+import { CreateFavoriteParams, ErrorResponse, FavoriteResponse } from '../lib/types';
 
 export const useCreateFavoriteMutation = ({ onSuccess }: { onSuccess?: () => void }) => {
   return useMutation<void, ErrorResponse, CreateFavoriteParams>(createFavoriteRequest, {
@@ -23,10 +23,10 @@ export const useRemoveFavoriteMutation = ({ onSuccess }: { onSuccess?: () => voi
   });
 };
 
-export const useFavorites = ({ onSuccess }: { onSuccess?: (data: string[]) => void }) => {
+export const useFavorites = ({ onSuccess }: { onSuccess?: (data: FavoriteResponse[]) => void }) => {
   return useQuery(['favorite'], () => getFavorites(), {
     keepPreviousData: true,
-    onSuccess(data: string[]) {
+    onSuccess(data: FavoriteResponse[]) {
       if (onSuccess) {
         onSuccess(data);
       }

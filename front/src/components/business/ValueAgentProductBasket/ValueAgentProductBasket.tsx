@@ -36,7 +36,7 @@ export const ValueAgentProductBasket = ({
 
   return (
     <div className={cs('relative flex flex-col rounded-md w-full bg-[#E3E3FD]')}>
-      <div className="absolute right-2 top-2 cursor-pointer">
+      <div className={cs({ 'absolute right-2 top-2 cursor-pointer': true, hidden: !editable })}>
         <Typography onClick={() => onDelete(product.customId)}>
           <Icon name="cross-thin" size="sm" />
         </Typography>
