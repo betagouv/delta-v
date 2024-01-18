@@ -13,6 +13,7 @@ import {
   ModalValidateFeedbackInfoDesktop,
 } from '@/components/autonomous/ModalValidateFeedbackInfo';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { Icon } from '@/components/common/Icon';
 import { TitleAgent } from '@/components/common/TitleAgent';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -23,12 +24,14 @@ import { RoutingAgent } from '@/utils/const';
 
 export interface FormContactUsData {
   comment: string;
+  id: string;
 }
 
 const ContactPage = () => {
   const router = useRouter();
   const schema = yup.object({
     comment: yup.string().required('Minimum 10 caractères').min(10, 'Minimum 10 caractères'),
+    id: yup.string(),
   });
   const {
     handleSubmit,
@@ -65,6 +68,8 @@ const ContactPage = () => {
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
+
+  const [file, setFile] = useState<File>();
 
   const onClickToRedirectToHome = () => {
     setOpenValidateFeedbackInfoMobile(false);
@@ -132,6 +137,44 @@ const ContactPage = () => {
                 additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
               />
             </div>
+            {file ? (
+              <div className="flex gap-5 items-center flex-row">
+                <div className="inline-flex flex-row gap-1 items-center">
+                  <Icon name="paperclip" size="sm" color="primary" />
+                  <Typography size="text-2xs" weight="bold" underline color="black">
+                    {file.name}
+                  </Typography>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <button
+                    className="py-3 w-full rounded-full text-primary-600 text-xs underline"
+                    type="submit"
+                    disabled={!isValid}
+                  >
+                    Modifier
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <label
+                htmlFor="file"
+                className="inline-flex border border-primary-600 text-primary-600 rounded-full px-5 py-2 justify-center items-center self-start"
+              >
+                <div className="inline-flex flex-row gap-1 items-center">
+                  <Icon name="paperclip" size="sm" />
+                  <Typography size="text-2xs" weight="bold">
+                    Ajouter une pièce jointe
+                  </Typography>
+                </div>
+                <input
+                  id="file"
+                  name="file"
+                  onChange={(e) => setFile(e.target.files?.[0])}
+                  type="file"
+                  className="hidden"
+                />
+              </label>
+            )}
           </div>
           <div className="w-[118px] self-center md:self-start mb-4">
             <button
