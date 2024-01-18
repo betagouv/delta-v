@@ -12,17 +12,9 @@ export type FilterGroupProps = {
   control?: any;
   name: string;
   rules?: any;
-  isMobile?: boolean;
 };
 
-export const FilterGroup = ({
-  title,
-  filters,
-  control,
-  name,
-  rules,
-  isMobile,
-}: FilterGroupProps) => {
+export const FilterGroup = ({ title, filters, control, name, rules }: FilterGroupProps) => {
   const { field } = useController({
     control,
     name,
@@ -44,7 +36,7 @@ export const FilterGroup = ({
   };
 
   return (
-    <div className={`flex gap-2.5 ${!isMobile ? 'flex-row items-center' : 'flex-col'}`}>
+    <div className="sm:flex-col md:flex-row md:items-center flex gap-2.5">
       <Typography color="black" size="text-xs">
         {title}
       </Typography>
