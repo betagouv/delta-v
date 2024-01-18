@@ -24,7 +24,6 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-col justify-center">
-        <span>fdsgsdfgdfghdf</span>
         <p
           className={`leading-[90px] text-[100px] ml-[-112px] text-primary-600 text-center font-bold ${marianne.variable} font-marianne`}
         >
