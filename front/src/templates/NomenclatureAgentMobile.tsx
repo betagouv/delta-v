@@ -1,8 +1,8 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { ProductSearchBarStyle } from '@/components/business/ProductSearchBar/enum';
-import { ProductSearchBarMobile } from '@/components/business/ProductSearchBar/mobile';
+import { ProductSearchBarStyle } from '@/components/business/ProductSearchTools/enum';
+import { ProductSearchBarMobile } from '@/components/business/ProductSearchTools/mobile';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 

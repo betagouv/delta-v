@@ -63,7 +63,7 @@ export const ProductSearchBarMobile = ({
     setOpenFavoriteDownModal(false);
   };
 
-  const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
+  const onClickProduct = (product: IdRequiredProduct, searchValue: string) => {
     setOpenSearchDownModal(false);
     setOpenFavoriteDownModal(false);
     updateSearchProductHistory.mutate({ productId: product.id, searchValue });

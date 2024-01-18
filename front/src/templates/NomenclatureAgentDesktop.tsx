@@ -7,8 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { AddProductToFavorites } from '@/components/autonomous/AddProductToFavorites';
 import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
-import { ProductSearchBarDesktop } from '@/components/business/ProductSearchBar/desktop';
-import { ProductSearchBarStyle } from '@/components/business/ProductSearchBar/enum';
+import { ProductSearchTools } from '@/components/business/ProductSearchTools/desktop';
+import { ProductSearchBarStyle } from '@/components/business/ProductSearchTools/enum';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import CenterModal from '@/components/common/CenterModal';
 import { NavBar } from '@/components/common/NavBar';
@@ -107,7 +107,7 @@ const NomenclatureAgentDesktop = () => {
       </div>
       <div className="flex flex-col px-[126px] pt-[60px] gap-[30px]">
         <Typography size="text-3xl">Nomenclature</Typography>
-        <ProductSearchBarDesktop
+        <ProductSearchTools
           variant={ProductSearchBarStyle.NOMENCLATURE}
           onFilterByCategoryClick={() => setShowCategoryFilters(!showCategoryFilters)}
         />

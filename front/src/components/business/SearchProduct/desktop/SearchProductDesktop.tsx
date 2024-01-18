@@ -10,12 +10,11 @@ import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
-import { getStringOrUndefined } from '@/utils/string';
 
 interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
-  onClickProduct?: (product: IdRequiredProduct, search?: string) => void;
+  onClickProduct?: (product: IdRequiredProduct, search: string) => void;
   onFilterByCategoryClick?: () => void;
   onSearchClick?: (search: string) => void;
   placeholder?: string;
@@ -33,7 +32,7 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
   autoFocus = false,
   disabled = false,
 }: SearchProductProps<T>) => {
-  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
@@ -72,7 +71,7 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
           enterKeyHint="search"
           className="text-xs font-normal border-none w-full placeholder:text-secondary-400 placeholder:italic focus:ring-transparent"
           onChange={(event) => {
-            setSearchValue(getStringOrUndefined(event.target.value));
+            setSearchValue(event.target.value);
             onSearch(event.target.value);
           }}
           autoFocus={autoFocus}
@@ -100,7 +99,10 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
         )}
       </div>
       <div
-        className="h-full flex items-center px-5 rounded-full bg-white gap-11"
+        className={classNames({
+          'h-full flex items-center px-5 rounded-full bg-white gap-11': true,
+          'cursor-pointer': onFilterByCategoryClick,
+        })}
         onClick={handleFilterByCategoryClick}
       >
         <div className="flex items-center gap-[10px]">

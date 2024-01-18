@@ -9,7 +9,7 @@ interface ModalSearchNomenclatureProductProps {
   open: boolean;
   onClose?: () => void;
   onSearchAll?: (search: string) => void;
-  onClickProduct?: (product: IdRequiredProduct, searchValue?: string) => void;
+  onClickProduct?: (product: IdRequiredProduct, searchValue: string) => void;
 }
 
 export const ModalSearchNomenclatureProduct: React.FC<ModalSearchNomenclatureProductProps> = ({

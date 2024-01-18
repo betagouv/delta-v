@@ -14,7 +14,7 @@ import {
   DefaultValuesUpdateProduct,
   OnAddProductOptions,
 } from '@/components/business/FormSelectProduct';
-import { ProductSearchBarMobile } from '@/components/business/ProductSearchBar/mobile';
+import { ProductSearchBarMobile } from '@/components/business/ProductSearchTools/mobile';
 import { ValueAgentProductBasket } from '@/components/business/ValueAgentProductBasket';
 import { AmountAgentProductBasketGroup } from '@/components/common/AmountAgentProductBasket/AmountAgentProductBasketGroup';
 import { Button } from '@/components/common/Button';

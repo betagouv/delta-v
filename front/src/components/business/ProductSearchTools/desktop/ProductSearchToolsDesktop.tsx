@@ -12,15 +12,15 @@ import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { findProduct, haveAgeRestriction } from '@/utils/product.util';
 
-export interface ProductSearchBarProps {
+export interface ProductSearchToolsProps {
   variant?: ProductSearchBarStyle;
   onFilterByCategoryClick?: () => void;
 }
 
-export const ProductSearchBarDesktop = ({
+export const ProductSearchTools = ({
   variant = ProductSearchBarStyle.DECLARATION,
   onFilterByCategoryClick,
-}: ProductSearchBarProps) => {
+}: ProductSearchToolsProps) => {
   const router = useRouter();
   const [isDeleteFavoriteModalOpen, setIsDeleteFavoriteModalOpen] = useState(false);
   const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
@@ -33,7 +33,7 @@ export const ProductSearchBarDesktop = ({
     nomenclatureProducts,
     setFavoriteProducts,
     favoriteProducts,
-    defaultCurrency,
+    // defaultCurrency,
   } = useStore((state) => ({
     searchNomenclatureProducts: state.searchNomenclatureProducts,
     searchProducts: state.searchProducts,
@@ -41,7 +41,7 @@ export const ProductSearchBarDesktop = ({
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
     favoriteProducts: state.products.appState.favoriteProducts,
-    defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
+    // defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
   }));
 
   const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
@@ -63,7 +63,7 @@ export const ProductSearchBarDesktop = ({
 
   useFavorites({ onSuccess });
 
-  const onClickProduct = (product: IdRequiredProduct, searchValue?: string) => {
+  const onClickProduct = (product: IdRequiredProduct, searchValue: string) => {
     updateSearchProductHistory.mutate({ productId: product.id, searchValue });
     router.push({
       pathname: searchPagePath,
@@ -114,6 +114,8 @@ export const ProductSearchBarDesktop = ({
       ageRestrictionFavoriteProducts.push(favoriteProduct);
     }
   });
+
+  console.log(selectedFavoriteProduct);
 
   return (
     <>
