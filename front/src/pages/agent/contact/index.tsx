@@ -19,12 +19,14 @@ import { RoutingAgent } from '@/utils/const';
 
 export interface FormContactUsData {
   comment: string;
+  id: string;
 }
 
 const ContactPage = () => {
   const router = useRouter();
   const schema = yup.object({
     comment: yup.string().required('Le message est requis').min(10, 'Minimum 10 caractères'),
+    id: yup.string(),
   });
   const {
     handleSubmit,
