@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import NextLink from 'next/link';
 
+import { marianne } from '../FontInitializer';
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 
@@ -23,12 +24,21 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-col justify-center">
-        <p className="leading-[90px] text-[100px] ml-[-112px] text-primary-600 text-center font-bold font-marianne">
+        <span>fdsgsdfgdfghdf</span>
+        <p
+          className={`leading-[90px] text-[100px] ml-[-112px] text-primary-600 text-center font-bold ${marianne.variable} font-marianne`}
+        >
           Contrôler
         </p>
         <div className="flex flex-row justify-center items-start">
-          <p className="leading-10 text-[50px] text-black font-bold font-marianne">une</p>
-          <p className="leading-[90px] text-[100px] text-black font-bold ml-4 font-marianne">
+          <p
+            className={`leading-10 text-[50px] text-black font-bold ${marianne.variable} font-marianne`}
+          >
+            une
+          </p>
+          <p
+            className={`leading-[90px] text-[100px] text-black font-bold ml-4 ${marianne.variable} font-marianne`}
+          >
             déclaration
           </p>
         </div>

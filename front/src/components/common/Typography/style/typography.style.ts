@@ -1,3 +1,5 @@
+import { marianne, roboto } from '../../FontInitializer';
+
 export type TextSize =
   | 'text-3xs'
   | 'text-2xs'
@@ -153,9 +155,9 @@ export const getNoWrap = (noWrap?: boolean): string => {
 
 export const getFontFamily = (fontFamily?: 'roboto' | 'marianne'): string => {
   if (fontFamily === 'marianne') {
-    return 'font-marianne';
+    return `${marianne.variable} font-marianne`;
   }
-  return 'font-roboto';
+  return `${roboto.variable} font-roboto`;
 };
 
 export const getTextTransform = (transform?: Transform): string => {

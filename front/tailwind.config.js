@@ -56,8 +56,8 @@ module.exports = {
         '4xl': '2rem',
       },
       fontFamily: {
-        roboto: ['Roboto', 'sans-serif'],
-        marianne: ['Marianne', 'sans-serif'],
+        roboto: ['var(--font-roboto)', 'sans-serif'],
+        marianne: ['var(--font-marianne)', 'sans-serif'],
       },
     },
   },
