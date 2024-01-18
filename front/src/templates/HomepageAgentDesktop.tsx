@@ -65,7 +65,7 @@ const HomepageAgentDesktop = () => {
           searchValue={searchValue}
         />
       </div>
-      <div className="flex flex-col  mt-10 px-[126px] gap-[50px] pb-[104px]">
+      <div className="flex flex-col  mt-10 pl-[125px] pr-[103px] gap-[50px] pb-[70px]">
         <BlockHistoricDeclarations
           errorDeclarations={apiErrorDeclarations}
           paidDeclarations={apiPaidDeclarations}

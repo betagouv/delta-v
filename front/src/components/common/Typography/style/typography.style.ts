@@ -151,6 +151,13 @@ export const getNoWrap = (noWrap?: boolean): string => {
   return '';
 };
 
+export const getFontFamily = (fontFamily?: 'roboto' | 'marianne'): string => {
+  if (fontFamily === 'marianne') {
+    return 'font-marianne';
+  }
+  return 'font-roboto';
+};
+
 export const getTextTransform = (transform?: Transform): string => {
   if (transform === 'sentence-case') {
     return 'first-letter:uppercase';
