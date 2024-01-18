@@ -15,7 +15,7 @@ interface SearchProductProps<T> {
   onSearch: (searchValue: string) => SearchType<T>[];
   onChange?: (displayResult: boolean) => void;
   onClickProduct?: (product: IdRequiredProduct, search: string) => void;
-  onFilterByCategoryClick?: () => void;
+  onFilterClick?: (isOpen: boolean) => void;
   onSearchClick?: (search: string) => void;
   placeholder?: string;
   autoFocus?: boolean;
@@ -27,7 +27,7 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
   onChange,
   onClickProduct = () => {},
   onSearchClick = () => {},
-  onFilterByCategoryClick,
+  onFilterClick,
   placeholder = '',
   autoFocus = false,
   disabled = false,
@@ -35,7 +35,7 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
   const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<T>[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const productsThatMatch = onSearch(searchValue ?? '');
@@ -54,13 +54,13 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
   const isFocusedEmpty = isFocused && !searchValue;
   const showSearchResults = !!searchValue && resultSearch.length > 0;
   const showSearchHistory = !!history && (isFocusedEmpty || !!searchValue);
-  const handleFilterByCategoryClick = () => {
-    if (onFilterByCategoryClick) {
-      onFilterByCategoryClick();
-      setIsFiltersOpen(!isFiltersOpen);
+
+  const handleFilterClick = () => {
+    setIsFilterOpen(!isFilterOpen);
+    if (onFilterClick) {
+      onFilterClick(isFilterOpen);
     }
   };
-
   return (
     <div className="h-[40px] w-full flex items-center gap-[10px]">
       <div className="relative h-full flex px-5 bg-white rounded-full flex-1">
@@ -83,7 +83,7 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
           }
         />
         {isFocused && (
-          <div className="border-secondary-bg w-full border-[5px] absolute flex flex-col left-0 bottom-0 translate-y-[calc(100%+5px)] z-10 bg-white rounded-[10px] p-5">
+          <div className="w-[calc(100%+10px)] border-secondary-bg border-[5px] absolute flex flex-col left-0 bottom-0 translate-y-[calc(100%+5px)] translate-x-[-5px] z-10 bg-white rounded-[10px] p-5">
             {showSearchResults && (
               <SearchResultProducts
                 resultSearch={resultSearch as unknown as SearchType<Product>[]}
@@ -101,9 +101,9 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
       <div
         className={classNames({
           'h-full flex items-center px-5 rounded-full bg-white gap-11': true,
-          'cursor-pointer': onFilterByCategoryClick,
+          'cursor-pointer': onFilterClick,
         })}
-        onClick={handleFilterByCategoryClick}
+        onClick={handleFilterClick}
       >
         <div className="flex items-center gap-[10px]">
           <SvgIcon name="filter" className="h-3 w-3" />
@@ -113,8 +113,8 @@ export const SearchProductDesktop: React.FC<SearchProductProps<any>> = <T extend
         </div>
         <span
           className={classNames({
-            'rotate-180 transition-all': isFiltersOpen,
-            'rotate-0 transition-all': !isFiltersOpen,
+            'rotate-180 transition-all': isFilterOpen,
+            'rotate-0 transition-all': !isFilterOpen,
           })}
         >
           <Icon name="chevron-down" size="sm" />

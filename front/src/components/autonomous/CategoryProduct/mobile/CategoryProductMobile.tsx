@@ -4,7 +4,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { AddProductCartDeclaration } from '../AddProductCartDeclaration';
+import { AddProductCartDeclaration } from '../../AddProductCartDeclaration';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
@@ -14,7 +14,7 @@ import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 
-interface ModalCategoryProductProps {
+interface CategoryProductMobileProps {
   open: boolean;
   onClose?: () => void;
   defaultCurrency?: string;
@@ -27,7 +27,7 @@ interface DisplayedProduct {
   title: string;
 }
 
-export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
+export const CategoryProductMobile: React.FC<CategoryProductMobileProps> = ({
   onClose,
   open,
   defaultCurrency,

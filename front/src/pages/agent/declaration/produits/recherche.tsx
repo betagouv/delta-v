@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { CategoryProductMobile } from '@/components/autonomous/CategoryProduct/mobile';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
-import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
@@ -124,7 +124,7 @@ const SearchProduct = () => {
             ))}
           </div>
         </div>
-        <ModalCategoryProduct
+        <CategoryProductMobile
           open={openCategoryDownModal}
           onClose={() => setOpenCategoryDownModal(false)}
           defaultCurrency={defaultCurrency}

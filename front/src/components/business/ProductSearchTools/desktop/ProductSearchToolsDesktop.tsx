@@ -14,12 +14,14 @@ import { findProduct, haveAgeRestriction } from '@/utils/product.util';
 
 export interface ProductSearchToolsProps {
   variant?: ProductSearchBarStyle;
-  onFilterByCategoryClick?: () => void;
+  onFilterByCategoryClick?: (isOpen: boolean) => void;
+  onFavoriteClick?: (product: Product) => void;
 }
 
 export const ProductSearchTools = ({
   variant = ProductSearchBarStyle.DECLARATION,
   onFilterByCategoryClick,
+  onFavoriteClick,
 }: ProductSearchToolsProps) => {
   const router = useRouter();
   const [isDeleteFavoriteModalOpen, setIsDeleteFavoriteModalOpen] = useState(false);
@@ -72,6 +74,9 @@ export const ProductSearchTools = ({
   };
 
   const onClickFavorite = (product: Product) => {
+    if (onFavoriteClick) {
+      onFavoriteClick(product);
+    }
     setSelectedFavoriteProduct(product);
   };
 
@@ -89,9 +94,9 @@ export const ProductSearchTools = ({
     setIsDeleteFavoriteModalOpen(false);
   };
 
-  const onFilterClick = () => {
+  const onFilterClick = (isOpen: boolean) => {
     if (onFilterByCategoryClick) {
-      onFilterByCategoryClick();
+      onFilterByCategoryClick(isOpen);
     }
     setSelectedFavoriteProduct(undefined);
   };
@@ -115,8 +120,6 @@ export const ProductSearchTools = ({
     }
   });
 
-  console.log(selectedFavoriteProduct);
-
   return (
     <>
       <div className="p-5 bg-secondary-bg rounded-[20px] flex flex-col items-center gap-4">
@@ -128,7 +131,7 @@ export const ProductSearchTools = ({
           }
           placeholder="Type de marchandises, marques..."
           onClickProduct={onClickProduct}
-          onFilterByCategoryClick={onFilterClick}
+          onFilterClick={onFilterClick}
           onSearchClick={onSearchAll}
         />
 

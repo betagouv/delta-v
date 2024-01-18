@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { ProductSearchBarStyle, getSearchPagePath } from '../enum';
 import { useFavorites } from '@/api/hooks/useAPIFavorite';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
+import { CategoryProductMobile } from '@/components/autonomous/CategoryProduct/mobile';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
-import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalFavorites } from '@/components/autonomous/ModalFavorites';
 import { ModalSearchNomenclatureProduct } from '@/components/autonomous/ModalSearchNomenclatureProduct';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
@@ -194,7 +194,7 @@ export const ProductSearchBarMobile = ({
             onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
             onSearchAll={onSearchAll}
           />
-          <ModalCategoryProduct
+          <CategoryProductMobile
             open={openCategoryDownModal}
             onClose={handleCloseDownModal}
             defaultCurrency={defaultCurrency}
