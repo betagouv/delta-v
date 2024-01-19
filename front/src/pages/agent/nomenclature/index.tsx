@@ -3,7 +3,7 @@ import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { NomenclatureAgentDesktop } from '@/templates/NomenclatureAgentDesktop';
+import { AgentNomenclaturePageDesktop } from '@/templates/AgentNomenclaturePageDesktop';
 import NomenclatureAgentMobile from '@/templates/NomenclatureAgentMobile';
 import { TailwindDefaultScreenSize } from '@/utils/enums';
 
@@ -13,7 +13,9 @@ const Index = () => {
   });
 
   return (
-    <AgentRoute>{isMobile ? <NomenclatureAgentMobile /> : <NomenclatureAgentDesktop />}</AgentRoute>
+    <AgentRoute>
+      {isMobile ? <NomenclatureAgentMobile /> : <AgentNomenclaturePageDesktop />}
+    </AgentRoute>
   );
 };
 

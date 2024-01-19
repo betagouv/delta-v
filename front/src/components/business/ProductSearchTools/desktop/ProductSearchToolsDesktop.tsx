@@ -1,190 +1,143 @@
-import { useState } from 'react';
-
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 import { FavoriteProducts } from '../../FavoriteProducts';
+import { NomenclatureCard } from '../../NomenclatureCard';
 import { SearchProductDesktop } from '../../SearchProduct/desktop';
-import { ProductSearchBarStyle, getSearchPagePath } from '../enum';
-import { useFavorites, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { ProductSearchBarStyle } from '../enum';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
+import { AddProductToFavorites } from '@/components/autonomous/AddProductToFavorites';
+import { CategoryProductDesktop } from '@/components/autonomous/CategoryProduct/desktop';
 import { ModalDeleteFavoriteProductDesktop } from '@/components/autonomous/ModalDeleteFavoriteProduct/desktop';
+import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
+import CenterModal from '@/components/common/CenterModal';
+import { Typography } from '@/components/common/Typography';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
-import { findProduct, haveAgeRestriction } from '@/utils/product.util';
+import { getSearchProductResults } from '@/utils/search';
 
 export interface ProductSearchToolsProps {
   variant?: ProductSearchBarStyle;
-  onFilterByCategoryClick?: (isOpen: boolean) => void;
-  onFavoriteClick?: (product: Product) => void;
 }
 
 export const ProductSearchTools = ({
   variant = ProductSearchBarStyle.DECLARATION,
-  onFilterByCategoryClick,
-  onFavoriteClick,
 }: ProductSearchToolsProps) => {
-  const router = useRouter();
-  const [isDeleteFavoriteModalOpen, setIsDeleteFavoriteModalOpen] = useState(false);
-  const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
-    undefined,
-  );
-  const {
-    searchNomenclatureProducts,
-    searchProducts,
-    removeFavoriteProducts,
-    nomenclatureProducts,
-    setFavoriteProducts,
-    favoriteProducts,
-    // defaultCurrency,
-  } = useStore((state) => ({
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
+  const { searchNomenclatureProducts, searchProducts, findProduct } = useStore((state) => ({
     searchNomenclatureProducts: state.searchNomenclatureProducts,
     searchProducts: state.searchProducts,
-    removeFavoriteProducts: state.removeFavoriteProducts,
-    setFavoriteProducts: state.setFavoriteProducts,
-    nomenclatureProducts: state.products.appState.nomenclatureProducts,
-    favoriteProducts: state.products.appState.favoriteProducts,
-    // defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
+    findProduct: state.findProduct,
   }));
 
-  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
+  const searchFunction =
+    variant === ProductSearchBarStyle.NOMENCLATURE ? searchNomenclatureProducts : searchProducts;
 
-  const removeFavoriteMutation = useRemoveFavoriteMutation({});
+  const [showMatchingProducts, setShowMatchingProducts] = useState<boolean>(false);
+  const [showCategoryFilters, setShowCategoryFilters] = useState<boolean>(false);
+  const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
+  const [isDeleteFavoriteModalOpen, setIsDeleteFavoriteModalOpen] = useState(false);
 
-  const searchPagePath = getSearchPagePath(variant);
-
-  const onSuccess = (data: string[]) => {
-    const tmpFavorites: Product[] = [];
-    data.forEach((id) => {
-      const product = findProduct(nomenclatureProducts, id);
-      if (product) {
-        tmpFavorites.push(product);
-      }
-    });
-    setFavoriteProducts(tmpFavorites);
+  const onClickProduct = (product: IdRequiredProduct, search: string) => {
+    setSelectedId(product.id);
+    setSearchValue(search);
+    setShowCategoryFilters(false);
+    setShowMatchingProducts(true);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue: search });
   };
 
-  useFavorites({ onSuccess });
-
-  const onClickProduct = (product: IdRequiredProduct, searchValue: string) => {
-    updateSearchProductHistory.mutate({ productId: product.id, searchValue });
-    router.push({
-      pathname: searchPagePath,
-      query: { search: searchValue, selectedId: product.id },
-    });
+  const onFilterByCategoryClick = (isOpen: boolean) => {
+    setShowCategoryFilters(!isOpen);
+    setShowMatchingProducts(false);
+    setProductsThatMatch([]);
   };
 
-  const onClickFavorite = (product: Product) => {
-    if (onFavoriteClick) {
-      onFavoriteClick(product);
-    }
-    setSelectedFavoriteProduct(product);
+  const onSearchAll = (search: string) => {
+    setSelectedId(undefined);
+    setSearchValue(search);
+    setShowCategoryFilters(false);
+    setShowMatchingProducts(true);
   };
 
-  const onDeleteFavorite = (product: Product) => {
-    setSelectedFavoriteProduct(product);
-    setIsDeleteFavoriteModalOpen(true);
+  const onClickCard = (product: Product) => {
+    setCurrentProduct(product);
   };
 
   const onConfirmDeleteFavorite = () => {
-    if (!selectedFavoriteProduct) {
-      return;
-    }
-    removeFavoriteProducts(selectedFavoriteProduct.id);
-    removeFavoriteMutation.mutate(selectedFavoriteProduct.id);
     setIsDeleteFavoriteModalOpen(false);
   };
 
-  const onFilterClick = (isOpen: boolean) => {
-    if (onFilterByCategoryClick) {
-      onFilterByCategoryClick(isOpen);
-    }
-    setSelectedFavoriteProduct(undefined);
-  };
-
-  const onSearchAll = (searchValue: string) => {
-    router.push({
-      pathname: searchPagePath,
-      query: { search: searchValue },
-    });
-  };
-
-  const flattenFavoriteProducts: Product[] = [];
-  const ageRestrictionFavoriteProducts: Product[] = [];
-
-  favoriteProducts?.forEach((favoriteProduct) => {
-    const product = favoriteProduct;
-    if (product) {
-      flattenFavoriteProducts.push(product);
-    } else if (haveAgeRestriction(favoriteProduct)) {
-      ageRestrictionFavoriteProducts.push(favoriteProduct);
-    }
-  });
+  useEffect(() => {
+    setProductsThatMatch(
+      getSearchProductResults({
+        selectedId,
+        search: searchValue,
+        findProduct,
+        searchFunction,
+      }),
+    );
+  }, [selectedId, searchValue]);
 
   return (
-    <>
-      <div className="p-5 bg-secondary-bg rounded-[20px] flex flex-col items-center gap-4">
+    <div>
+      <div className=" first:p-5 bg-secondary-bg rounded-[20px] flex flex-col items-center gap-4">
         <SearchProductDesktop
-          onSearch={
-            variant === ProductSearchBarStyle.NOMENCLATURE
-              ? searchNomenclatureProducts
-              : searchProducts
-          }
+          onSearchProduct={searchFunction}
           placeholder="Type de marchandises, marques..."
           onClickProduct={onClickProduct}
-          onFilterClick={onFilterClick}
-          onSearchClick={onSearchAll}
+          onFilterClick={onFilterByCategoryClick}
+          onSearchAllClick={onSearchAll}
         />
 
-        {flattenFavoriteProducts.length > 0 && (
-          <FavoriteProducts
-            allowedFavoriteProducts={flattenFavoriteProducts}
-            restrictedFavoriteProducts={ageRestrictionFavoriteProducts}
-            onFavoriteClick={(product) => onClickFavorite(product)}
-            onDeleteClick={onDeleteFavorite}
-          />
+        <FavoriteProducts onFavoriteClick={(product) => setCurrentProduct(product)} />
+      </div>
+      <div className="flex-col pt-5 relative flex">
+        <div className="absolute right-0 top-[30px]">
+          <ModalSelectCountry />
+        </div>
+        {showCategoryFilters && <CategoryProductDesktop hideListOnModalClose={false} />}
+        {showMatchingProducts && (
+          <div className="flex flex-col gap-[30px]">
+            <Typography size="text-xs" color="black">
+              {`${productsThatMatch.length} résultat${
+                productsThatMatch.length > 1 ? 's' : ''
+              } pour "${searchValue}"`}
+            </Typography>
+            {productsThatMatch.length > 0 && (
+              <div className="grid grid-cols-3 gap-4">
+                {productsThatMatch.map((product) => {
+                  return (
+                    <NomenclatureCard
+                      product={product}
+                      searchValue={searchValue}
+                      onClick={onClickCard}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </div>
         )}
       </div>
 
-      {selectedFavoriteProduct && (
-        <ModalDeleteFavoriteProductDesktop
-          open={isDeleteFavoriteModalOpen}
-          productName={selectedFavoriteProduct.name}
-          onDeleteProduct={onConfirmDeleteFavorite}
-          onClose={() => setIsDeleteFavoriteModalOpen(false)}
-        />
-      )}
-
-      {variant === ProductSearchBarStyle.NOMENCLATURE && (
+      {currentProduct && (
         <>
-          {/* <ModalSearchNomenclatureProduct
-            open={openSearchDownModal}
-            onClose={handleCloseDownModal}
-            onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
-            onSearchAll={onSearchAll}
-          /> */}
-          {/* <ModalCategoryNomenclatureProduct
-            open={openCategoryDownModal}
-            onClose={handleCloseDownModal}
-            defaultProduct={selectedFavoriteProduct}
-          /> */}
+          <ModalDeleteFavoriteProductDesktop
+            open={isDeleteFavoriteModalOpen}
+            productName={currentProduct.name}
+            onDeleteProduct={onConfirmDeleteFavorite}
+            onClose={() => setIsDeleteFavoriteModalOpen(false)}
+          />
+          <CenterModal open={true} noMargin onClose={() => setCurrentProduct(undefined)}>
+            <AddProductToFavorites
+              currentProduct={currentProduct}
+              onAddProduct={() => console.log('product added to favorite')}
+            />
+          </CenterModal>
         </>
       )}
-
-      {variant === ProductSearchBarStyle.DECLARATION && (
-        <>
-          {/* <ModalSearchProduct
-            open={openSearchDownModal}
-            onClose={handleCloseDownModal}
-            onClickProduct={(product, searchValue) => onClickProduct(product, searchValue)}
-            onSearchAll={onSearchAll}
-          /> */}
-          {/* <ModalCategoryProduct
-            open={openCategoryDownModal}
-            onClose={handleCloseDownModal}
-            defaultCurrency={defaultCurrency}
-          /> */}
-        </>
-      )}
-    </>
+    </div>
   );
 };

@@ -17,6 +17,7 @@ import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
+import { getSearchProductResults } from '@/utils/search';
 
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
@@ -40,27 +41,6 @@ const SearchProduct = () => {
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
 
-  const setupSearchProductResults = (): void => {
-    if (!selectedId) {
-      setProductsThatMatch(searchProducts((search as string) ?? ''));
-      return;
-    }
-
-    const reducedProductsThatMatch = searchProducts((search as string) ?? '');
-    const searchProductsWithoutSelectedProduct = reducedProductsThatMatch.filter(
-      (product) => product.id !== selectedId,
-    );
-
-    const productOnTop = findProduct(selectedId);
-
-    if (!productOnTop) {
-      setProductsThatMatch(searchProductsWithoutSelectedProduct);
-      return;
-    }
-
-    setProductsThatMatch([productOnTop, ...searchProductsWithoutSelectedProduct]);
-  };
-
   useEffect(() => {
     if (selectedId) {
       setSelectedProduct(findProduct(selectedId));
@@ -69,7 +49,14 @@ const SearchProduct = () => {
   }, [selectedId]);
 
   useEffect(() => {
-    setupSearchProductResults();
+    setProductsThatMatch(
+      getSearchProductResults({
+        selectedId,
+        search,
+        findProduct,
+        searchFunction: searchProducts,
+      }),
+    );
   }, [selectedId, search]);
 
   const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {

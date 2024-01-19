@@ -72,16 +72,18 @@ export const NomenclatureCard = ({ product, onClick, searchValue }: Nomenclature
   };
   return (
     <div
-      className={cs(
-        'relative grid rounded-lg border border-secondary-300 grid-cols-[40px_1fr] md:w-72 p-5 gap-5',
-      )}
+      className={cs({
+        'relative grid rounded-lg border border-secondary-300 grid-cols-[40px_1fr] md:w-72 p-5 gap-5':
+          true,
+        'cursor-pointer': onClick,
+      })}
       onClick={onClick ? () => onClick(product) : undefined}
     >
-      <div className="justify-center flex items-center z-10">
+      <div className="justify-center flex items-center">
         <SvgIcon name={product.icon ?? 'categoryOther'} />
       </div>
 
-      <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer z-10">
+      <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
         {isInFavorite ? (
           <button
             name="star-full"

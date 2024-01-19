@@ -14,6 +14,9 @@ import { useStore } from '@/stores/store';
 
 interface CategoryProductDesktopProps {
   defaultProduct?: Product;
+  listVisible?: boolean;
+  hideListOnModalClose?: boolean;
+  onModalClose?: () => void;
 }
 
 interface DisplayedProduct {
@@ -24,6 +27,9 @@ interface DisplayedProduct {
 
 export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
   defaultProduct,
+  listVisible = true,
+  hideListOnModalClose = true,
+  onModalClose,
 }) => {
   const { findProduct, findProductTree, addProductCartDeclarationAgent, products } = useStore(
     (state) => ({
@@ -36,6 +42,7 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
 
   const { trackEvent } = useMatomo();
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
+  const [isListVisible, setIsListVisible] = useState<boolean>(listVisible);
   const [productTree, setProductTree] = useState<Product[]>([]);
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(defaultProduct);
   const defaultDisplayedProducts: DisplayedProduct[] = products?.map((product): Item => {
@@ -92,10 +99,20 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
     setCurrentId(productTree?.[1]?.id);
   };
 
+  const handleModalClose = () => {
+    if (onModalClose) {
+      onModalClose();
+    }
+    if (hideListOnModalClose) {
+      setIsListVisible(false);
+    }
+    setCurrentId(productTree?.[1]?.id);
+  };
+
   const isFinalProduct = currentProduct?.finalProduct ?? false;
   return (
     <>
-      {currentProduct && !isFinalProduct && (
+      {isListVisible && (
         <CategoryList
           onSelectProduct={onSelectProduct}
           productTree={productTree}
@@ -105,11 +122,10 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
           bigSize
         />
       )}
-      <CenterModal open={isFinalProduct} noMargin onClose={() => setCurrentProduct(undefined)}>
+      <CenterModal open={isFinalProduct} noMargin onClose={handleModalClose}>
         <AddProductToFavorites
           currentProduct={currentProduct}
           onAddProduct={onAddProduct}
-          onRemoveProduct={() => console.log('removed')}
           onSelectProduct={onSelectProduct}
         />
       </CenterModal>

@@ -7,6 +7,7 @@ import { Icon } from '../Icon';
 import { IconButtonWithTitle } from '../IconButtonWithTitle';
 import { SvgIcon, SvgNames } from '../SvgIcon';
 import { TitleAgent } from '../TitleAgent';
+import { Typography } from '../Typography';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
 import { Product } from '@/model/product';
 import { TailwindDefaultScreenSize } from '@/utils/enums';
@@ -39,6 +40,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
   const isMobile = useMediaQuery({
     query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
   });
+
   return (
     <ul role="list">
       {title && bigSize && (
@@ -59,16 +61,26 @@ export const CategoryList: React.FC<CategoryListProps> = ({
         </div>
       )}
 
-      {!isMobile && (
-        <div className="h-[46px]">
-          {productTree && productTree.length > 0 && (
-            <IconButtonWithTitle
-              icon="chevron-left"
-              title={productTree[0]?.name ?? ''}
-              onClick={onClick}
-            />
-          )}
-        </div>
+      {!isMobile && productTree && (
+        <>
+          <div className="mb-[36px]">
+            {productTree.length > 0 && (
+              <div className="flex items-start w-full">
+                <IconButtonWithTitle
+                  icon="chevron-left"
+                  title={productTree[1]?.name ?? 'Catégories'}
+                  onClick={onClick}
+                />
+              </div>
+            )}
+          </div>
+          <div className="flex-col gap-4 items-center flex mb-10">
+            {productTree[0]?.icon && <SvgIcon name={productTree[0]?.icon} className="h-10" />}
+            <Typography size="text-[26px]" color="black" weight="bold">
+              {productTree[0]?.name}
+            </Typography>
+          </div>
+        </>
       )}
       <div
         className={cs({

@@ -3,34 +3,71 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 
+import { useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { ModalDeleteFavoriteProductDesktop } from '@/components/autonomous/ModalDeleteFavoriteProduct/desktop';
 import { FavoriteBadge } from '@/components/common/FavoriteBadge';
 import { Product } from '@/model/product';
+import { useStore } from '@/stores/store';
 import { TailwindDefaultScreenSize } from '@/utils/enums';
+import { haveAgeRestriction } from '@/utils/product.util';
 
 export interface FavoriteProductsProps {
-  allowedFavoriteProducts?: Product[];
-  restrictedFavoriteProducts?: Product[];
-  onFavoriteClick: (product: Product) => void;
-  onDeleteClick: (product: Product) => void;
+  onFavoriteClick?: (product: Product) => void;
+  onDeleteClick?: (product: Product) => void;
 }
 
-export const FavoriteProducts = ({
-  allowedFavoriteProducts,
-  restrictedFavoriteProducts,
-  onFavoriteClick,
-  onDeleteClick,
-}: FavoriteProductsProps) => {
+export const FavoriteProducts = ({ onFavoriteClick, onDeleteClick }: FavoriteProductsProps) => {
   const isMobile = useMediaQuery({
     query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
   });
+
+  const removeFavoriteMutation = useRemoveFavoriteMutation({});
+
+  const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
+    undefined,
+  );
+  const [isDeleteFavoriteModalOpen, setIsDeleteFavoriteModalOpen] = useState(false);
   const [isAvailableToEdit, setIsAvailableToEdit] = useState<boolean>(false);
 
+  const { favoriteProducts, removeFavoriteProducts } = useStore((state) => ({
+    favoriteProducts: state.products.appState.favoriteProducts,
+    removeFavoriteProducts: state.removeFavoriteProducts,
+  }));
+
+  const allowedFavoriteProducts: Product[] = [];
+  const restrictedFavoriteProducts: Product[] = [];
+
+  favoriteProducts?.forEach((favoriteProduct) => {
+    const product = favoriteProduct;
+    if (product) {
+      allowedFavoriteProducts.push(product);
+    } else if (haveAgeRestriction(favoriteProduct)) {
+      restrictedFavoriteProducts.push(favoriteProduct);
+    }
+  });
+
   const onClick = (product: Product) => {
-    onFavoriteClick(product);
+    setSelectedFavoriteProduct(product);
+    if (onFavoriteClick) {
+      onFavoriteClick(product);
+    }
   };
 
   const onDelete = (product: Product) => {
-    onDeleteClick(product);
+    if (onDeleteClick) {
+      onDeleteClick(product);
+    }
+    setSelectedFavoriteProduct(product);
+    setIsDeleteFavoriteModalOpen(true);
+  };
+
+  const onConfirmDeleteFavorite = () => {
+    if (!selectedFavoriteProduct) {
+      return;
+    }
+    removeFavoriteProducts(selectedFavoriteProduct.id);
+    removeFavoriteMutation.mutate(selectedFavoriteProduct.id);
+    setIsDeleteFavoriteModalOpen(false);
   };
 
   return (
@@ -52,7 +89,7 @@ export const FavoriteProducts = ({
                 <FavoriteBadge
                   product={favoriteProduct}
                   onClick={() => {}}
-                  onDeleteClick={onDeleteClick}
+                  onDeleteClick={onDelete}
                   isAvailableToEdit={isAvailableToEdit}
                   key={favoriteProduct.id}
                   disabled
@@ -73,6 +110,14 @@ export const FavoriteProducts = ({
             </div>
           )}
         </div>
+      )}
+      {selectedFavoriteProduct && (
+        <ModalDeleteFavoriteProductDesktop
+          open={isDeleteFavoriteModalOpen}
+          productName={selectedFavoriteProduct.name}
+          onDeleteProduct={onConfirmDeleteFavorite}
+          onClose={() => setIsDeleteFavoriteModalOpen(false)}
+        />
       )}
     </>
   );
