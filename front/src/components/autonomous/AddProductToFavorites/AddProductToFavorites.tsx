@@ -45,7 +45,7 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
     if (currentProduct?.id) {
       const steps = findProductTreeSteps(currentProduct.id);
       setDefaultSteps(steps);
-      setSelectedProduct(steps[0]);
+      setSelectedProduct(steps[steps.length - 1]);
     }
   }, [currentProduct]);
 
