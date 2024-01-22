@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import Error from 'next/error';
@@ -11,6 +11,7 @@ import { FormSelectProduct, OnAddProductOptions } from '@/components/business/Fo
 import { CategoryList } from '@/components/common/CategoryList';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { Meta } from '@/layout/Meta';
+import { Product, ProductDisplayTypes } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
@@ -19,9 +20,9 @@ const ProductSearch = () => {
   const [openModalAddProductCartDeclaration, setOpenModalAddProductCartDeclaration] =
     useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { findProduct, addProductCartDeclaration, defaultCurrency } = useStore(
+  const { findProductTreeSteps, addProductCartDeclaration, defaultCurrency } = useStore(
     (state) => ({
-      findProduct: state.findProduct,
+      findProductTreeSteps: state.findProductTreeSteps,
       addProductCartDeclaration: state.addProductCartDeclaration,
       defaultCurrency: state.declaration.appState.declarationRequest.defaultCurrency,
     }),
@@ -31,7 +32,16 @@ const ProductSearch = () => {
   const router = useRouter();
   const queryParams = router.query;
   const id = typeof queryParams.id === 'string' ? queryParams.id : undefined;
-  const currentProduct = findProduct(id as string);
+
+  const [currentProduct, setCurrentProduct] = useState<Product | undefined>();
+  const [defaultSteps, setDefaultSteps] = useState<Product[]>([]);
+  useEffect(() => {
+    if (id) {
+      const steps = findProductTreeSteps(id as string);
+      setDefaultSteps(steps);
+      setCurrentProduct(steps[0]);
+    }
+  }, [id]);
   const onRedirectProduct = (idRedirect: string) => {
     router.push(`/declaration/produits/${idRedirect}`);
   };
@@ -80,17 +90,18 @@ const ProductSearch = () => {
       method="declaration"
     >
       <div className="flex flex-1 flex-col gap-6">
-        {currentProduct?.finalProduct ? (
-          <FormSelectProduct
-            currentProduct={currentProduct}
-            onAddProduct={onAddProductCartDeclaration}
-            defaultCurrency={defaultCurrency}
-          />
-        ) : (
+        {currentProduct.productDisplayTypes === ProductDisplayTypes.category ? (
           <CategoryList
             onSelectProduct={onRedirectProduct}
             items={displayedProducts}
             title="Catégories"
+          />
+        ) : (
+          <FormSelectProduct
+            currentProduct={currentProduct}
+            defaultSteps={defaultSteps}
+            onAddProduct={onAddProductCartDeclaration}
+            defaultCurrency={defaultCurrency}
           />
         )}
       </div>

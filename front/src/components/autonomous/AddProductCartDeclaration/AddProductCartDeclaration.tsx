@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import shallow from 'zustand/shallow';
 
 import {
   DefaultValuesUpdateProduct,
@@ -27,9 +29,23 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
   defaultCurrency,
   defaultValues,
 }) => {
-  const { findProductTree } = useStore((state) => ({
-    findProductTree: state.findProductTree,
-  }));
+  const { findProductTree, findProductTreeSteps } = useStore(
+    (state) => ({
+      findProductTree: state.findProductTree,
+      findProductTreeSteps: state.findProductTreeSteps,
+    }),
+    shallow,
+  );
+
+  const [defaultSteps, setDefaultSteps] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  useEffect(() => {
+    if (currentProduct?.id) {
+      const steps = findProductTreeSteps(currentProduct.id);
+      setDefaultSteps(steps);
+      setSelectedProduct(steps[0]);
+    }
+  }, [currentProduct]);
 
   const productTree = currentProduct ? findProductTree(currentProduct.id) : [];
   return (
@@ -62,9 +78,10 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
           </div>
         </div>
         <div className="flex flex-1 flex-col gap-6 bg-secondary-bg px-4 py-5">
-          {currentProduct && (
+          {selectedProduct && (
             <FormSelectProduct
-              currentProduct={currentProduct}
+              currentProduct={selectedProduct}
+              defaultSteps={defaultSteps}
               onAddProduct={onAddProduct}
               templateRole="agent"
               defaultCurrency={defaultCurrency}

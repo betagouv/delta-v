@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   DefaultValuesUpdateProduct,
@@ -30,13 +30,24 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
   defaultCurrency,
   defaultValues,
 }) => {
-  const { nomenclatureProducts } = useStore((state) => ({
+  const { nomenclatureProducts, findProductTreeSteps } = useStore((state) => ({
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
+    findProductTreeSteps: state.findProductTreeSteps,
   }));
 
   const productTree = currentProduct
     ? findProductTree(nomenclatureProducts, currentProduct.id)
     : [];
+
+  const [defaultSteps, setDefaultSteps] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  useEffect(() => {
+    if (currentProduct?.id) {
+      const steps = findProductTreeSteps(currentProduct.id);
+      setDefaultSteps(steps);
+      setSelectedProduct(steps[0]);
+    }
+  }, [currentProduct]);
 
   return (
     <>
@@ -68,9 +79,10 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
           </div>
         </div>
         <div className="flex flex-1 flex-col gap-6 bg-secondary-bg px-4 py-5">
-          {currentProduct && (
+          {selectedProduct && (
             <FormSelectProduct
-              currentProduct={currentProduct}
+              currentProduct={selectedProduct}
+              defaultSteps={defaultSteps}
               onAddProduct={onAddProduct}
               onRemoveProduct={onRemoveProduct}
               defaultCurrency={defaultCurrency}

@@ -9,7 +9,7 @@ import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
 import { SvgNames } from '@/components/common/SvgIcon';
-import { Product } from '@/model/product';
+import { Product, ProductDisplayTypes } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { findProduct, findProductTree } from '@/utils/product.util';
 
@@ -132,8 +132,8 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   };
 
   const isFinalProduct = currentProduct
-    ? currentProduct.finalProduct
-    : defaultProduct?.finalProduct ?? false;
+    ? currentProduct.productDisplayTypes !== ProductDisplayTypes.category
+    : defaultProduct?.productDisplayTypes !== ProductDisplayTypes.category ?? false;
 
   return (
     <>

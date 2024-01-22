@@ -1076,7 +1076,7 @@ items:
     icon: 'categoryLaptop'
     relatedWords: >
       PC,MacBook,Ordinateur,ordinateur portable,portable,laptop,Lenovo,asus,Apple,MSI,Acer,HP,Dell,Fujitsu,Toshiba,Compaq,Roccat,Razer,Dynabook,Huawei,
-      Alienware,Samsung,LG,Thomson,Ordissimo,Gigabyte,Schneider, Sony, Darty
+      Alienware,Samsung,LG,Thomson,Ordissimo,Gigabyte,Schneider,Sony,Darty
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
@@ -1091,7 +1091,7 @@ items:
     info: 'Tablettes numériques'
     icon: 'categoryTablet'
     relatedWords: >
-      iPad,Apple,Samsung,Huawei,Galaxy, Samsung Galaxy,Lenovo,tablette
+      iPad,Apple,Samsung,Huawei,Galaxy,Samsung Galaxy,Lenovo,tablette
     parentProduct: '@hightech'
     finalProduct: true
     productDisplayTypes: 'addable'
