@@ -1,12 +1,10 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import { useMediaQuery } from 'react-responsive';
 
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { IdRequiredProduct, Product } from '@/model/product';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 import { SearchType } from '@/utils/search';
 
 interface SearchResultProductsProps {
@@ -15,14 +13,10 @@ interface SearchResultProductsProps {
   onClickProduct: (product: IdRequiredProduct, searchValue: string) => void;
 }
 
-export const renderMatchedWithSearch = (
-  product: SearchType<Product>,
-  search: string,
-  isMobile: boolean = true,
-) => {
+export const renderMatchedWithSearch = (product: SearchType<Product>, search: string) => {
   if (!product.rankedValue.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
     return (
-      <Typography color="black" size={isMobile ? 'text-base' : 'text-2xs'}>
+      <Typography color="black" size="text-base" desktopSize="text-xs">
         {product.rankedValue}
       </Typography>
     );
@@ -32,7 +26,7 @@ export const renderMatchedWithSearch = (
   const matchValues = matchValue.split(',');
 
   return (
-    <Typography color="black" size={isMobile ? 'text-base' : 'text-2xs'}>
+    <Typography color="black" size="text-base" desktopSize="text-xs">
       {matchValues[0]}
       <b>{search}</b>
       {matchValues[1]}
@@ -45,9 +39,6 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
   search,
   onClickProduct,
 }: SearchResultProductsProps) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
   return (
     <>
       {resultSearch.length > 0 ? (
@@ -66,18 +57,23 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
                 }
               >
                 <div className="flex items-center gap-3">
-                  <span className="mb-1 text-blue-700">
-                    <Icon name="search" size={isMobile ? 'base' : 'sm'} />
-                  </span>
+                  <div className="mb-1 text-blue-700">
+                    <span className="hidden md:block">
+                      <Icon name="search" size="sm" />
+                    </span>
+                    <span className="md:hidden block">
+                      <Icon name="search" size="base" />
+                    </span>
+                  </div>
                   <span>
-                    {renderMatchedWithSearch(resultElement, search, isMobile)}
+                    {renderMatchedWithSearch(resultElement, search)}
                     {resultElement.name && (
                       <React.Fragment>
-                        <Typography color="light-gray" size={isMobile ? 'text-base' : 'text-2xs'}>
+                        <Typography color="light-gray" size="text-base" desktopSize="text-xs">
                           {' '}
                           dans{' '}
                         </Typography>
-                        <Typography size={isMobile ? 'text-base' : 'text-2xs'}>
+                        <Typography size="text-base" desktopSize="text-xs">
                           <span className="text-blue-700">{resultElement.name}</span>
                         </Typography>
                       </React.Fragment>

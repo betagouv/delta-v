@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 
-import classNames from 'classnames';
 import { getEmojiFlag } from 'countries-list';
 import { motion } from 'framer-motion';
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useForm } from 'react-hook-form';
-import { useMediaQuery } from 'react-responsive';
-import { twMerge } from 'tailwind-merge';
 import shallow from 'zustand/shallow';
 
 import CenterModal from '@/components/common/CenterModal';
@@ -17,16 +14,16 @@ import { InputGroup } from '@/components/input/InputGroup';
 import { useStore } from '@/stores/store';
 import { countriesAlternatives, disabledCountries } from '@/utils/const';
 import { memoizedCountriesOptions } from '@/utils/country.util';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 interface FormCountryData {
   country?: Alpha2Code;
 }
 
-export const ModalSelectCountry: React.FC = () => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
+interface ModalSelectCountryProps {
+  modalType?: 'down' | 'center';
+}
+
+export const ModalSelectCountry = ({ modalType = 'down' }: ModalSelectCountryProps) => {
   const {
     setProductsNomenclatureToDisplay,
     setCountryForProductsNomenclature,
@@ -43,9 +40,9 @@ export const ModalSelectCountry: React.FC = () => {
   const countries = getNames('fr', { select: 'official' });
   const [open, setOpen] = React.useState(false);
   const [selectedCountry, setSelectedCountry] = React.useState<string | undefined>(
-    `${countries[countryForProductsNomenclature]} ${getEmojiFlag(
-      countryForProductsNomenclature,
-    ).toString()}`,
+    `${getEmojiFlag(countryForProductsNomenclature).toString()}  ${
+      countries[countryForProductsNomenclature]
+    } `,
   );
 
   const { register, control } = useForm<FormCountryData>({
@@ -58,7 +55,7 @@ export const ModalSelectCountry: React.FC = () => {
 
   register('country', {
     onChange: (e: any) => {
-      const country = `${countries[e.target.value]} ${getEmojiFlag(e.target.value).toString()}`;
+      const country = `${getEmojiFlag(e.target.value).toString()}  ${countries[e.target.value]}`;
       setSelectedCountry(country);
       setCountryForProductsNomenclature(e.target.value);
       setProductsNomenclatureToDisplay(e.target.value);
@@ -68,7 +65,7 @@ export const ModalSelectCountry: React.FC = () => {
 
   const countriesOptions = memoizedCountriesOptions(countriesAlternatives, disabledCountries, true);
 
-  const ModalComponent = isMobile ? DownModal : CenterModal;
+  const ModalComponent = modalType === 'down' ? DownModal : CenterModal;
 
   return (
     <>
@@ -76,25 +73,18 @@ export const ModalSelectCountry: React.FC = () => {
         className="flex flex-row gap-[10px] items-center cursor-pointer"
         onClick={() => setOpen(true)}
       >
-        <Typography color="black" size="2xs" weight="bold">
+        <Typography color="black" size="text-2xs" weight="bold" desktopSize="text-sm">
           {selectedCountry}
         </Typography>
         <Icon name="chevron-down" size="lg" />
       </div>
 
       <ModalComponent bgColor="bg-white" open={open} onClose={() => setOpen(false)} centeredContent>
-        <motion.div
-          className={twMerge(
-            classNames({
-              'mx-auto flex flex-col h-auto': true,
-              'mb-[10px] mt-[30px] w-[250px] gap-5 ': isMobile,
-              'px-[76px] gap-4': !isMobile,
-            }),
-          )}
-        >
+        <motion.div className="mx-auto flex flex-col h-auto mb-[10px] mt-[30px] w-[250px] gap-5 md:gap-4">
           <Typography
             color="black"
-            size={isMobile ? 'text-xs' : 'text-2xs'}
+            size="text-xs"
+            desktopSize="text-xs"
             weight="bold"
             textPosition="text-center"
           >

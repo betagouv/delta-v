@@ -9,9 +9,9 @@ module.exports = {
   content: [path.join(__dirname, './src/**/*.(js|jsx|ts|tsx)')],
   safelist: ['truncate'],
   theme: {
-    screens: {
-      laptop: '1121px',
-    },
+    // screens: {
+    //   laptop: '1121px',
+    // },
     extend: {
       fontSize: {
         '2xs': '.625rem',

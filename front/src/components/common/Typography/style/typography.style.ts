@@ -7,8 +7,7 @@ export type TextSize =
   | 'text-lg'
   | 'text-xl'
   | 'text-2xl'
-  | 'text-3xl'
-  | string;
+  | 'text-3xl';
 
 export type Color =
   | 'primary'
@@ -42,6 +41,25 @@ export const getFontWeight = (weight: Weight): string => {
       return 'font-extrabold';
     default:
       return 'font-normal';
+  }
+};
+
+export const getDesktopFontWeight = (weight: Weight): string => {
+  switch (weight) {
+    case 'thin':
+      return 'md:font-thin';
+    case 'light':
+      return 'md:font-light';
+    case 'normal':
+      return 'md:font-normal';
+    case 'medium':
+      return 'md:font-medium';
+    case 'bold':
+      return 'md:font-bold';
+    case 'extrabold':
+      return 'md:font-extrabold';
+    default:
+      return 'md:font-normal';
   }
 };
 
@@ -158,7 +176,7 @@ export const getTextTransform = (transform?: Transform): string => {
   return transform ?? '';
 };
 
-export const getIncreasedTextSize = (size: TextSize): string => {
+export const getIncreasedTextSize = (size: TextSize | `text-${string}`): string => {
   switch (size) {
     case 'text-3xs':
       return 'text-2xs';
@@ -180,5 +198,30 @@ export const getIncreasedTextSize = (size: TextSize): string => {
       return 'text-4xl';
     default:
       return size;
+  }
+};
+
+export const getDesktopTextSize = (size?: TextSize | `md:text-${string}`): string => {
+  switch (size) {
+    case 'text-3xs':
+      return 'md:text-3xs';
+    case 'text-2xs':
+      return 'md:text-2xs';
+    case 'text-xs':
+      return 'md:text-xs';
+    case 'text-sm':
+      return 'md:text-sm';
+    case 'text-base':
+      return 'md:text-base';
+    case 'text-lg':
+      return 'md:text-lg';
+    case 'text-xl':
+      return 'md:text-xl';
+    case 'text-2xl':
+      return 'md:text-2xl';
+    case 'text-3xl':
+      return 'md:text-3xl';
+    default:
+      return size ?? '';
   }
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import { useMediaQuery } from 'react-responsive';
 
 import {
   DefaultValuesUpdateProduct,
@@ -12,7 +11,6 @@ import { Breadcrumbs } from '@/components/common/Breadcrumbs';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 import { findProductTree } from '@/utils/product.util';
 
 type OnAddProduct = (options: OnAddProductOptions) => void;
@@ -34,9 +32,6 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
   defaultCurrency,
   defaultValues,
 }) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
   const { nomenclatureProducts } = useStore((state) => ({
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
   }));
@@ -47,10 +42,8 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
 
   return (
     <>
-      <div
-        className={classNames({ 'flex flex-col h-full flex-1': true, 'min-h-[586px]': !isMobile })}
-      >
-        <div className={classNames({ 'px-4 py-5': isMobile, 'px-10 pt-10 pb-5': !isMobile })}>
+      <div className="flex flex-col h-full">
+        <div className={classNames({ 'px-4 pt-5 md:px-10 md:pt-10 md:pb-5': true })}>
           <div className="flex flex-row gap-4">
             <Breadcrumbs
               categoryProducts={productTree
@@ -64,7 +57,8 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
           <div className="flex flex-col gap-2 pt-5 pb-2">
             <Typography
               color="black"
-              size={isMobile ? 'text-xl' : 'text-[26px]'}
+              size="text-xl"
+              desktopSize="md:text-[26px]"
               weight="bold"
               lineHeight="leading-none"
             >
@@ -73,7 +67,7 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
             {currentProduct?.nomenclatures && (
               <div className="flex flex-row gap-2">
                 {currentProduct.nomenclatures.map((nomenclature) => (
-                  <Typography color="primary" size={isMobile ? 'text-2xs' : 'text-xs'}>
+                  <Typography color="primary" size="text-2xs" desktopSize="text-sm">
                     {nomenclature}
                   </Typography>
                 ))}
@@ -83,9 +77,7 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
         </div>
         <div
           className={classNames({
-            'flex flex-1 flex-col gap-6 bg-secondary-bg': true,
-            'px-4 py-5': isMobile,
-            'p-10': !isMobile,
+            'relative flex flex-col gap-6 bg-secondary-bg px-4 py-5 md:p-10 h-full': true,
           })}
         >
           {currentProduct && (

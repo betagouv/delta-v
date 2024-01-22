@@ -1,7 +1,6 @@
 import React from 'react';
 
 import cs from 'classnames';
-import { useMediaQuery } from 'react-responsive';
 
 import { Icon } from '../Icon';
 import { IconButtonWithTitle } from '../IconButtonWithTitle';
@@ -10,7 +9,57 @@ import { TitleAgent } from '../TitleAgent';
 import { Typography } from '../Typography';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
 import { Product } from '@/model/product';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
+
+const CategoryListHeaderMobile = ({
+  productTree,
+  onClick,
+}: {
+  productTree: Product[];
+  onClick?: () => void;
+}) => {
+  if (productTree.length <= 0) {
+    return <></>;
+  }
+  return (
+    <div className="mt-7">
+      <IconButtonWithTitle
+        icon="chevron-left"
+        title={productTree[0]?.name ?? ''}
+        onClick={onClick}
+      />
+    </div>
+  );
+};
+
+const CategoryListHeaderDesktop = ({
+  productTree,
+  onClick,
+}: {
+  productTree: Product[];
+  onClick?: () => void;
+}) => {
+  return (
+    <>
+      <div className="mb-[36px]">
+        {productTree.length > 0 && (
+          <div className="flex items-start w-full">
+            <IconButtonWithTitle
+              icon="chevron-left"
+              title={productTree[1]?.name ?? 'Catégories'}
+              onClick={onClick}
+            />
+          </div>
+        )}
+      </div>
+      <div className="flex-col gap-4 items-center flex mb-10">
+        {productTree[0]?.icon && <SvgIcon name={productTree[0]?.icon} className="h-10" />}
+        <Typography size="text-[26px]" color="black" weight="bold">
+          {productTree[0]?.name}
+        </Typography>
+      </div>
+    </>
+  );
+};
 
 export interface Item {
   title: string;
@@ -37,10 +86,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({
   displayType = 'list',
   bigSize,
 }: CategoryListProps) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
-
   return (
     <ul role="list">
       {title && bigSize && (
@@ -51,41 +96,20 @@ export const CategoryList: React.FC<CategoryListProps> = ({
 
       {title && !bigSize && <li className="flex py-1 text-sm">{title}</li>}
 
-      {isMobile && productTree && productTree.length > 0 && (
-        <div className="mt-7">
-          <IconButtonWithTitle
-            icon="chevron-left"
-            title={productTree[0]?.name ?? ''}
-            onClick={onClick}
-          />
-        </div>
-      )}
-
-      {!isMobile && productTree && (
+      {productTree && (
         <>
-          <div className="mb-[36px]">
-            {productTree.length > 0 && (
-              <div className="flex items-start w-full">
-                <IconButtonWithTitle
-                  icon="chevron-left"
-                  title={productTree[1]?.name ?? 'Catégories'}
-                  onClick={onClick}
-                />
-              </div>
-            )}
-          </div>
-          <div className="flex-col gap-4 items-center flex mb-10">
-            {productTree[0]?.icon && <SvgIcon name={productTree[0]?.icon} className="h-10" />}
-            <Typography size="text-[26px]" color="black" weight="bold">
-              {productTree[0]?.name}
-            </Typography>
-          </div>
+          <span className="md:hidden block">
+            <CategoryListHeaderMobile productTree={productTree} onClick={onClick} />
+          </span>
+          <span className="hidden md:block">
+            <CategoryListHeaderDesktop productTree={productTree} onClick={onClick} />
+          </span>
         </>
       )}
       <div
         className={cs({
-          'grid grid-cols-3 gap-2 mt-5 justify-items-center': displayType === 'card' && isMobile,
-          'flex flex-wrap gap-5 ': displayType === 'card' && !isMobile,
+          'grid grid-cols-3 gap-2 mt-5 justify-items-center md:flex md:flex-wrap md:gap-5':
+            displayType === 'card',
           'flex flex-col': displayType === 'list',
         })}
       >

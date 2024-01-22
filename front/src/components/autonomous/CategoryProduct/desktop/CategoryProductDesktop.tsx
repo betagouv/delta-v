@@ -43,6 +43,7 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
   const { trackEvent } = useMatomo();
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
   const [isListVisible, setIsListVisible] = useState<boolean>(listVisible);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [productTree, setProductTree] = useState<Product[]>([]);
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(defaultProduct);
   const defaultDisplayedProducts: DisplayedProduct[] = products?.map((product): Item => {
@@ -54,6 +55,14 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
   });
   const [displayedProducts, setDisplayedProducts] =
     useState<DisplayedProduct[]>(defaultDisplayedProducts);
+
+  useEffect(() => {
+    if (currentProduct?.finalProduct) {
+      setIsModalOpen(true);
+    } else {
+      setIsModalOpen(false);
+    }
+  }, [currentProduct]);
 
   useEffect(() => {
     if (currentId) {
@@ -107,9 +116,10 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
       setIsListVisible(false);
     }
     setCurrentId(productTree?.[1]?.id);
+    setIsModalOpen(false);
+    setCurrentProduct(undefined);
   };
 
-  const isFinalProduct = currentProduct?.finalProduct ?? false;
   return (
     <>
       {isListVisible && (
@@ -122,7 +132,7 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
           bigSize
         />
       )}
-      <CenterModal open={isFinalProduct} noMargin onClose={handleModalClose}>
+      <CenterModal open={isModalOpen} noMargin onClose={handleModalClose}>
         <AddProductToFavorites
           currentProduct={currentProduct}
           onAddProduct={onAddProduct}

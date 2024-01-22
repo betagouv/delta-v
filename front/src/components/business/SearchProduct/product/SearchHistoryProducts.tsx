@@ -1,7 +1,6 @@
 import React from 'react';
 
 import cs from 'classnames';
-import { useMediaQuery } from 'react-responsive';
 
 import { SearchProductHistoryItem } from '@/api/lib/products';
 import { Icon } from '@/components/common/Icon';
@@ -9,7 +8,6 @@ import { Typography } from '@/components/common/Typography';
 import { AGENT_PRODUCT_SEARCH_HISTORY_LIMIT } from '@/config/productSearch';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 interface SearchHistoryProductsProps {
   history: SearchProductHistoryItem[];
@@ -20,7 +18,6 @@ interface ProductHistoryItemProps {
   onClick?: (product: IdRequiredProduct, searchValue: string) => void;
   disabled?: boolean;
   searchValue: string;
-  isMobile?: boolean;
 }
 
 type ProductHistoryToShow = {
@@ -33,7 +30,6 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
   onClick,
   disabled = false,
   searchValue,
-  isMobile = true,
 }: ProductHistoryItemProps) => {
   return (
     <li
@@ -47,11 +43,16 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
       onClick={onClick && (() => onClick(product, searchValue))}
     >
       <div className="flex items-center gap-3">
-        <span
+        <div
           className={cs({ 'mb-1': true, 'text-blue-700': !disabled, 'text-gray-400': disabled })}
         >
-          <Icon name="search" size={isMobile ? 'base' : 'sm'} />
-        </span>
+          <span className="block md:hidden">
+            <Icon name="search" size="base" />
+          </span>
+          <span className="md:block hidden">
+            <Icon name="search" size="sm" />
+          </span>
+        </div>
         <span>
           {product.name && (
             <React.Fragment>
@@ -59,17 +60,18 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
                 <>
                   <Typography
                     color={disabled ? 'light-gray' : 'black'}
-                    size={isMobile ? 'text-base' : 'text-2xs'}
+                    size="text-base"
+                    desktopSize="text-xs"
                   >
                     {searchValue}
                   </Typography>
-                  <Typography color="light-gray" size={isMobile ? 'text-base' : 'text-2xs'}>
+                  <Typography color="light-gray" size="text-base" desktopSize="text-xs">
                     {' '}
                     dans{' '}
                   </Typography>
                 </>
               )}
-              <Typography size={isMobile ? 'text-base' : 'text-2xs'}>
+              <Typography size="text-base" desktopSize="text-xs">
                 <span className={disabled ? 'text-gray-400' : 'text-blue-700'}>{product.name}</span>
               </Typography>
             </React.Fragment>
@@ -84,9 +86,6 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   history,
   onClickProduct,
 }: SearchHistoryProductsProps) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
   const { findProduct } = useStore((state) => ({ findProduct: state.findProduct }));
   const historyProductToShow: ProductHistoryToShow[] = [];
 
@@ -101,12 +100,8 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   return (
     <>
       {historyProductToShow.length > 0 ? (
-        <ul className="gap-2 flex flex-col">
-          <Typography
-            color="black"
-            size={isMobile ? 'text-base' : 'text-xs'}
-            weight={isMobile ? 'normal' : 'bold'}
-          >
+        <ul className="gap-2 flex flex-col md:font-bold font-normal">
+          <Typography color="black" size="text-base" desktopSize="text-xs" desktopWeight="bold">
             Historique des recherches
           </Typography>
           {historyProductToShow.map((historyToShowItem) => {
@@ -116,7 +111,6 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
                 onClick={onClickProduct}
                 key={historyToShowItem.product.id}
                 searchValue={historyToShowItem.searchValue}
-                isMobile={isMobile}
               />
             );
           })}

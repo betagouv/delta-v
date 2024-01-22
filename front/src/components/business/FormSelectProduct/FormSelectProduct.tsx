@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
-import { useMediaQuery } from 'react-responsive';
 
 import { FormAddProduct } from '../FormAddProduct';
 import { FormAddProductToFavorite } from '../FormAddProductToFavorite';
@@ -14,7 +12,6 @@ import { FormSelectProductData, Role, getDefaultValues } from './utils';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 export interface OnAddProductOptions {
   product: Product;
@@ -53,9 +50,6 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   defaultValues,
   isAddAbleToFavorites = false,
 }: FormSelectProductProps) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
   const [steps, setSteps] = useState<Product[]>([]);
   const [allowNotManagedProduct, setAllowNotManagedProduct] = useState<boolean>(false);
 
@@ -125,7 +119,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   return allowNotManagedProduct ||
     currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full">
       {templateRole === 'user' && (
         <div>
           <label
@@ -177,9 +171,10 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
             templateRole={templateRole}
             isAddAble={isAddAble}
           />
-          <div className={classNames({ 'flex flex-col gap-1': true, 'mt-[77px]': isMobile })}>
+          <div className="flex flex-col gap-1 mt-[77px] bottom-0">
             <Typography
-              size={isMobile ? 'text-2xs' : 'text-xs'}
+              size="text-2xs"
+              desktopSize="text-sm"
               color="middle-gray"
               textPosition="text-center"
             >

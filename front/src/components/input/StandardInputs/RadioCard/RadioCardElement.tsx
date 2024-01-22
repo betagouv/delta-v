@@ -1,10 +1,8 @@
 import classNames from 'classnames';
-import { useMediaQuery } from 'react-responsive';
 import { twMerge } from 'tailwind-merge';
 
 import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 
 export interface IRadioCardElementOptions {
   value: string;
@@ -23,9 +21,6 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
   bigSize = false,
   onClick,
 }) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
   return (
     <button
       data-testid="radio-card-element"
@@ -37,8 +32,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
             true,
           'opacity-50 cursor-not-allowed': disabled,
           'font-bold border-4 py-[14px] px-2': checked,
-          'p-[18px] h-[130px] w-[104px]': bigSize && isMobile,
-          'p-[18px] h-[160px] w-[138px]': bigSize && !isMobile,
+          'p-[18px] h-[130px] w-[104px] md:h-[160px] md:w-[138px]': bigSize,
         }),
       )}
       onClick={(e) => {
@@ -50,16 +44,12 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
     >
       <div
         className={classNames({
-          'h-auto flex flex-col items-center ': true,
-          'gap-3': isMobile,
-          'gap-5': !isMobile,
+          'h-auto flex flex-col items-center gap-3 md:gap-5': true,
         })}
       >
         <div
           className={classNames({
-            'flex-col flex w-auto': true,
-            'h-7': isMobile,
-            'h-10': !isMobile,
+            'flex-col flex w-auto h-7 md:h-10': true,
           })}
         >
           <SvgIcon name={svgIcon} />
@@ -67,7 +57,8 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
         <div className="flex-col flex">
           <Typography
             color="secondary"
-            size={isMobile ? 'text-xs' : 'text-sm'}
+            size="text-xs"
+            desktopSize="text-base"
             lineHeight="leading-none"
           >
             {value.length > 30 ? `${value.slice(0, 30)}...` : value}

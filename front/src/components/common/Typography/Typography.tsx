@@ -1,12 +1,15 @@
 import React from 'react';
 
 import cn from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
 import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
 import {
   Color,
   getActiveColor,
   getColor,
+  getDesktopFontWeight,
+  getDesktopTextSize,
   getFontWeight,
   getIncreasedTextSize,
   getNoWrap,
@@ -36,12 +39,14 @@ type LineHeight =
 export interface ITypographyProps {
   children: React.ReactNode;
   tag?: HTMLTags;
-  size?: TextSize;
+  size?: TextSize | `text-${string}`;
+  desktopSize?: TextSize | `md:text-${string}`;
   lineHeight?: LineHeight;
   variant?: Variant;
   color?: Color;
   colorGradient?: string;
   weight?: Weight;
+  desktopWeight?: Weight;
   italic?: boolean;
   transform?: Transform;
   underline?: boolean;
@@ -58,9 +63,11 @@ export const Typography: React.FC<ITypographyProps> = ({
   color = 'primary',
   colorGradient = '600',
   size = 'text-sm',
+  desktopSize,
   lineHeight = 'leading-normal',
   children,
   weight = 'normal',
+  desktopWeight = 'normal',
   italic = false,
   underline = false,
   activeColor,
@@ -75,22 +82,26 @@ export const Typography: React.FC<ITypographyProps> = ({
     usedVariant = tag && tag in HTMLTagToVariantMapping ? HTMLTagToVariantMapping[tag] : 'body1';
   }
 
-  const className = cn({
-    // [`${usedVariant}`]: true,
-    // hidden: true,
-    [getFontWeight(weight)]: true,
-    [getColor(color, colorGradient)]: true,
-    [getActiveColor(activeColor)]: activeColor,
-    // [size]: true,
-    [getIncreasedTextSize(size)]: true,
-    [lineHeight]: true,
-    italic,
-    underline,
-    [`${textPosition}`]: true,
-    [getTruncate(truncate)]: truncate,
-    [getTextTransform(transform)]: transform,
-    [getNoWrap(noWrap)]: noWrap,
-  });
+  const className = twMerge(
+    cn({
+      // [`${usedVariant}`]: true,
+      // hidden: true,
+      [getFontWeight(weight)]: true,
+      [getDesktopFontWeight(desktopWeight)]: true,
+      [getColor(color, colorGradient)]: true,
+      [getActiveColor(activeColor)]: activeColor,
+      // [size]: true,
+      [getIncreasedTextSize(size)]: true,
+      [desktopSize ? getDesktopTextSize(desktopSize) : '']: desktopSize,
+      [lineHeight]: true,
+      italic,
+      underline,
+      [`${textPosition}`]: true,
+      [getTruncate(truncate)]: truncate,
+      [getTextTransform(transform)]: transform,
+      [getNoWrap(noWrap)]: noWrap,
+    }),
+  );
   const CustomTag = tag ?? 'span';
 
   return (

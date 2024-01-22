@@ -15,6 +15,7 @@ export interface ICenterModalProps {
   children?: any;
   centeredContent?: boolean;
   noMargin?: boolean;
+  containerClassname?: string;
 }
 
 export const CenterModal: React.FC<ICenterModalProps> = ({
@@ -25,6 +26,7 @@ export const CenterModal: React.FC<ICenterModalProps> = ({
   children,
   centeredContent = false,
   noMargin = false,
+  containerClassname,
 }: ICenterModalProps) => {
   const handleOnClose = (): void => {
     if (onClose) {
@@ -53,10 +55,13 @@ export const CenterModal: React.FC<ICenterModalProps> = ({
           <div className="fixed inset-0 bg-black/60" />
         </Transition.Child>
         <div
-          className={classNames({
-            flex: true,
-            'text-center place-content-center': centeredContent,
-          })}
+          className={classNames(
+            {
+              'flex relative -translate-x-1/2 translate-y-1/2': true,
+              'text-center place-content-center': centeredContent,
+            },
+            containerClassname,
+          )}
         >
           <Transition.Child
             as={Fragment}
@@ -71,8 +76,7 @@ export const CenterModal: React.FC<ICenterModalProps> = ({
               className={twMerge(
                 classNames(
                   {
-                    'relative -translate-x-1/2 translate-y-1/2 inline-block h-full w-full rounded-[20px] z-10 py-8 px-16 overflow-hidden':
-                      true,
+                    'inline-block w-full rounded-[20px] z-10 py-8 px-16 overflow-hidden': true,
                     'py-0 px-0': noMargin,
                   },
                   bgColor,

@@ -1,14 +1,12 @@
 import { useState } from 'react';
 
 import classNames from 'classnames';
-import { useMediaQuery } from 'react-responsive';
 
 import { useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { ModalDeleteFavoriteProductDesktop } from '@/components/autonomous/ModalDeleteFavoriteProduct/desktop';
 import { FavoriteBadge } from '@/components/common/FavoriteBadge';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 import { haveAgeRestriction } from '@/utils/product.util';
 
 export interface FavoriteProductsProps {
@@ -17,10 +15,6 @@ export interface FavoriteProductsProps {
 }
 
 export const FavoriteProducts = ({ onFavoriteClick, onDeleteClick }: FavoriteProductsProps) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
-
   const removeFavoriteMutation = useRemoveFavoriteMutation({});
 
   const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
@@ -73,7 +67,7 @@ export const FavoriteProducts = ({ onFavoriteClick, onDeleteClick }: FavoritePro
   return (
     <>
       {(allowedFavoriteProducts || restrictedFavoriteProducts) && (
-        <div className={classNames({ 'w-full flex gap-5': true, 'flex-col': isMobile })}>
+        <div className="w-full flex gap-5 md:flex-row flex-col">
           <div className="flex flex-wrap gap-[10px]">
             {allowedFavoriteProducts?.map((favoriteProduct) => (
               <FavoriteBadge
@@ -99,8 +93,7 @@ export const FavoriteProducts = ({ onFavoriteClick, onDeleteClick }: FavoritePro
           {allowedFavoriteProducts && allowedFavoriteProducts.length > 0 && (
             <div
               className={classNames({
-                'underline w-fit self-center cursor-pointer': true,
-                'pb-[10px]': isMobile,
+                'underline w-fit self-center cursor-pointer md:pb-0 pb-[10px]': true,
                 'text-error': isAvailableToEdit,
                 'text-primary-400': !isAvailableToEdit,
               })}

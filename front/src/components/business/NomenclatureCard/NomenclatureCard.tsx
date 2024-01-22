@@ -26,7 +26,7 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
   if (!stringToChange.includes(search.toLocaleLowerCase())) {
     // return <span className="text-xs text-black">{product.rankedValue}</span>;
     return (
-      <Typography color="black" size="text-base">
+      <Typography color="black" size="text-base" desktopSize="text-xs">
         {stringToChange}
       </Typography>
     );
@@ -36,7 +36,7 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
   const matchValue = stringToChange.replace(searchRegex(search), '_');
   const matchValues = matchValue.split('_');
   return numberOccurrence.map((item, i) => (
-    <Typography color="black" size="text-base">
+    <Typography color="black" size="text-base" desktopSize="text-xs">
       {matchValues[i]}
       <span className="bg-primary-400 text-white">{item}</span>
       {matchValues[i + 1]}
@@ -111,9 +111,7 @@ export const NomenclatureCard = ({ product, onClick, searchValue }: Nomenclature
 
       <div>
         {searchValue ? (
-          <Typography color="black" transform="sentence-case" size="text-xs">
-            {renderMatchedWithSearch(product.name, searchValue)}
-          </Typography>
+          renderMatchedWithSearch(product.name, searchValue)
         ) : (
           <Typography color="black" transform="sentence-case" size="text-xs">
             {product.name}
@@ -129,12 +127,10 @@ export const NomenclatureCard = ({ product, onClick, searchValue }: Nomenclature
         </div>
         <div className="flex flex-col line-clamp-2">
           {searchValue ? (
-            <Typography color="black" transform="sentence-case" size="text-sm">
-              {renderMatchedWithSearch(
-                product.relatedWords.map((item) => item).join(', '),
-                searchValue,
-              )}
-            </Typography>
+            renderMatchedWithSearch(
+              product.relatedWords.map((item) => item).join(', '),
+              searchValue,
+            )
           ) : (
             <Typography color="black" transform="sentence-case" size="text-sm">
               {product.relatedWords.map((item) => item).join(', ')}

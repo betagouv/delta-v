@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import classNames from 'classnames';
 import { FieldErrors } from 'react-hook-form';
-import { useMediaQuery } from 'react-responsive';
 import shallow from 'zustand/shallow';
 
 import { Role } from '../FormSelectProduct/utils';
@@ -11,7 +10,6 @@ import { ModalDeleteFavoriteProductDesktop } from '@/components/autonomous/Modal
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
-import { TailwindDefaultScreenSize } from '@/utils/enums';
 import { findProduct } from '@/utils/product.util';
 
 interface FormAddProductToFavoriteProps {
@@ -32,9 +30,6 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
   isAddAble = false,
   onRemoveProduct,
 }: FormAddProductToFavoriteProps) => {
-  const isMobile = useMediaQuery({
-    query: `(max-width: ${TailwindDefaultScreenSize.TABLET})`,
-  });
   const { nomenclatureProducts, favoriteProducts, removeFavoriteProducts, addFavoriteProducts } =
     useStore(
       (state) => ({
@@ -91,22 +86,16 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
           {isAddAble && (
             <div className="flex flex-col gap-[10px] flex-1 justify-between">
               <div className="w-full bg-primary-100 text-primary-600 h-[76px] flex justify-center items-center">
-                <Typography size={isMobile ? 'text-2xs' : 'text-xs'} weight="bold">
+                <Typography size="text-2xs" desktopSize="text-sm" weight="bold">
                   Taux de DD : {product?.id}
                 </Typography>
               </div>
-              <div
-                className={classNames({
-                  'flex w-full': true,
-                  'flex-col gap-[30px]': isMobile,
-                  'justify-between': !isMobile,
-                })}
-              >
+              <div className="md: flex-col flex md:flex-row w-full gap-[30px] justify-between">
                 <div className="flex flex-col gap-1 justify-start">
-                  <Typography size={isMobile ? 'text-2xs' : 'text-xs'} color="black">
+                  <Typography size="text-2xs" desktopSize="text-sm" color="black">
                     Prix d'achat : 12,00€
                   </Typography>
-                  <Typography size={isMobile ? 'text-2xs' : 'text-xs'} color="black">
+                  <Typography size="text-2xs" desktopSize="text-sm" color="black">
                     Prix de vente : 12,00€
                   </Typography>
                 </div>
@@ -121,8 +110,7 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
                     {isInFavorite ? (
                       <button
                         className={classNames({
-                          'underline text-error text-xs ': true,
-                          'self-start': !isMobile,
+                          'underline text-error text-xs md:self-start': true,
                         })}
                         type="button"
                         onClick={() => handleRemoveFavorite(product)}
@@ -132,8 +120,7 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
                     ) : (
                       <button
                         className={classNames({
-                          'underline text-primary-600 text-xs': true,
-                          'self-start': !isMobile,
+                          'underline text-primary-600 text-xs md:self-start': true,
                         })}
                         onClick={() => handleAddFavorite(product)}
                       >

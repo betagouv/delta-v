@@ -95,7 +95,7 @@ export const ProductSearchTools = ({
       </div>
       <div className="flex-col pt-5 relative flex">
         <div className="absolute right-0 top-[30px]">
-          <ModalSelectCountry />
+          <ModalSelectCountry modalType="center" />
         </div>
         {showCategoryFilters && <CategoryProductDesktop hideListOnModalClose={false} />}
         {showMatchingProducts && (
@@ -106,14 +106,16 @@ export const ProductSearchTools = ({
               } pour "${searchValue}"`}
             </Typography>
             {productsThatMatch.length > 0 && (
-              <div className="grid grid-cols-3 gap-4">
+              <div className="flex flex-wrap gap-4">
                 {productsThatMatch.map((product) => {
                   return (
-                    <NomenclatureCard
-                      product={product}
-                      searchValue={searchValue}
-                      onClick={onClickCard}
-                    />
+                    <div className="w-[292px]">
+                      <NomenclatureCard
+                        product={product}
+                        searchValue={searchValue}
+                        onClick={onClickCard}
+                      />
+                    </div>
                   );
                 })}
               </div>
@@ -130,7 +132,12 @@ export const ProductSearchTools = ({
             onDeleteProduct={onConfirmDeleteFavorite}
             onClose={() => setIsDeleteFavoriteModalOpen(false)}
           />
-          <CenterModal open={true} noMargin onClose={() => setCurrentProduct(undefined)}>
+          <CenterModal
+            open={true}
+            noMargin
+            onClose={() => setCurrentProduct(undefined)}
+            containerClassname="min-h-[586px]"
+          >
             <AddProductToFavorites
               currentProduct={currentProduct}
               onAddProduct={() => console.log('product added to favorite')}
