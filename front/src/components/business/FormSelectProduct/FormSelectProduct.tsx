@@ -30,6 +30,7 @@ export interface DefaultValuesUpdateProduct {
 
 interface FormSelectProductProps {
   currentProduct: Product;
+  defaultSteps: Product[];
   onAddProduct: (options: OnAddProductOptions) => void;
   onRemoveProduct?: (product: Product) => void;
   templateRole?: Role;
@@ -41,6 +42,7 @@ interface FormSelectProductProps {
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   currentProduct,
+  defaultSteps,
   onAddProduct,
   onRemoveProduct,
   templateRole = 'user',
@@ -49,13 +51,10 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   defaultValues,
   isAddAbleToFavorites = false,
 }: FormSelectProductProps) => {
-  const [steps, setSteps] = useState<Product[]>([]);
+  const [steps, setSteps] = useState<Product[]>(defaultSteps);
   const [allowNotManagedProduct, setAllowNotManagedProduct] = useState<boolean>(false);
 
   useEffect(() => {
-    if (currentProduct) {
-      setSteps([currentProduct]);
-    }
     setAllowNotManagedProduct(false);
   }, [currentProduct]);
 

@@ -28,11 +28,11 @@ export const Radio: React.FC<IRadioOptions> = ({
   return (
     <div className="flex items-center space-y-0 space-x-6">
       {radioValues.map((radioValue, index) => (
-        <div key={index} className="flex items-center space-x-3">
+        <div key={`${radioValue.id}-${index}`} className="flex items-center space-x-3">
           <input
             data-testid="radio-element"
             name={name}
-            id={index.toString()}
+            id={`${radioValue.id}-${index}`}
             value={radioValue.id}
             type="radio"
             className={classNames({
@@ -43,7 +43,7 @@ export const Radio: React.FC<IRadioOptions> = ({
             {...register}
           />
           <label
-            htmlFor={index.toString()}
+            htmlFor={`${radioValue.id}-${index}`}
             className={classNames({
               'ml-2.5 block text-base text-black disabled:text-disabled-text': true,
               'text-error': newRadio && error,
