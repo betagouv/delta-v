@@ -10,7 +10,7 @@ export interface FilterBarForm {
   search: string | null;
 }
 export type FilterBarProps = {
-  title: string;
+  title?: string;
   searchType?: SearchDisplayType;
   noSearchBar?: boolean;
   noPeriodInput?: boolean;
@@ -22,6 +22,7 @@ export type FilterBarProps = {
   withNewsTagsFilter?: boolean;
   defaultSearchValue?: string;
   filterBarData?: FilterBarForm;
+  children?: React.ReactNode;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
