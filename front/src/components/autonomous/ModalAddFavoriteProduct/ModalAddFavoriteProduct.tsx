@@ -41,12 +41,17 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
     setAdded(true);
   };
 
+  const handleClose = () => {
+    setAdded(false);
+    onClose();
+  };
+
   return (
     <>
       <DownModal
         bgColor="bg-white"
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         title="Ajouter aux favoris"
         titlePosition="text-left"
       >
@@ -57,7 +62,7 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
                 La marchandise "{value}" <br /> à été ajouté à vos favoris.
               </Typography>
               <div className="w-36 flex self-center">
-                <Button fullWidth type="button" onClick={onClose}>
+                <Button fullWidth type="button" onClick={handleClose}>
                   Fermer
                 </Button>
               </div>
@@ -86,7 +91,7 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
                     Ajouter
                   </Button>
                 </div>
-                <Typography onClick={onClose} underline color="primary">
+                <Typography onClick={handleClose} underline color="primary">
                   Annuler
                 </Typography>
               </div>

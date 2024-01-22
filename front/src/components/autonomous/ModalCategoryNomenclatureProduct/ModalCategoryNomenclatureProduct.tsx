@@ -48,7 +48,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
 
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const [productTree, setProductTree] = useState<Product[]>([]);
-  const [value, setVlue] = useState('');
+  const [value, setValue] = useState('');
 
   const createFavoriteMutation = useCreateFavoriteMutation({
     onSuccess: () => {
@@ -114,6 +114,11 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
     setOpenModalDeleteFavorite(true);
   };
 
+  const onCloseModalAddFavorite = () => {
+    setValue('');
+    setOpenModalAddFavorite(false);
+  };
+
   const onRemove = (product?: Product) => {
     if (!product) {
       return;
@@ -142,7 +147,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
       productId: currentProduct?.id,
       name: data.name,
     });
-    setVlue(data.name);
+    setValue(data.name);
   };
   const isFinalProduct = checkIsFinalProduct(currentProduct ?? defaultProduct);
 
@@ -181,7 +186,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
       />
       <ModalAddFavoriteProduct
         open={openModalAddFavorite}
-        onClose={() => setOpenModalAddFavorite(false)}
+        onClose={onCloseModalAddFavorite}
         onSubmit={onSubmit}
         value={value}
       />
