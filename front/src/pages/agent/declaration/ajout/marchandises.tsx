@@ -67,6 +67,7 @@ const Declaration = () => {
     }),
     shallow,
   );
+
   const amountProducts = declarationAgentResponse?.amountProducts;
   const valueProducts = declarationAgentResponse?.valueProducts;
   const customProducts = declarationAgentResponse?.customProducts;
