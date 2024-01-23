@@ -12,6 +12,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import shallow from 'zustand/shallow';
 
 import { configureAxios } from '@/api/base';
+import { FontInitializer } from '@/components/common/FontInitializer';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { Config } from '@/config';
@@ -100,6 +101,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <FontInitializer />
       <MatomoProvider value={instance}>
         {!hideLoading && (
           <div

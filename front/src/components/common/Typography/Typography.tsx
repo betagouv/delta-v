@@ -7,6 +7,7 @@ import {
   Color,
   getActiveColor,
   getColor,
+  getFontFamily,
   getFontWeight,
   getIncreasedTextSize,
   getNoWrap,
@@ -50,6 +51,7 @@ export interface ITypographyProps {
   truncate?: boolean;
   noWrap?: boolean;
   onClick?: () => void;
+  family?: 'roboto' | 'marianne';
 }
 
 export const Typography: React.FC<ITypographyProps> = ({
@@ -69,6 +71,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   transform,
   noWrap = false,
   onClick,
+  family = 'roboto',
 }) => {
   let usedVariant = variant;
   if (usedVariant === null) {
@@ -90,6 +93,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     [getTruncate(truncate)]: truncate,
     [getTextTransform(transform)]: transform,
     [getNoWrap(noWrap)]: noWrap,
+    [getFontFamily(family)]: family,
   });
   const CustomTag = tag ?? 'span';
 
