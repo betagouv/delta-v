@@ -15,6 +15,7 @@ interface StepsFormProductProps {
   currentProduct: Product;
   setSteps: (steps: Product[]) => void;
   steps: Product[];
+  isFromFavorites?: boolean;
   register: any;
   control: any;
 }
@@ -25,6 +26,7 @@ export const StepsFormProduct: React.FC<StepsFormProductProps> = ({
   steps,
   register,
   control,
+  isFromFavorites = false,
 }: StepsFormProductProps) => {
   const [idSelectedStep, setIdSelectedStep] = useState<string | undefined>();
 
@@ -47,11 +49,16 @@ export const StepsFormProduct: React.FC<StepsFormProductProps> = ({
         },
       });
       if (step.productDisplayTypes === ProductDisplayTypes.radio) {
-        return getRadioProductForm(step, fieldRegister);
+        return getRadioProductForm(step, fieldRegister, isFromFavorites);
       }
 
       if (step.productDisplayTypes === ProductDisplayTypes.radioCard) {
-        return getRadioCardProductForm(step, fieldRegister, control);
+        return getRadioCardProductForm({
+          product: step,
+          register: fieldRegister,
+          control,
+          disabled: isFromFavorites,
+        });
       }
       return undefined;
     })

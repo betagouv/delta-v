@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import shallow from 'zustand/shallow';
 
 import { AddProductToFavorites } from '../AddProductToFavorites';
+import { FormAddFavoriteData, ModalAddFavoriteProduct } from '../ModalAddFavoriteProduct';
 import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct';
-import { useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
@@ -17,7 +18,9 @@ interface ModalCategoryNomenclatureProductProps {
   open: boolean;
   onClose?: () => void;
   onOpen?: () => void;
+  onClickFavorite?: (product: Product) => void;
   defaultProduct?: Product;
+  isFromFavorites?: boolean;
 }
 
 interface DisplayedProduct {
@@ -28,12 +31,15 @@ interface DisplayedProduct {
 
 export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatureProductProps> = ({
   onClose,
+  onOpen,
   open,
+  isFromFavorites = false,
   defaultProduct,
 }) => {
-  const { products, removeFavoriteProducts } = useStore(
+  const { products, addFavoriteProducts, removeFavoriteProducts } = useStore(
     (state) => ({
       products: state.products.appState.nomenclatureProducts,
+      addFavoriteProducts: state.addFavoriteProducts,
       removeFavoriteProducts: state.removeFavoriteProducts,
     }),
     shallow,
@@ -43,9 +49,19 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
 
   const [currentId, setCurrentId] = useState<string | undefined>(undefined);
   const [openModalDeleteFavorite, setOpenModalDeleteFavorite] = useState(false);
+  const [openModalAddFavorite, setOpenModalAddFavorite] = useState(false);
 
   const [currentProduct, setCurrentProduct] = useState<Product | undefined>(undefined);
   const [productTree, setProductTree] = useState<Product[]>([]);
+  const [value, setValue] = useState('');
+
+  const createFavoriteMutation = useCreateFavoriteMutation({
+    onSuccess: () => {
+      if (onClose) {
+        onClose();
+      }
+    },
+  });
 
   const defaultDisplayedProducts: DisplayedProduct[] = products?.map((product): Item => {
     return {
@@ -103,6 +119,16 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
     setOpenModalDeleteFavorite(true);
   };
 
+  const onCloseModalAddFavorite = () => {
+    setValue('');
+    setOpenModalAddFavorite(false);
+    if (onOpen) {
+      setTimeout(() => {
+        onOpen();
+      }, 300);
+    }
+  };
+
   const onRemove = (product?: Product) => {
     if (!product) {
       return;
@@ -122,6 +148,19 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
     if (onClose) {
       onClose();
     }
+    setOpenModalAddFavorite(true);
+  };
+
+  const onSubmit = (data: FormAddFavoriteData) => {
+    if (!currentProduct) {
+      return;
+    }
+    addFavoriteProducts(currentProduct);
+    createFavoriteMutation.mutate({
+      productId: currentProduct?.id,
+      name: data.name,
+    });
+    setValue(data.name);
   };
   const isFinalProduct = checkIsFinalProduct(currentProduct ?? defaultProduct);
 
@@ -136,6 +175,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
                 onAddProduct={onAddProduct}
                 onRemoveProduct={onClickDelete}
                 onSelectProduct={onSelectProduct}
+                isFromFavorites={isFromFavorites}
               />
             ) : (
               <div className="px-4 py-5">
@@ -157,6 +197,12 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
         open={openModalDeleteFavorite}
         onClose={() => setOpenModalDeleteFavorite(false)}
         onDeleteProduct={() => onRemove(currentProduct)}
+      />
+      <ModalAddFavoriteProduct
+        open={openModalAddFavorite}
+        onClose={onCloseModalAddFavorite}
+        onSubmit={onSubmit}
+        value={value}
       />
     </>
   );

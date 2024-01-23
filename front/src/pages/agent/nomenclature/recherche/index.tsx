@@ -41,12 +41,11 @@ const SearchProduct = () => {
 
   const [initialProduct, setInitialProduct] = useState<Product | undefined>(undefined);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(!!initialProduct);
-  console.log('🚀 ~ SearchProduct ~ initialProduct:', initialProduct);
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product>(
     (initialProduct as Product) ?? undefined,
   );
-  console.log('🚀 ~ SearchProduct ~ selectedProduct:', selectedProduct);
+
   const [resultCount, setResultCount] = useState<number>(0);
 
   const [value, setValue] = useState('');
@@ -88,19 +87,12 @@ const SearchProduct = () => {
   }, [selectedId, search]);
 
   const onCloseModalAddFavorite = () => {
-    setValue('');
     setOpenModalAddFavorite(false);
-    setTimeout(() => {
-      setOpenCategoryDownModal(true);
-    }, 300);
+    setValue('');
   };
 
   const createFavoriteMutation = useCreateFavoriteMutation({
-    onSuccess: () => {
-      if (onCloseModalAddFavorite) {
-        onCloseModalAddFavorite();
-      }
-    },
+    onSuccess: () => {},
   });
 
   const onClickFavorite = (product: Product) => {

@@ -67,8 +67,10 @@ const Nomenclature = () => {
       query: { search: searchValue, selectedId: product.id },
     });
   };
+  const [isFromFavorites, setIsFromFavorites] = useState<boolean>(false);
 
   const onClickFavorite = (product: Product) => {
+    setIsFromFavorites(true);
     setSelectedFavoriteProduct(product);
     setOpenSearchDownModal(false);
     setOpenFavoriteDownModal(false);
@@ -177,6 +179,7 @@ const Nomenclature = () => {
           open={openCategoryDownModal}
           onClose={handleCloseDownModal}
           defaultProduct={selectedFavoriteProduct}
+          isFromFavorites={isFromFavorites}
         />
         <ModalFavorites
           open={openFavoriteDownModal}

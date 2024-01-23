@@ -20,6 +20,7 @@ interface AddProductToFavoritesProps {
   onSelectProduct?: (id: string) => void;
   defaultCurrency?: string;
   defaultValues?: DefaultValuesUpdateProduct;
+  isFromFavorites?: boolean;
 }
 
 export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
@@ -29,6 +30,7 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
   onSelectProduct,
   defaultCurrency,
   defaultValues,
+  isFromFavorites,
 }) => {
   const { nomenclatureProducts, findProductTreeSteps } = useStore((state) => ({
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
@@ -86,6 +88,7 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
               onAddProduct={onAddProduct}
               onRemoveProduct={onRemoveProduct}
               defaultCurrency={defaultCurrency}
+              isFromFavorites={isFromFavorites}
               defaultValues={defaultValues}
               isAddAbleToFavorites
               templateRole="agent"

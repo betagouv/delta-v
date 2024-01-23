@@ -97,7 +97,7 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
                   <>
                     <FavoriteBadge
                       product={favoriteProduct}
-                      onClick={() => console.log('click')}
+                      onClick={onClick}
                       onDeleteClick={onClickDelete}
                       isAvailableToEdit={isAvailableToEdit}
                       key={favoriteProduct.id}

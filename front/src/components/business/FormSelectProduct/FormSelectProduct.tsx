@@ -38,6 +38,7 @@ interface FormSelectProductProps {
   defaultName?: string;
   defaultValues?: DefaultValuesUpdateProduct;
   isAddAbleToFavorites?: boolean;
+  isFromFavorites?: boolean;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
@@ -47,6 +48,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   onRemoveProduct,
   templateRole = 'user',
   defaultCurrency = 'EUR',
+  isFromFavorites = false,
   defaultName = '',
   defaultValues,
   isAddAbleToFavorites = false,
@@ -144,6 +146,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         currentProduct={currentProduct}
         register={register}
         setSteps={setSteps}
+        isFromFavorites={isFromFavorites}
         steps={steps}
       />
       {isAddAble && !isAddAbleToFavorites && (
@@ -159,7 +162,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       )}
       {isAddAbleToFavorites && (
         <FormAddProductToFavorite
-          productId={currentProduct.id}
+          productId={steps[steps.length - 1]?.id}
           onRemoveProduct={onRemoveProduct}
           control={control}
           register={register}
