@@ -209,7 +209,7 @@ const HomepageAgentMobile = () => {
                 stopCamera={stopCamera}
                 data={dataScan}
               />
-              <div className="flex flex-col mt-10 gap-[10px]">
+              <div className="flex flex-col mt-10 gap-2.5">
                 <div className="flex flex-col">
                   <Typography weight="bold" size="text-xs">
                     Le scan ne marche pas ?

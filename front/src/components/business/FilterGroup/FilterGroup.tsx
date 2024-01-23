@@ -36,12 +36,12 @@ export const FilterGroup = ({ title, filters, control, name, rules }: FilterGrou
   };
 
   return (
-    <div>
+    <div className="sm:flex-col md:flex-row md:items-center flex gap-2.5">
       <Typography color="black" size="text-xs">
         {title}
       </Typography>
 
-      <div className="mt-2.5 flex flex-wrap gap-2.5 pr-6">
+      <div className="flex flex-wrap gap-2.5 pr-6">
         {filters.map((item, index) => (
           <FilterItem
             key={index}

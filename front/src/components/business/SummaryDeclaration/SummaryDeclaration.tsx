@@ -84,7 +84,7 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
         )}
       </div>
       <div className="-mx-4 my-4 border-b-2 border-dashed" />
-      <div className="flex flex-col gap-[10px]">
+      <div className="flex flex-col gap-2.5">
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
             <Typography color="black" weight="bold" size="sm">

@@ -7,7 +7,8 @@ import { useRouter } from 'next/router';
 import { UseDeclarationParams, useDeclarations } from '@/api/hooks/useAPIDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { DeclarationCard } from '@/components/business/DeclarationCard';
-import { FilterBar, FilterBarForm } from '@/components/business/FilterGroup/FilterBar';
+import { FilterBarMobile } from '@/components/business/FilterGroup/FilterBarMobile';
+import { FilterBarForm } from '@/components/business/FilterGroup/types';
 import { Meta } from '@/layout/Meta';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { MainAgent } from '@/templates/MainAgent';
@@ -115,7 +116,7 @@ const QuittancePage = () => {
           ) : (
             <>
               <div className="mb-5">
-                <FilterBar
+                <FilterBarMobile
                   title="Plus de filtres"
                   searchType="global"
                   onValidateFilter={onValidateFilter}
@@ -127,7 +128,7 @@ const QuittancePage = () => {
                   defaultSearchValue={search as string}
                 />
               </div>
-              <div className="flex flex-col gap-2.5 md:items-center">
+              <div className="md:items-center flex flex-col gap-2.5">
                 {declarations &&
                   declarations?.map((declaration, index) => (
                     <span className={cs({ 'opacity-40': openFilterBar })} key={declaration.id}>

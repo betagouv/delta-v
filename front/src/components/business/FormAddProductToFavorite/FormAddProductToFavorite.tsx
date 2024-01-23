@@ -42,7 +42,7 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
 
   return (
     <div className="flex flex-1 flex-col gap-6 w-full">
-      <div className="flex flex-col gap-[10px] ml-2">
+      <div className="flex flex-col gap-2.5 ml-2">
         {isAddAble && (
           <div className="flex flex-col gap-1 ml-2 flex-1 justify-between">
             <div className="w-full bg-primary-100 text-primary-600 h-[76px] flex justify-center items-center">

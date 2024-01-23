@@ -370,7 +370,7 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
         </div>
       )}
       <div className="mt-2">
-        <p className="leading-0 text-[10px] text-secondary-300">
+        <p className="leading-0 text-2xs text-secondary-300">
           *Les informations proposées par DéclareDouane et les montants de droit et taxes
           potentiellement dus suite à une déclaration restent soumis à l'approbation d'un agent des
           douanes au moment du passage de la frontière. Si vous estimez que votre déclaration

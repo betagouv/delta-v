@@ -3,10 +3,9 @@ import React from 'react';
 import cs from 'classnames';
 import { useForm } from 'react-hook-form';
 
-import { FilterHistoryItemProps } from '../FilterHistory';
 import { FilterHistory } from '../FilterHistory/FilterHistory';
-import { SearchDisplayType } from '../Search';
 import { FilterGroup } from './FilterGroup';
+import { FilterBarForm, FilterBarProps } from './types';
 import { Button } from '@/components/common/Button';
 import { Icon } from '@/components/common/Icon';
 import { SvgIcon } from '@/components/common/SvgIcon';
@@ -14,32 +13,7 @@ import { Typography } from '@/components/common/Typography';
 import { PeriodInput } from '@/components/input/StandardInputs/PeriodInput';
 import { FILTER_MEANS_OF_TRANSPORT, FILTER_NEWS_TAGS, FILTER_STATUS } from '@/utils/filters';
 
-export type FilterBarProps = {
-  title: string;
-  searchType?: SearchDisplayType;
-  noSearchBar?: boolean;
-  noPeriodInput?: boolean;
-  filterHistories?: FilterHistoryItemProps[];
-  filtersCount?: number;
-  onValidateFilter: (data: FilterBarForm) => void;
-  withMeanOfTransportFilter?: boolean;
-  withStatusFilter?: boolean;
-  withNewsTagsFilter?: boolean;
-  defaultSearchValue?: string;
-  open: boolean;
-  setOpen: (open: boolean) => void;
-};
-
-export interface FilterBarForm {
-  status?: string[];
-  meanOfTransport?: string[];
-  newsTags?: string[];
-  startDate?: Date | null;
-  endDate?: Date | null;
-  search: string | null;
-}
-
-export const FilterBar = ({
+export const FilterBarMobile = ({
   title = 'Plus de filtres',
   noSearchBar = false,
   noPeriodInput = false,
@@ -50,17 +24,18 @@ export const FilterBar = ({
   withNewsTagsFilter = false,
   defaultSearchValue,
   onValidateFilter,
+  filterBarData,
   open,
   setOpen,
 }: FilterBarProps) => {
   const { register, control, handleSubmit } = useForm<FilterBarForm>({
     defaultValues: {
-      status: [],
-      meanOfTransport: [],
-      newsTags: [],
-      startDate: null,
-      endDate: null,
-      search: defaultSearchValue ?? null,
+      status: filterBarData?.status ?? [],
+      meanOfTransport: filterBarData?.meanOfTransport ?? [],
+      newsTags: filterBarData?.newsTags ?? [],
+      startDate: filterBarData?.startDate ?? null,
+      endDate: filterBarData?.endDate ?? null,
+      search: filterBarData?.search ?? defaultSearchValue ?? null,
     },
   });
 

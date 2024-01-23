@@ -54,7 +54,7 @@ export const TabBar: React.FC<TabBarProps> = ({
         <div className="mb-2 h-6 w-auto">
           <SvgIcon name={icon} />
         </div>
-        <p className="text-center text-[10px] leading-none md:text-[12px]">{title}</p>
+        <p className="text-center text-2xs leading-none md:text-[12px]">{title}</p>
       </div>
     );
   };

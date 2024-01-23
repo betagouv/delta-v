@@ -20,7 +20,7 @@ export const NewDataInfoItem = ({
 }: NewDataInfoItemProps) => {
   return (
     <div className={`flex flex-col flex-1`}>
-      <div className="ml-5 text-gray-500 text-[10px]">
+      <div className="ml-5 text-gray-500 text-2xs">
         <Typography color="light-gray" size="text-3xs" transform="uppercase">
           {label}
         </Typography>
