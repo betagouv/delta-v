@@ -36,7 +36,7 @@ export interface BaseAPIResponse {
 
 export interface FavoriteResponse {
   productId: string;
-  name?: string;
+  name: string;
 }
 
 export interface ValidationError {
@@ -58,7 +58,7 @@ export type CreateFeedbackParams = {
 
 export type CreateFavoriteParams = {
   productId: string;
-  name?: string;
+  name: string;
 };
 
 export type CreateDeclarationParams = {

@@ -3,7 +3,7 @@ import { FavoriteRepositoryInterface } from '../../../repositories/favorite.repo
 interface FavoriteOptions {
   userId: string;
   productId: string;
-  name?: string;
+  name: string;
   favoriteRepository: FavoriteRepositoryInterface;
 }
 

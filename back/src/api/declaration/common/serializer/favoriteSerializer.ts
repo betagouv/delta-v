@@ -2,7 +2,7 @@ import { Favorite } from '../../../../entities/favorite.entity';
 
 export interface SerializedFavorite {
   productId: string;
-  name?: string;
+  name: string;
 }
 
 export const favoriteSerializer = (favorite: Favorite): SerializedFavorite => ({

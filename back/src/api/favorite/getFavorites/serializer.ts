@@ -9,5 +9,5 @@ export interface SerializedGetAllFavorite {
 }
 
 export default (favorites: FavoriteEntity[]): SerializedGetAllFavorite => ({
-  favorites: favorites.map((favorite) => favoriteSerializer(favorite)),
+  favorites: favorites.map(favoriteSerializer),
 });

@@ -5,7 +5,7 @@ import { ProductEntity, ProductEntityInterface } from './product.entity';
 export interface Favorite {
   userId: string;
   productId: string;
-  name?: string;
+  name: string;
 }
 
 export interface FavoriteEntityInterface extends Favorite {
@@ -21,8 +21,8 @@ export class FavoriteEntity implements FavoriteEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
   productId: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  name?: string;
+  @Column({ type: 'varchar', length: 255 })
+  name: string;
 
   @ManyToOne(() => ProductEntity, (product) => product.favorites, { onDelete: 'CASCADE' })
   @JoinColumn()

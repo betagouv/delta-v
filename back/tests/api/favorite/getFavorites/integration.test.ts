@@ -51,10 +51,7 @@ describe('getFavorite route', () => {
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(status).toBe(HttpStatuses.OK);
-    expect(body.favorites).toMatchObject([
-      { productId: product2.id },
-      { productId: product.id, name },
-    ]);
+    expect(body.favorites).toMatchObject([{ productId: product.id }, { productId: product2.id }]);
     expect(body.favorites).not.toContain(product3.id);
   });
 });

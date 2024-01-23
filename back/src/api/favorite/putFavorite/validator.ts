@@ -4,7 +4,7 @@ import { validator } from '../../../core/validator';
 export interface PutFavoriteRequest {
   body: {
     productId: string;
-    name?: string;
+    name: string;
   };
 }
 
