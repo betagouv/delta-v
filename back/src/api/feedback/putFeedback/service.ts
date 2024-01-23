@@ -13,6 +13,16 @@ interface FeedbackOptions {
   eventEmitter: CustomEventEmitterInterface;
 }
 
+const getPhotosUrls = async (files?: Express.Multer.File[]): Promise<Picture[]> => {
+  if (!files) {
+    return [];
+  }
+  const photoUrls = (await Promise.all(files.map((file) => uploadBuffer(file.buffer)))).filter(
+    (pictureUrl) => pictureUrl,
+  ) as string[];
+  return photoUrls.map((url) => ({ url, nsfw: false }));
+};
+
 export const service = async ({
   feedbackId,
   comment,

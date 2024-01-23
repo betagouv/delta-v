@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 import { useCreateFeedbackMutation } from '@/api/hooks/useAPIFeedback';
+import { ModalDeleteAttachment } from '@/components/autonomous/ModalDeleteAttachment';
 import {
   ModalValidateFeedbackInfoMobile,
   ModalValidateFeedbackInfoDesktop,
@@ -24,7 +25,6 @@ import { RoutingAgent } from '@/utils/const';
 
 export interface FormContactUsData {
   comment: string;
-  id: string;
 }
 
 const ContactPage = () => {
@@ -65,6 +65,7 @@ const ContactPage = () => {
     }
   }, [watch('comment')]);
 
+  const [openDeleteAttachment, setOpenDeleteAttachment] = useState(false);
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
@@ -94,6 +95,7 @@ const ContactPage = () => {
     createFeedbackMutation.mutate({
       feedbackId,
       comment: data.comment,
+      file,
     });
   };
 
@@ -176,6 +178,44 @@ const ContactPage = () => {
               </label>
             )}
           </div>
+          {file ? (
+            <div className="flex gap-5 items-center flex-row">
+              <div className="inline-flex flex-row gap-0.5 items-center text-primary-600">
+                <Icon name="paperclip" size="sm" color="primary" />
+                <Typography size="text-2xs" underline color="black">
+                  {file.name}
+                </Typography>
+              </div>
+              <div className="flex flex-row gap-2">
+                <button
+                  className=" text-primary-600 text-xs underline font-bold"
+                  type="button"
+                  onClick={() => setOpenDeleteAttachment(true)}
+                >
+                  Modifier
+                </button>
+              </div>
+            </div>
+          ) : (
+            <label
+              htmlFor="file"
+              className="inline-flex border border-primary-600 text-primary-600 rounded-full px-5 py-2 justify-center items-center self-start"
+            >
+              <div className="inline-flex flex-row gap-1 items-center">
+                <Icon name="paperclip" size="sm" />
+                <Typography size="text-2xs" weight="bold">
+                  Ajouter une pièce jointe
+                </Typography>
+              </div>
+              <input
+                id="file"
+                name="file"
+                onChange={(e) => setFile(e.target.files?.[0])}
+                type="file"
+                className="hidden"
+              />
+            </label>
+          )}
           <div className="w-[118px] self-center md:self-start mb-4">
             <button
               className={clsxm({
@@ -198,6 +238,14 @@ const ContactPage = () => {
           open={openValidateFeedbackInfoDesktop}
           onClose={() => setOpenValidateFeedbackInfoDesktop(false)}
           onClickToRedirect={onClickToRedirectToHome}
+        />
+        <ModalDeleteAttachment
+          open={openDeleteAttachment}
+          onClose={() => setOpenDeleteAttachment(false)}
+          onDelete={() => {
+            setFile(undefined);
+            setOpenDeleteAttachment(false);
+          }}
         />
       </MainAgent>
     </AgentRoute>
