@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 
-import { CustomHeader } from '@/components/autonomous/CustomHeader';
-import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
+import { MainAgentDesktop } from './MainAgentDesktop';
+import { MainAgentMobile } from './MainAgentMobile';
+import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 
 type IMainAgentProps = {
   meta: ReactNode;
@@ -16,6 +17,7 @@ type IMainAgentProps = {
   withTitle?: boolean;
   linkButton?: string;
   withPadding?: boolean;
+  isMobile?: boolean;
 };
 
 const MainAgent = ({
@@ -27,23 +29,25 @@ const MainAgent = ({
   withTitle = false,
   withPadding = false,
   linkButton,
+  isMobile = true,
 }: IMainAgentProps) => {
   return (
-    <div className="h-full antialiased">
-      {meta}
-
-      <div className={withHeader || withTitle ? 'flex min-h-[calc(100%)] flex-col' : ''}>
-        {withHeader && (
-          <CustomHeader withLogo={withLogo} title={titleHeader} templateRole="agent" />
-        )}
-        {withTitle && (
-          <div className="p-4 pt-0">
-            <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />
-          </div>
-        )}
-        {withPadding ? <div className="px-4">{children}</div> : <div>{children}</div>}
-      </div>
-    </div>
+    <AgentRoute>
+      {isMobile ? (
+        <MainAgentMobile
+          children={children}
+          meta={meta}
+          withHeader={withHeader}
+          withLogo={withLogo}
+          titleHeader={titleHeader}
+          withTitle={withTitle}
+          withPadding={withPadding}
+          linkButton={linkButton}
+        />
+      ) : (
+        <MainAgentDesktop children={children} meta={meta} titleHeader={titleHeader} />
+      )}
+    </AgentRoute>
   );
 };
 

@@ -16,7 +16,7 @@ interface NavBarProps {
 export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps) => {
   return (
     <div className="flex flex-row justify-between items-center">
-      <div className="w-[86px] h-[45px]">
+      <div className="w-[86px] h-[45px] md:hidden lg:flex">
         <SvgIcon name="logoAgent" />
       </div>
       <div className="flex flex-row gap-[45px] items-center py-7">
@@ -31,7 +31,7 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
                         true,
                     })}
                   >
-                    <div className="flex flex-row gap-[10px] items-center">
+                    <div className="flex flex-row gap-2.5 items-center">
                       <div className="w-5 h-5 flex items-center justify-items-center">
                         <SvgIcon name={item.svgIcon} />
                       </div>

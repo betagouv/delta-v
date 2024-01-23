@@ -32,13 +32,24 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
   defaultCurrency,
   defaultValues,
 }) => {
-  const { nomenclatureProducts } = useStore((state) => ({
+  const { nomenclatureProducts, findProductTreeSteps } = useStore((state) => ({
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
+    findProductTreeSteps: state.findProductTreeSteps,
   }));
 
   const productTree = currentProduct
     ? findProductTree(nomenclatureProducts, currentProduct.id)
     : [];
+
+  const [defaultSteps, setDefaultSteps] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  useEffect(() => {
+    if (currentProduct?.id) {
+      const steps = findProductTreeSteps(currentProduct.id);
+      setDefaultSteps(steps);
+      setSelectedProduct(steps[0]);
+    }
+  }, [currentProduct]);
 
   return (
     <>
@@ -82,7 +93,8 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
         >
           {currentProduct && (
             <FormSelectProduct
-              currentProduct={currentProduct}
+              currentProduct={selectedProduct}
+              defaultSteps={defaultSteps}
               onAddProduct={onAddProduct}
               onRemoveProduct={onRemoveProduct}
               defaultCurrency={defaultCurrency}

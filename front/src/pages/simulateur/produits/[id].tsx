@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import Error from 'next/error';
@@ -11,6 +11,7 @@ import { FormSelectProduct, OnAddProductOptions } from '@/components/business/Fo
 import { CategoryList } from '@/components/common/CategoryList';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
+import { Product, ProductDisplayTypes } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
@@ -18,9 +19,9 @@ import { Main } from '@/templates/Main';
 const ProductSearch = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { findProduct, addProduct, defaultCurrency } = useStore(
+  const { findProductTreeSteps, addProduct, defaultCurrency } = useStore(
     (state) => ({
-      findProduct: state.findProduct,
+      findProductTreeSteps: state.findProductTreeSteps,
       addProduct: state.addProduct,
       defaultCurrency: state.simulator.appState.simulatorRequest.defaultCurrency,
     }),
@@ -33,7 +34,17 @@ const ProductSearch = () => {
   const customName =
     typeof queryParams.customName === 'string' ? queryParams.customName : undefined;
   const id = typeof queryParams.id === 'string' ? queryParams.id : undefined;
-  const currentProduct = findProduct(id as string);
+
+  const [currentProduct, setCurrentProduct] = useState<Product | undefined>();
+  const [defaultSteps, setDefaultSteps] = useState<Product[]>([]);
+  useEffect(() => {
+    if (id) {
+      const steps = findProductTreeSteps(id as string);
+      setDefaultSteps(steps);
+      setCurrentProduct(steps[0]);
+    }
+  }, [id]);
+
   const onRedirectProduct = (idRedirect: string) => {
     router.push(`/simulateur/produits/${idRedirect}`);
   };
@@ -81,18 +92,19 @@ const ProductSearch = () => {
       titleIcon="calculator"
     >
       <div className="flex flex-1 flex-col gap-6">
-        {currentProduct?.finalProduct ? (
-          <FormSelectProduct
-            currentProduct={currentProduct}
-            onAddProduct={onAddProduct}
-            defaultCurrency={defaultCurrency}
-            defaultName={customName}
-          />
-        ) : (
+        {currentProduct.productDisplayTypes === ProductDisplayTypes.category ? (
           <CategoryList
             onSelectProduct={onRedirectProduct}
             items={displayedProducts}
             title="Catégories"
+          />
+        ) : (
+          <FormSelectProduct
+            currentProduct={currentProduct}
+            defaultSteps={defaultSteps}
+            onAddProduct={onAddProduct}
+            defaultCurrency={defaultCurrency}
+            defaultName={customName}
           />
         )}
       </div>

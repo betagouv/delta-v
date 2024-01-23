@@ -52,7 +52,7 @@ export const ActualityCard = ({
         {tags && (
           <div className="flex flex-row gap-2">
             {tags.map((tag) => (
-              <div className="border text-[10px] border-secondary-300 rounded-full px-[10px] py-[5px]">
+              <div className="border text-2xs border-secondary-300 rounded-full px-2.5 py-[5px]">
                 {tag}
               </div>
             ))}

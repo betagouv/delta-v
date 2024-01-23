@@ -18,10 +18,15 @@ export const BlockActualities: React.FC<BlockActualitiesProps> = ({
 }: BlockActualitiesProps) => {
   return (
     <div className="flex flex-col justify-start gap-[30px]">
-      <TitleAgent title="Actualités douanières" textPosition="text-left" size="text-3xl" />
-      {!isLoading && (
+      <TitleAgent
+        title="Actualités douanières"
+        textPosition="text-left"
+        size="text-3xl"
+        fontFamily="marianne"
+      />
+      {!isLoading && actualities && actualities.length > 0 ? (
         <>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 items-start gap-10">
+          <div className="grid-cols-3 grid items-start gap-10">
             {actualities &&
               actualities?.map((actuality) => (
                 <ActualityCard
@@ -43,6 +48,10 @@ export const BlockActualities: React.FC<BlockActualitiesProps> = ({
             </NextLink>
           </div>
         </>
+      ) : (
+        <Typography size="text-xs" color="light-gray" italic>
+          Pas d’actualité
+        </Typography>
       )}
     </div>
   );

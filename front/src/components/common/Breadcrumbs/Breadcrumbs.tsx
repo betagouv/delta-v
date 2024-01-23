@@ -22,14 +22,14 @@ export const Breadcrumbs: React.FC<IBreadcrumbsProps> = ({
       ? [...categoryProducts.slice(categoryProducts.length - limit, categoryProducts.length)]
       : categoryProducts;
   return (
-    <div className="flex flex-row flex-wrap items-center gap-x-[10px] pr-4">
+    <div className="flex flex-row flex-wrap items-center gap-x-2.5 pr-4">
       {displayedCategoryProducts.map((item, index) => {
         return (
           <>
             <div
               key={index}
               className={cs({
-                'max-w-[85px] flex flex-row items-center gap-[10px] line-clamp-1': true,
+                'max-w-[85px] flex flex-row items-center gap-2.5 line-clamp-1': true,
                 'cursor-pointer': onClickLink,
               })}
               onClick={() => onClickLink && onClickLink(item.id)}

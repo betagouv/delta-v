@@ -4,13 +4,14 @@ import { Alpha2Code } from 'i18n-iso-countries';
 
 import { StoreSlice } from '../store';
 import { getAllProductRequest } from '@/api/lib/products';
-import { Product } from '@/model/product';
+import { Product, ProductDisplayTypes } from '@/model/product';
 import { findProduct, findProductTree, setupProductsToDisplay } from '@/utils/product.util';
 import { advancedSearch, SearchType } from '@/utils/search';
 
 export interface ProductsUseCaseSlice {
   findProduct: (id: string) => Product | undefined;
   findProductTree: (id: string) => Product[];
+  findProductTreeSteps: (id: string) => Product[];
   searchProducts: (searchValue: string) => SearchType<Product>[];
   searchNomenclatureProducts: (searchValue: string) => SearchType<Product>[];
   searchAllProducts: (searchValue: string) => SearchType<Product>[];
@@ -48,6 +49,16 @@ const getFlattenProducts = (products: Product[]): Product[] => {
 export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set, get) => ({
   findProduct: (id: string) => {
     return findProduct(get().products.appState.products, id);
+  },
+  findProductTreeSteps: (id: string) => {
+    const productTree = findProductTree(get().products.appState.products, id);
+    const productWithoutCategory = productTree.filter(
+      (product) => product.productDisplayTypes !== ProductDisplayTypes.category,
+    );
+    if (productWithoutCategory.length > 0) {
+      return productWithoutCategory.reverse();
+    }
+    return productTree;
   },
   findProductTree: (id: string) => {
     return findProductTree(get().products.appState.products, id);

@@ -9,9 +9,6 @@ module.exports = {
   content: [path.join(__dirname, './src/**/*.(js|jsx|ts|tsx)')],
   safelist: ['truncate'],
   theme: {
-    // screens: {
-    //   laptop: '1121px',
-    // },
     extend: {
       fontSize: {
         '2xs': '.625rem',
@@ -56,7 +53,8 @@ module.exports = {
         '4xl': '2rem',
       },
       fontFamily: {
-        roboto: ['Roboto', 'sans-serif'],
+        roboto: ['var(--font-roboto)', 'sans-serif'],
+        marianne: ['var(--font-marianne)', 'sans-serif'],
       },
     },
   },

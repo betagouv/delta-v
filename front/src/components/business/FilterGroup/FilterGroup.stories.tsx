@@ -1,9 +1,10 @@
 import { Meta } from '@storybook/react';
 
 import { FilterHistoryItemProps } from '../FilterHistory';
-import { FilterBar, FilterBarProps } from './FilterBar';
+import { FilterBarDesktop } from './FilterBarDesktop';
 import { FilterGroup } from './FilterGroup';
 import { FilterItem } from './FilterItem';
+import { FilterBarProps } from './types';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
@@ -29,7 +30,7 @@ const FILTER_BAR_DATA: FilterBarProps = {
 };
 
 export const FilterBarExample = (): JSX.Element => (
-  <FilterBar
+  <FilterBarDesktop
     title={FILTER_BAR_DATA.title}
     searchType={FILTER_BAR_DATA.searchType}
     filterHistories={FILTER_BAR_DATA.filterHistories}

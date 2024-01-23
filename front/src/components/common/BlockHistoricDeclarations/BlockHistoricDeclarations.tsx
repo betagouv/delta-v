@@ -26,81 +26,105 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
   errorDeclarations,
 }: BlockHistoricDeclarationsProps) => {
   const router = useRouter();
+  const submittedDeclarationsNotEmpty = submittedDeclarations && submittedDeclarations.length > 0;
+  const paidDeclarationsNotEmpty = paidDeclarations && paidDeclarations.length > 0;
+  const errorDeclarationsNotEmpty = errorDeclarations && errorDeclarations.length > 0;
+  const emptyDeclarations =
+    !submittedDeclarationsNotEmpty && !paidDeclarationsNotEmpty && !errorDeclarationsNotEmpty;
+
   return (
     <div className="flex flex-col justify-start gap-[30px]">
-      <TitleAgent title="Historique des déclarations" textPosition="text-left" size="text-3xl" />
-      <div className="flex flex-row items-start gap-10  md:overflow-scroll">
-        <div className="flex flex-col gap-[30px] flex-1">
-          <Typography size="text-xs" color="black">
-            En attente de validation
-          </Typography>
-          {!isSubmittedDeclarationsLoading && submittedDeclarations && (
-            <div className="flex flex-col gap-5">
-              {submittedDeclarations?.map((item) => (
-                <DeclarationCard
-                  firstName={item.declarantFirstName}
-                  lastName={item.declarantLastName}
-                  id={item.id}
-                  status={item.status}
-                  date={item.versionDate}
-                  transport={item.declarantMeanOfTransport}
-                  key={item.publicId}
-                  publicId={item.publicId}
-                  onClick={() => router.push(`/agent/declaration/${item.id}`)}
-                />
-              ))}
+      <TitleAgent
+        title="Historique des déclarations"
+        textPosition="text-left"
+        size="text-3xl"
+        fontFamily="marianne"
+      />
+      {!emptyDeclarations ? (
+        <div className="md:overflow-scroll grid-cols-3 items-start grid gap-10">
+          {submittedDeclarationsNotEmpty && (
+            <div className="flex flex-col gap-[30px] flex-1">
+              <Typography size="text-xs" color="black">
+                En attente de validation
+              </Typography>
+              {!isSubmittedDeclarationsLoading && submittedDeclarations && (
+                <div className="flex flex-col gap-5">
+                  {submittedDeclarations?.map((item) => (
+                    <DeclarationCard
+                      firstName={item.declarantFirstName}
+                      lastName={item.declarantLastName}
+                      id={item.id}
+                      status={item.status}
+                      date={item.versionDate}
+                      transport={item.declarantMeanOfTransport}
+                      key={item.publicId}
+                      publicId={item.publicId}
+                      onClick={() => router.push(`/agent/declaration/${item.id}`)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
-        </div>
-        <div className="flex flex-col gap-[30px] flex-1">
-          <Typography size="text-xs" color="black">
-            Payée
-          </Typography>
-          {!isPaidDeclarationsLoading && paidDeclarations && (
-            <div className="flex flex-col gap-5">
-              {paidDeclarations?.map((item) => (
-                <DeclarationCard
-                  firstName={item.declarantFirstName}
-                  lastName={item.declarantLastName}
-                  id={item.id}
-                  status={item.status}
-                  date={item.versionDate}
-                  transport={item.declarantMeanOfTransport}
-                  key={item.publicId}
-                  publicId={item.publicId}
-                  onClick={() => router.push(`/agent/declaration/${item.id}`)}
-                />
-              ))}
+          {paidDeclarationsNotEmpty && (
+            <div className="flex flex-col gap-[30px] flex-1">
+              <Typography size="text-xs" color="black">
+                Payée
+              </Typography>
+              {!isPaidDeclarationsLoading && paidDeclarations && (
+                <div className="flex flex-col gap-5">
+                  {paidDeclarations?.map((item) => (
+                    <DeclarationCard
+                      firstName={item.declarantFirstName}
+                      lastName={item.declarantLastName}
+                      id={item.id}
+                      status={item.status}
+                      date={item.versionDate}
+                      transport={item.declarantMeanOfTransport}
+                      key={item.publicId}
+                      publicId={item.publicId}
+                      onClick={() => router.push(`/agent/declaration/${item.id}`)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
-        </div>
-        <div className="flex flex-col gap-[30px] flex-1">
-          <Typography size="text-xs" color="black">
-            Non conforme
-          </Typography>
+          {errorDeclarationsNotEmpty && (
+            <div className="flex flex-col gap-[30px] flex-1">
+              <Typography size="text-xs" color="black">
+                Non conforme
+              </Typography>
 
-          {!isErrorDeclarationsLoading && errorDeclarations && (
-            <div className="flex flex-col gap-5">
-              {errorDeclarations.map((item) => (
-                <DeclarationCard
-                  firstName={item.declarantFirstName}
-                  lastName={item.declarantLastName}
-                  id={item.id}
-                  status={item.status}
-                  date={item.versionDate}
-                  transport={item.declarantMeanOfTransport}
-                  key={item.publicId}
-                  publicId={item.publicId}
-                  onClick={() => router.push(`/agent/declaration/${item.id}`)}
-                />
-              ))}
+              {!isErrorDeclarationsLoading && errorDeclarations && (
+                <div className="flex flex-col gap-5">
+                  {errorDeclarations.map((item) => (
+                    <DeclarationCard
+                      firstName={item.declarantFirstName}
+                      lastName={item.declarantLastName}
+                      id={item.id}
+                      status={item.status}
+                      date={item.versionDate}
+                      transport={item.declarantMeanOfTransport}
+                      key={item.publicId}
+                      publicId={item.publicId}
+                      onClick={() => router.push(`/agent/declaration/${item.id}`)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
-      </div>
+      ) : (
+        <Typography size="text-xs" color="light-gray" italic>
+          Pas de déclaration
+        </Typography>
+      )}
       {!isErrorDeclarationsLoading &&
         !isPaidDeclarationsLoading &&
-        !isSubmittedDeclarationsLoading && (
+        !isSubmittedDeclarationsLoading &&
+        !emptyDeclarations && (
           <div className="flex justify-center">
             <NextLink href="/agent/declaration">
               <div className="flex flex-row items-center gap-2 border border-primary-600 py-2 px-9 rounded-full">

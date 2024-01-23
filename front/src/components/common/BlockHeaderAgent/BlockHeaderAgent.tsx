@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import NextLink from 'next/link';
 
+import { marianne } from '../FontInitializer';
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 
@@ -23,12 +24,22 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-col justify-center">
-        <p className="leading-[90px] text-[100px] ml-[-112px] text-primary-600 text-center font-semibold">
+        <p
+          className={`leading-[90px] text-[100px] ml-[-112px] text-primary-600 text-center font-bold ${marianne.variable} font-marianne`}
+        >
           Contrôler
         </p>
         <div className="flex flex-row justify-center items-start">
-          <p className="leading-10 text-[50px] text-black font-semibold">une</p>
-          <p className="leading-[90px] text-[100px] text-black font-semibold ml-4">déclaration</p>
+          <p
+            className={`leading-10 text-[50px] text-black font-bold ${marianne.variable} font-marianne`}
+          >
+            une
+          </p>
+          <p
+            className={`leading-[90px] text-[100px] text-black font-bold ml-4 ${marianne.variable} font-marianne`}
+          >
+            déclaration
+          </p>
         </div>
         <div className="justify-center flex flex-col mt-10">
           <Typography size="text-xs" color="black" textPosition="text-center">
@@ -37,12 +48,12 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
           </Typography>
         </div>
         <div className="flex flex-col justify-center self-center gap-4 mt-5">
-          <div className="flex flex-row justify-start items-center gap-[10px]">
+          <div className="flex flex-row justify-start items-center gap-2.5">
             <input
               data-testid="input-search-element"
               placeholder="Numéro de déclaration, nom, prénom..."
               enterKeyHint="search"
-              className="block w-[433px] rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent border-none"
+              className="block w-[433px] h-10 rounded-full py-2 px-5 text-xs placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent border-none"
               onChange={(event) => {
                 onChangeSearch(event.target.value);
               }}
@@ -66,7 +77,7 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
                 Raccourcis :
               </Typography>
             </div>
-            <div className="flex flex-row items-center gap-[10px]">
+            <div className="flex flex-row items-center gap-2.5">
               <NextLink href={RITA_URL} target="_blank">
                 <div
                   className={classNames({
