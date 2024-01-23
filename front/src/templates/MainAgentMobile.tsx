@@ -41,7 +41,7 @@ const MainAgentMobile = ({
             <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />
           </div>
         )}
-        {withPadding ? <div className="px-4">{children}</div> : <div>{children}</div>}
+        {withPadding ? <div className="px-4">{children}</div> : children}
       </div>
     </div>
   );

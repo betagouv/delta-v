@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -10,7 +10,6 @@ import * as yup from 'yup';
 import { useCreateFeedbackMutation } from '@/api/hooks/useAPIFeedback';
 import { ModalValidateFeedbackInfo } from '@/components/autonomous/ModalValidateFeedbackInfo';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { Icon } from '@/components/common/Icon';
 import { TitleAgent } from '@/components/common/TitleAgent';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -20,20 +19,17 @@ import { RoutingAgent } from '@/utils/const';
 
 export interface FormContactUsData {
   comment: string;
-  id: string;
 }
 
 const ContactPage = () => {
   const router = useRouter();
   const schema = yup.object({
     comment: yup.string().required('Le message est requis').min(10, 'Minimum 10 caractères'),
-    id: yup.string(),
   });
   const {
     handleSubmit,
     register,
     reset,
-    getValues,
     formState: { errors, isValid },
   } = useForm<FormContactUsData>({
     mode: 'onBlur',
@@ -43,15 +39,6 @@ const ContactPage = () => {
     },
   });
   const [openValidateFeedbackInfo, setOpenValidateFeedbackInfo] = useState(false);
-  const error = errors.id;
-
-  const [files, setFiles] = useState<File[]>(getValues('id') || []);
-
-  const dropzoneRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    error && dropzoneRef.current?.focus();
-  }, [error]);
 
   const onClickToRedirectToHome = () => {
     setOpenValidateFeedbackInfo(false);
@@ -93,7 +80,7 @@ const ContactPage = () => {
         isMobile={isMobile}
       >
         <form
-          className="flex flex-col gap-4 py-6 px-4 justify-between flex-1"
+          className="flex flex-col py-6 px-4 justify-between flex-1 gap-20"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col">
@@ -118,25 +105,7 @@ const ContactPage = () => {
               />
             </div>
           </div>
-          <label
-            htmlFor="dropzone-file"
-            className="inline-flex border border-primary-600 text-primary-600 rounded-full px-5 py-2 justify-center items-center self-start"
-          >
-            <div className="inline-flex flex-row gap-1 items-center">
-              <Icon name="paperclip" size="sm" />
-              <Typography size="text-2xs" weight="bold">
-                Ajouter une pièce jointe
-              </Typography>
-            </div>
-            <input
-              id="dropzone-file"
-              name="dropzone-file"
-              ref={dropzoneRef}
-              type="file"
-              className="hidden"
-            />
-          </label>
-          <div className="w-[118px] self-center mb-4">
+          <div className="w-[118px] self-center md:self-start mb-4">
             <button
               className={`py-3 w-full rounded-full  text-white ${
                 isValid ? 'bg-primary-600' : 'bg-disabled-bg'
