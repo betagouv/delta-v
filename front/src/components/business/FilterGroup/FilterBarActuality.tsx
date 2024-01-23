@@ -14,7 +14,7 @@ export const FilterBarActuality = ({
   filterBarData,
   setOpen,
 }: FilterBarProps) => {
-  const { register, control, handleSubmit, getValues } = useForm<FilterBarForm>({
+  const { register, control, handleSubmit } = useForm<FilterBarForm>({
     defaultValues: {
       status: filterBarData?.status ?? [],
       meanOfTransport: filterBarData?.meanOfTransport ?? [],
@@ -28,8 +28,6 @@ export const FilterBarActuality = ({
   const onSubmit = (data: FilterBarForm) => {
     setOpen(false);
     onValidateFilter(data);
-
-    console.log('🚀 ~ onSubmit ~ onValidateFilter:', getValues());
   };
   const [startFocused, setStartFocused] = React.useState<boolean>(false);
   const [endFocused, setEndFocused] = React.useState<boolean>(false);
@@ -64,7 +62,7 @@ export const FilterBarActuality = ({
         </div>
         {(startFocused || endFocused) && <div className="h-[260px]" />}
         <FilterGroup
-          title="Filter par"
+          title="Filtrer par :"
           control={control}
           name="newsTags"
           filters={FILTER_NEWS_TAGS}

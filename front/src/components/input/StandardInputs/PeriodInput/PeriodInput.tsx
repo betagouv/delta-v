@@ -34,7 +34,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
     name: endDateName,
   });
   return (
-    <div className="flex w-full justify-center z-40">
+    <div className="flex w-full justify-center z-40 gap-[3px]">
       <DatePicker
         selectsStart
         dateFormat={'dd/MM/yyyy'}
@@ -52,7 +52,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
         }
         placeholderText="Du: jj/mm/aaaa"
         className={cs({
-          'justify-center w-full rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:text-xs placeholder:italic placeholder:text-secondary-400 mr-[2px]':
+          'justify-center w-full rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:text-xs placeholder:italic placeholder:text-secondary-400':
             true,
           'border-none': noBorder,
         })}
@@ -111,7 +111,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
         minDate={dayjs(startDateField.value).add(1, 'day').toDate()}
         maxDate={dayjs(new Date()).toDate()}
         className={cs({
-          'justify-center w-full rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:text-xs placeholder:italic placeholder:text-secondary-400 ml-[2px]':
+          'justify-center w-full rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:text-xs placeholder:italic placeholder:text-secondary-400':
             true,
           'border-none': noBorder,
         })}

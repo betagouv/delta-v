@@ -127,7 +127,7 @@ export const FilterBarMobile = ({
             )}
             {withNewsTagsFilter && (
               <FilterGroup
-                title="Filter par"
+                title="Filtrer par :"
                 control={control}
                 name="newsTags"
                 filters={FILTER_NEWS_TAGS}

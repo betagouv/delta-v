@@ -88,6 +88,7 @@ svg {
     font-size: 12px;
     line-height: 18px;
     letter-spacing: -0.264px;
+    width: 100%
   } 
 .react-datepicker-wrapper::placeholder  {
     color: var(--light-text-disabled-grey, #929292);
