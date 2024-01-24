@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { useMediaQuery } from 'react-responsive';
 import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
@@ -60,6 +61,10 @@ const ContactPage = () => {
     });
   };
 
+  const isMobile = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
   return (
     <AgentRoute>
       <MainAgent
@@ -72,9 +77,10 @@ const ContactPage = () => {
         withTitle
         titleHeader="Contact"
         linkButton={`${RoutingAgent.home}?mode=tools`}
+        isMobile={isMobile}
       >
         <form
-          className="flex flex-col gap-4 py-6 px-4 justify-between flex-1"
+          className="flex flex-col py-6 px-4 justify-between flex-1 gap-20"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col">
@@ -99,7 +105,7 @@ const ContactPage = () => {
               />
             </div>
           </div>
-          <div className="w-[118px] self-center mb-4">
+          <div className="w-[118px] self-center md:self-start mb-4">
             <button
               className={`py-3 w-full rounded-full  text-white ${
                 isValid ? 'bg-primary-600' : 'bg-disabled-bg'
