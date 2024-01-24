@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { NavBar } from '@/components/common/NavBar';
 import { TitleAgent } from '@/components/common/TitleAgent';
 import { MAIN_MENU_AGENT_ITEMS } from '@/utils/const';
@@ -11,15 +13,24 @@ type IMainAgentDesktopProps = {
 };
 
 const MainAgentDesktop = ({ meta, children, titleHeader }: IMainAgentDesktopProps) => {
+  const router = useRouter();
+  const path = router.pathname;
   return (
     <div className="h-full antialiased flex flex-col">
       {meta}
 
       <div className="pl-[103px] pr-20 border-b border-disabled-bg">
-        <NavBar links={MAIN_MENU_AGENT_ITEMS} />
+        <NavBar links={MAIN_MENU_AGENT_ITEMS} activePath={path} />
       </div>
       <div className="flex flex-col flex-1 px-[126px] py-[60px] gap-[30px]">
-        {titleHeader && <TitleAgent title={titleHeader} textPosition="text-left" size="text-3xl" />}
+        {titleHeader && (
+          <TitleAgent
+            title={titleHeader}
+            textPosition="text-left"
+            size="text-3xl"
+            fontFamily="marianne"
+          />
+        )}
         <div className="flex-1">{children}</div>
       </div>
     </div>

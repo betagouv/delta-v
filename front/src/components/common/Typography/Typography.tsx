@@ -1,12 +1,12 @@
 import React from 'react';
 
-import cn from 'classnames';
-
 import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
 import {
   Color,
   getActiveColor,
   getColor,
+  getDesktopFontWeight,
+  getDesktopTextSize,
   getFontFamily,
   getFontWeight,
   getIncreasedTextSize,
@@ -17,6 +17,7 @@ import {
   Transform,
   Weight,
 } from './style/typography.style';
+import clsxm from '@/utils/clsxm';
 
 type LineHeight =
   | 'leading-3'
@@ -37,12 +38,14 @@ type LineHeight =
 export interface ITypographyProps {
   children: React.ReactNode;
   tag?: HTMLTags;
-  size?: TextSize;
+  size?: TextSize | `text-${string}`;
+  desktopSize?: TextSize | `md:text-${string}`;
   lineHeight?: LineHeight;
   variant?: Variant;
   color?: Color;
   colorGradient?: string;
   weight?: Weight;
+  desktopWeight?: Weight;
   italic?: boolean;
   transform?: Transform;
   underline?: boolean;
@@ -60,9 +63,11 @@ export const Typography: React.FC<ITypographyProps> = ({
   color = 'primary',
   colorGradient = '600',
   size = 'text-sm',
+  desktopSize,
   lineHeight = 'leading-normal',
   children,
   weight = 'normal',
+  desktopWeight,
   italic = false,
   underline = false,
   activeColor,
@@ -78,14 +83,16 @@ export const Typography: React.FC<ITypographyProps> = ({
     usedVariant = tag && tag in HTMLTagToVariantMapping ? HTMLTagToVariantMapping[tag] : 'body1';
   }
 
-  const className = cn({
+  const className = clsxm({
     // [`${usedVariant}`]: true,
     // hidden: true,
     [getFontWeight(weight)]: true,
+    [desktopWeight ? getDesktopFontWeight(desktopWeight) : '']: true,
     [getColor(color, colorGradient)]: true,
     [getActiveColor(activeColor)]: activeColor,
     // [size]: true,
     [getIncreasedTextSize(size)]: true,
+    [desktopSize ? getDesktopTextSize(desktopSize) : '']: desktopSize,
     [lineHeight]: true,
     italic,
     underline,

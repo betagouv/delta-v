@@ -41,7 +41,7 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
         fontFamily="marianne"
       />
       {!emptyDeclarations ? (
-        <div className="md:overflow-scroll grid-cols-3 items-start grid gap-10">
+        <div className="grid-cols-3 items-start grid gap-10">
           {submittedDeclarationsNotEmpty && (
             <div className="flex flex-col gap-[30px] flex-1">
               <Typography size="text-xs" color="black">

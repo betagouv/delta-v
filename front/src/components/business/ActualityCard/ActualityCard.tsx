@@ -44,7 +44,7 @@ export const ActualityCard = ({
   return (
     <div
       className={cs(
-        'flex flex-col rounded-xl border border-gray-300 p-5 gap-4 w-full lg:max-w-[470px] md:min-w-[288px] lg:min-w-[230px]',
+        'flex flex-col rounded-xl border border-gray-300 p-5 gap-4 w-full md:w-[324px]',
       )}
       ref={cardRef}
     >
@@ -52,23 +52,28 @@ export const ActualityCard = ({
         {tags && (
           <div className="flex flex-row gap-2">
             {tags.map((tag) => (
-              <div className="border text-2xs border-secondary-300 rounded-full px-2.5 py-[5px]">
+              <div className="border md:text-2xs text-sm border-secondary-300 rounded-full px-2.5 py-[5px] md:py-0">
                 {tag}
               </div>
             ))}
           </div>
         )}
-        <Typography color="middle-gray" size="text-2xs" textPosition="text-right">
+        <Typography
+          color="middle-gray"
+          size="text-xs"
+          desktopSize="text-2xs"
+          textPosition="text-right"
+        >
           {dayjs(creationDate).format('DD/MM/YYYY')}
         </Typography>
       </div>
       <div className="line-clamp-3 md:line-clamp-2">
-        <Typography weight="bold" size="text-xl" color="black">
+        <Typography weight="bold" size="text-xl" desktopSize="md:text-[22px]" color="black">
           {title}
         </Typography>
       </div>
       <div className="line-clamp-4">
-        <Typography variant="paragraph" size="text-sm" color="black">
+        <Typography variant="paragraph" size="text-sm" desktopSize="text-xs" color="black">
           {content}
         </Typography>
       </div>

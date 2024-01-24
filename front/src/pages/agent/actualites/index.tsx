@@ -8,10 +8,9 @@ import { UseActualityParams, useActualities } from '@/api/hooks/useAPIActualitie
 import { ActualityResponse } from '@/api/lib/actualities';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { ActualityCard } from '@/components/business/ActualityCard';
-import { FilterBarDesktop } from '@/components/business/FilterGroup/FilterBarDesktop';
+import { FilterBarActualityDesktop } from '@/components/business/FilterGroup/FilterBarActualityDesktop';
 import { FilterBarMobile } from '@/components/business/FilterGroup/FilterBarMobile';
 import { FilterBarForm } from '@/components/business/FilterGroup/types';
-import { Typography } from '@/components/common/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { Constants } from '@/utils/enums';
@@ -96,11 +95,11 @@ const ActualitiesPage = () => {
         withTitle
         titleHeader="Actualités"
       >
-        <div className={classNames({ 'flex flex-col ': true, ' px-4 pb-4': isMobile })}>
+        <div className={classNames({ 'flex flex-col ': true, 'px-4 pb-4': isMobile })}>
           {isLoading ? (
             <div>Chargement...</div>
           ) : (
-            <div className="flex flex-col gap-[26px]">
+            <div className="flex flex-col gap-5 md:gap-[30px]">
               {isMobile ? (
                 <FilterBarMobile
                   title="Actualités"
@@ -112,7 +111,7 @@ const ActualitiesPage = () => {
                   filterBarData={filterBarData}
                 />
               ) : (
-                <FilterBarDesktop
+                <FilterBarActualityDesktop
                   title="Actualités"
                   searchType="global"
                   onValidateFilter={onValidateFilter}
@@ -123,12 +122,7 @@ const ActualitiesPage = () => {
                 />
               )}
               <div className="flex flex-col gap-2.5">
-                {!isMobile && (
-                  <Typography size="text-xs" color="black">
-                    {actualities?.length} résultat(s)
-                  </Typography>
-                )}
-                <div className="grid sm:grid-cols-1 sm:gap-2.5 md:grid-cols-2 lg:grid-cols-3 md:gap-[30px]">
+                <div className="flex flex-col md:flex-row md:flex-wrap gap-[30px]">
                   {actualities &&
                     !openFilterBar &&
                     actualities?.map((actuality, index) => (

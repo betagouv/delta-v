@@ -65,7 +65,7 @@ export const FilterBarMobile = ({
           <Typography color="black">{title}</Typography>
           {!open && filtersCount > 0 && (
             <div className="flex justify-center items-center h-5 w-5 rounded-full bg-primary-600 ">
-              <Typography color="white" size="sm" weight="bold">
+              <Typography color="white" size="text-sm" weight="bold">
                 {filtersCount}
               </Typography>
             </div>
@@ -127,7 +127,7 @@ export const FilterBarMobile = ({
             )}
             {withNewsTagsFilter && (
               <FilterGroup
-                title="Filter par"
+                title="Filtrer par :"
                 control={control}
                 name="newsTags"
                 filters={FILTER_NEWS_TAGS}

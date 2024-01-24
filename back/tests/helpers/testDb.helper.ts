@@ -89,11 +89,9 @@ export const testDbManager = (): ITestDbManager => {
     ): Promise<SearchProductHistory | null> =>
       connection.manager.findOne(SearchProductHistoryEntity, { where: { productId, userId } }),
     clear: async (): Promise<void> => {
-      await Promise.all(
-        ENTITIES.map(async (entity) => {
-          await connection.manager.delete(entity, true);
-        }),
-      );
+      for (const entity of ENTITIES) {
+        await connection.manager.delete(entity, true);
+      }
     },
   };
 };
