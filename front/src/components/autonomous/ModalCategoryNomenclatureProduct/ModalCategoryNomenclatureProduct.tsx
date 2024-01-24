@@ -68,6 +68,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   useEffect(() => {
     if (currentId) {
       const selectedProduct = findProduct(products, currentId);
+      console.log('🚀 ~ useEffect ~ selectedProduct:', selectedProduct);
 
       setProductTree(findProductTree(products, currentId));
       setCurrentProduct(selectedProduct);
@@ -132,8 +133,11 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   };
 
   const isFinalProduct = currentProduct
-    ? currentProduct.productDisplayTypes !== ProductDisplayTypes.category
-    : defaultProduct?.productDisplayTypes !== ProductDisplayTypes.category ?? false;
+    ? currentProduct.productDisplayTypes !== ProductDisplayTypes.category &&
+      currentProduct.finalProduct === true
+    : (defaultProduct?.productDisplayTypes !== ProductDisplayTypes.category &&
+        defaultProduct?.finalProduct === true) ??
+      false;
 
   return (
     <>

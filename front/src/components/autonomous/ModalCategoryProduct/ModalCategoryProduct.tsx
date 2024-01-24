@@ -124,8 +124,11 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
   };
 
   const isFinalProduct = currentProduct
-    ? currentProduct.productDisplayTypes !== ProductDisplayTypes.category
-    : defaultProduct?.productDisplayTypes !== ProductDisplayTypes.category ?? false;
+    ? currentProduct.productDisplayTypes !== ProductDisplayTypes.category &&
+      currentProduct.finalProduct === true
+    : (defaultProduct?.productDisplayTypes !== ProductDisplayTypes.category &&
+        defaultProduct?.finalProduct === true) ??
+      false;
 
   return (
     <>
