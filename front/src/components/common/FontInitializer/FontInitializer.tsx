@@ -1,4 +1,3 @@
-import { Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
 
 export const marianne = localFont({
@@ -19,11 +18,22 @@ export const marianne = localFont({
   variable: '--font-marianne',
 });
 
-export const roboto = Roboto({
-  weight: ['100', '300', '400', '500', '700', '900'],
-  style: ['normal', 'italic'],
+export const roboto = localFont({
+  src: [
+    { path: '/fonts/Roboto/Roboto-Black.ttf', weight: '900', style: 'normal' },
+    { path: '/fonts/Roboto/Roboto-BlackItalic.ttf', weight: '900', style: 'italic' },
+    { path: '/fonts/Roboto/Roboto-Bold.ttf', weight: '700', style: 'normal' },
+    { path: '/fonts/Roboto/Roboto-BoldItalic.ttf', weight: '700', style: 'italic' },
+    { path: '/fonts/Roboto/Roboto-Light.ttf', weight: '300', style: 'normal' },
+    { path: '/fonts/Roboto/Roboto-LightItalic.ttf', weight: '300', style: 'italic' },
+    { path: '/fonts/Roboto/Roboto-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '/fonts/Roboto/Roboto-MediumItalic.ttf', weight: '500', style: 'italic' },
+    { path: '/fonts/Roboto/Roboto-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '/fonts/Roboto/Roboto-Italic.ttf', weight: '400', style: 'italic' },
+    { path: '/fonts/Roboto/Roboto-Thin.ttf', weight: '100', style: 'normal' },
+    { path: '/fonts/Roboto/Roboto-ThinItalic.ttf', weight: '100', style: 'italic' },
+  ],
   variable: '--font-roboto',
-  subsets: ['latin'],
 });
 
 export const FontInitializer = () => {

@@ -24,11 +24,11 @@ const MainAuth = ({ children, meta, withPadding = true, bgColor = 'white' }: IMa
         src={AuthBackground.src}
         fill
         alt="authentication background"
-        className="object-cover laptop:block hidden"
+        className="object-cover md:block hidden"
       />
       <div
         className={cs({
-          'laptop:h-[755px] laptop:w-[420px] h-full w-full antialiased laptop:relative laptop:rounded-xl laptop:overflow-hidden':
+          'md:h-[755px] md:w-[420px] h-full w-full antialiased md:relative md:rounded-xl md:overflow-hidden':
             true,
           'bg-secondary-bg': bgColor === 'gray',
           'bg-white': bgColor === 'white',
