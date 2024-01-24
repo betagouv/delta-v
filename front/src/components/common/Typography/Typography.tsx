@@ -1,8 +1,5 @@
 import React from 'react';
 
-import cn from 'classnames';
-import { twMerge } from 'tailwind-merge';
-
 import { HTMLTags, HTMLTagToVariantMapping, Variant } from './const';
 import {
   Color,
@@ -20,6 +17,7 @@ import {
   Transform,
   Weight,
 } from './style/typography.style';
+import clsxm from '@/utils/clsxm';
 
 type LineHeight =
   | 'leading-3'
@@ -85,27 +83,25 @@ export const Typography: React.FC<ITypographyProps> = ({
     usedVariant = tag && tag in HTMLTagToVariantMapping ? HTMLTagToVariantMapping[tag] : 'body1';
   }
 
-  const className = twMerge(
-    cn({
-      // [`${usedVariant}`]: true,
-      // hidden: true,
-      [getFontWeight(weight)]: true,
-      [desktopWeight ? getDesktopFontWeight(desktopWeight) : '']: true,
-      [getColor(color, colorGradient)]: true,
-      [getActiveColor(activeColor)]: activeColor,
-      // [size]: true,
-      [getIncreasedTextSize(size)]: true,
-      [desktopSize ? getDesktopTextSize(desktopSize) : '']: desktopSize,
-      [lineHeight]: true,
-      italic,
-      underline,
-      [`${textPosition}`]: true,
-      [getTruncate(truncate)]: truncate,
-      [getTextTransform(transform)]: transform,
-      [getNoWrap(noWrap)]: noWrap,
-      [getFontFamily(family)]: family,
-    }),
-  );
+  const className = clsxm({
+    // [`${usedVariant}`]: true,
+    // hidden: true,
+    [getFontWeight(weight)]: true,
+    [desktopWeight ? getDesktopFontWeight(desktopWeight) : '']: true,
+    [getColor(color, colorGradient)]: true,
+    [getActiveColor(activeColor)]: activeColor,
+    // [size]: true,
+    [getIncreasedTextSize(size)]: true,
+    [desktopSize ? getDesktopTextSize(desktopSize) : '']: desktopSize,
+    [lineHeight]: true,
+    italic,
+    underline,
+    [`${textPosition}`]: true,
+    [getTruncate(truncate)]: truncate,
+    [getTextTransform(transform)]: transform,
+    [getNoWrap(noWrap)]: noWrap,
+    [getFontFamily(family)]: family,
+  });
   const CustomTag = tag ?? 'span';
 
   return (
