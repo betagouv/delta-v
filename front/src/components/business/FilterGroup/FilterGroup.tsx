@@ -12,7 +12,6 @@ export type FilterGroupProps = {
   control?: any;
   name: string;
   rules?: any;
-  isMobile?: boolean;
 };
 
 export const FilterGroup = ({ title, filters, control, name, rules }: FilterGroupProps) => {
