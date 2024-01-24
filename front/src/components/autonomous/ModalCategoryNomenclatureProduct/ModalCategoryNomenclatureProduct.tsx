@@ -20,7 +20,6 @@ interface ModalCategoryNomenclatureProductProps {
   onOpen?: () => void;
   onClickFavorite?: (product: Product) => void;
   defaultProduct?: Product;
-  isFromFavorites?: boolean;
 }
 
 interface DisplayedProduct {
@@ -33,7 +32,6 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   onClose,
   onOpen,
   open,
-  isFromFavorites = false,
   defaultProduct,
 }) => {
   const { products, addFavoriteProducts, removeFavoriteProducts } = useStore(
@@ -116,6 +114,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
 
   const onClickDelete = (product: Product) => {
     setCurrentProduct(product);
+    onCloseModal();
     setOpenModalDeleteFavorite(true);
   };
 
@@ -129,13 +128,23 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
     }
   };
 
+  const onCloseModalDeleteFavorite = () => {
+    setValue('');
+    setOpenModalDeleteFavorite(false);
+    if (onOpen) {
+      setTimeout(() => {
+        onOpen();
+      }, 300);
+    }
+  };
+
   const onRemove = (product?: Product) => {
     if (!product) {
       return;
     }
     removeFavoriteProducts(product.id);
     removeFavoriteMutation.mutate(product.id);
-    setOpenModalDeleteFavorite(false);
+    onCloseModalDeleteFavorite();
   };
 
   const onParentCategoryClick = () => {
@@ -175,7 +184,6 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
                 onAddProduct={onAddProduct}
                 onRemoveProduct={onClickDelete}
                 onSelectProduct={onSelectProduct}
-                isFromFavorites={isFromFavorites}
               />
             ) : (
               <div className="px-4 py-5">
@@ -195,7 +203,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
       </DownModal>
       <ModalDeleteFavoriteProduct
         open={openModalDeleteFavorite}
-        onClose={() => setOpenModalDeleteFavorite(false)}
+        onClose={onCloseModalDeleteFavorite}
         onDeleteProduct={() => onRemove(currentProduct)}
       />
       <ModalAddFavoriteProduct

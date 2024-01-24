@@ -37,7 +37,7 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
   const matchValue = stringToChange.replace(searchRegex(search), '_');
   const matchValues = matchValue.split('_');
   return numberOccurrence.map((item, i) => (
-    <Typography color="black" size="text-base">
+    <Typography color="black" size="text-base" key={item}>
       {matchValues[i]}
       <span className="bg-primary-400 text-white">{item}</span>
       {matchValues[i + 1]}
@@ -88,13 +88,12 @@ export const NomenclatureCard = ({
       <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer z-10">
         {isInFavorite ? (
           <button
-            color="yellow"
             onClick={(e) => {
               e.stopPropagation();
               onRemove(product.id);
             }}
           >
-            <Icon name="etoile" color="yellow" />
+            <Icon name="etoile" color="link" />
           </button>
         ) : (
           <button
