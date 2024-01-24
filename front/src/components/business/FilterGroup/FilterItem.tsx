@@ -3,6 +3,7 @@ import React from 'react';
 import cs from 'classnames';
 
 import { Icon } from '@/components/common/Icon';
+import { Typography } from '@/components/common/Typography';
 import { FilterOptions } from '@/utils/filters';
 
 export type FilterItemProps = {
@@ -30,14 +31,10 @@ export const FilterItem = ({ filter, isActive, onClick }: FilterItemProps) => {
       >
         <Icon name="plus" size="xs" />
       </div>
-      <span
-        className={cs({
-          'text-xs ml-1': true,
-          'text-primary-600': !isActive,
-          'text-white': isActive,
-        })}
-      >
-        {filter.value}
+      <span className="flex ml-1 items-center">
+        <Typography size="text-2xs" desktopSize="text-sm" color={isActive ? 'white' : 'primary'}>
+          {filter.value}
+        </Typography>
       </span>
     </div>
   );

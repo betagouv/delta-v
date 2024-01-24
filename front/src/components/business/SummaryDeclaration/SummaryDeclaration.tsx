@@ -87,7 +87,7 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
       <div className="flex flex-col gap-2.5">
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
-            <Typography color="black" weight="bold" size="sm">
+            <Typography color="black" weight="bold" size="text-sm">
               Numéro de déclaration
             </Typography>
             <Typography size="text-base" color="black">
@@ -97,66 +97,66 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
         </div>
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
-            <Typography color="black" weight="bold" size="xs">
+            <Typography color="black" weight="bold" size="text-sm">
               Nom
             </Typography>
-            <Typography color="black" size="xs">
+            <Typography color="black" size="text-sm">
               {declarationResponse.declarantLastName}
             </Typography>
           </div>
           <div className="flex flex-col flex-1">
-            <Typography color="black" weight="bold" size="xs">
+            <Typography color="black" weight="bold" size="text-sm">
               Prénom
             </Typography>
-            <Typography color="black" size="xs">
+            <Typography color="black" size="text-sm">
               {declarationResponse.declarantFirstName}
             </Typography>
           </div>
         </div>
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
-            <Typography color="black" weight="bold" size="xs">
+            <Typography color="black" weight="bold" size="text-sm">
               Adresse
             </Typography>
-            <Typography color="black" size="xs">
+            <Typography color="black" size="text-sm">
               {declarationResponse.declarantAddressStreet}
             </Typography>
           </div>
         </div>
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
-            <Typography color="black" weight="bold" size="xs">
+            <Typography color="black" weight="bold" size="text-sm">
               Code Postal
             </Typography>
-            <Typography color="black" size="xs">
+            <Typography color="black" size="text-sm">
               {declarationResponse.declarantAddressPostalCode}
             </Typography>
           </div>
           <div className="flex flex-col flex-1">
-            <Typography color="black" weight="bold" size="xs">
+            <Typography color="black" weight="bold" size="text-sm">
               Ville
             </Typography>
-            <Typography color="black" size="xs">
+            <Typography color="black" size="text-sm">
               {declarationResponse.declarantAddressCity}
             </Typography>
           </div>
         </div>
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
-            <Typography color="black" weight="bold" size="xs">
+            <Typography color="black" weight="bold" size="text-sm">
               Email
             </Typography>
-            <Typography color="black" size="xs">
+            <Typography color="black" size="text-sm">
               {declarationResponse.declarantEmail}
             </Typography>
           </div>
         </div>
         <div className="flex flex-row justify-start">
           <div className="flex flex-col flex-1 justify-start">
-            <Typography color="black" weight="bold" size="xs">
+            <Typography color="black" weight="bold" size="text-sm">
               Téléphone
             </Typography>
-            <Typography color="black" size="xs">
+            <Typography color="black" size="text-sm">
               {declarationResponse.declarantPhoneNumber}
             </Typography>
           </div>

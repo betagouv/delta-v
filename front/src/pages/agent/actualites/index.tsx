@@ -8,7 +8,7 @@ import { UseActualityParams, useActualities } from '@/api/hooks/useAPIActualitie
 import { ActualityResponse } from '@/api/lib/actualities';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { ActualityCard } from '@/components/business/ActualityCard';
-import { FilterBarActuality } from '@/components/business/FilterGroup/FilterBarActuality';
+import { FilterBarActualityDesktop } from '@/components/business/FilterGroup/FilterBarActualityDesktop';
 import { FilterBarMobile } from '@/components/business/FilterGroup/FilterBarMobile';
 import { FilterBarForm } from '@/components/business/FilterGroup/types';
 import { Meta } from '@/layout/Meta';
@@ -95,7 +95,7 @@ const ActualitiesPage = () => {
         withTitle
         titleHeader="Actualités"
       >
-        <div className={classNames({ 'flex flex-col ': true, ' px-4 pb-4': isMobile })}>
+        <div className={classNames({ 'flex flex-col ': true, 'px-4 pb-4': isMobile })}>
           {isLoading ? (
             <div>Chargement...</div>
           ) : (
@@ -111,7 +111,7 @@ const ActualitiesPage = () => {
                   filterBarData={filterBarData}
                 />
               ) : (
-                <FilterBarActuality
+                <FilterBarActualityDesktop
                   title="Actualités"
                   searchType="global"
                   onValidateFilter={onValidateFilter}
