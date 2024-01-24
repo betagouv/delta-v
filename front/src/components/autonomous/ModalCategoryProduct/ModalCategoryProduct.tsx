@@ -10,9 +10,10 @@ import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
 import { SvgNames } from '@/components/common/SvgIcon';
-import { Product, ProductDisplayTypes } from '@/model/product';
+import { Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
+import { checkIsFinalProduct } from '@/utils/product.util';
 
 interface ModalCategoryProductProps {
   open: boolean;
@@ -123,12 +124,7 @@ export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
     setCurrentId(productTree?.[1]?.id);
   };
 
-  const isFinalProduct = currentProduct
-    ? currentProduct.productDisplayTypes !== ProductDisplayTypes.category &&
-      currentProduct.finalProduct === true
-    : (defaultProduct?.productDisplayTypes !== ProductDisplayTypes.category &&
-        defaultProduct?.finalProduct === true) ??
-      false;
+  const isFinalProduct = checkIsFinalProduct(currentProduct ?? defaultProduct);
 
   return (
     <>

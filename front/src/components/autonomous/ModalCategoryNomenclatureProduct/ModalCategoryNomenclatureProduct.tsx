@@ -9,9 +9,9 @@ import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import DownModal from '@/components/common/DownModal';
 import { SvgNames } from '@/components/common/SvgIcon';
-import { Product, ProductDisplayTypes } from '@/model/product';
+import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
-import { findProduct, findProductTree } from '@/utils/product.util';
+import { checkIsFinalProduct, findProduct, findProductTree } from '@/utils/product.util';
 
 interface ModalCategoryNomenclatureProductProps {
   open: boolean;
@@ -131,13 +131,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
       productId: product.id,
     });
   };
-
-  const isFinalProduct = currentProduct
-    ? currentProduct.productDisplayTypes !== ProductDisplayTypes.category &&
-      currentProduct.finalProduct === true
-    : (defaultProduct?.productDisplayTypes !== ProductDisplayTypes.category &&
-        defaultProduct?.finalProduct === true) ??
-      false;
+  const isFinalProduct = checkIsFinalProduct(currentProduct ?? defaultProduct);
 
   return (
     <>

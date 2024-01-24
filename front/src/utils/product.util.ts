@@ -1,7 +1,7 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 
 import { CountryType, getCountryType } from './country.util';
-import { AmountProduct, Product } from '@/model/product';
+import { AmountProduct, Product, ProductDisplayTypes } from '@/model/product';
 
 export const findProduct = (products: Product[], id: string): Product | undefined => {
   let existingProduct;
@@ -104,4 +104,14 @@ export const haveAgeRestriction = (product: Product): boolean => {
     product.amountProduct === AmountProduct.wine ||
     product.amountProduct === AmountProduct.sparklingWine
   );
+};
+
+export const checkIsFinalProduct = (product?: Product): boolean => {
+  if (!product) {
+    return false;
+  }
+  if (product.productDisplayTypes !== ProductDisplayTypes.category && product.finalProduct) {
+    return true;
+  }
+  return false;
 };
