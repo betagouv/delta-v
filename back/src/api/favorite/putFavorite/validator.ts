@@ -12,7 +12,7 @@ export const putFavoriteValidator: IRequestValidatorSchema = {
   body: validator
     .object({
       productId: validator.string().uuid().required(),
-      name: validator.string().min(3).max(30).optional(),
+      name: validator.string().min(3).max(30).required(),
     })
     .required(),
 };

@@ -14,6 +14,16 @@ describe('putFavorite validator', () => {
   it('should validate proper data', () => {
     expect(isValid(validData)).toBeTruthy();
   });
+  it('should be invalid - name undefined', () => {
+    const data = {
+      body: {
+        ...validData.body,
+        name: undefined,
+      },
+    };
+
+    expect(isValid(data)).toBe(false);
+  });
   it('should be invalid - productId undefined', () => {
     const data = {
       body: {

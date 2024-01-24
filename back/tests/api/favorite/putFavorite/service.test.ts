@@ -8,11 +8,13 @@ describe('putFavorite service', () => {
     const favoriteRepository = favoriteRepositoryMock({});
     const userId = faker.string.uuid();
     const productId = faker.string.uuid();
+    const name = faker.commerce.productName();
 
     await service({
       productId,
       userId,
       favoriteRepository,
+      name,
     });
     expect(favoriteRepository.createOne).toBeCalled();
   });
