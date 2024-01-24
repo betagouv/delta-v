@@ -76,7 +76,7 @@ describe('putFavorite route', () => {
     expect(storedFavorite).toBeDefined();
     expect(storedFavorite?.userId).toEqual(user.id);
     expect(storedFavorite?.productId).toEqual(product.id);
-    expect(storedFavorite?.name).toBeNull();
+    expect(storedFavorite?.name).toBe(name);
   });
 
   test('should return success with code 200 even if favorite exists', async () => {

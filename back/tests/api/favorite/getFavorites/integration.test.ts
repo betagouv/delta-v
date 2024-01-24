@@ -35,6 +35,8 @@ describe('getFavorite route', () => {
     const productId2 = faker.string.uuid();
     const productId3 = faker.string.uuid();
     const name = faker.commerce.productName();
+    const name2 = faker.commerce.productName();
+    const name3 = faker.commerce.productName();
     const product = await prepareContextProduct({ testDb, dataProduct: { id: productId } });
     const product2 = await prepareContextProduct({ testDb, dataProduct: { id: productId2 } });
     const product3 = await prepareContextProduct({ testDb, dataProduct: { id: productId3 } });
@@ -44,14 +46,17 @@ describe('getFavorite route', () => {
     });
     await prepareContextFavorite({
       testDb,
-      dataFavorite: { userId: user.id, productId: product2.id },
+      dataFavorite: { userId: user.id, productId: product2.id, name: name2 },
     });
     const { status, body } = await request(testApp)
       .get(`/api/favorite/`)
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(status).toBe(HttpStatuses.OK);
-    expect(body.favorites).toMatchObject([{ productId: product.id }, { productId: product2.id }]);
-    expect(body.favorites).not.toContain(product3.id);
+    expect(body.favorites).toBeDefined();
+    expect(body.favorites).toHaveLength(2);
+    expect(body.favorites).toContainEqual({ productId: product.id, name });
+    expect(body.favorites).toContainEqual({ productId: product2.id, name: name2 });
+    expect(body.favorites).not.toContainEqual({ productId: product3.id, name: name3 });
   });
 });
