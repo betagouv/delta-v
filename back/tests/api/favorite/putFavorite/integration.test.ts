@@ -59,10 +59,11 @@ describe('putFavorite route', () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
 
     const productId = faker.string.uuid();
+    const name = faker.commerce.productName();
     const product = await prepareContextProduct({ testDb, dataProduct: { id: productId } });
     const { status, body } = await request(testApp)
       .put(`/api/favorite/`)
-      .send({ productId })
+      .send({ productId, name })
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(status).toBe(HttpStatuses.OK);
@@ -82,6 +83,7 @@ describe('putFavorite route', () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
 
     const productId = faker.string.uuid();
+    const name = faker.commerce.productName();
     const product = await prepareContextProduct({ testDb, dataProduct: { id: productId } });
     await prepareContextFavorite({
       testDb,
@@ -89,7 +91,7 @@ describe('putFavorite route', () => {
     });
     const { status, body } = await request(testApp)
       .put(`/api/favorite/`)
-      .send({ productId })
+      .send({ productId, name })
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(status).toBe(HttpStatuses.OK);
