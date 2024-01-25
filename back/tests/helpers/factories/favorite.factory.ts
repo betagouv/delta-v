@@ -6,6 +6,7 @@ const buildSchema = (): Favorite => {
   return {
     productId: faker.string.uuid(),
     userId: faker.string.uuid(),
+    name: faker.commerce.productName(),
   };
 };
 

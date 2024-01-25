@@ -159,7 +159,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       )}
       {isAddAbleToFavorites && (
         <FormAddProductToFavorite
-          productId={currentProduct.id}
+          productId={steps[steps.length - 1]?.id}
           onRemoveProduct={onRemoveProduct}
           control={control}
           register={register}

@@ -51,7 +51,11 @@ export const StepsFormProduct: React.FC<StepsFormProductProps> = ({
       }
 
       if (step.productDisplayTypes === ProductDisplayTypes.radioCard) {
-        return getRadioCardProductForm(step, fieldRegister, control);
+        return getRadioCardProductForm({
+          product: step,
+          register: fieldRegister,
+          control,
+        });
       }
       return undefined;
     })

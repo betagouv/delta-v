@@ -21,5 +21,6 @@ export const service = async ({
   await favoriteRepository.deleteOne({
     userId,
     productId,
+    name: favoriteExists.name,
   });
 };

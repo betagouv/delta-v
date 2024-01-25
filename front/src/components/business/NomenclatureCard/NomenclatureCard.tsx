@@ -4,7 +4,7 @@ import cs from 'classnames';
 import dayjs from 'dayjs';
 import shallow from 'zustand/shallow';
 
-import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { Icon } from '@/components/common/Icon';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
@@ -19,6 +19,7 @@ dayjs.locale('fr');
 export type NomenclatureCardProps = {
   product: Product;
   onClick?: (product: Product) => void;
+  onClickFavorite?: (product: Product) => void;
   searchValue?: string;
 };
 
@@ -36,7 +37,7 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
   const matchValue = stringToChange.replace(searchRegex(search), '_');
   const matchValues = matchValue.split('_');
   return numberOccurrence.map((item, i) => (
-    <Typography color="black" size="text-base">
+    <Typography color="black" size="text-base" key={item}>
       {matchValues[i]}
       <span className="bg-primary-400 text-white">{item}</span>
       {matchValues[i + 1]}
@@ -44,17 +45,19 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
   ));
 };
 
-export const NomenclatureCard = ({ product, onClick, searchValue }: NomenclatureCardProps) => {
-  const { favoriteProducts, addFavoriteProducts, removeFavoriteProducts } = useStore(
+export const NomenclatureCard = ({
+  product,
+  onClick,
+  onClickFavorite,
+  searchValue,
+}: NomenclatureCardProps) => {
+  const { favoriteProducts, removeFavoriteProducts } = useStore(
     (state) => ({
-      addFavoriteProducts: state.addFavoriteProducts,
       favoriteProducts: state.products.appState.favoriteProducts,
       removeFavoriteProducts: state.removeFavoriteProducts,
     }),
     shallow,
   );
-
-  const createFavoriteMutation = useCreateFavoriteMutation({});
 
   const removeFavoriteMutation = useRemoveFavoriteMutation({});
   const isInFavorite = favoriteProducts ? favoriteProducts.find((p) => p.id === product.id) : false;
@@ -64,18 +67,19 @@ export const NomenclatureCard = ({ product, onClick, searchValue }: Nomenclature
     removeFavoriteMutation.mutate(id);
   };
 
-  const onAddProduct = (productFavorite: Product) => {
-    addFavoriteProducts(productFavorite);
-    createFavoriteMutation.mutate({
-      productId: product.id,
-    });
-  };
   return (
     <div
       className={cs(
         'relative grid rounded-lg border border-secondary-300 grid-cols-[40px_1fr] md:w-72 p-5 gap-5',
       )}
-      onClick={onClick ? () => onClick(product) : undefined}
+      onClick={
+        onClick
+          ? (e) => {
+              e.stopPropagation();
+              onClick(product);
+            }
+          : undefined
+      }
     >
       <div className="justify-center flex items-center z-10">
         <SvgIcon name={product.icon ?? 'categoryOther'} />
@@ -84,25 +88,24 @@ export const NomenclatureCard = ({ product, onClick, searchValue }: Nomenclature
       <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer z-10">
         {isInFavorite ? (
           <button
-            name="star-full"
-            color="yellow"
             onClick={(e) => {
               e.stopPropagation();
               onRemove(product.id);
             }}
           >
-            <Icon name={isInFavorite ? 'star-full' : 'star-empty'} color="yellow" />
+            <Icon name="etoile" color="link" />
           </button>
         ) : (
           <button
-            name="star-empty"
             color="gray"
             onClick={(e) => {
               e.stopPropagation();
-              onAddProduct(product);
+              if (onClickFavorite) {
+                onClickFavorite(product);
+              }
             }}
           >
-            <Icon name={isInFavorite ? 'star-full' : 'star-empty'} color="yellow" />
+            <Icon name="empty-star" color="gray" size="xl" />
           </button>
         )}
       </div>

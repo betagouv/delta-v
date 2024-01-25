@@ -24,6 +24,7 @@ export const Radio: React.FC<IRadioOptions> = ({
   name,
   error,
   newRadio = false,
+  disabled = false,
 }) => {
   return (
     <div className="flex items-center space-y-0 space-x-6">
@@ -31,6 +32,7 @@ export const Radio: React.FC<IRadioOptions> = ({
         <div key={`${radioValue.id}-${index}`} className="flex items-center space-x-3">
           <input
             data-testid="radio-element"
+            disabled={disabled}
             name={name}
             id={`${radioValue.id}-${index}`}
             value={radioValue.id}

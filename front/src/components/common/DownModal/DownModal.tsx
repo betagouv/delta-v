@@ -14,6 +14,7 @@ export interface IDownModalProps {
   children?: any;
   withoutMargin?: boolean;
   defaultHeight?: boolean;
+  titlePosition?: 'text-left' | 'text-center' | 'text-right';
 }
 
 export const DownModal: React.FC<IDownModalProps> = ({
@@ -24,6 +25,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
   children,
   withoutMargin = false,
   defaultHeight: fixedHeight = false,
+  titlePosition = 'text-center',
 }: IDownModalProps) => {
   const handleOnClose = (): void => {
     if (onClose) {
@@ -61,7 +63,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
           })}
         >
           {/* This element is to trick the browser into centering the Downmodal contents. */}
-          <span className="hidden sm:inline-block sm:align-middle" aria-hidden="true">
+          <span className="sm:inline-block sm:align-middle hidden" aria-hidden="true">
             &#8203;
           </span>
           <Transition.Child
@@ -76,15 +78,21 @@ export const DownModal: React.FC<IDownModalProps> = ({
             <div
               className={`relative inline-block h-full w-full rounded-t-3xl z-10 ${bgColor} ${
                 withoutMargin ? '' : 'px-4 py-5'
-              } text-left shadow-xl transition-all sm:max-w-lg sm:align-middle lg:rounded-b-3xl`}
+              } sm:max-w-lg sm:align-middle lg:rounded-b-3xl text-left shadow-xl transition-all`}
             >
               <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
                 <Icon name="clear" onClick={onClose} />
               </div>
               {title && (
-                <div className="mx-base text-center">
+                <div>
                   <Dialog.Title>
-                    <Typography size="text-lg" color="black" weight="bold" lineHeight="leading-4">
+                    <Typography
+                      size="text-lg"
+                      color="black"
+                      weight="bold"
+                      lineHeight="leading-4"
+                      textPosition={titlePosition}
+                    >
                       {title}
                     </Typography>
                   </Dialog.Title>

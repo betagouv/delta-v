@@ -67,6 +67,7 @@ const Declaration = () => {
     }),
     shallow,
   );
+
   const amountProducts = declarationAgentResponse?.amountProducts;
   const valueProducts = declarationAgentResponse?.valueProducts;
   const customProducts = declarationAgentResponse?.customProducts;
@@ -352,6 +353,7 @@ const Declaration = () => {
       <ModalCategoryProduct
         open={openCategoryDownModal}
         onClose={handleCloseDownModal}
+        onAddProduct={onUpdateProduct}
         defaultCurrency={defaultCurrency}
         defaultProduct={categoryProductToShow}
       />

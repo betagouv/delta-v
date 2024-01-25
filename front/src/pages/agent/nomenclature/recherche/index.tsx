@@ -3,6 +3,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
+import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import {
+  FormAddFavoriteData,
+  ModalAddFavoriteProduct,
+} from '@/components/autonomous/ModalAddFavoriteProduct';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
 import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -17,13 +22,14 @@ import { findProduct } from '@/utils/product.util';
 import { SearchType } from '@/utils/search';
 
 const SearchProduct = () => {
-  const { searchNomenclatureProducts, products } = useStore(
+  const { searchNomenclatureProducts, addFavoriteProducts, products } = useStore(
     (state) => ({
       setProductsNomenclatureToDisplay: state.setProductsNomenclatureToDisplay,
       searchNomenclatureProducts: state.searchNomenclatureProducts,
       setCountryForProductsNomenclature: state.setCountryForProductsNomenclature,
       countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
       products: state.products.appState.nomenclatureProducts,
+      addFavoriteProducts: state.addFavoriteProducts,
     }),
     shallow,
   );
@@ -39,7 +45,11 @@ const SearchProduct = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product>(
     (initialProduct as Product) ?? undefined,
   );
+
   const [resultCount, setResultCount] = useState<number>(0);
+
+  const [value, setValue] = useState('');
+  const [openModalAddFavorite, setOpenModalAddFavorite] = useState(false);
 
   useEffect(() => {
     if (id && !selectedId) {
@@ -75,6 +85,33 @@ const SearchProduct = () => {
     setProductsThatMatch(reducedProductsThatMatch);
     setOpenCategoryDownModal(true);
   }, [selectedId, search]);
+
+  const onCloseModalAddFavorite = () => {
+    setOpenModalAddFavorite(false);
+    setValue('');
+  };
+
+  const createFavoriteMutation = useCreateFavoriteMutation({
+    onSuccess: () => {},
+  });
+
+  const onClickFavorite = (product: Product) => {
+    setSelectedProduct(product);
+    setOpenCategoryDownModal(false);
+    setOpenModalAddFavorite(true);
+  };
+
+  const onSubmit = (data: FormAddFavoriteData) => {
+    if (!selectedProduct) {
+      return;
+    }
+    addFavoriteProducts(selectedProduct);
+    createFavoriteMutation.mutate({
+      productId: selectedProduct?.id,
+      name: data.name,
+    });
+    setValue(data.name);
+  };
 
   useEffect(() => {
     if (!productsThatMatch && !selectedProduct) {
@@ -120,6 +157,7 @@ const SearchProduct = () => {
                 key={initialProduct.id}
                 product={initialProduct}
                 onClick={onClickProduct}
+                onClickFavorite={onClickFavorite}
                 searchValue={search as string}
               />
             )}
@@ -128,6 +166,7 @@ const SearchProduct = () => {
                 key={product.id}
                 product={product}
                 onClick={onClickProduct}
+                onClickFavorite={onClickFavorite}
                 searchValue={search as string}
               />
             ))}
@@ -136,7 +175,15 @@ const SearchProduct = () => {
         <ModalCategoryNomenclatureProduct
           open={openCategoryDownModal}
           onClose={() => setOpenCategoryDownModal(false)}
+          onOpen={() => setOpenCategoryDownModal(true)}
           defaultProduct={initialProduct ?? selectedProduct}
+        />
+
+        <ModalAddFavoriteProduct
+          open={openModalAddFavorite}
+          onClose={onCloseModalAddFavorite}
+          onSubmit={onSubmit}
+          value={value}
         />
       </MainAgent>
     </AgentRoute>

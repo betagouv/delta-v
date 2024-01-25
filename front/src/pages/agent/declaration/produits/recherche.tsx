@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -39,6 +40,7 @@ const SearchProduct = () => {
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
   const setupSearchProductResults = (): void => {
     if (!selectedId) {
@@ -72,7 +74,7 @@ const SearchProduct = () => {
     setupSearchProductResults();
   }, [selectedId, search]);
 
-  const onAddProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
@@ -83,7 +85,9 @@ const SearchProduct = () => {
     };
 
     addProductCartDeclarationAgent(shoppingProduct);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue: customName });
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
+    setOpenCategoryDownModal(false);
     setOpenModalAddProduct(false);
     router.push(`/agent/declaration/ajout/marchandises`);
   };
@@ -127,6 +131,7 @@ const SearchProduct = () => {
         <ModalCategoryProduct
           open={openCategoryDownModal}
           onClose={() => setOpenCategoryDownModal(false)}
+          onAddProduct={onAddProduct}
           defaultCurrency={defaultCurrency}
           defaultProduct={selectedProduct}
         />

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 
-import { ModalCategoryProduct } from './ModalSelectCountry';
+import { ModalCategoryProduct } from '../ModalCategoryProduct';
 import { Button } from '@/components/common/Button';
 
 export default {
@@ -19,7 +19,7 @@ export const Base = () => {
   };
   return (
     <>
-      <ModalCategoryProduct open={open} onClose={onClose} />
+      <ModalCategoryProduct open={open} onClose={onClose} onAddProduct={() => {}} />
       <Button onClick={() => setOpen(true)}>Open</Button>
     </>
   );
