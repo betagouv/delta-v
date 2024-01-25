@@ -14,6 +14,7 @@ export interface IAppConfig {
   ROUTE_FRONTEND_RESET_PASSWORD: string;
   ROUTE_FRONTEND_CHECK_DECLARATION: string;
   WHITE_LIST_AGENT_EMAIL: string[];
+  FEEDBACK_RECEIVER_EMAIL_LIST: string[];
   DISABLE_RATE_LIMIT: boolean;
 }
 
@@ -62,6 +63,9 @@ function parseConfig(config: any): IAppConfig {
     ROUTE_FRONTEND_CHECK_DECLARATION: config.ROUTE_FRONTEND_CHECK_DECLARATION,
     WHITE_LIST_AGENT_EMAIL: config.WHITE_LIST_AGENT_EMAIL
       ? config.WHITE_LIST_AGENT_EMAIL.split(',')
+      : [],
+    FEEDBACK_RECEIVER_EMAIL_LIST: config.FEEDBACK_RECEIVER_EMAIL_LIST
+      ? config.FEEDBACK_RECEIVER_EMAIL_LIST.split(',')
       : [],
     DISABLE_RATE_LIMIT: getBoolean(config.DISABLE_RATE_LIMIT) ?? false,
   };

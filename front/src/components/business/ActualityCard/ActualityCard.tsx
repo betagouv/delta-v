@@ -44,7 +44,7 @@ export const ActualityCard = ({
   return (
     <div
       className={cs(
-        'flex flex-col rounded-xl border border-gray-300 p-5 gap-4 w-full md:w-[324px]',
+        'flex flex-col rounded-xl border border-gray-300 p-5 gap-4 w-full md:min-w-[250px]',
       )}
       ref={cardRef}
     >

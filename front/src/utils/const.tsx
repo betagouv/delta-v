@@ -149,7 +149,6 @@ export const MAIN_MENU_AGENT_ITEMS: MenuAgentItem[] = [
     id: 'declaration',
     title: 'Créer une déclaration',
     svgIcon: 'categoryCreateDeclaration' as SvgNames,
-    path: RoutingAgent.createDeclaration,
     openDeclarationResumeModal: true,
   },
   {
@@ -169,6 +168,7 @@ export const MAIN_MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Actualités',
     path: RoutingAgent.actualities,
     svgIcon: 'categoryActualities' as SvgNames,
+    disabled: true,
   },
   {
     id: 'contact',

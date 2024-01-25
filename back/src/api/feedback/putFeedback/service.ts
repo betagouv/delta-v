@@ -38,7 +38,7 @@ export const service = async ({
   });
 
   eventEmitter.emitSendEmail({
-    to: config.WHITE_LIST_AGENT_EMAIL,
+    to: config.FEEDBACK_RECEIVER_EMAIL_LIST,
     html: putFeedbackHtml,
     subject: 'Veuillez répondre à ce message',
   });
