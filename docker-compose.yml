@@ -111,7 +111,7 @@ services:
 
   frontend-web-delta-v:
     container_name: frontend-web-delta-v
-    image: node:16
+    image: node:18
     restart: unless-stopped
     ports:
       - 3000:3000
@@ -127,7 +127,7 @@ services:
 
   storybook-delta-v:
     container_name: storybook-delta-v
-    image: node:16
+    image: node:18
     ports:
       - 9009:9009
     volumes:

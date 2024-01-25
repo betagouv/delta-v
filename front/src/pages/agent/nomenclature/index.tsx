@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { useFavorites } from '@/api/hooks/useAPIFavorite';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
+import { FavoriteResponse } from '@/api/lib/types';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
 import { ModalFavorites } from '@/components/autonomous/ModalFavorites';
 import { ModalSearchNomenclatureProduct } from '@/components/autonomous/ModalSearchNomenclatureProduct';
@@ -38,12 +39,12 @@ const Nomenclature = () => {
 
   const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
-  const onSuccess = (data: string[]) => {
+  const onSuccess = (data: FavoriteResponse[]) => {
     const tmpFavorites: Product[] = [];
-    data.forEach((id) => {
-      const product = findProduct(nomenclatureProducts, id);
+    data.forEach((favorite) => {
+      const product = findProduct(nomenclatureProducts, favorite.productId);
       if (product) {
-        tmpFavorites.push(product);
+        tmpFavorites.push({ ...product, name: favorite.name ?? product.name });
       }
     });
     setFavoriteProducts(tmpFavorites);
@@ -175,6 +176,7 @@ const Nomenclature = () => {
         <ModalCategoryNomenclatureProduct
           open={openCategoryDownModal}
           onClose={handleCloseDownModal}
+          onOpen={() => setOpenCategoryDownModal(true)}
           defaultProduct={selectedFavoriteProduct}
         />
         <ModalFavorites

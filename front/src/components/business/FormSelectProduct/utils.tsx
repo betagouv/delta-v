@@ -18,6 +18,14 @@ export interface FormSelectProductData extends FormStepsProductData {
   templateRole?: Role;
 }
 
+export interface RadioCardProductFormOptions {
+  product: Product;
+  register: any;
+  control: any;
+  templateRole?: Role;
+  disabled?: boolean;
+}
+
 export const getDefaultValues = (steps: Product[]): FormStepsProductData => {
   const defaultValues: FormStepsProductData = {};
   steps.forEach((step) => {
@@ -56,7 +64,11 @@ export const getSteps = ({ currentProduct, lastId }: GetSteps): Product[] => {
   return steps;
 };
 
-export const getRadioProductForm = (product: Product, register: any): ReactNode => {
+export const getRadioProductForm = (
+  product: Product,
+  register: any,
+  disabled?: boolean,
+): ReactNode => {
   const radioValues: IRadioType[] = product.subProducts.map((subProduct): IRadioType => {
     return { id: subProduct.id, value: subProduct.radioValue ?? subProduct.name };
   });
@@ -67,18 +79,20 @@ export const getRadioProductForm = (product: Product, register: any): ReactNode 
       radioValues={radioValues}
       type="radio"
       label={product.childrenQuestion ?? undefined}
+      disabled={disabled}
       barGroupedRadio
       newLabel
     />
   );
 };
 
-export const getRadioCardProductForm = (
-  product: Product,
-  register: any,
-  control: any,
-  templateRole?: Role,
-): ReactNode => {
+export const getRadioCardProductForm = ({
+  product,
+  register,
+  control,
+  templateRole = 'user',
+  disabled,
+}: RadioCardProductFormOptions): ReactNode => {
   const radioCardValues: IRadioCardType[] = product.subProducts.map(
     (subProduct): IRadioCardType => {
       return {
@@ -96,6 +110,7 @@ export const getRadioCardProductForm = (
       radioCardValues={radioCardValues}
       type="radioCard"
       label={product.childrenQuestion ?? undefined}
+      disabled={disabled}
     />
   ) : (
     <InputGroup
@@ -105,6 +120,7 @@ export const getRadioCardProductForm = (
       radioCardValues={radioCardValues}
       type="radioCard"
       label={product.childrenQuestion ?? undefined}
+      disabled={disabled}
     />
   );
 };

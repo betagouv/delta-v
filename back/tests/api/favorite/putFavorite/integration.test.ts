@@ -31,14 +31,15 @@ describe('putFavorite route', () => {
     await testDb.disconnect();
   });
 
-  test('should return success with code 200', async () => {
+  test('should return success with code 200 with favorite name', async () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
 
     const productId = faker.string.uuid();
+    const name = faker.commerce.productName();
     const product = await prepareContextProduct({ testDb, dataProduct: { id: productId } });
     const { status, body } = await request(testApp)
       .put(`/api/favorite/`)
-      .send({ productId })
+      .send({ productId, name })
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(status).toBe(HttpStatuses.OK);
@@ -51,12 +52,38 @@ describe('putFavorite route', () => {
     expect(storedFavorite).toBeDefined();
     expect(storedFavorite?.userId).toEqual(user.id);
     expect(storedFavorite?.productId).toEqual(product.id);
+    expect(storedFavorite?.name).toEqual(name);
+  });
+
+  test('should return success with code 200', async () => {
+    const { accessToken, user } = await prepareContextUser({ testDb });
+
+    const productId = faker.string.uuid();
+    const name = faker.commerce.productName();
+    const product = await prepareContextProduct({ testDb, dataProduct: { id: productId } });
+    const { status, body } = await request(testApp)
+      .put(`/api/favorite/`)
+      .send({ productId, name })
+      .set('Authorization', `Bearer ${accessToken}`);
+
+    expect(status).toBe(HttpStatuses.OK);
+    expect(body.code).toEqual(ResponseCodes.FAVORITE_ADDED);
+
+    const storedFavorite = await AppDataSource.manager
+      .withRepository(FavoriteRepository)
+      .getOneByUserIdAndProductId(productId, user.id);
+
+    expect(storedFavorite).toBeDefined();
+    expect(storedFavorite?.userId).toEqual(user.id);
+    expect(storedFavorite?.productId).toEqual(product.id);
+    expect(storedFavorite?.name).toBe(name);
   });
 
   test('should return success with code 200 even if favorite exists', async () => {
     const { accessToken, user } = await prepareContextUser({ testDb });
 
     const productId = faker.string.uuid();
+    const name = faker.commerce.productName();
     const product = await prepareContextProduct({ testDb, dataProduct: { id: productId } });
     await prepareContextFavorite({
       testDb,
@@ -64,7 +91,7 @@ describe('putFavorite route', () => {
     });
     const { status, body } = await request(testApp)
       .put(`/api/favorite/`)
-      .send({ productId })
+      .send({ productId, name })
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(status).toBe(HttpStatuses.OK);

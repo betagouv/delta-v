@@ -16,13 +16,14 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { productId } = req.body;
+    const { productId, name } = req.body;
 
     const { userId } = req.jwt;
 
     await service({
       userId,
       productId,
+      name,
       favoriteRepository: AppDataSource.manager.withRepository(FavoriteRepository),
     });
 

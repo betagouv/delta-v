@@ -25,11 +25,10 @@ export const Breadcrumbs: React.FC<IBreadcrumbsProps> = ({
     <div className="flex flex-row flex-wrap items-center gap-x-2.5 pr-4">
       {displayedCategoryProducts.map((item, index) => {
         return (
-          <>
+          <div key={index} className="flex flex-row items-center gap-2.5">
             <div
-              key={index}
               className={cs({
-                'max-w-[85px] flex flex-row items-center gap-2.5 line-clamp-1': true,
+                'max-w-[85px] line-clamp-1': true,
                 'cursor-pointer': onClickLink,
               })}
               onClick={() => onClickLink && onClickLink(item.id)}
@@ -41,7 +40,7 @@ export const Breadcrumbs: React.FC<IBreadcrumbsProps> = ({
             {index !== displayedCategoryProducts.length - 1 && (
               <Icon name="chevron-right" size="xs" />
             )}
-          </>
+          </div>
         );
       })}
     </div>
