@@ -5,7 +5,12 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
+import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
+import {
+  FormAddFavoriteData,
+  ModalAddFavoriteProduct,
+} from '@/components/autonomous/ModalAddFavoriteProduct';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -22,11 +27,18 @@ import { MainAgent } from '@/templates/MainAgent';
 const SearchProduct = () => {
   const [openModalAddProduct, setOpenModalAddProduct] = useState<boolean>(false);
   const { trackEvent } = useMatomo();
-  const { addProductCartDeclarationAgent, searchProducts, findProduct, defaultCurrency } = useStore(
+  const {
+    addProductCartDeclarationAgent,
+    searchProducts,
+    findProduct,
+    defaultCurrency,
+    addFavoriteProducts,
+  } = useStore(
     (state) => ({
       findProduct: state.findProduct,
       addProductCartDeclarationAgent: state.addProductCartDeclarationAgent,
       searchProducts: state.searchProducts,
+      addFavoriteProducts: state.addFavoriteProducts,
       defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
     }),
     shallow,
@@ -40,6 +52,8 @@ const SearchProduct = () => {
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
+  const [favoriteValue, setFavoriteValue] = useState('');
+  const [openModalAddFavorite, setOpenModalAddFavorite] = useState(false);
   const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
   const setupSearchProductResults = (): void => {
@@ -61,6 +75,33 @@ const SearchProduct = () => {
     }
 
     setProductsThatMatch([productOnTop, ...searchProductsWithoutSelectedProduct]);
+  };
+
+  const createFavoriteMutation = useCreateFavoriteMutation({
+    onSuccess: () => {},
+  });
+
+  const onClickFavorite = (product: Product) => {
+    setSelectedProduct(product);
+    setOpenCategoryDownModal(false);
+    setOpenModalAddFavorite(true);
+  };
+
+  const onCloseModalAddFavorite = () => {
+    setOpenModalAddFavorite(false);
+    setFavoriteValue('');
+  };
+
+  const onSubmit = (data: FormAddFavoriteData) => {
+    if (!selectedProduct) {
+      return;
+    }
+    addFavoriteProducts({ ...selectedProduct, name: data.name });
+    createFavoriteMutation.mutate({
+      productId: selectedProduct?.id,
+      name: data.name,
+    });
+    setFavoriteValue(data.name);
   };
 
   useEffect(() => {
@@ -123,6 +164,7 @@ const SearchProduct = () => {
                 key={product.id}
                 product={product}
                 onClick={onClickProduct}
+                onClickFavorite={onClickFavorite}
                 searchValue={search as string}
               />
             ))}
@@ -141,6 +183,13 @@ const SearchProduct = () => {
           onAddProduct={onAddProduct}
           currentProduct={selectedProduct}
           defaultCurrency={defaultCurrency}
+        />
+
+        <ModalAddFavoriteProduct
+          open={openModalAddFavorite}
+          onClose={onCloseModalAddFavorite}
+          onSubmit={onSubmit}
+          value={favoriteValue}
         />
       </MainAgent>
     </AgentRoute>

@@ -74,8 +74,6 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   useEffect(() => {
     if (currentId) {
       const selectedProduct = findProduct(products, currentId);
-      console.log('🚀 ~ useEffect ~ selectedProduct:', selectedProduct);
-
       setProductTree(findProductTree(products, currentId));
       setCurrentProduct(selectedProduct);
       setDisplayedProducts(
@@ -121,11 +119,6 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
   const onCloseModalAddFavorite = () => {
     setValue('');
     setOpenModalAddFavorite(false);
-    if (onOpen) {
-      setTimeout(() => {
-        onOpen();
-      }, 300);
-    }
   };
 
   const onCloseModalDeleteFavorite = () => {
@@ -164,7 +157,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
     if (!currentProduct) {
       return;
     }
-    addFavoriteProducts(currentProduct);
+    addFavoriteProducts({ ...currentProduct, name: data.name });
     createFavoriteMutation.mutate({
       productId: currentProduct?.id,
       name: data.name,

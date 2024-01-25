@@ -4,6 +4,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
@@ -40,6 +41,7 @@ const Declaration = () => {
     setProductsDeclarationToDisplayAgent,
     removeProductDeclaration,
     updateProductCartDeclarationAgent,
+    addProductCartDeclarationAgent,
     resetDeclarationAgent,
     findProduct,
     findDeclarationShoppingProductAgent,
@@ -53,6 +55,7 @@ const Declaration = () => {
     (state) => ({
       setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
       updateProductCartDeclarationAgent: state.updateProductCartDeclarationAgent,
+      addProductCartDeclarationAgent: state.addProductCartDeclarationAgent,
       removeProductDeclaration: state.removeProductCartDeclarationAgent,
       resetDeclarationAgent: state.resetDeclarationAgent,
       findProduct: state.findProduct,
@@ -138,6 +141,22 @@ const Declaration = () => {
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
     setOpenModalAddProduct(false);
     router.push(`/agent/declaration/ajout/marchandises`);
+  };
+
+  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
+    const shoppingProduct: ShoppingProduct = {
+      id: uuidv4(),
+      productId: product.id,
+      name,
+      value: parseFloat(value),
+      amount: 1,
+      currency: currency ?? 'EUR',
+    };
+
+    addProductCartDeclarationAgent(shoppingProduct);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue: customName });
+    trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
+    setOpenCategoryDownModal(false);
   };
 
   const onModifyClick = (id: string) => {
@@ -353,7 +372,7 @@ const Declaration = () => {
       <ModalCategoryProduct
         open={openCategoryDownModal}
         onClose={handleCloseDownModal}
-        onAddProduct={onUpdateProduct}
+        onAddProduct={onAddProduct}
         defaultCurrency={defaultCurrency}
         defaultProduct={categoryProductToShow}
       />
