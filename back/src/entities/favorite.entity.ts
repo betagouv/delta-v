@@ -21,7 +21,7 @@ export class FavoriteEntity implements FavoriteEntityInterface {
   @PrimaryColumn({ type: 'uuid' })
   productId: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, default: '' })
   name: string;
 
   @ManyToOne(() => ProductEntity, (product) => product.favorites, { onDelete: 'CASCADE' })
