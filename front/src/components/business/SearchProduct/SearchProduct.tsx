@@ -51,7 +51,7 @@ export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unkno
 
   const isFocusedEmpty = isFocused && !searchValue;
   const showSearchResults = !!searchValue && resultSearch.length > 0;
-  const showSearchHistory = !!history && (isFocusedEmpty || !!searchValue);
+  const showSearchHistory = !!history && (isFocusedEmpty || !!searchValue) && history.length > 0;
 
   return (
     <>

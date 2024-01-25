@@ -111,44 +111,39 @@ const QuittancePage = () => {
         linkButton={`${RoutingAgent.home}?mode=tools`}
       >
         <div className="flex flex-col px-4 pb-4">
-          {isLoading ? (
-            <div>Chargement...</div>
-          ) : (
-            <>
-              <div className="mb-5">
-                <FilterBarMobile
-                  title="Plus de filtres"
-                  searchType="global"
-                  onValidateFilter={onValidateFilter}
-                  open={openFilterBar}
-                  setOpen={setOpenFilterBar}
-                  withMeanOfTransportFilter
-                  withStatusFilter
-                  filtersCount={counter}
-                  defaultSearchValue={search as string}
-                />
-              </div>
-              <div className="md:items-center flex flex-col gap-2.5">
-                {declarations &&
-                  declarations?.map((declaration, index) => (
-                    <span className={cs({ 'opacity-40': openFilterBar })} key={declaration.id}>
-                      <DeclarationCard
-                        {...declaration}
-                        date={declaration.versionDate}
-                        id={declaration.id}
-                        publicId={declaration.publicId}
-                        onClick={() => router.push(`/agent/declaration/${declaration.id}`)}
-                        firstName={declaration.declarantFirstName}
-                        lastName={declaration.declarantLastName}
-                        transport={declaration.declarantMeanOfTransport}
-                        newLimit={apiDeclarations && apiDeclarations.length ? newLimit : undefined}
-                        isLast={index === declarations.length - 1}
-                      />
-                    </span>
-                  ))}
-              </div>
-            </>
-          )}
+          <div className="mb-5">
+            <FilterBarMobile
+              title="Plus de filtres"
+              searchType="global"
+              onValidateFilter={onValidateFilter}
+              open={openFilterBar}
+              setOpen={setOpenFilterBar}
+              withMeanOfTransportFilter
+              withStatusFilter
+              filtersCount={counter}
+              defaultSearchValue={search as string}
+            />
+          </div>
+          <div className="md:items-center flex flex-col gap-2.5">
+            {declarations &&
+              declarations?.map((declaration, index) => (
+                <span className={cs({ 'opacity-40': openFilterBar })} key={declaration.id}>
+                  <DeclarationCard
+                    {...declaration}
+                    date={declaration.versionDate}
+                    id={declaration.id}
+                    publicId={declaration.publicId}
+                    onClick={() => router.push(`/agent/declaration/${declaration.id}`)}
+                    firstName={declaration.declarantFirstName}
+                    lastName={declaration.declarantLastName}
+                    transport={declaration.declarantMeanOfTransport}
+                    newLimit={apiDeclarations && apiDeclarations.length ? newLimit : undefined}
+                    isLast={index === declarations.length - 1}
+                  />
+                </span>
+              ))}
+          </div>
+          {isLoading && <div>Chargement...</div>}
         </div>
       </MainAgent>
     </AgentRoute>

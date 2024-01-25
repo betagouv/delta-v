@@ -40,6 +40,7 @@ jobs:
       ROUTE_FRONTEND_CHECK_DECLARATION: /check-declaration
       LOG_LEVEL: fatal
       WHITE_LIST_AGENT_EMAIL: "test@gmail.com"
+      FEEDBACK_RECEIVER_EMAIL_LIST: "test@gmail.com"
 
     steps:
       - uses: actions/checkout@v3

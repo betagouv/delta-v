@@ -34,8 +34,7 @@ const SearchProduct = () => {
 
   const router = useRouter();
 
-  const { search, selectedId }: { id?: string; search?: string; selectedId?: string } =
-    router.query;
+  const { search, selectedId }: { search?: string; selectedId?: string } = router.query;
 
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);

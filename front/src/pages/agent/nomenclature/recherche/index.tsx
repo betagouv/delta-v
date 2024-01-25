@@ -18,17 +18,12 @@ import { Meta } from '@/layout/Meta';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { findProduct } from '@/utils/product.util';
-import { SearchType } from '@/utils/search';
 
 const SearchProduct = () => {
-  const { searchNomenclatureProducts, addFavoriteProducts, products } = useStore(
+  const { findProduct, searchNomenclatureProducts, addFavoriteProducts } = useStore(
     (state) => ({
-      setProductsNomenclatureToDisplay: state.setProductsNomenclatureToDisplay,
+      findProduct: state.findProduct,
       searchNomenclatureProducts: state.searchNomenclatureProducts,
-      setCountryForProductsNomenclature: state.setCountryForProductsNomenclature,
-      countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
-      products: state.products.appState.nomenclatureProducts,
       addFavoriteProducts: state.addFavoriteProducts,
     }),
     shallow,
@@ -36,54 +31,45 @@ const SearchProduct = () => {
 
   const router = useRouter();
 
-  const { id, search, selectedId }: { id?: string; search?: string; selectedId?: string } =
-    router.query;
+  const { search, selectedId }: { search?: string; selectedId?: string } = router.query;
 
-  const [initialProduct, setInitialProduct] = useState<Product | undefined>(undefined);
-  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(!!initialProduct);
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState<boolean>(false);
   const [productsThatMatch, setProductsThatMatch] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product>(
-    (initialProduct as Product) ?? undefined,
-  );
-
-  const [resultCount, setResultCount] = useState<number>(0);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
 
   const [value, setValue] = useState('');
   const [openModalAddFavorite, setOpenModalAddFavorite] = useState(false);
 
-  useEffect(() => {
-    if (id && !selectedId) {
-      setProductsThatMatch([findProduct(products, id as string) as Product]);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (search && !selectedId) {
-      setProductsThatMatch(searchNomenclatureProducts((search as string) ?? ''));
-    }
-  }, [search]);
-
-  useEffect(() => {
+  const setupSearchProductResults = (): void => {
     if (!selectedId) {
+      setProductsThatMatch(searchNomenclatureProducts((search as string) ?? ''));
       return;
     }
 
-    setInitialProduct(findProduct(products, selectedId));
     const reducedProductsThatMatch = searchNomenclatureProducts((search as string) ?? '');
-
-    const selectedProductPosition = reducedProductsThatMatch.findIndex(
-      (product) => product.id === selectedId,
+    const searchProductsWithoutSelectedProduct = reducedProductsThatMatch.filter(
+      (product) => product.id !== selectedId,
     );
 
-    if (selectedProductPosition === undefined) {
-      setProductsThatMatch(reducedProductsThatMatch);
-      setOpenCategoryDownModal(true);
+    const productOnTop = findProduct(selectedId);
+
+    if (!productOnTop) {
+      setProductsThatMatch(searchProductsWithoutSelectedProduct);
       return;
     }
 
-    reducedProductsThatMatch.splice(selectedProductPosition, 1);
-    setProductsThatMatch(reducedProductsThatMatch);
-    setOpenCategoryDownModal(true);
+    setProductsThatMatch([productOnTop, ...searchProductsWithoutSelectedProduct]);
+  };
+
+  useEffect(() => {
+    if (selectedId) {
+      setSelectedProduct(findProduct(selectedId));
+      setOpenCategoryDownModal(true);
+    }
+  }, [selectedId]);
+
+  useEffect(() => {
+    setupSearchProductResults();
   }, [selectedId, search]);
 
   const onCloseModalAddFavorite = () => {
@@ -113,18 +99,6 @@ const SearchProduct = () => {
     setValue(data.name);
   };
 
-  useEffect(() => {
-    if (!productsThatMatch && !selectedProduct) {
-      setResultCount(0);
-      return;
-    }
-    if (!productsThatMatch && selectedProduct) {
-      setResultCount(1);
-      return;
-    }
-    setResultCount(productsThatMatch.length + 1);
-  }, [productsThatMatch, selectedProduct]);
-
   const onClickProduct = (product: Product) => {
     setSelectedProduct(product);
     setOpenCategoryDownModal(true);
@@ -145,23 +119,14 @@ const SearchProduct = () => {
         <div className="flex flex-1 flex-col border-t border-secondary-300 py-4 mx-5">
           <div className="flex flex-row justify-between items-center">
             <Typography size="text-sm" color="black">
-              {`${resultCount} résultat${resultCount > 1 ? 's' : ''} pour "${
-                id ? productsThatMatch[0]?.name : search ?? ''
-              }"`}
+              {`${productsThatMatch.length} résultat${
+                productsThatMatch.length > 1 ? 's' : ''
+              } pour "${search}"`}
             </Typography>
             <ModalSelectCountry />
           </div>
           <div className="flex flex-1 flex-col gap-4 mt-2">
-            {initialProduct && (
-              <NomenclatureCard
-                key={initialProduct.id}
-                product={initialProduct}
-                onClick={onClickProduct}
-                onClickFavorite={onClickFavorite}
-                searchValue={search as string}
-              />
-            )}
-            {(productsThatMatch as SearchType<Product>[])?.map((product) => (
+            {productsThatMatch?.map((product) => (
               <NomenclatureCard
                 key={product.id}
                 product={product}
@@ -176,7 +141,7 @@ const SearchProduct = () => {
           open={openCategoryDownModal}
           onClose={() => setOpenCategoryDownModal(false)}
           onOpen={() => setOpenCategoryDownModal(true)}
-          defaultProduct={initialProduct ?? selectedProduct}
+          defaultProduct={selectedProduct}
         />
 
         <ModalAddFavoriteProduct
