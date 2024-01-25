@@ -91,7 +91,7 @@ const SearchProduct = () => {
     if (!selectedProduct) {
       return;
     }
-    addFavoriteProducts(selectedProduct);
+    addFavoriteProducts({ ...selectedProduct, name: data.name });
     createFavoriteMutation.mutate({
       productId: selectedProduct?.id,
       name: data.name,

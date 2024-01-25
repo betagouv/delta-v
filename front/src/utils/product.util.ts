@@ -110,7 +110,7 @@ export const checkIsFinalProduct = (product?: Product): boolean => {
   if (!product) {
     return false;
   }
-  if (product.productDisplayTypes !== ProductDisplayTypes.category && product.finalProduct) {
+  if (product.productDisplayTypes !== ProductDisplayTypes.category) {
     return true;
   }
   return false;

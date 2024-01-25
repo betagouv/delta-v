@@ -256,6 +256,7 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
         newState.declaration.appState.declarationAgentRequest.shoppingProducts.find(
           (product: ShoppingProduct) => product.id === id,
         );
+      console.log('🚀 ~ set ~ currentShoppingProduct:', currentShoppingProduct);
       const newShoppingProducts =
         newState.declaration.appState.declarationAgentRequest.shoppingProducts.filter(
           (product: ShoppingProduct) => product.id !== id,

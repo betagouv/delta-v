@@ -6,7 +6,7 @@ export class AlterFavoriteTable1706028299978 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
             ALTER TABLE "favorite"
-            ADD "name" character varying(255) NOT NULL
+            ADD "name" character varying(255) NOT NULL DEFAULT ''
         `);
   }
 
