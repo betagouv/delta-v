@@ -39,6 +39,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
 
   const [defaultSteps, setDefaultSteps] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+
   useEffect(() => {
     if (currentProduct?.id) {
       const steps = findProductTreeSteps(currentProduct.id);
