@@ -9,7 +9,7 @@ interface ModalValidateFeedbackInfoProps {
   onClickToRedirect: () => void;
 }
 
-export const ModalValidateFeedbackInfo: React.FC<ModalValidateFeedbackInfoProps> = ({
+export const ModalValidateFeedbackInfoMobile: React.FC<ModalValidateFeedbackInfoProps> = ({
   onClose,
   onClickToRedirect,
   open,
