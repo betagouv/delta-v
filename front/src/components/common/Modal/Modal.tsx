@@ -64,7 +64,7 @@ export const Modal: React.FC<IModalProps> = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative z-50 my-largeBase inline-block w-full rounded-lg bg-white p-modal text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle">
+            <div className="relative z-50 my-largeBase inline-block w-full rounded-lg bg-white p-modalMobile md:p-modalDesktop text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle">
               {!preventClose && (
                 <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
                   <Icon name="clear" onClick={onClose} />
@@ -87,7 +87,9 @@ export const Modal: React.FC<IModalProps> = ({
                 </div>
               )}
               {children && (
-                <div className={`flex ${withMargin && 'mt-base'} justify-center`}>{children}</div>
+                <div className={`flex ${withMargin && 'sm:mt-base md:m-0'} justify-center`}>
+                  {children}
+                </div>
               )}
             </div>
           </Transition.Child>

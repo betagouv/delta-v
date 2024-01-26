@@ -1,1 +1,2 @@
-export * from './ModalValidateFeedbackInfo';
+export * from './ModalValidateFeedbackInfoMobile';
+export * from './ModalValidateFeedbackInfoDesktop';

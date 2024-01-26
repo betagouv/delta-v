@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 
-import { ModalValidateFeedbackInfo } from './ModalValidateFeedbackInfo';
+import { ModalValidateFeedbackInfoMobile } from './ModalValidateFeedbackInfoMobile';
 import { Button } from '@/components/common/Button';
 
 export default {
-  title: 'Components/Business/ModalValidateFeedbackInfo',
-  component: ModalValidateFeedbackInfo,
+  title: 'Components/Business/ModalValidateFeedbackInfoMobile',
+  component: ModalValidateFeedbackInfoMobile,
 } as Meta;
 
 export const Base = () => {
@@ -19,7 +19,7 @@ export const Base = () => {
   };
   return (
     <>
-      <ModalValidateFeedbackInfo
+      <ModalValidateFeedbackInfoMobile
         open={open}
         onClose={onClose}
         onClickToRedirect={() => console.log('click')}

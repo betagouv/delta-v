@@ -47,7 +47,8 @@ module.exports = {
         lightBase: '1.25rem',
         base: '1.5rem',
         largeBase: '1.75rem',
-        modal: '35px',
+        modalMobile: '35px',
+        modalDesktop: '30px',
       },
       borderRadius: {
         '4xl': '2rem',

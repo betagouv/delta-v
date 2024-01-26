@@ -8,7 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 import { useCreateFeedbackMutation } from '@/api/hooks/useAPIFeedback';
-import { ModalValidateFeedbackInfo } from '@/components/autonomous/ModalValidateFeedbackInfo';
+import {
+  ModalValidateFeedbackInfoMobile,
+  ModalValidateFeedbackInfoDesktop,
+} from '@/components/autonomous/ModalValidateFeedbackInfo';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { TitleAgent } from '@/components/common/TitleAgent';
 import { Typography } from '@/components/common/Typography';
@@ -38,10 +41,15 @@ const ContactPage = () => {
       comment: '',
     },
   });
-  const [openValidateFeedbackInfo, setOpenValidateFeedbackInfo] = useState(false);
+  const [openValidateFeedbackInfoMobile, setOpenValidateFeedbackInfoMobile] = useState(false);
+  const [openValidateFeedbackInfoDesktop, setOpenValidateFeedbackInfoDesktop] = useState(false);
+  const isMobile = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
 
   const onClickToRedirectToHome = () => {
-    setOpenValidateFeedbackInfo(false);
+    setOpenValidateFeedbackInfoMobile(false);
+    setOpenValidateFeedbackInfoDesktop(false);
     router.push(`${RoutingAgent.home}?mode=tools`);
   };
 
@@ -50,7 +58,11 @@ const ContactPage = () => {
   const createFeedbackMutation = useCreateFeedbackMutation({
     onSuccess: () => {
       reset();
-      setOpenValidateFeedbackInfo(true);
+      if (isMobile) {
+        setOpenValidateFeedbackInfoMobile(true);
+      } else {
+        setOpenValidateFeedbackInfoDesktop(true);
+      }
     },
   });
 
@@ -60,10 +72,6 @@ const ContactPage = () => {
       comment: data.comment,
     });
   };
-
-  const isMobile = useMediaQuery({
-    query: '(max-width: 767px)',
-  });
 
   return (
     <AgentRoute>
@@ -80,7 +88,7 @@ const ContactPage = () => {
         isMobile={isMobile}
       >
         <form
-          className="flex flex-col py-6 px-4 justify-between flex-1 gap-20"
+          className="md:p-0 justify-between flex flex-col py-6 px-4 flex-1 gap-20"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col">
@@ -98,7 +106,7 @@ const ContactPage = () => {
             <div className="mt-4">
               <InputGroup
                 type="textarea"
-                placeholder="Votre message"
+                placeholder="Saisissez votre message..."
                 name="comment"
                 register={register('comment')}
                 error={!isValid ? errors?.comment?.message : undefined}
@@ -117,9 +125,14 @@ const ContactPage = () => {
             </button>
           </div>
         </form>
-        <ModalValidateFeedbackInfo
-          open={openValidateFeedbackInfo}
-          onClose={() => setOpenValidateFeedbackInfo(false)}
+        <ModalValidateFeedbackInfoMobile
+          open={openValidateFeedbackInfoMobile}
+          onClose={() => setOpenValidateFeedbackInfoMobile(false)}
+          onClickToRedirect={onClickToRedirectToHome}
+        />
+        <ModalValidateFeedbackInfoDesktop
+          open={openValidateFeedbackInfoDesktop}
+          onClose={() => setOpenValidateFeedbackInfoDesktop(false)}
           onClickToRedirect={onClickToRedirectToHome}
         />
       </MainAgent>
