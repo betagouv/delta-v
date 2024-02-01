@@ -41,6 +41,8 @@ jobs:
       LOG_LEVEL: fatal
       WHITE_LIST_AGENT_EMAIL: "test@gmail.com"
       FEEDBACK_RECEIVER_EMAIL_LIST: "test@gmail.com"
+      REDIS_URL: "redis://:redis@localhost:6379/0"
+      DB_CACHE_REDIS_URL: "redis://:redis@localhost:6379/0"
 
     steps:
       - uses: actions/checkout@v3

@@ -33,6 +33,7 @@ export interface IDatabaseConfig {
   DB_USERNAME: string;
   DB_PASSWORD: string;
   DB_DATABASE: string;
+  DB_CACHE_REDIS_URL?: string;
   INSTANCE_CONNECTION_NAME?: string;
 }
 
@@ -53,6 +54,7 @@ const requiredVariables: string[][] = [
   ['DB_USERNAME', 'POSTGRESQL_ADDON_USER'],
   ['DB_PASSWORD', 'POSTGRESQL_ADDON_PASSWORD'],
   ['DB_DATABASE', 'POSTGRESQL_ADDON_DB'],
+  ['DB_CACHE_REDIS_URL'],
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,6 +68,7 @@ function parseConfig(config: any): IDatabaseConfig {
       ? parseNumber(config.POSTGRESQL_ADDON_PORT)
       : parseNumber(config.DB_PORT),
     DB_LOGGING: parseBoolean(config.DB_LOGGING) ?? (config.DB_LOGGING as LoggerOptions),
+    DB_CACHE_REDIS_URL: config.DB_CACHE_REDIS_URL,
   };
 }
 
