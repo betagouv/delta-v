@@ -5,6 +5,7 @@ export interface Feedback {
   userId?: string;
   comment: string;
   email?: string;
+  pictureUrl?: string | null;
 }
 
 @Entity('feedback')
@@ -20,4 +21,7 @@ export class FeedbackEntity implements Feedback {
 
   @Column({ type: 'varchar', nullable: true })
   email?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  pictureUrl?: string | null;
 }

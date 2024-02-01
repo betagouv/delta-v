@@ -97,6 +97,7 @@ const ContactPage = () => {
       comment: data.comment,
       file,
     });
+    setFile(undefined);
   };
 
   return (
@@ -117,116 +118,92 @@ const ContactPage = () => {
           className="md:p-0 justify-between flex flex-col py-6 px-4 flex-1 gap-20"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col">
-            <TitleAgent
-              title="On vous écoute"
-              colorClassnameOne="text-black"
-              colorClassnameTwo="text-primary-600"
-              switchWordPosition={2}
-              textPosition="text-left"
-            />
-            <Typography size="text-xs" color="black">
-              Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
-              une optimisation, une demande particulière ?
-            </Typography>
-            <div className="mt-4">
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col">
+              <TitleAgent
+                title="On vous écoute"
+                colorClassnameOne="text-black"
+                colorClassnameTwo="text-primary-600"
+                switchWordPosition={2}
+                textPosition="text-left"
+              />
+              <Typography size="text-xs" color="black">
+                Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
+                une optimisation, une demande particulière ?
+              </Typography>
+              <div className="mt-4">
+                <InputGroup
+                  type="textarea"
+                  placeholder="Saisissez votre message..."
+                  name="comment"
+                  register={register('comment')}
+                  error={isError ? errors?.comment?.message : undefined}
+                  additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
+                />
+                <Typography size="text-xs" color="black">
+                  Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une
+                  demande particulière ?
+                </Typography>
+              </div>
               <InputGroup
                 type="textarea"
                 placeholder="Saisissez votre message..."
                 name="comment"
                 register={register('comment')}
-                error={isError ? errors?.comment?.message : undefined}
-                additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
+                error={!isValid ? errors?.comment?.message : undefined}
               />
-            </div>
-            {file ? (
-              <div className="flex gap-5 items-center flex-row">
-                <div className="inline-flex flex-row gap-1 items-center">
-                  <Icon name="paperclip" size="sm" color="primary" />
-                  <Typography size="text-2xs" weight="bold" underline color="black">
-                    {file.name}
-                  </Typography>
+
+              {file ? (
+                <div className="flex gap-5 items-center flex-row">
+                  <div className="inline-flex flex-row gap-0.5 items-center text-primary-600">
+                    <Icon name="paperclip" size="sm" color="primary" />
+                    <Typography size="text-2xs" underline color="black">
+                      {file.name}
+                    </Typography>
+                  </div>
+                  <div className="flex flex-row gap-2">
+                    <button
+                      className=" text-primary-600 text-xs underline font-bold"
+                      type="button"
+                      onClick={() => setOpenDeleteAttachment(true)}
+                    >
+                      Modifier
+                    </button>
+                  </div>
                 </div>
-                <div className="flex flex-row gap-2">
-                  <button
-                    className="py-3 w-full rounded-full text-primary-600 text-xs underline"
-                    type="submit"
-                    disabled={!isValid}
-                  >
-                    Modifier
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <label
-                htmlFor="file"
-                className="inline-flex border border-primary-600 text-primary-600 rounded-full px-5 py-2 justify-center items-center self-start"
-              >
-                <div className="inline-flex flex-row gap-1 items-center">
-                  <Icon name="paperclip" size="sm" />
-                  <Typography size="text-2xs" weight="bold">
-                    Ajouter une pièce jointe
-                  </Typography>
-                </div>
-                <input
-                  id="file"
-                  name="file"
-                  onChange={(e) => setFile(e.target.files?.[0])}
-                  type="file"
-                  className="hidden"
-                />
-              </label>
-            )}
-          </div>
-          {file ? (
-            <div className="flex gap-5 items-center flex-row">
-              <div className="inline-flex flex-row gap-0.5 items-center text-primary-600">
-                <Icon name="paperclip" size="sm" color="primary" />
-                <Typography size="text-2xs" underline color="black">
-                  {file.name}
-                </Typography>
-              </div>
-              <div className="flex flex-row gap-2">
-                <button
-                  className=" text-primary-600 text-xs underline font-bold"
-                  type="button"
-                  onClick={() => setOpenDeleteAttachment(true)}
+              ) : (
+                <label
+                  htmlFor="file"
+                  className="inline-flex border border-primary-600 text-primary-600 rounded-full px-5 py-2 justify-center items-center self-start"
                 >
-                  Modifier
-                </button>
-              </div>
+                  <div className="inline-flex flex-row gap-1 items-center">
+                    <Icon name="paperclip" size="sm" />
+                    <Typography size="text-2xs" weight="bold">
+                      Ajouter une pièce jointe
+                    </Typography>
+                  </div>
+                  <input
+                    id="file"
+                    name="file"
+                    onChange={(e) => setFile(e.target.files?.[0])}
+                    type="file"
+                    className="hidden"
+                  />
+                </label>
+              )}
             </div>
-          ) : (
-            <label
-              htmlFor="file"
-              className="inline-flex border border-primary-600 text-primary-600 rounded-full px-5 py-2 justify-center items-center self-start"
-            >
-              <div className="inline-flex flex-row gap-1 items-center">
-                <Icon name="paperclip" size="sm" />
-                <Typography size="text-2xs" weight="bold">
-                  Ajouter une pièce jointe
-                </Typography>
-              </div>
-              <input
-                id="file"
-                name="file"
-                onChange={(e) => setFile(e.target.files?.[0])}
-                type="file"
-                className="hidden"
-              />
-            </label>
-          )}
-          <div className="w-[118px] self-center md:self-start mb-4">
-            <button
-              className={clsxm({
-                'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer': true,
-                'bg-disabled-bg cursor-not-allowed': isError,
-              })}
-              type="submit"
-              disabled={isError}
-            >
-              Envoyer
-            </button>
+            <div className="w-[118px] self-center md:self-start mb-4">
+              <button
+                className={clsxm({
+                  'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer': true,
+                  'bg-disabled-bg cursor-not-allowed': isError,
+                })}
+                type="submit"
+                disabled={isError}
+              >
+                Envoyer
+              </button>
+            </div>
           </div>
         </form>
         <ModalValidateFeedbackInfoMobile

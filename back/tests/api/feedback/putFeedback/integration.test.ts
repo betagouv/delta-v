@@ -1,3 +1,4 @@
+import path from 'path';
 import { Express } from 'express';
 import request from 'supertest';
 
@@ -11,6 +12,7 @@ import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
 import api from '../../../../src/api';
 import { FeedbackRepository } from '../../../../src/repositories/feedback.repository';
+import { S3Service } from '../../../../src/api/feedback/putFeedback/services/s3.service';
 
 const testDb = testDbManager();
 
@@ -36,10 +38,20 @@ describe('putFeedback route', () => {
 
     const comment = 'test comment';
     const feedbackId = faker.string.uuid();
+
+    const spy = jest.spyOn<any, string>(S3Service.prototype, 'upload').mockImplementation(() => ({
+      Location: 'fake url',
+    }));
+
+    const firstFilePath = path.resolve(__dirname, './assets/image.jpg');
     const { status, body } = await request(testApp)
       .put(`/api/feedback/${feedbackId}`)
-      .send({ comment })
+      .field({ comment })
+      .set('Content-Type', 'multipart/form-data')
+      .attach('file', firstFilePath)
       .set('Authorization', `Bearer ${accessToken}`);
+
+    spy.mockClear();
 
     expect(status).toBe(HttpStatuses.OK);
     expect(body.code).toEqual(ResponseCodes.FEEDBACK_UPDATED);
@@ -53,6 +65,7 @@ describe('putFeedback route', () => {
       expect(storedFeedback.email).toEqual(user.email);
       expect(storedFeedback.comment).toEqual(comment);
       expect(storedFeedback.userId).toEqual(user.id);
+      expect(storedFeedback.pictureUrl).toEqual('fake url');
     }
 
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);

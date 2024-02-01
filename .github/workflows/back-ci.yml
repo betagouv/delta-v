@@ -47,6 +47,10 @@ jobs:
       WHITE_LIST_AGENT_EMAIL: "test@gmail.com"
       FEEDBACK_RECEIVER_EMAIL_LIST: "test@gmail.com"
       REDIS_URL: "redis://:redis@localhost:6379/0"
+      CELLAR_HOST: http://localhost:8000
+      CELLAR_KEY_ID: cellarKeyId
+      CELLAR_KEY_SECRET: cellarKeySecret
+      CELLAR_BUCKET_NAME: cellarBuck
 
     steps:
       - uses: actions/checkout@v3

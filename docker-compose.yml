@@ -26,7 +26,11 @@ x-envs: &common-envs
   WHITE_LIST_AGENT_EMAIL: "s.sabalot@gmail.com,sbergeot.pro@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"
   FEEDBACK_RECEIVER_EMAIL_LIST: "s.sabalot@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"
   REDIS_URL: ${REDIS_URL:-redis://:redis@redis.api.dev.delta-v:6379}
-  DISABLE_RATE_LIMIT: "false"
+  DISABLE_RATE_LIMIT: "true"
+  CELLAR_HOST: ${CELLAR_HOST}
+  CELLAR_KEY_ID: ${CELLAR_KEY_ID}
+  CELLAR_KEY_SECRET: ${CELLAR_KEY_SECRET}
+  CELLAR_BUCKET_NAME: ${CELLAR_BUCKET_NAME}
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
