@@ -10,8 +10,8 @@ import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { CategoryProductMobile } from '@/components/autonomous/CategoryProduct';
 import {
   FormAddFavoriteData,
-  ModalAddFavoriteProductMobile,
-} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProductMobile';
+  ModalAddFavoriteProduct,
+} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
@@ -184,7 +184,7 @@ const SearchProduct = () => {
           defaultCurrency={defaultCurrency}
         />
 
-        <ModalAddFavoriteProductMobile
+        <ModalAddFavoriteProduct
           open={openModalAddFavorite}
           onClose={onCloseModalAddFavorite}
           onSubmit={onSubmit}

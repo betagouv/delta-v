@@ -3,12 +3,12 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 
-import { ModalAddFavoriteProductMobile } from './ModalAddFavoriteProduct';
+import { ModalAddFavoriteProduct } from './ModalAddFavoriteProduct';
 import { Button } from '@/components/common/Button';
 
 export default {
   title: 'Components/Business/ModalAddFavoriteProduct',
-  component: ModalAddFavoriteProductMobile,
+  component: ModalAddFavoriteProduct,
 } as Meta;
 
 export const Base = () => {

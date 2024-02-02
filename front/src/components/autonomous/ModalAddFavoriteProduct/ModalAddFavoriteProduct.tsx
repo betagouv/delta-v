@@ -31,7 +31,7 @@ const getNameLengthHelperText = (value: string, limit: number): string => {
   return `${limit} caractères maximum`;
 };
 
-export const ModalAddFavoriteProductMobile: React.FC<ModalAddFavoriteProductProps> = ({
+export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = ({
   onClose,
   open,
   onSubmit,

@@ -5,8 +5,8 @@ import shallow from 'zustand/shallow';
 import { AddProductToFavorites } from '../AddProductToFavorites';
 import {
   FormAddFavoriteData,
-  ModalAddFavoriteProductMobile,
-} from '../ModalAddFavoriteProduct/ModalAddFavoriteProductMobile';
+  ModalAddFavoriteProduct,
+} from '../ModalAddFavoriteProduct/ModalAddFavoriteProduct';
 import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct/ModalDeleteFavoriteProduct';
 import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
@@ -225,7 +225,7 @@ export const ModalCategoryNomenclatureProduct: React.FC<ModalCategoryNomenclatur
         onDeleteProduct={() => onConfirmRemoveFavorite(currentProduct)}
         productName={currentProduct?.name}
       />
-      <ModalAddFavoriteProductMobile
+      <ModalAddFavoriteProduct
         open={openAddFavoriteModal}
         onClose={onAddFavoriteModalClose}
         onSubmit={onConfirmAddFavorite}

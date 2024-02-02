@@ -6,7 +6,7 @@ import shallow from 'zustand/shallow';
 
 import { Role } from '../FormSelectProduct/utils';
 import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
-import { ModalAddFavoriteProductMobile } from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProductMobile';
+import { ModalAddFavoriteProduct } from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
 import { ModalDeleteFavoriteProduct } from '@/components/autonomous/ModalDeleteFavoriteProduct/ModalDeleteFavoriteProduct';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
@@ -159,7 +159,7 @@ export const FormAddProductToFavorite: React.FC<FormAddProductToFavoriteProps> =
             onClose={() => setIsRemoveFavoriteModalOpen(false)}
             productName={product.name}
           />
-          <ModalAddFavoriteProductMobile
+          <ModalAddFavoriteProduct
             open={isAddFavoriteModalOpen}
             onClose={() => setIsAddFavoriteModalOpen(false)}
             onSubmit={handleConfirmAddFavorite}

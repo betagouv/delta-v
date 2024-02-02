@@ -8,8 +8,8 @@ import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { CategoryProductDesktop } from '@/components/autonomous/CategoryProduct/CategoryProductDesktop';
 import {
   FormAddFavoriteData,
-  ModalAddFavoriteProductMobile,
-} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProductMobile';
+  ModalAddFavoriteProduct,
+} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
 import { ModalDeleteFavoriteProduct } from '@/components/autonomous/ModalDeleteFavoriteProduct/ModalDeleteFavoriteProduct';
 import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
@@ -226,7 +226,7 @@ export const ProductSearchTools = ({
       )}
       {currentFavorite && (
         <>
-          <ModalAddFavoriteProductMobile
+          <ModalAddFavoriteProduct
             open={openAddFavoriteModal}
             onClose={onCloseAddFavoriteModal}
             onSubmit={onConfirmAddFavorite}
