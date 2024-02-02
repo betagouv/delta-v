@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
-import classNames from 'classnames';
-
-import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct';
+import { ModalDeleteFavoriteProduct } from '../ModalDeleteFavoriteProduct/ModalDeleteFavoriteProduct';
 import { useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { FavoriteProducts } from '@/components/business/FavoriteProducts';
 import DownModal from '@/components/common/DownModal';
-import { FavoriteBadge } from '@/components/common/FavoriteBadge';
 import { TitleAgent } from '@/components/common/TitleAgent';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
@@ -35,8 +33,6 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
   }));
 
-  const [isAvailableToEdit, setIsAvailableToEdit] = useState<boolean>(false);
-
   const removeFavoriteMutation = useRemoveFavoriteMutation({});
 
   const onClick = (product: Product) => {
@@ -46,11 +42,6 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
   const onClickDelete = (product: Product) => {
     setCurrentProduct(product);
     setOpenModalDeleteFavorite(true);
-  };
-
-  const onCloseModal = () => {
-    setIsAvailableToEdit(false);
-    onClose();
   };
 
   const onRemove = (product?: Product) => {
@@ -75,49 +66,12 @@ export const ModalFavorites: React.FC<ModalFavoritesProps> = ({
   });
 
   return (
-    <DownModal bgColor="bg-white" open={open} onClose={onCloseModal}>
+    <DownModal bgColor="bg-white" open={open} onClose={onClose}>
       <div className="flex flex-col gap-6 justify-start">
         <TitleAgent title="Mes favoris" textPosition="text-left" />
         <div className="flex flex-row gap-[10px] w-full flex-wrap">
           {flattenFavoriteProducts && flattenFavoriteProducts.length ? (
-            <>
-              {flattenFavoriteProducts.map((favoriteProduct) => (
-                <>
-                  <FavoriteBadge
-                    product={favoriteProduct}
-                    onClick={onClick}
-                    onDeleteClick={onClickDelete}
-                    isAvailableToEdit={isAvailableToEdit}
-                    key={favoriteProduct.id}
-                  />
-                </>
-              ))}
-              {ageRestrictionFavoriteProducts &&
-                ageRestrictionFavoriteProducts.map((favoriteProduct) => (
-                  <>
-                    <FavoriteBadge
-                      product={favoriteProduct}
-                      onClick={onClick}
-                      onDeleteClick={onClickDelete}
-                      isAvailableToEdit={isAvailableToEdit}
-                      key={favoriteProduct.id}
-                      disabled
-                    />
-                  </>
-                ))}
-
-              <div className="w-full text-center mt-5 mb-[14px]">
-                <button
-                  className={classNames(
-                    'underline',
-                    isAvailableToEdit ? 'text-error' : 'text-primary-400',
-                  )}
-                  onClick={() => setIsAvailableToEdit(!isAvailableToEdit)}
-                >
-                  {isAvailableToEdit ? 'Annuler' : 'Modifier'}
-                </button>
-              </div>
-            </>
+            <FavoriteProducts onDeleteClick={onClickDelete} onFavoriteClick={onClick} />
           ) : (
             <div className="flex flex-col items-center justify-center w-full mb-5">
               {ageRestrictionFavoriteProducts && ageRestrictionFavoriteProducts.length > 0 ? (

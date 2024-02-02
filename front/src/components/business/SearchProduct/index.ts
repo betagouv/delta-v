@@ -1,1 +1,1 @@
-export * from './SearchProduct';
+export * from './SearchProductMobile';

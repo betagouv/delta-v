@@ -9,6 +9,7 @@ import { StepsFormProduct } from '../StepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
 import { getSchema } from './schema';
 import { FormSelectProductData, Role, getDefaultValues } from './utils';
+import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Product, ProductDisplayTypes } from '@/model/product';
 
@@ -117,7 +118,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   return allowNotManagedProduct ||
     currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full gap-6">
       {templateRole === 'user' && (
         <div>
           <label
@@ -158,16 +159,29 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         />
       )}
       {isAddAbleToFavorites && (
-        <FormAddProductToFavorite
-          productId={steps[steps.length - 1]?.id}
-          onRemoveProduct={onRemoveProduct}
-          control={control}
-          register={register}
-          errors={errors}
-          defaultCurrency={defaultCurrency}
-          templateRole={templateRole}
-          isAddAble={isAddAble}
-        />
+        <div className="md:grid md:grid-rows-2 h-full">
+          <FormAddProductToFavorite
+            productId={steps[steps.length - 1]?.id}
+            onRemoveFavorite={onRemoveProduct}
+            control={control}
+            register={register}
+            errors={errors}
+            defaultCurrency={defaultCurrency}
+            templateRole={templateRole}
+            isAddAble={isAddAble}
+          />
+          <div className="flex flex-col w-full h-full md:justify-end md:mt-0 mt-10 ">
+            <Typography
+              size="text-2xs"
+              desktopSize="text-sm"
+              color="middle-gray"
+              textPosition="text-center"
+            >
+              Vous souhaitez nous faire parvenir une remarque, une optimisation,
+              <br /> une demande particulière ? <a>Cliquez ici</a>
+            </Typography>
+          </div>
+        </div>
       )}
     </form>
   ) : (

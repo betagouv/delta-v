@@ -33,7 +33,7 @@ export const Breadcrumbs: React.FC<IBreadcrumbsProps> = ({
               })}
               onClick={() => onClickLink && onClickLink(item.id)}
             >
-              <Typography color="middle-gray" size="text-2xs">
+              <Typography color="middle-gray" size="text-2xs" desktopSize="text-sm">
                 {item.name}
               </Typography>
             </div>

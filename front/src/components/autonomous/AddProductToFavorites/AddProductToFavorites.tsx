@@ -9,6 +9,7 @@ import { Breadcrumbs } from '@/components/common/Breadcrumbs';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
+import clsxm from '@/utils/clsxm';
 import { findProductTree } from '@/utils/product.util';
 
 type OnAddProduct = (options: OnAddProductOptions) => void;
@@ -51,8 +52,8 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
 
   return (
     <>
-      <div className="flex flex-col h-full flex-1">
-        <div className="px-4 py-5">
+      <div className="flex flex-col h-full">
+        <div className={clsxm({ 'px-4 pt-5 md:px-10 md:pt-10 md:pb-5': true })}>
           <div className="flex flex-row gap-4">
             <Breadcrumbs
               categoryProducts={productTree
@@ -63,14 +64,20 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
               onClickLink={onSelectProduct}
             />
           </div>
-          <div className="flex flex-col gap-2 pt-5 pb-2">
-            <Typography color="black" size="text-xl" weight="bold" lineHeight="leading-none">
+          <div className="flex flex-col gap-2 pt-5 md:pb-2 pb-[30px]">
+            <Typography
+              color="black"
+              size="text-xl"
+              desktopSize="md:text-[26px]"
+              weight="bold"
+              lineHeight="leading-none"
+            >
               {currentProduct?.name}
             </Typography>
             {currentProduct?.nomenclatures && (
               <div className="flex flex-row gap-2">
                 {currentProduct.nomenclatures.map((nomenclature) => (
-                  <Typography color="primary" size="text-2xs">
+                  <Typography color="primary" size="text-2xs" desktopSize="text-sm">
                     {nomenclature}
                   </Typography>
                 ))}
@@ -78,7 +85,11 @@ export const AddProductToFavorites: React.FC<AddProductToFavoritesProps> = ({
             )}
           </div>
         </div>
-        <div className="flex flex-1 flex-col gap-6 bg-secondary-bg px-4 py-5">
+        <div
+          className={clsxm({
+            'flex flex-col gap-6 bg-secondary-bg px-4 py-5 md:p-10 h-full md:min-h-[420px]': true,
+          })}
+        >
           {selectedProduct && (
             <FormSelectProduct
               currentProduct={selectedProduct}

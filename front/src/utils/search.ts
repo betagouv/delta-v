@@ -1,6 +1,7 @@
 import Fuse from 'fuse.js';
 
 import { AGENT_PRODUCT_SEARCH_RESULTS_LIMIT } from '@/config/productSearch';
+import { Product } from '@/model/product';
 
 interface AdvancedSearchOptions<T> {
   searchValue: string;
@@ -46,4 +47,35 @@ export const advancedSearch = <T>({
       rankedPosition: rankedItem.matches?.[0]?.indices[0] ?? [0, 0],
     }))
     .slice(0, limit);
+};
+
+interface GetSearchProductResultsProps {
+  findProduct: (id: string) => Product | undefined;
+  searchFunction: (searchValue: string) => SearchType<Product>[];
+  selectedId?: string;
+  search?: string;
+}
+
+export const getSearchProductResults = ({
+  findProduct,
+  searchFunction,
+  selectedId,
+  search,
+}: GetSearchProductResultsProps): Product[] => {
+  if (!selectedId) {
+    return searchFunction(search ?? '');
+  }
+
+  const reducedProductsThatMatch = searchFunction(search ?? '');
+  const searchProductsWithoutSelectedProduct = reducedProductsThatMatch.filter(
+    (product) => product.id !== selectedId,
+  );
+
+  const productOnTop = findProduct(selectedId);
+
+  if (!productOnTop) {
+    return searchProductsWithoutSelectedProduct;
+  }
+
+  return [productOnTop, ...searchProductsWithoutSelectedProduct];
 };

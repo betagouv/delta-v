@@ -6,8 +6,8 @@ import shallow from 'zustand/shallow';
 import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import {
   FormAddFavoriteData,
-  ModalAddFavoriteProduct,
-} from '@/components/autonomous/ModalAddFavoriteProduct';
+  ModalAddFavoriteProductMobile,
+} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProductMobile';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
 import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -131,7 +131,7 @@ const SearchProduct = () => {
                 key={product.id}
                 product={product}
                 onClick={onClickProduct}
-                onClickFavorite={onClickFavorite}
+                onAddFavorite={onClickFavorite}
                 searchValue={search as string}
               />
             ))}
@@ -144,7 +144,7 @@ const SearchProduct = () => {
           defaultProduct={selectedProduct}
         />
 
-        <ModalAddFavoriteProduct
+        <ModalAddFavoriteProductMobile
           open={openModalAddFavorite}
           onClose={onCloseModalAddFavorite}
           onSubmit={onSubmit}
