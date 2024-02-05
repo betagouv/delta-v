@@ -1,17 +1,11 @@
 import IORedis, { Redis } from 'ioredis';
-
-import { buildConfig, IDatabaseConfig } from './databaseConfig';
+import { config } from './config';
 
 let redisConnection: Redis;
-let config: IDatabaseConfig;
 
 export const getRedisConnection = (): Redis => {
-  config = config || buildConfig();
-  if (!config.DB_CACHE_REDIS_URL) {
-    throw new Error('Missing DB_CACHE_REDIS_URL - adn-db getRedisConnection');
-  }
   if (!redisConnection) {
-    redisConnection = new IORedis(config.DB_CACHE_REDIS_URL);
+    redisConnection = new IORedis(config.REDIS_URL);
   }
   return redisConnection;
 };
