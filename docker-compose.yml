@@ -44,7 +44,7 @@ x-redis-common-envs: &redis-common-envs
 
 services:
   backend-api: &backend_default
-    image: node:18
+    image: node:20-bookworm
     restart: unless-stopped
     volumes:
       - ./back/:/usr/app:delegated
