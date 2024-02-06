@@ -14,13 +14,15 @@ import { useStore } from '@/stores/store';
 import { countriesAlternatives, disabledCountries } from '@/utils/const';
 import { memoizedCountriesOptions } from '@/utils/country.util';
 
-interface ModalSelectCountryProps {}
+interface ModalSelectCountryProps {
+  isOpen?: boolean;
+}
 
 interface FormCountryData {
   country?: Alpha2Code;
 }
 
-export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = () => {
+export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({ isOpen = false }) => {
   const {
     setProductsNomenclatureToDisplay,
     setCountryForProductsNomenclature,
@@ -35,7 +37,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = () => {
   );
 
   const countries = getNames('fr', { select: 'official' });
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(isOpen);
   const [selectedCountry, setSelectedCountry] = React.useState<string | undefined>(
     `${countries[countryForProductsNomenclature]} ${getEmojiFlag(
       countryForProductsNomenclature,
@@ -52,15 +54,17 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = () => {
 
   register('country', {
     onChange: (e: any) => {
-      const country = `${countries[e.target.value]} ${getEmojiFlag(e.target.value).toString()}`;
+      const countryCode = e.target.value;
+      const country = `${countries[countryCode]} ${getEmojiFlag(countryCode).toString()}`;
       setSelectedCountry(country);
-      setCountryForProductsNomenclature(e.target.value);
-      setProductsNomenclatureToDisplay(e.target.value);
+      setCountryForProductsNomenclature(countryCode);
+      setProductsNomenclatureToDisplay(countryCode);
       setOpen(false);
     },
   });
 
   const countriesOptions = memoizedCountriesOptions(countriesAlternatives, disabledCountries, true);
+  console.log(countriesOptions);
 
   return (
     <>
@@ -84,7 +88,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = () => {
             register={register('country')}
             control={control}
             fullWidth={true}
-            placeholder="Pays"
+            placeholder={selectedCountry ?? 'Pays'}
             trailingIcon="chevron-down"
             withBorder
             withListBoxEffect

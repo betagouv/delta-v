@@ -164,7 +164,7 @@ const Nomenclature = () => {
           </button>
         </div>
         <div className="flex flex-row justify-end w-full mt-[30px] border-t pt-5">
-          <ModalSelectCountry />
+          <ModalSelectCountry isOpen={true} />
         </div>
 
         <ModalSearchNomenclatureProduct

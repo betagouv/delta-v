@@ -7,7 +7,6 @@ import * as yup from 'yup';
 
 import { useResetPasswordMutation } from '@/api/hooks/useAPIAuth';
 import { ApiError } from '@/components/common/ApiError';
-import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
@@ -59,13 +58,10 @@ const ResetPasswordPage = () => {
 
   const resetPasswordMutation = useResetPasswordMutation({
     onSuccess: () => {
-      setTimeout(() => {
-        router.push(RoutingAuthentication.login);
-      }, 1000);
+      router.push(RoutingAuthentication.resetPasswordSuccess);
     },
   });
   const apiError = resetPasswordMutation.error ?? undefined;
-  const { data: apiSuccess } = resetPasswordMutation;
 
   const onSubmit = async (data: FormForgetPasswordData) => {
     if (!apiError && isValid && data.password === data.confirmPassword) {
@@ -125,10 +121,7 @@ const ResetPasswordPage = () => {
             confirmPassword={confirmPasswordFormFieldData}
             submitCount={submitClickCount}
           />
-          <div className="pt-10 pb-2 flex">
-            {apiError && <ApiError apiError={apiError} />}
-            {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
-          </div>
+          <div className="pt-10 pb-2 flex">{apiError && <ApiError apiError={apiError} />}</div>
           <div className="flex flex-col gap-4 w-40 self-center pb-2">
             <Button fullWidth={true} type="submit" size="sm" onClick={handleSubmitClick}>
               Valider

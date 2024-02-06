@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -18,6 +18,7 @@ import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
+import clsxm from '@/utils/clsxm';
 import { RoutingAgent } from '@/utils/const';
 
 export interface FormContactUsData {
@@ -27,13 +28,14 @@ export interface FormContactUsData {
 const ContactPage = () => {
   const router = useRouter();
   const schema = yup.object({
-    comment: yup.string().required('Le message est requis').min(10, 'Minimum 10 caractères'),
+    comment: yup.string().required('Minimum 10 caractères').min(10, 'Minimum 10 caractères'),
   });
   const {
     handleSubmit,
     register,
     reset,
-    formState: { errors, isValid },
+    watch,
+    formState: { errors, isValid, submitCount },
   } = useForm<FormContactUsData>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
@@ -43,6 +45,23 @@ const ContactPage = () => {
   });
   const [openValidateFeedbackInfoMobile, setOpenValidateFeedbackInfoMobile] = useState(false);
   const [openValidateFeedbackInfoDesktop, setOpenValidateFeedbackInfoDesktop] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (submitCount === 0) {
+      return;
+    }
+    if (submitCount > 0) {
+      setIsError(!isValid);
+    }
+  }, [submitCount]);
+
+  useEffect(() => {
+    if (isError) {
+      setIsError(false);
+    }
+  }, [watch('comment')]);
+
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
@@ -100,8 +119,8 @@ const ContactPage = () => {
               textPosition="text-left"
             />
             <Typography size="text-xs" color="black">
-              Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une demande
-              particulière ?
+              Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
+              une optimisation, une demande particulière ?
             </Typography>
             <div className="mt-4">
               <InputGroup
@@ -109,17 +128,19 @@ const ContactPage = () => {
                 placeholder="Saisissez votre message..."
                 name="comment"
                 register={register('comment')}
-                error={!isValid ? errors?.comment?.message : undefined}
+                error={isError ? errors?.comment?.message : undefined}
+                additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
               />
             </div>
           </div>
           <div className="w-[118px] self-center md:self-start mb-4">
             <button
-              className={`py-3 w-full rounded-full  text-white ${
-                isValid ? 'bg-primary-600' : 'bg-disabled-bg'
-              } text-xs`}
+              className={clsxm({
+                'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer': true,
+                'bg-disabled-bg cursor-not-allowed': isError,
+              })}
               type="submit"
-              disabled={!isValid}
+              disabled={isError}
             >
               Envoyer
             </button>

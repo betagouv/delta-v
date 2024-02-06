@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 
 import { UseActualityParams, useActualities } from '@/api/hooks/useAPIActualities';
@@ -68,27 +67,22 @@ const ActualitiesPage = () => {
         withTitle
         titleHeader="Actualités"
       >
-        <div className={classNames({ 'flex flex-col ': true, 'px-4 pb-4': isMobile })}>
-          <div className="flex flex-col gap-5 md:gap-[30px]">
-            <div className="flex flex-col gap-2.5">
-              <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-                {actualities &&
-                  actualities?.map((actuality, index) => (
-                    <ActualityCard
-                      key={actuality.id}
-                      {...actuality}
-                      creationDate={actuality.creationDate}
-                      content={actuality.content}
-                      tags={actuality.tags}
-                      newLimit={apiActualities && apiActualities.length ? newLimit : undefined}
-                      isLast={index === actualities.length - 1}
-                    />
-                  ))}
-              </div>
-              {isLoading && <div>Chargement...</div>}
-            </div>
-          </div>
+        <div className="flex flex-col md:flex-row md:flex-wrap gap-[30px] max-w-7xl px-4 pb-4 md:px-0 md:pb-0">
+          {actualities &&
+            actualities?.map((actuality, index) => (
+              <ActualityCard
+                key={actuality.id}
+                {...actuality}
+                creationDate={actuality.creationDate}
+                content={actuality.content}
+                tags={actuality.tags}
+                newLimit={apiActualities && apiActualities.length ? newLimit : undefined}
+                isLast={index === actualities.length - 1}
+                width={324}
+              />
+            ))}
         </div>
+        {isLoading && <div>Chargement...</div>}
       </MainAgent>
     </AgentRoute>
   );

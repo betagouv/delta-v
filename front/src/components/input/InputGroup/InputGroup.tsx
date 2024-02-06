@@ -57,6 +57,7 @@ export interface IInputGroupProps {
   register?: UseFormRegisterReturn;
   rows?: number;
   specificClassName?: string;
+  additionalClassName?: string;
   fullWidth?: boolean;
   bigSize?: boolean;
   trailingIcon?: string;
@@ -89,6 +90,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   helperText,
   rows,
   specificClassName,
+  additionalClassName,
   fullWidth,
   bigSize,
   trailingIcon,
@@ -183,6 +185,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               error={error}
               rows={rows}
               specificClassName={specificClassName}
+              additionalClassName={additionalClassName}
               register={register}
             />
           )}

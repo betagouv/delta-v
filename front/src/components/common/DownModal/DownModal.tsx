@@ -39,7 +39,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
         as="div"
         className={classNames({
           'fixed bottom-0 z-40 w-full justify-center': true,
-          'h-[calc(100vh-50px)]': fixedHeight,
+          'h-[calc(90vh-50px)]': fixedHeight,
           'h-auto': !fixedHeight,
         })}
         onClose={handleOnClose}
