@@ -3,6 +3,7 @@ import request from 'supertest';
 import { compare } from 'bcrypt';
 
 import { faker } from '@faker-js/faker';
+import { Redis } from 'ioredis';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import buildTestApp from '../../../helpers/testApp.helper';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
@@ -13,23 +14,29 @@ import { AppDataSource } from '../../../../src/loader/database';
 import { changePassword } from '../../../../src/api/authentication/changePassword';
 import { passwordRegex } from '../../../../src/api/authentication/common/const/regex';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
+import { buildTestRedis } from '../../../helpers/testRedis.helper';
 
 const testDb = testDbManager();
+const redisHelper = buildTestRedis();
 
 describe('change password route', () => {
   let testApp: Express;
+  let redisConnection: Redis;
 
   beforeAll(async () => {
     await testDb.connect();
+    redisConnection = redisHelper.connect();
     testApp = buildTestApp(changePassword);
   });
 
   beforeEach(async () => {
     await testDb.clear();
+    await redisHelper.clear();
   });
 
   afterAll(async () => {
     await testDb.disconnect();
+    await redisHelper.disconnect();
   });
 
   test('should return success with code 200', async () => {
@@ -42,7 +49,11 @@ describe('change password route', () => {
       .send({ oldPassword, newPassword })
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
+    expect(value).toBe('0');
     expect(body.code).toEqual(ResponseCodes.USER_PASSWORD_UPDATED);
 
     const storedUser = await AppDataSource.manager
@@ -76,10 +87,14 @@ describe('change password route', () => {
     expect(status).toBe(HttpStatuses.UNAUTHORIZED);
     expect(body.code).toEqual(ErrorCodes.USER_BLOCKED_UNAUTHORIZED);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const storedUser = await AppDataSource.manager
       .withRepository(UserRepository)
       .getOneById(user.id);
 
+    expect(value).toBe('1');
     expect(storedUser).toBeDefined();
     if (storedUser) {
       const isPasswordGoodAndUnchanged = await compare(oldPassword, storedUser.password);
@@ -107,10 +122,14 @@ describe('change password route', () => {
     expect(status).toBe(HttpStatuses.UNAUTHORIZED);
     expect(body.code).toEqual(ErrorCodes.USER_NOT_ENABLED_UNAUTHORIZED);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const storedUser = await AppDataSource.manager
       .withRepository(UserRepository)
       .getOneById(user.id);
 
+    expect(value).toBe('1');
     expect(storedUser).toBeDefined();
     if (storedUser) {
       const isPasswordGoodAndUnchanged = await compare(oldPassword, storedUser.password);

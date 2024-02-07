@@ -1,6 +1,7 @@
 import { Express } from 'express';
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
+import { Redis } from 'ioredis';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import buildTestApp from '../../../helpers/testApp.helper';
@@ -8,25 +9,31 @@ import { testDbManager } from '../../../helpers/testDb.helper';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
 import { putSearchHistory } from '../../../../src/api/product/putSearchHistory';
 import { searchProductHistoryEntityFactory } from '../../../helpers/factories/searchProductHistory.factory';
+import { buildTestRedis } from '../../../helpers/testRedis.helper';
 
 const testDb = testDbManager();
+const redisHelper = buildTestRedis();
 
 const searchValue = faker.commerce.product();
 
 describe('put search product history integration', () => {
   let testApp: Express;
+  let redisConnection: Redis;
 
   beforeAll(async () => {
     await testDb.connect();
+    redisConnection = redisHelper.connect();
     testApp = buildTestApp(putSearchHistory);
   });
 
   beforeEach(async () => {
     await testDb.clear();
+    await redisHelper.clear();
   });
 
   afterAll(async () => {
     await testDb.disconnect();
+    await redisHelper.disconnect();
   });
 
   test('should put new product history with success', async () => {
@@ -42,8 +49,12 @@ describe('put search product history integration', () => {
       })
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const newSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);
 
+    expect(value).toBe('0');
     expect(newSearchProductHistory).toBeDefined();
 
     expect(status).toBe(HttpStatuses.OK);
@@ -65,8 +76,12 @@ describe('put search product history integration', () => {
       .send({ productId: product.id, searchValue })
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const updatedSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);
 
+    expect(value).toBe('0');
     expect(initialSearchProductHistory).toBeDefined();
     expect(updatedSearchProductHistory).toBeDefined();
     expect(updatedSearchProductHistory?.userId).toEqual(initialSearchProductHistory.userId);

@@ -1,6 +1,7 @@
 import { Express } from 'express';
 import request from 'supertest';
 
+import { Redis } from 'ioredis';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import buildTestApp from '../../../helpers/testApp.helper';
 import api from '../../../../src/api';
@@ -12,23 +13,29 @@ import {
   buildRefreshTokenObject,
 } from '../../../../src/core/jwt/verifyToken';
 import { sendEmailResetPasswordLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
+import { buildTestRedis } from '../../../helpers/testRedis.helper';
 
 const testDb = testDbManager();
+const redisHelper = buildTestRedis();
 
 describe('login route', () => {
+  let redisConnection: Redis;
   let testApp: Express;
 
   beforeAll(async () => {
     await testDb.connect();
+    redisConnection = redisHelper.connect();
     testApp = buildTestApp(api);
   });
 
   beforeEach(async () => {
     await testDb.clear();
+    await redisHelper.clear();
   });
 
   afterAll(async () => {
     await testDb.disconnect();
+    await redisHelper.disconnect();
   });
 
   test('should return success with code 200', async () => {
@@ -39,6 +46,9 @@ describe('login route', () => {
       .post('/api/login')
       .send({ email: user.email, password: clearPassword });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
     expect(body.accessToken).toBeDefined();
     expect(body.refreshToken).toBeDefined();
@@ -48,6 +58,7 @@ describe('login route', () => {
 
     const authObjectRefresh = await buildRefreshTokenObject(body.refreshToken);
     expect(authObjectRefresh).toMatchObject({ userId: user.id, email: user.email });
+    expect(value).toBe('0');
   });
 
   test('should return error with code 404 - user not found', async () => {
@@ -106,7 +117,11 @@ describe('login route', () => {
       .post('/api/login')
       .send({ email: `bad.${user.email}`, password: clearPassword });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(body.code).toEqual(ErrorCodes.BAD_CREDENTIALS);
+    expect(value).toBe('1');
     expect(status).toBe(HttpStatuses.UNAUTHORIZED);
   });
 
@@ -120,11 +135,15 @@ describe('login route', () => {
         .send({ email: user.email, password: `bad_${clearPassword}` });
     }
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const { status, body } = await request(testApp)
       .post('/api/login')
       .send({ email: user.email, password: `bad_${clearPassword}` });
 
     expect(body.code).toEqual(ErrorCodes.TOO_MANY_REQUESTS);
+    expect(value).toBe('11');
     expect(status).toBe(HttpStatuses.TOO_MANY_REQUESTS);
   });
 });
