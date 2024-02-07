@@ -15,7 +15,7 @@ export interface ProductsAppStateSlice {
       flattenProducts: Product[];
       flattenNomenclatureProducts: Product[];
       flattenAllProducts: Product[];
-      countryForProductsNomenclature: Alpha2Code;
+      countryForProductsNomenclature: Alpha2Code | undefined;
     };
   };
 }
@@ -28,7 +28,7 @@ export const PRODUCT_EMPTY_STATE = {
   flattenNomenclatureProducts: [],
   flattenProducts: [],
   flattenAllProducts: [],
-  countryForProductsNomenclature: 'FR' as Alpha2Code,
+  countryForProductsNomenclature: undefined,
 };
 
 export const createProductsAppStateSlice: StoreSlice<ProductsAppStateSlice> = () => ({

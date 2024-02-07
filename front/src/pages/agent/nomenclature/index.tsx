@@ -46,6 +46,9 @@ const Nomenclature = () => {
   }));
 
   useEffect(() => {
+    if (!countryForProductsNomenclature) {
+      return;
+    }
     setProductsNomenclatureToDisplayAgent(countryForProductsNomenclature);
   }, [countryForProductsNomenclature]);
 

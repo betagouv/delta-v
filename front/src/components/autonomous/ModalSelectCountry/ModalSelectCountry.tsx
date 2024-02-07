@@ -39,9 +39,11 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({ isOpen =
   const countries = getNames('fr', { select: 'official' });
   const [open, setOpen] = React.useState(isOpen);
   const [selectedCountry, setSelectedCountry] = React.useState<string | undefined>(
-    `${countries[countryForProductsNomenclature]} ${getEmojiFlag(
-      countryForProductsNomenclature,
-    ).toString()}`,
+    countryForProductsNomenclature
+      ? `${countries[countryForProductsNomenclature]} ${getEmojiFlag(
+          countryForProductsNomenclature,
+        ).toString()}`
+      : 'Pays',
   );
 
   const { register, control } = useForm<FormCountryData>({
@@ -49,6 +51,9 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({ isOpen =
   });
 
   useEffect(() => {
+    if (!countryForProductsNomenclature) {
+      return;
+    }
     setProductsNomenclatureToDisplay(countryForProductsNomenclature);
   }, []);
 
@@ -64,7 +69,6 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({ isOpen =
   });
 
   const countriesOptions = memoizedCountriesOptions(countriesAlternatives, disabledCountries, true);
-  console.log(countriesOptions);
 
   return (
     <>
