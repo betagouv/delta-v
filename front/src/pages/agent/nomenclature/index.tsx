@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
@@ -31,11 +31,23 @@ const Nomenclature = () => {
   const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
     undefined,
   );
-  const { nomenclatureProducts, setFavoriteProducts, favoriteProducts } = useStore((state) => ({
+  const {
+    nomenclatureProducts,
+    setFavoriteProducts,
+    favoriteProducts,
+    setProductsNomenclatureToDisplayAgent,
+    countryForProductsNomenclature,
+  } = useStore((state) => ({
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
     favoriteProducts: state.products.appState.favoriteProducts,
+    setProductsNomenclatureToDisplayAgent: state.setProductsNomenclatureToDisplayAgent,
+    countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
   }));
+
+  useEffect(() => {
+    setProductsNomenclatureToDisplayAgent(countryForProductsNomenclature);
+  }, [countryForProductsNomenclature]);
 
   const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 

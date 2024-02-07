@@ -21,6 +21,7 @@ export interface ProductsUseCaseSlice {
   setCountryForProductsNomenclature: (country: Alpha2Code) => void;
   setProductsDeclarationToDisplay: () => void;
   setProductsDeclarationToDisplayAgent: () => void;
+  setProductsNomenclatureToDisplayAgent: (country: Alpha2Code) => void;
   setFavoriteProducts: (favorites: Product[]) => void;
   addFavoriteProducts: (favorite: Product) => void;
   removeFavoriteProducts: (id: string) => void;
@@ -153,6 +154,18 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
         contactDetails.age,
         meansOfTransportAndCountry.country,
       );
+      newState.products.appState.flattenProducts = getFlattenProducts(
+        newState.products.appState.products,
+      );
+      return newState;
+    });
+  },
+  setProductsNomenclatureToDisplayAgent: (country: Alpha2Code) => {
+    const { allProducts } = get().products.appState;
+
+    set((state: any) => {
+      const newState = { ...state };
+      newState.products.appState.products = setupProductsToDisplay(allProducts, 18, country);
       newState.products.appState.flattenProducts = getFlattenProducts(
         newState.products.appState.products,
       );
