@@ -15,6 +15,7 @@ export interface IDownModalProps {
   withoutMargin?: boolean;
   defaultHeight?: boolean;
   titlePosition?: 'text-left' | 'text-center' | 'text-right';
+  forceOpen?: boolean;
 }
 
 export const DownModal: React.FC<IDownModalProps> = ({
@@ -26,6 +27,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
   withoutMargin = false,
   defaultHeight: fixedHeight = false,
   titlePosition = 'text-center',
+  forceOpen = false,
 }: IDownModalProps) => {
   const handleOnClose = (): void => {
     if (onClose) {
@@ -42,7 +44,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
           'h-[calc(90vh-50px)]': fixedHeight,
           'h-auto': !fixedHeight,
         })}
-        onClose={handleOnClose}
+        onClose={forceOpen ? () => {} : handleOnClose}
       >
         <Transition.Child
           as={Fragment}
@@ -80,9 +82,11 @@ export const DownModal: React.FC<IDownModalProps> = ({
                 withoutMargin ? '' : 'px-4 py-5'
               } sm:max-w-lg sm:align-middle lg:rounded-b-3xl text-left shadow-xl transition-all`}
             >
-              <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
-                <Icon name="clear" onClick={onClose} />
-              </div>
+              {!forceOpen && (
+                <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
+                  <Icon name="clear" onClick={onClose} />
+                </div>
+              )}
               {title && (
                 <div>
                   <Dialog.Title>

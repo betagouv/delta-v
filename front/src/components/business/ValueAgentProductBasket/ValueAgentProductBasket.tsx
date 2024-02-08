@@ -92,17 +92,19 @@ export const ValueAgentProductBasket = ({
           </div>
         )}
         {detailsButton && !editable && (
-          <span className="flex justify-center">
+          <div className="w-24 self-center">
             <Button
               color="tertiary"
               variant="outlined"
               size="2xs"
               onClick={() => setOpen(!open)}
               icon={open ? 'chevron-thin-up' : 'chevron-thin-down'}
+              fullWidth
+              iconClassname="w-2.5"
             >
               Voir calcul
             </Button>
-          </span>
+          </div>
         )}
         {editable && (
           <span className="flex justify-center">

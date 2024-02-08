@@ -16,13 +16,17 @@ import { memoizedCountriesOptions } from '@/utils/country.util';
 
 interface ModalSelectCountryProps {
   isOpen?: boolean;
+  forceOpen?: boolean;
 }
 
 interface FormCountryData {
   country?: Alpha2Code;
 }
 
-export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({ isOpen = false }) => {
+export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
+  isOpen = false,
+  forceOpen = false,
+}) => {
   const {
     setProductsNomenclatureToDisplay,
     setCountryForProductsNomenclature,
@@ -79,7 +83,12 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({ isOpen =
         <Icon name="chevron-down" size="lg" />
       </div>
 
-      <DownModal bgColor="bg-white" open={open} onClose={() => setOpen(false)}>
+      <DownModal
+        bgColor="bg-white"
+        open={open}
+        onClose={() => setOpen(false)}
+        forceOpen={forceOpen}
+      >
         <motion.div className="mx-auto mb-2.5 mt-[30px] w-[250px] gap-5 flex flex-col h-auto">
           <Typography color="black" size="text-xs" weight="bold" textPosition="text-center">
             Sélectionner le pays de provenance :

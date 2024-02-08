@@ -1,7 +1,5 @@
 import React from 'react';
 
-import cn from 'classnames';
-
 import { Icon } from '../Icon';
 import {
   ButtonColor,
@@ -12,6 +10,7 @@ import {
   IconPosition,
 } from './style/button.style';
 import { getIconStyle } from './style/icon.style';
+import clsxm from '@/utils/clsxm';
 
 export interface IButtonProps {
   children?: any;
@@ -33,6 +32,7 @@ export interface IButtonProps {
   mobileVariant?: 'icon' | 'fullWidth';
   type?: 'button' | 'submit';
   external?: boolean;
+  iconClassname?: string;
 }
 
 export const Button: React.FC<IButtonProps> = ({
@@ -49,6 +49,7 @@ export const Button: React.FC<IButtonProps> = ({
   loading = false,
   type = 'button',
   children,
+  iconClassname,
 }: IButtonProps) => {
   const buttonDisabled = disabled || loading;
 
@@ -73,16 +74,20 @@ export const Button: React.FC<IButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={buttonDisabled}
-      className={cn({ 'min-w-[120px]': size !== '2xs', ...customButtonClassName, ...className })}
+      className={clsxm({
+        'min-w-[120px]': size !== '2xs',
+        ...customButtonClassName,
+        ...className,
+      })}
     >
       {children && <span>{children}</span>}
       {icon && !loading && (
-        <div className={cn(customIconClassName)}>
+        <div className={clsxm(customIconClassName, iconClassname)}>
           <Icon name={icon} />
         </div>
       )}
       {loading && (
-        <div className={cn(customIconClassName)}>
+        <div className={clsxm(customIconClassName)}>
           <Icon name="spinner1" />
         </div>
       )}

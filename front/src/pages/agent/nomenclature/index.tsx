@@ -17,6 +17,7 @@ import { Meta } from '@/layout/Meta';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
+import clsxm from '@/utils/clsxm';
 import { findProduct, haveAgeRestriction } from '@/utils/product.util';
 
 export interface FormDeclarationData {
@@ -168,7 +169,10 @@ const Nomenclature = () => {
           <button
             onClick={onFilterByCategoryClick}
             type="button"
-            className="border gap-3 bg-white border-gray-300 rounded-full flex-1 flex justify-center items-center"
+            className={clsxm({
+              'border gap-3 bg-white border-gray-300 rounded-full flex-1 flex justify-center items-center cursor-pointer':
+                true,
+            })}
           >
             <div className="flex flex-row items-center gap-3">
               <Typography color="black" weight="bold" size="text-xs">
@@ -179,7 +183,7 @@ const Nomenclature = () => {
           </button>
         </div>
         <div className="flex flex-row justify-end w-full mt-[30px] border-t pt-5">
-          <ModalSelectCountry isOpen={true} />
+          <ModalSelectCountry isOpen={true} forceOpen={!countryForProductsNomenclature} />
         </div>
 
         <ModalSearchNomenclatureProduct
