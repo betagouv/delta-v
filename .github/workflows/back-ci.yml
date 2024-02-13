@@ -20,15 +20,14 @@ on:
 jobs:
   test-back:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: back
     services:
       redis:
         image: redis
         ports:
           - 6379:6379
-        options: --entrypoint redis-server
-    defaults:
-      run:
-        working-directory: back
     env:
       PORT: 8080
       DB_HOST: localhost
