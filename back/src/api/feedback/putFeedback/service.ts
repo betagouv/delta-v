@@ -5,6 +5,7 @@ import { config } from '../../../loader/config';
 import { FeedbackRepositoryInterface } from '../../../repositories/feedback.repository';
 import { buildPutFeedbackEmailRenderer } from './emailRenderer';
 import { IS3Service } from './services/s3.service';
+import { Size, resizePicture } from './services/resizePicture.service';
 
 interface FeedbackOptions {
   feedbackId: string;
@@ -27,7 +28,9 @@ const getPhotosUrl = async (
   }
   const fileName = `${pictureId}-${file.originalname.split('.').reverse()[0]}`;
 
-  const photoUrl = await s3Service.upload({ buffer: file.buffer, fileName });
+  const resizedBuffer = await resizePicture(Size.BIG, file.buffer);
+
+  const photoUrl = await s3Service.upload({ buffer: resizedBuffer, fileName });
   return photoUrl.Location;
 };
 

@@ -1,6 +1,5 @@
 import { S3, Endpoint } from 'aws-sdk';
 import { config } from '../../../../loader/config';
-import { Size, resizePicture } from './resizePicture.service';
 
 export interface IUploadOptions {
   fileName: string;
@@ -32,9 +31,8 @@ export class S3Service implements IS3Service {
     this.bucket = config.bucketName;
   }
   public async upload({ fileName, buffer }: IUploadOptions): Promise<S3.ManagedUpload.SendData> {
-    const resizedBuffer = await resizePicture(Size.BIG, buffer);
     const bucket = this.bucket;
-    const params = { Bucket: bucket, Key: fileName, Body: resizedBuffer };
+    const params = { Bucket: bucket, Key: fileName, Body: buffer };
     const upload = await this.s3.upload(params).promise();
     return upload;
   }
