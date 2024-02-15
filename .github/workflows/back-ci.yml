@@ -66,6 +66,7 @@ jobs:
           postgresql password: pass
       - run: "yarn install --ignore-scripts"
       - run: "npm rebuild bcrypt --build-from-source"
+      - run: "npm rebuild sharp --build-from-source"
       - run: yarn migration:run
       - run: yarn lint
       - run: yarn test
