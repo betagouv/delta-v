@@ -26,7 +26,6 @@ export type NomenclatureCardProps = {
 
 export const renderMatchedWithSearch = (stringToChange: string, search: string): any => {
   if (!stringToChange.includes(search.toLocaleLowerCase())) {
-    // return <span className="text-xs text-black">{product.rankedValue}</span>;
     return (
       <Typography color="black" size="text-base" desktopSize="text-xs">
         {stringToChange}

@@ -9,13 +9,7 @@ interface CategoryFilterButtonProps {
 }
 
 export const SearchProductCategoryFilter = ({ onClick, open }: CategoryFilterButtonProps) => {
-  // const [isOpen, setIsOpen] = useState<boolean>(open ?? false);
-
   const handleOnClick = () => {
-    // if (onClick) {
-    //   setIsOpen(!isOpen);
-    //   onClick(isOpen);
-    // }
     if (onClick) {
       onClick();
     }
