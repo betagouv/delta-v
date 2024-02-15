@@ -3,7 +3,6 @@ import request from 'supertest';
 import { compare } from 'bcrypt';
 
 import { faker } from '@faker-js/faker';
-import { Redis } from 'ioredis';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import buildTestApp from '../../../helpers/testApp.helper';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
@@ -14,29 +13,24 @@ import { AppDataSource } from '../../../../src/loader/database';
 import { changePassword } from '../../../../src/api/authentication/changePassword';
 import { passwordRegex } from '../../../../src/api/authentication/common/const/regex';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
-import { buildTestRedis } from '../../../helpers/testRedis.helper';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
-const redisHelper = buildTestRedis();
 
 describe('change password route', () => {
   let testApp: Express;
-  let redisConnection: Redis;
 
   beforeAll(async () => {
     await testDb.connect();
-    redisConnection = redisHelper.connect();
     testApp = buildTestApp(changePassword);
   });
 
   beforeEach(async () => {
     await testDb.clear();
-    await redisHelper.clear();
   });
 
   afterAll(async () => {
     await testDb.disconnect();
-    await redisHelper.disconnect();
   });
 
   test('should return success with code 200', async () => {

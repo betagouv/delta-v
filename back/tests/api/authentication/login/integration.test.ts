@@ -1,7 +1,6 @@
 import { Express } from 'express';
 import request from 'supertest';
 
-import { Redis } from 'ioredis';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import buildTestApp from '../../../helpers/testApp.helper';
 import api from '../../../../src/api';
@@ -13,29 +12,24 @@ import {
   buildRefreshTokenObject,
 } from '../../../../src/core/jwt/verifyToken';
 import { sendEmailResetPasswordLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
-import { buildTestRedis } from '../../../helpers/testRedis.helper';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
-const redisHelper = buildTestRedis();
 
 describe('login route', () => {
-  let redisConnection: Redis;
   let testApp: Express;
 
   beforeAll(async () => {
     await testDb.connect();
-    redisConnection = redisHelper.connect();
     testApp = buildTestApp(api);
   });
 
   beforeEach(async () => {
     await testDb.clear();
-    await redisHelper.clear();
   });
 
   afterAll(async () => {
     await testDb.disconnect();
-    await redisHelper.disconnect();
   });
 
   test('should return success with code 200', async () => {

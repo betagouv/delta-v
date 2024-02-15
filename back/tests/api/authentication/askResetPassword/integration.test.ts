@@ -1,7 +1,6 @@
 import { Express } from 'express';
 import request from 'supertest';
 
-import { Redis } from 'ioredis';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import buildTestApp from '../../../helpers/testApp.helper';
 import api from '../../../../src/api';
@@ -11,31 +10,26 @@ import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.en
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
 import { sendEmailResetPasswordLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
-import { buildTestRedis } from '../../../helpers/testRedis.helper';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
-const redisHelper = buildTestRedis();
 
 describe('askResetPassword route', () => {
   let testApp: Express;
-  let redisConnection: Redis;
 
   beforeAll(async () => {
     await testDb.connect();
-    redisConnection = redisHelper.connect();
     testApp = buildTestApp(api);
   });
 
   beforeEach(async () => {
     await testDb.clear();
-    await redisHelper.clear();
     clearEventEmitterMock();
     sendEmailResetPasswordLimiter.resetKey('::ffff:127.0.0.1');
   });
 
   afterAll(async () => {
     await testDb.disconnect();
-    await redisHelper.disconnect();
   });
 
   test('should return success with code 200 and send email', async () => {

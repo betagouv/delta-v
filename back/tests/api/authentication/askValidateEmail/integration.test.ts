@@ -1,7 +1,6 @@
 import { Express } from 'express';
 import request from 'supertest';
 
-import { Redis } from 'ioredis';
 import { testDbManager } from '../../../helpers/testDb.helper';
 import buildTestApp from '../../../helpers/testApp.helper';
 import { askEmailValidation } from '../../../../src/api/authentication/askEmailValidation';
@@ -11,18 +10,15 @@ import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.en
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
 import { resendEmailValidationEmailLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
-import { buildTestRedis } from '../../../helpers/testRedis.helper';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
-const redisHelper = buildTestRedis();
 
 describe('askEmailValidationRouter route', () => {
-  let redisConnection: Redis;
   let testApp: Express;
 
   beforeAll(async () => {
     await testDb.connect();
-    redisConnection = redisHelper.connect();
     testApp = buildTestApp(askEmailValidation);
   });
 
@@ -30,12 +26,10 @@ describe('askEmailValidationRouter route', () => {
     await testDb.clear();
     clearEventEmitterMock();
     resendEmailValidationEmailLimiter.resetKey('::ffff:127.0.0.1');
-    await redisHelper.clear();
   });
 
   afterAll(async () => {
     await testDb.disconnect();
-    await redisHelper.disconnect();
   });
 
   test('should return success with code 200 - with jwt', async () => {

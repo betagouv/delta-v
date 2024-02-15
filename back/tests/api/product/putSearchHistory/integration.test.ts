@@ -1,7 +1,6 @@
 import { Express } from 'express';
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
-import { Redis } from 'ioredis';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import buildTestApp from '../../../helpers/testApp.helper';
@@ -9,31 +8,26 @@ import { testDbManager } from '../../../helpers/testDb.helper';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
 import { putSearchHistory } from '../../../../src/api/product/putSearchHistory';
 import { searchProductHistoryEntityFactory } from '../../../helpers/factories/searchProductHistory.factory';
-import { buildTestRedis } from '../../../helpers/testRedis.helper';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
-const redisHelper = buildTestRedis();
 
 const searchValue = faker.commerce.product();
 
 describe('put search product history integration', () => {
   let testApp: Express;
-  let redisConnection: Redis;
 
   beforeAll(async () => {
     await testDb.connect();
-    redisConnection = redisHelper.connect();
     testApp = buildTestApp(putSearchHistory);
   });
 
   beforeEach(async () => {
     await testDb.clear();
-    await redisHelper.clear();
   });
 
   afterAll(async () => {
     await testDb.disconnect();
-    await redisHelper.disconnect();
   });
 
   test('should put new product history with success', async () => {
