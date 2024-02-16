@@ -116,13 +116,15 @@ const ResetPasswordPage = () => {
       ></TitleHeaderAgent>
       <section className="self-center w-full flex flex-col items-center px-10">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
-          <ConfirmPasswordInput
-            password={passwordFormFieldData}
-            confirmPassword={confirmPasswordFormFieldData}
-            submitCount={submitClickCount}
-          />
-          <div className="pt-10 pb-2 flex">{apiError && <ApiError apiError={apiError} />}</div>
-          <div className="flex flex-col gap-4 w-40 self-center pb-2">
+          <div className="pb-10">
+            <ConfirmPasswordInput
+              password={passwordFormFieldData}
+              confirmPassword={confirmPasswordFormFieldData}
+              submitCount={submitClickCount}
+            />
+          </div>
+          {apiError && <ApiError apiError={apiError} />}
+          <div className="flex flex-col gap-4 w-40 self-center py-2">
             <Button fullWidth={true} type="submit" size="sm" onClick={handleSubmitClick}>
               Valider
             </Button>

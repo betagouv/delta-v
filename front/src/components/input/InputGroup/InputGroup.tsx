@@ -56,7 +56,6 @@ export interface IInputGroupProps {
   mobileColumn?: boolean;
   register?: UseFormRegisterReturn;
   rows?: number;
-  specificClassName?: string;
   additionalClassName?: string;
   fullWidth?: boolean;
   bigSize?: boolean;
@@ -89,7 +88,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   error,
   helperText,
   rows,
-  specificClassName,
   additionalClassName,
   fullWidth,
   bigSize,
@@ -184,7 +182,6 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               disabled={inputDisabled}
               error={error}
               rows={rows}
-              specificClassName={specificClassName}
               additionalClassName={additionalClassName}
               register={register}
             />

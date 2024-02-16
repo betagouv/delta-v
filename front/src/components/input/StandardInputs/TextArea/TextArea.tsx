@@ -15,7 +15,6 @@ export interface ITextAreaOptions
   disabled?: boolean;
   error?: string;
   rows?: number;
-  specificClassName?: string;
   additionalClassName?: string;
   register?: UseFormRegisterReturn;
 }
@@ -26,7 +25,6 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
   disabled,
   error,
   rows,
-  specificClassName,
   additionalClassName,
   register,
 }) => {
@@ -47,15 +45,7 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
       id={name}
       placeholder={placeholder}
       disabled={disabled}
-      className={specificClassName ?? mergedClassname}
-      // className={`${
-      //   specificClassName ??
-      //   `bg-secondary-bg focus:outline-none placeholder:text-disabled-text border-none resize-none min-h-[288px] ${
-      //     error
-      //       ? 'border-error text-error placeholder:text-red-300 focus:border-error focus:outline-none focus:ring-error'
-      //       : ''
-      //   } block w-full rounded-[10px] p-5 text-xs placeholder:italic focus:border-none selection:focus:border-none`
-      // }`}
+      className={mergedClassname}
       {...register}
       name={name}
     />
