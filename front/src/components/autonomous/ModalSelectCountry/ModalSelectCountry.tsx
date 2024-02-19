@@ -16,7 +16,7 @@ import { ModalType, getModalComponent } from '@/utils/modal';
 
 interface ModalSelectCountryProps {
   isOpen?: boolean;
-  forceOpen?: boolean;
+  preventClose?: boolean;
   modalType?: ModalType;
 }
 
@@ -26,7 +26,7 @@ interface FormCountryData {
 
 export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
   isOpen = false,
-  forceOpen = false,
+  preventClose = false,
   modalType = ModalType.DOWN,
 }) => {
   const {
@@ -94,7 +94,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
         bgColor="bg-white"
         open={open}
         onClose={() => setOpen(false)}
-        forceOpen={forceOpen}
+        preventClose={preventClose}
       >
         <motion.div className="mx-auto mb-2.5 mt-[30px] w-[250px] gap-5 flex flex-col h-auto">
           <Typography color="black" size="text-xs" weight="bold" textPosition="text-center">
