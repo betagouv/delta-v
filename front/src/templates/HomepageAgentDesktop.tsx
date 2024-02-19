@@ -4,21 +4,17 @@ import { useRouter } from 'next/router';
 
 import { useActualities } from '@/api/hooks/useAPIActualities';
 import { useDeclarations } from '@/api/hooks/useAPIDeclaration';
-import { ModalResumeDeclaration } from '@/components/autonomous/ModalResumeDeclaration';
 import { BlockActualities } from '@/components/common/BlockActualities';
 import { BlockHeaderAgent } from '@/components/common/BlockHeaderAgent';
 import { BlockHistoricDeclarations } from '@/components/common/BlockHistoricDeclarations';
 import { NavBar } from '@/components/common/NavBar';
-import { useStore } from '@/stores/store';
-import { MAIN_MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
-import { getLevelWithData } from '@/utils/declarationAgent';
+import { MAIN_MENU_AGENT_ITEMS } from '@/utils/const';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 import { Constants } from '@/utils/enums';
 
 const HomepageAgentDesktop = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState<string>('');
-  const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
 
   const basedDeclarationQueryData = {
     search: null,
@@ -59,31 +55,10 @@ const HomepageAgentDesktop = () => {
     setSearchValue(value);
   };
 
-  const { declarationAgentRequest } = useStore((state) => ({
-    declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
-  }));
-
-  const openDeclaration = () => {
-    if (getLevelWithData(declarationAgentRequest) === 1) {
-      router.push(RoutingAgent.createDeclaration);
-    } else {
-      setOpenModalResumeDeclaration(true);
-    }
-  };
-
-  const declarationLink = MAIN_MENU_AGENT_ITEMS.find((item) => item.id === 'declaration');
-
   return (
     <>
       <div className="flex flex-col pl-[103px] pr-20 pb-10 bg-navbar-bg gap-[14px]">
-        <NavBar
-          links={MAIN_MENU_AGENT_ITEMS}
-          onDeclarationClick={() => {
-            if (declarationLink?.openDeclarationResumeModal) {
-              openDeclaration();
-            }
-          }}
-        />
+        <NavBar links={MAIN_MENU_AGENT_ITEMS} />
         <BlockHeaderAgent
           onChangeSearch={onChangeSearch}
           onSearchAll={onSearchAll}
@@ -101,11 +76,6 @@ const HomepageAgentDesktop = () => {
         />
         <BlockActualities actualities={apiActualities} isLoading={isActualitiesLoading} />
       </div>
-      <ModalResumeDeclaration
-        open={openModalResumeDeclaration}
-        onClose={() => setOpenModalResumeDeclaration(false)}
-        templateRole="agent"
-      />
     </>
   );
 };

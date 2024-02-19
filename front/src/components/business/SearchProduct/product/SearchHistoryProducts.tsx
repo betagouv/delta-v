@@ -35,7 +35,7 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
     <li
       key={product.id}
       className={cs({
-        'flex select-none items-center px-3 pt-3 leading-3': true,
+        'flex select-none items-center px-3 leading-3 w-fit': true,
         'cursor-pointer': onClick,
         'cursor-not-allowed': disabled,
       })}
@@ -43,26 +43,35 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
       onClick={onClick && (() => onClick(product, searchValue))}
     >
       <div className="flex items-center gap-3">
-        <span
+        <div
           className={cs({ 'mb-1': true, 'text-blue-700': !disabled, 'text-gray-400': disabled })}
         >
-          <Icon name="search" size="base" />
-        </span>
+          <span className="block md:hidden">
+            <Icon name="search" size="base" />
+          </span>
+          <span className="md:block hidden">
+            <Icon name="search" size="sm" />
+          </span>
+        </div>
         <span>
           {product.name && (
             <React.Fragment>
               {searchValue && (
                 <>
-                  <Typography color={disabled ? 'light-gray' : 'black'} size="text-base">
+                  <Typography
+                    color={disabled ? 'light-gray' : 'black'}
+                    size="text-base"
+                    desktopSize="text-xs"
+                  >
                     {searchValue}
                   </Typography>
-                  <Typography color="light-gray" size="text-base">
+                  <Typography color="light-gray" size="text-base" desktopSize="text-xs">
                     {' '}
                     dans{' '}
                   </Typography>
                 </>
               )}
-              <Typography size="text-base">
+              <Typography size="text-base" desktopSize="text-xs">
                 <span className={disabled ? 'text-gray-400' : 'text-blue-700'}>{product.name}</span>
               </Typography>
             </React.Fragment>
@@ -91,8 +100,8 @@ export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   return (
     <>
       {historyProductToShow.length > 0 ? (
-        <ul className="w-full text-base">
-          <Typography color="black" size="text-base">
+        <ul className="gap-2 flex flex-col md:font-bold font-normal">
+          <Typography color="black" size="text-base" desktopSize="text-xs" desktopWeight="bold">
             Historique des recherches
           </Typography>
           {historyProductToShow.map((historyToShowItem) => {

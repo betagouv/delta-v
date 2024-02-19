@@ -1,6 +1,5 @@
 import React from 'react';
 
-import cs from 'classnames';
 import dayjs from 'dayjs';
 import shallow from 'zustand/shallow';
 
@@ -10,6 +9,7 @@ import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
+import clsxm from '@/utils/clsxm';
 import { searchRegex } from '@/utils/regex';
 
 require('dayjs/locale/fr');
@@ -19,15 +19,15 @@ dayjs.locale('fr');
 export type NomenclatureCardProps = {
   product: Product;
   onClick?: (product: Product) => void;
-  onClickFavorite?: (product: Product) => void;
+  onAddFavorite?: (product: Product) => void;
+  onRemoveFavorite?: (product: Product) => void;
   searchValue?: string;
 };
 
 export const renderMatchedWithSearch = (stringToChange: string, search: string): any => {
   if (!stringToChange.includes(search.toLocaleLowerCase())) {
-    // return <span className="text-xs text-black">{product.rankedValue}</span>;
     return (
-      <Typography color="black" size="text-base">
+      <Typography color="black" size="text-base" desktopSize="text-xs">
         {stringToChange}
       </Typography>
     );
@@ -37,7 +37,7 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
   const matchValue = stringToChange.replace(searchRegex(search), '_');
   const matchValues = matchValue.split('_');
   return numberOccurrence.map((item, i) => (
-    <Typography color="black" size="text-base" key={item}>
+    <Typography color="black" size="text-base" desktopSize="text-xs" key={item}>
       {matchValues[i]}
       <span className="bg-primary-400 text-white">{item}</span>
       {matchValues[i + 1]}
@@ -48,7 +48,8 @@ export const renderMatchedWithSearch = (stringToChange: string, search: string):
 export const NomenclatureCard = ({
   product,
   onClick,
-  onClickFavorite,
+  onAddFavorite,
+  onRemoveFavorite,
   searchValue,
 }: NomenclatureCardProps) => {
   const { favoriteProducts, removeFavoriteProducts } = useStore(
@@ -69,9 +70,11 @@ export const NomenclatureCard = ({
 
   return (
     <div
-      className={cs(
-        'relative grid rounded-lg border border-secondary-300 grid-cols-[40px_1fr] md:w-72 p-5 gap-5',
-      )}
+      className={clsxm({
+        'relative grid rounded-lg border border-secondary-300 grid-cols-[40px_1fr] md:w-72 p-5 gap-5':
+          true,
+        'cursor-pointer': onClick,
+      })}
       onClick={
         onClick
           ? (e) => {
@@ -81,16 +84,20 @@ export const NomenclatureCard = ({
           : undefined
       }
     >
-      <div className="justify-center flex items-center z-10">
+      <div className="justify-center flex items-center">
         <SvgIcon name={product.icon ?? 'categoryOther'} />
       </div>
 
-      <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer z-10">
+      <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
         {isInFavorite ? (
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onRemove(product.id);
+              if (onRemoveFavorite) {
+                onRemoveFavorite(product);
+              } else {
+                onRemove(product.id);
+              }
             }}
           >
             <Icon name="etoile" color="link" />
@@ -100,8 +107,8 @@ export const NomenclatureCard = ({
             color="gray"
             onClick={(e) => {
               e.stopPropagation();
-              if (onClickFavorite) {
-                onClickFavorite(product);
+              if (onAddFavorite) {
+                onAddFavorite(product);
               }
             }}
           >
@@ -130,12 +137,10 @@ export const NomenclatureCard = ({
         </div>
         <div className="flex flex-col line-clamp-2">
           {searchValue ? (
-            <Typography color="black" transform="sentence-case" size="text-sm">
-              {renderMatchedWithSearch(
-                product.relatedWords.map((item) => item).join(', '),
-                searchValue,
-              )}
-            </Typography>
+            renderMatchedWithSearch(
+              product.relatedWords.map((item) => item).join(', '),
+              searchValue,
+            )
           ) : (
             <Typography color="black" transform="sentence-case" size="text-sm">
               {product.relatedWords.map((item) => item).join(', ')}

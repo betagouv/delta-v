@@ -7,12 +7,12 @@ import shallow from 'zustand/shallow';
 
 import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
+import { CategoryProductMobile } from '@/components/autonomous/CategoryProduct';
 import {
   FormAddFavoriteData,
   ModalAddFavoriteProduct,
-} from '@/components/autonomous/ModalAddFavoriteProduct';
+} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
-import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
 import { NomenclatureCard } from '@/components/business/NomenclatureCard';
@@ -163,13 +163,13 @@ const SearchProduct = () => {
                 key={product.id}
                 product={product}
                 onClick={onClickProduct}
-                onClickFavorite={onClickFavorite}
+                onAddFavorite={onClickFavorite}
                 searchValue={search as string}
               />
             ))}
           </div>
         </div>
-        <ModalCategoryProduct
+        <CategoryProductMobile
           open={openCategoryDownModal}
           onClose={() => setOpenCategoryDownModal(false)}
           onAddProduct={onAddProduct}

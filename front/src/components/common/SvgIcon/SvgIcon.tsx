@@ -114,6 +114,7 @@ import CategoryWood from '@/assets/icons/categories/Wood.svg';
 import CategoryWoodenFloor from '@/assets/icons/categories/Wooden-Floor.svg';
 import AinIcon from '@/assets/icons/City-Ain.svg';
 import HauteSavoieIcon from '@/assets/icons/City-Haute-Savoie.svg';
+import ClearField from '@/assets/icons/ClearField.svg';
 import Coffee from '@/assets/icons/Coffee.svg';
 import CompleteBasket from '@/assets/icons/Complete-Basket.svg';
 import Dairy from '@/assets/icons/Dairy.svg';
@@ -314,7 +315,8 @@ export type SvgNames =
   | 'visibilityOn'
   | 'star'
   | 'starFull'
-  | 'categoryWoodenFloor';
+  | 'categoryWoodenFloor'
+  | 'clearField';
 
 export interface ISvgIconProps {
   name: SvgNames;
@@ -623,6 +625,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return CategoryWood;
     case 'categoryWoodenFloor':
       return CategoryWoodenFloor;
+    case 'clearField':
+      return ClearField;
     case 'douanier':
       return Douanier;
     case 'visibilityOff':

@@ -19,7 +19,7 @@ export interface IDownModalProps {
 
 export const DownModal: React.FC<IDownModalProps> = ({
   open,
-  onClose,
+  onClose = () => {},
   title,
   bgColor = 'bg-white',
   children,
@@ -27,12 +27,6 @@ export const DownModal: React.FC<IDownModalProps> = ({
   defaultHeight: fixedHeight = false,
   titlePosition = 'text-center',
 }: IDownModalProps) => {
-  const handleOnClose = (): void => {
-    if (onClose) {
-      onClose();
-    }
-  };
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -42,7 +36,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
           'h-[calc(100vh-50px)]': fixedHeight,
           'h-auto': !fixedHeight,
         })}
-        onClose={handleOnClose}
+        onClose={onClose}
       >
         <Transition.Child
           as={Fragment}

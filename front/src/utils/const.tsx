@@ -192,7 +192,6 @@ export const MY_ACCOUNT_MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Modifier mon mot de passe',
     path: RoutingAgent.changePassword,
     svgIcon: 'lock' as SvgNames,
-    openDeclarationResumeModal: true,
   },
 ];
 

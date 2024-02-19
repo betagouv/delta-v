@@ -3,6 +3,7 @@ import React from 'react';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { IdRequiredProduct, Product } from '@/model/product';
+import clsxm from '@/utils/clsxm';
 import { SearchType } from '@/utils/search';
 
 interface SearchResultProductsProps {
@@ -14,7 +15,7 @@ interface SearchResultProductsProps {
 export const renderMatchedWithSearch = (product: SearchType<Product>, search: string) => {
   if (!product.rankedValue.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
     return (
-      <Typography color="black" size="text-base">
+      <Typography color="black" size="text-base" desktopSize="text-xs">
         {product.rankedValue}
       </Typography>
     );
@@ -24,7 +25,7 @@ export const renderMatchedWithSearch = (product: SearchType<Product>, search: st
   const matchValues = matchValue.split(',');
 
   return (
-    <Typography color="black" size="text-base">
+    <Typography color="black" size="text-base" desktopSize="text-xs">
       {matchValues[0]}
       <b>{search}</b>
       {matchValues[1]}
@@ -40,30 +41,38 @@ export const SearchResultProducts: React.FC<SearchResultProductsProps> = ({
   return (
     <>
       {resultSearch.length > 0 ? (
-        <ul className="w-full text-base">
+        <ul className="text-base flex flex-col gap-2">
           {resultSearch.map((resultElement) => {
             return (
               <li
                 key={resultElement.id}
-                className="flex cursor-default select-none items-center px-3 pt-2 leading-3"
+                className={clsxm({
+                  'flex select-none items-center px-3 leading-3 w-fit': true,
+                  'cursor-pointer': onClickProduct,
+                })}
                 data-testid="result-product-search-element"
                 onClick={
                   onClickProduct && (() => onClickProduct(resultElement, resultElement.rankedValue))
                 }
               >
                 <div className="flex items-center gap-3">
-                  <span className="mb-1 text-blue-700">
-                    <Icon name="search" size="base" />
-                  </span>
+                  <div className="mb-1 text-blue-700">
+                    <span className="hidden md:block">
+                      <Icon name="search" size="sm" />
+                    </span>
+                    <span className="md:hidden block">
+                      <Icon name="search" size="base" />
+                    </span>
+                  </div>
                   <span>
                     {renderMatchedWithSearch(resultElement, search)}
                     {resultElement.name && (
                       <React.Fragment>
-                        <Typography color="light-gray" size="text-base">
+                        <Typography color="light-gray" size="text-base" desktopSize="text-xs">
                           {' '}
                           dans{' '}
                         </Typography>
-                        <Typography size="text-base">
+                        <Typography size="text-base" desktopSize="text-xs">
                           <span className="text-blue-700">{resultElement.name}</span>
                         </Typography>
                       </React.Fragment>

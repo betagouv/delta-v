@@ -9,8 +9,8 @@ import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
+import { CategoryProductMobile } from '@/components/autonomous/CategoryProduct';
 import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
-import { ModalCategoryProduct } from '@/components/autonomous/ModalCategoryProduct';
 import { ModalDeleteProductCartDeclaration } from '@/components/autonomous/ModalDeleteProductCartDeclaration';
 import { ModalFavorites } from '@/components/autonomous/ModalFavorites';
 import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
@@ -369,7 +369,7 @@ const Declaration = () => {
         onClickProduct={(product, searchValue) => onSearchProduct(product, searchValue)}
         onSearchAll={onSearchAll}
       />
-      <ModalCategoryProduct
+      <CategoryProductMobile
         open={openCategoryDownModal}
         onClose={handleCloseDownModal}
         onAddProduct={onAddProduct}

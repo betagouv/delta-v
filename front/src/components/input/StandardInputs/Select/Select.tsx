@@ -7,6 +7,7 @@ import { useController, UseFormRegisterReturn } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
 import { Icon } from '../../../common/Icon';
+import clsxm from '@/utils/clsxm';
 
 export interface IOptions {
   id: number | string;
@@ -68,7 +69,7 @@ export const Select: React.FC<ISelectOptions> = ({
               data-testid="select-element"
               className={twMerge(
                 classNames({
-                  'bg-white relative rounded-full pl-3 pr-10 py-2.5 text-left focus:outline-none w-auto border-0 focus:ring-0':
+                  'bg-white relative rounded-full pl-3 pr-10 py-2.5 text-left focus:outline-none w-auto border-0 focus:ring-0 text-base md:text-xs md:h-10':
                     true,
                   'w-full': fullWidth,
                   'bg-secondary-200 text-secondary-400 cursor-default': disabled,
@@ -117,11 +118,11 @@ export const Select: React.FC<ISelectOptions> = ({
                   >
                     {({ selected: selectedValue, active }) => (
                       <span
-                        className={classNames(
-                          selectedValue ? 'font-semibold bg-lightBlue' : 'font-normal',
-                          'block truncate text-base',
-                          active ? 'bg-lightBlue' : '',
-                        )}
+                        className={clsxm({
+                          'block truncate text-base md:text-xs font-normal': true,
+                          'font-semibold bg-lightBlue': selectedValue,
+                          'bg-lightBlue': active,
+                        })}
                       >
                         {option.value}
                       </span>
