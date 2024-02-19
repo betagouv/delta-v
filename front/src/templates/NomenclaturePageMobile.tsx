@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 
 import { useFavorites } from '@/api/hooks/useAPIFavorite';
@@ -13,9 +14,14 @@ import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
+import clsxm from '@/utils/clsxm';
 import { findProduct, haveAgeRestriction } from '@/utils/product.util';
 
-const NomenclaturePageAgentMobile = () => {
+export interface FormDeclarationData {
+  country?: Alpha2Code;
+}
+
+export const NomenclaturePageMobile = () => {
   const router = useRouter();
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
   const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
@@ -23,11 +29,26 @@ const NomenclaturePageAgentMobile = () => {
   const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
     undefined,
   );
-  const { nomenclatureProducts, setFavoriteProducts, favoriteProducts } = useStore((state) => ({
+  const {
+    nomenclatureProducts,
+    setFavoriteProducts,
+    favoriteProducts,
+    setProductsNomenclatureToDisplayAgent,
+    countryForProductsNomenclature,
+  } = useStore((state) => ({
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
     favoriteProducts: state.products.appState.favoriteProducts,
+    setProductsNomenclatureToDisplayAgent: state.setProductsNomenclatureToDisplayAgent,
+    countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
   }));
+
+  useEffect(() => {
+    if (!countryForProductsNomenclature) {
+      return;
+    }
+    setProductsNomenclatureToDisplayAgent(countryForProductsNomenclature);
+  }, [countryForProductsNomenclature]);
 
   const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
@@ -94,6 +115,7 @@ const NomenclaturePageAgentMobile = () => {
 
   const withoutFavoriteProducts =
     flattenFavoriteProducts.length === 0 && ageRestrictionFavoriteProducts.length === 0;
+
   return (
     <>
       <div className="p-5 bg-secondary-bg rounded-[10px]">
@@ -133,7 +155,10 @@ const NomenclaturePageAgentMobile = () => {
         <button
           onClick={onFilterByCategoryClick}
           type="button"
-          className="border gap-3 bg-white border-gray-300 rounded-full flex-1 flex justify-center items-center"
+          className={clsxm({
+            'border gap-3 bg-white border-gray-300 rounded-full flex-1 flex justify-center items-center cursor-pointer':
+              true,
+          })}
         >
           <div className="flex flex-row items-center gap-3">
             <Typography color="black" weight="bold" size="text-xs">
@@ -144,7 +169,7 @@ const NomenclaturePageAgentMobile = () => {
         </button>
       </div>
       <div className="flex flex-row justify-end w-full mt-[30px] border-t pt-5">
-        <ModalSelectCountry />
+        <ModalSelectCountry isOpen={true} forceOpen={!countryForProductsNomenclature} />
       </div>
 
       <ModalSearchNomenclatureProduct
@@ -169,4 +194,4 @@ const NomenclaturePageAgentMobile = () => {
   );
 };
 
-export { NomenclaturePageAgentMobile };
+export default NomenclaturePageMobile;

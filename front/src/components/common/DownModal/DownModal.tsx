@@ -29,6 +29,12 @@ export const DownModal: React.FC<IDownModalProps> = ({
   titlePosition = 'text-center',
   forceOpen = false,
 }: IDownModalProps) => {
+  const handleOnClose = (): void => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
