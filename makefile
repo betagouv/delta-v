@@ -6,14 +6,15 @@ FRONT_CONTAINER =  frontend-web-delta-v
 STORYBOOK_CONTAINER =  storybook-delta-v
 BACK_CONTAINER =  backend-api-delta-v
 DATABASE_CONTAINER = database-delta-v
+REDIS_CONTAINER = redis.api.dev.delta-v
 ADMIN_DATABASE_CONTAINER = adminer
 MAILHOG_CONTAINER = mailhog
 
 TEST_BACK_CONTAINER =  e2e-test-backend-api-delta-v
-TEST_DATABASE_CONTAINER =  e2e-test-database-delta-v
+TEST_DATABASE_CONTAINER = e2e-test-redis.api.dev.delta-v e2e-test-database-delta-v
 
 DATABASE_CONTAINERS =  $(DATABASE_CONTAINER) $(ADMIN_DATABASE_CONTAINER)
-BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS) $(MAILHOG_CONTAINER)
+BACK_CONTAINERS =  $(BACK_CONTAINER) $(REDIS_CONTAINER) $(DATABASE_CONTAINERS) $(MAILHOG_CONTAINER)
 
 ##
 ## -------------------------
@@ -27,7 +28,7 @@ BACK_CONTAINERS =  $(BACK_CONTAINER) $(DATABASE_CONTAINERS) $(MAILHOG_CONTAINER)
 
 
 .PHONY: init
-init: pull y-i-back y-i-front db-fixtures-clear-load db-migrate-run-e2e ## init all project
+init: pull y-i-back y-i-front init-redis db-fixtures-clear-load db-migrate-run-e2e ## init all project
 	
 .PHONY: pull
 pull: ## Download the latest version of the images
@@ -36,6 +37,10 @@ pull: ## Download the latest version of the images
 .PHONY: start
 start: ## Start the backend containers
 	$(DOCKER_COMPOSE) up --remove-orphans $(BACK_CONTAINERS) $(FRONT_CONTAINER)
+
+.PHONY: init-redis
+init-redis: ## Start the backend containers
+	docker run --rm --name test-redis redis:7-bullseye redis-server --loglevel warning
 	
 .PHONY: start-back
 start-back: ## Start the backend containers

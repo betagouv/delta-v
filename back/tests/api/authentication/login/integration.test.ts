@@ -12,6 +12,7 @@ import {
   buildRefreshTokenObject,
 } from '../../../../src/core/jwt/verifyToken';
 import { sendEmailResetPasswordLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
 
@@ -39,6 +40,9 @@ describe('login route', () => {
       .post('/api/login')
       .send({ email: user.email, password: clearPassword });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
     expect(body.accessToken).toBeDefined();
     expect(body.refreshToken).toBeDefined();
@@ -48,6 +52,7 @@ describe('login route', () => {
 
     const authObjectRefresh = await buildRefreshTokenObject(body.refreshToken);
     expect(authObjectRefresh).toMatchObject({ userId: user.id, email: user.email });
+    expect(value).toBe('0');
   });
 
   test('should return error with code 404 - user not found', async () => {
@@ -106,7 +111,11 @@ describe('login route', () => {
       .post('/api/login')
       .send({ email: `bad.${user.email}`, password: clearPassword });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(body.code).toEqual(ErrorCodes.BAD_CREDENTIALS);
+    expect(value).toBe('1');
     expect(status).toBe(HttpStatuses.UNAUTHORIZED);
   });
 
@@ -120,11 +129,15 @@ describe('login route', () => {
         .send({ email: user.email, password: `bad_${clearPassword}` });
     }
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const { status, body } = await request(testApp)
       .post('/api/login')
       .send({ email: user.email, password: `bad_${clearPassword}` });
 
     expect(body.code).toEqual(ErrorCodes.TOO_MANY_REQUESTS);
+    expect(value).toBe('11');
     expect(status).toBe(HttpStatuses.TOO_MANY_REQUESTS);
   });
 });

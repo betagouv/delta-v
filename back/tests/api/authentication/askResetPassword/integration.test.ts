@@ -10,6 +10,7 @@ import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.en
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
 import { sendEmailResetPasswordLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
 import { ErrorCodes } from '../../../../src/api/common/enums/errorCodes.enum';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
 
@@ -38,8 +39,12 @@ describe('askResetPassword route', () => {
       .post('/api/password/ask')
       .send({ email: user.email });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
     expect(body.code).toEqual(ResponseCodes.USER_ASK_RESET_PASSWORD);
+    expect(value).toBe('1');
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 
@@ -50,7 +55,11 @@ describe('askResetPassword route', () => {
       .post('/api/password/ask')
       .send({ email: user.email });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
+    expect(value).toBe('1');
     expect(body.code).toEqual(ResponseCodes.USER_ASK_RESET_PASSWORD);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
@@ -62,8 +71,12 @@ describe('askResetPassword route', () => {
       .post('/api/password/ask')
       .send({ email: user.email });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
     expect(body.code).toEqual(ResponseCodes.USER_ASK_RESET_PASSWORD);
+    expect(value).toBe('1');
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
 
@@ -74,7 +87,11 @@ describe('askResetPassword route', () => {
       .post('/api/password/ask')
       .send({ email: user.email });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
+    expect(value).toBe('1');
     expect(body.code).toEqual(ResponseCodes.USER_ASK_RESET_PASSWORD);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
@@ -88,7 +105,11 @@ describe('askResetPassword route', () => {
       .post('/api/password/ask')
       .send({ email: user.email });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(body.code).toEqual(ErrorCodes.TOO_MANY_REQUESTS_EMAIL_SEND);
+    expect(value).toBe('1');
     expect(status).toBe(HttpStatuses.TOO_MANY_REQUESTS);
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
