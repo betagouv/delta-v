@@ -14,17 +14,21 @@ import { countriesAlternatives, disabledCountries } from '@/utils/const';
 import { memoizedCountriesOptions } from '@/utils/country.util';
 import { ModalType, getModalComponent } from '@/utils/modal';
 
-interface ModalSelectCountryProps {}
+interface ModalSelectCountryProps {
+  isOpen?: boolean;
+  preventClose?: boolean;
+  modalType?: ModalType;
+}
 
 interface FormCountryData {
   country?: Alpha2Code;
 }
 
-interface ModalSelectCountryProps {
-  modalType?: ModalType;
-}
-
-export const ModalSelectCountry = ({ modalType = ModalType.DOWN }: ModalSelectCountryProps) => {
+export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
+  isOpen = false,
+  preventClose = false,
+  modalType = ModalType.DOWN,
+}) => {
   const {
     setProductsNomenclatureToDisplay,
     setCountryForProductsNomenclature,
@@ -39,11 +43,13 @@ export const ModalSelectCountry = ({ modalType = ModalType.DOWN }: ModalSelectCo
   );
 
   const countries = getNames('fr', { select: 'official' });
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(isOpen);
   const [selectedCountry, setSelectedCountry] = React.useState<string | undefined>(
-    `${getEmojiFlag(countryForProductsNomenclature).toString()}  ${
-      countries[countryForProductsNomenclature]
-    } `,
+    countryForProductsNomenclature
+      ? `${countries[countryForProductsNomenclature]} ${getEmojiFlag(
+          countryForProductsNomenclature,
+        ).toString()}`
+      : 'Pays',
   );
 
   const { register, control } = useForm<FormCountryData>({
@@ -51,15 +57,19 @@ export const ModalSelectCountry = ({ modalType = ModalType.DOWN }: ModalSelectCo
   });
 
   useEffect(() => {
+    if (!countryForProductsNomenclature) {
+      return;
+    }
     setProductsNomenclatureToDisplay(countryForProductsNomenclature);
   }, []);
 
   register('country', {
     onChange: (e: any) => {
-      const country = `${getEmojiFlag(e.target.value).toString()}  ${countries[e.target.value]}`;
+      const countryCode = e.target.value;
+      const country = `${countries[countryCode]} ${getEmojiFlag(countryCode).toString()}`;
       setSelectedCountry(country);
-      setCountryForProductsNomenclature(e.target.value);
-      setProductsNomenclatureToDisplay(e.target.value);
+      setCountryForProductsNomenclature(countryCode);
+      setProductsNomenclatureToDisplay(countryCode);
       setOpen(false);
     },
   });
@@ -80,15 +90,14 @@ export const ModalSelectCountry = ({ modalType = ModalType.DOWN }: ModalSelectCo
         <Icon name="chevron-down" size="lg" />
       </div>
 
-      <ModalComponent bgColor="bg-white" open={open} onClose={() => setOpen(false)}>
-        <motion.div className="mx-auto flex flex-col h-auto mb-[10px] mt-[30px] w-[250px] md:w-[264px] gap-5 md:gap-4">
-          <Typography
-            color="black"
-            size="text-xs"
-            desktopSize="text-xs"
-            weight="bold"
-            textPosition="text-center"
-          >
+      <ModalComponent
+        bgColor="bg-white"
+        open={open}
+        onClose={() => setOpen(false)}
+        preventClose={preventClose}
+      >
+        <motion.div className="mx-auto mb-2.5 mt-[30px] w-[250px] gap-5 flex flex-col h-auto">
+          <Typography color="black" size="text-xs" weight="bold" textPosition="text-center">
             Sélectionner le pays de provenance :
           </Typography>
 
@@ -99,7 +108,7 @@ export const ModalSelectCountry = ({ modalType = ModalType.DOWN }: ModalSelectCo
             register={register('country')}
             control={control}
             fullWidth={true}
-            placeholder="Pays"
+            placeholder={selectedCountry ?? 'Pays'}
             trailingIcon="chevron-down"
             withBorder
             withListBoxEffect

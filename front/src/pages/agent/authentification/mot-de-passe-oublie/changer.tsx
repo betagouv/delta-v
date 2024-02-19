@@ -7,7 +7,6 @@ import * as yup from 'yup';
 
 import { useResetPasswordMutation } from '@/api/hooks/useAPIAuth';
 import { ApiError } from '@/components/common/ApiError';
-import { ApiSuccess } from '@/components/common/ApiSuccess';
 import { Button } from '@/components/common/Button';
 import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
 import { Typography } from '@/components/common/Typography';
@@ -59,13 +58,10 @@ const ResetPasswordPage = () => {
 
   const resetPasswordMutation = useResetPasswordMutation({
     onSuccess: () => {
-      setTimeout(() => {
-        router.push(RoutingAuthentication.login);
-      }, 1000);
+      router.push(RoutingAuthentication.resetPasswordSuccess);
     },
   });
   const apiError = resetPasswordMutation.error ?? undefined;
-  const { data: apiSuccess } = resetPasswordMutation;
 
   const onSubmit = async (data: FormForgetPasswordData) => {
     if (!apiError && isValid && data.password === data.confirmPassword) {
@@ -120,16 +116,15 @@ const ResetPasswordPage = () => {
       ></TitleHeaderAgent>
       <section className="self-center w-full flex flex-col items-center px-10">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex flex-col w-full">
-          <ConfirmPasswordInput
-            password={passwordFormFieldData}
-            confirmPassword={confirmPasswordFormFieldData}
-            submitCount={submitClickCount}
-          />
-          <div className="pt-10 pb-2 flex">
-            {apiError && <ApiError apiError={apiError} />}
-            {apiSuccess && <ApiSuccess apiSuccess={apiSuccess} />}
+          <div className="pb-10">
+            <ConfirmPasswordInput
+              password={passwordFormFieldData}
+              confirmPassword={confirmPasswordFormFieldData}
+              submitCount={submitClickCount}
+            />
           </div>
-          <div className="flex flex-col gap-4 w-40 self-center pb-2">
+          {apiError && <ApiError apiError={apiError} />}
+          <div className="flex flex-col gap-4 w-40 self-center py-2">
             <Button fullWidth={true} type="submit" size="sm" onClick={handleSubmitClick}>
               Valider
             </Button>

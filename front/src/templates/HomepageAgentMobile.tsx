@@ -81,10 +81,12 @@ const HomepageAgentMobile = () => {
     setVideoRef(null);
     scanner?.pause();
     setMode('tools');
+    router.push({ query: { mode: 'tools' } });
   };
 
   const handleClickScanner = () => {
     setMode('scanner');
+    router.push({ query: { mode: 'scanner' } });
   };
 
   useEffect(() => {

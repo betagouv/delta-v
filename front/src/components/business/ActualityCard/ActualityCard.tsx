@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 
-import cs from 'classnames';
 import dayjs from 'dayjs';
 
 import { Typography } from '@/components/common/Typography';
+import clsxm from '@/utils/clsxm';
 
 require('dayjs/locale/fr');
 
@@ -16,6 +16,7 @@ export type ActualityCardProps = {
   tags?: string[];
   newLimit?: () => void;
   isLast?: boolean;
+  width?: number;
 };
 
 export const ActualityCard = ({
@@ -25,6 +26,7 @@ export const ActualityCard = ({
   tags,
   newLimit,
   isLast,
+  width,
 }: ActualityCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -41,12 +43,16 @@ export const ActualityCard = ({
     observer.observe(cardRef.current);
   }, [isLast]);
 
+  const widthStyle = { maxWidth: `${width}px` };
+
   return (
     <div
-      className={cs(
-        'flex flex-col rounded-xl border border-gray-300 p-5 gap-4 w-full md:min-w-[250px]',
-      )}
+      className={clsxm({
+        'flex flex-col rounded-xl border border-gray-300 p-5 gap-4': true,
+        'w-full': !width,
+      })}
       ref={cardRef}
+      style={widthStyle}
     >
       <div className="grid grid-cols-2">
         {tags && (
@@ -72,8 +78,14 @@ export const ActualityCard = ({
           {title}
         </Typography>
       </div>
-      <div className="line-clamp-4">
-        <Typography variant="paragraph" size="text-sm" desktopSize="text-xs" color="black">
+      <div className="leading-[18px] line-clamp-4 md:leading-none">
+        <Typography
+          variant="paragraph"
+          size="text-sm"
+          desktopSize="text-xs"
+          color="black"
+          lineHeight="leading-none"
+        >
           {content}
         </Typography>
       </div>

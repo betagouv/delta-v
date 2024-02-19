@@ -67,7 +67,11 @@ export const memoizedCountriesOptions = (
 ): MemoizedCountry[] => {
   const memoizedCountries = useMemo(() => {
     const countries = getNames('fr', { select: 'official' });
-    const keys = Object.keys(countries) as Alpha2Code[];
+    const countriesArray = Object.entries(countries);
+    countriesArray.sort((a, b) => a[1].localeCompare(b[1]));
+    const keys = countriesArray.map((country) => {
+      return country[0] as Alpha2Code;
+    });
     const enabledKeys = keys.filter((key) => !disabledCountries.includes(key));
     return enabledKeys.map((key) => {
       const countryAlternative = countriesAlternatives.find((country) => country.id === key);

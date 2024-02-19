@@ -40,6 +40,9 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
   };
 
   const handleNavbarItemClick = (item: MenuAgentItem) => {
+    if (item.disabled) {
+      return;
+    }
     if (item.openDeclarationResumeModal) {
       openDeclaration();
     } else setOpenModalResumeDeclaration(false);
@@ -50,7 +53,7 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
       <div className="flex flex-row justify-between items-center">
         <div
           className="w-[86px] h-[45px] md:hidden lg:flex cursor-pointer"
-          onClick={() => router.push(RoutingAgent.home)}
+          onClick={() => router.push(`${RoutingAgent.home}?mode=tools`)}
         >
           <SvgIcon name="logoAgent" />
         </div>
@@ -61,9 +64,9 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
                 {item.id === 'declaration' ? (
                   <div
                     className={clsxm({
-                      'py-2 px-5 rounded-full bg-primary-400 inline-flex items-center justify-between cursor-pointer':
+                      'py-2 px-5 rounded-full bg-primary-400 inline-flex items-center justify-between cursor-pointer hover:opacity-80 active:opacity-0':
                         true,
-                      'cursor-not-allowed': item.disabled,
+                      'cursor-not-allowed hover:opacity-100 active:opacity-100': item.disabled,
                     })}
                     onClick={() => handleNavbarItemClick(item)}
                   >
@@ -80,8 +83,8 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
                   <NextLink href={getNavBarLink(item)} key={item.title}>
                     <div
                       className={clsxm({
-                        'cursor-pointer': true,
-                        'cursor-not-allowed': item.disabled,
+                        'cursor-pointer hover:opacity-80 active:opacity-0': true,
+                        'cursor-not-allowed hover:opacity-100 active:opacity-100': item.disabled,
                       })}
                       onClick={() => handleNavbarItemClick(item)}
                     >

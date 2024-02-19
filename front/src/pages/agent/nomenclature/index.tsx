@@ -5,7 +5,7 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { NomenclaturePageDesktop } from '@/templates/NomenclaturePageDesktop';
-import { NomenclaturePageAgentMobile } from '@/templates/NomenclaturePageMobile';
+import NomenclaturePageMobile from '@/templates/NomenclaturePageMobile';
 
 export interface FormDeclarationData {
   country?: Alpha2Code;
@@ -30,7 +30,7 @@ const Nomenclature = () => {
         titleHeader="Nomenclature"
         isMobile={isMobile}
       >
-        {isMobile ? <NomenclaturePageAgentMobile /> : <NomenclaturePageDesktop />}
+        {isMobile ? <NomenclaturePageMobile /> : <NomenclaturePageDesktop />}
       </MainAgent>
     </AgentRoute>
   );
