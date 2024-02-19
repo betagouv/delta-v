@@ -24,7 +24,7 @@ interface SearchProductProps<T> {
   disabled?: boolean;
 }
 
-export const SearchProduct: React.FC<SearchProductProps<any>> = <T extends unknown>({
+export const SearchProductMobile: React.FC<SearchProductProps<any>> = <T extends unknown>({
   onSearch,
   onChange = () => {},
   onSearchAll = () => {},

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import React, { useState } from 'react';
 
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -22,6 +23,28 @@ const getNavBarLink = (item: MenuAgentItem) => {
   }
   return item.path ?? '';
 };
+
+export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps) => {
+  const router = useRouter();
+  const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
+
+  const { declarationAgentRequest } = useStore((state) => ({
+    declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
+  }));
+
+  const openDeclaration = () => {
+    if (getLevelWithData(declarationAgentRequest) === 1) {
+      router.push(RoutingAgent.createDeclaration);
+    } else {
+      setOpenModalResumeDeclaration(true);
+    }
+  };
+
+  const handleNavbarItemClick = (item: MenuAgentItem) => {
+    if (item.openDeclarationResumeModal) {
+      openDeclaration();
+    } else setOpenModalResumeDeclaration(false);
+  };
 
 export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps) => {
   const router = useRouter();

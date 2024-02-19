@@ -25,13 +25,18 @@ x-envs: &common-envs
   SMTP_URL: smtp://username:password@mailhog:1025
   WHITE_LIST_AGENT_EMAIL: "s.sabalot@gmail.com,sbergeot.pro@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"
   FEEDBACK_RECEIVER_EMAIL_LIST: "s.sabalot@gmail.com,farid.boussetta@snowpact.com,anthony.hoang@snowpact.com"
-  DISABLE_RATE_LIMIT: "true"
+  REDIS_URL: ${REDIS_URL:-redis://:redis@redis.api.dev.delta-v:6379}
+  DISABLE_RATE_LIMIT: "false"
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
   DB_HOST: e2e-test-database-delta-v
   LOG_LEVEL: fatal
   DISABLE_RATE_LIMIT: "false"
+  REDIS_URL: redis://:redis@e2e-test-redis.api.dev.delta-v:6379/0
+
+x-redis-common-envs: &redis-common-envs
+  REDIS_PASSWORD: redis
 
 services:
   backend-api: &backend_default
@@ -47,11 +52,37 @@ services:
     working_dir: /usr/app
     command: yarn dev
 
+  redis.api.dev.delta-v:
+    container_name: redis.api.dev.delta-v
+    image: "redis:7-bullseye"
+    restart: always
+    environment:
+      REDIS_PASSWORD: redis
+    ports:
+      - 9003:6379
+    networks:
+      - backend
+    volumes:
+      - redis_data:/data
+
+  e2e-test-redis.api.dev.delta-v:
+    container_name: e2e-test-redis.api.dev.delta-v
+    image: "redis:7-bullseye"
+    environment:
+      REDIS_PASSWORD: redis
+    ports:
+      - 9004:6379
+    networks:
+      - backend
+    volumes:
+      - ./e2e/tmpredisdata:/data
+
   backend-api-delta-v:
     <<: *backend_default
     container_name: backend-api-delta-v
     depends_on:
       - database-delta-v
+      - redis.api.dev.delta-v
     ports:
       - 8080:8080
 
@@ -60,6 +91,7 @@ services:
     container_name: e2e-test-backend-api-delta-v
     depends_on:
       - e2e-test-database-delta-v
+      - e2e-test-redis.api.dev.delta-v
     ports:
       - 8180:8080
     environment:
@@ -156,4 +188,5 @@ networks:
 
 volumes:
   db-data:
+  redis_data:
   e2e-test-db-data:

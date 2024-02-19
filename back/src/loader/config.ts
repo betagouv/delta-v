@@ -16,6 +16,7 @@ export interface IAppConfig {
   WHITE_LIST_AGENT_EMAIL: string[];
   FEEDBACK_RECEIVER_EMAIL_LIST: string[];
   DISABLE_RATE_LIMIT: boolean;
+  REDIS_URL: string;
 }
 
 const REQUIRED_VARIABLES: string[] = [
@@ -27,6 +28,7 @@ const REQUIRED_VARIABLES: string[] = [
   'ROUTE_FRONTEND_VALIDATE_ACCOUNT',
   'ROUTE_FRONTEND_RESET_PASSWORD',
   'ROUTE_FRONTEND_CHECK_DECLARATION',
+  'REDIS_URL',
 ];
 
 export function checkRequiredVariables(config: NodeJS.ProcessEnv): void {
@@ -68,6 +70,7 @@ function parseConfig(config: any): IAppConfig {
       ? config.FEEDBACK_RECEIVER_EMAIL_LIST.split(',')
       : [],
     DISABLE_RATE_LIMIT: getBoolean(config.DISABLE_RATE_LIMIT) ?? false,
+    REDIS_URL: config.REDIS_URL,
   };
 }
 

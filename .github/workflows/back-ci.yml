@@ -23,6 +23,11 @@ jobs:
     defaults:
       run:
         working-directory: back
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
     env:
       PORT: 8080
       DB_HOST: localhost
@@ -41,6 +46,7 @@ jobs:
       LOG_LEVEL: fatal
       WHITE_LIST_AGENT_EMAIL: "test@gmail.com"
       FEEDBACK_RECEIVER_EMAIL_LIST: "test@gmail.com"
+      REDIS_URL: "redis://:redis@localhost:6379/0"
 
     steps:
       - uses: actions/checkout@v3

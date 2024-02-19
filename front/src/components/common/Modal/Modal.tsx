@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
+import clsxm from '@/utils/clsxm';
 
 export interface IModalProps {
   open: boolean;
@@ -13,31 +14,22 @@ export interface IModalProps {
   children?: any;
   preventClose?: boolean;
   withMargin?: boolean;
+  noPadding?: boolean;
 }
 
 export const Modal: React.FC<IModalProps> = ({
   open,
-  onClose,
+  onClose = () => {},
   title,
   children,
   subtitle,
   preventClose = false,
   withMargin = true,
+  noPadding = false,
 }: IModalProps) => {
-  const handleOnClose = (): void => {
-    if (preventClose) return;
-    if (onClose) {
-      onClose();
-    }
-  };
-
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="fixed inset-0 z-40 w-full overflow-visible"
-        onClose={handleOnClose}
-      >
+      <Dialog as="div" className="fixed inset-0 z-40 w-full overflow-visible" onClose={onClose}>
         <div className="flex min-h-screen items-center justify-center px-small pt-small pb-20 text-center">
           <Transition.Child
             as={Fragment}
@@ -64,7 +56,13 @@ export const Modal: React.FC<IModalProps> = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative z-50 my-largeBase inline-block w-full rounded-lg bg-white p-modalMobile md:p-modalDesktop text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle">
+            <div
+              className={clsxm({
+                'overflow-hidden relative z-50 my-largeBase inline-block w-full p-modalMobile md:p-modalDesktop rounded-lg md:rounded-[20px] bg-white text-left align-bottom shadow-xl transition-all sm:max-w-lg sm:align-middle':
+                  true,
+                'p-0 md:p-0': noPadding,
+              })}
+            >
               {!preventClose && (
                 <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
                   <Icon name="clear" onClick={onClose} />

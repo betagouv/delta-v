@@ -11,7 +11,7 @@ import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import { checkIsFinalProduct } from '@/utils/product.util';
 
-interface ModalCategoryProductProps {
+interface CategoryProductProps {
   open: boolean;
   onAddProduct: (options: OnAddProductOptions) => void;
   onClose?: () => void;
@@ -25,7 +25,7 @@ interface DisplayedProduct {
   title: string;
 }
 
-export const ModalCategoryProduct: React.FC<ModalCategoryProductProps> = ({
+export const CategoryProductMobile: React.FC<CategoryProductProps> = ({
   onClose,
   onAddProduct,
   open,

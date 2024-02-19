@@ -6,8 +6,60 @@ import { Icon } from '../Icon';
 import { IconButtonWithTitle } from '../IconButtonWithTitle';
 import { SvgIcon, SvgNames } from '../SvgIcon';
 import { TitleAgent } from '../TitleAgent';
+import { Typography } from '../Typography';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
 import { Product } from '@/model/product';
+
+const CategoryListHeaderMobile = ({
+  productTree,
+  onClick,
+}: {
+  productTree: Product[];
+  onClick?: () => void;
+}) => {
+  if (productTree.length <= 0) {
+    return <></>;
+  }
+  return (
+    <div className="mt-7">
+      <IconButtonWithTitle
+        icon="chevron-left"
+        title={productTree[0]?.name ?? ''}
+        onClick={onClick}
+      />
+    </div>
+  );
+};
+
+const CategoryListHeaderDesktop = ({
+  productTree,
+  onClick,
+}: {
+  productTree: Product[];
+  onClick?: () => void;
+}) => {
+  return (
+    <>
+      <div className="mb-[36px]">
+        {productTree.length > 0 && (
+          <div className="flex items-start w-full">
+            <IconButtonWithTitle
+              icon="chevron-left"
+              title={productTree[1]?.name ?? 'Catégories'}
+              onClick={onClick}
+            />
+          </div>
+        )}
+      </div>
+      <div className="flex-col gap-4 items-center flex mb-10">
+        {productTree[0]?.icon && <SvgIcon name={productTree[0]?.icon} className="h-10" />}
+        <Typography size="text-[26px]" color="black" weight="bold">
+          {productTree[0]?.name}
+        </Typography>
+      </div>
+    </>
+  );
+};
 
 export interface Item {
   title: string;
@@ -44,20 +96,21 @@ export const CategoryList: React.FC<CategoryListProps> = ({
 
       {title && !bigSize && <li className="flex py-1 text-sm">{title}</li>}
 
-      {productTree && productTree.length > 0 && (
-        <div className="mt-7">
-          <IconButtonWithTitle
-            icon="chevron-left"
-            title={productTree[0]?.name ?? ''}
-            onClick={onClick}
-          />
-        </div>
+      {productTree && (
+        <>
+          <span className="md:hidden block">
+            <CategoryListHeaderMobile productTree={productTree} onClick={onClick} />
+          </span>
+          <span className="hidden md:block">
+            <CategoryListHeaderDesktop productTree={productTree} onClick={onClick} />
+          </span>
+        </>
       )}
       <div
         className={cs({
-          'flex flex-row ': true,
-          'grid grid-cols-3 gap-2 mt-5': displayType === 'card',
-          'flex-col': displayType === 'list',
+          'grid grid-cols-3 gap-2 mt-5 justify-items-center md:flex md:flex-wrap md:gap-5':
+            displayType === 'card',
+          'flex flex-col': displayType === 'list',
         })}
       >
         {items.map((item, index) =>

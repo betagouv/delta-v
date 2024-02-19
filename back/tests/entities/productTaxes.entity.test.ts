@@ -11,9 +11,9 @@ describe('ProductTaxes entity', () => {
   const defaultOptions: ProductTaxesConstructorOptions = {
     id: faker.string.uuid(),
     name: faker.lorem.word(),
-    unitPrice: faker.number.float({ max: 1000, min: 0, precision: 0.01 }),
-    customDuty: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
-    vat: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
+    unitPrice: faker.number.float({ max: 1000, min: 0, multipleOf: 0.01 }),
+    customDuty: faker.number.float({ max: 100, min: 0, multipleOf: 0.01 }),
+    vat: faker.number.float({ max: 100, min: 0, multipleOf: 0.01 }),
   };
   describe('constructor', () => {
     it('should creat an object with default values', () => {
@@ -54,14 +54,14 @@ describe('ProductTaxes entity', () => {
       const detailedShoppingProduct = new DetailedShoppingProduct();
       detailedShoppingProduct.shoppingProduct = {
         id: faker.string.uuid(),
-        originalValue: faker.number.float({ max: 1000, min: 0, precision: 0.01 }),
+        originalValue: faker.number.float({ max: 1000, min: 0, multipleOf: 0.01 }),
         customName: faker.string.sample(),
         customId: faker.string.uuid(),
         currency: 'EUR',
       };
       detailedShoppingProduct.product = productEntityFactory({
-        customDuty: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
-        vat: faker.number.float({ max: 100, min: 0, precision: 0.01 }),
+        customDuty: faker.number.float({ max: 100, min: 0, multipleOf: 0.01 }),
+        vat: faker.number.float({ max: 100, min: 0, multipleOf: 0.01 }),
       });
       detailedShoppingProduct.currency = currencyEntityFactory({
         value: 1,

@@ -1,6 +1,10 @@
 import { rateLimit, Options } from 'express-rate-limit';
+import { RedisStore } from 'rate-limit-redis';
 import { HttpStatuses } from '../../httpStatuses';
 import { ErrorCodes } from '../../../api/common/enums/errorCodes.enum';
+import { getRedisConnection } from '../../../loader/redis';
+
+const client = getRedisConnection();
 
 export const defaultLimiterOptions: Partial<Options> = {
   windowMs: 10 * 60 * 1000,
@@ -14,6 +18,10 @@ export const defaultLimiterOptions: Partial<Options> = {
       code: ErrorCodes.TOO_MANY_REQUESTS,
     });
   },
+  store: new RedisStore({
+    // @ts-expect-error - Known issue: the `call` function is not present in @types/ioredis
+    sendCommand: (...args: string[]) => client.call(...args),
+  }),
 };
 
 export const defaultLimiter = rateLimit(defaultLimiterOptions);

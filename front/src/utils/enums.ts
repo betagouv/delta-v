@@ -11,3 +11,18 @@ export enum TailwindDefaultScreenSize {
   TABLET = '768px',
   DESKTOP = '1024px',
 }
+
+export enum ProductSearchContext {
+  DECLARATION = 'declaration',
+  NOMENCLATURE = 'nomenclature',
+}
+export const getSearchPagePath = (variant: ProductSearchContext): string | undefined => {
+  switch (variant) {
+    case ProductSearchContext.DECLARATION:
+      return '/agent/declaration/produits/recherche';
+    case ProductSearchContext.NOMENCLATURE:
+      return '/agent/nomenclature/recherche';
+    default:
+      return undefined;
+  }
+};

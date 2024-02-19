@@ -7,7 +7,7 @@ import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import {
   FormAddFavoriteData,
   ModalAddFavoriteProduct,
-} from '@/components/autonomous/ModalAddFavoriteProduct';
+} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
 import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -131,7 +131,7 @@ const SearchProduct = () => {
                 key={product.id}
                 product={product}
                 onClick={onClickProduct}
-                onClickFavorite={onClickFavorite}
+                onAddFavorite={onClickFavorite}
                 searchValue={search as string}
               />
             ))}

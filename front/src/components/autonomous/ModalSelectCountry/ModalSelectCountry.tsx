@@ -6,17 +6,18 @@ import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import DownModal from '@/components/common/DownModal';
 import { Icon } from '@/components/common/Icon';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { useStore } from '@/stores/store';
 import { countriesAlternatives, disabledCountries } from '@/utils/const';
 import { memoizedCountriesOptions } from '@/utils/country.util';
+import { ModalType, getModalComponent } from '@/utils/modal';
 
 interface ModalSelectCountryProps {
   isOpen?: boolean;
   forceOpen?: boolean;
+  modalType?: ModalType;
 }
 
 interface FormCountryData {
@@ -26,6 +27,7 @@ interface FormCountryData {
 export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
   isOpen = false,
   forceOpen = false,
+  modalType = ModalType.DOWN,
 }) => {
   const {
     setProductsNomenclatureToDisplay,
@@ -74,16 +76,21 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
 
   const countriesOptions = memoizedCountriesOptions(countriesAlternatives, disabledCountries, true);
 
+  const ModalComponent = getModalComponent(modalType);
+
   return (
     <>
-      <div className="flex flex-row gap-2.5 items-center">
-        <Typography color="black" size="text-2xs" weight="bold" onClick={() => setOpen(true)}>
+      <div
+        className="flex flex-row gap-[10px] items-center cursor-pointer"
+        onClick={() => setOpen(true)}
+      >
+        <Typography color="black" size="text-2xs" weight="bold" desktopSize="text-sm">
           {selectedCountry}
         </Typography>
         <Icon name="chevron-down" size="lg" />
       </div>
 
-      <DownModal
+      <ModalComponent
         bgColor="bg-white"
         open={open}
         onClose={() => setOpen(false)}
@@ -107,7 +114,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
             withListBoxEffect
           />
         </motion.div>
-      </DownModal>
+      </ModalComponent>
     </>
   );
 };

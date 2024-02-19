@@ -10,6 +10,7 @@ import { ResponseCodes } from '../../../../src/api/common/enums/responseCodes.en
 import { prepareContextUser } from '../../../helpers/prepareContext/user';
 import { clearEventEmitterMock, eventEmitterMock } from '../../../mocks/eventEmitter.mock';
 import { resendEmailValidationEmailLimiter } from '../../../../src/core/middlewares/rateLimiter/resendEmailLimiter';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
 
@@ -51,7 +52,11 @@ describe('askEmailValidationRouter route', () => {
       .post('/api/email/validate/ask')
       .send({ email: user.email });
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.OK);
+    expect(value).toBe('1');
     expect(body.code).toEqual(ResponseCodes.USER_ASK_EMAIL_VALIDATION);
 
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
@@ -68,7 +73,11 @@ describe('askEmailValidationRouter route', () => {
       .post('/api/email/validate/ask')
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.NOT_FOUND);
+    expect(value).toBe('0');
     expect(body.code).toEqual(ErrorCodes.USER_NOT_FOUND);
 
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
@@ -101,8 +110,12 @@ describe('askEmailValidationRouter route', () => {
       .post('/api/email/validate/ask')
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(status).toBe(HttpStatuses.UNAUTHORIZED);
     expect(body.code).toEqual(ErrorCodes.USER_ALREADY_ENABLED_UNAUTHORIZED);
+    expect(value).toBe('0');
 
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(0);
   });
@@ -121,8 +134,12 @@ describe('askEmailValidationRouter route', () => {
       .post('/api/email/validate/ask')
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     expect(body.code).toEqual(ErrorCodes.TOO_MANY_REQUESTS_EMAIL_SEND);
     expect(status).toBe(HttpStatuses.TOO_MANY_REQUESTS);
+    expect(value).toBe('1');
     expect(eventEmitterMock.emitSendEmail.mock.calls.length).toBe(1);
   });
 });

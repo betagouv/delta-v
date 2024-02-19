@@ -8,6 +8,7 @@ import { testDbManager } from '../../../helpers/testDb.helper';
 import { HttpStatuses } from '../../../../src/core/httpStatuses';
 import { putSearchHistory } from '../../../../src/api/product/putSearchHistory';
 import { searchProductHistoryEntityFactory } from '../../../helpers/factories/searchProductHistory.factory';
+import { redisConnection } from '../../../setupTests';
 
 const testDb = testDbManager();
 
@@ -42,8 +43,12 @@ describe('put search product history integration', () => {
       })
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const newSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);
 
+    expect(value).toBe('0');
     expect(newSearchProductHistory).toBeDefined();
 
     expect(status).toBe(HttpStatuses.OK);
@@ -65,8 +70,12 @@ describe('put search product history integration', () => {
       .send({ productId: product.id, searchValue })
       .set('Authorization', `Bearer ${accessToken}`);
 
+    const redisKeys = await redisConnection.keys('*');
+    const value = await redisConnection.get(redisKeys[0]);
+
     const updatedSearchProductHistory = await testDb.getSearchProductHistory(product.id, user.id);
 
+    expect(value).toBe('0');
     expect(initialSearchProductHistory).toBeDefined();
     expect(updatedSearchProductHistory).toBeDefined();
     expect(updatedSearchProductHistory?.userId).toEqual(initialSearchProductHistory.userId);
