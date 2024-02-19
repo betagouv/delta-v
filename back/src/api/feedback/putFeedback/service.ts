@@ -26,11 +26,10 @@ const getPhotosUrl = async (
   if (!file) {
     return undefined;
   }
-  const fileName = `${pictureId}-${file.originalname.split('.').reverse()[0]}`;
 
   const resizedBuffer = await resizePicture(Size.BIG, file.buffer);
 
-  const photoUrl = await s3Service.upload({ buffer: resizedBuffer, fileName });
+  const photoUrl = await s3Service.upload({ buffer: resizedBuffer, fileName: pictureId });
   return photoUrl.Location;
 };
 
