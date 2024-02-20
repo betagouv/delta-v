@@ -192,18 +192,18 @@ const ContactPage = () => {
                 </label>
               )}
             </div>
-            <div className="w-[118px] self-center md:self-start mb-4">
-              <button
-                className={clsxm({
-                  'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer': true,
-                  'bg-disabled-bg cursor-not-allowed': isError,
-                })}
-                type="submit"
-                disabled={isError}
-              >
-                Envoyer
-              </button>
-            </div>
+          </div>
+          <div className="w-[118px] self-center md:self-start mb-4">
+            <button
+              className={clsxm({
+                'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer': true,
+                'bg-disabled-bg cursor-not-allowed': isError,
+              })}
+              type="submit"
+              disabled={isError}
+            >
+              Envoyer
+            </button>
           </div>
         </form>
         <ModalValidateFeedbackInfoMobile
