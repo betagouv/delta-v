@@ -8,6 +8,7 @@ import { serializePutFeedback } from './serializer';
 import { service } from './service';
 
 import { PutFeedbackRequest } from './validator';
+import { getFeedbackImageServerService } from './services/s3.service';
 
 type PutDeclaration = ValidatedRequest<PutFeedbackRequest>;
 
@@ -19,6 +20,7 @@ export default async (
   try {
     const { feedbackId } = req.params;
     const { comment } = req.body;
+    const file = req.file;
 
     const { email, userId } = req.jwt;
 
@@ -27,8 +29,10 @@ export default async (
       comment,
       email,
       userId,
+      file,
       feedbackRepository: AppDataSource.manager.withRepository(FeedbackRepository),
       eventEmitter,
+      s3Service: getFeedbackImageServerService(),
     });
 
     const response = serializePutFeedback();

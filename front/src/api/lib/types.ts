@@ -54,6 +54,7 @@ export interface ErrorResponse extends BaseAPIResponse {
 export type CreateFeedbackParams = {
   feedbackId: string;
   comment: string;
+  file?: File;
 };
 
 export type CreateFavoriteParams = {

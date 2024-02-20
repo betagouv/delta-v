@@ -17,6 +17,10 @@ export interface IAppConfig {
   FEEDBACK_RECEIVER_EMAIL_LIST: string[];
   DISABLE_RATE_LIMIT: boolean;
   REDIS_URL: string;
+  CELLAR_KEY_ID: string;
+  CELLAR_KEY_SECRET: string;
+  CELLAR_HOST: string;
+  CELLAR_BUCKET_NAME: string;
 }
 
 const REQUIRED_VARIABLES: string[] = [
@@ -71,6 +75,10 @@ function parseConfig(config: any): IAppConfig {
       : [],
     DISABLE_RATE_LIMIT: getBoolean(config.DISABLE_RATE_LIMIT) ?? false,
     REDIS_URL: config.REDIS_URL,
+    CELLAR_KEY_ID: config.CELLAR_KEY_ID,
+    CELLAR_KEY_SECRET: config.CELLAR_KEY_SECRET,
+    CELLAR_HOST: config.CELLAR_HOST,
+    CELLAR_BUCKET_NAME: config.CELLAR_BUCKET_NAME,
   };
 }
 

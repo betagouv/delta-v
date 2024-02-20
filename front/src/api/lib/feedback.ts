@@ -3,9 +3,15 @@ import axios from 'axios';
 import { CreateFeedbackParams } from './types';
 
 export const createFeedbackRequest = async (params: CreateFeedbackParams): Promise<void> => {
-  const bodyParams = {
-    comment: params.comment,
-  };
+  const formData = new FormData();
 
-  await axios.put(`/feedback/${params.feedbackId}/`, bodyParams);
+  formData.append('comment', params.comment);
+
+  if (params.file) {
+    formData.append('file', params.file);
+  }
+
+  await axios.put(`/feedback/${params.feedbackId}/`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
 };
