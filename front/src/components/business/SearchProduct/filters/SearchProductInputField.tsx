@@ -68,7 +68,7 @@ export const SearchInputField = ({
         placeholder={placeholder}
         disabled={disabled}
         enterKeyHint="search"
-        className="relative text-xs font-normal border-none w-full placeholder:text-secondary-400 placeholder:italic focus:ring-transparent"
+        className="relative text-xs font-normal border-none w-full placeholder:text-placeholder placeholder:italic focus:ring-transparent"
         onChange={handleFieldChange}
         autoFocus={autoFocus}
         onFocus={() => setIsFocused(true)}

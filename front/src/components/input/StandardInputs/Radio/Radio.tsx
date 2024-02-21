@@ -38,7 +38,7 @@ export const Radio: React.FC<IRadioOptions> = ({
             value={radioValue.id}
             type="radio"
             className={classNames({
-              'form-radio h-5 w-5 border-gray-300 text-primary-600 focus:ring-transparent disabled:text-disabled-text':
+              'form-radio h-5 w-5 md:h-[17px] md:w-[17px]  border-gray-300 text-primary-600 focus:ring-transparent disabled:text-disabled-text':
                 true,
               'border-error': newRadio && error,
             })}
@@ -47,7 +47,7 @@ export const Radio: React.FC<IRadioOptions> = ({
           <label
             htmlFor={`${radioValue.id}-${index}`}
             className={classNames({
-              'ml-2.5 block text-base text-black disabled:text-disabled-text': true,
+              'ml-2.5 block text-base md:text-xs text-black disabled:text-disabled-text': true,
               'text-error': newRadio && error,
             })}
           >

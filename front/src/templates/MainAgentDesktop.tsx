@@ -16,13 +16,13 @@ const MainAgentDesktop = ({ meta, children, titleHeader }: IMainAgentDesktopProp
   const router = useRouter();
   const path = router.pathname;
   return (
-    <div className="h-full antialiased flex flex-col">
+    <div className="antialiased flex flex-col ">
       {meta}
 
       <div className="pl-[103px] pr-20 border-b border-disabled-bg">
         <NavBar links={MAIN_MENU_AGENT_ITEMS} activePath={path} />
       </div>
-      <div className="flex flex-col flex-1 px-[126px] py-[60px] gap-[30px]">
+      <div className="flex flex-col flex-1 px-[126px] pt-[60px] gap-[30px] ">
         {titleHeader && (
           <TitleAgent
             title={titleHeader}

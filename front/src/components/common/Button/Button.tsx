@@ -28,6 +28,7 @@ export interface IButtonProps {
   uppercase?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
+  fullHeight?: boolean;
   loading?: boolean;
   mobileVariant?: 'icon' | 'fullWidth';
   type?: 'button' | 'submit';
@@ -46,6 +47,7 @@ export const Button: React.FC<IButtonProps> = ({
   rounded = 'full',
   disabled = false,
   fullWidth = false,
+  fullHeight = false,
   loading = false,
   type = 'button',
   children,
@@ -61,6 +63,7 @@ export const Button: React.FC<IButtonProps> = ({
     rounded,
     disabled: buttonDisabled,
     fullWidth,
+    fullHeight,
   });
   const customIconClassName = getIconStyle({
     size,

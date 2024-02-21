@@ -1,20 +1,26 @@
 /* eslint-disable no-nested-ternary */
 
+import { useState } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
+import { useMediaQuery } from 'react-responsive';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { Button } from '@/components/common/Button';
+import { Tooltip } from '@/components/common/Tooltip';
+import { TooltipContainer } from '@/components/common/Tooltip/TooltipContainer';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Radio } from '@/components/input/StandardInputs/Radio';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { useStore } from '@/stores/store';
-import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
+import { DeclarationAgentStepsDesktop } from '@/templates/DeclarationAgentStepsDesktop';
+import { DeclarationAgentStepsMobile } from '@/templates/DeclarationAgentStepsMobile';
 import { RoutingAgent } from '@/utils/const';
 
 export interface FormDeclarationData {
@@ -150,169 +156,216 @@ const Declaration = () => {
     router.push(`/agent/declaration/ajout/transports`);
   };
 
+  const [isMailTooltipOpen, setIsMailTooltipOpen] = useState(false);
+  const [isPhoneTooltipOpen, setIsPhoneTooltipOpen] = useState(false);
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
+  const DeclarationAgentStepsComponent = isMobile
+    ? DeclarationAgentStepsMobile
+    : DeclarationAgentStepsDesktop;
+
   return (
     <AgentRoute>
-      <DeclarationAgentSteps
+      <DeclarationAgentStepsComponent
         currentStep={1}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
         linkButton={`${RoutingAgent.home}?mode=tools`}
       >
-        <div className="flex flex-col gap-5">
-          <div className="w5/6 flex flex-col gap-5">
-            <div className="w-56">
-              <InputGroup
-                type="text"
-                name="lastName"
-                fullWidth={true}
-                placeholder="Nom"
-                register={register('lastName')}
-                control={control}
-                error={errors?.lastName?.message}
-                required
-              />
-            </div>
-            <div className="w-56">
-              <InputGroup
-                type="text"
-                name="firstName"
-                fullWidth={true}
-                placeholder="Prénom"
-                register={register('firstName')}
-                control={control}
-                error={errors?.firstName?.message}
-                required
-              />
-            </div>
-          </div>
-          <InputGroup
-            type="text"
-            name="address"
-            fullWidth={true}
-            placeholder="Adresse"
-            register={register('address')}
-            control={control}
-            error={errors?.address?.message}
-            required
-          />
-          <div className="flex items-start gap-5">
-            <div className="w-32">
-              <InputGroup
-                type="text"
-                name="postalCode"
-                fullWidth={true}
-                placeholder="Code postal"
-                register={register('postalCode')}
-                control={control}
-                error={errors?.postalCode?.message}
-                required
-              />
-            </div>
-            <div className="flex-1">
-              <InputGroup
-                type="text"
-                name="city"
-                fullWidth={true}
-                placeholder="Ville"
-                register={register('city')}
-                control={control}
-                error={errors?.city?.message}
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div className="mt-4 flex flex-col w-fit">
-          <div>
-            <label
-              htmlFor="adult"
-              className={classNames({
-                'mb-2 block text-base': true,
-                'text-error': errors?.adult?.message,
-              })}
-              data-testid="label-element"
-            >
-              L’usager a-t-il plus de 18 ans ?
-            </label>
-            <div
-              className={classNames({
-                'bg-white px-5 py-2.5 rounded-full flex justify-center h-10': true,
-                'border border-error': errors?.adult?.message,
-              })}
-            >
-              <Radio
-                id="adult"
-                name="adult"
-                error={errors?.adult?.message}
-                radioValues={[
-                  { id: 'true', value: 'Oui' },
-                  { id: 'false', value: 'Non' },
-                ]}
-                register={register('adult')}
-                newRadio
-              />
-            </div>
-            {errors?.adult?.message && (
-              <div data-testid="error-element" className="flex pl-2 pt-1">
-                <span className="pl-1" id="input-error">
-                  <Typography size="text-2xs" color="error">
-                    {errors?.adult?.message}
-                  </Typography>
-                </span>
+        <div className="flex flex-col md:w-[616px] py-10">
+          <div className="flex flex-col gap-5">
+            <div className="w5/6 flex flex-col gap-5">
+              <div className="flex md:flex-row flex-col gap-5">
+                <div className="w-56 md:w-[300px]">
+                  <InputGroup
+                    type="text"
+                    name="lastName"
+                    fullWidth={true}
+                    placeholder="Nom"
+                    register={register('lastName')}
+                    control={control}
+                    error={errors?.lastName?.message}
+                    required
+                  />
+                </div>
+                <div className="w-56 md:w-[300px]">
+                  <InputGroup
+                    type="text"
+                    name="firstName"
+                    fullWidth={true}
+                    placeholder="Prénom"
+                    register={register('firstName')}
+                    control={control}
+                    error={errors?.firstName?.message}
+                    required
+                  />
+                </div>
               </div>
+            </div>
+            <div className="w-full md:w-[505px]">
+              <InputGroup
+                type="text"
+                name="address"
+                fullWidth={true}
+                placeholder="Adresse"
+                register={register('address')}
+                control={control}
+                error={errors?.address?.message}
+                required
+              />
+            </div>
+            <div className="flex items-start gap-5 w-full md:w-[505px]">
+              <div className="w-32 md:w-[190px]">
+                <InputGroup
+                  type="text"
+                  name="postalCode"
+                  fullWidth={true}
+                  placeholder="Code postal"
+                  register={register('postalCode')}
+                  control={control}
+                  error={errors?.postalCode?.message}
+                  required
+                />
+              </div>
+              <div className="flex-1">
+                <InputGroup
+                  type="text"
+                  name="city"
+                  fullWidth={true}
+                  placeholder="Ville"
+                  register={register('city')}
+                  control={control}
+                  error={errors?.city?.message}
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-col w-fit">
+            <div>
+              <label
+                htmlFor="adult"
+                className={classNames({
+                  'mb-2 block text-base md:text-sm': true,
+                  'text-error': errors?.adult?.message,
+                })}
+                data-testid="label-element"
+              >
+                L’usager a-t-il plus de 18 ans ?
+              </label>
+              <div
+                className={classNames({
+                  'bg-white px-5 py-2.5 rounded-full flex justify-center h-10 md:w-[156px]': true,
+                  'border border-error': errors?.adult?.message,
+                })}
+              >
+                <Radio
+                  id="adult"
+                  name="adult"
+                  error={errors?.adult?.message}
+                  radioValues={[
+                    { id: 'true', value: 'Oui' },
+                    { id: 'false', value: 'Non' },
+                  ]}
+                  register={register('adult')}
+                  newRadio
+                />
+              </div>
+              {errors?.adult?.message && (
+                <div data-testid="error-element" className="flex pl-2 pt-1">
+                  <span className="pl-1" id="input-error">
+                    <Typography size="text-2xs" color="error">
+                      {errors?.adult?.message}
+                    </Typography>
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className={classNames({ 'mt-4 w-56': true, hidden: !watchNotAdultSelect })}>
+              <InputGroup
+                type="select"
+                name="age"
+                fullWidth={true}
+                placeholder="Sélectionnez l’âge"
+                register={register('age')}
+                control={control}
+                error={errors?.age?.message}
+                options={[
+                  { id: 14, value: 'Moins de 15 ans' },
+                  { id: 15, value: '15 ans' },
+                  { id: 16, value: '16 ans' },
+                  { id: 17, value: '17 ans' },
+                ]}
+              />
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-col gap-5 w-full">
+            <div className="md:grid md:grid-cols-[340px_20px] md:gap-2">
+              <InputGroup
+                type="text"
+                name="mail"
+                fullWidth={true}
+                placeholder="Adresse mail"
+                register={register('email')}
+                control={control}
+                error={errors?.email?.message}
+                required
+              />
+              <div className="mt-2.5">
+                <Tooltip
+                  iconClassname="h-5 w-5 hidden md:block"
+                  onClick={() => setIsMailTooltipOpen(!isMailTooltipOpen)}
+                  isOpen={isMailTooltipOpen}
+                />
+              </div>
+            </div>
+            {isMailTooltipOpen && (
+              <TooltipContainer
+                description="L’adresse mail n’est pas obligatoire mais est fortement recommandée. Une fois la
+                déclaration finie, vous pourrez directement l’envoyer à l’usager."
+                onCloseClick={() => setIsMailTooltipOpen(false)}
+              />
+            )}
+
+            <div className="md:grid md:grid-cols-[230px_20px] md:gap-2 w-56 md:w-full">
+              <InputGroup
+                type="text"
+                name="phone"
+                fullWidth={true}
+                placeholder="Téléphone"
+                register={register('phoneNumber')}
+                control={control}
+                error={errors?.phoneNumber?.message}
+                required
+              />
+              <div className="mt-2.5">
+                <Tooltip
+                  iconClassname="h-5 w-5 hidden md:block"
+                  onClick={() => setIsPhoneTooltipOpen(!isPhoneTooltipOpen)}
+                  isOpen={isPhoneTooltipOpen}
+                />
+              </div>
+            </div>
+            {isPhoneTooltipOpen && (
+              <TooltipContainer
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                onCloseClick={() => setIsPhoneTooltipOpen(false)}
+              />
             )}
           </div>
-          <div className={classNames({ 'mt-4 w-56': true, hidden: !watchNotAdultSelect })}>
-            <InputGroup
-              type="select"
-              name="age"
-              fullWidth={true}
-              placeholder="Sélectionnez l’âge"
-              register={register('age')}
-              control={control}
-              error={errors?.age?.message}
-              options={[
-                { id: 14, value: 'Moins de 15 ans' },
-                { id: 15, value: '15 ans' },
-                { id: 16, value: '16 ans' },
-                { id: 17, value: '17 ans' },
-              ]}
-            />
+
+          <div className="mb-8 flex-1 md:mt-10 md:flex-none" />
+          <div className="w-40 md:w-[118px] md:h-[34px] self-center md:self-start">
+            <Button fullWidth fullHeight type="submit">
+              <span className="md:text-xs">Valider</span>
+            </Button>
           </div>
         </div>
-
-        <div className="mt-5 flex flex-col gap-5">
-          <InputGroup
-            type="text"
-            name="mail"
-            fullWidth={true}
-            placeholder="Email"
-            register={register('email')}
-            control={control}
-            error={errors?.email?.message}
-            required
-          />
-          <div className="w-56">
-            <InputGroup
-              type="text"
-              name="phone"
-              fullWidth={false}
-              placeholder="Téléphone"
-              register={register('phoneNumber')}
-              control={control}
-              error={errors?.phoneNumber?.message}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="mb-8 flex-1" />
-        <div className="w-40 self-center">
-          <Button fullWidth={true} type="submit">
-            Valider
-          </Button>
-        </div>
-      </DeclarationAgentSteps>
+      </DeclarationAgentStepsComponent>
     </AgentRoute>
   );
 };

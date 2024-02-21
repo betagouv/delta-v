@@ -53,7 +53,7 @@ export const BlockHeaderAgent: React.FC<BlockHeaderAgentProps> = ({
               data-testid="input-search-element"
               placeholder="Numéro de déclaration, nom, prénom..."
               enterKeyHint="search"
-              className="block w-[433px] h-10 rounded-full py-2 px-5 text-xs placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent border-none"
+              className="block w-[433px] h-10 rounded-full py-2 px-5 text-xs placeholder:font-light placeholder:italic placeholder:text-placeholder focus:border-secondary-300 focus:outline-none  focus:ring-transparent border-none"
               onChange={(event) => {
                 onChangeSearch(event.target.value);
               }}

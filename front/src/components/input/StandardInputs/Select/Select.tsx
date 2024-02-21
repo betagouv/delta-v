@@ -51,7 +51,7 @@ export const Select: React.FC<ISelectOptions> = ({
   };
 
   let classNameOptions =
-    'absolute z-10 mt-1 max-h-60 w-full list-none overflow-auto rounded-md bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none';
+    'absolute z-10 mt-3 max-h-60 w-full list-none overflow-auto rounded-2xl bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none ';
   classNameOptions += fullWidth ? ' w-full' : ' w-auto';
   return (
     <Listbox
@@ -79,9 +79,11 @@ export const Select: React.FC<ISelectOptions> = ({
                 }),
               )}
             >
-              <span className={classNames({ 'block truncate ml-2': true, 'text-error': error })}>
-                {options.find((option) => option.id === field.value)?.value ?? placeholder}
-              </span>
+              <div className={classNames({ 'block truncate ml-2': true, 'text-error': error })}>
+                {options.find((option) => option.id === field.value)?.value ?? (
+                  <span className="font-light italic text-placeholder">{placeholder}</span>
+                )}
+              </div>
               <span
                 className={classNames({
                   'pointer-events-none absolute inset-y-0 right-0 flex p-2.5 pr-5 items-center':

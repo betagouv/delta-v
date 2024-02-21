@@ -94,7 +94,7 @@ export const FilterBarMobile = ({
                 data-testid="input-search-element"
                 enterKeyHint="search"
                 placeholder="Thèmes, mots-clés..."
-                className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none focus:ring-transparent mt-2 border-none"
+                className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-placeholder focus:border-secondary-300 focus:outline-none focus:ring-transparent mt-2 border-none"
                 {...register('search')}
               />
             )}

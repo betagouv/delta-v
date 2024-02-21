@@ -182,13 +182,15 @@ export const ProductSearchTools = ({
         <FavoriteProducts onFavoriteClick={onFavoriteBadgeClick} />
       </div>
       <div className="flex-col pt-5 relative flex">
-        <div className="absolute right-0 top-[30px]">
-          <ModalSelectCountry
-            modalType={modalType}
-            isOpen={true}
-            preventClose={!countryForProductsNomenclature}
-          />
-        </div>
+        {variant === ProductSearchContext.NOMENCLATURE && (
+          <div className="absolute right-0 top-[30px]">
+            <ModalSelectCountry
+              modalType={modalType}
+              isOpen={true}
+              preventClose={!countryForProductsNomenclature}
+            />
+          </div>
+        )}
         {showCategoryFilters && (
           <CategoryProductDesktop onModalClose={onCloseCategoryNomenclatureModal} />
         )}

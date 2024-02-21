@@ -52,7 +52,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
         }
         placeholderText="Du: jj/mm/aaaa"
         className={cs({
-          'justify-center w-full rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:text-xs placeholder:italic placeholder:text-secondary-400 text-sm py-2.5':
+          'justify-center w-full rounded-l-full border border-secondary-300 focus:ring-0 pl-5  placeholder:text-xs placeholder:italic placeholder:text-placeholder text-sm py-2.5':
             true,
           'border-none': noBorder,
         })}
@@ -111,7 +111,7 @@ export const PeriodInput: React.FC<IPeriodInputOptions> = ({
         minDate={dayjs(startDateField.value).add(1, 'day').toDate()}
         maxDate={dayjs(new Date()).toDate()}
         className={cs({
-          'justify-center w-full rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:text-xs placeholder:italic placeholder:text-secondary-400 text-sm py-2.5':
+          'justify-center w-full rounded-r-full border border-secondary-300 pl-5 focus:ring-0 placeholder:text-xs placeholder:italic placeholder:text-placeholder text-sm py-2.5':
             true,
           'border-none': noBorder,
         })}

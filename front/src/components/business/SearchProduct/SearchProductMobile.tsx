@@ -71,7 +71,7 @@ export const SearchProductMobile: React.FC<SearchProductProps<any>> = <T extends
             placeholder={placeholder}
             disabled={disabled}
             enterKeyHint="search"
-            className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2 border-none"
+            className="block w-full rounded-full py-2 px-5 text-base placeholder:font-light placeholder:italic placeholder:text-placeholder focus:border-secondary-300 focus:outline-none  focus:ring-transparent mt-2 border-none"
             onChange={(event) => {
               setSearchValue(getStringOrUndefined(event.target.value));
               onSearch(event.target.value);
