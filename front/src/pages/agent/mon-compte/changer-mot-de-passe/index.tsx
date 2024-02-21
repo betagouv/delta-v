@@ -124,6 +124,7 @@ const ChangePasswordPage = () => {
           colorClassnameOne="text-black"
           colorClassnameTwo="text-primary-600"
           onReturnClick={!isCurrentStepOne ? handleReturnFromStepTwo : undefined}
+          titleWidthClassname="w-[220px]"
         />
         <section className="my-auto h-3/4 flex flex-col items-center w-full px-10 ">
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">

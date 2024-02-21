@@ -131,7 +131,7 @@ const ContactPage = () => {
                 Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
                 une optimisation, une demande particulière ?
               </Typography>
-              <div className="mt-4">
+              <div className="my-4">
                 <InputGroup
                   type="textarea"
                   placeholder="Saisissez votre message..."
@@ -140,18 +140,7 @@ const ContactPage = () => {
                   error={isError ? errors?.comment?.message : undefined}
                   additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
                 />
-                <Typography size="text-xs" color="black">
-                  Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une
-                  demande particulière ?
-                </Typography>
               </div>
-              <InputGroup
-                type="textarea"
-                placeholder="Saisissez votre message..."
-                name="comment"
-                register={register('comment')}
-                error={!isValid ? errors?.comment?.message : undefined}
-              />
 
               {file ? (
                 <div className="flex gap-5 items-center flex-row">
