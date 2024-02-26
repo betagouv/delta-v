@@ -21,6 +21,23 @@ interface DisplayedProduct {
   title: string;
 }
 
+const getSubProductCardsToDisplay = (productTree: Product[]) => {
+  const currentProduct = productTree[0];
+  const parentProduct = productTree[1];
+  const isFinalProduct = checkIsFinalProduct(currentProduct);
+  const selectedProduct = isFinalProduct ? parentProduct : currentProduct;
+  if (!selectedProduct) {
+    return [];
+  }
+  return selectedProduct.subProducts.map((product) => {
+    return {
+      id: product.id,
+      svgNames: product.icon ?? 'categoryOther',
+      title: product.name,
+    };
+  });
+};
+
 export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
   defaultProduct,
   onModalClose,
@@ -50,17 +67,10 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
   useEffect(() => {
     if (currentId) {
       const selectedProduct = findProduct(products, currentId);
-      setProductTree(findProductTree(products, currentId));
+      const newProductTree = findProductTree(products, currentId);
+      setProductTree(newProductTree);
       setCurrentProduct(selectedProduct);
-      setDisplayedProducts(
-        selectedProduct?.subProducts.map((product) => {
-          return {
-            id: product.id,
-            svgNames: product.icon ?? 'categoryOther',
-            title: product.name,
-          };
-        }) ?? [],
-      );
+      setDisplayedProducts(getSubProductCardsToDisplay(newProductTree));
     } else {
       setProductTree([]);
       setCurrentProduct(undefined);

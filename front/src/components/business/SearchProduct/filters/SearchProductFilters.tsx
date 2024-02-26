@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { SearchProductCategoryFilter } from './SearchProductCategoryFilter';
 import { SearchInputField } from './SearchProductInputField';
 import { SearchProductSubmitButton } from './SearchProductSubmitButton';
+import { SearchProductHistoryItem } from '@/api/lib/products';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
@@ -13,6 +14,7 @@ interface SearchProductFilterBarProps {
   onSearchAllClick?: (searchValue: string) => void;
   placeholder?: string;
   isCategoryFilterOpen?: boolean;
+  history?: SearchProductHistoryItem[];
 }
 
 export const SearchProductFilterBar = ({
@@ -22,6 +24,7 @@ export const SearchProductFilterBar = ({
   onSearchAllClick,
   placeholder,
   isCategoryFilterOpen,
+  history,
 }: SearchProductFilterBarProps) => {
   const [searchValue, setSearchValue] = useState<string>('');
 
@@ -43,6 +46,7 @@ export const SearchProductFilterBar = ({
         placeholder={placeholder}
         onClickProduct={onClickProduct}
         onClearFieldClick={() => setSearchValue('')}
+        history={history}
       />
       <SearchProductCategoryFilter onClick={onFilterClick} open={isCategoryFilterOpen} />
       <SearchProductSubmitButton onClick={onSearchClick} />
