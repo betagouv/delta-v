@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { putFeedbackValidator } from '../../../../src/api/feedback/putFeedback/validator';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
+import { validatorHelper } from '../../../../src/core/testHelpers';
 
 describe('putFeedback validator', () => {
   const validator = putFeedbackValidator;
@@ -12,7 +12,7 @@ describe('putFeedback validator', () => {
       feedbackId: faker.string.uuid(),
     },
   };
-  const { isValid, getParsedData } = zodValidatorHelper(validator);
+  const { isValid, getParsedData } = validatorHelper(validator);
   it('should validate proper data', () => {
     console.log(getParsedData(validData));
 

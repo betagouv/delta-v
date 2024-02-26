@@ -1,10 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { getGetDeclarationsValidator } from '../../../../src/api/declaration/getDeclarations/validator';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 const validator = getGetDeclarationsValidator;
 
-const { isValid } = zodValidatorHelper(validator);
+const { isValid } = validatorHelper(validator);
 
 const queryParams = {
   searchPublicId: faker.string.nanoid(10),

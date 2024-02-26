@@ -1,9 +1,8 @@
 import { refreshValidator } from '../../../../src/api/authentication/refresh/validator';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 describe('refresh validator', () => {
   const validator = refreshValidator;
-  const { isValid } = zodValidatorHelper(validator);
+  const { isValid } = validatorHelper(validator);
   const validData = {
     body: {
       accessToken:

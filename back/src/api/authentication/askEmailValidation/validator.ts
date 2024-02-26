@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 
 export const askEmailValidationValidator = z.object({
   body: z.object({

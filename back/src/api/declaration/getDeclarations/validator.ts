@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { validateMeanOfTransports, validateStatus } from '../../../utils/joiCustomValidators';
 import { parseDate, parseNumber } from '../../../utils/zodParser';
 

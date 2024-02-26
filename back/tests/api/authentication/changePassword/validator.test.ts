@@ -1,11 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { passwordRegex } from '../../../../src/api/authentication/common/const/regex';
 import { changePasswordValidator } from '../../../../src/api/authentication/changePassword/validator';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 describe('change password validator', () => {
   const validator = changePasswordValidator;
-  const { isValid } = zodValidatorHelper(validator);
+  const { isValid } = validatorHelper(validator);
   const validData = {
     body: {
       oldPassword: faker.string.alphanumeric(),

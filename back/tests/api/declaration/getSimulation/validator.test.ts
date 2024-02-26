@@ -1,9 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { simulateValidator } from '../../../../src/api/declaration/getSimulation/validator';
 import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
-const { isValid, getParsedData } = zodValidatorHelper(simulateValidator);
+import { validatorHelper } from '../../../../src/core/testHelpers';
+const { isValid, getParsedData } = validatorHelper(simulateValidator);
 
 const defaultValidBody = {
   shoppingProducts: [

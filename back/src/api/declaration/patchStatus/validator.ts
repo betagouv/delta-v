@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { DeclarationStatus } from '../../../entities/declaration.entity';
 
 export const patchStatusValidator = z.object({

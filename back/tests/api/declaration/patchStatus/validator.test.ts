@@ -1,9 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { patchStatusValidator } from '../../../../src/api/declaration/patchStatus/validator';
 import { DeclarationStatus } from '../../../../src/entities/declaration.entity';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
-const { isValid } = zodValidatorHelper(patchStatusValidator);
+import { validatorHelper } from '../../../../src/core/testHelpers';
+const { isValid } = validatorHelper(patchStatusValidator);
 
 const defaultValidBody = {
   status: DeclarationStatus.DRAFT,

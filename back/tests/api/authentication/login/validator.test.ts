@@ -1,9 +1,8 @@
 import { loginValidator } from '../../../../src/api/authentication/login/validator';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 describe('login validator', () => {
   const validator = loginValidator;
-  const { isValid, getParsedData } = zodValidatorHelper(validator);
+  const { isValid, getParsedData } = validatorHelper(validator);
   it('should validate proper data', () => {
     const validData = {
       body: {

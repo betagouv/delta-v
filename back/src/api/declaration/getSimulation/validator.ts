@@ -1,6 +1,6 @@
 import { Alpha2Code, getAlpha2Codes } from 'i18n-iso-countries';
 import { RefinementCtx, z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { MeansOfTransport, meansOfTransport } from '../../common/enums/meansOfTransport.enum';
 import { parseBoolean, parseNumber } from '../../../utils/zodParser';
 

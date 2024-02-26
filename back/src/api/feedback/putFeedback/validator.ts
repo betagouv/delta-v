@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { MimeTypes } from '../../common/enums/mimeTypes';
 
 export const putFeedbackValidator = z.object({

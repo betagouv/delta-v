@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { passwordRegex } from '../common/const/regex';
 
 export const changePasswordValidator = z.object({

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 
 export const deleteFavoriteValidator = z.object({
   params: z.object({

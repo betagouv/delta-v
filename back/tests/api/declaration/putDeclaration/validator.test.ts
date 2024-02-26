@@ -5,9 +5,8 @@ import {
   DeclarationData,
   prepareDeclarationData,
 } from '../../../helpers/prepareContext/declarationData';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
-const { isValid } = zodValidatorHelper(putDeclarationValidator);
+import { validatorHelper } from '../../../../src/core/testHelpers';
+const { isValid } = validatorHelper(putDeclarationValidator);
 const declarationData = prepareDeclarationData();
 
 interface ShoppingProduct {

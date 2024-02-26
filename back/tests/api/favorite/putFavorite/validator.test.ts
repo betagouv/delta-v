@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { putFavoriteValidator } from '../../../../src/api/favorite/putFavorite/validator';
-import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 describe('putFavorite validator', () => {
   const validator = putFavoriteValidator;
   const validData = {
@@ -10,7 +9,7 @@ describe('putFavorite validator', () => {
       name: faker.commerce.productName(),
     },
   };
-  const { isValid } = zodValidatorHelper(validator);
+  const { isValid } = validatorHelper(validator);
   it('should validate proper data', () => {
     expect(isValid(validData)).toBeTruthy();
   });

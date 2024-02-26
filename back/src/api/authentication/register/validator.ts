@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { config } from '../../../loader/config';
 import { emailDouaneRegex, passwordRegex } from '../common/const/regex';
 

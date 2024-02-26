@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { z } from 'zod';
 import { validateNewsTags } from '../../../utils/joiCustomValidators';
-import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { parseDate, parseNumber } from '../../../utils/zodParser';
 
 export const getActualitiesValidator = z.object({
