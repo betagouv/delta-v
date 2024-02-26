@@ -22,4 +22,4 @@ build/
 
 back/.DS_Store
 
-e2e/*
+e2e/tmpredisdata
