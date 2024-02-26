@@ -137,6 +137,7 @@ describe('getActualities endpoint', () => {
       .set('Authorization', `Bearer ${accessToken}`);
     expect(status).toBe(200);
 
+    console.log('🚀 ~ it.only ~ body:', body);
     expect(body.actualities.length).toBe(1);
     expect(body.actualities).toMatchObject([
       {

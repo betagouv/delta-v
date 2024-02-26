@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { simulateValidator } from '../../../../src/api/declaration/getSimulation/validator';
 import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
-const { isValid } = validatorHelper(simulateValidator);
+const { isValid, getParsedData } = zodValidatorHelper(simulateValidator);
 
 const defaultValidBody = {
   shoppingProducts: [
@@ -159,6 +159,7 @@ describe('test simulator validator', () => {
         age: 12,
       },
     };
+    console.log(getParsedData(data));
     expect(isValid(data)).toBe(true);
   });
   test.each([

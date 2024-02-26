@@ -1,9 +1,9 @@
 import { ValidateEmailValidator } from '../../../../src/api/authentication/validateEmail/validator';
-import { validatorHelper } from '../../../../src/core/testHelpers';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
 describe('validate email validator', () => {
   const validator = ValidateEmailValidator;
-  const { isValid, getParsedData } = validatorHelper(validator);
+  const { isValid, getParsedData } = zodValidatorHelper(validator);
   it('should validate proper data', () => {
     const validData = {
       body: {

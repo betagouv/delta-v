@@ -1,18 +1,12 @@
-import { buildValidationMiddleware, IRequestValidatorSchema } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
+import { z } from 'zod';
+import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
 
-export interface DeleteFavoriteRequest {
-  params: {
-    productId: string;
-  };
-}
+export const deleteFavoriteValidator = z.object({
+  params: z.object({
+    productId: z.string().uuid().min(1, "L'id du produit est requis"),
+  }),
+});
 
-export const deleteFavoriteValidator: IRequestValidatorSchema = {
-  params: validator
-    .object({
-      productId: validator.string().uuid().required(),
-    })
-    .required(),
-};
+export type DeleteFavoriteRequest = z.infer<typeof deleteFavoriteValidator>;
 
 export default buildValidationMiddleware(deleteFavoriteValidator);

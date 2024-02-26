@@ -1,5 +1,5 @@
-import { buildValidationMiddleware } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
+import { z } from 'zod';
+import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
 
 export interface IGetOneDeclaration {
   params: {
@@ -7,10 +7,12 @@ export interface IGetOneDeclaration {
   };
 }
 
-export const getOneDeclarationValidator = {
-  params: validator.object({
-    declarationId: validator.string().uuid().required(),
+export const getOneDeclarationValidator = z.object({
+  params: z.object({
+    declarationId: z.string().uuid(),
   }),
-};
+});
+
+export type IGetOneDeclarationRequest = z.infer<typeof getOneDeclarationValidator>;
 
 export default buildValidationMiddleware(getOneDeclarationValidator);

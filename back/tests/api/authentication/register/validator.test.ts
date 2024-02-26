@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { registerValidator } from '../../../../src/api/authentication/register/validator';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { config } from '../../../../src/loader/config';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
 describe('register validator', () => {
   const validator = registerValidator;
@@ -11,7 +11,7 @@ describe('register validator', () => {
       password: 'Password95*',
     },
   };
-  const { isValid } = validatorHelper(validator);
+  const { isValid } = zodValidatorHelper(validator);
 
   it('should validate proper data - douane email', () => {
     expect(isValid(validData)).toBeTruthy();

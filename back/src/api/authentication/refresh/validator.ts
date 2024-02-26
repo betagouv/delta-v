@@ -1,25 +1,20 @@
-import { buildValidationMiddleware } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
+import { z } from 'zod';
+import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
 import { jwtTokenRegex } from '../common/const/regex';
 
-export interface IRefreshRequest {
-  body: {
-    accessToken: string;
-    refreshToken: string;
-  };
-}
-
-export const refreshValidator = {
-  body: validator.object({
-    accessToken: validator.string().regex(jwtTokenRegex).required().messages({
-      'string.empty': "L'access token est requis",
-      'string.pattern.base': "L'access token ne respecte pas le bon format",
-    }),
-    refreshToken: validator.string().regex(jwtTokenRegex).required().messages({
-      'string.empty': 'Le refresh token est requis',
-      'string.pattern.base': 'Le refresh token ne respecte pas le bon format',
-    }),
+export const refreshValidator = z.object({
+  body: z.object({
+    accessToken: z
+      .string()
+      .regex(jwtTokenRegex, "L'access token ne respecte pas le bon format")
+      .min(1, "L'access token est requis"),
+    refreshToken: z
+      .string()
+      .regex(jwtTokenRegex, 'Le refresh token ne respecte pas le bon format')
+      .min(1, 'Le refresh token est requis'),
   }),
-};
+});
+
+export type IRefreshRequest = z.infer<typeof refreshValidator>;
 
 export default buildValidationMiddleware(refreshValidator);

@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { putSearchProductHistoryValidator } from '../../../../src/api/product/putSearchHistory/validator';
-import { validatorHelper } from '../../../../src/core/testHelpers';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
 describe('put one node validator', () => {
   const validator = putSearchProductHistoryValidator;
-  const { isValid } = validatorHelper(validator);
+  const { isValid } = zodValidatorHelper(validator);
   const validData = {
     body: {
       productId: faker.string.uuid(),

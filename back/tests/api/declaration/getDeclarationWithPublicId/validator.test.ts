@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { getOneDeclarationWithPublicIdValidator } from '../../../../src/api/declaration/getDeclarationWithPublicId/validator';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
 const validator = getOneDeclarationWithPublicIdValidator;
 
-const { isValid } = validatorHelper(validator);
+const { isValid } = zodValidatorHelper(validator);
 
 describe('getOneDeclarationWithPublicId validator', () => {
   it('should validate proper data', () => {

@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { getOneDeclarationValidator } from '../../../../src/api/declaration/getDeclaration/validator';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
 const validator = getOneDeclarationValidator;
 
-const { isValid } = validatorHelper(validator);
+const { isValid } = zodValidatorHelper(validator);
 
 describe('getOneDeclaration validator', () => {
   it('should validate proper data', () => {

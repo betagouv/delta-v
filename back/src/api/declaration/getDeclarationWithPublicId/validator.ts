@@ -1,16 +1,14 @@
-import { buildValidationMiddleware } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
+import { z } from 'zod';
+import { buildValidationMiddleware } from '../../../core/middlewares/zodValidation.middleware';
 
-export interface IGetOneDeclarationWithPublicId {
-  params: {
-    publicDeclarationId: string;
-  };
-}
-
-export const getOneDeclarationWithPublicIdValidator = {
-  params: validator.object({
-    publicDeclarationId: validator.string().length(10).required(),
+export const getOneDeclarationWithPublicIdValidator = z.object({
+  params: z.object({
+    publicDeclarationId: z.string().length(10),
   }),
-};
+});
+
+export type IGetOneDeclarationWithPublicIdRequest = z.infer<
+  typeof getOneDeclarationWithPublicIdValidator
+>;
 
 export default buildValidationMiddleware(getOneDeclarationWithPublicIdValidator);

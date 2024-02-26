@@ -1,9 +1,9 @@
 import { resetPasswordValidator } from '../../../../src/api/authentication/resetPassword/validator';
-import { validatorHelper } from '../../../../src/core/testHelpers';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
 describe('reset password validator', () => {
   const validator = resetPasswordValidator;
-  const { isValid } = validatorHelper(validator);
+  const { isValid } = zodValidatorHelper(validator);
   const validData = {
     body: {
       token:

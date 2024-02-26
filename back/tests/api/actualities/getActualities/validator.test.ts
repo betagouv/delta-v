@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { getActualitiesValidator } from '../../../../src/api/actuality/getActualities/validator';
+import { zodValidatorHelper } from '../../../../src/core/testHelpers/zodValidator.helper';
 
 const validator = getActualitiesValidator;
 
-const { isValid } = validatorHelper(validator);
+const { isValid } = zodValidatorHelper(validator);
 
 const queryParams = {
   search: faker.string.nanoid(21),
