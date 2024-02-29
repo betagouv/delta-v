@@ -13,6 +13,7 @@ type IMainAgentProps = {
   withSearch?: boolean;
   withLogo?: boolean;
   titleHeader?: string;
+  titleSwitchWordPosition?: number;
   linkSearch?: string;
   withTitle?: boolean;
   linkButton?: string;
@@ -26,6 +27,7 @@ const MainAgent = ({
   withHeader = false,
   withLogo = false,
   titleHeader,
+  titleSwitchWordPosition,
   withTitle = false,
   withPadding = false,
   linkButton,
@@ -43,6 +45,7 @@ const MainAgent = ({
           withTitle={withTitle}
           withPadding={withPadding}
           linkButton={linkButton}
+          titleSwitchWordPosition={titleSwitchWordPosition}
         />
       ) : (
         <MainAgentDesktop children={children} meta={meta} titleHeader={titleHeader} />

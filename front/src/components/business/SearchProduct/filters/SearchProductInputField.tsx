@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SearchHistoryProducts } from '../product/SearchHistoryProducts';
 import { SearchResultProducts } from '../product/SearchResultProducts';
@@ -28,6 +28,7 @@ export const SearchInputField = ({
   disabled = false,
   history,
 }: SearchInputFieldProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<Product>[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -62,8 +63,25 @@ export const SearchInputField = ({
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        event.target instanceof Node &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setIsFocused(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative h-full flex px-5 bg-white rounded-full flex-1">
+    <div className="relative h-full flex px-5 bg-white rounded-full flex-1" ref={containerRef}>
       <input
         data-testid="input-search-element"
         placeholder={placeholder}
@@ -73,11 +91,6 @@ export const SearchInputField = ({
         onChange={handleFieldChange}
         autoFocus={autoFocus}
         onFocus={() => setIsFocused(true)}
-        onBlur={() =>
-          setTimeout(() => {
-            setIsFocused(false);
-          }, 100)
-        }
         value={searchValue}
       />
       {onClearFieldClick && searchValue && (
