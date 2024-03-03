@@ -10,6 +10,7 @@ export interface IDownModalProps {
   open: boolean;
   onClose?: () => void;
   title?: React.ReactNode;
+  subtitle?: React.ReactNode;
   bgColor?: string;
   children?: any;
   withoutMargin?: boolean;
@@ -28,6 +29,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
   defaultHeight: fixedHeight = false,
   titlePosition = 'text-center',
   preventClose = false,
+  subtitle,
 }: IDownModalProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -94,6 +96,13 @@ export const DownModal: React.FC<IDownModalProps> = ({
                       {title}
                     </Typography>
                   </Dialog.Title>
+                </div>
+              )}
+              {subtitle && (
+                <div className="mt-[30px] text-center">
+                  <Typography size="text-sm" color="secondary" lineHeight="leading-4">
+                    {subtitle}
+                  </Typography>
                 </div>
               )}
               {children && <div className="w-full h-full">{children}</div>}

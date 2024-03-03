@@ -8,7 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 import { useCreateFeedbackMutation } from '@/api/hooks/useAPIFeedback';
-import { ModalDeleteAttachment } from '@/components/autonomous/ModalDeleteAttachment';
+import { ModalDeleteAttachmentDesktop } from '@/components/autonomous/ModalDeleteAttachmentDesktop';
+import { ModalDeleteAttachmentMobile } from '@/components/autonomous/ModalDeleteAttachmentMobile';
 import {
   ModalValidateFeedbackInfoMobile,
   ModalValidateFeedbackInfoDesktop,
@@ -22,9 +23,11 @@ import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import clsxm from '@/utils/clsxm';
 import { RoutingAgent } from '@/utils/const';
+import { MAX_FILE_SIZE, isValidFileType } from '@/utils/fileValidator';
 
 export interface FormContactUsData {
   comment: string;
+  file?: File;
 }
 
 const ContactPage = () => {
@@ -32,7 +35,18 @@ const ContactPage = () => {
   const schema = yup.object({
     comment: yup.string().required('Minimum 10 caractères').min(10, 'Minimum 10 caractères'),
     id: yup.string(),
+    file: yup
+      .mixed()
+      .test('fileType', "L'image n'est pas au bon format", (value) => {
+        if (value.length > 0) return isValidFileType(value[0].name?.toLowerCase(), 'image');
+        return true;
+      })
+      .test('fileSize', "La taille de l'image est trop grande", (value) => {
+        if (value.length > 0) return value[0].size <= MAX_FILE_SIZE;
+        return true;
+      }),
   });
+
   const {
     handleSubmit,
     register,
@@ -65,12 +79,14 @@ const ContactPage = () => {
     }
   }, [watch('comment')]);
 
-  const [openDeleteAttachment, setOpenDeleteAttachment] = useState(false);
+  const [openDeleteAttachmentDesktop, setOpenDeleteAttachmentDesktop] = useState(false);
+  const [openDeleteAttachmentMobile, setOpenDeleteAttachmentMobile] = useState(false);
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
 
   const [file, setFile] = useState<File>();
+  const [urlFile, setUrlFile] = useState<string | undefined>();
 
   const onClickToRedirectToHome = () => {
     setOpenValidateFeedbackInfoMobile(false);
@@ -98,6 +114,23 @@ const ContactPage = () => {
       file,
     });
     setFile(undefined);
+  };
+
+  const onClickDeleteAttachment = () => {
+    if (isMobile) {
+      setOpenDeleteAttachmentDesktop(false);
+      setOpenDeleteAttachmentMobile(true);
+    } else {
+      setOpenDeleteAttachmentMobile(false);
+      setOpenDeleteAttachmentDesktop(true);
+    }
+  };
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+      setUrlFile(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   return (
@@ -153,43 +186,38 @@ const ContactPage = () => {
                 error={!isValid ? errors?.comment?.message : undefined}
               />
 
-              {file ? (
+              {file && urlFile ? (
                 <div className="flex gap-5 items-center flex-row">
                   <div className="inline-flex flex-row gap-0.5 items-center text-primary-600">
-                    <Icon name="paperclip" size="sm" color="primary" />
-                    <Typography size="text-2xs" underline color="black">
-                      {file.name}
-                    </Typography>
+                    <div className="mt-0.5">
+                      <Icon name="paperclip" size="sm" color="primary" />
+                    </div>
+                    <div>
+                      <a href={urlFile} id="idimage" className="w-10 h-10" target="_blank">
+                        <Typography size="text-2xs" weight="normal" color="black" underline>
+                          {file.name}
+                        </Typography>
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex flex-row gap-2">
+                  <div className="flex flex-row gap-2 mt-0.5">
                     <button
-                      className=" text-primary-600 text-xs underline font-bold"
+                      className="text-primary-600 text-xs underline font-bold"
                       type="button"
-                      onClick={() => setOpenDeleteAttachment(true)}
+                      onClick={onClickDeleteAttachment}
                     >
                       Modifier
                     </button>
                   </div>
                 </div>
               ) : (
-                <label
-                  htmlFor="file"
-                  className="inline-flex border border-primary-600 text-primary-600 rounded-full px-5 py-2 justify-center items-center self-start"
-                >
-                  <div className="inline-flex flex-row gap-1 items-center">
-                    <Icon name="paperclip" size="sm" />
-                    <Typography size="text-2xs" weight="bold">
-                      Ajouter une pièce jointe
-                    </Typography>
-                  </div>
-                  <input
-                    id="file"
-                    name="file"
-                    onChange={(e) => setFile(e.target.files?.[0])}
-                    type="file"
-                    className="hidden"
-                  />
-                </label>
+                <InputGroup
+                  type="file"
+                  name="file"
+                  register={register('file')}
+                  onFileChange={onFileChange}
+                  error={!isValid ? errors?.file?.message : undefined}
+                />
               )}
             </div>
           </div>
@@ -216,12 +244,20 @@ const ContactPage = () => {
           onClose={() => setOpenValidateFeedbackInfoDesktop(false)}
           onClickToRedirect={onClickToRedirectToHome}
         />
-        <ModalDeleteAttachment
-          open={openDeleteAttachment}
-          onClose={() => setOpenDeleteAttachment(false)}
+        <ModalDeleteAttachmentDesktop
+          open={openDeleteAttachmentDesktop}
+          onClose={() => setOpenDeleteAttachmentDesktop(false)}
           onDelete={() => {
             setFile(undefined);
-            setOpenDeleteAttachment(false);
+            setOpenDeleteAttachmentDesktop(false);
+          }}
+        />
+        <ModalDeleteAttachmentMobile
+          open={openDeleteAttachmentMobile}
+          onClose={() => setOpenDeleteAttachmentMobile(false)}
+          onDelete={() => {
+            setFile(undefined);
+            setOpenDeleteAttachmentMobile(false);
           }}
         />
       </MainAgent>
