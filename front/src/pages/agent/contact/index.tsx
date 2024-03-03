@@ -127,7 +127,7 @@ const ContactPage = () => {
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
       setUrlFile(URL.createObjectURL(e.target.files[0]));
     }
@@ -173,21 +173,10 @@ const ContactPage = () => {
                   error={isError ? errors?.comment?.message : undefined}
                   additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
                 />
-                <Typography size="text-xs" color="black">
-                  Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une
-                  demande particulière ?
-                </Typography>
               </div>
-              <InputGroup
-                type="textarea"
-                placeholder="Saisissez votre message..."
-                name="comment"
-                register={register('comment')}
-                error={!isValid ? errors?.comment?.message : undefined}
-              />
 
               {file && urlFile ? (
-                <div className="flex gap-5 items-center flex-row">
+                <div className="flex gap-5 items-center flex-row mt-5">
                   <div className="inline-flex flex-row gap-0.5 items-center text-primary-600">
                     <div className="mt-0.5">
                       <Icon name="paperclip" size="sm" color="primary" />
@@ -211,13 +200,15 @@ const ContactPage = () => {
                   </div>
                 </div>
               ) : (
-                <InputGroup
-                  type="file"
-                  name="file"
-                  register={register('file')}
-                  onFileChange={onFileChange}
-                  error={!isValid ? errors?.file?.message : undefined}
-                />
+                <div className="mt-5">
+                  <InputGroup
+                    type="file"
+                    name="file"
+                    register={register('file')}
+                    onFileChange={onFileChange}
+                    error={!isValid ? errors?.file?.message : undefined}
+                  />
+                </div>
               )}
             </div>
           </div>
