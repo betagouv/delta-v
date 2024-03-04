@@ -24,9 +24,10 @@ const ResetLinkSentPage = () => {
           switchWordPosition={1}
           colorClassnameOne="text-black"
           colorClassnameTwo="text-primary-600"
+          titleWidthClassname="w-[220px]"
         />
         <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10 ">
-          <div className="my-auto flex flex-col items-center self-center px-10">
+          <div className="my-auto flex flex-col items-center self-center">
             <Typography
               variant="h1"
               size="text-xl"

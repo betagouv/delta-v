@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -43,6 +43,9 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
+  const [isBadCredentialError, setIsBadCredentialError] = useState(false);
+  const [showFormError, setShowFormError] = useState(false);
+
   const router = useRouter();
 
   const { setUserFromToken } = useStore((state) => ({
@@ -78,6 +81,18 @@ const LoginPage = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
+  useEffect(() => {
+    if (apiError?.statusCode === 401) {
+      setIsBadCredentialError(true);
+    }
+  }, [apiError]);
+
+  const onFormChange = () => {
+    if (showFormError) {
+      setShowFormError(false);
+    }
+  };
+
   return (
     <MainAuth
       withPadding={false}
@@ -92,7 +107,11 @@ const LoginPage = () => {
         <div className="mb-16 h-20">
           <SvgIcon name="logoAgent" />
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col w-full"
+          onChange={onFormChange}
+        >
           <Typography variant="h1" size="text-xl" weight="bold" textPosition="text-center">
             Se connecter
           </Typography>
@@ -103,7 +122,11 @@ const LoginPage = () => {
               fullWidth={true}
               placeholder="Email"
               register={register('email')}
-              error={errors?.email?.message ?? getErrorFields('email', apiError)}
+              error={
+                showFormError
+                  ? errors?.email?.message ?? getErrorFields('email', apiError, true)
+                  : undefined
+              }
               withBorder
             />
           </div>
@@ -114,7 +137,11 @@ const LoginPage = () => {
               fullWidth={true}
               placeholder="Mot de passe"
               register={register('password')}
-              error={errors?.password?.message ?? getErrorFields('password', apiError)}
+              error={
+                showFormError
+                  ? errors?.password?.message ?? getErrorFields('password', apiError, true)
+                  : undefined
+              }
               trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
               onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
               withBorder
@@ -124,7 +151,7 @@ const LoginPage = () => {
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>
           <div className="mt-5 flex flex-col items-center gap-2">
-            {apiError?.message && (
+            {!isBadCredentialError && apiError?.message && (
               <>
                 <div className="ml-3">
                   <ApiError apiError={apiError} />
@@ -141,7 +168,13 @@ const LoginPage = () => {
               </>
             )}
             <div className="w-40 mb-2">
-              <Button fullWidth={true} type="submit" disabled={!isDirty || !isValid} size="sm">
+              <Button
+                fullWidth={true}
+                type="submit"
+                disabled={!isDirty || !isValid}
+                size="sm"
+                onClick={() => setShowFormError(true)}
+              >
                 Valider
               </Button>
             </div>

@@ -164,7 +164,7 @@ const ContactPage = () => {
                 Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
                 une optimisation, une demande particulière ?
               </Typography>
-              <div className="mt-4">
+              <div className="my-4">
                 <InputGroup
                   type="textarea"
                   placeholder="Saisissez votre message..."
