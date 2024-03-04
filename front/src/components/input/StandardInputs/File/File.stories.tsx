@@ -1,14 +1,14 @@
 import { Meta } from '@storybook/react';
 
-import { TextArea } from './File';
+import { File } from './File';
 
 export default {
-  title: 'Components/Input/StandardInputs/TextArea',
-  component: TextArea,
+  title: 'Components/Input/StandardInputs/File',
+  component: File,
 } as Meta;
 
 export const base = (): JSX.Element => (
   <div>
-    <TextArea name="test" placeholder="Placeholder" />
+    <File name="test" />
   </div>
 );
