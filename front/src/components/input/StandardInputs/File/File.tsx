@@ -30,6 +30,7 @@ export const File: React.FC<IFileOptions> = ({ name, register, onFileChange }) =
         </Typography>
       </div>
       <input
+        data-testid="file-element"
         name={name}
         {...rest}
         type="file"

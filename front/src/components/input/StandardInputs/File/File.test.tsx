@@ -1,16 +1,11 @@
 import { render } from '@testing-library/react';
 
-import { TextArea } from './File';
+import { File } from './File';
 
-describe('TextArea', () => {
-  it('should render component', () => {
-    const wrapper = render(<TextArea name="inputname" />);
-    const input = wrapper.getByTestId('textarea-element');
+describe('File', () => {
+  it('should render input', () => {
+    const wrapper = render(<File name="inputname" />);
+    const input = wrapper.getByTestId('file-element');
     expect(input).toBeVisible();
-  });
-  it('should render disabled component', () => {
-    const wrapper = render(<TextArea name="inputname" disabled />);
-    const input = wrapper.getByTestId('textarea-element');
-    input.hasAttribute('disabled');
   });
 });
