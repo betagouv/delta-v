@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Comboboxes } from '../StandardInputs/Comboboxes';
+import { File } from '../StandardInputs/File';
 import { Input } from '../StandardInputs/Input';
 import { IRadioType, Radio } from '../StandardInputs/Radio';
 import { IRadioCardType, RadioCard } from '../StandardInputs/RadioCard';
@@ -73,6 +74,7 @@ export interface IInputGroupProps {
   onTrailingIconClick?: () => void;
   onTrailingSvgIconClick?: () => void;
   withListBoxEffect?: boolean;
+  onFileChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -107,6 +109,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   onTrailingSvgIconClick,
   withListBoxEffect = false,
   required,
+  onFileChange,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
 
@@ -227,12 +230,14 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               bigSize={bigSize}
             />
           )}
+          {type === 'file' && <File name="file" register={register} onFileChange={onFileChange} />}
           {type !== 'select' &&
             type !== 'simple-select' &&
             type !== 'comboboxes' &&
             type !== 'textarea' &&
             type !== 'toggle' &&
             type !== 'radio' &&
+            type !== 'file' &&
             type !== 'radioCard' && (
               <Input
                 id={name}

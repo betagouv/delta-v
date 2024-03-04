@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 
 import { Icon } from '../Icon';
 import { Typography } from '../Typography';
+import { Color, TextSize, Weight } from '../Typography/style/typography.style';
 import clsxm from '@/utils/clsxm';
 
 export interface IModalProps {
@@ -15,6 +16,9 @@ export interface IModalProps {
   preventClose?: boolean;
   withMargin?: boolean;
   noPadding?: boolean;
+  titleColor?: Color;
+  titleWeight?: Weight;
+  titleSize?: TextSize;
 }
 
 export const Modal: React.FC<IModalProps> = ({
@@ -26,6 +30,9 @@ export const Modal: React.FC<IModalProps> = ({
   preventClose = false,
   withMargin = true,
   noPadding = false,
+  titleColor = 'primary',
+  titleWeight = 'bold',
+  titleSize = 'text-lg',
 }: IModalProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -75,7 +82,13 @@ export const Modal: React.FC<IModalProps> = ({
               {title && (
                 <div className="text-center">
                   <Dialog.Title>
-                    <Typography size="text-lg" color="primary" weight="bold" lineHeight="leading-4">
+                    <Typography
+                      size="text-lg"
+                      color={titleColor}
+                      weight={titleWeight}
+                      desktopSize={titleSize}
+                      lineHeight="leading-4"
+                    >
                       {title}
                     </Typography>
                   </Dialog.Title>

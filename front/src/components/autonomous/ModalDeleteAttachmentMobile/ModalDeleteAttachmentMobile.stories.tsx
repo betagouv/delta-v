@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 
-import { ModalDeleteAttachment } from './ModalDeleteAttachment';
+import { ModalDeleteAttachmentMobile } from './ModalDeleteAttachmentMobile';
 import { Button } from '@/components/common/Button';
 
 export default {
-  title: 'Components/Business/ModalDeleteAttachment',
-  component: ModalDeleteAttachment,
+  title: 'Components/Business/ModalDeleteAttachmentMobile',
+  component: ModalDeleteAttachmentMobile,
 } as Meta;
 
 export const Base = () => {
@@ -19,7 +19,7 @@ export const Base = () => {
   };
   return (
     <>
-      <ModalDeleteAttachment open={open} onClose={onClose} />
+      <ModalDeleteAttachmentMobile open={open} onClose={onClose} />
       <Button onClick={() => setOpen(true)}>Open</Button>
     </>
   );
