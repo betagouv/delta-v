@@ -1,5 +1,5 @@
 export const validFileExtensions: { [key: string]: string[] } = {
-  image: ['jpg', 'gif', 'png', 'jpeg', 'svg', 'webp'],
+  image: ['jpg', 'png', 'jpeg'],
 };
 
 export const isValidFileType = (fileName: string, fileType: string): boolean => {
