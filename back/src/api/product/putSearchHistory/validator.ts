@@ -3,8 +3,14 @@ import { buildValidationMiddleware } from '../../../core/middlewares';
 
 export const putSearchProductHistoryValidator = z.object({
   body: z.object({
-    productId: z.string().uuid().min(1, 'productId is required'),
-    searchValue: z.string().min(1, 'searchValue is required'),
+    productId: z
+      .string({
+        required_error: 'productId is required',
+      })
+      .uuid(),
+    searchValue: z.string({
+      required_error: 'searchValue is required',
+    }),
   }),
 });
 

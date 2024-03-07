@@ -3,7 +3,11 @@ import { buildValidationMiddleware } from '../../../core/middlewares';
 
 export const deleteFavoriteValidator = z.object({
   params: z.object({
-    productId: z.string().uuid().min(1, "L'id du produit est requis"),
+    productId: z
+      .string({
+        required_error: "L'id du produit est requis",
+      })
+      .uuid(),
   }),
 });
 

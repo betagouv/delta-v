@@ -46,17 +46,22 @@ export const refineMeanOfTransport = ({
 export const simulateValidator = z.object({
   body: z
     .object({
-      shoppingProducts: z
-        .array(
-          z.object({
-            id: z.string().uuid().optional(),
-            customName: z.string().optional().default(''),
-            customId: z.string().uuid().min(1, 'customId is required'),
-            originalValue: parseNumber(z.number().min(0)),
-            currency: z.string().length(3).optional().default('EUR'),
-          }),
-        )
-        .min(1, 'shoppingProducts is required'),
+      shoppingProducts: z.array(
+        z.object({
+          id: z.string().uuid().optional(),
+          customName: z.string().optional().default(''),
+          customId: z
+            .string({
+              required_error: "L'identifiant du produit est requis",
+            })
+            .uuid(),
+          originalValue: parseNumber(z.number().min(0)),
+          currency: z.string().length(3).optional().default('EUR'),
+        }),
+        {
+          required_error: 'La liste de produits est requise',
+        },
+      ),
       border: parseBoolean(z.boolean()),
       age: parseNumber(z.number().int().min(0)),
       country: z.any().refine((country: Alpha2Code) => {

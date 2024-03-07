@@ -4,7 +4,11 @@ import { MimeTypes } from '../../common/enums/mimeTypes';
 
 export const putFeedbackValidator = z.object({
   params: z.object({
-    feedbackId: z.string().uuid().min(1, "L'id du feedback est requis"),
+    feedbackId: z
+      .string({
+        required_error: "L'id du feedback est requis",
+      })
+      .uuid(),
   }),
   body: z.object({
     comment: z.string().min(10, 'Le commentaire doit contenir au moins 10 caractères'),

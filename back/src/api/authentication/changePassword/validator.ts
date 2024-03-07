@@ -4,10 +4,13 @@ import { passwordRegex } from '../common/const/regex';
 
 export const changePasswordValidator = z.object({
   body: z.object({
-    oldPassword: z.string().min(1, 'Le mot de passe est requis'),
+    oldPassword: z.string({
+      required_error: 'Le mot de passe actuel est requis',
+    }),
     newPassword: z
-      .string()
-      .min(1, 'Le mot de passe est requis')
+      .string({
+        required_error: 'Le nouveau mot de passe est requis',
+      })
       .regex(passwordRegex, 'Le mot de passe ne respecte pas le format demandé'),
   }),
 });

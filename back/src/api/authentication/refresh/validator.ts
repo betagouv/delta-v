@@ -5,13 +5,15 @@ import { jwtTokenRegex } from '../common/const/regex';
 export const refreshValidator = z.object({
   body: z.object({
     accessToken: z
-      .string()
-      .regex(jwtTokenRegex, "L'access token ne respecte pas le bon format")
-      .min(1, "L'access token est requis"),
+      .string({
+        required_error: "L'access token est requis",
+      })
+      .regex(jwtTokenRegex, "L'access token ne respecte pas le bon format"),
     refreshToken: z
-      .string()
-      .regex(jwtTokenRegex, 'Le refresh token ne respecte pas le bon format')
-      .min(1, 'Le refresh token est requis'),
+      .string({
+        required_error: 'Le refresh token est requis',
+      })
+      .regex(jwtTokenRegex, 'Le refresh token ne respecte pas le bon format'),
   }),
 });
 

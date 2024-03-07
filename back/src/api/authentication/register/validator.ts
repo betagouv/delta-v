@@ -18,8 +18,9 @@ export const registerValidator = z.object({
       },
     ),
     password: z
-      .string()
-      .min(1, 'Le mot de passe est requis')
+      .string({
+        required_error: 'Le mot de passe est requis',
+      })
       .regex(passwordRegex, 'Le mot de passe ne respecte pas le format demandé'),
   }),
 });

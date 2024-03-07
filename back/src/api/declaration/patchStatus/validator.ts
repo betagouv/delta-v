@@ -4,7 +4,11 @@ import { DeclarationStatus } from '../../../entities/declaration.entity';
 
 export const patchStatusValidator = z.object({
   params: z.object({
-    declarationId: z.string().uuid().min(1, "L'id de la déclaration est requis"),
+    declarationId: z
+      .string({
+        required_error: "L'id de la déclaration est requis",
+      })
+      .uuid(),
   }),
   body: z.object({
     status: z.nativeEnum(DeclarationStatus),

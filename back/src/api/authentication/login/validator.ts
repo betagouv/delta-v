@@ -3,8 +3,14 @@ import { buildValidationMiddleware } from '../../../core/middlewares';
 
 export const loginValidator = z.object({
   body: z.object({
-    email: z.string().email("L'email n'est pas valide").min(1, "L'email est requis"),
-    password: z.string().min(1, 'Le mot de passe est requis'),
+    email: z
+      .string({
+        required_error: "L'email est requis",
+      })
+      .email("L'email n'est pas valide"),
+    password: z.string({
+      required_error: 'Le mot de passe est requis',
+    }),
   }),
 });
 

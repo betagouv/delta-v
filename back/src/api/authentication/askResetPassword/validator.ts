@@ -3,7 +3,11 @@ import { buildValidationMiddleware } from '../../../core/middlewares';
 
 export const askResetPasswordValidator = z.object({
   body: z.object({
-    email: z.string().email("L'email n'est pas valide").min(1, "L'email est requis"),
+    email: z
+      .string({
+        required_error: "L'email est requis",
+      })
+      .email("L'email n'est pas valide"),
   }),
 });
 
