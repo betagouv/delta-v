@@ -8,11 +8,14 @@ import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 import { useCreateFeedbackMutation } from '@/api/hooks/useAPIFeedback';
+import { ModalDeleteAttachmentDesktop } from '@/components/autonomous/ModalDeleteAttachmentDesktop';
+import { ModalDeleteAttachmentMobile } from '@/components/autonomous/ModalDeleteAttachmentMobile';
 import {
   ModalValidateFeedbackInfoMobile,
   ModalValidateFeedbackInfoDesktop,
 } from '@/components/autonomous/ModalValidateFeedbackInfo';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { Icon } from '@/components/common/Icon';
 import { TitleAgent } from '@/components/common/TitleAgent';
 import { Typography } from '@/components/common/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
@@ -20,16 +23,30 @@ import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import clsxm from '@/utils/clsxm';
 import { RoutingAgent } from '@/utils/const';
+import { MAX_FILE_SIZE, isValidFileType } from '@/utils/fileValidator';
 
 export interface FormContactUsData {
   comment: string;
+  file?: File;
 }
 
 const ContactPage = () => {
   const router = useRouter();
   const schema = yup.object({
     comment: yup.string().required('Minimum 10 caractères').min(10, 'Minimum 10 caractères'),
+    id: yup.string(),
+    file: yup
+      .mixed()
+      .test('fileType', "L'image n'est pas au bon format", (value) => {
+        if (value.length > 0) return isValidFileType(value[0].name?.toLowerCase(), 'image');
+        return true;
+      })
+      .test('fileSize', "La taille de l'image est trop grande", (value) => {
+        if (value.length > 0) return value[0].size <= MAX_FILE_SIZE;
+        return true;
+      }),
   });
+
   const {
     handleSubmit,
     register,
@@ -62,9 +79,14 @@ const ContactPage = () => {
     }
   }, [watch('comment')]);
 
+  const [openDeleteAttachmentDesktop, setOpenDeleteAttachmentDesktop] = useState(false);
+  const [openDeleteAttachmentMobile, setOpenDeleteAttachmentMobile] = useState(false);
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
+
+  const [file, setFile] = useState<File>();
+  const [urlFile, setUrlFile] = useState<string | undefined>();
 
   const onClickToRedirectToHome = () => {
     setOpenValidateFeedbackInfoMobile(false);
@@ -89,7 +111,26 @@ const ContactPage = () => {
     createFeedbackMutation.mutate({
       feedbackId,
       comment: data.comment,
+      file,
     });
+    setFile(undefined);
+  };
+
+  const onClickDeleteAttachment = () => {
+    if (isMobile) {
+      setOpenDeleteAttachmentDesktop(false);
+      setOpenDeleteAttachmentMobile(true);
+    } else {
+      setOpenDeleteAttachmentMobile(false);
+      setOpenDeleteAttachmentDesktop(true);
+    }
+  };
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+      setUrlFile(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   return (
@@ -110,27 +151,65 @@ const ContactPage = () => {
           className="md:p-0 justify-between flex flex-col py-6 px-4 flex-1 gap-20"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col">
-            <TitleAgent
-              title="On vous écoute"
-              colorClassnameOne="text-black"
-              colorClassnameTwo="text-primary-600"
-              switchWordPosition={2}
-              textPosition="text-left"
-            />
-            <Typography size="text-xs" color="black">
-              Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
-              une optimisation, une demande particulière ?
-            </Typography>
-            <div className="mt-4">
-              <InputGroup
-                type="textarea"
-                placeholder="Saisissez votre message..."
-                name="comment"
-                register={register('comment')}
-                error={isError ? errors?.comment?.message : undefined}
-                additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col">
+              <TitleAgent
+                title="On vous écoute"
+                colorClassnameOne="text-black"
+                colorClassnameTwo="text-primary-600"
+                switchWordPosition={2}
+                textPosition="text-left"
               />
+              <Typography size="text-xs" color="black">
+                Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
+                une optimisation, une demande particulière ?
+              </Typography>
+              <div className="my-4">
+                <InputGroup
+                  type="textarea"
+                  placeholder="Saisissez votre message..."
+                  name="comment"
+                  register={register('comment')}
+                  error={isError ? errors?.comment?.message : undefined}
+                  additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
+                />
+              </div>
+
+              {file && urlFile ? (
+                <div className="flex gap-5 items-center flex-row mt-5">
+                  <div className="inline-flex flex-row gap-0.5 items-center text-primary-600">
+                    <div className="mt-0.5">
+                      <Icon name="paperclip" size="sm" color="primary" />
+                    </div>
+                    <div>
+                      <a href={urlFile} id="idimage" className="w-10 h-10" target="_blank">
+                        <Typography size="text-2xs" weight="normal" color="black" underline>
+                          {file.name}
+                        </Typography>
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex flex-row gap-2 mt-0.5">
+                    <button
+                      className="text-primary-600 text-xs underline font-bold"
+                      type="button"
+                      onClick={onClickDeleteAttachment}
+                    >
+                      Modifier
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-5">
+                  <InputGroup
+                    type="file"
+                    name="file"
+                    register={register('file')}
+                    onFileChange={onFileChange}
+                    error={!isValid ? errors?.file?.message : undefined}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="w-[118px] self-center md:self-start mb-4">
@@ -155,6 +234,22 @@ const ContactPage = () => {
           open={openValidateFeedbackInfoDesktop}
           onClose={() => setOpenValidateFeedbackInfoDesktop(false)}
           onClickToRedirect={onClickToRedirectToHome}
+        />
+        <ModalDeleteAttachmentDesktop
+          open={openDeleteAttachmentDesktop}
+          onClose={() => setOpenDeleteAttachmentDesktop(false)}
+          onDelete={() => {
+            setFile(undefined);
+            setOpenDeleteAttachmentDesktop(false);
+          }}
+        />
+        <ModalDeleteAttachmentMobile
+          open={openDeleteAttachmentMobile}
+          onClose={() => setOpenDeleteAttachmentMobile(false)}
+          onDelete={() => {
+            setFile(undefined);
+            setOpenDeleteAttachmentMobile(false);
+          }}
         />
       </MainAgent>
     </AgentRoute>

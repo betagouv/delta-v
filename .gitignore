@@ -19,3 +19,5 @@ build/
 .env
 
 .DS_Store
+
+back/.DS_Store
