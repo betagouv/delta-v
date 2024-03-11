@@ -3,7 +3,6 @@ import axios from 'axios';
 import { CreateFeedbackParams } from './types';
 
 export const createFeedbackRequest = async (params: CreateFeedbackParams): Promise<void> => {
-  console.log('🚀 ~ createFeedbackRequest ~ params:', params);
   const formData = new FormData();
 
   formData.append('comment', params.comment);
