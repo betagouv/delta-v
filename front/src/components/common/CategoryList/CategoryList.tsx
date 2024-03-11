@@ -9,6 +9,36 @@ import { TitleAgent } from '../TitleAgent';
 import { Typography } from '../Typography';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
 import { Product } from '@/model/product';
+import { checkIsFinalProduct } from '@/utils/product.util';
+
+const getReturnButtonLabelDesktop = (productTree: Product[]) => {
+  const currentProduct = productTree[0];
+  const isFinalProduct = checkIsFinalProduct(currentProduct);
+
+  if (isFinalProduct) {
+    return productTree[2]?.name;
+  }
+  return productTree[1]?.name;
+};
+
+const getHeaderTitleDesktop = (productTree: Product[]) => {
+  const currentProduct = productTree[0];
+  const isFinalProduct = checkIsFinalProduct(currentProduct);
+  const titleProduct = isFinalProduct ? productTree[1] : currentProduct;
+
+  if (!titleProduct) {
+    return null;
+  }
+
+  return (
+    <>
+      {titleProduct.icon && <SvgIcon name={titleProduct.icon} className="h-10" />}
+      <Typography size="text-[26px]" color="black" weight="bold">
+        {titleProduct.name}
+      </Typography>
+    </>
+  );
+};
 
 const CategoryListHeaderMobile = ({
   productTree,
@@ -38,25 +68,28 @@ const CategoryListHeaderDesktop = ({
   productTree: Product[];
   onClick?: () => void;
 }) => {
+  if (productTree.length <= 0) {
+    return null;
+  }
+
   return (
     <>
-      <div className="mb-[36px]">
-        {productTree.length > 0 && (
-          <div className="flex items-start w-full">
-            <IconButtonWithTitle
-              icon="chevron-left"
-              title={productTree[1]?.name ?? 'Catégories'}
-              onClick={onClick}
-            />
+      {productTree.length > 0 && (
+        <>
+          <div className="mb-[36px]">
+            <div className="flex items-start w-full">
+              <IconButtonWithTitle
+                icon="chevron-left"
+                title={getReturnButtonLabelDesktop(productTree) ?? 'Catégories'}
+                onClick={onClick}
+              />
+            </div>
           </div>
-        )}
-      </div>
-      <div className="flex-col gap-4 items-center flex mb-10">
-        {productTree[0]?.icon && <SvgIcon name={productTree[0]?.icon} className="h-10" />}
-        <Typography size="text-[26px]" color="black" weight="bold">
-          {productTree[0]?.name}
-        </Typography>
-      </div>
+          <div className="flex-col gap-4 items-center flex mb-10">
+            {getHeaderTitleDesktop(productTree)}
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -4,7 +4,10 @@ import { FavoriteProducts } from '../FavoriteProducts';
 import { NomenclatureCard } from '../NomenclatureCard';
 import { SearchProductFilterBar } from './filters/SearchProductFilters';
 import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
-import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
+import {
+  useGetSearchProductHistory,
+  usePutSearchProductHistoryMutation,
+} from '@/api/hooks/useAPIProducts';
 import { CategoryProductDesktop } from '@/components/autonomous/CategoryProduct/CategoryProductDesktop';
 import {
   FormAddFavoriteData,
@@ -43,9 +46,12 @@ export const ProductSearchTools = ({
     countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
   }));
 
+  const { data: history, refetch: updateHistory } = useGetSearchProductHistory();
   const createFavoriteMutation = useCreateFavoriteMutation({});
   const removeFavoriteMutation = useRemoveFavoriteMutation({});
-  const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
+  const updateSearchProductHistory = usePutSearchProductHistoryMutation({
+    onSuccess: updateHistory,
+  });
 
   const searchFunction =
     variant === ProductSearchContext.NOMENCLATURE ? searchNomenclatureProducts : searchProducts;
@@ -177,6 +183,7 @@ export const ProductSearchTools = ({
           onFilterClick={onFilterByCategoryClick}
           onSearchAllClick={onSearchAll}
           isCategoryFilterOpen={showCategoryFilters}
+          history={history}
         />
 
         <FavoriteProducts onFavoriteClick={onFavoriteBadgeClick} />
