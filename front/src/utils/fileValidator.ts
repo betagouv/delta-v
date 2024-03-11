@@ -6,4 +6,4 @@ export const isValidFileType = (fileName: string, fileType: string): boolean => 
   return (validFileExtensions[fileType] ?? []).indexOf(fileName.split('.').pop() as string) > -1;
 };
 
-export const MAX_FILE_SIZE = 102400;
+export const MAX_FILE_SIZE = 10485760;
