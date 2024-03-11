@@ -7,7 +7,7 @@ import {
 } from '../lib/products';
 import { ErrorResponse, ICommonResponse } from '../lib/types';
 
-export const useGetSearchProductHistory = () => useQuery('user', getSearchProductHistoryRequest);
+export const useGetSearchProductHistory = () => useQuery('history', getSearchProductHistoryRequest);
 
 export const usePutSearchProductHistoryMutation = ({ onSuccess }: { onSuccess?: () => void }) => {
   return useMutation<ICommonResponse, ErrorResponse, PutSearchProductHistoryParams>(

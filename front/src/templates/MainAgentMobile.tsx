@@ -12,6 +12,7 @@ type IMainAgentMobileProps = {
   withSearch?: boolean;
   withLogo?: boolean;
   titleHeader?: string;
+  titleSwitchWordPosition?: number;
   linkSearch?: string;
   withTitle?: boolean;
   linkButton?: string;
@@ -24,6 +25,7 @@ const MainAgentMobile = ({
   withHeader = false,
   withLogo = false,
   titleHeader,
+  titleSwitchWordPosition,
   withTitle = false,
   withPadding = false,
   linkButton,
@@ -38,7 +40,11 @@ const MainAgentMobile = ({
         )}
         {withTitle && (
           <div className="p-4 pt-0">
-            <TitleHeaderAgent title={titleHeader || ''} href={linkButton} />
+            <TitleHeaderAgent
+              title={titleHeader || ''}
+              href={linkButton}
+              switchWordPosition={titleSwitchWordPosition}
+            />
           </div>
         )}
         {withPadding ? <div className="px-4">{children}</div> : children}

@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SearchHistoryProducts } from '../product/SearchHistoryProducts';
 import { SearchResultProducts } from '../product/SearchResultProducts';
-import { useGetSearchProductHistory } from '@/api/hooks/useAPIProducts';
+import { SearchProductHistoryItem } from '@/api/lib/products';
 import { SvgIcon } from '@/components/common/SvgIcon';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
@@ -15,6 +15,7 @@ interface SearchInputFieldProps {
   placeholder?: string;
   autoFocus?: boolean;
   disabled?: boolean;
+  history?: SearchProductHistoryItem[];
 }
 
 export const SearchInputField = ({
@@ -25,9 +26,9 @@ export const SearchInputField = ({
   placeholder = '',
   autoFocus = false,
   disabled = false,
+  history,
 }: SearchInputFieldProps) => {
-  const { data: history } = useGetSearchProductHistory();
-
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<Product>[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -38,7 +39,8 @@ export const SearchInputField = ({
 
   const isFocusedEmpty = isFocused && !searchValue;
   const showSearchResults = !!searchValue && resultSearch.length > 0;
-  const showSearchHistory = !!history && (isFocusedEmpty || !!searchValue);
+  const showSearchHistory = !!history && history.length > 0 && (isFocusedEmpty || !!searchValue);
+  const showInputSuggestions = isFocused && (showSearchResults || showSearchHistory);
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -61,8 +63,25 @@ export const SearchInputField = ({
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        event.target instanceof Node &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setIsFocused(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative h-full flex px-5 bg-white rounded-full flex-1">
+    <div className="relative h-full flex px-5 bg-white rounded-full flex-1" ref={containerRef}>
       <input
         data-testid="input-search-element"
         placeholder={placeholder}
@@ -72,11 +91,6 @@ export const SearchInputField = ({
         onChange={handleFieldChange}
         autoFocus={autoFocus}
         onFocus={() => setIsFocused(true)}
-        onBlur={() =>
-          setTimeout(() => {
-            setIsFocused(false);
-          }, 100)
-        }
         value={searchValue}
       />
       {onClearFieldClick && searchValue && (
@@ -84,7 +98,7 @@ export const SearchInputField = ({
           <SvgIcon name="clearField" className=" w-[18px] h-[18px] cursor-pointer" />
         </span>
       )}
-      {isFocused && (
+      {showInputSuggestions && (
         <div className="w-[calc(100%+10px)] border-secondary-bg border-[5px] absolute flex flex-col left-0 bottom-0 translate-y-[calc(100%+5px)] translate-x-[-5px] z-10 bg-white rounded-[10px] p-5">
           {showSearchResults && (
             <SearchResultProducts

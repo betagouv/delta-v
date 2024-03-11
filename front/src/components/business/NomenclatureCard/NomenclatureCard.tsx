@@ -127,7 +127,7 @@ export const NomenclatureCard = ({
             {product.name}
           </Typography>
         )}
-        <div className="flex flex-row gap-2.5">
+        <div className="flex flex-row gap-x-2.5 w-full flex-wrap">
           {product.nomenclatures &&
             product.nomenclatures.map((item, index) => (
               <Typography key={index} color="primary" weight="thin" size="text-xs">

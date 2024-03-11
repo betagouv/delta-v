@@ -114,7 +114,8 @@ const SearchProduct = () => {
           />
         }
         withTitle
-        titleHeader="Recherche"
+        titleHeader="Résultat de la recherche"
+        titleSwitchWordPosition={4}
       >
         <div className="flex flex-1 flex-col border-t border-secondary-300 py-4 mx-5">
           <div className="flex flex-row justify-between items-center">
