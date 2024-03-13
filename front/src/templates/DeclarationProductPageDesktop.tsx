@@ -1,4 +1,5 @@
-import router from 'next/router';
+import { useState } from 'react';
+
 import { UseFormHandleSubmit, useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
@@ -6,48 +7,26 @@ import { DeclarationAgentStepsDesktop } from './DeclarationAgentStepsDesktop';
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { ProductSearchTools } from '@/components/business/SearchProduct/SearchProductDesktop';
+import { SummaryDeclarationAgent } from '@/components/business/SummaryDeclarationAgent';
+import Modal from '@/components/common/Modal';
 import { useStore } from '@/stores/store';
 import { DECLARATION_STEP_PAGE } from '@/utils/const';
 import { ProductSearchContext } from '@/utils/enums';
 
 export const DeclarationProductPageDesktop = () => {
-  const {
-    setProductsDeclarationToDisplayAgent,
-    removeProductDeclaration,
-    updateProductCartDeclarationAgent,
-    addProductCartDeclarationAgent,
-    resetDeclarationAgent,
-    findProduct,
-    findDeclarationShoppingProductAgent,
-    declarationId,
-    declarationAgentRequest,
-    meansOfTransportAndCountry,
-    defaultCurrency,
-    declarationAgentResponse,
-    favoriteProducts,
-  } = useStore(
+  const { declarationId, declarationAgentRequest } = useStore(
     (state) => ({
-      setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
-      updateProductCartDeclarationAgent: state.updateProductCartDeclarationAgent,
-      addProductCartDeclarationAgent: state.addProductCartDeclarationAgent,
-      removeProductDeclaration: state.removeProductCartDeclarationAgent,
-      resetDeclarationAgent: state.resetDeclarationAgent,
-      findProduct: state.findProduct,
-      findDeclarationShoppingProductAgent: state.findDeclarationShoppingProductAgent,
       declarationId: state.declaration.appState.declarationAgentRequest?.declarationId,
-      declarationAgentResponse: state.declaration.appState.declarationAgentResponse,
       declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
-      meansOfTransportAndCountry:
-        state.declaration.appState.declarationAgentRequest.meansOfTransportAndCountry,
-      defaultCurrency: state.declaration.appState.declarationAgentRequest.defaultCurrency,
-      favoriteProducts: state.products.appState.favoriteProducts,
     }),
     shallow,
   );
+
+  const [openSummaryModal, setOpenSummaryModal] = useState(false);
+
   const createDeclarationMutation = useCreateDeclarationMutation({
     onSuccess: () => {
-      resetDeclarationAgent();
-      router.push(`/agent/declaration/${declarationId}`);
+      setOpenSummaryModal(true);
     },
   });
   const { handleSubmit } = useForm();
@@ -72,6 +51,16 @@ export const DeclarationProductPageDesktop = () => {
         simpleBg
       >
         <ProductSearchTools variant={ProductSearchContext.DECLARATION} />
+        {declarationId && (
+          <Modal
+            open={openSummaryModal}
+            scrollable
+            noPadding
+            onClose={() => setOpenSummaryModal(false)}
+          >
+            <SummaryDeclarationAgent declarationId={declarationId} hideBackgroundSummary />
+          </Modal>
+        )}
       </DeclarationAgentStepsDesktop>
     </AgentRoute>
   );

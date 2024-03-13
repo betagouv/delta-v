@@ -53,23 +53,30 @@ export const ValueAgentProductBasket = ({
               ))}
             </span>
           )}
-          <Typography transform="sentence-case" size="text-sm" weight="bold">
+          <Typography transform="sentence-case" size="text-sm" weight="bold" desktopSize="text-sm">
             {product.customName}
           </Typography>
-          <Typography color="black" transform="sentence-case" size="text-xs">
+          <Typography color="black" transform="sentence-case" size="text-xs" desktopSize="text-xs">
             {product.name}
           </Typography>
         </div>
         {(product.unitPrice || product.unitTaxes) && (
           <div className="flex flex-col divide-y divide-black">
             <div className="grid grid-cols-2 pb-2">
-              <Typography color="black" transform="sentence-case" size="text-xs" weight="bold">
+              <Typography
+                color="black"
+                transform="sentence-case"
+                size="text-xs"
+                weight="bold"
+                desktopSize="text-xs"
+              >
                 Prix d'achat
               </Typography>
               <Typography
                 color="black"
                 transform="sentence-case"
                 size="text-xs"
+                desktopSize="text-xs"
                 textPosition="text-right"
                 weight="bold"
               >
@@ -77,12 +84,18 @@ export const ValueAgentProductBasket = ({
               </Typography>
             </div>
             <div className="grid grid-cols-2 pt-2">
-              <Typography transform="sentence-case" size="text-sm" weight="bold">
+              <Typography
+                transform="sentence-case"
+                size="text-sm"
+                weight="bold"
+                desktopSize="text-sm"
+              >
                 Droits et taxes dues
               </Typography>
               <Typography
                 transform="sentence-case"
                 size="text-sm"
+                desktopSize="text-sm"
                 textPosition="text-right"
                 weight="bold"
               >
@@ -101,6 +114,14 @@ export const ValueAgentProductBasket = ({
               icon={open ? 'chevron-thin-up' : 'chevron-thin-down'}
               fullWidth
               iconClassname="w-2.5"
+              className={{
+                'md:w-[82px]': true,
+                'md:h-[22px]': true,
+                'h-[30px]': true,
+                'md:text-2xs': true,
+                'md:whitespace-nowrap': true,
+                'text-xs': true,
+              }}
             >
               Voir calcul
             </Button>
@@ -109,9 +130,18 @@ export const ValueAgentProductBasket = ({
         {editable && (
           <span className="flex justify-center">
             <Button
-              size="sm"
+              size="2xs"
               color="tertiary"
               onClick={() => onEditClick && onEditClick(product.customId)}
+              className={{
+                'md:w-[82px]': true,
+                'md:h-[22px]': true,
+                'h-[30px]': true,
+                'w-[100px]': true,
+                'md:text-2xs': true,
+                'md:whitespace-nowrap': true,
+                'text-xs': true,
+              }}
             >
               <span>Modifier</span>
             </Button>

@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { Alpha2Code } from 'i18n-iso-countries';
 
-import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 import { AmountAgentProductBasket } from './AmountAgentProductBasket';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
@@ -44,28 +43,24 @@ export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGro
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="mt-2">
-        <Typography color="light-gray">
-          {getAmountCategoryName(amountProductGroup.group)}
-        </Typography>
+    <div className="flex flex-col gap-5">
+      <Typography color="light-gray">{getAmountCategoryName(amountProductGroup.group)}</Typography>
+      <div className="flex md:flex-row flex-col flex-wrap gap-4 md:gap-5">
+        {amountProductGroup.products.map((product) => (
+          <div className="md:w-72 w-full" key={product.customId}>
+            <AmountAgentProductBasket
+              containError={amountProductGroup.isOverMaximum}
+              product={product}
+              onProductClick={onModifyClick}
+              onDelete={onDelete}
+              editable={editable}
+            />
+          </div>
+        ))}
       </div>
-      {amountProductGroup.products.map((product) => (
-        <AmountAgentProductBasket
-          key={product.customId}
-          containError={amountProductGroup.isOverMaximum}
-          product={product}
-          onProductClick={onModifyClick}
-          onDelete={onDelete}
-          editable={editable}
-        />
-      ))}
       {amountProductGroup.isOverMaximum && (
         <div className="flex flex-row gap-1 text-error">
-          <div className="h-4 w-4">
-            <Icon name="error" />
-          </div>
-          <p className="flex-1 text-xs">
+          <p className="md:ml-5 flex-1 text-xs">
             Vous dépassez la limite légale d'unités{' '}
             {getMessageOverMaximumAmount(amountProductGroup.group)}. Pour connaître les quantités
             maximales autorisées{' '}

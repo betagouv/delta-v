@@ -157,7 +157,6 @@ const Declaration = () => {
   };
 
   const [isMailTooltipOpen, setIsMailTooltipOpen] = useState(false);
-  const [isPhoneTooltipOpen, setIsPhoneTooltipOpen] = useState(false);
 
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
@@ -304,7 +303,7 @@ const Declaration = () => {
           </div>
 
           <div className="mt-5 flex flex-col gap-5 w-full">
-            <div className="md:grid md:grid-cols-[340px_20px] md:gap-2">
+            <div className="grid gap-[10px] md:grid-cols-[340px_20px] grid-cols-[1fr_10px]">
               <InputGroup
                 type="text"
                 name="mail"
@@ -317,7 +316,7 @@ const Declaration = () => {
               />
               <div className="mt-2.5">
                 <Tooltip
-                  iconClassname="h-5 w-5 hidden md:block"
+                  iconClassname="h-5 w-5"
                   onClick={() => setIsMailTooltipOpen(!isMailTooltipOpen)}
                   isOpen={isMailTooltipOpen}
                 />
@@ -325,8 +324,7 @@ const Declaration = () => {
             </div>
             {isMailTooltipOpen && (
               <TooltipContainer
-                description="L’adresse mail n’est pas obligatoire mais est fortement recommandée. Une fois la
-                déclaration finie, vous pourrez directement l’envoyer à l’usager."
+                description="L’adresse mail est obligatoire, elle permet à l’usager de recevoir sa déclaration directement sur son mail."
                 onCloseClick={() => setIsMailTooltipOpen(false)}
               />
             )}
@@ -342,20 +340,7 @@ const Declaration = () => {
                 error={errors?.phoneNumber?.message}
                 required
               />
-              <div className="mt-2.5">
-                <Tooltip
-                  iconClassname="h-5 w-5 hidden md:block"
-                  onClick={() => setIsPhoneTooltipOpen(!isPhoneTooltipOpen)}
-                  isOpen={isPhoneTooltipOpen}
-                />
-              </div>
             </div>
-            {isPhoneTooltipOpen && (
-              <TooltipContainer
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                onCloseClick={() => setIsPhoneTooltipOpen(false)}
-              />
-            )}
           </div>
 
           <div className="mb-8 flex-1 md:mt-10 md:flex-none" />

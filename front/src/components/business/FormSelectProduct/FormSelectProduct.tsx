@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
-import { FormAddProduct } from '../FormAddProduct';
+import { FormAddProduct, OnAddProductValueOptions } from '../FormAddProduct';
 import { FormAddProductToFavorite } from '../FormAddProductToFavorite';
 import { StepsFormProduct } from '../StepsFormProduct/StepsFormProduct';
 import { ProductNotManaged } from './ProductNotManaged';
@@ -39,6 +39,7 @@ interface FormSelectProductProps {
   defaultName?: string;
   defaultValues?: DefaultValuesUpdateProduct;
   isAddAbleToFavorites?: boolean;
+  mode?: 'desktop' | 'mobile';
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
@@ -51,6 +52,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   defaultName = '',
   defaultValues,
   isAddAbleToFavorites = false,
+  mode = 'mobile',
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>(defaultSteps);
   const [allowNotManagedProduct, setAllowNotManagedProduct] = useState<boolean>(false);
@@ -98,7 +100,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
     });
   }, [steps]);
 
-  const onSubmit = (data: FormSelectProductData): void => {
+  const onSubmit = (data: FormSelectProductData | OnAddProductValueOptions): void => {
     const product = steps.pop();
     if (product) {
       onAddProduct({
@@ -118,7 +120,10 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
 
   return allowNotManagedProduct ||
     currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full gap-6">
+    <form
+      onSubmit={mode === 'mobile' ? handleSubmit(onSubmit) : undefined}
+      className="flex flex-col h-full gap-6"
+    >
       {templateRole === 'user' && (
         <div>
           <label
@@ -153,9 +158,12 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           disabled={!isAddAble}
           control={control}
           register={register}
+          getValues={getValues}
           errors={errors}
           defaultCurrency={defaultCurrency}
           templateRole={templateRole}
+          buttonType={mode === 'mobile' ? 'submit' : 'button'}
+          onButtonClick={mode === 'mobile' ? undefined : onSubmit}
         />
       )}
       {isAddAbleToFavorites && (

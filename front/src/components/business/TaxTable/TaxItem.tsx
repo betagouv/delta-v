@@ -11,11 +11,13 @@ import { DetailedProduct, ProductStatus } from '@/stores/simulator/appState.stor
 export interface ITaxItemProps {
   detailedProduct: DetailedProduct;
   withCalculation?: boolean;
+  noDetails?: boolean;
 }
 
 export const TaxItem: React.FC<ITaxItemProps> = ({
   detailedProduct,
   withCalculation = true,
+  noDetails = false,
 }: ITaxItemProps) => {
   const [openDetail, setOpenDetail] = useState<boolean>(false);
 
@@ -26,7 +28,7 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
       key={detailedProduct.customId}
       className={classNames({
         'border border-secondary-100 bg-white rounded-xl flex flex-col justify-start gap-2': true,
-        'pb-5': isAmountProduct,
+        'pb-5': isAmountProduct || noDetails,
       })}
     >
       <div className="flex flex-col pt-5 px-5">
@@ -56,7 +58,7 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
           {withCalculation || isAmountProduct ? `${detailedProduct.unitTaxes} €` : 'Non renseignés'}
         </Typography>
       </div>
-      {!isAmountProduct && (
+      {!isAmountProduct && !noDetails && (
         <div
           className="flex flex-col w-full justify-center py-2 px-5 bg-[#EEEEFE] rounded-b-xl cursor-pointer"
           onClick={() => setOpenDetail(!openDetail)}

@@ -29,6 +29,7 @@ export const SearchInputField = ({
   history,
 }: SearchInputFieldProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+
   const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<Product>[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);

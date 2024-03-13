@@ -29,6 +29,7 @@ export const NewDataInfoItem = ({
         <Typography
           color="black"
           size={size}
+          desktopSize="text-xs"
           weight={isBold ? 'bold' : 'normal'}
           lineHeight="leading-none"
         >

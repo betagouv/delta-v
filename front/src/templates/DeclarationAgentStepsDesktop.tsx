@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { UseFormHandleSubmit } from 'react-hook-form';
@@ -33,6 +33,12 @@ const DeclarationAgentStepsDesktop = ({
 }: IMainProps) => {
   const showProgressBar = currentStep <= 3 && currentStep >= 1;
 
+  const [headerHeight, setHeaderHeight] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    setHeaderHeight(document.getElementById('agentDesktopHeader')?.offsetHeight);
+  }, []);
+
   return (
     <>
       <MainAgentDesktop
@@ -53,6 +59,7 @@ const DeclarationAgentStepsDesktop = ({
           'bg-white': simpleBg,
           'bg-secondary-bg': !simpleBg,
         })}
+        style={{ height: `calc(100vh - ${headerHeight}px)` }}
       >
         {children}
       </form>

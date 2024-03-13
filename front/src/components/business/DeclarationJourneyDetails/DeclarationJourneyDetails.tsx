@@ -2,8 +2,8 @@ import React from 'react';
 
 import dayjs from 'dayjs';
 
-import { DataInfoItem } from '../DataInfoItem';
-import { MeansOfTransport } from '@/stores/declaration/appState.store';
+import { NewDataInfoItem } from '../NewDataInfoItem';
+import { Typography } from '@/components/common/Typography';
 
 require('dayjs/locale/fr');
 
@@ -11,7 +11,7 @@ dayjs.locale('fr');
 
 export type DeclarationJourneyDetailsProps = {
   country: string;
-  transport: MeansOfTransport;
+  transport: string;
   journeyId?: string;
 };
 
@@ -21,23 +21,17 @@ export const DeclarationJourneyDetails = ({
   journeyId,
 }: DeclarationJourneyDetailsProps) => {
   return (
-    <div className="grid h-full w-full grid-cols-2 gap-y-4">
-      <DataInfoItem
-        label="Pays"
-        value={country}
-        labelSize="text-sm"
-        valueSize="text-sm"
-        isRequired
-      />
-      <DataInfoItem label="Transport" value={transport} svgName={transport} isRequired />
-      {journeyId && (
-        <DataInfoItem
-          label="Numero de vol"
-          value={journeyId}
-          labelSize="text-sm"
-          valueSize="text-sm"
-        />
-      )}
+    <div className="flex flex-col bg-secondary-bg px-4 py-7 gap-[30px] md:px-10">
+      <Typography size="text-base" weight="bold" color="black">
+        Transport
+      </Typography>
+      <div className="grid grid-cols-2 gap-[30px]">
+        <div className="flex flex-col gap-4">
+          <NewDataInfoItem label="Pays d'achat" value={country} />
+          {journeyId && <NewDataInfoItem label="Numéro de vol" value={journeyId} />}
+        </div>
+        <NewDataInfoItem label="Moyen de transport" value={transport} />
+      </div>
     </div>
   );
 };

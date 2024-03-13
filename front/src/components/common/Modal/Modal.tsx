@@ -19,6 +19,7 @@ export interface IModalProps {
   titleColor?: Color;
   titleWeight?: Weight;
   titleSize?: TextSize;
+  scrollable?: boolean;
 }
 
 export const Modal: React.FC<IModalProps> = ({
@@ -33,12 +34,16 @@ export const Modal: React.FC<IModalProps> = ({
   titleColor = 'primary',
   titleWeight = 'bold',
   titleSize = 'text-lg',
+  scrollable = false,
 }: IModalProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-40 w-full overflow-visible"
+        className={clsxm({
+          'fixed inset-0 z-40 w-full overflow-visible': true,
+          'overflow-scroll': scrollable,
+        })}
         onClose={preventClose ? () => {} : onClose}
       >
         <div className="flex min-h-screen items-center justify-center px-small pt-small pb-20 text-center">

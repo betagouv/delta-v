@@ -16,7 +16,7 @@ const MainAgentDesktop = ({ meta, children, titleHeader }: IMainAgentDesktopProp
   const router = useRouter();
   const path = router.pathname;
   return (
-    <div className="antialiased flex flex-col ">
+    <div className="antialiased flex flex-col " id="agentDesktopHeader">
       {meta}
 
       <div className="pl-[103px] pr-20 border-b border-disabled-bg">

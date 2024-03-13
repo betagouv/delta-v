@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
+import { v4 as uuidv4 } from 'uuid';
+import shallow from 'zustand/shallow';
+
 import { FavoriteProducts } from '../FavoriteProducts';
+import { DefaultValuesUpdateProduct, OnAddProductOptions } from '../FormSelectProduct';
 import { NomenclatureCard } from '../NomenclatureCard';
 import { SearchProductFilterBar } from './filters/SearchProductFilters';
+import { ShoppingProductsCart } from './product/ShoppingProductsCart';
 import { useCreateFavoriteMutation, useRemoveFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import {
   useGetSearchProductHistory,
@@ -13,11 +19,14 @@ import {
   FormAddFavoriteData,
   ModalAddFavoriteProduct,
 } from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
+import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
 import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
 import { ModalDeleteFavoriteProduct } from '@/components/autonomous/ModalDeleteFavoriteProduct/ModalDeleteFavoriteProduct';
+import { ModalDeleteProductCartDeclaration } from '@/components/autonomous/ModalDeleteProductCartDeclaration';
 import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
 import { Typography } from '@/components/common/Typography';
 import { IdRequiredProduct, Product } from '@/model/product';
+import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 import { ProductSearchContext } from '@/utils/enums';
 import { ModalType } from '@/utils/modal';
@@ -30,6 +39,7 @@ export interface ProductSearchToolsProps {
 export const ProductSearchTools = ({
   variant = ProductSearchContext.DECLARATION,
 }: ProductSearchToolsProps) => {
+  const { trackEvent } = useMatomo();
   const {
     searchNomenclatureProducts,
     searchProducts,
@@ -37,14 +47,29 @@ export const ProductSearchTools = ({
     addFavoriteProducts,
     removeFavoriteProducts,
     countryForProductsNomenclature,
-  } = useStore((state) => ({
-    searchNomenclatureProducts: state.searchNomenclatureProducts,
-    searchProducts: state.searchProducts,
-    findProduct: state.findProduct,
-    addFavoriteProducts: state.addFavoriteProducts,
-    removeFavoriteProducts: state.removeFavoriteProducts,
-    countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
-  }));
+    addProductCartDeclarationAgent,
+    removeProductDeclaration,
+    updateProductCartDeclarationAgent,
+    findDeclarationShoppingProductAgent,
+  } = useStore(
+    (state) => ({
+      searchNomenclatureProducts: state.searchNomenclatureProducts,
+      searchProducts: state.searchProducts,
+      findProduct: state.findProduct,
+      addFavoriteProducts: state.addFavoriteProducts,
+      removeFavoriteProducts: state.removeFavoriteProducts,
+      countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
+      addProductCartDeclarationAgent: state.addProductCartDeclarationAgent,
+      removeProductDeclaration: state.removeProductCartDeclarationAgent,
+      updateProductCartDeclarationAgent: state.updateProductCartDeclarationAgent,
+      declarationAgentResponse: state.declaration.appState.declarationAgentResponse,
+      declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
+      meansOfTransportAndCountry:
+        state.declaration.appState.declarationAgentRequest.meansOfTransportAndCountry,
+      findDeclarationShoppingProductAgent: state.findDeclarationShoppingProductAgent,
+    }),
+    shallow,
+  );
 
   const { data: history, refetch: updateHistory } = useGetSearchProductHistory();
   const createFavoriteMutation = useCreateFavoriteMutation({});
@@ -70,10 +95,20 @@ export const ProductSearchTools = ({
   const [productsMatchingInputSearch, setProductsMatchingInputSearch] = useState<Product[]>([]);
 
   const [openCategoryNomenclatureModal, setOpenCategoryNomenclatureModal] = useState(false);
+  const [openDeclarationProductCartModal, setOpenDeclarationProductCartModal] = useState<
+    'add' | 'update' | undefined
+  >(undefined);
 
   const [favoriteValue, setFavoriteValue] = useState('');
   const [openAddFavoriteModal, setOpenAddFavoriteModal] = useState(false);
   const [openRemoveFavoriteModal, setOpenRemoveFavoriteModal] = useState(false);
+
+  const [cartProductId, setCartProductId] = useState<string | undefined>(undefined);
+  const [openRemoveCartProductModal, setOpenRemoveCartProductModal] = useState(false);
+
+  const [defaultValuesProduct, setDefaultValuesProduct] = useState<
+    DefaultValuesUpdateProduct | undefined
+  >();
 
   useEffect(() => {
     setProductsMatchingInputSearch(
@@ -98,6 +133,7 @@ export const ProductSearchTools = ({
     setShowMatchingProducts(true);
     setCurrentProduct(fullProduct);
     setOpenCategoryNomenclatureModal(true);
+    setOpenDeclarationProductCartModal('add');
     updateSearchProductHistory.mutate({ productId: product.id, searchValue: search });
   };
 
@@ -114,12 +150,17 @@ export const ProductSearchTools = ({
     setShowMatchingProducts(true);
   };
 
-  const onFavoriteBadgeClick = (product: Product) => {
+  const onOpenDeclarationProductCartModal = (product: Product) => {
     setCurrentProduct(product);
-    setOpenCategoryNomenclatureModal(true);
+    setOpenDeclarationProductCartModal('add');
   };
 
-  const onClickCard = (product: Product) => {
+  const onCloseDeclarationProductCartModal = () => {
+    setCurrentProduct(undefined);
+    setOpenDeclarationProductCartModal(undefined);
+  };
+
+  const onOpenCategoryNomenclatureModal = (product: Product) => {
     setCurrentProduct(product);
     setOpenCategoryNomenclatureModal(true);
   };
@@ -127,6 +168,11 @@ export const ProductSearchTools = ({
   const onCloseCategoryNomenclatureModal = () => {
     setCurrentProduct(undefined);
     setOpenCategoryNomenclatureModal(false);
+  };
+
+  const onCloseDeleteCartProductModal = () => {
+    setCartProductId(undefined);
+    setOpenRemoveCartProductModal(false);
   };
 
   const onAddFavoriteIconClick = (product: Product) => {
@@ -173,6 +219,72 @@ export const ProductSearchTools = ({
     onCloseRemoveFavoriteModal();
   };
 
+  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
+    const shoppingProduct: ShoppingProduct = {
+      id: uuidv4(),
+      productId: product.id,
+      name,
+      value: parseFloat(value),
+      amount: 1,
+      currency: currency ?? 'EUR',
+    };
+
+    addProductCartDeclarationAgent(shoppingProduct);
+    updateSearchProductHistory.mutate({ productId: product.id, searchValue: customName });
+    trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
+    setOpenDeclarationProductCartModal(undefined);
+    setShowMatchingProducts(false);
+    setShowCategoryFilters(false);
+  };
+
+  const onUpdateProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
+    if (!cartProductId) {
+      return;
+    }
+    const shoppingProduct: ShoppingProduct = {
+      id: cartProductId,
+      productId: product.id,
+      name,
+      value: parseFloat(value),
+      amount: 1,
+      currency: currency ?? 'EUR',
+    };
+
+    updateProductCartDeclarationAgent(shoppingProduct);
+    trackEvent({ category: 'user-action', action: 'add-product', name: product.name });
+    setOpenDeclarationProductCartModal(undefined);
+    setShowMatchingProducts(false);
+  };
+
+  const onRemoveCartProduct = (productId: string) => {
+    setCartProductId(productId);
+    setOpenRemoveCartProductModal(true);
+  };
+
+  const onConfirmRemoveCartProduct = () => {
+    if (cartProductId) {
+      removeProductDeclaration(cartProductId);
+      setOpenRemoveCartProductModal(false);
+    }
+  };
+
+  const onModifyClick = (productId: string) => {
+    const shoppingProduct = findDeclarationShoppingProductAgent(productId);
+    const product = findProduct(shoppingProduct?.productId ?? '');
+    if (!shoppingProduct) {
+      return;
+    }
+    setCartProductId(productId);
+    setDefaultValuesProduct({
+      customId: productId,
+      currency: shoppingProduct?.currency,
+      name: shoppingProduct?.name,
+      value: shoppingProduct?.value,
+    });
+    setCurrentProduct(product);
+    setOpenDeclarationProductCartModal('update');
+  };
+
   return (
     <div>
       <div className=" first:p-5 bg-secondary-bg rounded-[20px] flex flex-col items-center gap-4">
@@ -186,7 +298,13 @@ export const ProductSearchTools = ({
           history={history}
         />
 
-        <FavoriteProducts onFavoriteClick={onFavoriteBadgeClick} />
+        <FavoriteProducts
+          onFavoriteClick={
+            variant === ProductSearchContext.DECLARATION
+              ? onOpenDeclarationProductCartModal
+              : onOpenCategoryNomenclatureModal
+          }
+        />
       </div>
       <div className="flex-col pt-5 relative flex">
         {variant === ProductSearchContext.NOMENCLATURE && (
@@ -199,7 +317,12 @@ export const ProductSearchTools = ({
           </div>
         )}
         {showCategoryFilters && (
-          <CategoryProductDesktop onModalClose={onCloseCategoryNomenclatureModal} />
+          <CategoryProductDesktop
+            onNomenclatureModalClose={onCloseCategoryNomenclatureModal}
+            onDeclarationModalClose={onCloseDeclarationProductCartModal}
+            onAddProductToDeclaration={onAddProduct}
+            variant={variant}
+          />
         )}
         {showMatchingProducts && (
           <div className="flex flex-col gap-[30px]">
@@ -210,13 +333,17 @@ export const ProductSearchTools = ({
             </Typography>
             {productsMatchingInputSearch.length > 0 && (
               <div className="flex flex-wrap gap-4">
-                {productsMatchingInputSearch.map((product) => {
+                {productsMatchingInputSearch.map((product, index) => {
                   return (
-                    <div className="w-[292px]">
+                    <div className="w-[292px]" key={index}>
                       <NomenclatureCard
                         product={product}
                         searchValue={searchValue}
-                        onClick={onClickCard}
+                        onClick={
+                          variant === ProductSearchContext.DECLARATION
+                            ? onOpenDeclarationProductCartModal
+                            : onOpenCategoryNomenclatureModal
+                        }
                         onAddFavorite={onAddFavoriteIconClick}
                         onRemoveFavorite={onRemoveFavoriteIconClick}
                       />
@@ -227,14 +354,30 @@ export const ProductSearchTools = ({
             )}
           </div>
         )}
+        {!showMatchingProducts && !showCategoryFilters && (
+          <ShoppingProductsCart
+            onRemoveCartProduct={onRemoveCartProduct}
+            onModifyClick={onModifyClick}
+          />
+        )}
       </div>
 
-      {currentProduct && (
+      {currentProduct && variant === ProductSearchContext.NOMENCLATURE && (
         <ModalCategoryNomenclatureProduct
           open={openCategoryNomenclatureModal}
           onClose={onCloseCategoryNomenclatureModal}
           defaultProduct={currentProduct}
           modalType={modalType}
+        />
+      )}
+      {currentProduct && variant === ProductSearchContext.DECLARATION && (
+        <ModalAddProductCartDeclaration
+          open={!!openDeclarationProductCartModal}
+          onClose={onCloseDeclarationProductCartModal}
+          onAddProduct={openDeclarationProductCartModal === 'add' ? onAddProduct : onUpdateProduct}
+          currentProduct={currentProduct}
+          modalType={modalType}
+          defaultValues={defaultValuesProduct ?? undefined}
         />
       )}
       {currentFavorite && (
@@ -252,6 +395,14 @@ export const ProductSearchTools = ({
             productName={currentFavorite.name}
           />
         </>
+      )}
+      {cartProductId && (
+        <ModalDeleteProductCartDeclaration
+          modalType={ModalType.CENTER}
+          open={openRemoveCartProductModal}
+          onClose={onCloseDeleteCartProductModal}
+          onDeleteProduct={onConfirmRemoveCartProduct}
+        />
       )}
     </div>
   );

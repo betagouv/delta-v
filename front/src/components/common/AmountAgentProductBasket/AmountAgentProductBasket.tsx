@@ -110,7 +110,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
         {editable && (
           <span className="flex justify-center">
             <Button
-              size="sm"
+              size="2xs"
               color={containError ? 'red' : 'tertiary'}
               onClick={() => {
                 if (onButtonClick) {
@@ -119,6 +119,15 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
                 if (onProductClick) {
                   onProductClick(product.customId);
                 }
+              }}
+              className={{
+                'md:w-[82px]': true,
+                'md:h-[22px]': true,
+                'h-[30px]': true,
+                'w-[100px]': true,
+                'md:text-2xs': true,
+                'md:whitespace-nowrap': true,
+                'text-xs': true,
               }}
             >
               <span>Modifier</span>

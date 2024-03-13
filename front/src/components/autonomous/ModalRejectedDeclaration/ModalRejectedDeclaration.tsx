@@ -29,26 +29,44 @@ export const ModalRejectedDeclaration: React.FC<ModalRejectedDeclarationProps> =
       <Modal open={open} onClose={onClose} withMargin={false}>
         <div className="flex flex-col items-center">
           <div className="px-7 flex mt-5">
-            <Typography size="text-xs" color="secondary" textPosition="text-center">
+            <Typography
+              size="text-xs"
+              color="secondary"
+              textPosition="text-center"
+              desktopSize="text-xs"
+            >
               La déclaration est non conforme pour cause de :
             </Typography>
           </div>
-          <div className="flex flex-1 flex-col items-center mt-5 gap-3">
-            <Button onClick={onRejectedForLitigation} disabled={isLoading} fullWidth>
+          <div className="flex flex-1 flex-col items-center mt-5 gap-3 md:gap-5">
+            <Button
+              onClick={onRejectedForLitigation}
+              disabled={isLoading}
+              fullWidth
+              className={{ 'md:text-xs md:w-[148px] md:h-[34px]': true }}
+            >
               Contentieux
             </Button>
-            <Button onClick={onRejectedForError} disabled={isLoading} fullWidth>
+            <Button
+              onClick={onRejectedForError}
+              disabled={isLoading}
+              fullWidth
+              className={{ 'md:text-xs md:w-[148px] md:h-[34px]': true }}
+            >
               Erreur de l’usager
             </Button>
-            <Typography
-              size="text-xs"
-              color="primary"
-              textPosition="text-center"
-              underline
-              onClick={onClose}
-            >
-              Annuler
-            </Typography>
+            <div className="cursor-pointer">
+              <Typography
+                size="text-xs"
+                desktopSize="text-xs"
+                color="primary"
+                textPosition="text-center"
+                underline
+                onClick={onClose}
+              >
+                Annuler
+              </Typography>
+            </div>
           </div>
         </div>
       </Modal>

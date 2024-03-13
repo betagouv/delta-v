@@ -20,6 +20,7 @@ interface AddProductCartDeclarationProps {
   onSelectProduct?: (id: string) => void;
   defaultCurrency?: string;
   defaultValues?: DefaultValuesUpdateProduct;
+  mode?: 'desktop' | 'mobile';
 }
 
 export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps> = ({
@@ -28,6 +29,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
   onSelectProduct,
   defaultCurrency,
   defaultValues,
+  mode = 'mobile',
 }) => {
   const { findProductTree, findProductTreeSteps } = useStore(
     (state) => ({
@@ -51,8 +53,8 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
   const productTree = currentProduct ? findProductTree(currentProduct.id) : [];
   return (
     <>
-      <div className="flex flex-col h-full">
-        <div className="px-4 py-5">
+      <div className="flex flex-col h-full md:w-full">
+        <div className="px-4 py-5 md:px-10 md:pt-10 md:pb-5">
           <div className="flex flex-row gap-4">
             <Breadcrumbs
               categoryProducts={productTree
@@ -78,7 +80,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
             )}
           </div>
         </div>
-        <div className="flex flex-1 flex-col gap-6 bg-secondary-bg px-4 py-5">
+        <div className="flex flex-1 flex-col gap-6 bg-secondary-bg px-4 py-5 md:px-10 md:py-[30px]">
           {selectedProduct && (
             <FormSelectProduct
               currentProduct={selectedProduct}
@@ -87,6 +89,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
               templateRole="agent"
               defaultCurrency={defaultCurrency}
               defaultValues={defaultValues}
+              mode={mode}
             />
           )}
         </div>

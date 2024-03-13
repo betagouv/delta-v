@@ -5,6 +5,7 @@ import { Alpha2Code } from 'i18n-iso-countries';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
+// eslint-disable-next-line import/no-cycle
 import { Role } from '../FormSelectProduct/utils';
 import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
 import { Button } from '@/components/common/Button';
@@ -18,15 +19,23 @@ import { DeclarationRequest } from '@/stores/declaration/appState.store';
 import { SimulatorRequest } from '@/stores/simulator/appState.store';
 import { useStore } from '@/stores/store';
 
+export interface OnAddProductValueOptions {
+  name: string;
+  value: string;
+  currency: string;
+}
 interface FormAddProductProps {
   register: any;
   control: any;
+  getValues: any;
   disabled?: boolean;
   productId?: string;
   submitted?: boolean;
   errors: FieldErrors;
   defaultCurrency?: string;
   templateRole?: Role;
+  buttonType?: 'submit' | 'button';
+  onButtonClick?: (options: OnAddProductValueOptions) => void;
 }
 
 export interface FormSimulatorData {
@@ -68,12 +77,15 @@ const getCurrentRequest = ({
 export const FormAddProduct: React.FC<FormAddProductProps> = ({
   register,
   control,
+  getValues,
   disabled = false,
   submitted = false,
   productId,
   errors,
   defaultCurrency = 'EUR',
   templateRole,
+  buttonType = 'submit',
+  onButtonClick,
 }: FormAddProductProps) => {
   const { currencies, simulatorRequest, declarationAgentRequest, declarationRequest, findProduct } =
     useStore(
@@ -123,6 +135,17 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
     ? getAmountProductType(product.amountProduct)
     : 'valueProduct';
   const [openModalInfoProduct, setOpenModalInfoProduct] = useState<boolean>(false);
+
+  const handleSubmitClick = () => {
+    if (onButtonClick) {
+      const data = {
+        name: getValues('name'),
+        value: getValues('value'),
+        currency: getValues('currency'),
+      };
+      onButtonClick(data);
+    }
+  };
 
   return (
     <div className="flex flex-1 flex-col gap-6 w-full">
@@ -216,7 +239,17 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
         </div>
       ) : (
         <div className={classNames({ 'w-40': templateRole === 'agent' })}>
-          <Button disabled={disabled} fullWidth={true} type="submit">
+          <Button
+            disabled={disabled}
+            fullWidth={true}
+            type={buttonType}
+            onClick={buttonType === 'button' ? handleSubmitClick : undefined}
+            className={{
+              'md:w-[118px]': true,
+              'md:h-[34px]': true,
+              'text-xs': true,
+            }}
+          >
             Ajouter
           </Button>
         </div>
