@@ -192,7 +192,7 @@ const Declaration = () => {
         onSubmit={onSubmit}
         linkButton={DECLARATION_STEP_PAGE[1]}
       >
-        <div className="md:py-10">
+        <div className="md:py-10 flex flex-col">
           <InputGroup
             type="radioCard"
             label="Sélectionner le moyen de transport"

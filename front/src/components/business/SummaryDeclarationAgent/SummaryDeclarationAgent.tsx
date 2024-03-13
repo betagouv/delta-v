@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { getEmojiFlag } from 'countries-list';
 import { getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import ReactToPrint from 'react-to-print';
@@ -269,7 +270,11 @@ export const SummaryDeclarationAgent = ({
             phoneNumber={declarationResponse.declarantPhoneNumber}
           />
           <DeclarationJourneyDetails
-            country={countries[declarationResponse.declarantCountry] ?? ''}
+            country={
+              `${countries[declarationResponse.declarantCountry]} ${getEmojiFlag(
+                declarationResponse.declarantCountry,
+              ).toString()}` ?? ''
+            }
             transport={getMeanOfTransportsLabel(declarationResponse.declarantMeanOfTransport)}
           />
           <TaxTable declarationResponse={declarationResponse} noDetails />

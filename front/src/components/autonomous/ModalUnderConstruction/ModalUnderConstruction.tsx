@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Button } from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
+import { Typography } from '@/components/common/Typography';
 
 interface ModalUnderConstructionProps {
   open: boolean;
@@ -14,29 +15,35 @@ export const ModalUnderConstruction: React.FC<ModalUnderConstructionProps> = ({
 }) => {
   return (
     <>
-      <Modal
-        title={
-          <>
+      <Modal open={open} onClose={onClose}>
+        <div className="flex flex-col items-center gap-5">
+          <Typography
+            size="text-xs"
+            color="secondary"
+            textPosition="text-center"
+            weight="bold"
+            desktopSize="text-xs"
+          >
             Cette fonctionnalité n’est
             <br />
             pas encore opérationnelle
-          </>
-        }
-        subtitle={
-          <>
+          </Typography>
+          <Typography
+            size="text-xs"
+            color="secondary"
+            textPosition="text-center"
+            desktopSize="text-xs"
+          >
             Nous sommes désolés.
             <br />
             Nous travaillons et améliorons
             <br />
             l’application de jour en jour.
-          </>
-        }
-        open={open}
-        onClose={onClose}
-      >
-        <Button rounded="full" onClick={onClose}>
-          Retour
-        </Button>
+          </Typography>
+          <Button rounded="full" onClick={onClose} className={{ 'md:text-xs md:h-[34px]': true }}>
+            Retour
+          </Button>
+        </div>
       </Modal>
     </>
   );
