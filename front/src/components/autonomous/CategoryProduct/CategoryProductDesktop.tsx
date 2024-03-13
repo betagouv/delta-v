@@ -52,7 +52,10 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
 }) => {
   const { products } = useStore(
     (state) => ({
-      products: state.products.appState.nomenclatureProducts,
+      products:
+        variant === ProductSearchContext.DECLARATION
+          ? state.products.appState.products
+          : state.products.appState.nomenclatureProducts,
     }),
     shallow,
   );

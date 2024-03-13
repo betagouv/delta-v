@@ -41,7 +41,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
         }),
       )}
     >
-      <div className="absolute right-2 top-2 cursor-pointer">
+      <div className={cs({ 'absolute right-2 top-2 cursor-pointer': true, hidden: !editable })}>
         <Typography onClick={() => onDelete(product.customId)}>
           <Icon name="cross-thin" size="sm" />
         </Typography>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { UseFormHandleSubmit, useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
@@ -9,18 +9,24 @@ import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
 import { ProductSearchTools } from '@/components/business/SearchProduct/SearchProductDesktop';
 import { SummaryDeclarationAgent } from '@/components/business/SummaryDeclarationAgent';
 import Modal from '@/components/common/Modal';
+import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { useStore } from '@/stores/store';
 import { DECLARATION_STEP_PAGE } from '@/utils/const';
 import { ProductSearchContext } from '@/utils/enums';
 
-export const DeclarationProductPageDesktop = () => {
-  const { declarationId, declarationAgentRequest } = useStore(
+const Declaration = () => {
+  const { setProductsDeclarationToDisplayAgent, declarationId, declarationAgentRequest } = useStore(
     (state) => ({
+      setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
       declarationId: state.declaration.appState.declarationAgentRequest?.declarationId,
       declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
     }),
     shallow,
   );
+
+  useEffect(() => {
+    setProductsDeclarationToDisplayAgent();
+  }, []);
 
   const [openSummaryModal, setOpenSummaryModal] = useState(false);
 
@@ -65,3 +71,5 @@ export const DeclarationProductPageDesktop = () => {
     </AgentRoute>
   );
 };
+
+export default declarationAgent(Declaration);

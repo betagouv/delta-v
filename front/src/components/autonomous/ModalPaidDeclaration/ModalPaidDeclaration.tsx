@@ -58,7 +58,7 @@ export const ModalPaidDeclaration: React.FC<ModalPaidDeclarationProps> = ({
                 Déclaration payée
               </Typography>
             </Button>
-            <div className="cursor-pointer">
+            <div className="cursor-pointer w-full text-center">
               <Typography
                 size="text-sm"
                 desktopSize="text-xs"

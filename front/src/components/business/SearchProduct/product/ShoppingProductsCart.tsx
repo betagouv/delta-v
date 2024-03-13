@@ -47,7 +47,7 @@ export const ShoppingProductsCart: React.FC<ShoppingProductsCartProps> = ({
 
   return (
     <>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 pb-10">
         <div className="w-full flex flex-col gap-4">
           <div className="w-full flex flex-row justify-between items-center mb-1">
             <Typography color="black" size="text-xs">

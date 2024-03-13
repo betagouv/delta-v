@@ -61,6 +61,7 @@ export const ModalSwitchPaperDeclaration: React.FC<ModalSwitchPaperDeclarationPr
             <div className="cursor-pointer">
               <Typography
                 size="text-xs"
+                desktopSize="text-xs"
                 color="primary"
                 textPosition="text-center"
                 underline

@@ -44,7 +44,9 @@ export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGro
 
   return (
     <div className="flex flex-col gap-5">
-      <Typography color="light-gray">{getAmountCategoryName(amountProductGroup.group)}</Typography>
+      <Typography color="light-gray" desktopSize="text-sm">
+        {getAmountCategoryName(amountProductGroup.group)}
+      </Typography>
       <div className="flex md:flex-row flex-col flex-wrap gap-4 md:gap-5">
         {amountProductGroup.products.map((product) => (
           <div className="md:w-72 w-full" key={product.customId}>

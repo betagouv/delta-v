@@ -74,6 +74,8 @@ export const SearchInputField = ({
     if (onClearFieldClick) {
       onClearFieldClick();
     }
+    removeFocus();
+    setIsInputFocused(false);
   };
 
   useEffect(() => {

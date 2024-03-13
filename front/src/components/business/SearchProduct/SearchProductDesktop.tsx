@@ -158,6 +158,8 @@ export const ProductSearchTools = ({
   const onCloseDeclarationProductCartModal = () => {
     setCurrentProduct(undefined);
     setOpenDeclarationProductCartModal(undefined);
+    setOpenDeclarationProductCartModal(undefined);
+    setShowMatchingProducts(false);
   };
 
   const onOpenCategoryNomenclatureModal = (product: Product) => {
@@ -354,12 +356,14 @@ export const ProductSearchTools = ({
             )}
           </div>
         )}
-        {!showMatchingProducts && !showCategoryFilters && (
-          <ShoppingProductsCart
-            onRemoveCartProduct={onRemoveCartProduct}
-            onModifyClick={onModifyClick}
-          />
-        )}
+        {variant === ProductSearchContext.DECLARATION &&
+          !showMatchingProducts &&
+          !showCategoryFilters && (
+            <ShoppingProductsCart
+              onRemoveCartProduct={onRemoveCartProduct}
+              onModifyClick={onModifyClick}
+            />
+          )}
       </div>
 
       {currentProduct && variant === ProductSearchContext.NOMENCLATURE && (
