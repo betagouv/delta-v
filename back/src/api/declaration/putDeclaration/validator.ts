@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { AuthorType } from '../../common/enums/author.enum';
 import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
-import { parseNumber } from '../../../utils/zodParser';
 import { refineMeanOfTransport } from '../getSimulation/validator';
 import { refineValidateBorder } from '../../../utils/refine.util';
 
@@ -20,13 +19,13 @@ export const putDeclarationValidator = z.object({
       shoppingProducts: z.array(
         z.object({
           id: z.string().uuid().optional(),
-          customName: z.string().optional().default(''),
+          customName: z.string().optional(),
           customId: z
             .string({
               required_error: "L'identifiant du produit est requis",
             })
             .uuid(),
-          originalValue: parseNumber(z.number().min(0)),
+          originalValue: z.coerce.number().gt(0),
           currency: z.string().length(3).optional().default('EUR'),
         }),
         {
@@ -36,7 +35,7 @@ export const putDeclarationValidator = z.object({
       border: z
         .any()
         .superRefine((border, contextError) => refineValidateBorder({ border, contextError })),
-      age: parseNumber(z.number().int().min(0)),
+      age: z.coerce.number().int().gt(0),
       country: z.any().refine((country: Alpha2Code) => {
         return Object.keys(getAlpha2Codes()).includes(country);
       }),
