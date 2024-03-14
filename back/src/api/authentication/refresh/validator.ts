@@ -8,12 +8,12 @@ export const refreshValidator = z.object({
       .string({
         required_error: "L'access token est requis",
       })
-      .regex(jwtTokenRegex, "L'access token ne respecte pas le bon format"),
+      .regex(jwtTokenRegex, "L'access token est invalide"),
     refreshToken: z
       .string({
         required_error: 'Le refresh token est requis',
       })
-      .regex(jwtTokenRegex, 'Le refresh token ne respecte pas le bon format'),
+      .regex(jwtTokenRegex, "L'access token est invalide"),
   }),
 });
 

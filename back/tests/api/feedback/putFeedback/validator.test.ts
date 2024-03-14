@@ -12,10 +12,8 @@ describe('putFeedback validator', () => {
       feedbackId: faker.string.uuid(),
     },
   };
-  const { isValid, getParsedData } = validatorHelper(validator);
+  const { isValid } = validatorHelper(validator);
   it('should validate proper data', () => {
-    console.log(getParsedData(validData));
-
     expect(isValid(validData)).toBeTruthy();
   });
   it('should be invalid - comment length < 10', () => {

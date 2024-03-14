@@ -19,7 +19,7 @@ export default class ActualityQueryBuilder extends SelectQueryBuilder<News> {
       return this;
     }
 
-    const newTags = tags.split(',');
+    const newTags = tags.split(',').filter((tag) => tag !== '');
     return this.andWhere(
       new Brackets((qb) => {
         newTags.map((tag) => {

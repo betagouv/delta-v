@@ -1,50 +1,26 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { z } from 'zod';
 import { buildValidationMiddleware } from '../../../core/middlewares';
-import { validateMeanOfTransports, validateStatus } from '../../../utils/joiCustomValidators';
-import { parseDate, parseNumber } from '../../../utils/zodParser';
+import { parseDate } from '../../../utils/zodParser';
+import { refineValidateMeanOfTransports, refineValidateStatus } from '../../../utils/refine.util';
 
 export const getGetDeclarationsValidator = z.object({
   query: z
     .object({
-      limit: parseNumber(z.number().int().min(1).max(100)).default(10),
-      offset: parseNumber(z.number().int().min(0)).default(0),
+      limit: z.coerce.number().int().min(1).max(100).default(10),
+      offset: z.coerce.number().int().min(0).default(0),
       search: z.string().optional(),
       searchPublicId: z.string().optional(),
       status: z
         .string()
         .optional()
-        .superRefine((status, customError) => {
-          if (status) {
-            const { isValid, messages } = validateStatus(status);
-            if (!isValid) {
-              return messages.map((message) =>
-                customError.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  path: ['status'],
-                  message: message,
-                }),
-              );
-            }
-          }
-        }),
+        .superRefine((status, customError) => refineValidateStatus({ status, customError })),
       meanOfTransports: z
         .string()
         .optional()
-        .superRefine((meanOfTransports, customError) => {
-          if (meanOfTransports) {
-            const { isValid, messages } = validateMeanOfTransports(meanOfTransports);
-            if (!isValid) {
-              return messages.map((message) =>
-                customError.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  path: ['meanOfTransports'],
-                  message: message,
-                }),
-              );
-            }
-          }
-        }),
+        .superRefine((meanOfTransports, customError) =>
+          refineValidateMeanOfTransports({ meanOfTransports, customError }),
+        ),
       startDate: parseDate(z.date()).optional(),
       endDate: parseDate(z.date()).optional(),
     })

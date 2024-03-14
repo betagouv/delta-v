@@ -16,11 +16,8 @@ export const validateStatus = (value: string): IJoiCustomValidatorsResponse => {
   const { isValid, str } = validateList(value, Object.values(DeclarationStatus));
   const messages = str
     .split(',')
-    .map(
-      (m: string) =>
-        `${m} is not a valid status. Valid statuses are: ${Object.values(DeclarationStatus).join(
-          ', ',
-        )}`,
+    .map((m: string) =>
+      m.length ? `${m} is not a valid status.` : 'status cannot be empty string',
     );
 
   return {
@@ -32,11 +29,10 @@ export const validateMeanOfTransports = (value: string): IJoiCustomValidatorsRes
   const { isValid, str } = validateList(value, Object.values(MeansOfTransport));
   const messages = str
     .split(',')
-    .map(
-      (m: string) =>
-        `${m} is not a valid mean of transport. Valid means of transport are: ${Object.values(
-          MeansOfTransport,
-        ).join(', ')}`,
+    .map((m: string) =>
+      m.length
+        ? `${m} is not a valid mean of transport.`
+        : 'mean of transport cannot be empty string',
     );
 
   return {
@@ -48,10 +44,7 @@ export const validateNewsTags = (value: string): IJoiCustomValidatorsResponse =>
   const { isValid, str } = validateList(value, Object.values(NewsTags));
   const messages = str
     .split(',')
-    .map(
-      (m: string) =>
-        `${m} is not a valid tag. Valid tags are: ${Object.values(NewsTags).join(', ')}`,
-    );
+    .map((m: string) => (m.length ? `${m} is not a valid tag.` : 'tag cannot be empty string'));
 
   return {
     isValid,

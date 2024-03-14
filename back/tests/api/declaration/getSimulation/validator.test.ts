@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { simulateValidator } from '../../../../src/api/declaration/getSimulation/validator';
 import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
 import { validatorHelper } from '../../../../src/core/testHelpers';
-const { isValid, getParsedData } = validatorHelper(simulateValidator);
+const { isValid } = validatorHelper(simulateValidator);
 
 const defaultValidBody = {
   shoppingProducts: [
@@ -158,7 +158,6 @@ describe('test simulator validator', () => {
         age: 12,
       },
     };
-    console.log(getParsedData(data));
     expect(isValid(data)).toBe(true);
   });
   test.each([

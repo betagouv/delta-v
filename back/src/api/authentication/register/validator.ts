@@ -5,7 +5,7 @@ import { emailDouaneRegex, passwordRegex } from '../common/const/regex';
 
 export const registerValidator = z.object({
   body: z.object({
-    email: z.string().refine(
+    email: z.string({ required_error: "L'email est requis" }).refine(
       (email) => {
         if (config.WHITE_LIST_AGENT_EMAIL.length > 0) {
           return config.WHITE_LIST_AGENT_EMAIL.includes(email) || emailDouaneRegex.test(email);

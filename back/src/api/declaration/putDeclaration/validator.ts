@@ -5,6 +5,7 @@ import { AuthorType } from '../../common/enums/author.enum';
 import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 import { parseNumber } from '../../../utils/zodParser';
 import { refineMeanOfTransport } from '../getSimulation/validator';
+import { refineValidateBorder } from '../../../utils/refine.util';
 
 export const putDeclarationValidator = z.object({
   params: z.object({
@@ -32,19 +33,9 @@ export const putDeclarationValidator = z.object({
           required_error: 'La liste des produits est requise',
         },
       ),
-      border: z.any().superRefine((border: boolean, ctx: z.RefinementCtx) => {
-        if (typeof border === 'boolean') {
-          return true;
-        }
-        if (typeof border === 'string' && ['true', 'false'].includes(border)) {
-          return true;
-        }
-        return ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['border'],
-          message: 'border must be a boolean or a string "true" or "false"',
-        });
-      }),
+      border: z
+        .any()
+        .superRefine((border, contextError) => refineValidateBorder({ border, contextError })),
       age: parseNumber(z.number().int().min(0)),
       country: z.any().refine((country: Alpha2Code) => {
         return Object.keys(getAlpha2Codes()).includes(country);

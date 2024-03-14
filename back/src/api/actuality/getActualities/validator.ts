@@ -1,8 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { z } from 'zod';
-import { validateNewsTags } from '../../../utils/joiCustomValidators';
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { parseDate, parseNumber } from '../../../utils/zodParser';
+import { refineValidateNewsTags } from '../../../utils/refine.util';
 
 export const getActualitiesValidator = z.object({
   query: z
@@ -13,20 +12,7 @@ export const getActualitiesValidator = z.object({
       tags: z
         .string()
         .optional()
-        .superRefine((tags, customError) => {
-          if (tags) {
-            const { isValid, messages } = validateNewsTags(tags);
-            if (!isValid) {
-              return messages.map((message) =>
-                customError.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  path: ['tags'],
-                  message: message,
-                }),
-              );
-            }
-          }
-        }),
+        .superRefine((tags, customError) => refineValidateNewsTags({ tags, customError })),
       startDate: parseDate(z.date()).optional(),
       endDate: parseDate(z.date()).optional(),
     })
