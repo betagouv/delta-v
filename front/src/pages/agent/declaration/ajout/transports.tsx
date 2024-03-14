@@ -20,6 +20,7 @@ import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
 import { DeclarationAgentStepsDesktop } from '@/templates/DeclarationAgentStepsDesktop';
 import { DeclarationAgentStepsMobile } from '@/templates/DeclarationAgentStepsMobile';
+import clsxm from '@/utils/clsxm';
 import { DECLARATION_STEP_PAGE, disabledCountries } from '@/utils/const';
 
 export interface MeansOfTransportAndCountryData {
@@ -204,49 +205,56 @@ const Declaration = () => {
             littleCard
             newLabel
           />
-          {transportChosen && (
-            <div className="mt-4 md:w-[284px]">
-              <InputGroup
-                type="select"
-                fullWidth={true}
-                name="country"
-                placeholder="Sélectionner le pays d’où vous arrivez"
-                trailingIcon="search"
-                options={countriesOptions}
-                register={register('country', { required: true })}
-                control={control}
-                error={errors?.country?.message}
-              />
+          <div className={clsxm({ 'mt-4 md:w-[284px]': true, invisible: !transportChosen })}>
+            <InputGroup
+              type="select"
+              fullWidth={true}
+              name="country"
+              placeholder="Sélectionner le pays d’où vous arrivez"
+              trailingIcon="search"
+              options={countriesOptions}
+              register={register('country', { required: true })}
+              control={control}
+              error={errors?.country?.message}
+            />
+          </div>
+          <div
+            className={clsxm({
+              'mt-4 grid grid-cols-[3fr_1fr] md:grid-cols-[284px_1fr] md:gap-1 gap-4 items-center':
+                true,
+              invisible: !isPlane,
+              hidden: !isPlane && isFrontalier,
+            })}
+          >
+            <InputGroup
+              type="text"
+              name="phone"
+              fullWidth={true}
+              placeholder="Numéro de vol  : A36WJB..."
+              register={register('flightNumber')}
+              control={control}
+              error={errors?.flightNumber?.message}
+              required
+            />
+            <div className="ml-2.5">
+              <Typography
+                size="text-xs"
+                desktopSize="text-2xs"
+                color="placeholder"
+                italic
+                weight="normal"
+              >
+                Facultatif
+              </Typography>
             </div>
-          )}
-          {isPlane && (
-            <div className="mt-4 grid grid-cols-[3fr_1fr] md:grid-cols-[284px_1fr] md:gap-1 gap-4 items-center">
-              <InputGroup
-                type="text"
-                name="phone"
-                fullWidth={true}
-                placeholder="Numéro de vol  : A36WJB..."
-                register={register('flightNumber')}
-                control={control}
-                error={errors?.flightNumber?.message}
-                required
-              />
-              <div className="ml-2.5">
-                <Typography
-                  size="text-xs"
-                  desktopSize="text-2xs"
-                  color="placeholder"
-                  italic
-                  weight="normal"
-                >
-                  Facultatif
-                </Typography>
-              </div>
-            </div>
-          )}
+          </div>
           {isFrontalier && (
             <div className="mt-4">
-              <label htmlFor="adult" className={`mb-4 block text-base`} data-testid="label-element">
+              <label
+                htmlFor="adult"
+                className="mb-4 block text-base md:text-xs"
+                data-testid="label-element"
+              >
                 Est-ce dans le cadre d’un déplacement frontalier ?
               </label>
               <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">

@@ -137,6 +137,12 @@ export const ProductSearchTools = ({
     updateSearchProductHistory.mutate({ productId: product.id, searchValue: search });
   };
 
+  const onClearFieldClick = () => {
+    setSearchValue('');
+    setShowMatchingProducts(false);
+    setProductsMatchingInputSearch([]);
+  };
+
   const onFilterByCategoryClick = () => {
     setShowCategoryFilters(!showCategoryFilters);
     setShowMatchingProducts(false);
@@ -158,8 +164,6 @@ export const ProductSearchTools = ({
   const onCloseDeclarationProductCartModal = () => {
     setCurrentProduct(undefined);
     setOpenDeclarationProductCartModal(undefined);
-    setOpenDeclarationProductCartModal(undefined);
-    setShowMatchingProducts(false);
   };
 
   const onOpenCategoryNomenclatureModal = (product: Product) => {
@@ -292,12 +296,18 @@ export const ProductSearchTools = ({
       <div className=" first:p-5 bg-secondary-bg rounded-[20px] flex flex-col items-center gap-4">
         <SearchProductFilterBar
           onSearchProduct={searchFunction}
-          placeholder="Type de marchandises, marques..."
+          placeholder={
+            showCategoryFilters
+              ? 'Que recherchez-vous ?  (type de vêtements, marques, matières...)'
+              : 'Type de marchandises, marques...'
+          }
           onClickProduct={onClickInputResult}
           onFilterClick={onFilterByCategoryClick}
           onSearchAllClick={onSearchAll}
           isCategoryFilterOpen={showCategoryFilters}
           history={history}
+          onClearFieldClick={onClearFieldClick}
+          clearButtonVisibility={showMatchingProducts}
         />
 
         <FavoriteProducts

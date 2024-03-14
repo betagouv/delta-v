@@ -105,7 +105,7 @@ export const ValueAgentProductBasket = ({
           </div>
         )}
         {detailsButton && !editable && (
-          <div className="w-24 self-center">
+          <div className="flex justify-center">
             <Button
               color="tertiary"
               variant="outlined"
@@ -118,6 +118,7 @@ export const ValueAgentProductBasket = ({
                 'md:w-[82px]': true,
                 'md:h-[22px]': true,
                 'h-[30px]': true,
+                'w-[100px]': true,
                 'md:text-2xs': true,
                 'md:whitespace-nowrap': true,
                 'text-xs': true,
@@ -128,7 +129,7 @@ export const ValueAgentProductBasket = ({
           </div>
         )}
         {editable && (
-          <span className="flex justify-center">
+          <div className="flex justify-center">
             <Button
               size="2xs"
               color="tertiary"
@@ -143,9 +144,9 @@ export const ValueAgentProductBasket = ({
                 'text-xs': true,
               }}
             >
-              <span>Modifier</span>
+              Modifier
             </Button>
-          </span>
+          </div>
         )}
       </div>
 

@@ -37,12 +37,13 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
       className={twMerge(
         cs({
           'relative flex flex-col rounded-md w-full bg-[#E3E3FD]': true,
-          'bg-[#FFE8E5] border border-[#CE0500]': containError,
+          'bg-[#FFE8E5]': containError,
+          'border border-[#CE0500]': containError && !editable,
         }),
       )}
     >
       <div className={cs({ 'absolute right-2 top-2 cursor-pointer': true, hidden: !editable })}>
-        <Typography onClick={() => onDelete(product.customId)}>
+        <Typography onClick={() => onDelete(product.customId)} color="red">
           <Icon name="cross-thin" size="sm" />
         </Typography>
       </div>

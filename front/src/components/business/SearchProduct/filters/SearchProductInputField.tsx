@@ -7,6 +7,8 @@ import { SvgIcon } from '@/components/common/SvgIcon';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { SearchType } from '@/utils/search';
 
+export type ClearButtonVisibilityType = 'always' | 'never' | 'searchValue' | boolean;
+
 interface SearchInputFieldProps {
   onSearchProduct: (searchValue: string) => SearchType<Product>[];
   onFieldChange?: (value: string) => void;
@@ -16,7 +18,25 @@ interface SearchInputFieldProps {
   autoFocus?: boolean;
   disabled?: boolean;
   history?: SearchProductHistoryItem[];
+  clearButtonVisibility?: ClearButtonVisibilityType;
 }
+
+const getShowButtonValue = (type: ClearButtonVisibilityType, searchValue: string): boolean => {
+  switch (type) {
+    case 'always':
+      return true;
+    case 'never':
+      return false;
+    case 'searchValue':
+      return !!searchValue;
+    case true:
+      return true;
+    case false:
+      return !!searchValue;
+    default:
+      return !!searchValue;
+  }
+};
 
 export const SearchInputField = ({
   onSearchProduct,
@@ -27,6 +47,7 @@ export const SearchInputField = ({
   autoFocus = false,
   disabled = false,
   history,
+  clearButtonVisibility = 'searchValue',
 }: SearchInputFieldProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -40,10 +61,15 @@ export const SearchInputField = ({
   const [searchValue, setSearchValue] = useState<string>('');
   const [resultSearch, setResultSearch] = useState<SearchType<Product>[]>([]);
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+  const [showClearButton, setShowClearButton] = useState<boolean>(false);
 
   useEffect(() => {
     setResultSearch(onSearchProduct(searchValue ?? ''));
   }, [searchValue]);
+
+  useEffect(() => {
+    setShowClearButton(getShowButtonValue(clearButtonVisibility, searchValue));
+  }, [searchValue, clearButtonVisibility]);
 
   const isFocusedEmpty = isInputFocused && !searchValue;
   const showSearchResults = !!searchValue && resultSearch.length > 0;
@@ -61,19 +87,20 @@ export const SearchInputField = ({
     }
   };
 
-  const handleProductClick = (product: IdRequiredProduct, search: string) => {
-    if (onClickProduct) {
-      onClickProduct(product, search);
-    }
-    removeFocus();
-    setIsInputFocused(false);
-  };
-
   const handleClearFieldClick = () => {
     setSearchValue('');
     if (onClearFieldClick) {
       onClearFieldClick();
     }
+    removeFocus();
+    setIsInputFocused(false);
+  };
+
+  const handleProductClick = (product: IdRequiredProduct, search: string) => {
+    if (onClickProduct) {
+      onClickProduct(product, search);
+    }
+    handleClearFieldClick();
     removeFocus();
     setIsInputFocused(false);
   };
@@ -110,7 +137,7 @@ export const SearchInputField = ({
         onFocus={handleFieldFocus}
         value={searchValue}
       />
-      {onClearFieldClick && searchValue && (
+      {showClearButton && (
         <span onClick={handleClearFieldClick} className="my-auto ml-[13px]">
           <SvgIcon name="clearField" className=" w-[18px] h-[18px] cursor-pointer" />
         </span>
