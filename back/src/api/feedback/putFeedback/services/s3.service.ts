@@ -40,8 +40,8 @@ export class S3Service implements IS3Service {
 
 export const getFeedbackImageServerService = (): S3Service =>
   new S3Service({
-    host: config.CELLAR_HOST,
+    host: config.CELLAR_ADDON_HOST,
     bucketName: config.CELLAR_BUCKET_NAME,
-    idKey: config.CELLAR_KEY_ID,
-    secretKey: config.CELLAR_KEY_SECRET,
+    idKey: config.CELLAR_ADDON_KEY_ID,
+    secretKey: config.CELLAR_ADDON_KEY_SECRET,
   });

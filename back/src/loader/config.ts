@@ -26,9 +26,9 @@ const Config = z.object({
   FEEDBACK_RECEIVER_EMAIL_LIST: parseArray(z.string()),
   DISABLE_RATE_LIMIT: parseBoolean(z.boolean()).default(false),
   REDIS_URL: z.string(),
-  CELLAR_KEY_ID: z.string(),
-  CELLAR_KEY_SECRET: z.string(),
-  CELLAR_HOST: z.string(),
+  CELLAR_ADDON_KEY_ID: z.string(),
+  CELLAR_ADDON_KEY_SECRET: z.string(),
+  CELLAR_ADDON_HOST: z.string(),
   CELLAR_BUCKET_NAME: z.string(),
 });
 export type Config = z.infer<typeof Config>;
