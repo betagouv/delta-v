@@ -4,10 +4,7 @@ x-envs: &common-envs
   PORT: 8080
   DB_PORT: 5432
   LOG_LEVEL: info
-  DB_USERNAME: ${DB_USERNAME:-postgres}
-  DB_PASSWORD: ${DB_PASSWORD:-pass}
-  DB_DATABASE: ${DB_DATABASE:-postgres}
-  DB_HOST: ${DB_HOST:-database-delta-v}
+  POSTGRESQL_ADDON_URI: ${POSTGRESQL_ADDON_URI:-postgres://postgres:pass@database-delta-v:5432/postgres}
   ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET:-accessTokenSecretLocalDev}
   ACCESS_TOKEN_LIFE: ${ACCESS_TOKEN_LIFE:-30m}
   REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-refreshTokenSecretLocalDev}
@@ -34,7 +31,7 @@ x-envs: &common-envs
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
-  DB_HOST: e2e-test-database-delta-v
+  POSTGRESQL_ADDON_URI: postgres://postgres:pass@e2e-test-database-delta-v:5432/postgres
   LOG_LEVEL: fatal
   DISABLE_RATE_LIMIT: "false"
   REDIS_URL: redis://:redis@e2e-test-redis.api.dev.delta-v:6379/0

@@ -10,11 +10,7 @@ export const entitiesPath = path.join(__dirname, '..', 'entities');
 
 const dbEnvConfig: PostgresConnectionOptions = {
   type: 'postgres',
-  host: config.DB_HOST,
-  port: config.DB_PORT,
-  username: config.DB_USERNAME,
-  password: config.DB_PASSWORD,
-  database: config.DB_DATABASE,
+  url: config.POSTGRESQL_ADDON_URI,
   entities: [path.join(entitiesPath, '**', '*.ts'), path.join(entitiesPath, '**', '*.js')],
   logging: config.DB_LOGGING,
   synchronize: false,
