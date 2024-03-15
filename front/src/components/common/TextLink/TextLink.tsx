@@ -37,6 +37,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
         activeColor="white"
         underline={underline}
         lineHeight="leading-tight"
+        desktopSize="text-xs"
       >
         <Link to={to} href={href} external={external} back={back} onClick={onClick}>
           <div className="flex flex-row gap-1">

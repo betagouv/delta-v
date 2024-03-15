@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useRouter } from 'next/router';
 import { UseFormHandleSubmit, useForm } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
@@ -11,15 +12,22 @@ import { SummaryDeclarationAgent } from '@/components/business/SummaryDeclaratio
 import Modal from '@/components/common/Modal';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { useStore } from '@/stores/store';
-import { DECLARATION_STEP_PAGE } from '@/utils/const';
+import { DECLARATION_STEP_PAGE, RoutingAgent } from '@/utils/const';
 import { ProductSearchContext } from '@/utils/enums';
 
 const Declaration = () => {
-  const { setProductsDeclarationToDisplayAgent, declarationId, declarationAgentRequest } = useStore(
+  const router = useRouter();
+  const {
+    setProductsDeclarationToDisplayAgent,
+    declarationId,
+    declarationAgentRequest,
+    resetDeclarationAgent,
+  } = useStore(
     (state) => ({
       setProductsDeclarationToDisplayAgent: state.setProductsDeclarationToDisplayAgent,
       declarationId: state.declaration.appState.declarationAgentRequest?.declarationId,
       declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
+      resetDeclarationAgent: state.resetDeclarationAgent,
     }),
     shallow,
   );
@@ -35,7 +43,9 @@ const Declaration = () => {
       setOpenSummaryModal(true);
     },
   });
+
   const { handleSubmit } = useForm();
+
   const onSubmit = () => {
     if (!declarationId) return;
     createDeclarationMutation.mutate({
@@ -46,6 +56,12 @@ const Declaration = () => {
       meansOfTransportAndCountry: declarationAgentRequest.meansOfTransportAndCountry,
       authorType: 'agent',
     });
+  };
+
+  const onCloseSummaryModal = () => {
+    setOpenSummaryModal(false);
+    resetDeclarationAgent();
+    router.push(RoutingAgent.declarations);
   };
   return (
     <AgentRoute>
@@ -58,12 +74,7 @@ const Declaration = () => {
       >
         <ProductSearchTools variant={ProductSearchContext.DECLARATION} />
         {declarationId && (
-          <Modal
-            open={openSummaryModal}
-            scrollable
-            noPadding
-            onClose={() => setOpenSummaryModal(false)}
-          >
+          <Modal open={openSummaryModal} scrollable noPadding onClose={onCloseSummaryModal}>
             <SummaryDeclarationAgent declarationId={declarationId} hideBackgroundSummary />
           </Modal>
         )}

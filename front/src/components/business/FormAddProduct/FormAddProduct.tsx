@@ -166,7 +166,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             withBorder={templateRole !== 'agent'}
           />
           <Info>
-            <div className="leading-tight">
+            <div className="md:text-xs leading-tight">
               Vous souhaitez en savoir plus sur les
               <br /> quantités que vous pouvez <br />
               <div className="flex flex-row gap-1">

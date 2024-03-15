@@ -150,7 +150,7 @@ export const Input: React.FC<IInputOptions> = ({
         </div>
       )}
       {trailingAddons && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full items-center pr-4">
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex h-full items-center pr-4 md:text-xs">
           {trailingAddons}
         </div>
       )}
