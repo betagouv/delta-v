@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 
-import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
+import { Icon } from '@/components/common/Icon';
+import { SvgNames } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 import clsxm from '@/utils/clsxm';
 
@@ -39,10 +40,13 @@ export const RadioCardMin: React.FC<IRadioCardMinOptions> = ({
           'flex flex-row items-center pl-1 pr-3 py-0.5': true,
         })}
       >
-        <SvgIcon
-          name="addAlt"
-          className={clsxm('w-5 h-5 md:w-[14px] md:h-[14px]', { 'rotate-45': checked })}
-        />
+        <div
+          className={clsxm('w-6 h-6 md:w-4 md:h-4 items-center flex', {
+            'rotate-45': checked,
+          })}
+        >
+          <Icon name="add_circle" />
+        </div>
         <label
           className={classNames({
             'flex ml-1 cursor-pointer items-center': true,

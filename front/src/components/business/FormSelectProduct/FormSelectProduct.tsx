@@ -39,7 +39,7 @@ interface FormSelectProductProps {
   defaultName?: string;
   defaultValues?: DefaultValuesUpdateProduct;
   isAddAbleToFavorites?: boolean;
-  mode?: 'desktop' | 'mobile';
+  isMobile?: boolean;
 }
 
 export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
@@ -52,7 +52,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   defaultName = '',
   defaultValues,
   isAddAbleToFavorites = false,
-  mode = 'mobile',
+  isMobile = true,
 }: FormSelectProductProps) => {
   const [steps, setSteps] = useState<Product[]>(defaultSteps);
   const [allowNotManagedProduct, setAllowNotManagedProduct] = useState<boolean>(false);
@@ -121,7 +121,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
   return allowNotManagedProduct ||
     currentProduct.productDisplayTypes !== ProductDisplayTypes.notManaged ? (
     <form
-      onSubmit={mode === 'mobile' ? handleSubmit(onSubmit) : undefined}
+      onSubmit={isMobile === true ? handleSubmit(onSubmit) : undefined}
       className="flex flex-col h-full gap-6"
     >
       {templateRole === 'user' && (
@@ -162,8 +162,8 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
           errors={errors}
           defaultCurrency={defaultCurrency}
           templateRole={templateRole}
-          buttonType={mode === 'mobile' ? 'submit' : 'button'}
-          onButtonClick={mode === 'mobile' ? undefined : onSubmit}
+          buttonType={isMobile === true ? 'submit' : 'button'}
+          onButtonClick={isMobile === true ? undefined : onSubmit}
         />
       )}
       {isAddAbleToFavorites && (

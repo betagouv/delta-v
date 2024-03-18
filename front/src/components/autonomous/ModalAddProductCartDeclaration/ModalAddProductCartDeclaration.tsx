@@ -37,7 +37,7 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
         defaultCurrency={defaultCurrency}
         currentProduct={currentProduct}
         defaultValues={defaultValues}
-        mode={modalType === ModalType.DOWN ? 'mobile' : 'desktop'}
+        isMobile={modalType === ModalType.DOWN}
       />
     </ModalComponent>
   );

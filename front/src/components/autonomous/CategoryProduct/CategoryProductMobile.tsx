@@ -113,6 +113,7 @@ export const CategoryProductMobile: React.FC<CategoryProductProps> = ({
                 defaultCurrency={defaultCurrency}
                 onAddProduct={onAddProduct}
                 onSelectProduct={onSelectProduct}
+                isMobile
               />
             ) : (
               <div className="px-4 py-5">

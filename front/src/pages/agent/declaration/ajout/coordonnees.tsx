@@ -314,13 +314,11 @@ const Declaration = () => {
                 error={errors?.email?.message}
                 required
               />
-              <div className="mt-2.5">
-                <Tooltip
-                  iconClassname="h-5 w-5"
-                  onClick={() => setIsMailTooltipOpen(!isMailTooltipOpen)}
-                  isOpen={isMailTooltipOpen}
-                />
-              </div>
+              <Tooltip
+                onClick={() => setIsMailTooltipOpen(!isMailTooltipOpen)}
+                isOpen={isMailTooltipOpen}
+                iconClassname="mt-[3px]"
+              />
             </div>
             {isMailTooltipOpen && (
               <TooltipContainer

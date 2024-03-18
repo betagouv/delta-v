@@ -1,6 +1,5 @@
 import React from 'react';
 
-import AddAlt from '@/assets/icons/Add-Alt.svg';
 import Add from '@/assets/icons/Add.svg';
 import ArrowRight from '@/assets/icons/Arrow-Right.svg';
 import BasketColor from '@/assets/icons/Basket-Color.svg';
@@ -125,7 +124,6 @@ import Filter from '@/assets/icons/Filter.svg';
 import Folder from '@/assets/icons/Folder.svg';
 import Forbidden from '@/assets/icons/Forbidden.svg';
 import Home from '@/assets/icons/Home.svg';
-import InfoLight from '@/assets/icons/Info-Light.svg';
 import Info from '@/assets/icons/Info.svg';
 import Keyboard from '@/assets/icons/Keyboard.svg';
 import LiteSearch from '@/assets/icons/Lite-Search.svg';
@@ -149,7 +147,6 @@ import Star from '@/assets/icons/Star.svg';
 import StarFull from '@/assets/icons/StarFull.svg';
 import Sweets from '@/assets/icons/Sweets.svg';
 import Tea from '@/assets/icons/Tea.svg';
-import Times from '@/assets/icons/Times.svg';
 import Train from '@/assets/icons/Train.svg';
 import Traveler from '@/assets/icons/Traveler.svg';
 import Watch from '@/assets/icons/Watch.svg';
@@ -170,10 +167,8 @@ export type SvgNames =
   | 'logoFrenchDouane'
   | 'logoDouane'
   | 'add'
-  | 'addAlt'
   | 'home'
   | 'info'
-  | 'infoLight'
   | 'arrowRight'
   | 'basketColor'
   | 'boat'
@@ -321,8 +316,7 @@ export type SvgNames =
   | 'star'
   | 'starFull'
   | 'categoryWoodenFloor'
-  | 'clearField'
-  | 'times';
+  | 'clearField';
 
 export interface ISvgIconProps {
   name: SvgNames;
@@ -345,14 +339,10 @@ const getSvgFromName = (name: SvgNames): any => {
       return LogoDouane;
     case 'add':
       return Add;
-    case 'addAlt':
-      return AddAlt;
     case 'home':
       return Home;
     case 'info':
       return Info;
-    case 'infoLight':
-      return InfoLight;
     case 'arrowRight':
       return ArrowRight;
     case 'basketColor':
@@ -403,8 +393,6 @@ const getSvgFromName = (name: SvgNames): any => {
       return Sweets;
     case 'tea':
       return Tea;
-    case 'times':
-      return Times;
     case 'basket':
       return Basket;
     case 'bigArrowRight':

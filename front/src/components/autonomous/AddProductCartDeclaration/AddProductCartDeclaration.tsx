@@ -20,7 +20,7 @@ interface AddProductCartDeclarationProps {
   onSelectProduct?: (id: string) => void;
   defaultCurrency?: string;
   defaultValues?: DefaultValuesUpdateProduct;
-  mode?: 'desktop' | 'mobile';
+  isMobile?: boolean;
 }
 
 export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps> = ({
@@ -29,7 +29,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
   onSelectProduct,
   defaultCurrency,
   defaultValues,
-  mode = 'mobile',
+  isMobile = false,
 }) => {
   const { findProductTree, findProductTreeSteps } = useStore(
     (state) => ({
@@ -89,7 +89,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
               templateRole="agent"
               defaultCurrency={defaultCurrency}
               defaultValues={defaultValues}
-              mode={mode}
+              isMobile={isMobile}
             />
           )}
         </div>

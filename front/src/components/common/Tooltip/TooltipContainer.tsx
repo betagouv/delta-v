@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SvgIcon } from '../SvgIcon';
+import { Icon } from '../Icon';
 import { Typography } from '../Typography';
 
 export interface TooltipContainerProps {
@@ -22,7 +22,7 @@ export const TooltipContainer: React.FC<TooltipContainerProps> = ({
       <div className="md:block hidden">
         {onCloseClick && (
           <div className="self-center cursor-pointer" onClick={onCloseClick}>
-            <SvgIcon name="times" className="h-[14px] w-[14px]" />
+            <Icon name="cross-thin" size="base" />
           </div>
         )}
       </div>

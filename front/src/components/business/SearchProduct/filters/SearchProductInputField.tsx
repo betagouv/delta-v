@@ -27,12 +27,8 @@ const getShowButtonValue = (type: ClearButtonVisibilityType, searchValue: string
       return true;
     case 'never':
       return false;
-    case 'searchValue':
-      return !!searchValue;
     case true:
       return true;
-    case false:
-      return !!searchValue;
     default:
       return !!searchValue;
   }
