@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { putFavoriteValidator } from '../../../../src/api/favorite/putFavorite/validator';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 describe('putFavorite validator', () => {
   const validator = putFavoriteValidator;
   const validData = {

@@ -6,9 +6,9 @@ import { DeclarationRepository } from '../../../repositories/declaration.reposit
 import { AppDataSource } from '../../../loader/database';
 import serializer from './serializer';
 import service from './service';
-import { IGetOneDeclarationWithPublicId } from './validator';
+import { IGetOneDeclarationWithPublicIdRequest } from './validator';
 
-type GetOneDeclarationWithPublicId = ValidatedRequest<IGetOneDeclarationWithPublicId>;
+type GetOneDeclarationWithPublicId = ValidatedRequest<IGetOneDeclarationWithPublicIdRequest>;
 
 export default async (
   req: GetOneDeclarationWithPublicId,

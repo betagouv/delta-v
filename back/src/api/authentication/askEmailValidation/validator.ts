@@ -1,18 +1,17 @@
-import { buildValidationMiddleware, IRequestValidatorSchema } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
+/* eslint-disable import/no-extraneous-dependencies */
+import { z } from 'zod';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 
-export interface AskEmailValidationRequest {
-  body: {
-    email: string;
-  };
-}
-
-export const askEmailValidationValidator: IRequestValidatorSchema = {
-  body: validator.object({
-    email: validator.string().email().messages({
-      'string.email': "L'email n'est pas valide",
-    }),
+export const askEmailValidationValidator = z.object({
+  body: z.object({
+    email: z
+      .string({
+        required_error: "L'email est requis",
+      })
+      .email("L'email n'est pas valide"),
   }),
-};
+});
+
+export type AskEmailValidationRequest = z.infer<typeof askEmailValidationValidator>;
 
 export default buildValidationMiddleware(askEmailValidationValidator);

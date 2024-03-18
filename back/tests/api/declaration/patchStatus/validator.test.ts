@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { patchStatusValidator } from '../../../../src/api/declaration/patchStatus/validator';
 import { DeclarationStatus } from '../../../../src/entities/declaration.entity';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 const { isValid } = validatorHelper(patchStatusValidator);
 
 const defaultValidBody = {

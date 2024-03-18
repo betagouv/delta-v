@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { getActualitiesValidator } from '../../../../src/api/actuality/getActualities/validator';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 const validator = getActualitiesValidator;
 
 const { isValid } = validatorHelper(validator);

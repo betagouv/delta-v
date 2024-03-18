@@ -1,6 +1,5 @@
 import { refreshValidator } from '../../../../src/api/authentication/refresh/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
-
 describe('refresh validator', () => {
   const validator = refreshValidator;
   const { isValid } = validatorHelper(validator);

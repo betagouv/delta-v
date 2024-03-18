@@ -180,7 +180,18 @@ const ContactPage = () => {
                   error={isError ? errors?.comment?.message : undefined}
                   additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
                 />
+                <Typography size="text-xs" color="black">
+                  Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une
+                  demande particulière ?
+                </Typography>
               </div>
+              <InputGroup
+                type="textarea"
+                placeholder="Saisissez votre message..."
+                name="comment"
+                register={register('comment')}
+                error={!isValid ? errors?.comment?.message : undefined}
+              />
 
               {file && urlFile ? (
                 <div className="flex flex-col gap-4">

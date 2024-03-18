@@ -1,12 +1,11 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { putDeclarationValidator } from '../../../../src/api/declaration/putDeclaration/validator';
 import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
 import {
   DeclarationData,
   prepareDeclarationData,
 } from '../../../helpers/prepareContext/declarationData';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 const { isValid } = validatorHelper(putDeclarationValidator);
 const declarationData = prepareDeclarationData();
 
@@ -50,6 +49,9 @@ delete defaultValidBody.declarationId;
 describe('test simulator validator', () => {
   it('should validate data', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
       },
@@ -58,6 +60,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - ID not uuid', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         shoppingProducts: [
@@ -73,6 +78,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - ID not defined', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         shoppingProducts: [
@@ -87,6 +95,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - price should be higher than 0', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         shoppingProducts: [
@@ -102,6 +113,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - missing border', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         border: undefined,
@@ -109,17 +123,36 @@ describe('test simulator validator', () => {
     };
     expect(isValid(data)).toBe(false);
   });
+  it('should validate data - good format border', () => {
+    const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
+      body: {
+        ...defaultValidBody,
+        border: 'false',
+      },
+    };
+    expect(isValid(data)).toBe(true);
+  });
   it('should not validate data - bad format border', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         border: 'bad',
       },
     };
+
     expect(isValid(data)).toBe(false);
   });
   it('should not validate data - age undefiend', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         age: undefined,
@@ -130,6 +163,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - bad format age', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         age: 'bad',
@@ -139,6 +175,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - country undefiend', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         country: undefined,
@@ -149,6 +188,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - bad country', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         country: 'bad',
@@ -158,9 +200,12 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - missing mean of transport', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
-        MeansOfTransport: undefined,
+        meanOfTransport: undefined,
         border: false,
         age: 18,
       },
@@ -169,6 +214,9 @@ describe('test simulator validator', () => {
   });
   it('should validate data - missing mean of transport but age < 15', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         border: false,
@@ -186,6 +234,9 @@ describe('test simulator validator', () => {
     [false, 'teebdefgrg'],
   ])('validate data should be %p - with mean of transport = %p', (result, meanOfTransport) => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         border: false,
@@ -197,6 +248,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - missing authorType', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         authorType: undefined,
@@ -206,15 +260,21 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - missing declarantAddress', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
-        declarantAddress: undefined,
+        declarantAddressStreet: undefined,
       },
     };
     expect(isValid(data)).toBe(false);
   });
   it('should not validate data - missing declarantEmail', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         declarantEmail: undefined,
@@ -224,6 +284,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - missing declarantFirstName', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         declarantFirstName: undefined,
@@ -233,6 +296,9 @@ describe('test simulator validator', () => {
   });
   it('should not validate data - missing declarantLastName', () => {
     const data = {
+      params: {
+        declarationId: faker.string.uuid(),
+      },
       body: {
         ...defaultValidBody,
         declarantLastName: undefined,

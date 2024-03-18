@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { passwordRegex } from '../../../../src/api/authentication/common/const/regex';
 import { changePasswordValidator } from '../../../../src/api/authentication/changePassword/validator';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 describe('change password validator', () => {
   const validator = changePasswordValidator;
   const { isValid } = validatorHelper(validator);

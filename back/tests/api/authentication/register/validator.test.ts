@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { registerValidator } from '../../../../src/api/authentication/register/validator';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { config } from '../../../../src/loader/config';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 describe('register validator', () => {
   const validator = registerValidator;
   const validData = {

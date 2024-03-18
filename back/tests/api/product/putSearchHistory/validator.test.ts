@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { putSearchProductHistoryValidator } from '../../../../src/api/product/putSearchHistory/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
-
 describe('put one node validator', () => {
   const validator = putSearchProductHistoryValidator;
   const { isValid } = validatorHelper(validator);

@@ -1,18 +1,19 @@
+import { z } from 'zod';
 import { buildValidationMiddleware } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
 
-export interface PutSearchProductHistoryRequest {
-  body: {
-    productId: string;
-    searchValue: string;
-  };
-}
-
-export const putSearchProductHistoryValidator = {
-  body: validator.object({
-    productId: validator.string().uuid().required(),
-    searchValue: validator.string().required(),
+export const putSearchProductHistoryValidator = z.object({
+  body: z.object({
+    productId: z
+      .string({
+        required_error: 'productId is required',
+      })
+      .uuid(),
+    searchValue: z.string({
+      required_error: 'searchValue is required',
+    }),
   }),
-};
+});
+
+export type PutSearchProductHistoryRequest = z.infer<typeof putSearchProductHistoryValidator>;
 
 export default buildValidationMiddleware(putSearchProductHistoryValidator);

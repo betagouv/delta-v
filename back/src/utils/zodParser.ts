@@ -39,6 +39,15 @@ export const parseBoolean = <T extends ZodTypeAny>(schema: T) => {
   }, schema);
 };
 
+export const parseDate = <T extends ZodTypeAny>(schema: T) => {
+  return z.preprocess((obj) => {
+    if (typeof obj === 'string') {
+      return new Date(obj);
+    }
+    return obj;
+  }, schema);
+};
+
 export const parseArray = <T extends ZodTypeAny>(schema: T) => {
   return z.preprocess((obj) => {
     if (Array.isArray(obj)) {

@@ -1,31 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import Joi, { ValidationResult } from 'joi';
-import { IRequestValidatorSchema } from '../middlewares';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AnyZodObject, SafeParseReturnType } from 'zod';
 
 export interface IValidatorHelper {
   isValid: (args: any) => boolean;
   getParsedData: (args: any) => any;
 }
 
-function useValidator(schema: IRequestValidatorSchema, args: any): ValidationResult {
-  return Joi.object({ ...schema }).validate(args);
-}
+const useValidator = (
+  schema: AnyZodObject,
+  args: any,
+): SafeParseReturnType<
+  {
+    [x: string]: any;
+  },
+  {
+    [x: string]: any;
+  }
+> => {
+  return schema.safeParse(args);
+};
 
-/**
- * Helper for testing joi validator schemas
- * @param schema object validator schema
- */
-export function validatorHelper(schema: IRequestValidatorSchema): IValidatorHelper {
+export function validatorHelper(schema: AnyZodObject): IValidatorHelper {
   return {
-    isValid: (args): boolean => useValidator(schema, args).error === undefined,
+    isValid: (args): boolean => useValidator(schema, args).success,
     getParsedData: (args): any => {
-      const { value, error } = useValidator(schema, args);
-      if (error) {
-        throw error;
+      const result = useValidator(schema, args);
+      if (!result.success) {
+        throw result.error;
       }
 
-      return value;
+      return result.data;
     },
   };
 }

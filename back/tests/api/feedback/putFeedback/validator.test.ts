@@ -1,6 +1,6 @@
-import { validatorHelper } from '../../../../src/core/testHelpers';
-import { putFeedbackValidator } from '../../../../src/api/feedback/putFeedback/validator';
 import { faker } from '@faker-js/faker';
+import { putFeedbackValidator } from '../../../../src/api/feedback/putFeedback/validator';
+import { validatorHelper } from '../../../../src/core/testHelpers';
 
 describe('putFeedback validator', () => {
   const validator = putFeedbackValidator;

@@ -1,25 +1,22 @@
+import { z } from 'zod';
 import { buildValidationMiddleware } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
 import { jwtTokenRegex, passwordRegex } from '../common/const/regex';
 
-export interface IResetPasswordRequest {
-  body: {
-    token: string;
-    password: string;
-  };
-}
-
-export const resetPasswordValidator = {
-  body: validator.object({
-    token: validator.string().regex(jwtTokenRegex).required().messages({
-      'string.empty': 'Le jeton est requis',
-      'string.pattern.base': 'Le jeton ne respecte pas le bon format',
-    }),
-    password: validator.string().regex(passwordRegex).required().messages({
-      'string.empty': 'Le mot de passe est requis',
-      'string.pattern.base': 'Le mot de passe ne respecte pas le format demandé',
-    }),
+export const resetPasswordValidator = z.object({
+  body: z.object({
+    token: z
+      .string({
+        required_error: 'Le jeton est requis',
+      })
+      .regex(jwtTokenRegex, { message: 'Le jeton ne respecte pas le bon format' }),
+    password: z
+      .string({
+        required_error: 'Le mot de passe est requis',
+      })
+      .regex(passwordRegex, { message: 'Le mot de passe ne respecte pas le format demandé' }),
   }),
-};
+});
+
+export type IResetPasswordRequest = z.infer<typeof resetPasswordValidator>;
 
 export default buildValidationMiddleware(resetPasswordValidator);
