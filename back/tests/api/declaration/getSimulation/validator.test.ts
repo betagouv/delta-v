@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { simulateValidator } from '../../../../src/api/declaration/getSimulation/validator';
 import { MeansOfTransport } from '../../../../src/api/common/enums/meansOfTransport.enum';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 const { isValid } = validatorHelper(simulateValidator);
 
 const defaultValidBody = {

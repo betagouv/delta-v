@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { validatorHelper } from '../../../../src/core/testHelpers';
 import { getOneDeclarationWithPublicIdValidator } from '../../../../src/api/declaration/getDeclarationWithPublicId/validator';
-
+import { validatorHelper } from '../../../../src/core/testHelpers';
 const validator = getOneDeclarationWithPublicIdValidator;
 
 const { isValid } = validatorHelper(validator);

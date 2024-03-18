@@ -1,23 +1,13 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { NextFunction, Request, Response } from 'express';
-import Joi, { ObjectSchema, ValidationResult, ValidationOptions, ValidationError } from 'joi';
 
+import { AnyZodObject, ZodError } from 'zod';
 import { HttpStatuses } from '../httpStatuses';
 
 const DEFAULT_ERROR_MESSAGE = 'Bad Request';
 const DEFAULT_ERROR_CODE = 'bad-request';
-
-const JOI_OPTIONS: ValidationOptions = { abortEarly: false };
-
-export interface IRequestValidatorSchema {
-  headers?: ObjectSchema<any>;
-  params?: ObjectSchema<any>;
-  query?: ObjectSchema<any>;
-  cookies?: ObjectSchema<any>;
-  body?: ObjectSchema<any>;
-  file?: ObjectSchema<any>;
-}
 
 interface IErrorResponse {
   message: string;
@@ -33,54 +23,27 @@ interface IErrorResponse {
   };
 }
 
-function buildValidator(schema: IRequestValidatorSchema): ObjectSchema<IRequestValidatorSchema> {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return Joi.object({
-    headers: Joi.any(),
-    params: Joi.any(),
-    query: Joi.any(),
-    cookies: Joi.any(),
-    body: Joi.any(),
-    file: Joi.any(),
-    ...schema,
-  })
-    .required()
-    .min(1);
-}
-
 const buildErrorMessage = (options: IValidationMiddlewareOptions | undefined): string =>
   options?.message ?? DEFAULT_ERROR_MESSAGE;
 
 const buildErrorResponse = (
-  error: ValidationError,
+  error: ZodError,
   options: IValidationMiddlewareOptions | undefined,
-): IErrorResponse => ({
-  message: buildErrorMessage(options),
-  code: options?.code || DEFAULT_ERROR_CODE,
-  statusCode: HttpStatuses.BAD_REQUEST,
-  context: {
-    validationErrors: error.details.map((detail) => ({
-      name: detail.context?.key,
-      message: detail.message,
-      path: detail.path,
-      type: detail.type,
-    })),
-  },
-});
-
-function validate(
-  validator: ObjectSchema<IRequestValidatorSchema>,
-  data: any,
-): ValidationResult['value'] {
-  const result = validator.validate(data, JOI_OPTIONS);
-
-  if (result.error) {
-    throw result.error;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return result.value;
-}
+): IErrorResponse => {
+  return {
+    message: buildErrorMessage(options),
+    code: options?.code || DEFAULT_ERROR_CODE,
+    statusCode: HttpStatuses.BAD_REQUEST,
+    context: {
+      validationErrors: error.issues.map((issue) => ({
+        name: issue.path[issue.path.length - 1] as string,
+        message: issue.message,
+        path: issue.path,
+        type: issue.code,
+      })),
+    },
+  };
+};
 
 interface IExtendedRequest extends Request {
   file?: any;
@@ -91,6 +54,23 @@ export interface IValidationMiddlewareOptions {
   code?: string;
 }
 
+// function buildValidator with schema
+function buildValidator(schema: AnyZodObject): AnyZodObject {
+  return schema;
+}
+
+//function validate with validator and data
+export function validate(
+  validator: AnyZodObject,
+  data: any,
+): { isValid: boolean; parsedData: any } {
+  const result = validator.safeParse(data);
+  if (result.success) {
+    return { isValid: true, parsedData: result.data };
+  }
+  return { isValid: false, parsedData: result.error };
+}
+
 /**
  * Build validation middleware.
  * @param schema Joi validator schema or schema builder function (allows to use TranslationFunction when generating error messages)
@@ -98,7 +78,7 @@ export interface IValidationMiddlewareOptions {
  * @param options.code Error code
  */
 export function buildValidationMiddleware(
-  schema: IRequestValidatorSchema,
+  schema: AnyZodObject,
   options?: IValidationMiddlewareOptions,
 ) {
   return function validationMiddleware(
@@ -108,39 +88,29 @@ export function buildValidationMiddleware(
   ): Response | void {
     const { headers, params, query, body, cookies, file } = request;
 
-    try {
-      const validator = buildValidator(schema);
+    const validator = buildValidator(schema);
 
-      const validationResult = validate(validator, {
-        headers,
-        params,
-        query,
-        body,
-        cookies,
-        file,
-      });
+    const validationResult = validate(validator, {
+      headers,
+      params,
+      query,
+      body,
+      cookies,
+      file,
+    });
 
-      request.headers = validationResult.headers;
-      request.params = validationResult.params;
-      request.query = validationResult.query;
-      request.cookies = validationResult.cookies;
-      request.body = validationResult.body;
-      request.file = validationResult.file;
-
-      return next();
-    } catch (error: any) {
-      if (error.isJoi && error instanceof ValidationError) {
-        const validationResponse = buildErrorResponse(error, options);
-
-        // request.logger.warn({
-        //   message: 'Validation failed',
-        //   context: { validationResponse },
-        // });
-
-        return response.status(HttpStatuses.BAD_REQUEST).send(validationResponse);
-      }
-
-      return next(error);
+    if (!validationResult.isValid) {
+      const validationResponse = buildErrorResponse(validationResult.parsedData, options);
+      return response.status(HttpStatuses.BAD_REQUEST).send(validationResponse);
     }
+
+    request.headers = validationResult.parsedData.headers;
+    request.params = validationResult.parsedData.params;
+    request.query = validationResult.parsedData.query;
+    request.cookies = validationResult.parsedData.cookies;
+    request.body = validationResult.parsedData.body;
+    request.file = validationResult.parsedData.file;
+
+    return next();
   };
 }

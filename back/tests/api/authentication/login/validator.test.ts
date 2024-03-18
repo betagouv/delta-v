@@ -1,6 +1,5 @@
 import { loginValidator } from '../../../../src/api/authentication/login/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
-
 describe('login validator', () => {
   const validator = loginValidator;
   const { isValid, getParsedData } = validatorHelper(validator);

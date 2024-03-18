@@ -1,6 +1,5 @@
 import { resetPasswordValidator } from '../../../../src/api/authentication/resetPassword/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
-
 describe('reset password validator', () => {
   const validator = resetPasswordValidator;
   const { isValid } = validatorHelper(validator);

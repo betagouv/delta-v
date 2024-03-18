@@ -1,41 +1,35 @@
-import { buildValidationMiddleware, IRequestValidatorSchema } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
+import { z } from 'zod';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 import { MimeTypes } from '../../common/enums/mimeTypes';
 
-export interface PutFeedbackRequest {
-  params: {
-    feedbackId: string;
-  };
-  body: {
-    comment: string;
-  };
-  file?: Express.Multer.File;
-}
-
-export const putFeedbackValidator: IRequestValidatorSchema = {
-  params: validator
-    .object({
-      feedbackId: validator.string().uuid().required(),
-    })
-    .required(),
-  body: validator
-    .object({
-      comment: validator.string().min(10).required(),
-    })
-    .required(),
-  file: validator
-    .object({
-      fieldname: validator.string().required(),
-      originalname: validator.string().required(),
-      encoding: validator.string().required(),
-      mimetype: validator.string().valid(MimeTypes.JPEG, MimeTypes.PNG).required(),
-      buffer: validator.binary().required(),
-      size: validator
-        .number()
-        .max(10 * 1024 * 1024) //10mo
-        .required(),
-    })
+export const putFeedbackValidator = z.object({
+  params: z.object({
+    feedbackId: z
+      .string({
+        required_error: "L'id du feedback est requis",
+      })
+      .uuid(),
+  }),
+  body: z.object({
+    comment: z.string().min(10, 'Le commentaire doit contenir au moins 10 caractères'),
+  }),
+  file: z
+    .any()
+    .refine((file) => file?.fieldname, 'Image is required.')
+    .refine((file) => file?.originalname, 'Image is required.')
+    .refine((file) => file?.encoding, 'Image is required.')
+    .refine(
+      (file) => file?.size <= 10 * 1024 * 1024,
+      "La taille de l'image ne doit pas dépasser 10Mo",
+    )
+    .refine(
+      (file) => Object.values(MimeTypes).includes(file?.mimetype),
+      '.jpg, .jpeg, .png, .pdf files are accepted.',
+    )
+    .refine((files) => files?.buffer instanceof Buffer, 'File is not a buffer.')
     .optional(),
-};
+});
+
+export type PutFeedbackRequest = z.infer<typeof putFeedbackValidator>;
 
 export default buildValidationMiddleware(putFeedbackValidator);

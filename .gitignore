@@ -21,3 +21,5 @@ build/
 .DS_Store
 
 back/.DS_Store
+
+e2e/tmpredisdata

@@ -1,23 +1,19 @@
-import { buildValidationMiddleware, IRequestValidatorSchema } from '../../../core/middlewares';
-import { validator } from '../../../core/validator';
+import { z } from 'zod';
+import { buildValidationMiddleware } from '../../../core/middlewares';
 
-export interface LoginRequest {
-  body: {
-    email: string;
-    password: string;
-  };
-}
-
-export const loginValidator: IRequestValidatorSchema = {
-  body: validator.object({
-    email: validator.string().required().email().messages({
-      'string.empty': "L'email est requis",
-      'string.email': "L'email n'est pas valide",
-    }),
-    password: validator.string().required().messages({
-      'string.empty': 'Le mot de passe est requis',
+export const loginValidator = z.object({
+  body: z.object({
+    email: z
+      .string({
+        required_error: "L'email est requis",
+      })
+      .email("L'email n'est pas valide"),
+    password: z.string({
+      required_error: 'Le mot de passe est requis',
     }),
   }),
-};
+});
+
+export type LoginRequest = z.infer<typeof loginValidator>;
 
 export default buildValidationMiddleware(loginValidator);

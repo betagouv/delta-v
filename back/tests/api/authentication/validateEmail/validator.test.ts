@@ -1,6 +1,5 @@
 import { ValidateEmailValidator } from '../../../../src/api/authentication/validateEmail/validator';
 import { validatorHelper } from '../../../../src/core/testHelpers';
-
 describe('validate email validator', () => {
   const validator = ValidateEmailValidator;
   const { isValid, getParsedData } = validatorHelper(validator);
