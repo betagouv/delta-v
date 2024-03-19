@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Icon } from '@/components/common/Icon';
 import { SvgNames } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
+import clsxm from '@/utils/clsxm';
 
 export interface IRadioCardMinOptions {
   value: string;
@@ -37,17 +38,23 @@ export const RadioCardMin: React.FC<IRadioCardMinOptions> = ({
       <div
         className={classNames({
           'flex flex-row items-center pl-1 pr-3 py-0.5': true,
-          'pl-2.5': checked,
         })}
       >
-        <Icon name={checked ? 'cross-thin' : 'add_circle'} size={checked ? 'xs' : 'lg'} />
-        <label
-          className={classNames({
-            'ml-1 cursor-pointer': true,
-            'ml-2.5': checked,
+        <div
+          className={clsxm('w-6 h-6 md:w-4 md:h-4 items-center flex', {
+            'rotate-45': checked,
           })}
         >
-          <Typography color={checked ? 'white' : undefined}>{value}</Typography>
+          <Icon name="add_circle" />
+        </div>
+        <label
+          className={classNames({
+            'flex ml-1 cursor-pointer items-center': true,
+          })}
+        >
+          <Typography color={checked ? 'white' : undefined} size="text-sm" desktopSize="text-xs">
+            {value}
+          </Typography>
         </label>
       </div>
     </button>

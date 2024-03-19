@@ -121,8 +121,8 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
             <label
               htmlFor={name}
               className={classNames({
-                'mb-2 block text-sm font-bold': !newLabel,
-                'mb-5 block text-sm font-normal': newLabel,
+                'mb-2 block text-sm font-bold md:text-xs': !newLabel,
+                'mb-5 block text-sm font-normal md:text-xs': newLabel,
               })}
               data-testid="label-element"
             >

@@ -5,6 +5,7 @@ import { getEmojiFlag } from 'countries-list';
 import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
+import { useMediaQuery } from 'react-responsive';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
@@ -17,7 +18,9 @@ import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
-import { DeclarationAgentSteps } from '@/templates/DeclarationAgentSteps';
+import { DeclarationAgentStepsDesktop } from '@/templates/DeclarationAgentStepsDesktop';
+import { DeclarationAgentStepsMobile } from '@/templates/DeclarationAgentStepsMobile';
+import clsxm from '@/utils/clsxm';
 import { DECLARATION_STEP_PAGE, disabledCountries } from '@/utils/const';
 
 export interface MeansOfTransportAndCountryData {
@@ -83,7 +86,8 @@ const Declaration = () => {
     handleSubmit,
     register,
     control,
-    formState: { errors, isValid },
+    watch,
+    formState: { errors },
     getValues,
   } = useForm<MeansOfTransportAndCountryData>({
     mode: 'onBlur',
@@ -98,6 +102,7 @@ const Declaration = () => {
   const [transportChosen, setTransportChosen] = useState<string | undefined>(
     getValues('meansOfTransport'),
   );
+  const [selectedCountry, setSelectedCountry] = useState(watch('country'));
 
   const [isPlane, setIsPlane] = useState(getValues('meansOfTransport') === 'plane');
   const [isFrontalier, setIsFrontalier] = useState(getValues('country') === 'CH');
@@ -129,6 +134,7 @@ const Declaration = () => {
   register('country', {
     onChange: (e) => {
       setTransportChosen(e.target.value);
+      setSelectedCountry(e.target.value);
       if (e.target.value === 'CH') {
         setIsFrontalier(true);
       } else {
@@ -171,32 +177,40 @@ const Declaration = () => {
     return finalCountriesOptions;
   }, []);
 
+  const isMobile = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
+  const DeclarationAgentStepsComponent = isMobile
+    ? DeclarationAgentStepsMobile
+    : DeclarationAgentStepsDesktop;
+
   return (
     <AgentRoute>
-      <DeclarationAgentSteps
+      <DeclarationAgentStepsComponent
         currentStep={2}
         handleSubmit={handleSubmit as UseFormHandleSubmit<any>}
         onSubmit={onSubmit}
         linkButton={DECLARATION_STEP_PAGE[1]}
       >
-        <InputGroup
-          type="radioCard"
-          label="Sélectionner le moyen de transport"
-          name="meansOfTransport"
-          radioCardValues={meansOfTransports}
-          register={register('meansOfTransport', { required: true })}
-          control={control}
-          error={errors?.meansOfTransport?.message}
-          littleCard
-          newLabel
-        />
-        {transportChosen && (
-          <div className="mt-4">
+        <div className="md:py-10 flex flex-col">
+          <InputGroup
+            type="radioCard"
+            label="Sélectionner le moyen de transport"
+            name="meansOfTransport"
+            radioCardValues={meansOfTransports}
+            register={register('meansOfTransport', { required: true })}
+            control={control}
+            error={errors?.meansOfTransport?.message}
+            littleCard
+            newLabel
+          />
+          <div className={clsxm({ 'mt-4 md:w-[284px]': true, invisible: !transportChosen })}>
             <InputGroup
               type="select"
               fullWidth={true}
               name="country"
-              placeholder="Sélectionner le pays d'où arrive l'usager"
+              placeholder="Sélectionner le pays d’où vous arrivez"
               trailingIcon="search"
               options={countriesOptions}
               register={register('country', { required: true })}
@@ -204,54 +218,67 @@ const Declaration = () => {
               error={errors?.country?.message}
             />
           </div>
-        )}
-        {isPlane && (
-          <div className="mt-4 flex flex-row items-center">
-            <div className="w-52">
-              <InputGroup
-                type="text"
-                name="phone"
-                fullWidth={true}
-                placeholder="N° de vol  : A36WJB..."
-                register={register('flightNumber')}
-                control={control}
-                error={errors?.flightNumber?.message}
-                required
-              />
-            </div>
+          <div
+            className={clsxm({
+              'mt-4 grid grid-cols-[3fr_1fr] md:grid-cols-[284px_1fr] md:gap-1 gap-4 items-center':
+                true,
+              invisible: !isPlane,
+              hidden: !isPlane && isFrontalier,
+            })}
+          >
+            <InputGroup
+              type="text"
+              name="phone"
+              fullWidth={true}
+              placeholder="Numéro de vol  : A36WJB..."
+              register={register('flightNumber')}
+              control={control}
+              error={errors?.flightNumber?.message}
+              required
+            />
             <div className="ml-2.5">
-              <Typography size="text-xs" color="light-gray" italic>
+              <Typography
+                size="text-xs"
+                desktopSize="text-2xs"
+                color="placeholder"
+                italic
+                weight="normal"
+              >
                 Facultatif
               </Typography>
             </div>
           </div>
-        )}
-        {isFrontalier && (
-          <div className="mt-4">
-            <label htmlFor="adult" className={`mb-4 block text-base`} data-testid="label-element">
-              Est-ce dans le cadre d’un déplacement frontalier ?
-            </label>
-            <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
-              <Radio
-                name="border"
-                radioValues={radioValues}
-                register={register('border')}
-                error={errors?.border?.message}
-              />
+          {isFrontalier && (
+            <div className="mt-4">
+              <label
+                htmlFor="adult"
+                className="mb-4 block text-base md:text-xs"
+                data-testid="label-element"
+              >
+                Est-ce dans le cadre d’un déplacement frontalier ?
+              </label>
+              <div className="bg-white w-44 px-5 py-2.5 rounded-full flex justify-center">
+                <Radio
+                  name="border"
+                  radioValues={radioValues}
+                  register={register('border')}
+                  error={errors?.border?.message}
+                />
+              </div>
             </div>
-          </div>
-        )}
-        <div>
-          {errors?.meansOfTransport && (
-            <div className="text-red-500">{errors.meansOfTransport.message}</div>
           )}
+          <div>
+            {errors?.meansOfTransport && (
+              <div className="text-red-500">{errors.meansOfTransport.message}</div>
+            )}
+          </div>
+          <div className="md:relative md:bottom-0 md:mt-20 absolute bottom-8 w-40 md:w-[118px] md:h-[34px] self-center md:self-start">
+            <Button fullWidth fullHeight type="submit" disabled={!selectedCountry}>
+              <span className="md:text-xs">Valider</span>
+            </Button>
+          </div>
         </div>
-        <div className="absolute bottom-8 w-40 self-center">
-          <Button fullWidth={true} type="submit" disabled={!isValid}>
-            Valider
-          </Button>
-        </div>
-      </DeclarationAgentSteps>
+      </DeclarationAgentStepsComponent>
     </AgentRoute>
   );
 };

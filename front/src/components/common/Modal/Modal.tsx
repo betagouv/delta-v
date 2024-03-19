@@ -18,7 +18,9 @@ export interface IModalProps {
   noPadding?: boolean;
   titleColor?: Color;
   titleWeight?: Weight;
-  titleSize?: TextSize;
+  desktopTitleSize?: TextSize;
+  desktopSubtitleSize?: TextSize;
+  scrollable?: boolean;
 }
 
 export const Modal: React.FC<IModalProps> = ({
@@ -32,13 +34,18 @@ export const Modal: React.FC<IModalProps> = ({
   noPadding = false,
   titleColor = 'primary',
   titleWeight = 'bold',
-  titleSize = 'text-lg',
+  desktopTitleSize = 'text-lg',
+  desktopSubtitleSize,
+  scrollable = false,
 }: IModalProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-40 w-full overflow-visible"
+        className={clsxm({
+          'fixed inset-0 z-40 w-full overflow-visible': true,
+          'overflow-scroll': scrollable,
+        })}
         onClose={preventClose ? () => {} : onClose}
       >
         <div className="flex min-h-screen items-center justify-center px-small pt-small pb-20 text-center">
@@ -86,7 +93,7 @@ export const Modal: React.FC<IModalProps> = ({
                       size="text-lg"
                       color={titleColor}
                       weight={titleWeight}
-                      desktopSize={titleSize}
+                      desktopSize={desktopTitleSize}
                       lineHeight="leading-4"
                     >
                       {title}
@@ -96,7 +103,12 @@ export const Modal: React.FC<IModalProps> = ({
               )}
               {subtitle && (
                 <div className="mt-5 text-center">
-                  <Typography size="text-sm" color="secondary" lineHeight="leading-4">
+                  <Typography
+                    size="text-sm"
+                    color="secondary"
+                    lineHeight="leading-4"
+                    desktopSize={desktopSubtitleSize}
+                  >
                     {subtitle}
                   </Typography>
                 </div>

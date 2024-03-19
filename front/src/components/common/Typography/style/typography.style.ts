@@ -15,6 +15,7 @@ export type Color =
   | 'primary'
   | 'secondary'
   | 'defaultText'
+  | 'placeholder'
   | 'red'
   | 'white'
   | 'middle-gray'
@@ -115,6 +116,8 @@ export const getColor = (color: Color, colorGradient?: string): string => {
       }
     case 'red':
       return 'text-red-600';
+    case 'placeholder':
+      return 'text-placeholder';
     case 'white':
       return 'text-white';
     case 'light-gray':
@@ -129,6 +132,8 @@ export const getColor = (color: Color, colorGradient?: string): string => {
       return 'text-error';
     case 'black':
       return 'text-black';
+    case 'defaultText':
+      return 'text-defaultText';
     default:
       return 'text-primary-700';
   }

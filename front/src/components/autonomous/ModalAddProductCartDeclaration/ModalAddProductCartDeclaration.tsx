@@ -5,10 +5,10 @@ import {
   DefaultValuesUpdateProduct,
   OnAddProductOptions,
 } from '@/components/business/FormSelectProduct';
-import DownModal from '@/components/common/DownModal';
 import { Product } from '@/model/product';
+import { ModalType, getModalComponent } from '@/utils/modal';
 
-type OnAddProduct = (options: OnAddProductOptions) => void;
+export type OnAddProduct = (options: OnAddProductOptions) => void;
 
 interface ModalAddProductCartDeclarationProps {
   open: boolean;
@@ -17,6 +17,7 @@ interface ModalAddProductCartDeclarationProps {
   onAddProduct: OnAddProduct;
   defaultCurrency?: string;
   defaultValues?: DefaultValuesUpdateProduct;
+  modalType?: ModalType;
 }
 
 export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclarationProps> = ({
@@ -26,15 +27,18 @@ export const ModalAddProductCartDeclaration: React.FC<ModalAddProductCartDeclara
   open,
   defaultCurrency,
   defaultValues,
+  modalType = ModalType.DOWN,
 }) => {
+  const ModalComponent = getModalComponent(modalType);
   return (
-    <DownModal bgColor="bg-white" open={open} onClose={onClose} withoutMargin>
+    <ModalComponent bgColor="bg-white" open={open} onClose={onClose} withoutMargin noPadding>
       <AddProductCartDeclaration
         onAddProduct={onAddProduct}
         defaultCurrency={defaultCurrency}
         currentProduct={currentProduct}
         defaultValues={defaultValues}
+        isMobile={modalType === ModalType.DOWN}
       />
-    </DownModal>
+    </ModalComponent>
   );
 };

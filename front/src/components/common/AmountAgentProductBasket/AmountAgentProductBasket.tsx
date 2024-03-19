@@ -37,12 +37,13 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
       className={twMerge(
         cs({
           'relative flex flex-col rounded-md w-full bg-[#E3E3FD]': true,
-          'bg-[#FFE8E5] border border-[#CE0500]': containError,
+          'bg-[#FFE8E5]': containError,
+          'border border-[#CE0500]': containError && !editable,
         }),
       )}
     >
-      <div className="absolute right-2 top-2 cursor-pointer">
-        <Typography onClick={() => onDelete(product.customId)}>
+      <div className={cs({ 'absolute right-2 top-2 cursor-pointer': true, hidden: !editable })}>
+        <Typography onClick={() => onDelete(product.customId)} color="red">
           <Icon name="cross-thin" size="sm" />
         </Typography>
       </div>
@@ -110,7 +111,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
         {editable && (
           <span className="flex justify-center">
             <Button
-              size="sm"
+              size="2xs"
               color={containError ? 'red' : 'tertiary'}
               onClick={() => {
                 if (onButtonClick) {
@@ -119,6 +120,15 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
                 if (onProductClick) {
                   onProductClick(product.customId);
                 }
+              }}
+              className={{
+                'md:w-[82px]': true,
+                'md:h-[22px]': true,
+                'h-[30px]': true,
+                'w-[100px]': true,
+                'md:text-2xs': true,
+                'md:whitespace-nowrap': true,
+                'text-xs': true,
               }}
             >
               <span>Modifier</span>

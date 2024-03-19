@@ -3,7 +3,7 @@ import { SvgIcon } from '@/components/common/SvgIcon';
 import { Typography } from '@/components/common/Typography';
 
 export const TobaccoAndorra: React.FC = () => (
-  <div className="flex flex-col">
+  <div className="flex flex-col md:text-xs">
     <div className="flex flex-row justify-around">
       <div className="flex flex-col items-center text-center">
         <div className="h-14 w-auto">

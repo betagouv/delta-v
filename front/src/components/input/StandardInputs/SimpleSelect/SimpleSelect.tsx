@@ -23,7 +23,7 @@ export const SimpleSelect: React.FC<SimpleSelectOptions> = ({
   fullWidth,
   register,
 }) => {
-  let className = `bg-white relative border border-secondary-100 border-solid rounded-full pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 text-base max-w-full`;
+  let className = `bg-white relative border border-secondary-100 border-solid rounded-full pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 text-base md:text-xs max-w-full`;
   className += fullWidth ? ' w-full' : ' w-auto';
   className += error
     ? ' border-red-500 focus:ring-red-500 focus:border-red-500'

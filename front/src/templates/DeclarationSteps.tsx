@@ -15,12 +15,6 @@ type IMainProps = {
   onClickBack?: () => void;
 };
 
-export type ProgressBarAgentItemType = {
-  name: string;
-  to: string;
-  stepNumber: number;
-};
-
 const DeclarationSteps = ({
   children,
   handleSubmit,

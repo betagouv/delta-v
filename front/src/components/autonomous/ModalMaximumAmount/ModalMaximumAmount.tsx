@@ -97,7 +97,14 @@ export const ModalMaximumAmount: React.FC<ModalMaximumAmountProps> = ({
   const modalData = getValues(countryType, productType, border);
   return (
     <>
-      <Modal title={modalData.title} subtitle={modalData.subTitle} open={open} onClose={onClose}>
+      <Modal
+        title={modalData.title}
+        subtitle={modalData.subTitle}
+        open={open}
+        onClose={onClose}
+        desktopTitleSize="text-sm"
+        desktopSubtitleSize="text-sm"
+      >
         <div className="flex flex-1 flex-col">{modalData.content}</div>
       </Modal>
     </>

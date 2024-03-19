@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 
 import { Icon } from '../Icon';
-import { ProgressBarAgentItem } from './ProgressBarAgentItem';
-import { ProgressBarAgentItemType } from '@/templates/DeclarationAgentSteps';
+import { ProgressBarAgentItem, ProgressBarAgentItemType } from './ProgressBarAgentItem';
 
 export interface IProgressBarAgentProps {
   links: ProgressBarAgentItemType[];
@@ -34,7 +33,7 @@ export const ProgressBarAgent: React.FC<IProgressBarAgentProps> = ({
   currentStep,
 }: IProgressBarAgentProps) => {
   return (
-    <nav className="flex flex-row justify-between">
+    <nav className="flex flex-row justify-between md:justify-start md:gap-5 md:pb-10">
       {links.map((link) => {
         return RenderProgress(link, currentStep);
       })}

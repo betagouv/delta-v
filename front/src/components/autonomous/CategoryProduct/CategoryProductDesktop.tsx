@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react';
 
 import shallow from 'zustand/shallow';
 
+import { ModalAddProductCartDeclaration, OnAddProduct } from '../ModalAddProductCartDeclaration';
 import { ModalCategoryNomenclatureProduct } from '../ModalCategoryNomenclatureProduct';
 import { CategoryList, Item } from '@/components/common/CategoryList';
 import { SvgNames } from '@/components/common/SvgIcon';
 import { Product } from '@/model/product';
 import { useStore } from '@/stores/store';
+import { ProductSearchContext } from '@/utils/enums';
 import { ModalType } from '@/utils/modal';
 import { checkIsFinalProduct, findProduct, findProductTree } from '@/utils/product.util';
 
 interface CategoryProductDesktopProps {
   defaultProduct?: Product;
-  onModalClose?: () => void;
+  onNomenclatureModalClose?: () => void;
+  onDeclarationModalClose?: () => void;
+  variant?: ProductSearchContext;
+  onAddProductToDeclaration: OnAddProduct;
 }
 
 interface DisplayedProduct {
@@ -40,11 +45,17 @@ const getSubProductCardsToDisplay = (productTree: Product[]) => {
 
 export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
   defaultProduct,
-  onModalClose,
+  onNomenclatureModalClose,
+  onDeclarationModalClose,
+  variant = ProductSearchContext.DECLARATION,
+  onAddProductToDeclaration,
 }) => {
   const { products } = useStore(
     (state) => ({
-      products: state.products.appState.nomenclatureProducts,
+      products:
+        variant === ProductSearchContext.DECLARATION
+          ? state.products.appState.products
+          : state.products.appState.nomenclatureProducts,
     }),
     shallow,
   );
@@ -88,8 +99,11 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
   };
 
   const handleModalClose = () => {
-    if (onModalClose) {
-      onModalClose();
+    if (onNomenclatureModalClose) {
+      onNomenclatureModalClose();
+    }
+    if (onDeclarationModalClose) {
+      onDeclarationModalClose();
     }
     onParentCategoryClick();
   };
@@ -98,7 +112,7 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
 
   return (
     <>
-      <div className="px-4 py-5">
+      <div className="py-5">
         <CategoryList
           onSelectProduct={onSelectProduct}
           productTree={productTree}
@@ -108,12 +122,21 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
           bigSize
         />
       </div>
-      {currentProduct && (
+      {currentProduct && variant === ProductSearchContext.NOMENCLATURE && (
         <ModalCategoryNomenclatureProduct
           open={isFinalProduct}
           defaultProduct={currentProduct}
           modalType={ModalType.CENTER}
           onClose={handleModalClose}
+        />
+      )}
+      {currentProduct && variant === ProductSearchContext.DECLARATION && (
+        <ModalAddProductCartDeclaration
+          open={isFinalProduct}
+          onClose={handleModalClose}
+          onAddProduct={onAddProductToDeclaration}
+          currentProduct={currentProduct}
+          modalType={ModalType.CENTER}
         />
       )}
     </>

@@ -26,12 +26,23 @@ export const ModalSwitchPaperDeclaration: React.FC<ModalSwitchPaperDeclarationPr
     <>
       <Modal open={open} onClose={onClose} withMargin={false}>
         <div className="flex flex-col items-center">
-          <Typography size="text-xs" color="secondary" textPosition="text-center" weight="bold">
+          <Typography
+            size="text-xs"
+            color="secondary"
+            textPosition="text-center"
+            weight="bold"
+            desktopSize="text-xs"
+          >
             Êtes-vous sur de vouloir passer en <br />
             déclaration papier ?
           </Typography>
           <div className="flex mt-2">
-            <Typography size="text-xs" color="secondary" textPosition="text-center">
+            <Typography
+              size="text-xs"
+              color="secondary"
+              textPosition="text-center"
+              desktopSize="text-xs"
+            >
               La déclaration n’est pas complète : <br />
               L'usager n’a pas pu ajouter une marchandise
               <br />
@@ -39,18 +50,26 @@ export const ModalSwitchPaperDeclaration: React.FC<ModalSwitchPaperDeclarationPr
             </Typography>
           </div>
           <div className="flex flex-1 flex-col items-center mt-6 gap-3">
-            <Button onClick={onSwitchPaperDeclaration} disabled={isLoading} fullWidth>
+            <Button
+              onClick={onSwitchPaperDeclaration}
+              disabled={isLoading}
+              fullWidth
+              className={{ 'md:text-xs md:h-[34px]': true }}
+            >
               Je passe en déclaration papier
             </Button>
-            <Typography
-              size="text-xs"
-              color="primary"
-              textPosition="text-center"
-              underline
-              onClick={onClose}
-            >
-              Annuler
-            </Typography>
+            <div className="cursor-pointer">
+              <Typography
+                size="text-xs"
+                desktopSize="text-xs"
+                color="primary"
+                textPosition="text-center"
+                underline
+                onClick={onClose}
+              >
+                Annuler
+              </Typography>
+            </div>
           </div>
         </div>
       </Modal>

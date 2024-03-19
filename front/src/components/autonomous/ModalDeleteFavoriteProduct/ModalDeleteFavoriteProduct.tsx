@@ -60,6 +60,7 @@ export const ModalDeleteFavoriteProduct: React.FC<ModalDeleteProductCartDeclarat
           </Typography>
           <div className="flex gap-5">
             <button
+              type="button"
               className="w-28 h-[34px] bg-primary-600 rounded-full"
               onClick={(_product) => onDeleteProduct()}
             >
@@ -68,6 +69,7 @@ export const ModalDeleteFavoriteProduct: React.FC<ModalDeleteProductCartDeclarat
               </Typography>
             </button>
             <button
+              type="button"
               onClick={onClose}
               className="w-28 h-[34px] border-primary-600 rounded-full border"
             >

@@ -10,6 +10,7 @@ export const SearchProductSubmitButton = ({ onClick }: SubmitSearchButtonProps) 
     <button
       className="bg-primary-600 w-[134px] h-[34px] rounded-full flex items-center px-5 justify-between ml-5"
       onClick={onClick}
+      type="button"
     >
       <Typography color="white" size="text-2xs" textPosition="text-left">
         Rechercher

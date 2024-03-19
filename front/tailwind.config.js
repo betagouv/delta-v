@@ -40,6 +40,7 @@ module.exports = {
         error: '#CE0500',
         success: '#18753C',
         note: '#FFEA79',
+        placeholder: '#929292',
       },
       spacing: {
         extraSmall: '0.75rem',

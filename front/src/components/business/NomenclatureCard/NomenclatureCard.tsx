@@ -91,6 +91,7 @@ export const NomenclatureCard = ({
       <div className="absolute top-4 right-4 flex h-7 w-7 items-center cursor-pointer">
         {isInFavorite ? (
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               if (onRemoveFavorite) {
@@ -104,6 +105,7 @@ export const NomenclatureCard = ({
           </button>
         ) : (
           <button
+            type="button"
             color="gray"
             onClick={(e) => {
               e.stopPropagation();

@@ -116,7 +116,7 @@ export const Search: React.FC<SearchProps<any>> = <T extends unknown>({
       <div className="relative">
         <input
           className={cs({
-            'h-10 w-full rounded-full py-2 pl-3 pr-10 placeholder:font-light placeholder:italic placeholder:text-secondary-400 focus:border-secondary-300 focus:outline-none focus:ring-transparent':
+            'h-10 w-full rounded-full py-2 pl-3 pr-10 placeholder:font-light placeholder:italic placeholder:text-placeholder focus:border-secondary-300 focus:outline-none focus:ring-transparent':
               true,
             'border border-secondary-300': !noBorder,
           })}

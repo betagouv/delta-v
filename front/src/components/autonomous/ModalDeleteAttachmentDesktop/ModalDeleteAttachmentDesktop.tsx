@@ -19,7 +19,7 @@ export const ModalDeleteAttachmentDesktop: React.FC<ModalDeleteAttachmentDesktop
       title="Voulez-vous supprimer cette pièce jointe ?"
       titleColor="black"
       titleWeight="normal"
-      titleSize="text-sm"
+      desktopTitleSize="text-sm"
       open={open}
       onClose={onClose}
     >
