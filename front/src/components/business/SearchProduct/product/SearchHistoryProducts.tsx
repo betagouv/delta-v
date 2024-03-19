@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import cs from 'classnames';
 
@@ -82,21 +82,36 @@ const ProductHistoryItem: React.FC<ProductHistoryItemProps> = ({
   );
 };
 
+const getHistoryToShow = (
+  history: SearchProductHistoryItem[],
+  findingFunction: (id: string) => Product | undefined,
+): ProductHistoryToShow[] => {
+  const fullHistory = history
+    .map((historyItem) => {
+      const product = findingFunction(historyItem.id);
+      if (product) {
+        return { product, searchValue: historyItem.searchValue };
+      }
+      return null;
+    })
+    .filter((item) => item !== null) as ProductHistoryToShow[];
+  return fullHistory.slice(0, AGENT_PRODUCT_SEARCH_HISTORY_LIMIT);
+};
+
 export const SearchHistoryProducts: React.FC<SearchHistoryProductsProps> = ({
   history,
   onClickProduct,
 }: SearchHistoryProductsProps) => {
   const { findProduct } = useStore((state) => ({ findProduct: state.findProduct }));
-  const historyProductToShow: ProductHistoryToShow[] = [];
 
-  history.forEach((historyItem) => {
-    const product = findProduct(historyItem.id);
-    if (product) {
-      historyProductToShow.push({ product, searchValue: historyItem.searchValue });
-    }
-  });
+  const [historyProductToShow, setHistoryProductToShow] = useState<ProductHistoryToShow[]>(
+    getHistoryToShow(history, findProduct),
+  );
 
-  historyProductToShow.splice(AGENT_PRODUCT_SEARCH_HISTORY_LIMIT);
+  useEffect(() => {
+    setHistoryProductToShow(getHistoryToShow(history, findProduct));
+  }, []);
+
   return (
     <>
       {historyProductToShow.length > 0 ? (

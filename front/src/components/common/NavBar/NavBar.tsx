@@ -14,6 +14,7 @@ import { getLevelWithData } from '@/utils/declarationAgent';
 interface NavBarProps {
   links: MenuAgentItem[];
   activePath?: string;
+  width?: number;
 }
 
 const getNavBarLink = (item: MenuAgentItem) => {
@@ -23,7 +24,7 @@ const getNavBarLink = (item: MenuAgentItem) => {
   return item.path ?? '';
 };
 
-export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps) => {
+export const NavBar: React.FC<NavBarProps> = ({ links, activePath, width }: NavBarProps) => {
   const router = useRouter();
   const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
 
@@ -50,7 +51,7 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
 
   return (
     <>
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row justify-between items-center" style={{ width }}>
         <div
           className="w-[86px] h-[45px] md:hidden lg:flex cursor-pointer"
           onClick={() => router.push(`${RoutingAgent.home}?mode=tools`)}

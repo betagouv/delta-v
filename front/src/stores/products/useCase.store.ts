@@ -112,9 +112,11 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
     });
   },
   setCountryForProductsNomenclature: (country: Alpha2Code) => {
+    const { allProducts } = get().products.appState;
     set((state: any) => {
       const newState = { ...state };
       newState.products.appState.countryForProductsNomenclature = country;
+      newState.products.appState.products = setupProductsToDisplay(allProducts, 18, country);
       return newState;
     });
   },

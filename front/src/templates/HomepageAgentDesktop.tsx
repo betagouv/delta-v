@@ -57,15 +57,17 @@ const HomepageAgentDesktop = () => {
 
   return (
     <>
-      <div className="flex flex-col pl-[103px] pr-20 pb-10 bg-navbar-bg gap-[14px]">
-        <NavBar links={MAIN_MENU_AGENT_ITEMS} />
-        <BlockHeaderAgent
-          onChangeSearch={onChangeSearch}
-          onSearchAll={onSearchAll}
-          searchValue={searchValue}
-        />
+      <div className="bg-navbar-bg">
+        <div className="container flex flex-col px-20 pb-10  gap-[14px]">
+          <NavBar links={MAIN_MENU_AGENT_ITEMS} />
+          <BlockHeaderAgent
+            onChangeSearch={onChangeSearch}
+            onSearchAll={onSearchAll}
+            searchValue={searchValue}
+          />
+        </div>
       </div>
-      <div className="flex flex-col  mt-10 pl-[125px] pr-[103px] gap-[50px] pb-[70px]">
+      <div className="container flex flex-col  mt-10 pl-[125px] pr-[103px] gap-[50px] pb-[70px]">
         <BlockHistoricDeclarations
           errorDeclarations={apiErrorDeclarations}
           paidDeclarations={apiPaidDeclarations}

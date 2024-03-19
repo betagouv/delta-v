@@ -9,6 +9,9 @@ module.exports = {
   content: [path.join(__dirname, './src/**/*.(js|jsx|ts|tsx)')],
   safelist: ['truncate'],
   theme: {
+    container: {
+      center: true,
+    },
     extend: {
       fontSize: {
         '2xs': '.625rem',

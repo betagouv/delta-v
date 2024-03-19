@@ -40,14 +40,17 @@ export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({
         subtitle="Souhaitez vous la reprendre ou en débuter une nouvelle ? "
         open={open}
         onClose={onClose}
+        desktopTitleSize="text-sm"
+        desktopSubtitleSize="text-sm"
       >
-        <div className="grid w-full grid-rows-2 gap-base">
+        <div className="grid w-full grid-rows-2 gap-base justify-items-center mt-5">
           <Button
             type="submit"
             size="lg"
             variant="outlined"
             rounded="full"
             fullWidth
+            className={{ 'md:w-[198px] md:h-[34px] md:text-xs': true }}
             onClick={() => {
               if (templateRole === 'agent') {
                 resetDeclarationAgent();
@@ -60,7 +63,14 @@ export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({
           >
             Nouvelle declaration
           </Button>
-          <Button type="submit" size="lg" rounded="full" fullWidth onClick={resumeDeclaration}>
+          <Button
+            type="submit"
+            size="lg"
+            rounded="full"
+            fullWidth
+            onClick={resumeDeclaration}
+            className={{ 'md:w-[198px] md:h-[34px] md:text-xs': true }}
+          >
             Reprendre la declaration
           </Button>
         </div>

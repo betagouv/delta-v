@@ -24,10 +24,20 @@ export const ModalDeleteAttachmentDesktop: React.FC<ModalDeleteAttachmentDesktop
       onClose={onClose}
     >
       <div className="flex flex-row gap-4 pt-5">
-        <Button size="lg" variant="normal" onClick={onDelete} className={{ 'w-[100px]': true }}>
+        <Button
+          size="lg"
+          variant="normal"
+          onClick={onDelete}
+          className={{ 'w-[100px] md:w-[111px] md:h-[34px] md:text-xs': true }}
+        >
           Supprimer
         </Button>
-        <Button size="lg" variant="outlined" onClick={onClose} className={{ 'w-[100px]': true }}>
+        <Button
+          size="lg"
+          variant="outlined"
+          onClick={onClose}
+          className={{ 'w-[100px] md:w-[111px] md:h-[34px] md:text-xs': true }}
+        >
           Annuler
         </Button>
       </div>
