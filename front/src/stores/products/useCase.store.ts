@@ -18,7 +18,7 @@ export interface ProductsUseCaseSlice {
   getProductsResponse: () => Promise<void>;
   setProductsSimulatorToDisplay: () => void;
   setProductsNomenclatureToDisplay: (country: Alpha2Code) => void;
-  setCountryForProductsNomenclature: (country: Alpha2Code) => void;
+  setCountryForProductsNomenclature: (country: Alpha2Code | undefined) => void;
   setProductsDeclarationToDisplay: () => void;
   setProductsDeclarationToDisplayAgent: () => void;
   setProductsNomenclatureToDisplayAgent: (country: Alpha2Code) => void;
@@ -111,12 +111,14 @@ export const createUseCaseProductSlice: StoreSlice<ProductsUseCaseSlice> = (set,
       return newState;
     });
   },
-  setCountryForProductsNomenclature: (country: Alpha2Code) => {
+  setCountryForProductsNomenclature: (country: Alpha2Code | undefined) => {
     const { allProducts } = get().products.appState;
     set((state: any) => {
       const newState = { ...state };
       newState.products.appState.countryForProductsNomenclature = country;
-      newState.products.appState.products = setupProductsToDisplay(allProducts, 18, country);
+      if (country) {
+        newState.products.appState.products = setupProductsToDisplay(allProducts, 18, country);
+      }
       return newState;
     });
   },

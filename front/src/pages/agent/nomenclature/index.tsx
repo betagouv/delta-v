@@ -1,4 +1,3 @@
-import { Alpha2Code } from 'i18n-iso-countries';
 import { useMediaQuery } from 'react-responsive';
 
 import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
@@ -6,10 +5,6 @@ import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { NomenclaturePageDesktop } from '@/templates/NomenclaturePageDesktop';
 import NomenclaturePageMobile from '@/templates/NomenclaturePageMobile';
-
-export interface FormDeclarationData {
-  country?: Alpha2Code;
-}
 
 const Nomenclature = () => {
   const isMobile = useMediaQuery({

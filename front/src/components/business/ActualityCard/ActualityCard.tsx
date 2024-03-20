@@ -17,6 +17,7 @@ export type ActualityCardProps = {
   newLimit?: () => void;
   isLast?: boolean;
   width?: number;
+  responsive?: boolean;
 };
 
 export const ActualityCard = ({
@@ -27,6 +28,7 @@ export const ActualityCard = ({
   newLimit,
   isLast,
   width,
+  responsive = false,
 }: ActualityCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -54,9 +56,14 @@ export const ActualityCard = ({
       ref={cardRef}
       style={widthStyle}
     >
-      <div className="grid grid-cols-2">
+      <div
+        className={clsxm({
+          'flex justify-between flex-wrap': true,
+          'lg:flex-row flex-col-reverse gap-2': responsive,
+        })}
+      >
         {tags && (
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-2 flex-wrap">
             {tags.map((tag) => (
               <div className="border md:text-2xs text-sm border-secondary-300 rounded-full px-2.5 py-[5px] md:py-0">
                 {tag}
@@ -64,30 +71,27 @@ export const ActualityCard = ({
             ))}
           </div>
         )}
-        <Typography
-          color="middle-gray"
-          size="text-xs"
-          desktopSize="text-2xs"
-          textPosition="text-right"
-        >
+        <Typography color="middle-gray" size="text-xs" desktopSize="text-2xs">
           {dayjs(creationDate).format('DD/MM/YYYY')}
         </Typography>
       </div>
-      <div className="line-clamp-3 md:line-clamp-2">
-        <Typography weight="bold" size="text-xl" desktopSize="md:text-[22px]" color="black">
-          {title}
-        </Typography>
-      </div>
-      <div className="leading-[18px] line-clamp-4 md:leading-none">
-        <Typography
-          variant="paragraph"
-          size="text-sm"
-          desktopSize="text-xs"
-          color="black"
-          lineHeight="leading-none"
-        >
-          {content}
-        </Typography>
+      <div className="flex flex-col gap-2">
+        <div className="line-clamp-3 md:line-clamp-2">
+          <Typography weight="bold" size="text-xl" desktopSize="md:text-[22px]" color="black">
+            {title}
+          </Typography>
+        </div>
+        <div className="leading-[18px] line-clamp-4 md:leading-none">
+          <Typography
+            variant="paragraph"
+            size="text-sm"
+            desktopSize="text-xs"
+            color="black"
+            lineHeight="leading-none"
+          >
+            {content}
+          </Typography>
+        </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export const BlockActualities: React.FC<BlockActualitiesProps> = ({
   actualities,
 }: BlockActualitiesProps) => {
   return (
-    <div className="flex flex-col justify-start gap-[30px]">
+    <div className="flex flex-col justify-start gap-[30px] mx-auto">
       <TitleAgent
         title="Actualités douanières"
         textPosition="text-left"
@@ -26,16 +26,19 @@ export const BlockActualities: React.FC<BlockActualitiesProps> = ({
       />
       {!isLoading && actualities && actualities.length > 0 ? (
         <>
-          <div className="grid-cols-3 grid items-start gap-10">
+          <div className="grid-cols-3 grid items-start lg:gap-10 gap-5 ">
             {actualities &&
               actualities?.map((actuality) => (
-                <ActualityCard
-                  {...actuality}
-                  key={actuality.id}
-                  creationDate={actuality.creationDate}
-                  content={actuality.content}
-                  tags={actuality.tags}
-                />
+                <div className="max-w-[324px]">
+                  <ActualityCard
+                    {...actuality}
+                    key={actuality.id}
+                    creationDate={actuality.creationDate}
+                    content={actuality.content}
+                    tags={actuality.tags}
+                    responsive
+                  />
+                </div>
               ))}
           </div>
           <div className="flex justify-center">

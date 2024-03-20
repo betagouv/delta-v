@@ -141,7 +141,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
       )}
       <div
         className={cs({
-          'grid grid-cols-3 gap-2 mt-5 justify-items-center md:flex md:flex-wrap md:gap-5':
+          'grid grid-cols-3 gap-2 mt-5 justify-items-center md:flex md:flex-wrap md:gap-5 md:mt-10':
             displayType === 'card',
           'flex flex-col': displayType === 'list',
         })}
