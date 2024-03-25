@@ -43,7 +43,10 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
       )}
     >
       <div className={cs({ 'absolute right-2 top-2 cursor-pointer': true, hidden: !editable })}>
-        <Typography onClick={() => onDelete(product.customId)} color="red">
+        <Typography
+          onClick={() => onDelete(product.customId)}
+          color={containError ? 'red' : undefined}
+        >
           <Icon name="cross-thin" size="sm" />
         </Typography>
       </div>
