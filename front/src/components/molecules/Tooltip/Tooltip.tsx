@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Icon } from '../Icon';
+import { Icon } from '@/components/atoms/Icon';
 import clsxm from '@/utils/clsxm';
 
 export interface TooltipProps {

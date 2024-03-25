@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 import shallow from 'zustand/shallow';
 
+import { AmountAgentProductBasketGroup } from '../../AmountAgentProductBasket/AmountAgentProductBasketGroup';
 import { ValueAgentProductBasket } from '../../ValueAgentProductBasket';
-import { AmountAgentProductBasketGroup } from '@/components/common/AmountAgentProductBasket/AmountAgentProductBasketGroup';
-import { Button } from '@/components/common/Button';
-import { Typography } from '@/components/common/Typography';
+import { Button } from '@/components/atoms/Button';
+import { Typography } from '@/components/atoms/Typography';
 import { useStore } from '@/stores/store';
 
 interface ShoppingProductsCartProps {

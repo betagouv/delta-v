@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SvgIcon, SvgNames } from '../../molecules/SvgIcon';
-import { Typography } from '../Typography';
+import { Typography } from '@/components/atoms/Typography';
+import { SvgNames, SvgIcon } from '@/components/molecules/SvgIcon';
 
 export interface TitleHeaderProps {
   title: React.ReactNode;
