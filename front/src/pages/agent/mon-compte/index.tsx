@@ -1,8 +1,8 @@
 import cs from 'classnames';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { LinkWithIcon } from '@/components/common/LinkWithIcon';
-import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
+import { LinkWithIcon } from '@/components/atoms/LinkWithIcon';
+import { TitleHeaderAgent } from '@/components/atoms/TitleHeaderAgent';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { MY_ACCOUNT_MENU_AGENT_ITEMS } from '@/utils/const';

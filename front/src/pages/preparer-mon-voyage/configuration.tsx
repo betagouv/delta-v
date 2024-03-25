@@ -4,7 +4,7 @@ import { Alpha2Code, getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioType } from '@/components/input/StandardInputs/Radio';
 import { Meta } from '@/layout/Meta';

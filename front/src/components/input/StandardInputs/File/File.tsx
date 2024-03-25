@@ -2,8 +2,8 @@ import React from 'react';
 
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import { Icon } from '@/components/common/Icon';
-import { Typography } from '@/components/common/Typography';
+import { Icon } from '@/components/atoms/Icon';
+import { Typography } from '@/components/atoms/Typography';
 import clsxm from '@/utils/clsxm';
 
 export interface IFileOptions {

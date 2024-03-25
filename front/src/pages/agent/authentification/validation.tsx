@@ -2,10 +2,10 @@ import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/router';
 
 import { useAskEmailValidationMutation, useValidationEmailMutation } from '@/api/hooks/useAPIAuth';
-import { ApiError } from '@/components/common/ApiError';
-import { ApiSuccess } from '@/components/common/ApiSuccess';
-import { Button } from '@/components/common/Button';
-import { Typography } from '@/components/common/Typography';
+import { ApiError } from '@/components/atoms/ApiError';
+import { ApiSuccess } from '@/components/atoms/ApiSuccess';
+import { Button } from '@/components/atoms/Button';
+import { Typography } from '@/components/atoms/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';

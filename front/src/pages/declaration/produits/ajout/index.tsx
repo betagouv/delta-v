@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
-import { AddNewProductForm, FormNewProduct } from '@/components/business/FormNewProduct';
+import { AddNewProductForm, FormNewProduct } from '@/components/organisms/FormNewProduct';
+import { ModalAddProduct } from '@/components/organisms/ModalAddProduct';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';

@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
-import { ModalAddProduct } from '@/components/autonomous/ModalAddProduct';
-import { FormSelectProduct, OnAddProductOptions } from '@/components/business/FormSelectProduct';
-import { CategoryList } from '@/components/common/CategoryList';
+import { CategoryList } from '@/components/molecules/CategoryList';
+import { FormSelectProduct, OnAddProductOptions } from '@/components/organisms/FormSelectProduct';
+import { ModalAddProduct } from '@/components/organisms/ModalAddProduct';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { Product, ProductDisplayTypes } from '@/model/product';

@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { useDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
-import { SummaryDeclaration } from '@/components/business/SummaryDeclaration';
-import { SummaryDeclarationExport } from '@/components/business/SummaryDeclarationExport';
-import { Button } from '@/components/common/Button';
-import { Link } from '@/components/common/Link';
-import { TextLink } from '@/components/common/TextLink';
-import { Typography } from '@/components/common/Typography';
+import { Button } from '@/components/atoms/Button';
+import { Link } from '@/components/atoms/Link';
+import { TextLink } from '@/components/atoms/TextLink';
+import { Typography } from '@/components/atoms/Typography';
+import { SummaryDeclaration } from '@/components/organisms/SummaryDeclaration';
+import { SummaryDeclarationExport } from '@/components/organisms/SummaryDeclarationExport';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';

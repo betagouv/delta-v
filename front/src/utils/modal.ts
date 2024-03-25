@@ -1,5 +1,5 @@
-import DownModal from '@/components/common/DownModal';
-import Modal from '@/components/common/Modal';
+import DownModal from '@/components/molecules/DownModal';
+import Modal from '@/components/molecules/Modal';
 
 export enum ModalType {
   DOWN = 'down',

@@ -1,8 +1,8 @@
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 
-import { PrepareMyTrip } from '@/components/business/PrepareMyTrip';
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
+import { PrepareMyTrip } from '@/components/molecules/PrepareMyTrip';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 import { CountryType } from '@/utils/country.util';

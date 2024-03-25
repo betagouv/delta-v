@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/atoms/Button';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioType } from '@/components/input/StandardInputs/Radio';
 import { simulator } from '@/core/hoc/simulator.hoc';

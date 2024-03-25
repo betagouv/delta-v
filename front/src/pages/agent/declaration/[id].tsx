@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { SummaryDeclarationAgent } from '@/components/business/SummaryDeclarationAgent';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { isUUIDRegex } from '@/utils/formatTools';

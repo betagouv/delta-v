@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
-import { CustomHeader } from '@/components/autonomous/CustomHeader';
-import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
+import { TitleHeaderAgent } from '@/components/atoms/TitleHeaderAgent';
+import { CustomHeader } from '@/components/molecules/CustomHeader';
 
 type IMainAgentMobileProps = {
   meta: ReactNode;

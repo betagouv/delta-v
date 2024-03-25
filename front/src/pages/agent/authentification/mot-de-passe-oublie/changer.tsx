@@ -6,10 +6,10 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useResetPasswordMutation } from '@/api/hooks/useAPIAuth';
-import { ApiError } from '@/components/common/ApiError';
-import { Button } from '@/components/common/Button';
-import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
-import { Typography } from '@/components/common/Typography';
+import { ApiError } from '@/components/atoms/ApiError';
+import { Button } from '@/components/atoms/Button';
+import { TitleHeaderAgent } from '@/components/atoms/TitleHeaderAgent';
+import { Typography } from '@/components/atoms/Typography';
 import {
   ConfirmPasswordInput,
   FormFieldData,

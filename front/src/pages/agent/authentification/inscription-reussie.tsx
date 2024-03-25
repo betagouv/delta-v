@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 
 import { useAskEmailValidationMutation } from '@/api/hooks/useAPIAuth';
-import { ApiError } from '@/components/common/ApiError';
-import { Button } from '@/components/common/Button';
-import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
-import { Typography } from '@/components/common/Typography';
+import { ApiError } from '@/components/atoms/ApiError';
+import { Button } from '@/components/atoms/Button';
+import { TitleHeaderAgent } from '@/components/atoms/TitleHeaderAgent';
+import { Typography } from '@/components/atoms/Typography';
 import { Meta } from '@/layout/Meta';
 import { MainAuth } from '@/templates/MainAuth';
 import { RoutingAuthentication } from '@/utils/const';

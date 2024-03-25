@@ -5,7 +5,7 @@ import { CheckIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
-import { Icon } from '../../../common/Icon';
+import { Icon } from '../../../atoms/Icon';
 
 export interface IOptions {
   id: number | string;

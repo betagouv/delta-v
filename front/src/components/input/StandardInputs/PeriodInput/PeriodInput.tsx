@@ -5,8 +5,8 @@ import dayjs from 'dayjs';
 import DatePicker from 'react-datepicker';
 import { useController } from 'react-hook-form';
 
-import { Icon } from '@/components/common/Icon';
-import { Typography } from '@/components/common/Typography';
+import { Icon } from '@/components/atoms/Icon';
+import { Typography } from '@/components/atoms/Typography';
 
 export interface IPeriodInputOptions {
   noBorder?: boolean;

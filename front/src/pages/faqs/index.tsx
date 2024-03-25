@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { ModalUnderConstruction } from '@/components/autonomous/ModalUnderConstruction';
-import { Faqs } from '@/components/business/Faq';
+import { Faqs } from '@/components/molecules/Faq';
+import { ModalUnderConstruction } from '@/components/organisms/ModalUnderConstruction';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';

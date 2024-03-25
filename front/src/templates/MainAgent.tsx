@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { MainAgentDesktop } from './MainAgentDesktop';
 import { MainAgentMobile } from './MainAgentMobile';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 
 type IMainAgentProps = {
   meta: ReactNode;

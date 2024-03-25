@@ -12,9 +12,9 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import shallow from 'zustand/shallow';
 
 import { configureAxios } from '@/api/base';
-import { FontInitializer } from '@/components/common/FontInitializer';
-import { SvgIcon } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
+import { FontInitializer } from '@/components/molecules/FontInitializer';
+import { SvgIcon } from '@/components/molecules/SvgIcon';
 import { Config } from '@/config';
 import { useStore } from '@/stores/store';
 import { RoutingAuthentication } from '@/utils/const';

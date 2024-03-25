@@ -1,8 +1,8 @@
 import shallow from 'zustand/shallow';
 
-import { Search } from '@/components/business/Search';
-import { SvgIcon } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
+import { SvgIcon } from '@/components/molecules/SvgIcon';
+import { Search } from '@/components/organisms/Search';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
