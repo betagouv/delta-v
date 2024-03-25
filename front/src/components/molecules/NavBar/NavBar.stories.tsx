@@ -4,7 +4,7 @@ import { NavBar } from './NavBar';
 import { MAIN_MENU_AGENT_ITEMS } from '@/utils/const';
 
 export default {
-  title: 'Components/Common/NavBar',
+  title: 'Components/Molecules/NavBar',
   component: NavBar,
 } as Meta;
 

@@ -7,7 +7,7 @@ import { ModalRejectedDeclaration } from './ModalRejectedDeclaration';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalRejectedDeclaration',
+  title: 'Components/Organisms/ModalRejectedDeclaration',
   component: ModalRejectedDeclaration,
 } as Meta;
 

@@ -7,7 +7,7 @@ import { ModalCancelDeclaration } from './ModalCancelDeclaration';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalCancelDeclaration',
+  title: 'Components/Organisms/ModalCancelDeclaration',
   component: ModalCancelDeclaration,
 } as Meta;
 

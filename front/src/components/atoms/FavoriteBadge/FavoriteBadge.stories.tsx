@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { FavoriteBadge } from './FavoriteBadge';
 
 export default {
-  title: 'Components/Common/FavoriteBadge',
+  title: 'Components/Atoms/FavoriteBadge',
   component: FavoriteBadge,
 } as Meta;
 

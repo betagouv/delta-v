@@ -7,7 +7,7 @@ import { ModalDeleteAttachmentMobile } from './ModalDeleteAttachmentMobile';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalDeleteAttachmentMobile',
+  title: 'Components/Organisms/ModalDeleteAttachmentMobile',
   component: ModalDeleteAttachmentMobile,
 } as Meta;
 

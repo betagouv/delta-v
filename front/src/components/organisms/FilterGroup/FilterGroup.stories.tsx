@@ -8,7 +8,7 @@ import { FilterBarProps } from './types';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
-  title: 'Components/Business/FilterGroup',
+  title: 'Components/Organisms/FilterGroup',
   component: FilterGroup,
 } as Meta;
 

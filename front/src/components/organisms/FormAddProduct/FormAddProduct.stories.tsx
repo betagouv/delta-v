@@ -5,7 +5,7 @@ import { FormAddProduct } from './FormAddProduct';
 import { productFactory } from '@/tests/factories/Product.factory';
 
 export default {
-  title: 'Components/Business/FormAddProduct',
+  title: 'Components/Organisms/FormAddProduct',
   component: FormAddProduct,
 } as Meta;
 

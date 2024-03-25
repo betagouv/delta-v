@@ -4,7 +4,7 @@ import { Faqs } from './Faqs';
 import { BlocElements } from '@/staticData';
 
 export default {
-  title: 'Components/Business/Faqs',
+  title: 'Components/Molecules/Faqs',
   component: Faqs,
 } as Meta;
 

@@ -8,7 +8,7 @@ import { DownModal } from './DownModal';
 import { InputGroup } from '@/components/input/InputGroup';
 
 export default {
-  title: 'Components/Common/DownModal',
+  title: 'Components/Molecules/DownModal',
   component: DownModal,
 } as Meta;
 

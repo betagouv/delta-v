@@ -6,7 +6,7 @@ import { scroller } from 'react-scroll';
 import { Accordions } from './Accordions';
 
 export default {
-  title: 'Components/Common/Accordions',
+  title: 'Components/Atoms/Accordions',
   component: Accordions,
 } as Meta;
 

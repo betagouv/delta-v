@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { TabBar, TabItem } from './TabBar';
 
 export default {
-  title: 'Components/Common/TabBar',
+  title: 'Components/Molecules/TabBar',
   component: TabBar,
 } as Meta;
 

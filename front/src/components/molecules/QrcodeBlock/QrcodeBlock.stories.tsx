@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { QrcodeBlock } from './QrcodeBlock';
 
 export default {
-  title: 'Components/Business/QrcodeBlock',
+  title: 'Components/Molecules/QrcodeBlock',
   component: QrcodeBlock,
 } as Meta;
 

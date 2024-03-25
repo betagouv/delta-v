@@ -6,7 +6,7 @@ import { ModalValidateDeclaration } from './ModalValidateDeclaration';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalValidateDeclaration',
+  title: 'Components/Organisms/ModalValidateDeclaration',
   component: ModalValidateDeclaration,
 } as Meta;
 

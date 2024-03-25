@@ -6,7 +6,7 @@ import { SelectCountry, SelectCountryProps } from './SelectCountry';
 import { SelectCountryPopup, SelectCountryPopupProps } from './SelectCountryPopup';
 
 export default {
-  title: 'Components/Business/SelectCountryPopup',
+  title: 'Components/Organisms/SelectCountryPopup',
   component: SelectCountry,
 } as Meta;
 

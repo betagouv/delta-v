@@ -7,7 +7,7 @@ import { ModalValidateFeedbackInfoMobile } from './ModalValidateFeedbackInfoMobi
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalValidateFeedbackInfoMobile',
+  title: 'Components/Organisms/ModalValidateFeedbackInfoMobile',
   component: ModalValidateFeedbackInfoMobile,
 } as Meta;
 

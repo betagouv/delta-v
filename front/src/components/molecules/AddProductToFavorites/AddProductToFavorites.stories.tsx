@@ -6,7 +6,7 @@ import { AddProductToFavorites } from './AddProductToFavorites';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/AddProductToFavorites',
+  title: 'Components/Molecules/AddProductToFavorites',
   component: AddProductToFavorites,
 } as Meta;
 

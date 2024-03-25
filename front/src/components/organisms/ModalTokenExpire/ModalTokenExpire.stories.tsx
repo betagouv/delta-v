@@ -8,7 +8,7 @@ import { ModalTokenExpire } from './ModalTokenExpire';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalTokenExpire',
+  title: 'Components/Organisms/ModalTokenExpire',
   component: ModalTokenExpire,
 } as Meta;
 

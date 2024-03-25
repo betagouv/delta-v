@@ -10,7 +10,7 @@ import { Button } from '@/components/atoms/Button';
 import { passwordRegex } from '@/utils/regex';
 
 export default {
-  title: 'Components/Autonomous/ConfirmPassword',
+  title: 'Components/Input/ConfirmPassword',
   component: ConfirmPasswordInput,
 } as Meta;
 

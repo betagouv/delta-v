@@ -7,7 +7,7 @@ import {
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 const meta: Meta<typeof DeclarationStatusDetails> = {
-  title: 'Components/Business/DeclarationStatusDetails',
+  title: 'Components/Molecules/DeclarationStatusDetails',
   component: DeclarationStatusDetails,
 };
 

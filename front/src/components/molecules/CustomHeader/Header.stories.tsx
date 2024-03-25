@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { CustomHeader } from './CustomHeader';
 
 export default {
-  title: 'Components/Business/CustomHeader',
+  title: 'Components/Molecules/CustomHeader',
   component: CustomHeader,
 } as Meta;
 

@@ -4,7 +4,7 @@ import { Typography } from '../Typography';
 import { ExternalLink } from './ExternalLink';
 
 export default {
-  title: 'Components/Common/ExternalLink',
+  title: 'Components/Atoms/ExternalLink',
   component: ExternalLink,
 } as Meta;
 

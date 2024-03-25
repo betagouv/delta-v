@@ -8,7 +8,7 @@ import { DetailedProduct } from '@/stores/simulator/appState.store';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
-  title: 'Components/Common/TaxTable',
+  title: 'Components/Molecules/TaxTable',
   component: TaxTable,
 } as Meta;
 

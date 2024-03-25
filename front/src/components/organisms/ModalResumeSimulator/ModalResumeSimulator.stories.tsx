@@ -8,7 +8,7 @@ import { Button } from '@/components/atoms/Button';
 import { SIMULATOR_EMPTY_STATE } from '@/stores/simulator/appState.store';
 
 export default {
-  title: 'Components/Business/ModalResumeSimulator',
+  title: 'Components/Organisms/ModalResumeSimulator',
   component: ModalResumeSimulator,
 } as Meta;
 

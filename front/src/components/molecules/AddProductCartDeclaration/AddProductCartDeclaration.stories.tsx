@@ -7,7 +7,7 @@ import { AddProductCartDeclaration } from './AddProductCartDeclaration';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/AddProductCartDeclaration',
+  title: 'Components/Molecules/AddProductCartDeclaration',
   component: AddProductCartDeclaration,
 } as Meta;
 

@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { Header } from './Header';
 
 export default {
-  title: 'Components/Business/Header',
+  title: 'Components/Molecules/Header',
   component: Header,
 } as Meta;
 

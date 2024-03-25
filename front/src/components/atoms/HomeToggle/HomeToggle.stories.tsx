@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import { HomeToggle, HomeToggleProps } from './HomeToggle';
 
 export default {
-  title: 'Components/Business/HomeToggle',
+  title: 'Components/Atoms/HomeToggle',
   component: HomeToggle,
 } as Meta;
 

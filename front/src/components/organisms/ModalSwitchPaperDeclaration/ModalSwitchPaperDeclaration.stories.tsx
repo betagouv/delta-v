@@ -7,7 +7,7 @@ import { ModalSwitchPaperDeclaration } from './ModalSwitchPaperDeclaration';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalSwitchPaperDeclaration',
+  title: 'Components/Organisms/ModalSwitchPaperDeclaration',
   component: ModalSwitchPaperDeclaration,
 } as Meta;
 

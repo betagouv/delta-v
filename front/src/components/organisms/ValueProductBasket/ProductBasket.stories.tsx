@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { ValueProductBasket } from './ValueProductBasket';
 
 export default {
-  title: 'Components/Common/ProductBasket',
+  title: 'Components/Organisms/ProductBasket',
   component: ValueProductBasket,
 } as Meta;
 

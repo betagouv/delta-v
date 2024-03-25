@@ -4,7 +4,7 @@ import { Tuto } from './Tuto';
 import StepOneTuto from '@/assets/images/Step-One-Tuto.png';
 
 export default {
-  title: 'Components/Business/Tuto',
+  title: 'Components/Organisms/Tuto',
   component: Tuto,
 } as Meta;
 

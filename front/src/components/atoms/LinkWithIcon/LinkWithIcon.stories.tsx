@@ -4,7 +4,7 @@ import { Typography } from '../Typography';
 import { LinkWithIcon } from './LinkWithIcon';
 
 export default {
-  title: 'Components/Common/LinkWithIcon',
+  title: 'Components/Atoms/LinkWithIcon',
   component: LinkWithIcon,
 } as Meta;
 

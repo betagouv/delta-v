@@ -7,7 +7,7 @@ import { ModalCategoryNomenclatureProduct } from './ModalCategoryNomenclaturePro
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalCategoryNomenclatureProduct',
+  title: 'Components/Organisms/ModalCategoryNomenclatureProduct',
   component: ModalCategoryNomenclatureProduct,
 } as Meta;
 

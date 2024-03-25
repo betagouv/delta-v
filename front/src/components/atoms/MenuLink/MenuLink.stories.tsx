@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { MenuLink } from './MenuLink';
 
 const meta: Meta<typeof MenuLink> = {
-  title: 'Components/Business/MenuLink',
+  title: 'Components/Atoms/MenuLink',
   component: MenuLink,
 };
 

@@ -7,7 +7,7 @@ import { ModalBorder } from './ModalBorder';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalBorder',
+  title: 'Components/Organisms/ModalBorder',
   component: ModalBorder,
 } as Meta;
 

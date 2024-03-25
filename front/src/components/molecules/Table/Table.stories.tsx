@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react';
 import { Table } from './Table';
 
 export default {
-  title: 'Components/Common/Table',
+  title: 'Components/Molecules/Table',
   component: Table,
 } as Meta;
 

@@ -6,7 +6,7 @@ import { productFactory } from '@/tests/factories/Product.factory';
 const product = productFactory({ icon: 'categoryCigar' });
 
 const meta: Meta<typeof NomenclatureCard> = {
-  title: 'Components/Business/NomenclatureCard',
+  title: 'Components/Molecules/NomenclatureCard',
   component: NomenclatureCard,
 };
 

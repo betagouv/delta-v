@@ -7,7 +7,7 @@ import { MeansOfTransport, ProductStatus } from '@/stores/simulator/appState.sto
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
-  title: 'Components/Business/SummaryDeclaration',
+  title: 'Components/Organisms/SummaryDeclaration',
   component: SummaryDeclaration,
 } as Meta;
 

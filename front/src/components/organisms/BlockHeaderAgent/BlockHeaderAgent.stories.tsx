@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react';
 import { BlockHeaderAgent } from './BlockHeaderAgent';
 
 export default {
-  title: 'Components/Common/BlockHeaderAgent',
+  title: 'Components/Organisms/BlockHeaderAgent',
   component: BlockHeaderAgent,
 } as Meta;
 

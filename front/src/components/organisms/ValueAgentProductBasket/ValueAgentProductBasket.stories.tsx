@@ -5,7 +5,7 @@ import { ValueAgentProductBasket, ValueAgentProductBasketProps } from './ValueAg
 import { DetailedProduct } from '@/stores/simulator/appState.store';
 
 const meta: Meta<typeof ValueAgentProductBasket> = {
-  title: 'Components/Business/ValueAgentProductBaskets',
+  title: 'Components/Organisms/ValueAgentProductBaskets',
   component: ValueAgentProductBasket,
 };
 

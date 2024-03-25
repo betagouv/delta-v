@@ -4,7 +4,7 @@ import { DeclarationBadgeStatus } from './DeclarationBadgeStatus';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 const meta: Meta<typeof DeclarationBadgeStatus> = {
-  title: 'Components/Business/DeclarationBadgeStatus',
+  title: 'Components/Molecules/DeclarationBadgeStatus',
   component: DeclarationBadgeStatus,
 };
 

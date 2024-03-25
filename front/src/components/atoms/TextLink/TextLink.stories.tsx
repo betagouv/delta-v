@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { TextLink } from './TextLink';
 
 export default {
-  title: 'Components/Common/TextLink',
+  title: 'Components/Atoms/TextLink',
   component: TextLink,
 } as Meta;
 

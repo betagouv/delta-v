@@ -7,7 +7,7 @@ import { ModalAddProductCartDeclaration } from './ModalAddProductCartDeclaration
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalAddProductCartDeclaration',
+  title: 'Components/Organisms/ModalAddProductCartDeclaration',
   component: ModalAddProductCartDeclaration,
 } as Meta;
 

@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { BlockHistoricDeclarations } from './BlockHistoricDeclarations';
 
 export default {
-  title: 'Components/Common/BlockHistoricDeclarations',
+  title: 'Components/Organisms/BlockHistoricDeclarations',
   component: BlockHistoricDeclarations,
 } as Meta;
 

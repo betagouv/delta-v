@@ -7,7 +7,7 @@ import { OnActionModal } from './OnActionModal';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/OnActionModal',
+  title: 'Components/Organisms/OnActionModal',
   component: OnActionModal,
 } as Meta;
 

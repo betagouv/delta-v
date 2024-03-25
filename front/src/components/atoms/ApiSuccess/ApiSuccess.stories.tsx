@@ -4,7 +4,7 @@ import { ApiSuccess } from './ApiSuccess';
 import { ICommonResponse } from '@/api/lib/types';
 
 export default {
-  title: 'Components/Common/ApiSuccess',
+  title: 'Components/Atoms/ApiSuccess',
   component: ApiSuccess,
 } as Meta;
 

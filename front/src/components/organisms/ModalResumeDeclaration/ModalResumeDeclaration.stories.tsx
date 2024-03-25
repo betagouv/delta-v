@@ -7,7 +7,7 @@ import { ModalResumeDeclaration } from './ModalResumeDeclaration';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalResumeDeclaration',
+  title: 'Components/Organisms/ModalResumeDeclaration',
   component: ModalResumeDeclaration,
 } as Meta;
 

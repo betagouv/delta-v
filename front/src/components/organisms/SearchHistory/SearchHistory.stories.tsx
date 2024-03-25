@@ -5,7 +5,7 @@ import { SearchHistory, SearchHistoryProps } from './SearchHistory';
 import { SearchHistoryItem, SearchHistoryItemProps } from './SearchHistoryItem';
 
 export default {
-  title: 'Components/Business/SearchHistory',
+  title: 'Components/Organisms/SearchHistory',
   component: SearchHistory,
 } as Meta;
 

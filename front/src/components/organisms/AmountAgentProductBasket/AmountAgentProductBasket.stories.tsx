@@ -6,7 +6,7 @@ import { AmountProduct } from '@/model/product';
 import { AmountProductInterface, GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
 export default {
-  title: 'Components/Common/AmountAgentProductBasket',
+  title: 'Components/Organisms/AmountAgentProductBasket',
   component: AmountAgentProductBasket,
 } as Meta;
 
@@ -55,7 +55,7 @@ export const withVariant = (): JSX.Element => (
     <AmountAgentProductBasket
       product={amountProduct}
       onButtonClick={() => console.log('clicked')}
-      deletable
+      editable
       onDelete={(id) => console.log(id)}
     />
     <br />
@@ -70,7 +70,7 @@ export const group = (): JSX.Element => (
       <AmountAgentProductBasketGroup
         amountProductGroup={groupedOverMaxProduct}
         onModifyClick={() => console.log('clicked')}
-        deletable={false}
+        editable={false}
         onDelete={(id) => console.log(id)}
       />
     </div>
@@ -79,7 +79,7 @@ export const group = (): JSX.Element => (
       <br />
       <AmountAgentProductBasketGroup
         amountProductGroup={groupedProduct}
-        deletable={false}
+        editable={false}
         onDelete={(id) => console.log(id)}
         onModifyClick={() => console.log('clicked')}
       />

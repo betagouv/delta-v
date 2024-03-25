@@ -7,7 +7,7 @@ import { ModalMaximumAmount } from './ModalMaximumAmount';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalMaximumAmount',
+  title: 'Components/Organisms/ModalMaximumAmount',
   component: ModalMaximumAmount,
 } as Meta;
 

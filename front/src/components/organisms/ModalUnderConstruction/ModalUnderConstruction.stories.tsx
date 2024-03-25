@@ -7,7 +7,7 @@ import { ModalUnderConstruction } from './ModalUnderConstruction';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalUnderConstruction',
+  title: 'Components/Organisms/ModalUnderConstruction',
   component: ModalUnderConstruction,
 } as Meta;
 

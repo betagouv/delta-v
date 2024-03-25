@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { BackButtonWithTitle } from './BackButtonWithTitle';
 
 export default {
-  title: 'Components/Common/BackButtonWithTitle',
+  title: 'Components/Atoms/BackButtonWithTitle',
   component: BackButtonWithTitle,
 } as Meta;
 

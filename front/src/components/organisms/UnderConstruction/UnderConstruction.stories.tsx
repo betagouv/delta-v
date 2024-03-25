@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { UnderConstruction } from './UnderConstruction';
 
 export default {
-  title: 'Components/Business/UnderConstruction',
+  title: 'Components/Organisms/UnderConstruction',
   component: UnderConstruction,
 } as Meta;
 

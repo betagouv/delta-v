@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DataInfoItem } from './DataInfoItem';
 
 const meta: Meta<typeof DataInfoItem> = {
-  title: 'Components/Business/DataInfoItem',
+  title: 'Components/Atoms/DataInfoItem',
   component: DataInfoItem,
 };
 

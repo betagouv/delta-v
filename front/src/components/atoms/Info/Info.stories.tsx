@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { Info } from './Info';
 
 export default {
-  title: 'Components/Common/Info',
+  title: 'Components/Atoms/Info',
   component: Info,
 } as Meta;
 

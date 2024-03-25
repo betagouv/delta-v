@@ -7,7 +7,7 @@ import { ModalDeclareSimulation } from './ModalDeclareSimulation';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalDeclareSimulation',
+  title: 'Components/Organisms/ModalDeclareSimulation',
   component: ModalDeclareSimulation,
 } as Meta;
 

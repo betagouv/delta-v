@@ -6,7 +6,7 @@ import {
 } from './DeclarationTravelDetails';
 
 const meta: Meta<typeof DeclarationTravelDetails> = {
-  title: 'Components/Business/DeclarationTravelDetails',
+  title: 'Components/Molecules/DeclarationTravelDetails',
   component: DeclarationTravelDetails,
 };
 

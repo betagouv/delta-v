@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { PasswordHelperText } from './PasswordHelperText';
 
 export default {
-  title: 'Components/Common/PasswordHelperText',
+  title: 'Components/Molecules/PasswordHelperText',
   component: PasswordHelperText,
 } as Meta;
 

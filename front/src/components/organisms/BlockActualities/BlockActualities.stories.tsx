@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { BlockActualities } from './BlockActualities';
 
 export default {
-  title: 'Components/Common/BlockActualities',
+  title: 'Components/Organisms/BlockActualities',
   component: BlockActualities,
 } as Meta;
 

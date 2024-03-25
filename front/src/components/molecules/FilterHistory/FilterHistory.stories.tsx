@@ -5,7 +5,7 @@ import { FilterHistoryItem, FilterHistoryItemProps } from './FilterHistoryItem';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
-  title: 'Components/Business/FilterHistoryItem',
+  title: 'Components/Molecules/FilterHistoryItem',
   component: FilterHistoryItem,
 } as Meta;
 

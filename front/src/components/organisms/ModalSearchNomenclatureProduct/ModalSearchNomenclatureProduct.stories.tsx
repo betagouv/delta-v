@@ -7,7 +7,7 @@ import { ModalSearchNomenclatureProduct } from './ModalSearchNomenclatureProduct
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalSearchNomenclatureProduct',
+  title: 'Components/Organisms/ModalSearchNomenclatureProduct',
   component: ModalSearchNomenclatureProduct,
 } as Meta;
 

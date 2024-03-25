@@ -4,7 +4,7 @@ import { ApiError } from './ApiError';
 import { IErrorResponse } from '@/api/lib/types';
 
 export default {
-  title: 'Components/Common/ApiError',
+  title: 'Components/Atoms/ApiError',
   component: ApiError,
 } as Meta;
 

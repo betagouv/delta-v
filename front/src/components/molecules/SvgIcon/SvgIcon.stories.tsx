@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react';
 import { SvgIcon } from './SvgIcon';
 
 export default {
-  title: 'Components/Common/SvgIcon',
+  title: 'Components/Molecules/SvgIcon',
   component: SvgIcon,
 } as Meta;
 

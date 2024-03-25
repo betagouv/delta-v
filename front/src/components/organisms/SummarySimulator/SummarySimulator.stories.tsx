@@ -8,7 +8,7 @@ import {
 } from '@/stores/simulator/appState.store';
 
 export default {
-  title: 'Components/Business/SummarySimulator',
+  title: 'Components/Organisms/SummarySimulator',
   component: SummarySimulator,
 } as Meta;
 

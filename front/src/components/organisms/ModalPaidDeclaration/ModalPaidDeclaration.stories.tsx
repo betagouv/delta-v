@@ -6,7 +6,7 @@ import { ModalPaidDeclaration } from './ModalPaidDeclaration';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalPaidDeclaration',
+  title: 'Components/Organisms/ModalPaidDeclaration',
   component: ModalPaidDeclaration,
 } as Meta;
 

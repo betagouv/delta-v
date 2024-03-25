@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { TransportBadge } from './TransportBadge';
 
 export default {
-  title: 'Components/Common/TransportBadge',
+  title: 'Components/Atoms/TransportBadge',
   component: TransportBadge,
 } as Meta;
 

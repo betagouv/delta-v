@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { Card } from './Card';
 
 export default {
-  title: 'Components/Common/Card',
+  title: 'Components/Molecules/Card',
   component: Card,
 } as Meta;
 

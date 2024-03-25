@@ -5,7 +5,7 @@ import { Product, ProductDisplayTypes } from '@/model/product';
 import { productFactory } from '@/tests/factories/Product.factory';
 
 export default {
-  title: 'Components/Business/FormSelectProduct',
+  title: 'Components/Organisms/FormSelectProduct',
   component: FormSelectProduct,
 } as Meta;
 

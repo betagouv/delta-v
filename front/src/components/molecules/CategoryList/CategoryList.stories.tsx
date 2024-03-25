@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { CategoryList, Item } from './CategoryList';
 
 export default {
-  title: 'Components/Common/CategoryList',
+  title: 'Components/Molecules/CategoryList',
   component: CategoryList,
 } as Meta;
 

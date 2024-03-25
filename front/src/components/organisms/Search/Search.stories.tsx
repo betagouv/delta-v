@@ -6,7 +6,7 @@ import { productFactory } from '@/tests/factories/Product.factory';
 import { SearchType } from '@/utils/search';
 
 export default {
-  title: 'Components/Business/Search',
+  title: 'Components/Organisms/Search',
   component: Search,
 } as Meta;
 

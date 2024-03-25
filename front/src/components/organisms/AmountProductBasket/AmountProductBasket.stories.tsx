@@ -5,7 +5,7 @@ import { AmountProduct } from '@/model/product';
 import { AmountProductInterface } from '@/stores/simulator/appState.store';
 
 export default {
-  title: 'Components/Common/AmountProductBasket',
+  title: 'Components/Organisms/AmountProductBasket',
   component: AmountProductBasket,
 } as Meta;
 

@@ -7,7 +7,7 @@ import { Modal } from './Modal';
 import { InputGroup } from '@/components/input/InputGroup';
 
 export default {
-  title: 'Components/Common/Modal',
+  title: 'Components/Molecules/Modal',
   component: Modal,
 } as Meta;
 

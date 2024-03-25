@@ -77,7 +77,7 @@ const categoryIcon: SvgNames[] = [
   'categoryCigar',
   'categoryClothes',
   'categoryCologne',
-  'categoryCommonGround',
+  'categoryMoleculesGround',
   'categoryCopper',
   'categoryCotton',
   'categoryCrystal',

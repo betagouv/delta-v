@@ -8,7 +8,7 @@ import { getAllAvailableIcons } from './selection.utils';
 
 const allIcons = getAllAvailableIcons();
 export default {
-  title: 'Components/Common/Icon',
+  title: 'Components/Atoms/Icon',
   component: Icon,
   argTypes: {
     name: {

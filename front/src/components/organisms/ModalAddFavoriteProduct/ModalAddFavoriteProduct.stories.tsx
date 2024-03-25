@@ -7,7 +7,7 @@ import { ModalAddFavoriteProduct } from './ModalAddFavoriteProduct';
 import { Button } from '@/components/atoms/Button';
 
 export default {
-  title: 'Components/Business/ModalAddFavoriteProduct',
+  title: 'Components/Organisms/ModalAddFavoriteProduct',
   component: ModalAddFavoriteProduct,
 } as Meta;
 

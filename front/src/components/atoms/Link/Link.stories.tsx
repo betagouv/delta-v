@@ -4,7 +4,7 @@ import { Typography } from '../Typography';
 import { Link } from './Link';
 
 export default {
-  title: 'Components/Common/Link',
+  title: 'Components/Atoms/Link',
   component: Link,
 } as Meta;
 

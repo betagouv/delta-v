@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { AddNote } from './AddNote';
 
 const meta: Meta<typeof AddNote> = {
-  title: 'Components/Business/AddNote',
+  title: 'Components/Molecules/AddNote',
   component: AddNote,
 };
 

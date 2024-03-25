@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react';
 import { Skeleton } from './Skeleton';
 
 export default {
-  title: 'Components/Common/Skeleton',
+  title: 'Components/Atoms/Skeleton',
   component: Skeleton,
 } as Meta;
 
