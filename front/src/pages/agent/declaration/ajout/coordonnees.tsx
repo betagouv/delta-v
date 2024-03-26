@@ -174,7 +174,7 @@ const Declaration = () => {
         onSubmit={onSubmit}
         linkButton={`${RoutingAgent.home}?mode=tools`}
       >
-        <div className="flex flex-col md:w-[616px] py-10">
+        <div className="flex flex-col md:w-[616px] md:py-10 pb-8 flex-1">
           <div className="flex flex-col gap-5">
             <div className="w5/6 flex flex-col gap-5">
               <div className="flex md:flex-row flex-col gap-5">

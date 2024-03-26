@@ -50,6 +50,7 @@ export interface IInputGroupProps {
   loading?: boolean;
   radioValues?: IRadioType[];
   radioCardValues?: IRadioCardType[];
+  radioCardLabelClassname?: string;
   variant?: 'default' | 'rounded';
   error?: string;
   helperText?: string;
@@ -85,6 +86,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   options,
   radioValues,
   radioCardValues,
+  radioCardLabelClassname,
   disabled,
   loading,
   error,
@@ -228,6 +230,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               control={control}
               littleCard={littleCard}
               bigSize={bigSize}
+              labelClassname={radioCardLabelClassname}
             />
           )}
           {type === 'file' && <File name="file" register={register} onFileChange={onFileChange} />}

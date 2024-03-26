@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 
 import { Typography } from '@/components/atoms/Typography';
 import { SvgIcon, SvgNames } from '@/components/molecules/SvgIcon';
+import clsxm from '@/utils/clsxm';
 
 export interface IRadioCardElementOptions {
   value: string;
@@ -11,6 +12,7 @@ export interface IRadioCardElementOptions {
   svgIcon: SvgNames;
   onClick: (transport?: string) => void;
   bigSize?: boolean;
+  labelClassname?: string;
 }
 
 export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
@@ -20,6 +22,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
   checked,
   bigSize = false,
   onClick,
+  labelClassname,
 }) => {
   return (
     <button
@@ -28,11 +31,11 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
       disabled={disabled}
       className={twMerge(
         classNames({
-          'h-[88px] w-[85px] border-gray-200 rounded-xl md:rounded-md py-[18px] px-4 flex items-center justify-center sm:flex-1 active:bg-gray-50 active:py-[14px] active:border-4 font-normal border':
+          'h-[88px] w-[85px] border-gray-200 rounded-xl md:rounded-md py-[18px] px-4 flex items-center justify-center active:bg-gray-50 active:py-[14px] active:border-4 font-normal border':
             true,
           'opacity-50 cursor-not-allowed': disabled,
           'font-bold border-4 py-[14px] px-2': checked,
-          'p-[18px] h-[130px] w-[104px] md:h-[160px] md:w-[138px]': bigSize,
+          'p-[18px] h-[130px] w-[104px] md:h-[160px] md:w-[138px] ': bigSize,
         }),
       )}
       onClick={(e) => {
@@ -44,7 +47,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
     >
       <div
         className={classNames({
-          'h-auto flex flex-col items-center gap-3 md:gap-5': true,
+          'h-auto flex flex-col items-center gap-3 ': true,
         })}
       >
         <div
@@ -54,7 +57,7 @@ export const RadioCardElement: React.FC<IRadioCardElementOptions> = ({
         >
           <SvgIcon name={svgIcon} />
         </div>
-        <div className="md:line-clamp-2">
+        <div className={clsxm('md:line-clamp-2', labelClassname)}>
           <Typography
             color="secondary"
             size="text-xs"

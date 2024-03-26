@@ -24,6 +24,7 @@ export interface IRadioOptions {
   rules?: any;
   onChange?: () => void;
   bigSize?: boolean;
+  labelClassname?: string;
 }
 
 export const RadioCard: React.FC<IRadioOptions> = ({
@@ -34,6 +35,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({
   rules,
   littleCard,
   bigSize,
+  labelClassname,
 }) => {
   const { field } = useController({
     control,
@@ -73,6 +75,7 @@ export const RadioCard: React.FC<IRadioOptions> = ({
               onClick={() => {
                 field.onChange(radioCardValue.id);
               }}
+              labelClassname={labelClassname}
             />
           ),
         )}
