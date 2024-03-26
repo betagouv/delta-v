@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { Button } from '@/components/common/Button';
-import { TitleHeaderAgent } from '@/components/common/TitleHeaderAgent';
-import { Typography } from '@/components/common/Typography';
+import { Button } from '@/components/atoms/Button';
+import { TitleHeaderAgent } from '@/components/atoms/TitleHeaderAgent';
+import { Typography } from '@/components/atoms/Typography';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { RoutingAgent } from '@/utils/const';

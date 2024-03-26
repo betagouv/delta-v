@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/atoms/Button';
 import { Checkbox } from '@/components/input/StandardInputs/Checkbox';
 import { displayInfoSimulator } from '@/core/hoc/displayInfoSimulator.hoc';
 import { useStore } from '@/stores/store';

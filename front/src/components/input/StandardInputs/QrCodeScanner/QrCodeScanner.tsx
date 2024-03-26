@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import { Skeleton } from '@/components/common/Skeleton';
+import { Skeleton } from '@/components/atoms/Skeleton';
 
 export interface QrCodeScannerOptions {
   onError?: (err: any) => void;

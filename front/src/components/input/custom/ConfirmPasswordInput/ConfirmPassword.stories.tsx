@@ -5,12 +5,12 @@ import { Meta } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { ConfirmPasswordInput, FormFieldData } from './ConfirmPassword';
-import { Button } from '@/components/common/Button';
+import { ConfirmPasswordInput, FormFieldData } from './ConfirmPasswordInput';
+import { Button } from '@/components/atoms/Button';
 import { passwordRegex } from '@/utils/regex';
 
 export default {
-  title: 'Components/Autonomous/ConfirmPassword',
+  title: 'Components/Input/ConfirmPassword',
   component: ConfirmPasswordInput,
 } as Meta;
 

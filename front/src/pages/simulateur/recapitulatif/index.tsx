@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
-import { ModalDeclareSimulation } from '@/components/autonomous/ModalDeclareSimulation';
-import { SummarySimulator } from '@/components/business/SummarySimulator';
-import { Button } from '@/components/common/Button';
-import { Link } from '@/components/common/Link';
-import { TextLink } from '@/components/common/TextLink';
-import { Typography } from '@/components/common/Typography';
+import { Button } from '@/components/atoms/Button';
+import { Link } from '@/components/atoms/Link';
+import { TextLink } from '@/components/atoms/TextLink';
+import { Typography } from '@/components/atoms/Typography';
+import { ModalDeclareSimulation } from '@/components/organisms/ModalDeclareSimulation';
+import { SummarySimulator } from '@/components/organisms/SummarySimulator';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';

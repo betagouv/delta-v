@@ -8,8 +8,8 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
-import { Button } from '@/components/common/Button';
-import { Typography } from '@/components/common/Typography';
+import { Button } from '@/components/atoms/Button';
+import { Typography } from '@/components/atoms/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioType, Radio } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';

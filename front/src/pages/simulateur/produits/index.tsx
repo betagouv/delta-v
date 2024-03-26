@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { CategoryList, Item } from '@/components/common/CategoryList';
 import { Input } from '@/components/input/StandardInputs/Input';
+import { CategoryList, Item } from '@/components/molecules/CategoryList';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';

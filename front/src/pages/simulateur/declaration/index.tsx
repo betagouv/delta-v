@@ -6,8 +6,8 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
-import { ModalCancelDeclaration } from '@/components/autonomous/ModalCancelDeclaration';
-import { FormContactDetails } from '@/components/business/FormContactDetails';
+import { FormContactDetails } from '@/components/organisms/FormContactDetails';
+import { ModalCancelDeclaration } from '@/components/organisms/ModalCancelDeclaration';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';
 

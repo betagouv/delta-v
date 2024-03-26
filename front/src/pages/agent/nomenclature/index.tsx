@@ -1,6 +1,6 @@
 import { useMediaQuery } from 'react-responsive';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { NomenclaturePageDesktop } from '@/templates/NomenclaturePageDesktop';

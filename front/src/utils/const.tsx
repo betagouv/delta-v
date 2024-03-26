@@ -1,7 +1,7 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 
-import { SvgNames } from '@/components/common/SvgIcon';
-import { TabItem } from '@/components/common/TabBar';
+import { SvgNames } from '@/components/molecules/SvgIcon';
+import { TabItem } from '@/components/molecules/TabBar';
 
 export enum Routing {
   home = '/',

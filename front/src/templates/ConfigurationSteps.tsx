@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
 import { Main } from './Main';
-import { ProgressBar } from '@/components/common/ProgressBar';
+import { ProgressBar } from '@/components/molecules/ProgressBar';
 import { Meta } from '@/layout/Meta';
 
 type IMainProps = {

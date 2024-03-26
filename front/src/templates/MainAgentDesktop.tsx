@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { NavBar } from '@/components/common/NavBar';
-import { TitleAgent } from '@/components/common/TitleAgent';
+import { TitleAgent } from '@/components/atoms/TitleAgent';
+import { NavBar } from '@/components/molecules/NavBar';
 import { MAIN_MENU_AGENT_ITEMS } from '@/utils/const';
 
 type IMainAgentDesktopProps = {

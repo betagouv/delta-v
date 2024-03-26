@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { About } from '@/components/business/About';
-import { LegalMentions } from '@/components/business/About/AboutData/LegalMentions';
-import { PersonalData } from '@/components/business/About/AboutData/PersonalData';
+import { About } from '@/components/molecules/About';
+import { LegalMentions } from '@/components/molecules/About/AboutData/LegalMentions';
+import { PersonalData } from '@/components/molecules/About/AboutData/PersonalData';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 

@@ -1,8 +1,8 @@
 import { DataElement } from '..';
 import Declaration from '@/assets/images/Declaration.jpg';
 import Identification from '@/assets/images/Identification.jpg';
-import { ExternalLink } from '@/components/common/ExternalLink';
-import { Typography } from '@/components/common/Typography';
+import { ExternalLink } from '@/components/atoms/ExternalLink';
+import { Typography } from '@/components/atoms/Typography';
 
 export const PrepareMyDocuments: DataElement[] = [
   {

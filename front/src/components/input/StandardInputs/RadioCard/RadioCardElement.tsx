@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
-import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
+import { SvgIcon, SvgNames } from '@/components/molecules/SvgIcon';
 
 export interface IRadioCardElementOptions {
   value: string;

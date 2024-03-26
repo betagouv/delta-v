@@ -1,6 +1,6 @@
 import { DataElement } from '..';
-import { ExternalLink } from '@/components/common/ExternalLink';
-import { SvgIcon } from '@/components/common/SvgIcon';
+import { ExternalLink } from '@/components/atoms/ExternalLink';
+import { SvgIcon } from '@/components/molecules/SvgIcon';
 
 export const WhenDeclare: DataElement[] = [
   {

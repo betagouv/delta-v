@@ -3,15 +3,15 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
-import { ModalMaximumAmount } from '@/components/autonomous/ModalMaximumAmount';
-import { OnActionModal } from '@/components/autonomous/OnActionModal';
-import { AmountProductBasket } from '@/components/common/AmountProductBasket';
-import { Button } from '@/components/common/Button';
-import { Icon } from '@/components/common/Icon';
-import { Link } from '@/components/common/Link';
-import { SvgIcon } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
-import { ValueProductBasket } from '@/components/common/ValueProductBasket';
+import { Button } from '@/components/atoms/Button';
+import { Icon } from '@/components/atoms/Icon';
+import { Link } from '@/components/atoms/Link';
+import { Typography } from '@/components/atoms/Typography';
+import { SvgIcon } from '@/components/molecules/SvgIcon';
+import { AmountProductBasket } from '@/components/organisms/AmountProductBasket';
+import { ModalMaximumAmount } from '@/components/organisms/ModalMaximumAmount';
+import { OnActionModal } from '@/components/organisms/OnActionModal';
+import { ValueProductBasket } from '@/components/organisms/ValueProductBasket';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import {

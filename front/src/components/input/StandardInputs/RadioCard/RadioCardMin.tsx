@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 
-import { Icon } from '@/components/common/Icon';
-import { SvgNames } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { Icon } from '@/components/atoms/Icon';
+import { Typography } from '@/components/atoms/Typography';
+import { SvgNames } from '@/components/molecules/SvgIcon';
 import clsxm from '@/utils/clsxm';
 
 export interface IRadioCardMinOptions {

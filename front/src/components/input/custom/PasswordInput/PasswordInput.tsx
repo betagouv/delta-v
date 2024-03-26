@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
-import { PasswordHelperText } from '@/components/common/PasswordHelperText';
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
+import { PasswordHelperText } from '@/components/molecules/PasswordHelperText';
 
 export interface PasswordInputProps {
   label: string;

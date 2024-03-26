@@ -6,10 +6,10 @@ import { useRouter } from 'next/router';
 import QrScanner from 'qr-scanner';
 
 import { useDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
-import { ModalResumeDeclaration } from '@/components/autonomous/ModalResumeDeclaration';
-import { LinkWithIcon } from '@/components/common/LinkWithIcon';
-import { Typography } from '@/components/common/Typography';
+import { LinkWithIcon } from '@/components/atoms/LinkWithIcon';
+import { Typography } from '@/components/atoms/Typography';
 import { QrCodeScanner } from '@/components/input/StandardInputs/QrCodeScanner';
+import { ModalResumeDeclaration } from '@/components/organisms/ModalResumeDeclaration';
 import useTokenValidity, { isConnected } from '@/hooks/useTokenValidity';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Fuse from 'fuse.js';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
-import { Icon } from '@/components/common/Icon';
+import { Icon } from '@/components/atoms/Icon';
 
 export interface Options {
   id: number | string | null;

@@ -10,13 +10,13 @@ import { useMediaQuery } from 'react-responsive';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { Button } from '@/components/common/Button';
-import { Tooltip } from '@/components/common/Tooltip';
-import { TooltipContainer } from '@/components/common/Tooltip/TooltipContainer';
-import { Typography } from '@/components/common/Typography';
+import { Button } from '@/components/atoms/Button';
+import { Typography } from '@/components/atoms/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { Radio } from '@/components/input/StandardInputs/Radio';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
+import { Tooltip } from '@/components/molecules/Tooltip';
+import { TooltipContainer } from '@/components/molecules/Tooltip/TooltipContainer';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationAgentStepsDesktop } from '@/templates/DeclarationAgentStepsDesktop';

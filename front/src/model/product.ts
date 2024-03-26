@@ -1,6 +1,6 @@
 import { Alpha2Code } from 'i18n-iso-countries';
 
-import { SvgNames } from '@/components/common/SvgIcon';
+import { SvgNames } from '@/components/molecules/SvgIcon';
 
 export interface Product {
   id: string;

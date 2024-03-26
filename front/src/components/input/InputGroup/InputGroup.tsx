@@ -12,8 +12,8 @@ import { IOptions, Select } from '../StandardInputs/Select';
 import { SimpleSelect } from '../StandardInputs/SimpleSelect';
 import { TextArea } from '../StandardInputs/TextArea';
 import { Toggle } from '../StandardInputs/Toggle';
-import { SvgNames } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
+import { SvgNames } from '@/components/molecules/SvgIcon';
 
 export interface IErrorType {
   message: string;

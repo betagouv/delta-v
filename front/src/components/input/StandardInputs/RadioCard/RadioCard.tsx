@@ -3,7 +3,7 @@ import { useController, UseFormRegisterReturn } from 'react-hook-form';
 
 import { RadioCardElement } from './RadioCardElement';
 import { RadioCardMin } from './RadioCardMin';
-import { SvgNames } from '@/components/common/SvgIcon';
+import { SvgNames } from '@/components/molecules/SvgIcon';
 
 export interface IRadioCardType {
   id: string;

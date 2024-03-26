@@ -4,15 +4,15 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
+import { Typography } from '@/components/atoms/Typography';
+import { NomenclatureCard } from '@/components/molecules/NomenclatureCard';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import {
   FormAddFavoriteData,
   ModalAddFavoriteProduct,
-} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
-import { ModalCategoryNomenclatureProduct } from '@/components/autonomous/ModalCategoryNomenclatureProduct';
-import { ModalSelectCountry } from '@/components/autonomous/ModalSelectCountry';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { NomenclatureCard } from '@/components/business/NomenclatureCard';
-import { Typography } from '@/components/common/Typography';
+} from '@/components/organisms/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
+import { ModalCategoryNomenclatureProduct } from '@/components/organisms/ModalCategoryNomenclatureProduct';
+import { ModalSelectCountry } from '@/components/organisms/ModalSelectCountry';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { Meta } from '@/layout/Meta';
 import { Product } from '@/model/product';

@@ -6,10 +6,10 @@ import shallow from 'zustand/shallow';
 
 import { DeclarationAgentStepsDesktop } from './DeclarationAgentStepsDesktop';
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { ProductSearchTools } from '@/components/business/SearchProduct/SearchProductDesktop';
-import { SummaryDeclarationAgent } from '@/components/business/SummaryDeclarationAgent';
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/molecules/Modal';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
+import { ProductSearchTools } from '@/components/organisms/SearchProduct/SearchProductDesktop';
+import { SummaryDeclarationAgent } from '@/components/organisms/SummaryDeclarationAgent';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { useStore } from '@/stores/store';
 import { DECLARATION_STEP_PAGE, RoutingAgent } from '@/utils/const';

@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
 import { MainAgentDesktop } from './MainAgentDesktop';
-import { ProgressBarAgent } from '@/components/common/ProgressBarAgent';
-import { ProgressBarAgentItemType } from '@/components/common/ProgressBarAgent/ProgressBarAgentItem';
+import { ProgressBarAgent } from '@/components/molecules/ProgressBarAgent';
+import { ProgressBarAgentItemType } from '@/components/molecules/ProgressBarAgent/types';
 import { Meta } from '@/layout/Meta';
 import { DECLARATION_STEP_PAGE } from '@/utils/const';
 

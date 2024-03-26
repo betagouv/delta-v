@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 
 import { useActualities } from '@/api/hooks/useAPIActualities';
 import { useDeclarations } from '@/api/hooks/useAPIDeclaration';
-import { BlockActualities } from '@/components/common/BlockActualities';
-import { BlockHeaderAgent } from '@/components/common/BlockHeaderAgent';
-import { BlockHistoricDeclarations } from '@/components/common/BlockHistoricDeclarations';
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/molecules/NavBar';
+import { BlockActualities } from '@/components/organisms/BlockActualities';
+import { BlockHeaderAgent } from '@/components/organisms/BlockHeaderAgent';
+import { BlockHistoricDeclarations } from '@/components/organisms/BlockHistoricDeclarations';
 import { MAIN_MENU_AGENT_ITEMS } from '@/utils/const';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 import { Constants } from '@/utils/enums';
