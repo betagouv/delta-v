@@ -3,7 +3,7 @@
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
-import { FormContactDetails } from '@/components/business/FormContactDetails';
+import { FormContactDetails } from '@/components/organisms/FormContactDetails';
 import { declaration } from '@/core/hoc/declaration.hoc';
 import { useStore } from '@/stores/store';
 import { DeclarationSteps } from '@/templates/DeclarationSteps';

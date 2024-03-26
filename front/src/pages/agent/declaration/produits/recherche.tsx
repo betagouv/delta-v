@@ -7,16 +7,16 @@ import shallow from 'zustand/shallow';
 
 import { useCreateFavoriteMutation } from '@/api/hooks/useAPIFavorite';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
-import { CategoryProductMobile } from '@/components/autonomous/CategoryProduct';
+import { Typography } from '@/components/atoms/Typography';
+import { NomenclatureCard } from '@/components/molecules/NomenclatureCard';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
+import { CategoryProductMobile } from '@/components/organisms/CategoryProduct';
+import { OnAddProductOptions } from '@/components/organisms/FormSelectProduct';
 import {
   FormAddFavoriteData,
   ModalAddFavoriteProduct,
-} from '@/components/autonomous/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
-import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { OnAddProductOptions } from '@/components/business/FormSelectProduct';
-import { NomenclatureCard } from '@/components/business/NomenclatureCard';
-import { Typography } from '@/components/common/Typography';
+} from '@/components/organisms/ModalAddFavoriteProduct/ModalAddFavoriteProduct';
+import { ModalAddProductCartDeclaration } from '@/components/organisms/ModalAddProductCartDeclaration';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { Meta } from '@/layout/Meta';
 import { Product } from '@/model/product';

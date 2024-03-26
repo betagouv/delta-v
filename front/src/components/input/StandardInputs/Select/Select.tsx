@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useController, UseFormRegisterReturn } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
-import { Icon } from '../../../common/Icon';
+import { Icon } from '../../../atoms/Icon';
 import clsxm from '@/utils/clsxm';
 
 export interface IOptions {

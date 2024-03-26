@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useMediaQuery } from 'react-responsive';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { HomepageAgentDesktop } from '@/templates/HomepageAgentDesktop';
 import { HomepageAgentMobile } from '@/templates/HomepageAgentMobile';
 import { TailwindDefaultScreenSize } from '@/utils/enums';

@@ -1,4 +1,4 @@
-import { Search } from '@/components/business/Search';
+import { Search } from '@/components/organisms/Search';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';

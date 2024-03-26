@@ -9,21 +9,21 @@ import shallow from 'zustand/shallow';
 
 import { useCreateDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
-import { CategoryProductMobile } from '@/components/autonomous/CategoryProduct';
-import { ModalAddProductCartDeclaration } from '@/components/autonomous/ModalAddProductCartDeclaration';
-import { ModalDeleteProductCartDeclaration } from '@/components/autonomous/ModalDeleteProductCartDeclaration';
-import { ModalFavorites } from '@/components/autonomous/ModalFavorites';
-import { ModalSearchProduct } from '@/components/autonomous/ModalSearchProduct';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
+import { Button } from '@/components/atoms/Button';
+import { Icon } from '@/components/atoms/Icon';
+import { Typography } from '@/components/atoms/Typography';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
+import { AmountAgentProductBasketGroup } from '@/components/organisms/AmountAgentProductBasket/AmountAgentProductBasketGroup';
+import { CategoryProductMobile } from '@/components/organisms/CategoryProduct';
 import {
   DefaultValuesUpdateProduct,
   OnAddProductOptions,
-} from '@/components/business/FormSelectProduct';
-import { ValueAgentProductBasket } from '@/components/business/ValueAgentProductBasket';
-import { AmountAgentProductBasketGroup } from '@/components/common/AmountAgentProductBasket/AmountAgentProductBasketGroup';
-import { Button } from '@/components/common/Button';
-import { Icon } from '@/components/common/Icon';
-import { Typography } from '@/components/common/Typography';
+} from '@/components/organisms/FormSelectProduct';
+import { ModalAddProductCartDeclaration } from '@/components/organisms/ModalAddProductCartDeclaration';
+import { ModalDeleteProductCartDeclaration } from '@/components/organisms/ModalDeleteProductCartDeclaration';
+import { ModalFavorites } from '@/components/organisms/ModalFavorites';
+import { ModalSearchProduct } from '@/components/organisms/ModalSearchProduct';
+import { ValueAgentProductBasket } from '@/components/organisms/ValueAgentProductBasket';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';

@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { MENU_ITEMS, Routing } from '../utils/const';
-import { CustomHeader } from '@/components/autonomous/CustomHeader';
-import { ModalResumeDeclaration } from '@/components/autonomous/ModalResumeDeclaration';
-import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
-import { SvgNames } from '@/components/common/SvgIcon';
-import { TabBar } from '@/components/common/TabBar';
-import { TitleHeader } from '@/components/common/TitleHeader';
+import { TitleHeader } from '@/components/atoms/TitleHeader';
+import { CustomHeader } from '@/components/molecules/CustomHeader';
+import { SvgNames } from '@/components/molecules/SvgIcon';
+import { TabBar } from '@/components/molecules/TabBar';
+import { ModalResumeDeclaration } from '@/components/organisms/ModalResumeDeclaration';
+import { ModalResumeSimulator } from '@/components/organisms/ModalResumeSimulator';
 import { useStore } from '@/stores/store';
 import { getLevelWithData as getDeclarationLevelWithData } from '@/utils/declaration';
 import { getLevelWithData } from '@/utils/simulator';

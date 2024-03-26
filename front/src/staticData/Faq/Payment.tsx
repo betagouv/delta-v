@@ -1,5 +1,5 @@
 import { DataElement } from '..';
-import { ExternalLink } from '@/components/common/ExternalLink';
+import { ExternalLink } from '@/components/atoms/ExternalLink';
 
 export const Payment: DataElement[] = [
   {

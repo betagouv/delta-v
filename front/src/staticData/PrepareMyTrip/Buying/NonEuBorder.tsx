@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Kid from '@/assets/images/Kid.jpg';
-import { ModalResumeSimulator } from '@/components/autonomous/ModalResumeSimulator';
-import { SvgIcon } from '@/components/common/SvgIcon';
-import { Typography } from '@/components/common/Typography';
+import { Typography } from '@/components/atoms/Typography';
+import { SvgIcon } from '@/components/molecules/SvgIcon';
+import { ModalResumeSimulator } from '@/components/organisms/ModalResumeSimulator';
 import { useStore } from '@/stores/store';
 import { Routing } from '@/utils/const';
 import { getLevelWithData } from '@/utils/simulator';

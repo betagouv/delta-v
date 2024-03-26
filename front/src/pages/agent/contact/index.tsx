@@ -8,17 +8,17 @@ import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 import { useCreateFeedbackMutation } from '@/api/hooks/useAPIFeedback';
-import { ModalDeleteAttachmentDesktop } from '@/components/autonomous/ModalDeleteAttachmentDesktop';
-import { ModalDeleteAttachmentMobile } from '@/components/autonomous/ModalDeleteAttachmentMobile';
+import { Icon } from '@/components/atoms/Icon';
+import { TitleAgent } from '@/components/atoms/TitleAgent';
+import { Typography } from '@/components/atoms/Typography';
+import { InputGroup } from '@/components/input/InputGroup';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
+import { ModalDeleteAttachmentDesktop } from '@/components/organisms/ModalDeleteAttachmentDesktop';
+import { ModalDeleteAttachmentMobile } from '@/components/organisms/ModalDeleteAttachmentMobile';
 import {
   ModalValidateFeedbackInfoMobile,
   ModalValidateFeedbackInfoDesktop,
-} from '@/components/autonomous/ModalValidateFeedbackInfo';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { Icon } from '@/components/common/Icon';
-import { TitleAgent } from '@/components/common/TitleAgent';
-import { Typography } from '@/components/common/Typography';
-import { InputGroup } from '@/components/input/InputGroup';
+} from '@/components/organisms/ModalValidateFeedbackInfo';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import clsxm from '@/utils/clsxm';

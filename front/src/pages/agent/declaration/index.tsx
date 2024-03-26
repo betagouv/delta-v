@@ -5,10 +5,10 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 
 import { UseDeclarationParams, useDeclarations } from '@/api/hooks/useAPIDeclaration';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { DeclarationCard } from '@/components/business/DeclarationCard';
-import { FilterBarMobile } from '@/components/business/FilterGroup/FilterBarMobile';
-import { FilterBarForm } from '@/components/business/FilterGroup/types';
+import { DeclarationCard } from '@/components/molecules/DeclarationCard';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
+import { FilterBarMobile } from '@/components/organisms/FilterGroup/FilterBarMobile';
+import { FilterBarForm } from '@/components/organisms/FilterGroup/types';
 import { Meta } from '@/layout/Meta';
 import { DeclarationResponse } from '@/stores/declaration/appState.store';
 import { MainAgent } from '@/templates/MainAgent';

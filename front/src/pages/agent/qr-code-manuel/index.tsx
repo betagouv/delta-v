@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 import { useDeclarations } from '@/api/hooks/useAPIDeclaration';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { DeclarationCard } from '@/components/business/DeclarationCard';
 import { InputGroup } from '@/components/input/InputGroup';
+import { DeclarationCard } from '@/components/molecules/DeclarationCard';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { RoutingAgent } from '@/utils/const';

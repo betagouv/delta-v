@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import Fuse from 'fuse.js';
 import * as ReactDOMServer from 'react-dom/server';
 
-import { AccordionData } from '@/components/common/Accordion/Accordion';
+import { AccordionData } from '@/components/atoms/Accordion/Accordion';
 import { SearchType } from '@/utils/search';
 import { getWord, shorten } from '@/utils/string';
 

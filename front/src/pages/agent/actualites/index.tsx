@@ -4,8 +4,8 @@ import { useMediaQuery } from 'react-responsive';
 
 import { UseActualityParams, useActualities } from '@/api/hooks/useAPIActualities';
 import { ActualityResponse } from '@/api/lib/actualities';
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { ActualityCard } from '@/components/business/ActualityCard';
+import { ActualityCard } from '@/components/molecules/ActualityCard';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { Meta } from '@/layout/Meta';
 import { MainAgent } from '@/templates/MainAgent';
 import { Constants } from '@/utils/enums';

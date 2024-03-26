@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
-import { Icon } from '@/components/common/Icon';
-import { SvgIcon, SvgNames } from '@/components/common/SvgIcon';
+import { Icon } from '@/components/atoms/Icon';
+import { SvgIcon, SvgNames } from '@/components/molecules/SvgIcon';
 
 export interface IInputOptions {
   placeholder?: string;

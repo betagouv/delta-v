@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { DataElement } from '..';
-import { ExternalLink } from '@/components/common/ExternalLink';
-import { Typography } from '@/components/common/Typography';
+import { ExternalLink } from '@/components/atoms/ExternalLink';
+import { Typography } from '@/components/atoms/Typography';
 import { Radio } from '@/components/input/StandardInputs/Radio';
 
 export interface FormData {

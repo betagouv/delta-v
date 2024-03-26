@@ -1,4 +1,4 @@
-import { SvgNames } from '@/components/common/SvgIcon';
+import { SvgNames } from '@/components/molecules/SvgIcon';
 
 export interface DataElement {
   id: string;

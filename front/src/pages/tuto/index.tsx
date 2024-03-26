@@ -3,10 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import { StepFour } from '@/components/business/Tuto/Steps/StepFour';
-import { StepOne } from '@/components/business/Tuto/Steps/StepOne';
-import { StepThree } from '@/components/business/Tuto/Steps/StepThree';
-import { StepTwo } from '@/components/business/Tuto/Steps/StepTwo';
+import { StepFour } from '@/components/organisms/Tuto/Steps/StepFour';
+import { StepOne } from '@/components/organisms/Tuto/Steps/StepOne';
+import { StepThree } from '@/components/organisms/Tuto/Steps/StepThree';
+import { StepTwo } from '@/components/organisms/Tuto/Steps/StepTwo';
 import { Meta } from '@/layout/Meta';
 import { Full } from '@/templates/Full';
 

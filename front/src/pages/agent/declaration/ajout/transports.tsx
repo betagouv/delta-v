@@ -9,12 +9,12 @@ import { useMediaQuery } from 'react-responsive';
 import * as yup from 'yup';
 import shallow from 'zustand/shallow';
 
-import { AgentRoute } from '@/components/autonomous/RouteGuard/AgentRoute';
-import { Button } from '@/components/common/Button';
-import { Typography } from '@/components/common/Typography';
+import { Button } from '@/components/atoms/Button';
+import { Typography } from '@/components/atoms/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import { IRadioType, Radio } from '@/components/input/StandardInputs/Radio';
 import { IRadioCardType } from '@/components/input/StandardInputs/RadioCard';
+import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { declarationAgent } from '@/core/hoc/declarationAgent.hoc';
 import { MeansOfTransport } from '@/stores/declaration/appState.store';
 import { useStore } from '@/stores/store';
