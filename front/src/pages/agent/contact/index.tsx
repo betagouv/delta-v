@@ -180,18 +180,7 @@ const ContactPage = () => {
                   error={isError ? errors?.comment?.message : undefined}
                   additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
                 />
-                <Typography size="text-xs" color="black">
-                  Vous souhaitez nous faire parvenir une remarque, <br /> une optimisation, une
-                  demande particulière ?
-                </Typography>
               </div>
-              <InputGroup
-                type="textarea"
-                placeholder="Saisissez votre message..."
-                name="comment"
-                register={register('comment')}
-                error={!isValid ? errors?.comment?.message : undefined}
-              />
 
               {file && urlFile ? (
                 <div className="flex flex-col gap-4">
@@ -244,7 +233,8 @@ const ContactPage = () => {
           <div className="w-[118px] self-center md:self-start mb-4">
             <button
               className={clsxm({
-                'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer': true,
+                'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer md:w-[117px] md:h-[34px] md:py-0':
+                  true,
                 'bg-disabled-bg cursor-not-allowed': isError,
               })}
               type="submit"

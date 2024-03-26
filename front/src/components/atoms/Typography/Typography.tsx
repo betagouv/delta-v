@@ -55,6 +55,7 @@ export interface ITypographyProps {
   noWrap?: boolean;
   onClick?: () => void;
   family?: 'roboto' | 'marianne';
+  opacity?: `opacity-${string}`;
 }
 
 export const Typography: React.FC<ITypographyProps> = ({
@@ -77,6 +78,7 @@ export const Typography: React.FC<ITypographyProps> = ({
   noWrap = false,
   onClick,
   family = 'roboto',
+  opacity = '',
 }) => {
   let usedVariant = variant;
   if (usedVariant === null) {
@@ -101,6 +103,7 @@ export const Typography: React.FC<ITypographyProps> = ({
     [getTextTransform(transform)]: transform,
     [getNoWrap(noWrap)]: noWrap,
     [getFontFamily(family)]: family,
+    [opacity]: true,
   });
   const CustomTag = tag ?? 'span';
 

@@ -45,11 +45,10 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
   const countries = getNames('fr', { select: 'official' });
   const [open, setOpen] = React.useState(isOpen);
   const [selectedCountry, setSelectedCountry] = React.useState<string | undefined>(
-    countryForProductsNomenclature
-      ? `${countries[countryForProductsNomenclature]} ${getEmojiFlag(
-          countryForProductsNomenclature,
-        ).toString()}`
-      : 'Pays',
+    countryForProductsNomenclature &&
+      `${countries[countryForProductsNomenclature]} ${getEmojiFlag(
+        countryForProductsNomenclature,
+      ).toString()}`,
   );
 
   const { register, control } = useForm<FormCountryData>({
@@ -85,7 +84,7 @@ export const ModalSelectCountry: React.FC<ModalSelectCountryProps> = ({
         onClick={() => setOpen(true)}
       >
         <Typography color="black" size="text-2xs" weight="bold" desktopSize="text-sm">
-          {selectedCountry}
+          {selectedCountry ?? 'Sélectionner le pays de provenance'}
         </Typography>
         <Icon name="chevron-down" size="lg" />
       </div>

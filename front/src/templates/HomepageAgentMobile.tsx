@@ -14,7 +14,7 @@ import useTokenValidity, { isConnected } from '@/hooks/useTokenValidity';
 import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { MainAgent } from '@/templates/MainAgent';
-import { MAIN_MENU_AGENT_ITEMS, RoutingAgent } from '@/utils/const';
+import { MAIN_MENU_AGENT_ITEMS, MenuAgentItem, RoutingAgent } from '@/utils/const';
 import { getLevelWithData } from '@/utils/declarationAgent';
 
 const SCAN_HEIGHT = '184px';
@@ -108,8 +108,9 @@ const HomepageAgentMobile = () => {
     };
   }, [videoRef, mode]);
 
-  const { declarationAgentRequest } = useStore((state) => ({
+  const { declarationAgentRequest, setCountryForProductsNomenclature } = useStore((state) => ({
     declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
+    setCountryForProductsNomenclature: state.setCountryForProductsNomenclature,
   }));
 
   const openDeclaration = () => {
@@ -118,6 +119,13 @@ const HomepageAgentMobile = () => {
     } else {
       setOpenModalResumeDeclaration(true);
     }
+  };
+
+  const handleMenuItemClick = (item: MenuAgentItem) => {
+    if (item.openDeclarationResumeModal) {
+      openDeclaration();
+    }
+    setCountryForProductsNomenclature(undefined);
   };
 
   return (
@@ -174,14 +182,7 @@ const HomepageAgentMobile = () => {
             >
               {MAIN_MENU_AGENT_ITEMS.map((item) => {
                 return (
-                  <div
-                    onClick={() => {
-                      if (item.openDeclarationResumeModal) {
-                        openDeclaration();
-                      }
-                    }}
-                    key={item.title}
-                  >
+                  <div onClick={() => handleMenuItemClick(item)} key={item.title}>
                     <LinkWithIcon
                       href={item.path}
                       key={item.title}

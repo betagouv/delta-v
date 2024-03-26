@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import shallow from 'zustand/shallow';
 
 import { Typography } from '../../atoms/Typography';
 import { SvgIcon } from '../SvgIcon';
@@ -27,9 +28,18 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
   const router = useRouter();
   const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
 
-  const { declarationAgentRequest } = useStore((state) => ({
-    declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
-  }));
+  const {
+    declarationAgentRequest,
+    setCountryForProductsNomenclature,
+    countryForProductsNomenclature,
+  } = useStore(
+    (state) => ({
+      declarationAgentRequest: state.declaration.appState.declarationAgentRequest,
+      setCountryForProductsNomenclature: state.setCountryForProductsNomenclature,
+      countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
+    }),
+    shallow,
+  );
 
   const openDeclaration = () => {
     if (getLevelWithData(declarationAgentRequest) === 1) {
@@ -46,18 +56,26 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
     if (item.openDeclarationResumeModal) {
       openDeclaration();
     } else setOpenModalResumeDeclaration(false);
+    if (countryForProductsNomenclature && activePath !== item.path) {
+      setCountryForProductsNomenclature(undefined);
+    }
   };
 
   return (
     <>
-      <div className="flex flex-row justify-between items-center">
+      <div
+        className={clsxm({
+          'flex items-center mx-auto lg:px-10 px-4 max-w-[1200px] w-full': true,
+        })}
+      >
         <div
-          className="w-[86px] h-[45px] md:hidden lg:flex cursor-pointer"
+          className="w-[86px] h-[45px] cursor-pointer"
           onClick={() => router.push(`${RoutingAgent.home}?mode=tools`)}
         >
           <SvgIcon name="logoAgent" />
         </div>
-        <div className="flex flex-row gap-[45px] items-center py-7">
+        <div className="flex-1" />
+        <div className="flex flex-row lg:gap-[45px] gap-5 items-center py-7">
           {links.map((item) => {
             return (
               <div key={item.title} className="flex justify-center items-center w-full">
@@ -83,7 +101,9 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
                   <NextLink href={getNavBarLink(item)} key={item.title}>
                     <div
                       className={clsxm({
-                        'cursor-pointer hover:opacity-80 active:opacity-0': true,
+                        'cursor-default': true,
+                        'cursor-pointer hover:opacity-80 active:opacity-0':
+                          activePath !== item.path,
                         'cursor-not-allowed hover:opacity-100 active:opacity-100': item.disabled,
                       })}
                       onClick={() => handleNavbarItemClick(item)}

@@ -15,14 +15,15 @@ type IMainAgentDesktopProps = {
 const MainAgentDesktop = ({ meta, children, titleHeader }: IMainAgentDesktopProps) => {
   const router = useRouter();
   const path = router.pathname;
+
   return (
     <div className="antialiased flex flex-col" id="agentDesktopHeader">
       {meta}
 
-      <div className="pl-[103px] pr-20 border-b border-disabled-bg">
+      <div className="flex place-content-center border-b border-disabled-bg">
         <NavBar links={MAIN_MENU_AGENT_ITEMS} activePath={path} />
       </div>
-      <div className="flex flex-col flex-1 px-[126px] pt-[60px] gap-[30px]">
+      <div className="container py-5 flex flex-col flex-1 pt-[60px] gap-[30px] max-w-[1052px]">
         {titleHeader && (
           <TitleAgent
             title={titleHeader}

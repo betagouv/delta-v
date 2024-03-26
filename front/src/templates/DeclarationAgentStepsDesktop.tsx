@@ -55,13 +55,12 @@ const DeclarationAgentStepsDesktop = ({
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={classNames({
-          'px-[126px]': true,
           'bg-white': simpleBg,
           'bg-secondary-bg': !simpleBg,
         })}
         style={{ height: `calc(100vh - ${headerHeight}px)` }}
       >
-        {children}
+        <div className="container max-w-[1052px]">{children}</div>
       </form>
     </>
   );

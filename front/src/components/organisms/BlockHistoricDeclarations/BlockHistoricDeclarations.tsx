@@ -41,9 +41,9 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
         fontFamily="marianne"
       />
       {!emptyDeclarations ? (
-        <div className="grid-cols-3 items-start grid gap-10">
+        <div className="grid-cols-3 items-start grid lg:gap-10 gap-5">
           {submittedDeclarationsNotEmpty && (
-            <div className="flex flex-col gap-[30px] flex-1">
+            <div className="flex flex-col gap-[30px]">
               <Typography size="text-xs" color="black">
                 En attente de validation
               </Typography>
@@ -60,6 +60,7 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
                       key={item.publicId}
                       publicId={item.publicId}
                       onClick={() => router.push(`/agent/declaration/${item.id}`)}
+                      responsive
                     />
                   ))}
                 </div>
@@ -67,7 +68,7 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
             </div>
           )}
           {paidDeclarationsNotEmpty && (
-            <div className="flex flex-col gap-[30px] flex-1">
+            <div className="flex flex-col gap-[30px]">
               <Typography size="text-xs" color="black">
                 Payée
               </Typography>
@@ -84,6 +85,7 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
                       key={item.publicId}
                       publicId={item.publicId}
                       onClick={() => router.push(`/agent/declaration/${item.id}`)}
+                      responsive
                     />
                   ))}
                 </div>
@@ -91,13 +93,13 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
             </div>
           )}
           {errorDeclarationsNotEmpty && (
-            <div className="flex flex-col gap-[30px] flex-1">
+            <div className="flex flex-col gap-[30px]">
               <Typography size="text-xs" color="black">
                 Non conforme
               </Typography>
 
               {!isErrorDeclarationsLoading && errorDeclarations && (
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5 max-w-[324px]">
                   {errorDeclarations.map((item) => (
                     <DeclarationCard
                       firstName={item.declarantFirstName}
@@ -109,6 +111,7 @@ export const BlockHistoricDeclarations: React.FC<BlockHistoricDeclarationsProps>
                       key={item.publicId}
                       publicId={item.publicId}
                       onClick={() => router.push(`/agent/declaration/${item.id}`)}
+                      responsive
                     />
                   ))}
                 </div>

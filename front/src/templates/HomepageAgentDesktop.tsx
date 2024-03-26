@@ -57,24 +57,30 @@ const HomepageAgentDesktop = () => {
 
   return (
     <>
-      <div className="flex flex-col pl-[103px] pr-20 pb-10 bg-navbar-bg gap-[14px]">
-        <NavBar links={MAIN_MENU_AGENT_ITEMS} />
-        <BlockHeaderAgent
-          onChangeSearch={onChangeSearch}
-          onSearchAll={onSearchAll}
-          searchValue={searchValue}
-        />
+      <div className="bg-navbar-bg">
+        <div className="flex place-content-center">
+          <NavBar links={MAIN_MENU_AGENT_ITEMS} />
+        </div>
+        <div className="mx-auto flex flex-col pb-10 gap-[14px]">
+          <BlockHeaderAgent
+            onChangeSearch={onChangeSearch}
+            onSearchAll={onSearchAll}
+            searchValue={searchValue}
+          />
+        </div>
       </div>
-      <div className="flex flex-col  mt-10 pl-[125px] pr-[103px] gap-[50px] pb-[70px]">
-        <BlockHistoricDeclarations
-          errorDeclarations={apiErrorDeclarations}
-          paidDeclarations={apiPaidDeclarations}
-          submittedDeclarations={apiSubmittedDeclarations}
-          isPaidDeclarationsLoading={isPaidDeclarationsLoading}
-          isSubmittedDeclarationsLoading={isSubmittedDeclarationsLoading}
-          isErrorDeclarationsLoading={isErrorDeclarationsLoading}
-        />
-        <BlockActualities actualities={apiActualities} isLoading={isActualitiesLoading} />
+      <div className="container flex mt-10 pb-[70px]">
+        <div className="mx-auto flex flex-col gap-[50px]">
+          <BlockHistoricDeclarations
+            errorDeclarations={apiErrorDeclarations}
+            paidDeclarations={apiPaidDeclarations}
+            submittedDeclarations={apiSubmittedDeclarations}
+            isPaidDeclarationsLoading={isPaidDeclarationsLoading}
+            isSubmittedDeclarationsLoading={isSubmittedDeclarationsLoading}
+            isErrorDeclarationsLoading={isErrorDeclarationsLoading}
+          />
+          <BlockActualities actualities={apiActualities} isLoading={isActualitiesLoading} />
+        </div>
       </div>
     </>
   );
