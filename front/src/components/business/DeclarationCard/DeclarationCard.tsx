@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-import cs from 'classnames';
 import dayjs from 'dayjs';
 
 import { DataInfoItem } from '../DataInfoItem';
@@ -63,9 +62,7 @@ export const DeclarationCard = ({
   const transportLabel = getMeanOfTransport(transport);
   return (
     <div
-      className={cs({
-        'flex flex-col rounded-xl border border-gray-300 px-5 py-5 cursor-pointer': true,
-      })}
+      className="flex flex-col rounded-xl border border-gray-300 p-5 cursor-pointer"
       ref={cardRef}
       onClick={() => onClick(id)}
     >
