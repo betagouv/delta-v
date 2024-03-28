@@ -168,7 +168,8 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           <Info>
             <div className="md:text-xs leading-tight">
               Vous souhaitez en savoir plus sur les
-              <br /> quantités que vous pouvez <br />
+              <br className="md:hidden block" /> quantités que vous pouvez
+              <br className="md:hidden block" />
               <div className="flex flex-row gap-1">
                 <p>ramener</p>
                 <TextLink underline onClick={() => setOpenModalInfoProduct(true)}>
