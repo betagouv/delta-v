@@ -111,6 +111,7 @@ export const getRadioCardProductForm = ({
       type="radioCard"
       label={product.childrenQuestion ?? undefined}
       disabled={disabled}
+      radioCardLabelClassname="md:line-clamp-1"
     />
   ) : (
     <InputGroup
@@ -121,6 +122,7 @@ export const getRadioCardProductForm = ({
       type="radioCard"
       label={product.childrenQuestion ?? undefined}
       disabled={disabled}
+      radioCardLabelClassname="md:line-clamp-1"
     />
   );
 };

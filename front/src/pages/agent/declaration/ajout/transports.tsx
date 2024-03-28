@@ -272,7 +272,7 @@ const Declaration = () => {
               <div className="text-red-500">{errors.meansOfTransport.message}</div>
             )}
           </div>
-          <div className="md:relative md:bottom-0 md:mt-20 absolute bottom-8 w-40 md:w-[118px] md:h-[34px] self-center md:self-start">
+          <div className="md:relative md:bottom-0 md:mt-20 absolute bottom-12 w-40 md:w-[118px] md:h-[34px] self-center md:self-start">
             <Button fullWidth fullHeight type="submit" disabled={!selectedCountry}>
               <span className="md:text-xs">Valider</span>
             </Button>

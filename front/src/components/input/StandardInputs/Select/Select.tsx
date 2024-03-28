@@ -51,7 +51,7 @@ export const Select: React.FC<ISelectOptions> = ({
   };
 
   let classNameOptions =
-    'absolute z-10 mt-3 max-h-60 w-full list-none overflow-auto rounded-2xl bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none ';
+    'absolute z-10 mt-3 max-h-60 w-full list-none overflow-auto rounded-2xl bg-white p-0 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none';
   classNameOptions += fullWidth ? ' w-full' : ' w-auto';
   return (
     <Listbox
@@ -117,12 +117,11 @@ export const Select: React.FC<ISelectOptions> = ({
                     }
                     value={option}
                   >
-                    {({ selected: selectedValue, active }) => (
+                    {({ selected: selectedValue }) => (
                       <span
                         className={clsxm({
                           'block truncate text-base md:text-xs font-normal': true,
-                          'font-semibold bg-lightBlue': selectedValue,
-                          'bg-lightBlue': active,
+                          'font-semibold': selectedValue,
                         })}
                       >
                         {option.value}

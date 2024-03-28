@@ -60,7 +60,7 @@ const DeclarationAgentStepsDesktop = ({
         })}
         style={{ height: `calc(100vh - ${headerHeight}px)` }}
       >
-        <div className="container max-w-[1052px]">{children}</div>
+        <div className="container max-w-[1052px] px-10">{children}</div>
       </form>
     </>
   );

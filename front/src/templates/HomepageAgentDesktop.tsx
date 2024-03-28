@@ -70,7 +70,7 @@ const HomepageAgentDesktop = () => {
         </div>
       </div>
       <div className="container flex mt-10 pb-[70px]">
-        <div className="mx-auto flex flex-col gap-[50px]">
+        <div className="mx-auto flex flex-col gap-[50px] px-10">
           <BlockHistoricDeclarations
             errorDeclarations={apiErrorDeclarations}
             paidDeclarations={apiPaidDeclarations}
