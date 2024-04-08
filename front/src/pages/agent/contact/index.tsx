@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useMediaQuery } from 'react-responsive';
@@ -155,10 +156,10 @@ const ContactPage = () => {
         isMobile={isMobile}
       >
         <form
-          className="md:p-0 justify-between flex flex-col py-6 px-4 flex-1 gap-20"
+          className="md:p-0 justify-between flex flex-col py-6 px-4 flex-1"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5 md:min-h-[420px]">
             <div className="flex flex-col">
               <TitleAgent
                 title="On vous écoute"
@@ -171,61 +172,74 @@ const ContactPage = () => {
                 Vous souhaitez nous faire parvenir une remarque, <br className="md:hidden block" />
                 une optimisation, une demande particulière ?
               </Typography>
-              <div className="my-4">
+              <div className="mt-4">
                 <InputGroup
                   type="textarea"
                   placeholder="Saisissez votre message..."
                   name="comment"
                   register={register('comment')}
                   error={isError ? errors?.comment?.message : undefined}
-                  additionalClassName="md:max-w-[668px] md:h-[185px] md:min-h-[0px]"
+                  additionalClassName="md:max-w-[668px] h-[185px] min-h-[0px]"
+                  preventErrorShift
                 />
               </div>
 
               {file && urlFile ? (
-                <div className="flex flex-col gap-4">
-                  <div className="flex gap-5 items-center flex-row mt-5">
-                    <div className="inline-flex flex-row gap-0.5 items-center text-primary-600">
-                      <div className="mt-0.5">
-                        <Icon name="paperclip" size="sm" color="primary" />
-                      </div>
-                      <div>
-                        <a href={urlFile} id="idimage" className="w-10 h-10" target="_blank">
-                          <Typography size="text-2xs" weight="normal" color="black" underline>
-                            {file.name}
-                          </Typography>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="flex flex-row gap-2 mt-0.5">
-                      <button
-                        className="text-primary-600 text-xs underline font-bold"
-                        type="button"
-                        onClick={onClickDeleteAttachment}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-5 justify-between md:justify-start">
+                    <div className="grid grid-cols-[16px_1fr] gap-1 items-center w-40">
+                      <Icon
+                        name={errors.files ? 'cross' : 'paperclip'}
+                        size="base"
+                        color={errors.files ? 'cancel' : 'primary'}
+                      />
+                      <NextLink
+                        href={urlFile}
+                        target="_blank"
+                        className={clsxm({
+                          'relative top-[-2px] line-clamp-1 text-black': true,
+                          'text-error': !!errors.files,
+                        })}
                       >
+                        <Typography
+                          size="text-xs"
+                          desktopSize="text-xs"
+                          color={errors.files ? 'error' : 'black'}
+                          underline
+                        >
+                          {file.name}
+                        </Typography>
+                      </NextLink>
+                    </div>
+                    <div
+                      className="cursor-pointer flex items-center"
+                      onClick={onClickDeleteAttachment}
+                    >
+                      <Typography size="text-xs" desktopSize="text-xs" weight="bold" underline>
                         Modifier
-                      </button>
+                      </Typography>
                     </div>
                   </div>
-                  {errors.files && (
-                    <div data-testid="error-element" className="flex">
-                      <span className="px-2 flex mb-1.5" id="input-error">
-                        <Typography size="text-3xs" color="error">
-                          {errors.files.message}
-                        </Typography>
-                      </span>
-                    </div>
-                  )}
+                  <div data-testid="error-element" className="flex" id="input-error">
+                    {errors.files && (
+                      <Typography size="text-3xs" desktopSize="md:text-[8px]" color="error" italic>
+                        L'image ne correspond pas au format pré requis : <br />
+                        JPG ou PNG, taille maximale 10Mo
+                      </Typography>
+                    )}
+                  </div>
                 </div>
               ) : (
-                <div className="mt-5">
+                <div className="flex flex-col gap-1">
                   <InputGroup
                     type="file"
                     name="file"
                     register={register('files')}
                     onFileChange={onFileChange}
-                    error={!isValid ? errors?.files?.message : undefined}
                   />
+                  <Typography color="placeholder" size="text-2xs" desktopSize="text-2xs" italic>
+                    Formats JPG ou PNG, taille maximale 10Mo
+                  </Typography>
                 </div>
               )}
             </div>

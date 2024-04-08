@@ -25,7 +25,18 @@ export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({
     resetDeclarationAgent: state.resetDeclarationAgent,
   }));
 
-  const resumeDeclaration = () => {
+  const onResetDeclarationClick = () => {
+    if (templateRole === 'agent') {
+      resetDeclarationAgent();
+      router.push(RoutingAgent.createDeclaration);
+    } else {
+      resetDeclaration();
+      router.push(Routing.createDeclaration);
+    }
+    onClose?.();
+  };
+
+  const onResumeDeclarationClick = () => {
     if (templateRole === 'agent') {
       router.push(RoutingAgent.createDeclaration);
     } else {
@@ -51,15 +62,7 @@ export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({
             rounded="full"
             fullWidth
             className={{ 'md:w-[198px] md:h-[34px] md:text-xs': true }}
-            onClick={() => {
-              if (templateRole === 'agent') {
-                resetDeclarationAgent();
-                router.push(RoutingAgent.createDeclaration);
-              } else {
-                resetDeclaration();
-                router.push(Routing.createDeclaration);
-              }
-            }}
+            onClick={onResetDeclarationClick}
           >
             Nouvelle declaration
           </Button>
@@ -68,7 +71,7 @@ export const ModalResumeDeclaration: React.FC<ModalDeclarationProps> = ({
             size="lg"
             rounded="full"
             fullWidth
-            onClick={resumeDeclaration}
+            onClick={onResumeDeclarationClick}
             className={{ 'md:w-[198px] md:h-[34px] md:text-xs': true }}
           >
             Reprendre la declaration

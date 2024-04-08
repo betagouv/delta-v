@@ -4,14 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useMediaQuery } from 'react-responsive';
 
-import { getSchema } from './schema';
+import { FAVORITE_MAXIMUM_NAME_LENGTH, getSchema } from './schema';
 import { Button } from '@/components/atoms/Button';
 import { Typography } from '@/components/atoms/Typography';
 import { InputGroup } from '@/components/input/InputGroup';
 import DownModal from '@/components/molecules/DownModal';
 import Modal from '@/components/molecules/Modal';
-
-const FAVORITE_MAXIMUM_NAME_LENGTH = 30;
 
 export interface FormAddFavoriteData {
   name: string;
@@ -41,13 +39,13 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
     handleSubmit,
     register,
     watch,
+    getValues,
     formState: { errors },
   } = useForm<FormAddFavoriteData>({
     resolver: yupResolver(getSchema()),
-    mode: 'onBlur',
   });
   const [added, setAdded] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isMaxError, setIsMaxError] = useState(false);
   const [helperText, setHelperText] = useState(
     `${FAVORITE_MAXIMUM_NAME_LENGTH} caractères maximum`,
   );
@@ -69,11 +67,11 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
   useEffect(() => {
     const inputValue = watch('name') ?? '';
     setHelperText(getNameLengthHelperText(inputValue, FAVORITE_MAXIMUM_NAME_LENGTH));
-    if (!isError && inputValue.length > FAVORITE_MAXIMUM_NAME_LENGTH) {
-      setIsError(true);
+    if (!isMaxError && inputValue.length > FAVORITE_MAXIMUM_NAME_LENGTH) {
+      setIsMaxError(true);
     }
-    if (isError && inputValue.length <= FAVORITE_MAXIMUM_NAME_LENGTH) {
-      setIsError(false);
+    if (isMaxError && inputValue.length <= FAVORITE_MAXIMUM_NAME_LENGTH) {
+      setIsMaxError(false);
     }
   }, [watch('name')]);
 
@@ -83,7 +81,7 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
         bgColor="bg-white"
         open={open}
         onClose={handleClose}
-        title="Ajouter aux favoris"
+        title="Ajouter en favoris"
         titlePosition="text-left"
       >
         <div className="mt-[30px]">
@@ -100,7 +98,7 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmitForm)} className="flex flex-1 flex-col gap-[30px]">
-              <div className="flex flex-col gap-[6px]">
+              <div className="flex flex-col">
                 <InputGroup
                   type="text"
                   fullWidth
@@ -109,16 +107,14 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
                   register={register('name', { required: false })}
                   error={errors.name?.message as string | undefined}
                   withBorder
+                  helperText="30 caractères maximum"
+                  helperTextColorClassname={errors.name ? 'error' : 'black'}
+                  preventErrorShift
                 />
-                <div className="ml-5">
-                  <Typography color={errors.name ? 'error' : 'black'} size="text-3xs">
-                    30 caractères maximum
-                  </Typography>
-                </div>
               </div>
               <div className="flex-col flex items-center justify-center gap-4 mb-[10px]">
                 <div className="w-36 flex">
-                  <Button fullWidth type="submit">
+                  <Button fullWidth type="submit" disabled={!getValues('name')}>
                     Ajouter
                   </Button>
                 </div>
@@ -165,18 +161,21 @@ export const ModalAddFavoriteProduct: React.FC<ModalAddFavoriteProductProps> = (
                   name="name"
                   placeholder="Exemple : Jeans, pantalon noir, slim..."
                   register={register('name', { required: false })}
-                  error={isError ? '' : undefined}
+                  error={isMaxError || errors.name?.type === 'min' ? '' : undefined}
                   withBorder
                 />
                 <div className="w-[112px] h-[34px] flex">
-                  <Button fullWidth type="submit">
-                    <span className="text-xs font-normal">Enregistrer</span>
+                  <Button fullWidth fullHeight type="submit">
+                    <span className="text-xs font-normal flex items-center">Enregistrer</span>
                   </Button>
                 </div>
               </div>
-              <div className="ml-5">
-                <Typography desktopSize="text-2xs" color={isError ? 'error' : 'black'}>
+              <div className="flex-col py-1 flex ml-5 min-h-[40px]">
+                <Typography desktopSize="text-2xs" color={isMaxError ? 'error' : 'black'}>
                   {helperText}
+                </Typography>
+                <Typography desktopSize="text-2xs" color={'error'}>
+                  {errors.name?.message as string | undefined}
                 </Typography>
               </div>
             </form>

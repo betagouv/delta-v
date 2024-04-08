@@ -72,7 +72,7 @@ export const AddProductCartDeclaration: React.FC<AddProductCartDeclarationProps>
             {currentProduct?.nomenclatures && (
               <div className="flex flex-row gap-2">
                 {currentProduct.nomenclatures.map((nomenclature) => (
-                  <Typography color="primary" size="text-2xs">
+                  <Typography color="primary" size="text-2xs" key={nomenclature}>
                     {nomenclature}
                   </Typography>
                 ))}

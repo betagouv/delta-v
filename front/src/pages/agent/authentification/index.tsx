@@ -115,7 +115,7 @@ const LoginPage = () => {
           <Typography variant="h1" size="text-xl" weight="bold" textPosition="text-center">
             Se connecter
           </Typography>
-          <div className="my-5">
+          <div className="flex flex-col gap-2 mt-5">
             <InputGroup
               type="text"
               name="email"
@@ -128,9 +128,8 @@ const LoginPage = () => {
                   : undefined
               }
               withBorder
+              preventErrorShift
             />
-          </div>
-          <div className="my-2.5">
             <InputGroup
               type={!passwordVisible ? 'password' : 'text'}
               name="password"
@@ -145,6 +144,7 @@ const LoginPage = () => {
               trailingSvgIcon={!passwordVisible ? 'visibilityOff' : 'visibilityOn'}
               onTrailingSvgIconClick={() => setPasswordVisible(!passwordVisible)}
               withBorder
+              preventErrorShift
             />
           </div>
           <TextLink underline to={RoutingAuthentication.forgetPassword}>

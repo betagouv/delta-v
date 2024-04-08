@@ -20,7 +20,7 @@ export const UserRepository: UserRepositoryInterface = AppDataSource.getReposito
     await this.createQueryBuilder('user').update().set(user).where({ id: userId }).execute();
   },
   getOneByEmail(email: string): Promise<User | null> {
-    return this.createQueryBuilder('user').where('user.email = :email', { email }).getOne();
+    return this.createQueryBuilder('user').where('user.email ILIKE :email', { email }).getOne();
   },
   getOneById(id: string): Promise<User | null> {
     return this.createQueryBuilder('user').where('user.id = :id', { id }).getOne();

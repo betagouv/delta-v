@@ -24,6 +24,19 @@ interface SearchProductProps<T> {
   disabled?: boolean;
 }
 
+const getResultsLabel = (itemCount: number): string | undefined => {
+  if (itemCount === 0) {
+    return 'Aucun résultat';
+  }
+  if (itemCount === 1) {
+    return 'Voir 1 résultat';
+  }
+  if (itemCount > 1) {
+    return `Voir les ${itemCount} résultats`;
+  }
+  return undefined;
+};
+
 export const SearchProductMobile: React.FC<SearchProductProps<any>> = <T extends unknown>({
   onSearch,
   onChange = () => {},
@@ -99,13 +112,16 @@ export const SearchProductMobile: React.FC<SearchProductProps<any>> = <T extends
           )}
         </div>
       </div>
-      <div className="py-5 relative w-full">
-        <div className="-top-5 absolute h-5 w-full bg-gradient-to-t from-white" />
+      <div className="w-full flex justify-center relative pt-5 pb-[30px]">
         {!!searchValue &&
           (resultSearch.length > 0 ? (
-            <div className="text-center">
-              <Button onClick={() => onSearchAll(searchValue)} disabled={resultSearch.length === 0}>
-                {`Voir les ${resultSearch.length} résultats`}
+            <div className="text-center min-w-[176px]">
+              <Button
+                onClick={() => onSearchAll(searchValue)}
+                disabled={resultSearch.length === 0}
+                fullWidth
+              >
+                {getResultsLabel(resultSearch.length)}
               </Button>
             </div>
           ) : (

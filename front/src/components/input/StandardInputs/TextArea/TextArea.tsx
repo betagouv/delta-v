@@ -28,16 +28,6 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
   additionalClassName,
   register,
 }) => {
-  const mergedClassname = clsxm(
-    {
-      'bg-secondary-bg focus:outline-none placeholder:text-disabled-text border-none resize-none min-h-[288px] block w-full rounded-[10px] p-5 text-xs placeholder:italic focus:border-none focus:ring-0':
-        true,
-      'border-error text-error placeholder:text-red-300 focus:border-error focus:outline-none focus:ring-error focus:ring-1 ring-1 ring-error':
-        error,
-    },
-    additionalClassName,
-  );
-
   return (
     <textarea
       data-testid="textarea-element"
@@ -45,7 +35,15 @@ export const TextArea: React.FC<ITextAreaOptions> = ({
       id={name}
       placeholder={placeholder}
       disabled={disabled}
-      className={mergedClassname}
+      className={clsxm(
+        {
+          'bg-secondary-bg focus:outline-none placeholder:text-disabled-text border-none resize-none min-h-[288px] block w-full rounded-[10px] p-5 text-xs placeholder:italic focus:border-none focus:ring-0':
+            true,
+          'border-error text-error placeholder:text-red-300 focus:border-error focus:outline-none focus:ring-error focus:ring-1 ring-1 ring-error':
+            error,
+        },
+        additionalClassName,
+      )}
       {...register}
       name={name}
     />

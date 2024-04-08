@@ -62,73 +62,76 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
   };
 
   return (
-    <>
+    <div
+      className={clsxm({
+        'flex items-center mx-auto lg:px-10 px-4 max-w-[1200px] w-full': true,
+      })}
+    >
       <div
-        className={clsxm({
-          'flex items-center mx-auto lg:px-10 px-4 max-w-[1200px] w-full': true,
-        })}
+        className="w-[86px] h-[45px] cursor-pointer"
+        onClick={() => router.push(`${RoutingAgent.home}?mode=tools`)}
       >
-        <div
-          className="w-[86px] h-[45px] cursor-pointer"
-          onClick={() => router.push(`${RoutingAgent.home}?mode=tools`)}
-        >
-          <SvgIcon name="logoAgent" />
-        </div>
-        <div className="flex-1" />
-        <div className="flex flex-row lg:gap-[45px] gap-5 items-center py-7">
-          {links.map((item) => {
-            return (
-              <div key={item.title} className="flex justify-center items-center w-full">
-                {item.id === 'declaration' ? (
+        <SvgIcon name="logoAgent" />
+      </div>
+      <div className="flex-1" />
+      <div className="flex flex-row lg:gap-[45px] gap-5 items-center py-7">
+        {links.map((item) => {
+          return (
+            <div key={item.title} className="flex justify-center items-center w-full">
+              {item.id === 'declaration' ? (
+                <div
+                  className={clsxm({
+                    'py-2 px-5 rounded-full bg-primary-400 inline-flex items-center justify-between cursor-pointer hover:opacity-80 active:opacity-0':
+                      true,
+                    'cursor-default hover:opacity-100 active:opacity-100':
+                      activePath === RoutingAgent.createDeclaration,
+                    'cursor-not-allowed hover:opacity-100 active:opacity-100': item.disabled,
+                  })}
+                  onClick={
+                    activePath !== RoutingAgent.createDeclaration
+                      ? () => handleNavbarItemClick(item)
+                      : undefined
+                  }
+                >
+                  <div className="flex flex-row gap-2.5 items-center">
+                    <div className="w-5 h-5 flex items-center justify-items-center">
+                      <SvgIcon name={item.svgIcon} />
+                    </div>
+                    <Typography color={'white'} size="text-2xs" tag="div" noWrap>
+                      {item.title}
+                    </Typography>
+                  </div>
+                </div>
+              ) : (
+                <NextLink href={getNavBarLink(item)} key={item.title}>
                   <div
                     className={clsxm({
-                      'py-2 px-5 rounded-full bg-primary-400 inline-flex items-center justify-between cursor-pointer hover:opacity-80 active:opacity-0':
-                        true,
+                      'cursor-default': true,
+                      'cursor-pointer hover:opacity-80 active:opacity-0': activePath !== item.path,
                       'cursor-not-allowed hover:opacity-100 active:opacity-100': item.disabled,
                     })}
                     onClick={() => handleNavbarItemClick(item)}
                   >
-                    <div className="flex flex-row gap-2.5 items-center">
-                      <div className="w-5 h-5 flex items-center justify-items-center">
-                        <SvgIcon name={item.svgIcon} />
-                      </div>
-                      <Typography color={'white'} size="text-2xs" tag="div" noWrap>
-                        {item.title}
-                      </Typography>
-                    </div>
-                  </div>
-                ) : (
-                  <NextLink href={getNavBarLink(item)} key={item.title}>
-                    <div
-                      className={clsxm({
-                        'cursor-default': true,
-                        'cursor-pointer hover:opacity-80 active:opacity-0':
-                          activePath !== item.path,
-                        'cursor-not-allowed hover:opacity-100 active:opacity-100': item.disabled,
-                      })}
-                      onClick={() => handleNavbarItemClick(item)}
+                    <Typography
+                      size="text-2xs"
+                      color={item.disabled ? 'light-gray' : 'black'}
+                      weight={activePath === item.path ? 'bold' : undefined}
+                      noWrap
                     >
-                      <Typography
-                        size="text-2xs"
-                        color={item.disabled ? 'light-gray' : 'black'}
-                        weight={activePath === item.path ? 'bold' : undefined}
-                        noWrap
-                      >
-                        {item.title}
-                      </Typography>
-                    </div>
-                  </NextLink>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                      {item.title}
+                    </Typography>
+                  </div>
+                </NextLink>
+              )}
+            </div>
+          );
+        })}
       </div>
       <ModalResumeDeclaration
         open={openModalResumeDeclaration}
         onClose={() => setOpenModalResumeDeclaration(false)}
         templateRole="agent"
       />
-    </>
+    </div>
   );
 };

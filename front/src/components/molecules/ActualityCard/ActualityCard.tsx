@@ -64,8 +64,11 @@ export const ActualityCard = ({
       >
         {tags && (
           <div className="flex flex-row gap-2 flex-wrap">
-            {tags.map((tag) => (
-              <div className="border md:text-2xs text-sm border-secondary-300 rounded-full px-2.5 py-[5px] md:py-0">
+            {tags.map((tag, index) => (
+              <div
+                className="border md:text-2xs text-sm border-secondary-300 rounded-full px-2.5 py-[5px] md:py-0"
+                key={index}
+              >
                 {tag}
               </div>
             ))}

@@ -29,7 +29,7 @@ export const BlockActualities: React.FC<BlockActualitiesProps> = ({
           <div className="grid-cols-3 grid items-start lg:gap-10 gap-5 ">
             {actualities &&
               actualities?.map((actuality) => (
-                <div className="max-w-[324px]">
+                <div className="max-w-[324px]" key={actuality.id}>
                   <ActualityCard
                     {...actuality}
                     key={actuality.id}

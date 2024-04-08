@@ -36,7 +36,7 @@ export const DownModal: React.FC<IDownModalProps> = ({
       <Dialog
         as="div"
         className={classNames({
-          'fixed bottom-0 z-40 w-full justify-center': true,
+          'fixed bottom-0 z-40 w-full justify-center max-h-screen overflow-scroll': true,
           'h-[calc(90vh-50px)]': fixedHeight,
           'h-auto': !fixedHeight,
         })}

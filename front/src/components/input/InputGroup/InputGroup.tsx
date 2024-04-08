@@ -13,7 +13,9 @@ import { SimpleSelect } from '../StandardInputs/SimpleSelect';
 import { TextArea } from '../StandardInputs/TextArea';
 import { Toggle } from '../StandardInputs/Toggle';
 import { Typography } from '@/components/atoms/Typography';
+import { Color } from '@/components/atoms/Typography/style/typography.style';
 import { SvgNames } from '@/components/molecules/SvgIcon';
+import clsxm from '@/utils/clsxm';
 
 export interface IErrorType {
   message: string;
@@ -54,6 +56,7 @@ export interface IInputGroupProps {
   variant?: 'default' | 'rounded';
   error?: string;
   helperText?: string;
+  helperTextColorClassname?: Color;
   elementRef?: object;
   mobileColumn?: boolean;
   register?: UseFormRegisterReturn;
@@ -76,6 +79,7 @@ export interface IInputGroupProps {
   onTrailingSvgIconClick?: () => void;
   withListBoxEffect?: boolean;
   onFileChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  preventErrorShift?: boolean;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -91,6 +95,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   loading,
   error,
   helperText,
+  helperTextColorClassname = 'light-gray',
   rows,
   additionalClassName,
   fullWidth,
@@ -112,13 +117,14 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   withListBoxEffect = false,
   required,
   onFileChange,
+  preventErrorShift = false,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
 
   return (
     <div>
       <>
-        <>
+        <div className={clsxm({ 'mb-1': helperText || error })}>
           {label && (
             <label
               htmlFor={name}
@@ -261,27 +267,35 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
                 onTrailingSvgIconClick={onTrailingSvgIconClick}
               />
             )}
-        </>
+        </div>
         {loading && 'Loading'}
       </>
       {helperText && (
-        <div data-testid="helper-element" className="flex pl-2 pt-1">
-          <span className="pl-1" id="input-error">
-            <Typography size="text-3xs" color="light-gray">
-              {helperText}
-            </Typography>
-          </span>
+        <div
+          data-testid="helper-element"
+          className={clsxm({
+            'flex pl-5': true,
+          })}
+          id="input-helper"
+        >
+          <Typography size="text-3xs" color={helperTextColorClassname}>
+            {helperText}
+          </Typography>
         </div>
       )}
-      {error && (
-        <div data-testid="error-element" className="flex pl-2 pt-1">
-          <span className="px-3 flex mb-1.5" id="input-error">
-            <Typography size="text-3xs" color="error">
-              {error}
-            </Typography>
-          </span>
-        </div>
-      )}
+      <div
+        data-testid="error-element"
+        className={clsxm({
+          'flex pl-5 items-center': true,
+          hidden: !error && !preventErrorShift,
+          'min-h-[24px]': preventErrorShift,
+        })}
+        id="input-error"
+      >
+        <Typography size="text-3xs" color="error">
+          {error}
+        </Typography>
+      </div>
     </div>
   );
 };
