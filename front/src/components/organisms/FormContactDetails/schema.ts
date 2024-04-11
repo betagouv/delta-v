@@ -19,7 +19,7 @@ export const getSchema = () => {
       .min(5, 'Le code postal doit contenir 5 chiffres')
       .max(5, 'Le code postal doit contenir 5 chiffres')
       .matches(/^[0-9]{5}$/, "Le code postal n'est pas valide"),
-    email: string().required("L'email est requis").email("L'email n'est pas valide"),
+    email: string().required("L'email est requis").email('Mail invalide'),
     phoneNumber: string()
       .min(10, 'Le numéro de téléphone doit contenir 10 chiffres')
       .required('Le numéro de téléphone est requis')

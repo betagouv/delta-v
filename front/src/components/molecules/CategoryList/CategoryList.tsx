@@ -20,25 +20,6 @@ const getReturnButtonLabelDesktop = (productTree: Product[]) => {
   return productTree[1]?.name;
 };
 
-// const getHeaderTitleDesktop = (productTree: Product[]) => {
-//   const currentProduct = productTree[0];
-//   const isFinalProduct = checkIsFinalProduct(currentProduct);
-//   const titleProduct = isFinalProduct ? productTree[1] : currentProduct;
-
-//   if (!titleProduct) {
-//     return null;
-//   }
-
-//   return (
-//     <>
-//       {titleProduct.icon && <SvgIcon name={titleProduct.icon} className="h-10" />}
-//       <Typography size="text-[26px]" color="black" weight="bold">
-//         {titleProduct.name}
-//       </Typography>
-//     </>
-//   );
-// };
-
 const CategoryListHeaderMobile = ({
   productTree,
   onClick,
@@ -72,20 +53,15 @@ const CategoryListHeaderDesktop = ({
   }
 
   return (
-    <>
-      <div className="mb-[36px] flex items-start w-full h-6">
-        {productTree.length > 0 && (
-          <IconButtonWithTitle
-            icon="chevron-left"
-            title={getReturnButtonLabelDesktop(productTree) ?? 'Catégories'}
-            onClick={onClick}
-          />
-        )}
-      </div>
-      {/* <div className="flex-col gap-4 items-center flex mb-10">
-            {getHeaderTitleDesktop(productTree)}
-          </div> */}
-    </>
+    <div className="mb-[36px] flex items-start w-full h-6">
+      {productTree.length > 0 && (
+        <IconButtonWithTitle
+          icon="chevron-left"
+          title={getReturnButtonLabelDesktop(productTree) ?? 'Catégories'}
+          onClick={onClick}
+        />
+      )}
+    </div>
   );
 };
 

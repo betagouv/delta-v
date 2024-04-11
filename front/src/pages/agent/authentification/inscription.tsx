@@ -25,7 +25,7 @@ export interface FormRegisterData {
 }
 
 const schema = yup.object({
-  email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
+  email: yup.string().required("L'email est requis").email('Mail invalide'),
   password: yup.string().required('Le mot de passe est requis'),
 });
 

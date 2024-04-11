@@ -10,7 +10,7 @@ import { ModalResumeDeclaration } from '@/components/organisms/ModalResumeDeclar
 import { useStore } from '@/stores/store';
 import clsxm from '@/utils/clsxm';
 import { MenuAgentItem, RoutingAgent } from '@/utils/const';
-import { getLevelWithData } from '@/utils/declarationAgent';
+import { checkIsOneOfDeclarationStepsPath, getLevelWithData } from '@/utils/declarationAgent';
 
 interface NavBarProps {
   links: MenuAgentItem[];
@@ -61,6 +61,8 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
     }
   };
 
+  const isOneOfDeclarationSteps = activePath && checkIsOneOfDeclarationStepsPath(activePath);
+
   return (
     <div
       className={clsxm({
@@ -83,21 +85,22 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
                   className={clsxm({
                     'py-2 px-5 rounded-full bg-primary-400 inline-flex items-center justify-between cursor-pointer hover:opacity-80 active:opacity-0':
                       true,
-                    'cursor-default hover:opacity-100 active:opacity-100':
-                      activePath === RoutingAgent.createDeclaration,
+                    'cursor-default hover:opacity-100 active:opacity-100': isOneOfDeclarationSteps,
                     'cursor-not-allowed hover:opacity-100 active:opacity-100': item.disabled,
                   })}
-                  onClick={
-                    activePath !== RoutingAgent.createDeclaration
-                      ? () => handleNavbarItemClick(item)
-                      : undefined
-                  }
+                  onClick={!isOneOfDeclarationSteps ? () => handleNavbarItemClick(item) : undefined}
                 >
                   <div className="flex flex-row gap-2.5 items-center">
                     <div className="w-5 h-5 flex items-center justify-items-center">
                       <SvgIcon name={item.svgIcon} />
                     </div>
-                    <Typography color={'white'} size="text-2xs" tag="div" noWrap>
+                    <Typography
+                      color={'white'}
+                      size="text-2xs"
+                      tag="div"
+                      noWrap
+                      weight={isOneOfDeclarationSteps ? 'bold' : undefined}
+                    >
                       {item.title}
                     </Typography>
                   </div>

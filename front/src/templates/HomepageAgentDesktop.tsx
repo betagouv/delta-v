@@ -14,6 +14,7 @@ import { Constants } from '@/utils/enums';
 
 const HomepageAgentDesktop = () => {
   const router = useRouter();
+  const path = router.pathname;
   const [searchValue, setSearchValue] = useState<string>('');
 
   const basedDeclarationQueryData = {
@@ -59,7 +60,7 @@ const HomepageAgentDesktop = () => {
     <>
       <div className="bg-navbar-bg">
         <div className="flex place-content-center">
-          <NavBar links={MAIN_MENU_AGENT_ITEMS} />
+          <NavBar links={MAIN_MENU_AGENT_ITEMS} activePath={path} />
         </div>
         <div className="mx-auto flex flex-col pb-10 gap-[14px]">
           <BlockHeaderAgent

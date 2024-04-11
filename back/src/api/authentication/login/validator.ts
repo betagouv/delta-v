@@ -7,7 +7,7 @@ export const loginValidator = z.object({
       .string({
         required_error: "L'email est requis",
       })
-      .email("L'email n'est pas valide"),
+      .email('Mail invalide'),
     password: z.string({
       required_error: 'Le mot de passe est requis',
     }),

@@ -86,7 +86,7 @@ const Declaration = () => {
         is: 'true',
         then: yup.number().typeError("L'age est requis").default(18).required("L'age est requis"),
       }),
-    email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
+    email: yup.string().required("L'email est requis").email('Mail invalide'),
     phoneNumber: yup
       .string()
       .min(10, 'Le numéro de téléphone doit contenir 10 chiffres')

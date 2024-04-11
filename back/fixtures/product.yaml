@@ -4,7 +4,7 @@ items:
   # Tobacco Category
   tobaccoCategory:
     id: 'e11e633d-d39c-40a7-bf18-161b8fddb167'
-    icon: 'categoryCigarette'
+    icon: 'categoryTobacco'
     name: 'Tabac'
     info: 'Tabac'
     productDisplayTypes: 'category'

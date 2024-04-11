@@ -9,8 +9,10 @@ export const putFavoriteValidator = z.object({
       })
       .uuid(),
     name: z
-      .string()
-      .min(3, 'Le nom du produit doit contenir au moins 3 caractères')
+      .string({
+        required_error: "L'id du produit est requis",
+      })
+      .min(1, 'Le nom du produit doit contenir au moins 1 caractère')
       .max(30, 'Le nom du produit doit contenir au plus 30 caractères'),
   }),
 });

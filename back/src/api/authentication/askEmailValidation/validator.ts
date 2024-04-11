@@ -8,7 +8,7 @@ export const askEmailValidationValidator = z.object({
       .string({
         required_error: "L'email est requis",
       })
-      .email("L'email n'est pas valide"),
+      .email('Mail invalide'),
   }),
 });
 

@@ -1,4 +1,4 @@
-import { Routing } from './const';
+import { DECLARATION_STEP_PAGE, Routing } from './const';
 import { DeclarationRequest } from '@/stores/declaration/appState.store';
 
 export interface RouteLevel {
@@ -57,4 +57,8 @@ export const getCurrentLevelPath = (path: string): number => {
 export const getCurrentPath = (declarationAgentRequest: DeclarationRequest): string => {
   const currentLevel = getLevelWithData(declarationAgentRequest);
   return routes.find((route) => route.level === currentLevel)?.path ?? Routing.home;
+};
+
+export const checkIsOneOfDeclarationStepsPath = (path: string): boolean => {
+  return Object.values(DECLARATION_STEP_PAGE).includes(path);
 };

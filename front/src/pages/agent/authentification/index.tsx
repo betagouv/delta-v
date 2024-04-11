@@ -103,7 +103,7 @@ const LoginPage = () => {
         />
       }
     >
-      <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10 ">
+      <section className="justify-center absolute my-auto h-3/4 flex flex-col items-center w-full px-10">
         <div className="mb-16 h-20">
           <SvgIcon name="logoAgent" />
         </div>

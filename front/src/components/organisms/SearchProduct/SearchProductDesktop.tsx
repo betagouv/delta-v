@@ -296,11 +296,7 @@ export const ProductSearchTools = ({
       <div className=" first:p-5 bg-secondary-bg rounded-[20px] flex flex-col items-center gap-4">
         <SearchProductFilterBar
           onSearchProduct={searchFunction}
-          placeholder={
-            showCategoryFilters
-              ? 'Que recherchez-vous ?  (type de vêtements, marques, matières...)'
-              : 'Type de marchandises, marques...'
-          }
+          placeholder="Que recherchez-vous ?  (type de vêtements, marques, matières...)"
           onClickProduct={onClickInputResult}
           onFilterClick={onFilterByCategoryClick}
           onSearchAllClick={onSearchAll}

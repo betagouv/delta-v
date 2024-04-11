@@ -19,7 +19,7 @@ export interface FormForgetPasswordData {
 }
 
 const schema = yup.object({
-  email: yup.string().required("L'email est requis").email("L'email n'est pas valide"),
+  email: yup.string().required("L'email est requis").email('Mail invalide'),
 });
 
 const AskResetPasswordPage = () => {
