@@ -6,6 +6,7 @@ import { Icon } from '../../atoms/Icon';
 import { IconButtonWithTitle } from '../../atoms/IconButtonWithTitle';
 import { TitleAgent } from '../../atoms/TitleAgent';
 import { SvgIcon, SvgNames } from '../SvgIcon';
+import { Typography } from '@/components/atoms/Typography';
 import { RadioCardElement } from '@/components/input/StandardInputs/RadioCard/RadioCardElement';
 import { Product } from '@/model/product';
 import { checkIsFinalProduct } from '@/utils/product.util';
@@ -48,18 +49,22 @@ const CategoryListHeaderDesktop = ({
   productTree: Product[];
   onClick?: () => void;
 }) => {
-  if (productTree.length <= 0) {
-    return null;
-  }
-
+  console.log('🚀 ~ productTree:', productTree);
   return (
-    <div className="mb-[36px] flex items-start w-full h-6">
+    <div className="mb-4 flex items-start w-full h-6">
       {productTree.length > 0 && (
         <IconButtonWithTitle
           icon="chevron-left"
           title={getReturnButtonLabelDesktop(productTree) ?? 'Catégories'}
           onClick={onClick}
         />
+      )}
+      {productTree.length === 0 && (
+        <div className="flex-1">
+          <Typography size="text-sm" weight="bold" color="black">
+            Catégories
+          </Typography>
+        </div>
       )}
     </div>
   );
@@ -112,7 +117,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
       )}
       <div
         className={cs({
-          'grid grid-cols-3 gap-2 mt-5 justify-items-center md:flex md:flex-wrap md:gap-5 md:mt-10':
+          'grid grid-cols-3 gap-2 justify-items-center md:flex md:flex-wrap sm:mt-5':
             displayType === 'card',
           'flex flex-col': displayType === 'list',
         })}

@@ -112,7 +112,7 @@ export const CategoryProductDesktop: React.FC<CategoryProductDesktopProps> = ({
 
   return (
     <>
-      <div className="py-5">
+      <div className="mt-5">
         <CategoryList
           onSelectProduct={onSelectProduct}
           productTree={productTree}
