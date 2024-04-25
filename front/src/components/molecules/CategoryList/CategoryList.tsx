@@ -49,7 +49,6 @@ const CategoryListHeaderDesktop = ({
   productTree: Product[];
   onClick?: () => void;
 }) => {
-  console.log('🚀 ~ productTree:', productTree);
   return (
     <div className="mb-4 flex items-start w-full h-6">
       {productTree.length > 0 && (

@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import shallow from 'zustand/shallow';
 
 import { NomenclatureCard } from '../../molecules/NomenclatureCard';
-import { FavoriteProducts } from '../FavoriteProducts';
 import { DefaultValuesUpdateProduct, OnAddProductOptions } from '../FormSelectProduct';
 import { ModalAddProductCartDeclaration } from '../ModalAddProductCartDeclaration';
 import { ModalDeleteProductCartDeclaration } from '../ModalDeleteProductCartDeclaration';
