@@ -1,21 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 
-import { StorybookFormProvider } from '@/../.storybook/decorators';
+import { PasswordInput } from './PasswordInput';
 
-import { PasswordInput } from '.';
-
-const meta: Meta<typeof PasswordInput> = {
-  title: 'forms/base/PasswordInput',
+export default {
+  title: 'Components/Forms/Base/PasswordInput',
   component: PasswordInput,
-  decorators: [(Story: any) => StorybookFormProvider(Story)]
-};
+} as Meta;
 
-export default meta;
-type Story = StoryObj<typeof PasswordInput>;
-
-export const Default: Story = {
-  args: {
-    id: 'Lorem ipsum dolor sit amet',
-    label: 'Password'
-  }
-};
+export const Base = () => (
+  <div>
+    <PasswordInput id="address" label="Password" />
+  </div>
+);

@@ -1,35 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 
-import { StorybookFormProvider } from '@/../.storybook/decorators';
+import { TextArea } from './TextArea';
 
-import { TextArea } from '.';
-
-const meta: Meta<typeof TextArea> = {
-  title: 'forms/base/TextArea',
+export default {
+  title: 'Components/Forms/Base/TextArea',
   component: TextArea,
-  decorators: [(Story: any) => StorybookFormProvider(Story)]
-};
+} as Meta;
 
-export default meta;
-type Story = StoryObj<typeof TextArea>;
-
-export const Default: Story = {
-  args: {
-    label: 'Lorem ipsum dolor sit amet',
-    id: 'TextArea id',
-    placeholder: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    helperText: 'Consectetur adipiscing elit',
-    readOnly: false
-  }
-};
-
-export const Horizontal: Story = {
-  args: {
-    horizontal: true,
-    label: 'Lorem ipsum dolor sit amet',
-    id: 'TextArea id',
-    placeholder: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    helperText: 'Consectetur adipiscing elit',
-    readOnly: false
-  }
-};
+export const Examples = () => (
+  <div>
+    <TextArea
+      label="Titre"
+      id="a"
+      placeholder="Contenu non modifiable"
+      helperText="Texte d'aide"
+      readOnly
+    ></TextArea>
+    <TextArea
+      label="Titre"
+      id="a"
+      placeholder="Contenu modifiable"
+      helperText="Texte d'aide"
+    ></TextArea>
+  </div>
+);

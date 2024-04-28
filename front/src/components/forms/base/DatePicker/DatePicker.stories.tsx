@@ -1,22 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 
-import { StorybookFormProvider } from '@/../.storybook/decorators';
+import { DatePicker } from './DatePicker';
 
-import { DatePicker } from '.';
-
-const meta: Meta<typeof DatePicker> = {
-  title: 'forms/base/DatePicker',
+export default {
+  title: 'Components/Forms/DatePicker',
   component: DatePicker,
-  decorators: [(Story: any) => StorybookFormProvider(Story)]
-};
+} as Meta;
 
-export default meta;
-type Story = StoryObj<typeof DatePicker>;
-
-export const Default: Story = {
-  args: {
-    id: 'Lorem ipsum dolor sit amet',
-    label: 'Date',
-    placeholder: 'dd/mm/yyyy'
-  }
-};
+export const Base = () => (
+  <div>
+    <DatePicker
+      id="date"
+      label="Date"
+      validation={{
+        required: 'Date must be filled',
+        valueAsDate: true,
+      }}
+      placeholder="dd/mm/yyyy"
+    />
+  </div>
+);

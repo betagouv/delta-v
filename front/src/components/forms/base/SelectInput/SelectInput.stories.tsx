@@ -1,26 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 
-import { StorybookFormProvider } from '@/../.storybook/decorators';
+import { SelectInput } from './SelectInput';
 
-import { SelectInput } from '.';
-
-const meta: Meta<typeof SelectInput> = {
-  title: 'forms/base/SelectInput',
+export default {
+  title: 'Components/Forms/Base/SelectInput',
   component: SelectInput,
-  decorators: [(Story: any) => StorybookFormProvider(Story)]
-};
+} as Meta;
 
-export default meta;
-type Story = StoryObj<typeof SelectInput>;
-
-export const Default: Story = {
-  args: {
-    id: 'gender',
-    label: 'Select',
-    placeholder: 'Choose gender',
-    options: [
-      { value: 'false', label: 'No' },
-      { value: 'true', label: 'Yes' }
-    ]
-  }
-};
+export const Base = () => (
+  <div>
+    <SelectInput id="gender" label="Select" placeholder="Choose gender">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="none">Prefer not to say</option>
+    </SelectInput>
+  </div>
+);

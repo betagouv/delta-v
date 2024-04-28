@@ -54,6 +54,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.1",
     "react-icomoon": "2.5.4",
+    "react-phone-number-input": "^3.3.6",
     "react-qr-reader": "^3.0.0-beta-1",
     "react-query": "3.39.3",
     "react-responsive": "^9.0.2",
