@@ -256,7 +256,7 @@ const ContactPage = () => {
             </div>
           </div>
           <div className="w-[118px] self-center md:self-start mb-4">
-            <Button type="submit" disabled={isError || watch('comment')?.length < 10} size="sm">
+            <Button type="submit" disabled={isError || watch('comment')?.length < 0} size="sm">
               Envoyer
             </Button>
           </div>
