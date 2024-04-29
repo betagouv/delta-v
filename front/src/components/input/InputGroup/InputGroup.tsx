@@ -80,6 +80,10 @@ export interface IInputGroupProps {
   withListBoxEffect?: boolean;
   onFileChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   preventErrorShift?: boolean;
+  fileTitle?: string;
+  withFileIcon?: boolean;
+  variantFile?: 'standard' | 'outlined';
+  subTitleFile?: string;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -118,6 +122,10 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   required,
   onFileChange,
   preventErrorShift = false,
+  withFileIcon,
+  fileTitle,
+  variantFile,
+  subTitleFile,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
 
@@ -239,7 +247,18 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               labelClassname={radioCardLabelClassname}
             />
           )}
-          {type === 'file' && <File name="file" register={register} onFileChange={onFileChange} />}
+          {type === 'file' && (
+            <File
+              name="file"
+              register={register}
+              onFileChange={onFileChange}
+              withIcon={withFileIcon}
+              title={fileTitle}
+              variant={variantFile}
+              subtitle={subTitleFile}
+              specificClass={additionalClassName}
+            />
+          )}
           {type !== 'select' &&
             type !== 'simple-select' &&
             type !== 'comboboxes' &&

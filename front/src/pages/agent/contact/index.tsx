@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 import { useCreateFeedbackMutation } from '@/api/hooks/useAPIFeedback';
+import { Button } from '@/components/atoms/Button';
 import { Icon } from '@/components/atoms/Icon';
 import { TitleAgent } from '@/components/atoms/TitleAgent';
 import { Typography } from '@/components/atoms/Typography';
@@ -16,6 +17,8 @@ import { InputGroup } from '@/components/input/InputGroup';
 import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 import { ModalDeleteAttachmentDesktop } from '@/components/organisms/ModalDeleteAttachmentDesktop';
 import { ModalDeleteAttachmentMobile } from '@/components/organisms/ModalDeleteAttachmentMobile';
+import { ModalEditAttachmentDesktop } from '@/components/organisms/ModalEditAttachmentDesktop';
+import { ModalEditAttachmentMobile } from '@/components/organisms/ModalEditAttachmentMobile';
 import {
   ModalValidateFeedbackInfoMobile,
   ModalValidateFeedbackInfoDesktop,
@@ -39,7 +42,7 @@ const ContactPage = () => {
     files: yup
       .mixed()
       .test('fileType', "L'image n'est pas au bon format", (value) => {
-        if (value.length > 0) return isValidFileType(value[0].name?.toLowerCase(), 'image');
+        if (value.length > 0) return isValidFileType('image', value[0]);
         return true;
       })
       .test('fileSize', "La taille de l'image est trop grande", (value) => {
@@ -65,6 +68,7 @@ const ContactPage = () => {
   const [openValidateFeedbackInfoMobile, setOpenValidateFeedbackInfoMobile] = useState(false);
   const [openValidateFeedbackInfoDesktop, setOpenValidateFeedbackInfoDesktop] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isErrorFile, setIsErrorFile] = useState(false);
 
   useEffect(() => {
     if (submitCount === 0) {
@@ -76,19 +80,29 @@ const ContactPage = () => {
   }, [submitCount]);
 
   useEffect(() => {
-    if (isError) {
+    if (watch('comment').length < 10 && watch('comment').length > 0) {
+      setIsError(true);
+    } else {
       setIsError(false);
     }
   }, [watch('comment')]);
 
   useEffect(() => {
-    if (isError) {
-      setIsError(false);
+    console.log(watch('files'));
+    if (
+      (watch('files')?.[0]?.size ?? 0) > MAX_FILE_SIZE ||
+      !isValidFileType('image', watch('files')?.[0])
+    ) {
+      setIsErrorFile(true);
+    } else {
+      setIsErrorFile(false);
     }
   }, [watch('files')]);
 
   const [openDeleteAttachmentDesktop, setOpenDeleteAttachmentDesktop] = useState(false);
   const [openDeleteAttachmentMobile, setOpenDeleteAttachmentMobile] = useState(false);
+  const [openEditAttachmentDesktop, setOpenEditAttachmentDesktop] = useState(false);
+  const [openEditAttachmentMobile, setOpenEditAttachmentMobile] = useState(false);
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
@@ -126,11 +140,11 @@ const ContactPage = () => {
 
   const onClickDeleteAttachment = () => {
     if (isMobile) {
-      setOpenDeleteAttachmentDesktop(false);
-      setOpenDeleteAttachmentMobile(true);
+      setOpenEditAttachmentDesktop(false);
+      setOpenEditAttachmentMobile(true);
     } else {
-      setOpenDeleteAttachmentMobile(false);
-      setOpenDeleteAttachmentDesktop(true);
+      setOpenEditAttachmentMobile(false);
+      setOpenEditAttachmentDesktop(true);
     }
   };
 
@@ -189,22 +203,22 @@ const ContactPage = () => {
                   <div className="flex items-center gap-5 justify-between md:justify-start">
                     <div className="grid grid-cols-[16px_1fr] gap-1 items-center w-40">
                       <Icon
-                        name={errors.files ? 'cross' : 'paperclip'}
+                        name={isErrorFile ? 'cross' : 'paperclip'}
                         size="base"
-                        color={errors.files ? 'cancel' : 'primary'}
+                        color={isErrorFile ? 'cancel' : 'primary'}
                       />
                       <NextLink
                         href={urlFile}
                         target="_blank"
                         className={clsxm({
                           'relative top-[-2px] line-clamp-1 text-black': true,
-                          'text-error': !!errors.files,
+                          'text-error': !!isErrorFile,
                         })}
                       >
                         <Typography
                           size="text-xs"
                           desktopSize="text-xs"
-                          color={errors.files ? 'error' : 'black'}
+                          color={isErrorFile ? 'error' : 'black'}
                           underline
                         >
                           {file.name}
@@ -221,7 +235,7 @@ const ContactPage = () => {
                     </div>
                   </div>
                   <div data-testid="error-element" className="flex" id="input-error">
-                    {errors.files && (
+                    {isErrorFile && (
                       <Typography size="text-3xs" desktopSize="md:text-[8px]" color="error" italic>
                         L'image ne correspond pas au format pré requis : <br />
                         JPG ou PNG, taille maximale 10Mo
@@ -230,32 +244,21 @@ const ContactPage = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col gap-1">
-                  <InputGroup
-                    type="file"
-                    name="file"
-                    register={register('files')}
-                    onFileChange={onFileChange}
-                  />
-                  <Typography color="placeholder" size="text-2xs" desktopSize="text-2xs" italic>
-                    Formats JPG ou PNG, taille maximale 10Mo
-                  </Typography>
-                </div>
+                <InputGroup
+                  type="file"
+                  name="file"
+                  register={register('files')}
+                  onFileChange={onFileChange}
+                  variantFile="outlined"
+                  subTitleFile="Formats JPG ou PNG, taille maximale 10Mo"
+                />
               )}
             </div>
           </div>
           <div className="w-[118px] self-center md:self-start mb-4">
-            <button
-              className={clsxm({
-                'py-3 w-full rounded-full text-white bg-primary-600 text-xs cursor-pointer md:w-[117px] md:h-[34px] md:py-0':
-                  true,
-                'bg-disabled-bg cursor-not-allowed': isError,
-              })}
-              type="submit"
-              disabled={isError}
-            >
+            <Button type="submit" disabled={isError || watch('comment')?.length < 10} size="sm">
               Envoyer
-            </button>
+            </Button>
           </div>
         </form>
         <ModalValidateFeedbackInfoMobile
@@ -286,6 +289,26 @@ const ContactPage = () => {
             });
             setOpenDeleteAttachmentMobile(false);
           }}
+        />
+        <ModalEditAttachmentDesktop
+          open={openEditAttachmentDesktop}
+          onClose={() => setOpenEditAttachmentDesktop(false)}
+          onDelete={() => {
+            setOpenEditAttachmentDesktop(false);
+            setOpenDeleteAttachmentDesktop(true);
+          }}
+          onFileChange={onFileChange}
+          register={register}
+        />
+        <ModalEditAttachmentMobile
+          open={openEditAttachmentMobile}
+          onClose={() => setOpenEditAttachmentMobile(false)}
+          onDelete={() => {
+            setOpenEditAttachmentMobile(false);
+            setOpenDeleteAttachmentMobile(true);
+          }}
+          onFileChange={onFileChange}
+          register={register}
         />
       </MainAgent>
     </AgentRoute>
