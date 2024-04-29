@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
+import cs from 'classnames';
 import { RegisterOptions, useFormContext } from 'react-hook-form';
 
-import { InputGroup } from '../../helper/InputGroup';
 import { Icon } from '@/components/atoms/Icon';
-import clsxm from '@/utils/clsxm';
+import InputGroup from '@/components/forms/core/InputGroup';
+import InputGroupHorizontal from '@/components/forms/core/InputGroupHorizontal';
 
 export type PasswordInputProps = {
   /** Input label */
@@ -18,16 +19,13 @@ export type PasswordInputProps = {
   placeholder?: string;
   /** Small text below input, useful for additional information */
   helperText?: string;
-  /**
-   * Input type
-   * @example text, email, password
-   */
-  type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
   /** Disables the input and shows defaultValue (can be set from React Hook Form) */
   readOnly?: boolean;
-  /** Manual validation using RHF, it is encouraged to use yup resolver instead */
-  validation?: RegisterOptions;
-} & React.ComponentPropsWithoutRef<'input'>;
+  /** Manual inputOptions using RHF, it is encouraged to use yup resolver instead */
+  inputOptions?: RegisterOptions;
+  horizontal?: boolean;
+  tooltipMessage?: string;
+};
 
 export const PasswordInput = ({
   label,
@@ -35,8 +33,9 @@ export const PasswordInput = ({
   helperText,
   id,
   readOnly = false,
-  validation,
-  ...rest
+  inputOptions,
+  horizontal,
+  tooltipMessage,
 }: PasswordInputProps) => {
   const {
     register,
@@ -47,33 +46,37 @@ export const PasswordInput = ({
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
 
+  const Group = horizontal ? InputGroupHorizontal : InputGroup;
+
   return (
-    <InputGroup
+    <Group
       id={id}
       label={label}
       helperText={helperText}
       error={formError?.message as unknown as string | undefined}
-      noErrorIcon
+      center
+      tooltipMessage={tooltipMessage}
     >
       <input
-        {...register(id, validation)}
-        {...rest}
+        data-testid={`input-${id}`}
+        {...register(id, inputOptions)}
         type={showPassword ? 'text' : 'password'}
         name={id}
         id={id}
         readOnly={readOnly}
-        className={clsxm(formError && 'error')}
+        className={cs(formError && 'error')}
         placeholder={placeholder}
         aria-describedby={id}
       />
 
       <button
         onClick={togglePassword}
+        tabIndex={-1}
         type="button"
-        className="absolute inset-y-0 right-0 mr-3 flex items-center rounded-lg p-1 focus:outline-none focus:ring focus:ring-primary-500"
+        className="absolute inset-y-0 right-0 mr-3 flex items-center rounded-lg p-1 focus:outline-none"
       >
         {showPassword ? <Icon name="visibilityOff" /> : <Icon name="visibilityOn" />}
       </button>
-    </InputGroup>
+    </Group>
   );
 };

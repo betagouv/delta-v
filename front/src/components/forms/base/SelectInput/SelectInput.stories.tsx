@@ -1,18 +1,23 @@
 import type { Meta } from '@storybook/react';
 
-import { SelectInput } from './SelectInput';
+import { SelectInput } from '.';
 
 export default {
   title: 'Components/Forms/Base/SelectInput',
   component: SelectInput,
+  args: {
+    id: 'gender',
+    label: 'Select',
+    placeholder: 'Choose gender',
+    options: [
+      { value: 'false', label: 'No' },
+      { value: 'true', label: 'Yes' },
+    ],
+  },
 } as Meta;
 
-export const Base = () => (
+export const Base = (args: any) => (
   <div>
-    <SelectInput id="gender" label="Select" placeholder="Choose gender">
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="none">Prefer not to say</option>
-    </SelectInput>
+    <SelectInput id="gender" {...args} />
   </div>
 );

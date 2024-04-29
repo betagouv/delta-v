@@ -1,14 +1,17 @@
+import React from 'react';
+
+import cs from 'classnames';
 import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { InputGroup } from '../../helper/InputGroup';
 import { Icon } from '@/components/atoms/Icon';
-import clsxm from '@/utils/clsxm';
+import InputGroup from '@/components/forms/core/InputGroup';
+import InputGroupHorizontal from '@/components/forms/core/InputGroupHorizontal';
 
 type DatePickerProps = {
-  validation?: RegisterOptions;
+  inputOptions?: RegisterOptions;
   label: string;
   id: string;
   placeholder?: string;
@@ -17,10 +20,12 @@ type DatePickerProps = {
   defaultValue?: string;
   helperText?: string;
   readOnly?: boolean;
+  horizontal?: boolean;
+  tooltipMessage?: string;
 } & Omit<ReactDatePickerProps, 'onChange'>;
 
 export const DatePicker = ({
-  validation,
+  inputOptions,
   label,
   id,
   placeholder,
@@ -29,6 +34,8 @@ export const DatePicker = ({
   defaultValue,
   helperText,
   readOnly = false,
+  horizontal,
+  tooltipMessage,
   ...rest
 }: DatePickerProps) => {
   const {
@@ -39,20 +46,27 @@ export const DatePicker = ({
 
   // If there is a year default, then change the year to the props
   const defaultDate = new Date();
-  if (defaultYear) defaultDate.setFullYear(defaultYear);
-  if (defaultMonth) defaultDate.setMonth(defaultMonth);
+  if (defaultYear) {
+    defaultDate.setFullYear(defaultYear);
+  }
+  if (defaultMonth) {
+    defaultDate.setMonth(defaultMonth);
+  }
+
+  const Group = horizontal ? InputGroupHorizontal : InputGroup;
 
   return (
-    <InputGroup
+    <Group
       id={id}
       label={label}
       helperText={helperText}
       error={formError?.message as unknown as string | undefined}
-      noErrorIcon
+      center
+      tooltipMessage={tooltipMessage}
     >
       <Controller
         control={control}
-        rules={validation}
+        rules={inputOptions}
         defaultValue={defaultValue}
         name={id}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -63,7 +77,7 @@ export const DatePicker = ({
                 onChange={onChange}
                 onBlur={onBlur}
                 selected={value ? new Date(value) : undefined}
-                className={clsxm(formError && 'error')}
+                className={cs(formError && 'error')}
                 placeholderText={placeholder}
                 aria-describedby={id}
                 showMonthDropdown
@@ -72,6 +86,7 @@ export const DatePicker = ({
                 openToDate={value ? new Date(value) : defaultDate}
                 dateFormat="dd/MM/yyyy"
                 readOnly={readOnly}
+                data-testid={`input-${id}`}
                 {...rest}
               />
               <Icon name="calendar" />
@@ -79,6 +94,6 @@ export const DatePicker = ({
           </>
         )}
       />
-    </InputGroup>
+    </Group>
   );
 };

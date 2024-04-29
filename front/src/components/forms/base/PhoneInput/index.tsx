@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 
 import { useController, useFormContext } from 'react-hook-form';
-import PhoneInputWithCountrySelect from 'react-phone-number-input';
+import PhoneInputNative from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
-import 'react-phone-number-input/style.css';
-
-import { InputGroup } from '../../helper/InputGroup';
+import InputGroup from '@/components/forms/core/InputGroup';
+import InputGroupHorizontal from '@/components/forms/core/InputGroupHorizontal';
 
 export type PhoneInputProps = {
   id: string;
   label?: string;
   placeholder?: string;
-  clearableArea?: boolean;
   readOnly?: boolean;
+  horizontal?: boolean;
+  country?: string;
+  tooltipMessage?: string;
 };
 
 export const PhoneInput = ({
@@ -20,7 +22,9 @@ export const PhoneInput = ({
   label,
   placeholder,
   readOnly,
-  clearableArea,
+  horizontal,
+  country = 'us',
+  tooltipMessage,
 }: PhoneInputProps) => {
   const {
     control,
@@ -41,30 +45,29 @@ export const PhoneInput = ({
     phoneField.onChange(newPhone);
   };
 
-  const handleClearNumber = () => {
-    setPhone('');
-  };
+  const Group = horizontal ? InputGroupHorizontal : InputGroup;
 
   return (
-    <InputGroup
+    <Group
       label={label}
       id={id}
-      clearableArea={clearableArea}
-      onClear={handleClearNumber}
       error={formError?.message as unknown as string | undefined}
+      center
+      tooltipMessage={tooltipMessage}
     >
-      <PhoneInputWithCountrySelect
-        id={id}
-        international={false}
+      <PhoneInputNative
+        country={country}
+        data-testid={`input-${id}`}
         placeholder={placeholder}
-        countryCallingCodeEditable={false}
-        initialValueFormat="national"
-        defaultCountry="FR"
-        limitMaxLength
         value={phone}
-        readOnly={readOnly}
+        inputProps={{
+          readOnly,
+        }}
+        containerClass="w-full"
+        inputClass="!w-full"
+        buttonClass="px-3 py-2 !border-slate-300 !rounded-l-md !bg-slate-100"
         onChange={handleOnChange}
       />
-    </InputGroup>
+    </Group>
   );
 };
