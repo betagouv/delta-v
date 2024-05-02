@@ -39,7 +39,11 @@ export const ModalEditAttachmentMobile: React.FC<ModalEditAttachmentMobileProps>
         <Button size="sm" variant="outlined" onClick={onDelete} type="button">
           Supprimer la pièce jointe
         </Button>
-        <button onClick={onClose} className="text-primary-500 underline font-bold text-xs">
+        <button
+          onClick={onClose}
+          className="text-primary-500 underline font-bold text-xs"
+          type="button"
+        >
           Annuler
         </button>
       </div>

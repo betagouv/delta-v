@@ -82,8 +82,8 @@ export interface IInputGroupProps {
   preventErrorShift?: boolean;
   fileTitle?: string;
   withFileIcon?: boolean;
-  variantFile?: 'standard' | 'outlined';
-  subTitleFile?: string;
+  fileVariant?: 'standard' | 'outlined';
+  fileSubtitle?: string;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
@@ -124,8 +124,8 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
   preventErrorShift = false,
   withFileIcon,
   fileTitle,
-  variantFile,
-  subTitleFile,
+  fileVariant,
+  fileSubtitle,
 }: IInputGroupProps) => {
   const inputDisabled = disabled || loading;
 
@@ -254,8 +254,8 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               onFileChange={onFileChange}
               withIcon={withFileIcon}
               title={fileTitle}
-              variant={variantFile}
-              subtitle={subTitleFile}
+              variant={fileVariant}
+              subtitle={fileSubtitle}
               specificClass={additionalClassName}
             />
           )}

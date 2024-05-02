@@ -249,8 +249,8 @@ const ContactPage = () => {
                   name="file"
                   register={register('files')}
                   onFileChange={onFileChange}
-                  variantFile="outlined"
-                  subTitleFile="Formats JPG ou PNG, taille maximale 10Mo"
+                  fileVariant="outlined"
+                  fileSubtitle="Formats JPG ou PNG, taille maximale 10Mo"
                 />
               )}
             </div>

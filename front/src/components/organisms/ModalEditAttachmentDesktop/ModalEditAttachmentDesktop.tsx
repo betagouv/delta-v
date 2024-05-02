@@ -56,7 +56,11 @@ export const ModalEditAttachmentDesktop: React.FC<ModalEditAttachmentDesktopProp
           </Button>
         </div>
         <div className="flex justify-center items-center">
-          <button onClick={onClose} className="text-primary-500 underline font-bold text-xs">
+          <button
+            onClick={onClose}
+            className="text-primary-500 underline font-bold text-xs"
+            type="button"
+          >
             Annuler
           </button>
         </div>
