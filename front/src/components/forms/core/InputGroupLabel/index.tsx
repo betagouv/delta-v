@@ -30,7 +30,7 @@ export const InputGroupLabel = ({
     inputLabel = (
       <div className="flex items-center gap-1">
         {inputLabel}
-        <Tooltip message={tooltipMessage}>
+        <Tooltip content={tooltipMessage}>
           <Icon name="info" />
         </Tooltip>
       </div>

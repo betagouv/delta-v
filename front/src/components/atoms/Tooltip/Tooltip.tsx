@@ -1,62 +1,59 @@
-import React, { ReactNode } from 'react';
+import * as React from 'react';
 
-import clsx from 'clsx';
+import {
+  TooltipArrow,
+  Tooltip as TooltipBase,
+  TooltipContent,
+  TooltipTrigger,
+} from '@radix-ui/react-tooltip';
 
 import { Typography } from '../Typography';
 
-type ComponentProps = {
-  message: string;
-  children: ReactNode;
-  position?: 'top' | 'bottom';
-  tooltipHidden?: boolean;
-};
+export type Side = 'top' | 'bottom' | 'left' | 'right';
+
+interface TooltipProps {
+  children: React.ReactNode;
+  content: React.ReactNode | null;
+  hidden?: boolean;
+  side?: Side;
+  disableTooltip?: boolean;
+}
 
 export const Tooltip = ({
-  message,
   children,
-  position = 'bottom',
-  tooltipHidden = false,
-}: ComponentProps) => {
-  if (tooltipHidden) {
+  content,
+  hidden = false,
+  side = 'bottom',
+  disableTooltip = false,
+}: TooltipProps): JSX.Element => {
+  if (hidden || !content || !children) {
+    return <></>;
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
+
+  if (disableTooltip) {
     return <>{children}</>;
   }
 
-  const getPositionStyles = () => {
-    switch (position) {
-      case 'top':
-        return {
-          tooltip: '-top-full left-1/2 -translate-x-1/2 mt-2',
-          arrow: 'bottom-0 mb-[23px] left-1/2 -translate-x-1/2 rotate-45',
-        };
-      case 'bottom':
-        return {
-          tooltip: '-bottom-full left-1/2 -translate-x-1/2 -mb-2',
-          arrow: 'top-0 mb-[23px] left-1/2 -translate-x-1/2 rotate-45',
-        };
-      default:
-        return {
-          tooltip: '-top-full left-1/2 -translate-x-1/2 mt-2',
-          arrow: 'bottom-0 mb-[23px] left-1/2 -translate-x-1/2 rotate-45',
-        };
-    }
-  };
-
-  const { tooltip, arrow } = getPositionStyles();
-
   return (
-    <div className="group relative hover:cursor-pointer">
-      <div>{children}</div>
-      <div
-        className={clsx(
-          'absolute hidden group-hover:flex min-w-full min-h-full place-content-center',
-          tooltip,
-        )}
-      >
-        <div className={clsx('absolute w-3 h-3 bg-slate-600', arrow)} />
-        <div className="whitespace-no-wrap absolute w-max max-w-sm -left-1/2 top-1 z-10 p-2 text-xs leading-none text-white bg-slate-600 rounded-md shadow-lg">
-          <Typography color="white">{message}</Typography>
-        </div>
-      </div>
-    </div>
+    <TooltipBase>
+      <TooltipTrigger asChild>
+        <div onClick={handleClick}>{children}</div>
+      </TooltipTrigger>
+      {content && (
+        <TooltipContent
+          side={side}
+          className={
+            'animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 overflow-hidden rounded-md bg-slate-900 px-3 py-1.5 text-xs text-slate-50 flex flex-col text-center gap-1'
+          }
+        >
+          <TooltipArrow />
+          {typeof content === 'string' ? <Typography color="white">{content}</Typography> : content}
+        </TooltipContent>
+      )}
+    </TooltipBase>
   );
 };

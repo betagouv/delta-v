@@ -60,7 +60,7 @@ export const SuggestionsContainer: React.FC<Props> = ({
         const disableClick = disableClickOnDisabledItem ? item.disabled : false;
         const renderedName =
           disableClick && item.disabledTooltipMessage ? (
-            <Tooltip message={item.disabledTooltipMessage}>{item.label}</Tooltip>
+            <Tooltip content={item.disabledTooltipMessage}>{item.label}</Tooltip>
           ) : (
             item.label
           );
