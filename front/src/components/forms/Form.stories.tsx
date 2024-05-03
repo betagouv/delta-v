@@ -51,7 +51,7 @@ export const FormInputs = () => {
       />
       <DatePicker id="date" label="Date" placeholder="dd/mm/yyyy" />
       <TextArea id="address" label="Text Area" />
-      <PasswordInput id="address" label="Password" />
+      <PasswordInput id="password" label="Password" />
       <PhoneInput id="phone" label="Phone" />
       <RadioGroup
         id="element"
