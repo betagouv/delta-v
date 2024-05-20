@@ -3,17 +3,12 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 import { FieldError, FieldErrorsImpl, Merge, useController, useFormContext } from 'react-hook-form';
 
-import { Suggestion, SuggestionsContainer } from './SuggestionsContainer';
+import { SuggestionsContainer } from './SuggestionsContainer';
+import { Suggestion, getMatchingResult } from './utils';
 import { Icon } from '@/components/atoms/Icon';
+import { Typography } from '@/components/atoms/Typography';
 import InputGroup from '@/components/forms/core/InputGroup';
 import InputGroupHorizontal from '@/components/forms/core/InputGroupHorizontal';
-import clsxm from '@/utils/clsxm';
-
-const findStringsStartingWithSearchStrings = (searchStrings: string[], strings: string[]) => {
-  return searchStrings.some((searchStringPart) => {
-    return strings.some((stringPart) => stringPart.startsWith(searchStringPart));
-  });
-};
 
 const getInputError = (
   labelError?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>,
@@ -26,6 +21,7 @@ const getInputError = (
   if (valueError) {
     return valueError.message as unknown as string;
   }
+  return undefined;
 };
 
 export type AutocompleteInputProps = {
@@ -45,6 +41,11 @@ export type AutocompleteInputProps = {
   disabledItemSubmitError?: string;
   hideNoMatchError?: boolean;
   tooltipMessage?: string;
+  searchFn?: (searchValue: string, options: Suggestion[]) => Suggestion[];
+  defaultItemId?: string;
+  favoriteItemIds?: string[];
+  defaultItemHelperText?: string;
+  favoritesTitle?: string;
 };
 
 export const AutocompleteInput = ({
@@ -64,6 +65,11 @@ export const AutocompleteInput = ({
   disabledItemSubmitError,
   hideNoMatchError,
   tooltipMessage,
+  searchFn = getMatchingResult,
+  defaultItemId,
+  favoriteItemIds,
+  defaultItemHelperText,
+  favoritesTitle,
 }: AutocompleteInputProps) => {
   const {
     control,
@@ -73,6 +79,7 @@ export const AutocompleteInput = ({
 
   const [isSelectionDisabled, setIsSelectionDisabled] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [showNoMatchError, setShowNoMatchError] = useState(false);
 
   const { field: fieldLabel } = useController({
     control,
@@ -105,18 +112,6 @@ export const AutocompleteInput = ({
 
   const Group = horizontal ? InputGroupHorizontal : InputGroup;
 
-  const getMatchingResult = (sv: string) => {
-    return options.filter((option) => {
-      const searchValueParts = sv.split(' ').filter((part) => part.trim() !== '');
-      const optionParts = option.label.split(' ').filter((part) => part.trim() !== '');
-
-      const flattenedSearchValueParts = searchValueParts.flatMap((part) => part.toLowerCase());
-      const flattenedNameParts = optionParts.flatMap((part) => part.toLowerCase());
-
-      return findStringsStartingWithSearchStrings(flattenedSearchValueParts, flattenedNameParts);
-    });
-  };
-
   const onDropdownClick = () => {
     setTimeout(() => {
       if (suggestions.length > 0) {
@@ -130,7 +125,7 @@ export const AutocompleteInput = ({
 
   const onInputFocus = () => {
     if (searchValue) {
-      const matchingResults = getMatchingResult(searchValue);
+      const matchingResults = searchFn(searchValue, options);
       setSuggestions(matchingResults);
     } else {
       setSuggestions(options);
@@ -161,8 +156,14 @@ export const AutocompleteInput = ({
       return;
     }
     if (searchValue) {
-      const matchingResults = getMatchingResult(searchValue);
+      const matchingResults = searchFn(searchValue, options);
       setSuggestions(matchingResults);
+      if (!showNoMatchError && matchingResults.length === 0) {
+        setShowNoMatchError(true);
+      }
+      if (showNoMatchError && matchingResults.length > 0) {
+        setShowNoMatchError(false);
+      }
     } else {
       setSuggestions(options);
     }
@@ -187,6 +188,7 @@ export const AutocompleteInput = ({
         !containerRef.current.contains(event.target)
       ) {
         setSuggestions([]);
+        setShowNoMatchError(false);
       }
     };
 
@@ -218,21 +220,35 @@ export const AutocompleteInput = ({
           aria-describedby={labelId}
           onChange={onInputChange}
           defaultValue={defaultValue}
-          className={clsxm(className, { 'font-bold': fieldValue.value })}
+          className={className}
           onFocus={onInputFocus}
           autoComplete="off"
           value={searchValue}
         />
-        <div className="absolute right-2 top-3 cursor-pointer" onClick={onDropdownClick}>
-          <Icon name="chevron-down" />
+        <div className="absolute right-5 top-[5px] cursor-pointer" onClick={onDropdownClick}>
+          <Icon name="search" size="sm" color="grey" />
         </div>
         {suggestions.length > 0 && (
           <SuggestionsContainer
             items={suggestions}
+            searchValue={searchValue ?? ''}
             onItemClick={onSuggestionClick}
             disableClickOnDisabledItem={disableClickOnDisabledItem}
             onOutsideClick={onOutsideClick}
+            defaultItemId={defaultItemId}
+            favoriteItemIds={favoriteItemIds}
+            defaultItemHelperText={defaultItemHelperText}
+            favoritesTitle={favoritesTitle}
           />
+        )}
+        {showNoMatchError && (
+          <div className="flex pl-4 h-10 items-center">
+            <Typography
+              color="middle-gray"
+              size="text-2xs"
+              italic
+            >{`Aucun résultat pour "${searchValue}"`}</Typography>
+          </div>
         )}
       </div>
     </Group>

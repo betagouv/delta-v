@@ -1,18 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
-import { Tooltip } from '@/components/atoms/Tooltip';
-import clsxm from '@/utils/clsxm';
-
-export type Suggestion = {
-  label: string;
-  value: string;
-  disabled?: boolean;
-  disabledTooltipMessage?: string;
-};
+import { Suggestion, checkDisableClick as checkIsClickDisabled, getRenderedOption } from './utils';
+import { Typography } from '@/components/atoms/Typography';
 
 type Props = {
   items: Suggestion[];
   onItemClick: (item: Suggestion) => void;
+  searchValue: string;
+  defaultItemId?: string;
+  defaultItemHelperText?: string;
+  favoriteItemIds?: string[];
+  favoritesTitle?: string;
   onOutsideClick?: () => void;
   disableClickOnDisabledItem?: boolean;
 };
@@ -20,10 +18,48 @@ type Props = {
 export const SuggestionsContainer: React.FC<Props> = ({
   items,
   onItemClick,
+  searchValue,
+  defaultItemId,
+  defaultItemHelperText = 'Par défaut',
+  favoriteItemIds,
+  favoritesTitle = 'Favoris',
   onOutsideClick,
-  disableClickOnDisabledItem,
+  disableClickOnDisabledItem = false,
 }: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const onClick = (item: Suggestion) => {
+    const disableClick = checkIsClickDisabled(item, disableClickOnDisabledItem);
+    if (!disableClick) {
+      onItemClick(item);
+    }
+  };
+
+  const formattedOptions = useMemo(() => {
+    const defaultOption = items.find((item) => item.value === defaultItemId);
+    const formattedDefaultOption = defaultOption && {
+      value: defaultOption.value,
+      label: getRenderedOption({
+        item: defaultOption,
+        disableClick: checkIsClickDisabled(defaultOption, disableClickOnDisabledItem),
+        onOptionClick: onClick,
+        helperText: defaultItemHelperText,
+      }),
+    };
+    const formattedAllOptions = items.map((item) => {
+      const disableClick = checkIsClickDisabled(item, disableClickOnDisabledItem);
+      const renderedOption = getRenderedOption({ item, disableClick, onOptionClick: onClick });
+      return { value: item.value, label: renderedOption };
+    });
+    const formattedFavoritesOptions = formattedAllOptions.filter((item) =>
+      favoriteItemIds?.includes(item.value),
+    );
+    return {
+      all: formattedAllOptions,
+      default: formattedDefaultOption,
+      favorites: formattedFavoritesOptions,
+    };
+  }, [items, defaultItemId, favoriteItemIds, disableClickOnDisabledItem]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -44,40 +80,27 @@ export const SuggestionsContainer: React.FC<Props> = ({
     };
   }, []);
 
-  const handleClick = (item: Suggestion) => {
-    const disableClick = disableClickOnDisabledItem ? item.disabled : false;
-    if (!disableClick) {
-      onItemClick(item);
-    }
-  };
-
   return (
     <div
-      className="z-10 flex flex-col absolute bg-white w-full gap-1 p-1 rounded-lg border-2"
+      className="z-10 flex flex-col bg-white w-full overflow-y-scroll max-h-[205px] top-9"
       ref={containerRef}
     >
-      {items.map((item) => {
-        const disableClick = disableClickOnDisabledItem ? item.disabled : false;
-        const renderedName =
-          disableClick && item.disabledTooltipMessage ? (
-            <Tooltip content={item.disabledTooltipMessage}>{item.label}</Tooltip>
-          ) : (
-            item.label
-          );
-        return (
-          <div
-            key={item.value}
-            className={clsxm({
-              'text-left hover:bg-slate-100 cursor-pointer': true,
-              'cursor-not-allowed': disableClick,
-              'text-slate-400': item.disabled,
-            })}
-            onClick={() => handleClick(item)}
-          >
-            {renderedName}
+      {searchValue === '' && formattedOptions.default && (
+        <div>{formattedOptions.default.label}</div>
+      )}
+      {searchValue === '' && formattedOptions.favorites.length > 0 && (
+        <div>
+          <div className="flex pl-4 h-7 items-center">
+            <Typography color="placeholder" size="text-2xs" italic>
+              {favoritesTitle}
+            </Typography>
           </div>
-        );
-      })}
+          {formattedOptions.favorites.map((favorite) => favorite.label)}
+        </div>
+      )}
+      {searchValue !== '' && items.length > 0 && (
+        <div className="flex-col flex">{formattedOptions.all.map((item) => item.label)}</div>
+      )}
     </div>
   );
 };

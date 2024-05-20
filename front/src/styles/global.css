@@ -176,3 +176,72 @@ svg {
 
 /* react-datepicker__day react-datepicker__day--003 react-datepicker__day--in-range react-datepicker__day--in-selecting-range */
 /* react-datepicker__day react-datepicker__day--003 react-datepicker__day--in-selecting-range */
+
+
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cecece;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+@layer base {
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    @apply block w-full text-xs px-4 h-9 placeholder-[#929292] placeholder:italic border !border-[#CECECE] rounded-full appearance-none focus:outline-none focus:ring-0;
+  }
+
+  input.error,
+  textarea.error,
+  select.error {
+    @apply border-red-500 focus:border-red-500 focus:ring-red-200;
+  }
+
+  input:read-only,
+  input:disabled,
+  select:disabled,
+  textarea:read-only,
+  textarea:disabled {
+    @apply cursor-pointer hover:cursor-not-allowed disabled:cursor-not-allowed border-slate-300 bg-slate-100 focus:border-slate-300 focus:ring-0 !text-slate-400;
+  }
+
+  input[type='radio']:disabled {
+    @apply !text-slate-300 cursor-not-allowed; 
+  }
+
+  input[type='radio']:disabled + label {
+    @apply !text-slate-400 cursor-not-allowed; 
+  }
+
+  .styled-link .active #menu {
+    background-color: #ecf1fa;
+  }
+}
+
