@@ -21,7 +21,11 @@ import {
 } from './declaration/useCase.store';
 import { createFaqAppStateSlice, FaqAppStateSlice } from './faq/appState.store';
 import { createUseCaseFaqSlice, FaqUseCaseSlice } from './faq/useCase.store';
-import { createGlobalAppStateSlice, GlobalAppStateSlice } from './global/appState.store';
+import {
+  createGlobalAppStateSlice,
+  GLOBAL_EMPTY_STATE,
+  GlobalAppStateSlice,
+} from './global/appState.store';
 import { createUseCaseGlobalSlice, GlobalUseCaseSlice } from './global/useCase.store';
 import {
   createPrepareMyTripAppStateSlice,
@@ -99,7 +103,7 @@ export const useStore = create<StoreState>(
     {
       name: 'app-storage',
       getStorage: () => (typeof window !== 'undefined' ? localStorage : dummyStorageApi),
-      version: 5,
+      version: 6,
       partialize: (state) => {
         return {
           simulator: state.simulator,
@@ -125,6 +129,10 @@ export const useStore = create<StoreState>(
 
         if (version < 5) {
           newPersistedState.declaration.appState = clone(DECLARATION_EMPTY_STATE);
+        }
+
+        if (version < 6) {
+          newPersistedState.global.appState = clone(GLOBAL_EMPTY_STATE);
         }
 
         return newPersistedState;

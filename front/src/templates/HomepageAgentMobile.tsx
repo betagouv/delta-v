@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import QrScanner from 'qr-scanner';
 
@@ -9,6 +8,7 @@ import { useDeclarationMutation } from '@/api/hooks/useAPIDeclaration';
 import { LinkWithIcon } from '@/components/atoms/LinkWithIcon';
 import { Typography } from '@/components/atoms/Typography';
 import { QrCodeScanner } from '@/components/input/StandardInputs/QrCodeScanner';
+import { Switch } from '@/components/molecules/Switch';
 import { ModalResumeDeclaration } from '@/components/organisms/ModalResumeDeclaration';
 import useTokenValidity, { isConnected } from '@/hooks/useTokenValidity';
 import { Meta } from '@/layout/Meta';
@@ -140,38 +140,12 @@ const HomepageAgentMobile = () => {
       >
         <div className="px-8 pt-9">
           <div className="flex flex-col justify-center items-center gap-1">
-            <div className="border border-secondary-300 flex flex-row justify-around rounded-full px-[20px] py-[8px] text-center gap-7">
-              <button
-                className={classNames({
-                  'z-10 text-base': true,
-                  'text-white': mode === 'scanner',
-                  'text-disabled-text': mode === 'tools',
-                })}
-                onClick={handleClickScanner}
-              >
-                Scanner
-              </button>
-              <button
-                className={classNames({
-                  'z-10 text-base': true,
-                  'text-white': mode === 'tools',
-                  'text-disabled-text': mode === 'scanner',
-                })}
-                onClick={handleClickTools}
-              >
-                Outils
-              </button>
-            </div>
-            <motion.div
-              className="relative bg-primary-600 w-[81px] h-[36px] rounded-full top-[-43px]"
-              initial={{
-                left: '42px',
-              }}
-              animate={{
-                left: mode === 'tools' ? '44px' : '-36px',
-                width: mode === 'tools' ? '76px' : '92px',
-              }}
-              transition={{ duration: 0.1 }}
+            <Switch
+              leftLabel="Scanner"
+              rightLabel="Outils"
+              onLeftToggle={handleClickScanner}
+              onRightToggle={handleClickTools}
+              active={mode === 'scanner' ? 'left' : 'right'}
             />
           </div>
           {mode === 'tools' ? (

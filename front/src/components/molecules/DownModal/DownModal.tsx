@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
 import classNames from 'classnames';
@@ -17,6 +17,8 @@ export interface IDownModalProps {
   defaultHeight?: boolean;
   titlePosition?: 'text-left' | 'text-center' | 'text-right';
   preventClose?: boolean;
+  scrollable?: boolean;
+  noInitialFocus?: boolean;
 }
 
 export const DownModal: React.FC<IDownModalProps> = ({
@@ -30,17 +32,22 @@ export const DownModal: React.FC<IDownModalProps> = ({
   titlePosition = 'text-center',
   preventClose = false,
   subtitle,
+  scrollable = false,
+  noInitialFocus = false,
 }: IDownModalProps) => {
+  const dialogRef = useRef(null);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className={classNames({
-          'fixed bottom-0 z-40 w-full justify-center max-h-screen overflow-scroll': true,
+          'fixed bottom-0 z-40 w-full justify-center max-h-screen': true,
           'h-[calc(90vh-50px)]': fixedHeight,
           'h-auto': !fixedHeight,
+          'overflow-scroll': scrollable,
         })}
         onClose={preventClose ? () => {} : onClose}
+        initialFocus={noInitialFocus ? dialogRef : undefined}
       >
         <Transition.Child
           as={Fragment}
@@ -61,7 +68,11 @@ export const DownModal: React.FC<IDownModalProps> = ({
           })}
         >
           {/* This element is to trick the browser into centering the Downmodal contents. */}
-          <span className="sm:inline-block sm:align-middle hidden" aria-hidden="true">
+          <span
+            className="sm:inline-block sm:align-middle hidden"
+            aria-hidden="true"
+            ref={dialogRef}
+          >
             &#8203;
           </span>
           <Transition.Child

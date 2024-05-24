@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 import { StoreSlice } from '../store';
 import { getAllProductRequest } from '@/api/lib/products';

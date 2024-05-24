@@ -199,6 +199,12 @@ svg {
   background-color: #94a3b8;
 }
 
+@media screen and (max-width: 768px){
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+}
+
 @layer base {
   [type='text'],
   [type='email'],
@@ -215,7 +221,7 @@ svg {
   [multiple],
   textarea,
   select {
-    @apply block w-full text-xs px-4 h-9 placeholder-[#929292] placeholder:italic border !border-[#CECECE] rounded-full appearance-none focus:outline-none focus:ring-0;
+    @apply block w-full text-sm md:text-xs px-4 h-9 placeholder-[#929292] placeholder:italic border !border-[#CECECE] rounded-full appearance-none focus:outline-none focus:ring-0;
   }
 
   input.error,
@@ -224,7 +230,6 @@ svg {
     @apply border-red-500 focus:border-red-500 focus:ring-red-200;
   }
 
-  input:read-only,
   input:disabled,
   select:disabled,
   textarea:read-only,

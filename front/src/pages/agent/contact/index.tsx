@@ -88,7 +88,6 @@ const ContactPage = () => {
   }, [watch('comment')]);
 
   useEffect(() => {
-    console.log(watch('files'));
     if (
       (watch('files')?.[0]?.size ?? 0) > MAX_FILE_SIZE ||
       !isValidFileType('image', watch('files')?.[0])

@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import type { Response, NextFunction } from 'express';
 import { HttpStatuses } from '../../../core/httpStatuses';
 import { ValidatedRequest } from '../../../core/utils/validatedExpressRequest';
 import { CurrencyRepository } from '../../../repositories/currency.repository';

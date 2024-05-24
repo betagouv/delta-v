@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getEmojiFlag } from 'countries-list';
-import { Alpha2Code, getNames } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
+import { getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import { useMediaQuery } from 'react-responsive';

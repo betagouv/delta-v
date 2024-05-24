@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 import { AlcoholAndorra } from './contentModal/alcoholAndorra';
 import { AlcoholBorder } from './contentModal/alcoholBorder';

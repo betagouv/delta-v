@@ -1,4 +1,5 @@
-import { Alpha2Code, getAlpha2Codes } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
+import { getAlpha2Codes } from 'i18n-iso-countries';
 import { z } from 'zod';
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { AuthorType } from '../../common/enums/author.enum';

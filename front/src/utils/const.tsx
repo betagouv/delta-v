@@ -1,4 +1,4 @@
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 import { SvgNames } from '@/components/molecules/SvgIcon';
 import { TabItem } from '@/components/molecules/TabBar';
@@ -32,6 +32,7 @@ export enum RoutingAgent {
   account = '/agent/mon-compte',
   changePassword = '/agent/mon-compte/changer-mot-de-passe',
   changePasswordSuccess = '/agent/mon-compte/changer-mot-de-passe/validation',
+  setDefaultCountry = '/agent/mon-compte/pays-par-defaut',
   contactUs = '/agent/contact',
   qrCodeManuel = '/agent/qr-code-manuel',
 }
@@ -193,6 +194,12 @@ export const MY_ACCOUNT_MENU_AGENT_ITEMS: MenuAgentItem[] = [
     title: 'Modifier mon mot de passe',
     path: RoutingAgent.changePassword,
     svgIcon: 'lock' as SvgNames,
+  },
+  {
+    id: 'set-default-country',
+    title: 'Modifier le pays de nomenclature par défaut',
+    path: RoutingAgent.setDefaultCountry,
+    svgIcon: 'earth' as SvgNames,
   },
 ];
 

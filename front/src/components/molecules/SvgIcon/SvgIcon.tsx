@@ -120,6 +120,7 @@ import CompleteBasket from '@/assets/icons/Complete-Basket.svg';
 import Dairy from '@/assets/icons/Dairy.svg';
 import Douanier from '@/assets/icons/Douanier.svg';
 import Download from '@/assets/icons/Download.svg';
+import Earth from '@/assets/icons/Earth.svg';
 import Filter from '@/assets/icons/Filter.svg';
 import Folder from '@/assets/icons/Folder.svg';
 import Forbidden from '@/assets/icons/Forbidden.svg';
@@ -172,6 +173,7 @@ export type SvgNames =
   | 'arrowRight'
   | 'basketColor'
   | 'boat'
+  | 'earth'
   | 'car'
   | 'plane'
   | 'plants'
@@ -349,6 +351,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return BasketColor;
     case 'boat':
       return Boat;
+    case 'earth':
+      return Earth;
     case 'car':
       return Car;
     case 'other':

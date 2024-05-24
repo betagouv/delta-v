@@ -1,5 +1,5 @@
 import clone from 'clone';
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 // eslint-disable-next-line import/no-cycle
 import { StoreSlice } from '../store';

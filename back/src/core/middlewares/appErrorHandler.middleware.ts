@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import type { Response, NextFunction } from 'express';
 import { HttpStatuses } from '../httpStatuses';
 import { IAppError } from '../buildError';
 import { RequestWithLogger } from './attachLogger.middleware';

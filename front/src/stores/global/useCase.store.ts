@@ -5,6 +5,8 @@ import { StoreSlice } from '../store';
 export interface GlobalUseCaseSlice {
   hideInfoSimulator: () => void;
   hideTuto: () => void;
+  hideSetDefaultCountry: () => void;
+  showSetDefaultCountry: () => void;
 }
 
 export const createUseCaseGlobalSlice: StoreSlice<GlobalUseCaseSlice> = (set) => ({
@@ -19,6 +21,20 @@ export const createUseCaseGlobalSlice: StoreSlice<GlobalUseCaseSlice> = (set) =>
     set((state: any) => {
       const newState = { ...state };
       newState.global.appState.displayTuto = false;
+      return newState;
+    });
+  },
+  hideSetDefaultCountry: (): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.global.appState.displaySetDefaultCountry = false;
+      return newState;
+    });
+  },
+  showSetDefaultCountry: (): void => {
+    set((state: any) => {
+      const newState = { ...state };
+      newState.global.appState.displaySetDefaultCountry = true;
       return newState;
     });
   },

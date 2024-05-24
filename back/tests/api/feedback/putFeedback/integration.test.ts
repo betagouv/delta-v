@@ -1,5 +1,5 @@
 import path from 'path';
-import { Express } from 'express';
+import type { Express } from 'express';
 import request from 'supertest';
 
 import { faker } from '@faker-js/faker';

@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { InputGroup } from '@/components/input/InputGroup';
+import { memoizedCountriesData } from '@/components/organisms/FormSelectCountry/utils';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
 import { countriesAlternatives, disabledCountries } from '@/utils/const';
-import { memoizedCountriesOptions } from '@/utils/country.util';
 
 export interface FormSimulatorData {
   country?: Alpha2Code;
@@ -61,6 +61,8 @@ const Configuration = () => {
     },
   });
 
+  const countryOptions = memoizedCountriesData({ countriesAlternatives, disabledCountries });
+
   return (
     <ConfigurationSteps
       fromProgression={50}
@@ -75,7 +77,9 @@ const Configuration = () => {
         name="country"
         placeholder="Pays"
         trailingIcon="search"
-        options={memoizedCountriesOptions(countriesAlternatives, disabledCountries)}
+        options={countryOptions.map((option) => {
+          return { id: option.value, value: option.label };
+        })}
         register={register('country', { required: true })}
         control={control}
         error={errors?.country?.message}

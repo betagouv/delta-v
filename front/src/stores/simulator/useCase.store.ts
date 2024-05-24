@@ -1,5 +1,5 @@
 import { countries } from 'countries-list';
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { v4 as uuidv4 } from 'uuid';
 
 // eslint-disable-next-line import/no-cycle

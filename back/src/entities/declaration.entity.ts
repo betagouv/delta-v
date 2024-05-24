@@ -1,4 +1,4 @@
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { Column, Entity, PrimaryColumn, Unique } from 'typeorm';
 import { AuthorType } from '../api/common/enums/author.enum';
 import { MeansOfTransport } from '../api/common/enums/meansOfTransport.enum';

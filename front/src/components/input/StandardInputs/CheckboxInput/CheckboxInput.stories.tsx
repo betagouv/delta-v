@@ -2,11 +2,11 @@ import { Meta } from '@storybook/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
 
-import { Checkbox } from './Checkbox';
+import { CheckboxInput } from './CheckboxInput';
 
 export default {
-  title: 'Components/Input/StandardInputs/Checkbox',
-  component: Checkbox,
+  title: 'Components/Input/StandardInputs/CheckboxInput',
+  component: CheckboxInput,
 } as Meta;
 
 type FormValues = {
@@ -25,7 +25,7 @@ export const Base = (): JSX.Element => {
 
   return (
     <div>
-      <Checkbox error={errors.happy?.message} name="happy" />
+      <CheckboxInput error={errors.happy?.message} name="happy" />
     </div>
   );
 };

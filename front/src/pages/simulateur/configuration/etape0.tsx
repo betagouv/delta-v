@@ -5,7 +5,7 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/atoms/Button';
-import { Checkbox } from '@/components/input/StandardInputs/Checkbox';
+import { CheckboxInput } from '@/components/input/StandardInputs/CheckboxInput';
 import { displayInfoSimulator } from '@/core/hoc/displayInfoSimulator.hoc';
 import { useStore } from '@/stores/store';
 import { ConfigurationSteps } from '@/templates/ConfigurationSteps';
@@ -67,7 +67,7 @@ const Configuration = () => {
           vous n’aurez plus qu’à vous présenter aux agents douaniers si besoin !
         </p>
         <div className="flex flex-row">
-          <Checkbox
+          <CheckboxInput
             name="notDisplayAnymore"
             register={register('notDisplayAnymore', { required: false })}
             error={errors?.notDisplayAnymore?.message}

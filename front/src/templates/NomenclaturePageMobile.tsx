@@ -1,20 +1,26 @@
 import { useEffect, useState } from 'react';
 
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 
+import { useGetDefaultCountry } from '@/api/hooks/useAPIConfig';
 import { useFavorites } from '@/api/hooks/useAPIFavorite';
 import { usePutSearchProductHistoryMutation } from '@/api/hooks/useAPIProducts';
 import { FavoriteResponse } from '@/api/lib/types';
 import { Icon } from '@/components/atoms/Icon';
 import { Typography } from '@/components/atoms/Typography';
+import { memoizedCountriesData } from '@/components/organisms/FormSelectCountry/utils';
 import { ModalCategoryNomenclatureProduct } from '@/components/organisms/ModalCategoryNomenclatureProduct';
 import { ModalFavorites } from '@/components/organisms/ModalFavorites';
 import { ModalSearchNomenclatureProduct } from '@/components/organisms/ModalSearchNomenclatureProduct';
 import { ModalSelectCountry } from '@/components/organisms/ModalSelectCountry';
+import { ModalSetDefaultCountry } from '@/components/organisms/ModalSetDefaultCountry';
+import { SelectCountryButton } from '@/components/organisms/SelectCountryButton';
 import { IdRequiredProduct, Product } from '@/model/product';
 import { useStore } from '@/stores/store';
 import clsxm from '@/utils/clsxm';
+import { countriesAlternatives, disabledCountries } from '@/utils/const';
+import { ModalType } from '@/utils/modal';
 import { findProduct, haveAgeRestriction } from '@/utils/product.util';
 
 export interface FormDeclarationData {
@@ -23,32 +29,49 @@ export interface FormDeclarationData {
 
 export const NomenclaturePageMobile = () => {
   const router = useRouter();
-  const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
-  const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
-  const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
-  const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
-    undefined,
-  );
   const {
     nomenclatureProducts,
     setFavoriteProducts,
     favoriteProducts,
     setProductsNomenclatureToDisplayAgent,
     countryForProductsNomenclature,
+    displaySetDefaultCountry,
   } = useStore((state) => ({
     setFavoriteProducts: state.setFavoriteProducts,
     nomenclatureProducts: state.products.appState.nomenclatureProducts,
     favoriteProducts: state.products.appState.favoriteProducts,
     setProductsNomenclatureToDisplayAgent: state.setProductsNomenclatureToDisplayAgent,
     countryForProductsNomenclature: state.products.appState.countryForProductsNomenclature,
+    displaySetDefaultCountry: state.global.appState.displaySetDefaultCountry,
   }));
+
+  const { data: defaultCountry, refetch: updateDefaultCountry } = useGetDefaultCountry();
+
+  const countriesData = memoizedCountriesData({ countriesAlternatives, disabledCountries });
+
+  const [currentCountryLabel, setCurrentCountryLabel] = useState<string | undefined>(undefined);
+  const [openSelectCountryModal, setOpenSelectCountryModal] = useState(
+    !countryForProductsNomenclature,
+  );
+  const [selectedCountry, setSelectedCountry] = useState<Alpha2Code | undefined>(undefined);
+
+  const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
+  const [openCategoryDownModal, setOpenCategoryDownModal] = useState(false);
+  const [openFavoriteDownModal, setOpenFavoriteDownModal] = useState(false);
+  const [selectedFavoriteProduct, setSelectedFavoriteProduct] = useState<Product | undefined>(
+    undefined,
+  );
+  const [openSetDefaultCountryModal, setOpenSetDefaultCountryModal] = useState(true);
 
   useEffect(() => {
     if (!countryForProductsNomenclature) {
       return;
     }
     setProductsNomenclatureToDisplayAgent(countryForProductsNomenclature);
-  }, [countryForProductsNomenclature]);
+    setCurrentCountryLabel(
+      countriesData.find((country) => country.value === countryForProductsNomenclature)?.label,
+    );
+  }, [countryForProductsNomenclature, defaultCountry]);
 
   const updateSearchProductHistory = usePutSearchProductHistoryMutation({});
 
@@ -101,6 +124,10 @@ export const NomenclaturePageMobile = () => {
     });
   };
 
+  const onCloseSelectCountryModal = () => {
+    setOpenSelectCountryModal(false);
+  };
+
   const flattenFavoriteProducts: Product[] = [];
   const ageRestrictionFavoriteProducts: Product[] = [];
 
@@ -115,6 +142,18 @@ export const NomenclaturePageMobile = () => {
 
   const withoutFavoriteProducts =
     flattenFavoriteProducts.length === 0 && ageRestrictionFavoriteProducts.length === 0;
+
+  const onSelectCountry = (country: Alpha2Code) => {
+    setOpenSetDefaultCountryModal(true);
+    setSelectedCountry(country);
+  };
+
+  const onCloseSetDefaultCountryModal = () => {
+    setOpenSetDefaultCountryModal(false);
+  };
+
+  const shouldShowSetDefaultCountryModal =
+    displaySetDefaultCountry && selectedCountry && selectedCountry !== defaultCountry;
 
   return (
     <>
@@ -169,7 +208,11 @@ export const NomenclaturePageMobile = () => {
         </button>
       </div>
       <div className="flex flex-row justify-end w-full mt-[30px] border-t pt-5">
-        <ModalSelectCountry isOpen={true} preventClose={!countryForProductsNomenclature} />
+        <SelectCountryButton
+          onClick={() => setOpenSelectCountryModal(true)}
+          countryLabel={currentCountryLabel}
+          isDefaultCountry={defaultCountry === countryForProductsNomenclature}
+        />
       </div>
 
       <ModalSearchNomenclatureProduct
@@ -190,6 +233,24 @@ export const NomenclaturePageMobile = () => {
         onClickFavorite={onClickFavorite}
         isInNomenclature
       />
+      <ModalSelectCountry
+        isOpen={openSelectCountryModal}
+        onClose={onCloseSelectCountryModal}
+        modalType={ModalType.DOWN}
+        preventClose={!countryForProductsNomenclature}
+        onSelect={(country) => onSelectCountry(country)}
+        defaultCountry={defaultCountry}
+      />
+      {shouldShowSetDefaultCountryModal && (
+        <ModalSetDefaultCountry
+          country={selectedCountry}
+          isOpen={openSetDefaultCountryModal}
+          onClose={onCloseSetDefaultCountryModal}
+          modalType={ModalType.DOWN}
+          preventClose={!countryForProductsNomenclature}
+          onSet={updateDefaultCountry}
+        />
+      )}
     </>
   );
 };

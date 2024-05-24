@@ -1,4 +1,5 @@
-import { Alpha2Code, getAlpha2Codes } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
+import { getAlpha2Codes } from 'i18n-iso-countries';
 import { RefinementCtx, z } from 'zod';
 import { buildValidationMiddleware } from '../../../core/middlewares';
 import { MeansOfTransport, meansOfTransport } from '../../common/enums/meansOfTransport.enum';

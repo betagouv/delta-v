@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Meta, Story } from '@storybook/react';
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 import { SelectCountry, SelectCountryProps } from './SelectCountry';
 import { SelectCountryPopup, SelectCountryPopupProps } from './SelectCountryPopup';

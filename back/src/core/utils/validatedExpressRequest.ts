@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Request, RequestHandler } from 'express';
+import type { Request, RequestHandler } from 'express';
 export type ValidatedRequest<RequestTypes> = Omit<Request, 'params' | 'body' | 'query'> &
   RequestTypes;
 

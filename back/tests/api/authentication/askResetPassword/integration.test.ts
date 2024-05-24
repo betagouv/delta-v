@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import type { Express } from 'express';
 import request from 'supertest';
 
 import { testDbManager } from '../../../helpers/testDb.helper';

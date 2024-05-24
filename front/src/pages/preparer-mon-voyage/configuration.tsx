@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 
-import { Alpha2Code, getNames } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
+import { getNames } from 'i18n-iso-countries';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 

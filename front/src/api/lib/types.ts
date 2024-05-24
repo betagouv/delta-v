@@ -1,3 +1,5 @@
+import type { Alpha2Code } from 'i18n-iso-countries';
+
 import { ContactDetails, MeansOfTransportAndCountry } from '@/stores/declaration/appState.store';
 import { ShoppingProduct } from '@/stores/simulator/appState.store';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
@@ -82,4 +84,8 @@ export type GetOneDeclarationParams = {
   meansOfTransportAndCountry: MeansOfTransportAndCountry;
   shoppingProducts: ShoppingProduct[];
   border?: boolean;
+};
+
+export type PutDefaultCountryParams = {
+  country: Alpha2Code | null;
 };

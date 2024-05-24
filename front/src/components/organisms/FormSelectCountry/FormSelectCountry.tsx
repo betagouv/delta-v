@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 import { SelectCountrySchema } from './schema';
-import { memoizedCountriesOptions } from './utils';
+import { memoizedCountriesData } from './utils';
 import { Form } from '@/components/forms/core/Form';
 import { AutocompleteInput } from '@/components/forms/custom/AutocompleteInput';
 import { Suggestion } from '@/components/forms/custom/AutocompleteInput/utils';
@@ -11,10 +11,11 @@ import { countriesAlternatives, disabledCountries } from '@/utils/const';
 
 interface FormSelectCountryProps {
   onSelectCountry: (country: Alpha2Code) => void;
+  defaultCountry?: Alpha2Code;
 }
 
-export const FormSelectCountry = ({ onSelectCountry }: FormSelectCountryProps) => {
-  const countries = memoizedCountriesOptions(countriesAlternatives, disabledCountries);
+export const FormSelectCountry = ({ onSelectCountry, defaultCountry }: FormSelectCountryProps) => {
+  const countriesData = memoizedCountriesData({ countriesAlternatives, disabledCountries });
   const onSubmit = (country: Suggestion) => {
     onSelectCountry(country.value as Alpha2Code);
   };
@@ -25,14 +26,14 @@ export const FormSelectCountry = ({ onSelectCountry }: FormSelectCountryProps) =
       onSubmit={onSubmit}
       render={() => (
         <AutocompleteInput
-          options={countries}
+          options={countriesData}
           labelId="countryName"
           valueId="countryCode"
           disableClickOnDisabledItem
           required
           placeholder="Saisissez le pays recherché"
           className="min-w-[250px]"
-          defaultItemId="DZ"
+          defaultItemId={defaultCountry}
           favoriteItemIds={['DZ', 'ES', 'VN']}
           onItemClick={onSubmit}
           defaultItemHelperText="Par défaut"

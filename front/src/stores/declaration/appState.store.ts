@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import clone from 'clone';
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 import { DetailedProduct, ShoppingProduct, SimulatorResponse } from '../simulator/appState.store';
 import { StoreSlice } from '../store';

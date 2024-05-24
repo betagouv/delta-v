@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import type { Request } from 'express';
 import { rateLimit, Options } from 'express-rate-limit';
 import RedisStore from 'rate-limit-redis';
 import { HttpStatuses } from '../../httpStatuses';

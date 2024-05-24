@@ -1,4 +1,4 @@
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { CountryType, getCountryType } from '../../../../utils/country.util';
 import { MeansOfTransport } from '../../../common/enums/meansOfTransport.enum';
 

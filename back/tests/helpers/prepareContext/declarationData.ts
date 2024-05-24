@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { AuthorType, AuthorTypeList } from '../../../src/api/common/enums/author.enum';
 import { MeansOfTransport } from '../../../src/api/common/enums/meansOfTransport.enum';
 

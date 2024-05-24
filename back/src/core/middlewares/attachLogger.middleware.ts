@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction, Router } from 'express';
+import type { Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import pinoHttp from 'pino-http';
 import { ILogger, Logger } from '../logger';
 

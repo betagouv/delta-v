@@ -14,4 +14,5 @@ export enum ResponseCodes {
   FEEDBACK_UPDATED = 'feedback-updated',
   FAVORITE_ADDED = 'favorite-added',
   FAVORITE_DELETED = 'favorite-deleted',
+  DEFAULT_COUNTRY_UPDATED = 'default-country-updated',
 }

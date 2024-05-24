@@ -1,4 +1,5 @@
-import { Router, Express } from 'express';
+import type { Express } from 'express';
+import { Router } from 'express';
 
 export interface IBuildAppFunctionArgs {
   prefix: string;

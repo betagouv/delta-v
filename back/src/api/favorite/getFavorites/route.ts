@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { HttpStatuses } from '../../../core/httpStatuses';
 import { AppDataSource } from '../../../loader/database';
 import { FavoriteRepository } from '../../../repositories/favorite.repository';

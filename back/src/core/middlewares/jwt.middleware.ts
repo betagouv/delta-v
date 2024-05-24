@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express';
+import type { Request, Response, NextFunction, RequestHandler } from 'express';
 
 import { IAuthObject } from '../jwt/AuthObject';
 import { buildAccessTokenObject, checkAndReturnAuthAccessToken } from '../jwt/verifyToken';

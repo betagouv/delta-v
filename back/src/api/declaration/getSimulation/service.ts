@@ -1,4 +1,4 @@
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { ProductTaxesInterface } from '../../../entities/productTaxes.entity';
 import { CurrencyRepositoryInterface } from '../../../repositories/currency.repository';
 import { ProductRepositoryInterface } from '../../../repositories/product.repository';

@@ -245,7 +245,8 @@ export const AutocompleteInput = ({
           <div className="flex pl-4 h-10 items-center">
             <Typography
               color="middle-gray"
-              size="text-2xs"
+              size="text-xs"
+              desktopSize="text-xs"
               italic
             >{`Aucun résultat pour "${searchValue}"`}</Typography>
           </div>

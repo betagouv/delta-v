@@ -2,9 +2,8 @@ import React from 'react';
 
 import cs from 'classnames';
 
-import { Icon } from '../Icon';
-import { Link } from '../Link';
 import { TitleAgent } from '../TitleAgent';
+import { BackButton } from '@/components/molecules/BackButton';
 import clsxm from '@/utils/clsxm';
 
 export interface TitleHeaderProps {
@@ -25,7 +24,7 @@ export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
   colorClassnameOne,
   colorClassnameTwo,
   href,
-  titleWidthClassname,
+  titleWidthClassname = 'w-[270px]',
   onReturnClick,
 }: TitleHeaderProps) => {
   return (
@@ -35,11 +34,7 @@ export const TitleHeaderAgent: React.FC<TitleHeaderProps> = ({
         bgColorClass,
       )}
     >
-      <div className="mx-auto mt-1.5">
-        <Link back={!href && !onReturnClick} href={href} onClick={onReturnClick}>
-          <Icon name="chevron-left" size="lg" />
-        </Link>
-      </div>
+      <BackButton href={href} onReturnClick={onReturnClick} />
       <div className={clsxm('flex w-full justify-center place-self-center', titleWidthClassname)}>
         <TitleAgent
           title={title}

@@ -82,7 +82,7 @@ export const SuggestionsContainer: React.FC<Props> = ({
 
   return (
     <div
-      className="z-10 flex flex-col bg-white w-full overflow-y-scroll max-h-[205px] top-9"
+      className="z-10 flex flex-col bg-white w-full overflow-y-scroll md:max-h-[205px] max-h-[calc(100vh-200px)] top-9"
       ref={containerRef}
     >
       {searchValue === '' && formattedOptions.default && (
@@ -91,15 +91,21 @@ export const SuggestionsContainer: React.FC<Props> = ({
       {searchValue === '' && formattedOptions.favorites.length > 0 && (
         <div>
           <div className="flex pl-4 h-7 items-center">
-            <Typography color="placeholder" size="text-2xs" italic>
+            <Typography color="placeholder" size="text-xs" desktopSize="text-xs" italic>
               {favoritesTitle}
             </Typography>
           </div>
-          {formattedOptions.favorites.map((favorite) => favorite.label)}
+          {formattedOptions.favorites.map((favorite) => (
+            <div key={favorite.value}>{favorite.label}</div>
+          ))}
         </div>
       )}
       {searchValue !== '' && items.length > 0 && (
-        <div className="flex-col flex">{formattedOptions.all.map((item) => item.label)}</div>
+        <div className="flex-col flex">
+          {formattedOptions.all.map((item) => (
+            <div key={item.value}>{item.label}</div>
+          ))}
+        </div>
       )}
     </div>
   );

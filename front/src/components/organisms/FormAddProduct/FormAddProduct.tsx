@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 import { FieldErrors } from 'react-hook-form';
 import shallow from 'zustand/shallow';
 

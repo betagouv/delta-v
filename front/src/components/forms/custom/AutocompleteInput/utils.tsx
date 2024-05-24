@@ -47,10 +47,10 @@ export const getRenderedOption = ({
   helperText?: string;
 }) => {
   const labelString = (
-    <div className="hover:text-[#6A6AF4] text-xs h-full w-full flex items-center gap-2.5">
+    <div className="hover:text-[#6A6AF4] text-sm md:text-xs h-full w-full flex items-center gap-2.5">
       {item.label}
       {helperText && (
-        <Typography color="placeholder" size="text-2xs" italic>
+        <Typography color="placeholder" size="text-xs" desktopSize="text-xs" italic>
           {helperText}
         </Typography>
       )}

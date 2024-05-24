@@ -1,6 +1,6 @@
 import redact from 'redact-object';
 import pino from 'pino';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 const DEFAULT_LOG_LEVEL = 'info';
 

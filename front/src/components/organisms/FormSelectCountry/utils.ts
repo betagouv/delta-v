@@ -1,15 +1,26 @@
 import { useMemo } from 'react';
 
 import { getEmojiFlag } from 'countries-list';
-import { Alpha2Code, getNames } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
+import { getNames } from 'i18n-iso-countries';
 
-import { Suggestion } from '@/components/forms/custom/AutocompleteInput/utils';
 import { CountryAlternative } from '@/utils/country.util';
 
-export const memoizedCountriesOptions = (
-  countriesAlternatives: CountryAlternative[],
-  disabledCountries: Alpha2Code[],
-): Suggestion[] => {
+type MemoizedCountriesType = {
+  label: string;
+  value: string;
+  tags: string[];
+};
+
+export const memoizedCountriesData = ({
+  countriesAlternatives,
+  disabledCountries,
+  withFlag = true,
+}: {
+  countriesAlternatives: CountryAlternative[];
+  disabledCountries: Alpha2Code[];
+  withFlag?: boolean;
+}): MemoizedCountriesType[] => {
   const memoizedCountries = useMemo(() => {
     const countries = getNames('fr', { select: 'official' });
     const countriesArray = Object.entries(countries);
@@ -22,7 +33,7 @@ export const memoizedCountriesOptions = (
       const label = countries[key] ?? '';
       const countryAlternative = countriesAlternatives.find((country) => country.id === key);
       return {
-        label: `${label} ${getEmojiFlag(key).toString()}`,
+        label: `${label}${withFlag && ` ${getEmojiFlag(key).toString()}`}`,
         value: key,
         tags: countryAlternative?.alternatives ?? [],
       };

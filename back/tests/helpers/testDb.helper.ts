@@ -13,6 +13,7 @@ import {
   SearchProductHistory,
   SearchProductHistoryEntity,
 } from '../../src/entities/searchProductHistory.entity';
+import { ConfigEntity, ConfigEntityInterface } from '../../src/entities/config.entity';
 
 export interface ITestDbManager {
   getConnection: () => DataSource;
@@ -25,6 +26,7 @@ export interface ITestDbManager {
   persistDeclaration: (args: DeclarationEntityInterface) => Promise<DeclarationEntityInterface>;
   persistActuality: (args: News) => Promise<News>;
   persistFavorite: (args: FavoriteEntityInterface) => Promise<FavoriteEntityInterface>;
+  persistConfig: (args: ConfigEntityInterface) => Promise<ConfigEntityInterface>;
   getCurrencies: () => Promise<Currency[]>;
   getDeclarations: () => Promise<DeclarationEntityInterface[]>;
   getDeclaration: (id: string) => Promise<DeclarationEntityInterface | null>;
@@ -44,6 +46,7 @@ const ENTITIES = [
   UserEntity,
   NewsEntity,
   FavoriteEntity,
+  ConfigEntity,
 ];
 
 export const testDbManager = (): ITestDbManager => {
@@ -70,6 +73,8 @@ export const testDbManager = (): ITestDbManager => {
     ): Promise<DeclarationEntityInterface> => connection.manager.save(DeclarationEntity, args),
     persistFavorite: async (args: FavoriteEntityInterface): Promise<FavoriteEntityInterface> =>
       connection.manager.save(FavoriteEntity, args),
+    persistConfig: async (args: ConfigEntityInterface): Promise<ConfigEntityInterface> =>
+      connection.manager.save(ConfigEntity, args),
     persistActuality: async (args: News): Promise<News> =>
       connection.manager.save(NewsEntity, args),
     getCurrencies: async (): Promise<Currency[]> => connection.manager.find(CurrencyEntity),

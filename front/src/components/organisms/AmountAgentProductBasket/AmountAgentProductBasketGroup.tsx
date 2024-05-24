@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Alpha2Code } from 'i18n-iso-countries';
+import type { Alpha2Code } from 'i18n-iso-countries';
 
 import { Typography } from '../../atoms/Typography';
 import { AmountAgentProductBasket } from './AmountAgentProductBasket';

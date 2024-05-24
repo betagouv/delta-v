@@ -1,4 +1,5 @@
-import express, { Router, Express } from 'express';
+import type { Express } from 'express';
+import express, { Router } from 'express';
 import { jsonParserMiddleware } from '../core/middlewares';
 import { appErrorHandlerMiddleware } from '../core/middlewares/appErrorHandler.middleware';
 import { attachLoggerMiddleware } from '../core/middlewares/attachLogger.middleware';
