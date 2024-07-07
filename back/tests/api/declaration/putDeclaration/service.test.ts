@@ -99,6 +99,7 @@ describe('test put declaration service', () => {
       totalCustomDutyAmount: 2.96,
       totalVatAmount: 24.26,
       totalTaxesAmount: 27.22,
+      totalTaxesRoundedAmount: 27,
     };
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(declarationRepository.createOne).toBeCalledWith(expectedDeclaration);

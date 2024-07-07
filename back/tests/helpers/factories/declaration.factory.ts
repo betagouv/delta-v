@@ -62,6 +62,7 @@ const buildSchema = (): DeclarationEntityInterface => {
     totalVatAmount: faker.number.float({ multipleOf: 0.01 }),
     totalCustomDutyAmount: faker.number.float({ multipleOf: 0.01 }),
     totalTaxesAmount: faker.number.float({ multipleOf: 0.01 }),
+    totalTaxesRoundedAmount: faker.number.float({ multipleOf: 0.01 }),
     franchiseAmount: faker.number.float({ multipleOf: 0.01 }),
     totalAmount: faker.number.float({ multipleOf: 0.01 }),
     authorType: AuthorType.user,

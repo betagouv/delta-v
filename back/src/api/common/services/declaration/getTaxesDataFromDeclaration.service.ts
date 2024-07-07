@@ -14,11 +14,17 @@ export const getTaxesDataFromDeclaration = (declaration: Declaration): TaxesData
     0,
   );
 
+  const totalTaxesRoundedAmount = valueProducts.reduce(
+    (acc, productTaxes) => currency(acc).add(productTaxes.getUnitTaxesRounded()).value,
+    0,
+  );
+
   return {
     totalCustomDutyAmount,
     totalVatAmount,
     franchiseAmount: declaration.franchiseAmount,
     totalTaxesAmount: currency(totalCustomDutyAmount).add(totalVatAmount).value,
+    totalTaxesRoundedAmount,
     totalAmount: declaration.total,
   };
 };

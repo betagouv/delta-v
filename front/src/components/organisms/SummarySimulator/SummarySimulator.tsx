@@ -27,13 +27,13 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
   qrCodeVersion = false,
   hideDetails = false,
 }: SummarySimulatorProps) => {
-  const totalTaxes = simulatorResponse?.totalTaxes ?? 0;
+  const totalTaxes = simulatorResponse?.totalTaxesRounded ?? 0;
   const [color, setColor] = useState<Color>('primary');
   useEffect(() => {
-    if (simulatorResponse?.totalTaxes === 0) {
+    if (simulatorResponse?.totalTaxesRounded === 0) {
       setColor('success');
     }
-    if (simulatorResponse?.totalTaxes !== 0) {
+    if (simulatorResponse?.totalTaxesRounded !== 0) {
       setColor('primary');
     }
   }, [simulatorResponse]);

@@ -33,8 +33,8 @@ export const SummaryValueProduct: React.FC<SummaryValueProductProps> = ({
           <div className="flex flex-1 flex-row">
             <Typography color="secondary">{product.unitPrice} €</Typography>
             <div className="flex-1" />
-            <Typography color={product.unitTaxes === 0 ? 'success' : 'primary'}>
-              {product.unitTaxes} €
+            <Typography color={product.unitTaxesRounded === 0 ? 'success' : 'primary'}>
+              {product.unitTaxesRounded} €
             </Typography>
           </div>
           <div

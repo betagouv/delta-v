@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Meta } from '@storybook/react';
 
 import { ValueAgentProductBasket, ValueAgentProductBasketProps } from './ValueAgentProductBasket';
-import { DetailedProduct } from '@/stores/simulator/appState.store';
+import { DetailedProduct, ProductStatus } from '@/stores/simulator/appState.store';
 
 const meta: Meta<typeof ValueAgentProductBasket> = {
   title: 'Components/Organisms/ValueAgentProductBaskets',
@@ -25,6 +25,9 @@ const product1: DetailedProduct = {
   unitCustomDuty: 12.5,
   unitVat: 50,
   unitTaxes: 62.5,
+  unitTaxesRounded: 63,
+  status: ProductStatus.VALUE_PRODUCT,
+  notManagedProduct: false,
 };
 
 const product2: DetailedProduct = {
@@ -41,6 +44,9 @@ const product2: DetailedProduct = {
   unitCustomDuty: 12.5,
   unitVat: 50,
   unitTaxes: 62.5,
+  unitTaxesRounded: 63,
+  status: ProductStatus.CUSTOM_PRODUCT,
+  notManagedProduct: true,
 };
 
 const item1: ValueAgentProductBasketProps = {
@@ -50,7 +56,6 @@ const item1: ValueAgentProductBasketProps = {
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
   ],
-  deletable: true,
   detailsButton: true,
   onDelete: (id) => console.log(id),
 };
@@ -62,7 +67,6 @@ const item2: ValueAgentProductBasketProps = {
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
   ],
-  deletable: true,
   detailsButton: false,
   onDelete: (id) => console.log(id),
 };
@@ -74,7 +78,6 @@ const item3: ValueAgentProductBasketProps = {
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
   ],
-  deletable: false,
   detailsButton: true,
   onDelete: (id) => console.log(id),
 };
@@ -86,7 +89,6 @@ const item4: ValueAgentProductBasketProps = {
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
     faker.datatype.number({ min: 1000, max: 9999 }).toString(),
   ],
-  deletable: false,
   onDelete: (id) => console.log(id),
 };
 

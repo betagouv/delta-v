@@ -1,13 +1,14 @@
 import { Meta } from '@storybook/react';
 
 import { ValueProductBasket } from './ValueProductBasket';
+import { DetailedProduct, ProductStatus } from '@/stores/simulator/appState.store';
 
 export default {
   title: 'Components/Organisms/ProductBasket',
   component: ValueProductBasket,
 } as Meta;
 
-const detailedProduct = {
+const detailedProduct: DetailedProduct = {
   id: '12',
   customId: '12',
   name: 'Produit',
@@ -21,6 +22,9 @@ const detailedProduct = {
   unitCustomDuty: 12.5,
   unitVat: 50,
   unitTaxes: 62.5,
+  unitTaxesRounded: 63,
+  notManagedProduct: false,
+  status: ProductStatus.VALUE_PRODUCT,
 };
 
 export const withVariant = (): JSX.Element => (

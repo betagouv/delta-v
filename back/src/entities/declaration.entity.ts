@@ -47,6 +47,7 @@ export interface TaxesData {
   totalVatAmount: number;
   totalCustomDutyAmount: number;
   totalTaxesAmount: number;
+  totalTaxesRoundedAmount: number;
   franchiseAmount: number;
   totalAmount: number;
 }
@@ -73,6 +74,7 @@ export interface ProductDeclaration {
   calculatedCustomDuty: number;
   calculatedVat: number;
   calculatedTaxes: number;
+  calculatedTaxesRounded: number;
   notManagedProduct: boolean;
 }
 
@@ -168,6 +170,9 @@ export class DeclarationEntity implements DeclarationEntityInterface {
 
   @Column({ type: 'float' })
   totalTaxesAmount: number;
+
+  @Column({ type: 'float' })
+  totalTaxesRoundedAmount: number;
 
   @Column({ type: 'float' })
   franchiseAmount: number;

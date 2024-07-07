@@ -43,6 +43,7 @@ export interface DetailedProduct {
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
+  unitTaxesRounded: number;
   customDuty: number;
   vat: number;
   notManagedProduct: boolean;
@@ -71,6 +72,7 @@ export interface SimulatorResponse {
   totalCustomDuty: number;
   totalVat: number;
   totalTaxes: number;
+  totalTaxesRounded: number;
   franchiseAmount: number;
   canCalculateTaxes: boolean;
   canCreateDeclaration: boolean;

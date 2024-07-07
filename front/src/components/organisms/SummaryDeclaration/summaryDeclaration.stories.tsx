@@ -33,6 +33,7 @@ const declarationResponse: DeclarationResponse = {
   totalAmount: faker.datatype.number(),
   totalCustomDutyAmount: faker.datatype.number(),
   totalTaxesAmount: faker.datatype.number(),
+  totalTaxesRoundedAmount: faker.datatype.number(),
   totalVatAmount: faker.datatype.number(),
   versionDate: faker.date.recent(),
   canCalculateTaxes: true,
@@ -52,6 +53,7 @@ const declarationResponse: DeclarationResponse = {
       unitVat: faker.datatype.number(),
       vat: faker.datatype.number(),
       unitPrice: faker.datatype.number(),
+      unitTaxesRounded: faker.datatype.number(),
     },
   ],
 };

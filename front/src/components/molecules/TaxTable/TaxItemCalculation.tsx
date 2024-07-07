@@ -114,6 +114,20 @@ export const TaxItemCalculation: React.FC<TaxItemCalculationProps> = ({
       ) : (
         <DisplayRate detailedProduct={detailedProduct} />
       )}
+      <div className="text-center flex flex-col gap-[2px]">
+        <Typography
+          weight="extrabold"
+          size="text-xs"
+          desktopSize="text-xs"
+          color="primary"
+          lineHeight="leading-none"
+        >
+          Total = {detailedProduct?.unitTaxes}€ après arrondi {detailedProduct?.unitTaxesRounded}€
+        </Typography>
+        <Typography size="text-xs" desktopSize="text-2xs" color="black" lineHeight="leading-none">
+          Règle de l'arrondi inférieur en dessous de 50 centimes
+        </Typography>
+      </div>
     </div>
   );
 };

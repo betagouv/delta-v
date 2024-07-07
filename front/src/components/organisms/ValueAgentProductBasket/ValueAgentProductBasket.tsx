@@ -60,7 +60,7 @@ export const ValueAgentProductBasket = ({
             {product.name}
           </Typography>
         </div>
-        {(product.unitPrice || product.unitTaxes) && (
+        {(product.unitPrice || product.unitTaxesRounded) && (
           <div className="flex flex-col divide-y divide-black">
             <div className="grid grid-cols-2 pb-2">
               <Typography
@@ -99,7 +99,7 @@ export const ValueAgentProductBasket = ({
                 textPosition="text-right"
                 weight="bold"
               >
-                {withCalculation ? `${product.unitTaxes} €` : 'non renseignés'}
+                {withCalculation ? `${product.unitTaxesRounded} €` : 'non renseignés'}
               </Typography>
             </div>
           </div>

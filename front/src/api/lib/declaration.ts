@@ -67,6 +67,7 @@ export interface CreateDeclarationResponse {
   totalCustomDuty: number;
   totalVat: number;
   totalTaxes: number;
+  totalTaxesRounded: number;
   franchiseAmount: number;
   declarationPublicId: string;
 }

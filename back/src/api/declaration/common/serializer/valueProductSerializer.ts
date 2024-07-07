@@ -17,6 +17,7 @@ export interface SerializedValueProduct {
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
+  unitTaxesRounded: number;
   notManagedProduct: boolean;
 }
 
@@ -38,5 +39,6 @@ export const serializeValueProduct = (
   unitCustomDuty: productTaxes.calculatedCustomDuty,
   unitVat: productTaxes.calculatedVat,
   unitTaxes: productTaxes.calculatedTaxes,
+  unitTaxesRounded: productTaxes.calculatedTaxesRounded,
   notManagedProduct: productTaxes.notManagedProduct,
 });

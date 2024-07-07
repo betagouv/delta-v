@@ -86,6 +86,7 @@ describe('test serializer', () => {
       totalCustomDuty: 15.2,
       totalVat: 40.04,
       totalTaxes: 55.24,
+      totalTaxesRounded: 55.0,
       franchiseAmount: 500,
       canCalculateTaxes: true,
       canCreateDeclaration: true,

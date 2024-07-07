@@ -179,6 +179,7 @@ describe('test simulator API', () => {
       totalCustomDuty: 0,
       totalVat: 0,
       totalTaxes: 0,
+      totalTaxesRounded: 0,
       franchiseAmount: 300,
       canCalculateTaxes: true,
     });
@@ -241,6 +242,7 @@ describe('test simulator API', () => {
       totalCustomDuty: 0,
       totalVat: 0,
       totalTaxes: 0,
+      totalTaxesRounded: 0,
       franchiseAmount: 300,
       canCalculateTaxes: false,
     });
