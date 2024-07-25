@@ -30,6 +30,11 @@ const Config = z.object({
   CELLAR_ADDON_KEY_SECRET: z.string(),
   CELLAR_ADDON_HOST: z.string(),
   CELLAR_BUCKET_NAME: z.string(),
+  AGENTCONNECT_CLIENT_ID: z.string(),
+  AGENTCONNECT_CLIENT_SECRET: z.string(),
+  AGENTCONNECT_REDIRECT_URI: z.string(),
+  AGENTCONNECT_TOKEN_ENDPOINT: z.string(),
+  AGENTCONNECT_USERINFO_ENDPOINT: z.string(),
 });
 export type Config = z.infer<typeof Config>;
 
