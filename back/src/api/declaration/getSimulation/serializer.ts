@@ -103,6 +103,7 @@ export const serializeSimulator = ({
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVat()).value,
     0,
   );
+
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
     customProducts: customProducts.map(serializeValueProduct),

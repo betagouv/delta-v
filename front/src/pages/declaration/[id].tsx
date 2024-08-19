@@ -65,6 +65,13 @@ const DeclarationSearch = () => {
               <SummaryDeclarationExport declarationResponse={declarationResponse} />
             </div>
             <div className="mb-2">
+              <Link to={`${Routing.declarationPayment}?declarationId=${id}`}>
+                <Button fullWidth variant="outlined">
+                  Payer
+                </Button>
+              </Link>
+            </div>
+            <div className="mb-2">
               <Link to={Routing.home}>
                 <Button fullWidth variant="outlined">
                   Revenir à l’accueil

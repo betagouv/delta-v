@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { DeclarationEntity, DeclarationEntityInterface } from '../entities/declaration.entity';
+import { DeclarationEntity, DeclarationEntityInterface, PaymentStatus } from '../entities/declaration.entity';
 import { AppDataSource } from '../loader/database';
 import DeclarationQueryBuilder from './queryBuilders/declaration.queryBuilder';
 
@@ -22,6 +22,10 @@ export type DeclarationRepositoryInterface = {
   updateOne(declarationId: string, declaration: UpdateDeclaration): Promise<void>;
   getAll(options: GetAllOptions): Promise<DeclarationEntityInterface[]>;
   getOneWithPublicId(publicDeclarationId: string): Promise<DeclarationEntityInterface | null>;
+  canMakePayment(declarationId: string): Promise<boolean>;
+  validatePayment(declarationId: string): Promise<void>;
+  rejectPayment(declarationId: string): Promise<void>;
+  getPaymentStatus(declarationId: string): Promise<string>;
 } & Repository<DeclarationEntity>;
 
 export const DeclarationRepository: DeclarationRepositoryInterface = AppDataSource.getRepository(
@@ -79,5 +83,35 @@ export const DeclarationRepository: DeclarationRepositoryInterface = AppDataSour
       .offset(offset);
 
     return query.getMany();
+  },
+  async validatePayment(declarationId: string): Promise<void> {
+    await this.createQueryBuilder('declaration')
+      .update(DeclarationEntity)
+      .set({ paymentStatus: PaymentStatus.VALIDATED })
+      .where('declaration.id = :declarationId', { declarationId })
+      .execute();
+  },
+  async rejectPayment(declarationId: string): Promise<void> {
+    await this.createQueryBuilder('declaration')
+      .update(DeclarationEntity)
+      .set({ paymentStatus: PaymentStatus.REFUSED })
+      .where('declaration.id = :declarationId', { declarationId })
+      .execute();
+  },
+  async canMakePayment(declarationId: string): Promise<boolean> {
+    const declaration = await this.createQueryBuilder('declaration')
+      .select('declaration.canCalculateTaxes')
+      .where('declaration.id = :declarationId', { declarationId })
+      .getOne();
+
+    return declaration?.canCalculateTaxes ?? false;
+  },
+  async getPaymentStatus(declarationId: string): Promise<string> {
+    const declaration = await this.createQueryBuilder('declaration')
+      .select('declaration.status')
+      .where('declaration.id = :declarationId', { declarationId })
+      .getOne();
+
+    return declaration?.status ?? 'unknown';
   },
 });

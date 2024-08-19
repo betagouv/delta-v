@@ -20,6 +20,12 @@ export enum ProductStatus {
   CUSTOM_PRODUCT = 'custom-product',
 }
 
+export enum PaymentStatus {
+  VALIDATED = 'validated',
+  PENDING = 'pending',
+  REFUSED = 'refused',
+}
+
 export interface VersionData {
   versionDate: Date;
   authorType: AuthorType;
@@ -51,6 +57,11 @@ export interface TaxesData {
   totalAmount: number;
 }
 
+export interface TaxesData {
+  paymentId: string | null;
+  paymentStatus: PaymentStatus;
+}
+
 export interface DeclarationVersion extends VersionData {
   products: ProductDeclaration[];
   declarationData: DeclarantData;
@@ -76,6 +87,7 @@ export interface ProductDeclaration {
   notManagedProduct: boolean;
 }
 
+
 export interface DeclarationEntityInterface extends VersionData, DeclarantData, TaxesData {
   id: string;
   publicId: string;
@@ -91,6 +103,12 @@ export class DeclarationEntity implements DeclarationEntityInterface {
 
   @Column({ type: 'varchar', length: 21, unique: true })
   publicId: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  paymentId: string | null;
+
+  @Column({ type: 'enum', enum: PaymentStatus, default: PaymentStatus.PENDING })
+  paymentStatus: PaymentStatus;
 
   @Column({ type: 'jsonb', select: false })
   products: ProductDeclaration[];

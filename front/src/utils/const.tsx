@@ -21,6 +21,7 @@ export enum Routing {
   declarationAge = '/declaration/ajout/age',
   declarationContactDetails = '/declaration/ajout/coordonnees',
   declarationTransport = '/declaration/ajout/transports',
+  declarationPayment = '/declaration/payment',
 }
 
 export enum RoutingAgent {
