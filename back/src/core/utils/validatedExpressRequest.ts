@@ -1,19 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Request, RequestHandler } from 'express';
-export type ValidatedRequest<RequestTypes> = Omit<Request, 'params' | 'body' | 'query'> &
+import { Request, RequestHandler, Response, NextFunction } from 'express';
+import { Session } from 'express-session';
+
+export interface CustomSession extends Session {
+  idToken: string;
+  state: string;
+  nonce: string;
+}
+
+interface CustomRequest extends Request {
+  session: CustomSession;
+}
+
+export type ValidatedRequest<RequestTypes> = Omit<CustomRequest, 'params' | 'body' | 'query'> &
   RequestTypes;
 
-export type RequestHandlerWithCustomRequestType = (
-  ...params: Parameters<RequestHandler<any, any, any, any>>
+export type RequestHandlerWithCustomRequestType<T = any> = (
+  req: ValidatedRequest<T>,
+  res: Response,
+  next: NextFunction,
 ) => any;
 
-type ValidatedExpressRequest = (route: RequestHandlerWithCustomRequestType) => any;
+type ValidatedExpressRequest = <T>(route: RequestHandlerWithCustomRequestType<T>) => RequestHandler;
 
-export const validatedExpressRequest: ValidatedExpressRequest = (
-  route: RequestHandlerWithCustomRequestType,
-): RequestHandlerWithCustomRequestType =>
-  function requestHandler(req, res, next): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return route(req, res, next);
+export const validatedExpressRequest: ValidatedExpressRequest = <T>(
+  route: RequestHandlerWithCustomRequestType<T>,
+): RequestHandler =>
+  function requestHandler(req: Request, res, next): void {
+    const customReq = req as unknown as ValidatedRequest<T>;
+    return route(customReq, res, next);
   };

@@ -34,6 +34,11 @@ export interface LoginResponse {
   refreshToken: string;
 }
 
+export interface AgentConnectCallbackOptions {
+  code: string;
+  state: string;
+}
+
 export const loginRequest = async (loginData: LoginRequestOptions): Promise<LoginResponse> => {
   const response = await axios.post('/login/', loginData);
   return response.data;
@@ -86,5 +91,16 @@ export const validateEmailRequest = async (token: string): Promise<ICommonRespon
   const response = await axios.post('/email/validate/', {
     token,
   });
+  return response.data;
+};
+
+export const initiateAgentConnectRequest = (): void => {
+  window.location.href = '/api/agent-connect/initiate';
+};
+
+export const agentConnectCallbackRequest = async (
+  callbackData: AgentConnectCallbackOptions,
+): Promise<LoginResponse> => {
+  const response = await axios.post('/agent-connect/authenticate', callbackData);
   return response.data;
 };

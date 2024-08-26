@@ -22,6 +22,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@codegouvfr/react-dsfr": "^1.11.4",
     "@datapunt/matomo-tracker-react": "0.5.1",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",

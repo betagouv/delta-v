@@ -1,4 +1,6 @@
 import { verify } from 'jsonwebtoken';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { TokenSet } from 'openid-client';
 import invalidTokenError from '../../api/common/errors/invalidToken.error';
 import { config } from '../../loader/config';
 import { AccessTokenAuthObject, IAuthObject } from './AuthObject';
@@ -52,6 +54,26 @@ export const buildTokenObject = async <T extends object>(
 
     if (!decoded) {
       throw invalidTokenError;
+    }
+
+    return decoded;
+  } catch {
+    throw invalidTokenError();
+  }
+};
+
+export const buildAgentConnectTokenObject = async (
+  token: string,
+  secret: string,
+  state: string,
+  nonce: string,
+  ignoreExpiration = false,
+): Promise<TokenSet> => {
+  try {
+    const decoded = await verifyToken<TokenSet>({ token, secret, ignoreExpiration });
+
+    if (decoded.state !== state || decoded.nonce !== nonce) {
+      throw invalidTokenError();
     }
 
     return decoded;

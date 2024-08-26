@@ -28,6 +28,14 @@ x-envs: &common-envs
   CELLAR_ADDON_KEY_ID: ${CELLAR_KEY_ID:-cellarLocalKeyId}
   CELLAR_ADDON_KEY_SECRET: ${CELLAR_KEY_SECRET:-cellarLocalKeySecret}
   CELLAR_BUCKET_NAME: ${CELLAR_BUCKET_NAME:-cellarLocalBucketName}
+  AGENTCONNECT_ISSUER: ${AGENTCONNECT_ISSUER:-agentconnectIssuerLocalDev}
+  AGENTCONNECT_CLIENT_ID: ${AGENTCONNECT_CLIENT_ID:-agentconnectClientIdLocalDev}
+  AGENTCONNECT_CLIENT_SECRET: ${AGENTCONNECT_CLIENT_SECRET:-agentconnectClientSecretLocalDev}
+  AGENTCONNECT_REDIRECT_URI: ${AGENTCONNECT_REDIRECT_URI:-http://localhost:8080/auth/agentconnect/callback}
+  AGENTCONNECT_TOKEN_ENDPOINT: ${AGENTCONNECT_TOKEN_ENDPOINT:-https://fca.integ01.dev-agentconnect.fr/api/v2/token}
+  AGENTCONNECT_USERINFO_ENDPOINT: ${AGENTCONNECT_USERINFO_ENDPOINT:-https://fca.integ01.dev-agentconnect.fr/api/v2/userinfo}
+  AGENTCONNECT_POST_LOGOUT_REDIRECT_URI: ${AGENTCONNECT_POST_LOGOUT_REDIRECT_URI:-http://localhost:3000}
+  SESSION_SECRET: ${SESSION_SECRET:-sessionSecretLocalDev}
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs

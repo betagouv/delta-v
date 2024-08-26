@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useAskEmailValidationMutation, useLoginMutation } from '@/api/hooks/useAPIAuth';
+import { initiateAgentConnectRequest } from '@/api/lib/auth';
+import { AgentConnectButton } from '@/components/atoms/AgentConnectButton';
 import { ApiError } from '@/components/atoms/ApiError';
 import { Button } from '@/components/atoms/Button';
 import { Link } from '@/components/atoms/Link';
@@ -93,6 +95,10 @@ const LoginPage = () => {
     }
   };
 
+  const handleAgentConnectClick = () => {
+    initiateAgentConnectRequest();
+  };
+
   return (
     <MainAuth
       withPadding={false}
@@ -150,6 +156,7 @@ const LoginPage = () => {
           <TextLink underline to={RoutingAuthentication.forgetPassword}>
             <Typography size="text-2xs">Mot de passe oublié ?</Typography>
           </TextLink>
+          <AgentConnectButton onClick={handleAgentConnectClick} />
           <div className="mt-5 flex flex-col items-center gap-2">
             {!isBadCredentialError && apiError?.message && (
               <>

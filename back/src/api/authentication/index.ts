@@ -7,6 +7,7 @@ import { resetPassword } from './resetPassword';
 import { askResetPassword } from './askResetPassword';
 import { refresh } from './refresh';
 import { changePassword } from './changePassword';
+import { agentConnectRouter } from './agentConnect';
 
 export default Router()
   .use(login)
@@ -16,4 +17,5 @@ export default Router()
   .use(askResetPassword)
   .use(askEmailValidation)
   .use(resetPassword)
-  .use(changePassword);
+  .use(changePassword)
+  .use(agentConnectRouter);
