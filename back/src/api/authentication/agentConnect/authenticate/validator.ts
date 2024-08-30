@@ -6,7 +6,7 @@ export const authenticateValidator = z.object({
     .object({
       code: z.string(),
       state: z.string(),
-      nonce: z.string(),
+      iss: z.string(),
     })
     .strict(),
 });

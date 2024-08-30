@@ -1,11 +1,14 @@
 import { useMutation, useQueryClient } from 'react-query';
 
 import {
+  AgentConnectCallbackOptions,
+  AgentConnectCallbackResponse,
   ChangePasswordRequestOptions,
   LoginRequestOptions,
   LoginResponse,
   RegisterRequestOptions,
   ResetPasswordRequestOptions,
+  agentConnectCallbackRequest,
   askEmailValidationRequest,
   askResetPasswordRequest,
   changePasswordRequest,
@@ -119,6 +122,21 @@ export const useChangePasswordMutation = ({
     changePasswordRequest,
     {
       onSuccess: (data: ICommonResponse) => {
+        if (onSuccess) {
+          onSuccess(data);
+        }
+      },
+    },
+  );
+};
+
+export const useAgentConnectCallbackMutation = ({
+  onSuccess,
+}: MutationSuccessCallback<AgentConnectCallbackResponse>) => {
+  return useMutation<AgentConnectCallbackResponse, IErrorResponse, AgentConnectCallbackOptions>(
+    agentConnectCallbackRequest,
+    {
+      onSuccess: (data: AgentConnectCallbackResponse) => {
         if (onSuccess) {
           onSuccess(data);
         }

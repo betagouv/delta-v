@@ -35,7 +35,8 @@ describe('AgentConnect authenticate endpoint', () => {
 
     const response = await request(testApp)
       .post('/api/agent-connect/authenticate')
-      .send({ code: 'mockCode', state: 'mockState', nonce: 'mockNonce' });
+      .send({ code: 'mockCode', state: 'mockState', nonce: 'mockNonce' })
+      .set('set-cookie', 'connect.sid=mockSessionId');
 
     expect(response.status).toBe(200);
   });

@@ -34,9 +34,14 @@ export interface LoginResponse {
   refreshToken: string;
 }
 
+export interface AgentConnectCallbackResponse {
+  idToken: string;
+}
+
 export interface AgentConnectCallbackOptions {
   code: string;
   state: string;
+  iss: string;
 }
 
 export const loginRequest = async (loginData: LoginRequestOptions): Promise<LoginResponse> => {
@@ -100,7 +105,7 @@ export const initiateAgentConnectRequest = (): void => {
 
 export const agentConnectCallbackRequest = async (
   callbackData: AgentConnectCallbackOptions,
-): Promise<LoginResponse> => {
+): Promise<AgentConnectCallbackResponse> => {
   const response = await axios.post('/agent-connect/authenticate', callbackData);
   return response.data;
 };

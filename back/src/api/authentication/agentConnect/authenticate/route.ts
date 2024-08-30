@@ -17,15 +17,19 @@ export default async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    const { code, state, nonce } = req.body;
-    if (req.session && (state !== req.session.state || nonce !== req.session.nonce)) {
+    const { code, state, iss } = req.body;
+    const nonce = req.session.nonce;
+
+    if (!state || state !== req.session.state || !nonce) {
       throw new Error('Invalid state or nonce parameter');
     }
 
     const { idToken } = await service({
+      req,
       code,
-      state: req.session.state,
-      nonce: req.session.nonce,
+      state,
+      iss,
+      nonce,
       agentConnectService,
       userRepository: AppDataSource.manager.withRepository(UserRepository),
     });
@@ -40,7 +44,7 @@ export default async (
     if (error instanceof Error && error.message === 'Invalid state or nonce parameter') {
       return res.status(HttpStatuses.BAD_REQUEST).send({ error: 'Invalid authentication request' });
     }
-    // Ajoutez d'autres cas d'erreur spécifiques à AgentConnect
     return next(error);
+    // Ajoutez d'autres cas d'erreur spécifiques à AgentConnect
   }
 };

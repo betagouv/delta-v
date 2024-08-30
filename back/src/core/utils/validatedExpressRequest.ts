@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { Http2ServerRequest } from 'http2';
 import { Request, RequestHandler, Response, NextFunction } from 'express';
 import { Session } from 'express-session';
 
@@ -14,7 +15,8 @@ interface CustomRequest extends Request {
 }
 
 export type ValidatedRequest<RequestTypes> = Omit<CustomRequest, 'params' | 'body' | 'query'> &
-  RequestTypes;
+  RequestTypes &
+  Http2ServerRequest;
 
 export type RequestHandlerWithCustomRequestType<T = any> = (
   req: ValidatedRequest<T>,

@@ -1,6 +1,5 @@
 import { verify } from 'jsonwebtoken';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { TokenSet } from 'openid-client';
 import invalidTokenError from '../../api/common/errors/invalidToken.error';
 import { config } from '../../loader/config';
 import { AccessTokenAuthObject, IAuthObject } from './AuthObject';
@@ -9,6 +8,25 @@ interface VerifyTokenOptions {
   token: string;
   secret: string;
   ignoreExpiration?: boolean;
+}
+
+interface IAgentConnectTokenObject {
+  token: string;
+  secret: string;
+  nonce: string;
+  ignoreExpiration?: boolean;
+}
+
+interface IAgentConnectTokenObjectResponse {
+  sub: string;
+  auth_time: number;
+  acr: string;
+  nonce: string;
+  at_hash: string;
+  aud: string;
+  exp: number;
+  iat: number;
+  iss: string;
 }
 
 export const checkAndReturnAuthAccessToken = (header: string | undefined): string => {
@@ -36,6 +54,7 @@ export const verifyToken = async <T extends object>({
           return reject(err);
         }
         if (decoded) {
+          console.log('🚀 ~ decoded:', decoded);
           resolve(decoded as T);
         }
         return reject();
@@ -62,17 +81,21 @@ export const buildTokenObject = async <T extends object>(
   }
 };
 
-export const buildAgentConnectTokenObject = async (
-  token: string,
-  secret: string,
-  state: string,
-  nonce: string,
+export const buildAgentConnectTokenObject = async ({
+  token,
+  secret,
+  nonce,
   ignoreExpiration = false,
-): Promise<TokenSet> => {
+}: IAgentConnectTokenObject): Promise<IAgentConnectTokenObjectResponse> => {
   try {
-    const decoded = await verifyToken<TokenSet>({ token, secret, ignoreExpiration });
+    const decoded = await verifyToken<IAgentConnectTokenObjectResponse>({
+      token,
+      secret,
+      ignoreExpiration,
+    });
+    console.log('🚀 ~ decoded:', decoded);
 
-    if (decoded.state !== state || decoded.nonce !== nonce) {
+    if (decoded.nonce !== nonce) {
       throw invalidTokenError();
     }
 

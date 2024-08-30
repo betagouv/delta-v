@@ -6,7 +6,7 @@ const Config = z.object({
   NODE_ENV: z.string().default('development'),
   PORT: z
     .string()
-    .default('8080')
+    .default('3000')
     .refine((val) => !Number.isNaN(parseInt(val, 10)), {
       message: 'Expected number, received a string',
     }),
@@ -37,6 +37,8 @@ const Config = z.object({
   AGENTCONNECT_TOKEN_ENDPOINT: z.string(),
   AGENTCONNECT_USERINFO_ENDPOINT: z.string(),
   AGENTCONNECT_POST_LOGOUT_REDIRECT_URI: z.string(),
+  AGENTCONNECT_ID_TOKEN_SIGNED_RESPONSE_ALG: z.string(),
+  AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG: z.string(),
   SESSION_SECRET: z.string(),
 });
 export type Config = z.infer<typeof Config>;
