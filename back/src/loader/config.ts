@@ -39,6 +39,7 @@ const Config = z.object({
   AGENTCONNECT_POST_LOGOUT_REDIRECT_URI: z.string(),
   AGENTCONNECT_ID_TOKEN_SIGNED_RESPONSE_ALG: z.string(),
   AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG: z.string(),
+  AGENTCONNECT_SCOPE: z.string(),
   SESSION_SECRET: z.string(),
 });
 export type Config = z.infer<typeof Config>;

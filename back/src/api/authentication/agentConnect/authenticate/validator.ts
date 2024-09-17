@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { buildValidationMiddleware } from '../../../../core/middlewares';
 
 export const authenticateValidator = z.object({
-  body: z
+  query: z
     .object({
       code: z.string(),
       state: z.string(),

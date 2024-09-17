@@ -11,7 +11,11 @@ import { MAIN_MENU_AGENT_ITEMS } from '@/utils/const';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 import { Constants } from '@/utils/enums';
 
-const HomepageAgentDesktop = () => {
+interface HomepageAgentDesktopProps {
+  handleLogout: () => void;
+}
+
+const HomepageAgentDesktop = ({ handleLogout }: HomepageAgentDesktopProps) => {
   const router = useRouter();
   const path = router.pathname;
   const [searchValue, setSearchValue] = useState<string>('');
@@ -59,7 +63,7 @@ const HomepageAgentDesktop = () => {
     <>
       <div className="bg-navbar-bg">
         <div className="flex place-content-center">
-          <NavBar links={MAIN_MENU_AGENT_ITEMS} activePath={path} />
+          <NavBar links={MAIN_MENU_AGENT_ITEMS} activePath={path} handleLogout={handleLogout} />
         </div>
         <div className="mx-auto flex flex-col pb-10 gap-[14px]">
           <BlockHeaderAgent

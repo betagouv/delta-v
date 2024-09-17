@@ -6,6 +6,7 @@ import shallow from 'zustand/shallow';
 
 import { Typography } from '../../atoms/Typography';
 import { SvgIcon } from '../SvgIcon';
+import { Button } from '@/components/atoms/Button';
 import { ModalResumeDeclaration } from '@/components/organisms/ModalResumeDeclaration';
 import { useStore } from '@/stores/store';
 import clsxm from '@/utils/clsxm';
@@ -15,6 +16,7 @@ import { checkIsOneOfDeclarationStepsPath, getLevelWithData } from '@/utils/decl
 interface NavBarProps {
   links: MenuAgentItem[];
   activePath?: string;
+  handleLogout: () => void;
 }
 
 const getNavBarLink = (item: MenuAgentItem) => {
@@ -24,7 +26,7 @@ const getNavBarLink = (item: MenuAgentItem) => {
   return item.path ?? '';
 };
 
-export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps) => {
+export const NavBar: React.FC<NavBarProps> = ({ links, activePath, handleLogout }: NavBarProps) => {
   const router = useRouter();
   const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
 
@@ -129,6 +131,10 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath }: NavBarProps
             </div>
           );
         })}
+
+        <Button onClick={handleLogout} icon="logout">
+          Déconnexion
+        </Button>
       </div>
       <ModalResumeDeclaration
         open={openModalResumeDeclaration}

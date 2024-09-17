@@ -8,16 +8,16 @@ interface ILogoutServiceOptions {
 
 interface ILogoutServiceResponse {
   logoutUrl: string;
+  state: string;
 }
 
 export const service = ({
   idToken,
   agentConnectService,
 }: ILogoutServiceOptions): ILogoutServiceResponse => {
-  const state = generateRandomString();
-  const nonce = generateRandomString();
+  const state = generateRandomString(32);
 
-  const logoutUrl = agentConnectService.getLogoutUrl(idToken, state, nonce);
+  const logoutUrl = agentConnectService.getLogoutUrl(idToken, state);
 
-  return { logoutUrl };
+  return { logoutUrl, state };
 };

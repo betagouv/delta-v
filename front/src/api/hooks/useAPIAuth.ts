@@ -3,12 +3,15 @@ import { useMutation, useQueryClient } from 'react-query';
 import {
   AgentConnectCallbackOptions,
   AgentConnectCallbackResponse,
+  AgentConnectLogoutCallbackOptions,
   ChangePasswordRequestOptions,
   LoginRequestOptions,
   LoginResponse,
   RegisterRequestOptions,
   ResetPasswordRequestOptions,
   agentConnectCallbackRequest,
+  agentConnectLogoutCallbackRequest,
+  agentConnectLogoutRequest,
   askEmailValidationRequest,
   askResetPasswordRequest,
   changePasswordRequest,
@@ -138,7 +141,40 @@ export const useAgentConnectCallbackMutation = ({
     {
       onSuccess: (data: AgentConnectCallbackResponse) => {
         if (onSuccess) {
+          setAccessToken(data.accessToken);
+          setRefreshToken(data.refreshToken);
           onSuccess(data);
+        }
+      },
+    },
+  );
+};
+
+export const useAgentConnectLogoutMutation = ({ onSuccess }: MutationSuccessCallback<void>) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, IErrorResponse, void>(agentConnectLogoutRequest, {
+    onSuccess: (data: void) => {
+      queryClient.clear();
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
+};
+
+export const useAgentConnectLogoutCallbackMutation = ({
+  onSuccess,
+}: MutationSuccessCallback<void>) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, IErrorResponse, AgentConnectLogoutCallbackOptions>(
+    agentConnectLogoutCallbackRequest,
+    {
+      onSuccess: () => {
+        queryClient.clear();
+        if (onSuccess) {
+          onSuccess();
         }
       },
     },

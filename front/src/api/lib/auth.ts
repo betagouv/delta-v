@@ -32,16 +32,27 @@ export interface ChangePasswordRequestOptions {
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
+  lastRefresh: boolean;
 }
 
 export interface AgentConnectCallbackResponse {
-  idToken: string;
+  accessToken: string;
+  refreshToken: string;
+  lastRefresh: boolean;
 }
 
 export interface AgentConnectCallbackOptions {
   code: string;
   state: string;
   iss: string;
+}
+
+export interface AgentConnectLogoutResponse {
+  logoutUrl: string;
+}
+
+export interface AgentConnectLogoutCallbackOptions {
+  state: string;
 }
 
 export const loginRequest = async (loginData: LoginRequestOptions): Promise<LoginResponse> => {
@@ -106,6 +117,18 @@ export const initiateAgentConnectRequest = (): void => {
 export const agentConnectCallbackRequest = async (
   callbackData: AgentConnectCallbackOptions,
 ): Promise<AgentConnectCallbackResponse> => {
-  const response = await axios.post('/agent-connect/authenticate', callbackData);
+  const response = await axios.get(
+    `/agent-connect/authenticate?code=${callbackData.code}&state=${callbackData.state}&iss=${callbackData.iss}`,
+  );
   return response.data;
+};
+
+export const agentConnectLogoutRequest = async (): Promise<void> => {
+  window.location.href = '/api/agent-connect/logout';
+};
+
+export const agentConnectLogoutCallbackRequest = async ({
+  state,
+}: AgentConnectLogoutCallbackOptions): Promise<void> => {
+  await axios.post('/agent-connect/logout-callback', { state });
 };

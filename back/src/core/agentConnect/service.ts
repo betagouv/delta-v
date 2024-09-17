@@ -10,9 +10,10 @@ export interface IAgentConnectService {
   getTokenSet(params: any, state: string, nonce: string): Promise<TokenSet>;
   getUserInfo(accessToken: string): Promise<any>;
   mapToUser(userInfo: any): Agent;
-  getLogoutUrl(idToken: string, state: string, nonce: string): string;
+  getLogoutUrl(idToken: string, state: string): string;
   getPublicKey(): Promise<jose.KeyLike>;
   refreshTokenSet(tokenSet: TokenSet): Promise<TokenSet>;
+  checkAndRefreshToken(tokenSet: TokenSet): Promise<TokenSet>;
 }
 
 export class AgentConnectService implements IAgentConnectService {
@@ -38,8 +39,9 @@ export class AgentConnectService implements IAgentConnectService {
   }
 
   public getAuthorizationUrl(state: string, nonce: string): string {
+    console.log('🚀 ~ AgentConnectService ~ getAuthorizationUrl ~ state:', this.config.scope);
     return this.client.authorizationUrl({
-      scope: 'openid email profile',
+      scope: this.config.scope,
       state,
       nonce,
       acr_values: 'eidas1',
@@ -57,7 +59,6 @@ export class AgentConnectService implements IAgentConnectService {
         state,
         nonce,
       });
-      console.log('🚀 ~ AgentConnectService ~ getTokenSet ~ tokenSet:', tokenSet);
       return tokenSet;
     } catch (error) {
       console.error('Error in getTokenSet:', error);
@@ -66,11 +67,6 @@ export class AgentConnectService implements IAgentConnectService {
   }
 
   public async getUserInfo(accessToken: string): Promise<any> {
-    console.log('🚀 ~ AgentConnectService ~ getUserInfo ~ access_token:', accessToken);
-    console.log(
-      '🚀 ~ AgentConnectService ~ getUserInfo ~ this.client:',
-      this.issuer.metadata.userinfo_endpoint,
-    );
     try {
       return await this.client.userinfo(accessToken);
     } catch (error) {
@@ -91,14 +87,12 @@ export class AgentConnectService implements IAgentConnectService {
     };
   }
 
-  public getLogoutUrl(idToken: string, state: string, nonce: string): string {
-    const params = new URLSearchParams({
+  public getLogoutUrl(idToken: string, state: string): string {
+    return this.client.endSessionUrl({
       id_token_hint: idToken,
       state,
-      nonce,
       post_logout_redirect_uri: this.config.postLogoutRedirectUri,
     });
-    return `${this.config.postLogoutRedirectUri}?${params.toString()}`;
   }
 
   public async getPublicKey(): Promise<jose.KeyLike> {
@@ -110,7 +104,7 @@ export class AgentConnectService implements IAgentConnectService {
       const jwks = jose.createRemoteJWKSet(new URL(this.issuer.metadata.jwks_uri as string));
 
       // Récupérer la clé publique
-      const key = await jwks({ alg: 'RS256' });
+      const key = await jwks({ alg: this.config.id_token_signed_response_alg });
 
       if (!key) {
         throw new Error('No public key found');
@@ -128,5 +122,14 @@ export class AgentConnectService implements IAgentConnectService {
       throw new Error('No refresh token available');
     }
     return await this.client.refresh(tokenSet.refresh_token);
+  }
+
+  public async checkAndRefreshToken(tokenSet: TokenSet): Promise<TokenSet> {
+    if (tokenSet.expired()) {
+      console.log('Token expired, refreshing...');
+      return await this.refreshTokenSet(tokenSet);
+    }
+    console.log('Token is still valid');
+    return tokenSet;
   }
 }

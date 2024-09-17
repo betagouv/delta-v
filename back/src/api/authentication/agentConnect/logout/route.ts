@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import { agentConnectService } from '../../../../core/agentConnect/client';
-import { CustomSession, ValidatedRequest } from '../../../../core/utils/validatedExpressRequest';
+import { ValidatedRequest } from '../../../../core/utils/validatedExpressRequest';
 import { service } from './service';
 
 type LogoutRequest = ValidatedRequest<Request>;
@@ -13,12 +13,10 @@ export default (req: LogoutRequest, res: Response, next: NextFunction): void => 
       return;
     }
 
-    const { logoutUrl } = service({ idToken, agentConnectService });
+    const { logoutUrl, state } = service({ idToken, agentConnectService });
 
-    // Effacer la session
-    if (req.session) {
-      req.session = {} as CustomSession;
-    }
+    // Stocker le state dans la session
+    req.session.logoutState = state;
 
     res.redirect(logoutUrl);
   } catch (error) {

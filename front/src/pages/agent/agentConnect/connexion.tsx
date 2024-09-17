@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -12,23 +12,25 @@ const AgentConnectCallbackPage = () => {
   const router = useRouter();
   const agentConnectCallbackMutation = useAgentConnectCallbackMutation({
     onSuccess: (data) => {
-      console.log('🚀 ~ AgentConnectCallbackPage ~ data:', data);
-
+      setUserFromToken(data.accessToken, data.refreshToken);
       router.replace('/agent');
     },
   });
 
+  const hasCalledRef = useRef(false);
+
   useEffect(() => {
     const { code, state, iss } = router.query;
 
-    if (code && state) {
+    if (code && state && !hasCalledRef.current) {
+      hasCalledRef.current = true;
       agentConnectCallbackMutation.mutate({
         code: code as string,
         state: state as string,
         iss: iss as string,
       });
     }
-  }, []);
+  }, [router.query]);
 
   return <div>Authentification en cours...</div>;
 };

@@ -8,6 +8,7 @@ export interface AgentConnectConfig {
   postLogoutRedirectUri: string;
   id_token_signed_response_alg: string;
   userinfo_signed_response_alg: string;
+  scope: string;
 }
 
 export const agentConnectConfig: AgentConnectConfig = {
@@ -18,4 +19,5 @@ export const agentConnectConfig: AgentConnectConfig = {
   postLogoutRedirectUri: config.AGENTCONNECT_POST_LOGOUT_REDIRECT_URI,
   id_token_signed_response_alg: config.AGENTCONNECT_ID_TOKEN_SIGNED_RESPONSE_ALG,
   userinfo_signed_response_alg: config.AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG,
+  scope: config.AGENTCONNECT_SCOPE,
 };

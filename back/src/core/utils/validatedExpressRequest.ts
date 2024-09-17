@@ -6,8 +6,11 @@ import { Session } from 'express-session';
 
 export interface CustomSession extends Session {
   idToken: string;
+  refreshToken: string;
   state: string;
   nonce: string;
+  logoutState: string;
+  logoutNonce: string;
 }
 
 interface CustomRequest extends Request {

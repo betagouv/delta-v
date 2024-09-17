@@ -8,11 +8,9 @@ type InitiateRequest = ValidatedRequest<Request>;
 export default (req: InitiateRequest, res: Response, next: NextFunction): void => {
   try {
     const { state, nonce, authorizationUrl } = service({ agentConnectService });
-    console.log('🚀 ~ authorizationUrl:', authorizationUrl);
 
     req.session.state = state;
     req.session.nonce = nonce;
-    console.log('🚀 ~ req.session:', req.session);
 
     res.redirect(authorizationUrl);
   } catch (error) {

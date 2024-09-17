@@ -3,8 +3,8 @@ import { validatedExpressRequest } from '../../../../core/utils/validatedExpress
 import route from './route';
 import validationMiddleware from './validator';
 
-export const authenticateAgentConnect = Router().get(
-  '/authenticate',
+export const logoutCallbackAgentConnect = Router().post(
+  '/logout-callback',
   validationMiddleware,
   validatedExpressRequest(route),
 );
