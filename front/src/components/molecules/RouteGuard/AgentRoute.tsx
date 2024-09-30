@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { ModalTokenExpire } from '../../organisms/ModalTokenExpire';
-import { useRefreshMutation } from '@/api/hooks/useAPIAuth';
+import { useAgentConnectLogoutMutation, useRefreshMutation } from '@/api/hooks/useAPIAuth';
 import useTokenValidity, { TokenValidity } from '@/hooks/useTokenValidity';
 import { useStore } from '@/stores/store';
 import { clearTokens, hasToken } from '@/utils/auth';
@@ -36,6 +36,12 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
     },
   });
 
+  const agentConnectLogoutMutation = useAgentConnectLogoutMutation({});
+
+  const disconnectAgentConnect = () => {
+    agentConnectLogoutMutation.mutate();
+  };
+
   const disconnect = () => {
     clearUser();
     clearTokens();
@@ -45,8 +51,13 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
   useEffect(() => {
     setShowExpirationModal(tokenValidity === TokenValidity.SOON_EXPIRED);
 
-    if (tokenValidity === TokenValidity.INVALID || !hasToken()) {
+    if (!hasToken()) {
       disconnect();
+      return;
+    }
+
+    if (tokenValidity === TokenValidity.INVALID) {
+      disconnectAgentConnect();
     }
   }, [tokenValidity]);
 

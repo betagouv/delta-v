@@ -25,7 +25,7 @@ export default async (
 
     const redisClient = getRedisConnection();
 
-    const { idToken, accessToken, refreshToken } = await service({
+    const { idToken, accessToken, refreshToken, lastRefresh } = await service({
       req,
       state,
       nonce,
@@ -40,7 +40,7 @@ export default async (
       req.session.refreshToken = refreshToken;
     }
 
-    return res.send({ accessToken, refreshToken }).status(HttpStatuses.OK);
+    return res.send({ accessToken, refreshToken, lastRefresh }).status(HttpStatuses.OK);
   } catch (error) {
     if (error instanceof Error && error.message === 'Invalid state or nonce parameter') {
       return res.status(HttpStatuses.BAD_REQUEST).send({ error: 'Invalid authentication request' });

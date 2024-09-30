@@ -39,6 +39,8 @@ export const service = async ({
     userId: user.id,
     email: user.email,
     isAgent: true,
+    name: '',
+    lastName: '',
   });
   const newRefreshToken = await generateRefreshToken({ userId: user.id, email: user.email });
 

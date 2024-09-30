@@ -7,6 +7,7 @@ import { Agent } from './lib';
 
 export interface IAgentConnectService {
   getAuthorizationUrl(state: string, nonce: string): string;
+  getCallbackParams(req: IncomingMessage | string | Http2ServerRequest): any;
   getTokenSet(params: any, state: string, nonce: string): Promise<TokenSet>;
   getUserInfo(accessToken: string): Promise<any>;
   mapToUser(userInfo: any): Agent;
@@ -14,6 +15,7 @@ export interface IAgentConnectService {
   getPublicKey(): Promise<jose.KeyLike>;
   refreshTokenSet(tokenSet: TokenSet): Promise<TokenSet>;
   checkAndRefreshToken(tokenSet: TokenSet): Promise<TokenSet>;
+  verifyIdToken(idToken: string): Promise<jose.JWTVerifyResult>;
 }
 
 export class AgentConnectService implements IAgentConnectService {
@@ -39,7 +41,6 @@ export class AgentConnectService implements IAgentConnectService {
   }
 
   public getAuthorizationUrl(state: string, nonce: string): string {
-    console.log('🚀 ~ AgentConnectService ~ getAuthorizationUrl ~ state:', this.config.scope);
     return this.client.authorizationUrl({
       scope: this.config.scope,
       state,
@@ -131,5 +132,18 @@ export class AgentConnectService implements IAgentConnectService {
     }
     console.log('Token is still valid');
     return tokenSet;
+  }
+
+  public async verifyIdToken(idToken: string): Promise<jose.JWTVerifyResult> {
+    try {
+      const publicKey = await this.getPublicKey();
+      return await jose.jwtVerify(idToken, publicKey, {
+        issuer: this.config.issuer,
+        audience: this.config.clientId,
+      });
+    } catch (error) {
+      console.error('Error verifying ID token:', error);
+      throw error;
+    }
   }
 }

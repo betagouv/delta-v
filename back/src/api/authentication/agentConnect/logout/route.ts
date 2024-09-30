@@ -9,7 +9,7 @@ export default (req: LogoutRequest, res: Response, next: NextFunction): void => 
   try {
     const idToken = req.session?.idToken;
     if (!idToken) {
-      res.status(400).json({ error: 'No active session' });
+      res.status(400).json({ error: 'Missing idToken in session' });
       return;
     }
 

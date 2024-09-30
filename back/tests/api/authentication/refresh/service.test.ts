@@ -16,6 +16,8 @@ describe('refresh service', () => {
       email: user.email,
       userId: user.id,
       isAgent: true,
+      name: '',
+      lastName: '',
     });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
 
@@ -37,6 +39,8 @@ describe('refresh service', () => {
       email: user.email,
       userId: faker.string.uuid(),
       isAgent: true,
+      name: '',
+      lastName: '',
     });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
 
@@ -56,6 +60,8 @@ describe('refresh service', () => {
       email: user.email,
       userId: user.id,
       isAgent: true,
+      name: '',
+      lastName: '',
     });
     const refreshToken = await generateRefreshToken({
       email: user.email,
@@ -78,6 +84,8 @@ describe('refresh service', () => {
       email: user.email,
       userId: user.id,
       isAgent: true,
+      name: '',
+      lastName: '',
     });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
 
@@ -97,6 +105,8 @@ describe('refresh service', () => {
       email: user.email,
       userId: user.id,
       isAgent: true,
+      name: '',
+      lastName: '',
     });
     const refreshToken = await generateRefreshToken({ email: user.email, userId: user.id });
 

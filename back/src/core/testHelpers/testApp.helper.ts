@@ -1,4 +1,7 @@
 import { Router, Express } from 'express';
+import session from 'express-session';
+// eslint-disable-next-line no-restricted-imports
+import { testSessionMiddleware } from '../../../tests/helpers/testSessionMiddleware';
 
 export interface IBuildAppFunctionArgs {
   prefix: string;
@@ -14,10 +17,24 @@ export type BuildAppFunction = (args: IBuildAppFunctionArgs) => Express;
 export const buildTestAppHelper =
   (buildAppFunction: BuildAppFunction, servicePrefix: string) =>
   (router: Router, otherPrefix?: string): Express => {
-    return buildAppFunction({
+    const app = buildAppFunction({
       prefix: `${servicePrefix}${otherPrefix || ''}`,
       router: router,
     });
+
+    // Ajout du middleware de session
+    app.use(
+      session({
+        secret: 'test-secret',
+        resave: false,
+        saveUninitialized: true,
+      }),
+    );
+
+    // Ajout du middleware de test pour la session
+    app.use(testSessionMiddleware);
+
+    return app;
   };
 
 /**

@@ -1,5 +1,4 @@
 import { decode } from 'jsonwebtoken';
-import * as jose from 'jose';
 import { Redis } from 'ioredis'; // Import Redis type
 import { v4 as uuidv4 } from 'uuid';
 import { AgentConnectService } from '../../../../core/agentConnect/service';
@@ -23,6 +22,7 @@ interface IAuthenticateServiceResponse {
   idToken: string;
   accessToken: string;
   refreshToken: string;
+  lastRefresh: boolean;
 }
 
 export const service = async ({
@@ -36,7 +36,6 @@ export const service = async ({
   try {
     const params = agentConnectService.getCallbackParams(req);
     const tokenSet = await agentConnectService.getTokenSet(params, state, nonce);
-    console.log('🚀 ~ tokenSet:', tokenSet);
 
     if (!tokenSet.access_token) {
       throw new Error('No access token received');
@@ -57,13 +56,8 @@ export const service = async ({
       throw new Error('Invalid token algorithm');
     }
 
-    const publicKey = await agentConnectService.getPublicKey();
-
     try {
-      const { payload } = await jose.jwtVerify(idToken, publicKey, {
-        issuer: config.AGENTCONNECT_ISSUER,
-        audience: config.AGENTCONNECT_CLIENT_ID,
-      });
+      const { payload } = await agentConnectService.verifyIdToken(idToken);
 
       if (payload.nonce !== nonce) {
         throw new Error('Invalid nonce');
@@ -86,18 +80,34 @@ export const service = async ({
       await userRepository.createUser(user);
     }
 
-    const accessToken = await generateAccessToken({
-      userId: userInfo.uid,
-      email: userInfo.email,
-      name: userInfo.given_name,
-      lastName: userInfo.usual_name,
-      isAgent: true,
-    });
+    console.log('🚀 ~ user:', user);
+
+    const accessTokenExpiry = Math.min(
+      convertToMilliseconds(config.ACCESS_TOKEN_LIFE),
+      tokenSet.expires_at
+        ? new Date(tokenSet.expires_at * 1000).getTime() - new Date().getTime()
+        : convertToMilliseconds(config.ACCESS_TOKEN_LIFE),
+    );
+
+    const accessToken = await generateAccessToken(
+      {
+        userId: userInfo.uid,
+        email: userInfo.email,
+        name: userInfo.given_name,
+        lastName: userInfo.usual_name,
+        isAgent: true,
+      },
+      accessTokenExpiry,
+    );
+
+    console.log(convertToMilliseconds(config.REFRESH_TOKEN_LIFE));
+    console.log(tokenSet.expires_at);
+    console.log(new Date((tokenSet.expires_at ?? 0) * 1000).getTime() - new Date().getTime());
 
     const refreshTokenExpiry = Math.min(
       convertToMilliseconds(config.REFRESH_TOKEN_LIFE),
       tokenSet.expires_at
-        ? tokenSet.expires_at * 1000 - Date.now()
+        ? new Date(tokenSet.expires_at * 1000).getTime() - new Date().getTime()
         : convertToMilliseconds(config.REFRESH_TOKEN_LIFE),
     );
 
@@ -115,6 +125,7 @@ export const service = async ({
       idToken,
       accessToken,
       refreshToken,
+      lastRefresh: refreshTokenExpiry === tokenSet.expires_at ? true : false,
     };
   } catch (error) {
     console.error('Error in authentication service:', error);

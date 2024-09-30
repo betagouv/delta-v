@@ -7,10 +7,10 @@ describe('AgentConnect authenticate validator', () => {
 
   it('should validate proper data', () => {
     const validData = {
-      body: {
+      query: {
         code: 'mockCode',
         state: 'mockState',
-        nonce: 'mockNonce',
+        iss: 'mockIssuer',
       },
     };
     expect(isValid(validData)).toBe(true);
@@ -19,7 +19,7 @@ describe('AgentConnect authenticate validator', () => {
 
   it('should invalidate data with missing properties', () => {
     const invalidData = {
-      body: {
+      query: {
         code: 'mockCode',
         state: 'mockState',
       },
@@ -29,10 +29,10 @@ describe('AgentConnect authenticate validator', () => {
 
   it('should invalidate data with extra properties', () => {
     const invalidData = {
-      body: {
+      query: {
         code: 'mockCode',
         state: 'mockState',
-        nonce: 'mockNonce',
+        iss: 'mockIssuer',
         extraProp: 'value',
       },
     };

@@ -59,7 +59,13 @@ export const prepareContextUser = async ({
   if (saveUser) {
     await testDb.persistUser(user);
   }
-  const accessToken = await generateAccessToken({ email: user.email, userId, isAgent: true });
+  const accessToken = await generateAccessToken({
+    email: user.email,
+    userId,
+    isAgent: true,
+    name: 'John',
+    lastName: 'Doe',
+  });
   const refreshToken = await generateRefreshToken(
     {
       email: user.email,

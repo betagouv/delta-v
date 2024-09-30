@@ -28,7 +28,6 @@ export const service = async ({
   userRepository,
   redisClient,
 }: RefreshServiceOptions): Promise<RefreshServiceResponse> => {
-  console.log('🚀 ~ lastRefresh:', lastRefresh);
   const userAccessToken = await buildAccessTokenObject(accessToken, true);
   const userRefreshToken = await buildRefreshTokenObject(refreshToken);
 

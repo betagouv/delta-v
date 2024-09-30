@@ -18,15 +18,20 @@ interface IAgentConnectTokenObject {
 }
 
 interface IAgentConnectTokenObjectResponse {
-  sub: string;
-  auth_time: number;
-  acr: string;
-  nonce: string;
-  at_hash: string;
-  aud: string;
-  exp: number;
-  iat: number;
-  iss: string;
+  header: {
+    alg: string;
+  };
+  payload: {
+    sub: string;
+    auth_time: number;
+    acr: string;
+    nonce: string;
+    at_hash: string;
+    aud: string;
+    exp: number;
+    iat: number;
+    iss: string;
+  };
 }
 
 export const checkAndReturnAuthAccessToken = (header: string | undefined): string => {
@@ -54,7 +59,6 @@ export const verifyToken = async <T extends object>({
           return reject(err);
         }
         if (decoded) {
-          console.log('🚀 ~ decoded:', decoded);
           resolve(decoded as T);
         }
         return reject();
@@ -93,9 +97,8 @@ export const buildAgentConnectTokenObject = async ({
       secret,
       ignoreExpiration,
     });
-    console.log('🚀 ~ decoded:', decoded);
 
-    if (decoded.nonce !== nonce) {
+    if (decoded.payload.nonce !== nonce) {
       throw invalidTokenError();
     }
 

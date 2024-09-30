@@ -12,6 +12,9 @@ describe('AgentConnectService', () => {
     clientSecret: 'mockClientSecret',
     redirectUri: 'https://mock-redirect.com',
     postLogoutRedirectUri: 'https://mock-logout.com',
+    id_token_signed_response_alg: 'RS256',
+    userinfo_signed_response_alg: 'RS256',
+    scope: 'openid email profile',
   };
 
   let agentConnectService: AgentConnectService;
@@ -25,7 +28,6 @@ describe('AgentConnectService', () => {
       endSessionUrl: jest.fn(),
     } as unknown as jest.Mocked<Client>;
 
-    console.log('🚀 ~ describe ~ mockClient:', mockClient);
     (Issuer.discover as jest.Mock).mockResolvedValue({
       Client: jest.fn().mockReturnValue(mockClient),
     });
@@ -69,11 +71,10 @@ describe('AgentConnectService', () => {
 
     const result = await agentConnectService.getTokenSet('mockCode', 'mockState', 'mockNonce');
     expect(result).toBe(mockTokenSet);
-    expect(mockClient.callback).toHaveBeenCalledWith(
-      mockConfig.redirectUri,
-      { code: 'mockCode' },
-      { state: 'mockState', nonce: 'mockNonce' },
-    );
+    expect(mockClient.callback).toHaveBeenCalledWith(mockConfig.redirectUri, 'mockCode', {
+      state: 'mockState',
+      nonce: 'mockNonce',
+    });
   });
 
   it('should get user info', async () => {

@@ -1,11 +1,20 @@
 import { Express } from 'express';
 import request from 'supertest';
 import buildTestApp from '../../../../helpers/testApp.helper';
-import api from '../../../../../src/api';
-import { agentConnectService } from '../../../../../src/core/agentConnect/client';
 import { testDbManager } from '../../../../helpers/testDb.helper';
+import { CustomSession } from '../../../../../src/core/utils/validatedExpressRequest';
+import api from '../../../../../src/api';
 
-jest.mock('../../../../../src/core/agentConnect/client');
+jest.mock('../../../../../src/core/agentConnect/client', () => {
+  const originalModule = jest.requireActual('../../../../../src/core/agentConnect/client');
+
+  return {
+    ...originalModule,
+    agentConnectService: {
+      getLogoutUrl: jest.fn().mockReturnValue('https://mock-logout-url.com'),
+    },
+  };
+});
 
 const testDb = testDbManager();
 
@@ -17,22 +26,37 @@ describe('AgentConnect logout endpoint', () => {
     testApp = buildTestApp(api);
   });
 
-  it.only('should redirect to logout URL', async () => {
-    const mockLogoutUrl = 'https://mock-logout-url.com';
-    (agentConnectService.getLogoutUrl as jest.Mock).mockReturnValue(mockLogoutUrl);
-
-    const response = await request(testApp)
-      .get('/api/agent-connect/logout')
-      .set('Cookie', ['idToken=mockIdToken']);
-
-    expect(response.status).toBe(302);
-    expect(response.header.location).toBe(mockLogoutUrl);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should return 400 if no active session', async () => {
-    const response = await request(testApp).get('/api/agent-connect/logout');
+  it('should return logout URL successfully', async () => {
+    const mockSession: Partial<CustomSession> = {
+      idToken: 'mockIdToken',
+    };
+
+    const agent = request.agent(testApp);
+
+    // Définir la session avant d'effectuer la requête de déconnexion
+    await agent.post('/api/set-session-for-test').send(mockSession);
+
+    const response = await agent.get('/api/agent-connect/logout');
+
+    expect(response.status).toBe(302);
+    expect(response.header.location).toBe('https://mock-logout-url.com');
+  });
+
+  it('should return 400 if idToken is missing in session', async () => {
+    const invalidSession: Partial<CustomSession> = {};
+
+    const agent = request.agent(testApp);
+
+    // Définir une session invalide sans idToken
+    await agent.post('/api/set-session-for-test').send(invalidSession);
+
+    const response = await agent.get('/api/agent-connect/logout');
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ error: 'No active session' });
+    expect(response.body).toEqual({ error: 'Missing idToken in session' });
   });
 });
