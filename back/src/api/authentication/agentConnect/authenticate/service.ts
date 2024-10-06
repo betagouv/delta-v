@@ -7,6 +7,7 @@ import { config } from '../../../../loader/config';
 import { ValidatedRequest } from '../../../../core/utils/validatedExpressRequest';
 import { generateAccessToken, generateRefreshToken } from '../../../../core/jwt/generateToken';
 import { convertToMilliseconds } from '../../../../utils/convertToMilliseconds.util';
+import { calculateRefreshTokenExpiry } from '../../../../utils/refreshTokenExpiration';
 import { IAuthenticateRequest } from './validator';
 
 interface ILoginServiceOptions {
@@ -36,6 +37,7 @@ export const service = async ({
   try {
     const params = agentConnectService.getCallbackParams(req);
     const tokenSet = await agentConnectService.getTokenSet(params, state, nonce);
+    console.log('🚀 ~ tokenSet:', tokenSet);
 
     if (!tokenSet.access_token) {
       throw new Error('No access token received');
@@ -67,6 +69,7 @@ export const service = async ({
     }
 
     const userInfo = await agentConnectService.getUserInfo(tokenSet.access_token as string);
+    console.log('🚀 ~ userInfo:', userInfo);
 
     let user = await userRepository.getOneByEmail(userInfo.email);
 
@@ -82,12 +85,12 @@ export const service = async ({
 
     console.log('🚀 ~ user:', user);
 
+    const tokenSetExpiry = calculateRefreshTokenExpiry();
     const accessTokenExpiry = Math.min(
       convertToMilliseconds(config.ACCESS_TOKEN_LIFE),
-      tokenSet.expires_at
-        ? new Date(tokenSet.expires_at * 1000).getTime() - new Date().getTime()
-        : convertToMilliseconds(config.ACCESS_TOKEN_LIFE),
+      tokenSetExpiry,
     );
+    const accessTokenExpiryInSeconds = accessTokenExpiry / 1000;
 
     const accessToken = await generateAccessToken(
       {
@@ -97,35 +100,38 @@ export const service = async ({
         lastName: userInfo.usual_name,
         isAgent: true,
       },
-      accessTokenExpiry,
+      accessTokenExpiryInSeconds,
     );
-
-    console.log(convertToMilliseconds(config.REFRESH_TOKEN_LIFE));
-    console.log(tokenSet.expires_at);
-    console.log(new Date((tokenSet.expires_at ?? 0) * 1000).getTime() - new Date().getTime());
 
     const refreshTokenExpiry = Math.min(
+      tokenSetExpiry,
       convertToMilliseconds(config.REFRESH_TOKEN_LIFE),
-      tokenSet.expires_at
-        ? new Date(tokenSet.expires_at * 1000).getTime() - new Date().getTime()
-        : convertToMilliseconds(config.REFRESH_TOKEN_LIFE),
     );
 
+    const refreshTokenExpiryInSeconds = refreshTokenExpiry / 1000;
     const refreshToken = await generateRefreshToken(
       {
         userId: userInfo.uid,
         email: userInfo.email,
       },
-      refreshTokenExpiry,
+      refreshTokenExpiryInSeconds,
     );
 
-    await redisClient.set(refreshToken, JSON.stringify(tokenSet), 'EX', refreshTokenExpiry);
+    await redisClient.set(
+      refreshToken,
+      JSON.stringify({
+        ...tokenSet,
+        expires_at: tokenSetExpiry,
+      }),
+      'EX',
+      refreshTokenExpiryInSeconds,
+    );
 
     return {
       idToken,
       accessToken,
       refreshToken,
-      lastRefresh: refreshTokenExpiry === tokenSet.expires_at ? true : false,
+      lastRefresh: refreshTokenExpiry === tokenSetExpiry ? true : false,
     };
   } catch (error) {
     console.error('Error in authentication service:', error);

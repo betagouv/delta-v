@@ -3,9 +3,13 @@ import { config } from './config';
 
 let redisConnection: Redis;
 
+export const createRedisConnection = (): Redis => {
+  return new IORedis(config.REDIS_URL);
+};
+
 export const getRedisConnection = (): Redis => {
   if (!redisConnection) {
-    redisConnection = new IORedis(config.REDIS_URL);
+    redisConnection = createRedisConnection();
   }
   return redisConnection;
 };

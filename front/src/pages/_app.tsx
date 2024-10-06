@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import classNames from 'classnames';
 import { AppProps } from 'next/app';
@@ -9,6 +11,7 @@ import '../config/i18n';
 import { NextRouter, useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { ToastContainer } from 'react-toastify';
 import shallow from 'zustand/shallow';
 
 import { configureAxios } from '@/api/base';
@@ -23,7 +26,7 @@ const ONE_DAY = 86400000;
 
 const initAxios = (
   clearUser: () => void,
-  setUserFromToken: (accessToken: string, refreshToken: string) => void,
+  setUserFromToken: (accessToken: string, refreshToken: string, lastRefresh: boolean) => void,
   router: NextRouter,
 ) => {
   configureAxios({
@@ -31,8 +34,8 @@ const initAxios = (
       clearUser();
       router.replace(RoutingAuthentication.login);
     },
-    onRefreshTokenSuccess: (accessToken, refreshToken) => {
-      setUserFromToken(accessToken, refreshToken);
+    onRefreshTokenSuccess: (accessToken, refreshToken, lastRefresh) => {
+      setUserFromToken(accessToken, refreshToken, lastRefresh);
     },
   });
 };
@@ -102,6 +105,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <FontInitializer />
+      <ToastContainer />
       <MatomoProvider value={instance}>
         {!hideLoading && (
           <div
@@ -123,6 +127,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         )}
         {showContent && <Component {...pageProps} />}
       </MatomoProvider>
+
       {!Config.isProduction && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );

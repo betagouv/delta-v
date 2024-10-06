@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { ICommonResponse } from './types';
-import { getAccessToken, getRefreshToken } from '@/utils/auth';
+import { getAccessToken, getLastRefresh, getRefreshToken } from '@/utils/auth';
 
 export type AccessTokenType = {
   accessToken: string;
@@ -33,6 +33,7 @@ export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
   lastRefresh: boolean;
+  timeToLogout: number;
 }
 
 export interface AgentConnectCallbackResponse {
@@ -63,7 +64,12 @@ export const loginRequest = async (loginData: LoginRequestOptions): Promise<Logi
 export const refreshRequest = async (): Promise<LoginResponse> => {
   const accessToken = getAccessToken();
   const refreshToken = getRefreshToken();
-  const response = await axios.post('/refresh/', { accessToken, refreshToken });
+  const lastRefresh = getLastRefresh();
+  const response = await axios.post('/agent-connect/refresh/', {
+    accessToken,
+    refreshToken,
+    lastRefresh: lastRefresh === 'true',
+  });
   return response.data;
 };
 

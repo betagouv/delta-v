@@ -22,7 +22,7 @@ import {
   validateEmailRequest,
 } from '../lib/auth';
 import { ICommonResponse, IErrorResponse, MutationSuccessCallback } from '../lib/types';
-import { setAccessToken, setRefreshToken } from '@/utils/auth';
+import { setAccessToken, setLastRefresh, setRefreshToken } from '@/utils/auth';
 
 export const useLoginMutation = ({ onSuccess }: MutationSuccessCallback<LoginResponse>) => {
   const queryClient = useQueryClient();
@@ -33,22 +33,33 @@ export const useLoginMutation = ({ onSuccess }: MutationSuccessCallback<LoginRes
       if (onSuccess) {
         setAccessToken(data.accessToken);
         setRefreshToken(data.refreshToken);
+        setLastRefresh(data.lastRefresh.toString());
         onSuccess(data);
       }
     },
   });
 };
 
-export const useRefreshMutation = ({ onSuccess }: MutationSuccessCallback<LoginResponse>) => {
+export const useRefreshMutation = ({
+  onSuccess,
+  onError,
+}: MutationSuccessCallback<LoginResponse>) => {
   const queryClient = useQueryClient();
 
   return useMutation<LoginResponse, IErrorResponse, void>(refreshRequest, {
     onSuccess: (data: LoginResponse) => {
       queryClient.invalidateQueries();
       if (onSuccess) {
+        console.log('🚀 ~ onSuccess ~ data:', data);
         setAccessToken(data.accessToken);
         setRefreshToken(data.refreshToken);
+        setLastRefresh(data.lastRefresh.toString());
         onSuccess(data);
+      }
+    },
+    onError: (error) => {
+      if (onError) {
+        onError(error);
       }
     },
   });
@@ -143,6 +154,7 @@ export const useAgentConnectCallbackMutation = ({
         if (onSuccess) {
           setAccessToken(data.accessToken);
           setRefreshToken(data.refreshToken);
+          setLastRefresh(data.lastRefresh.toString());
           onSuccess(data);
         }
       },

@@ -6,7 +6,11 @@ import { StoreSlice } from '../store';
 import { USER_EMPTY_STATE } from './appState.store';
 
 export interface UsersUseCaseSlice {
-  setUserFromToken: (accessToken: string, refreshToken: string) => Promise<void>;
+  setUserFromToken: (
+    accessToken: string,
+    refreshToken: string,
+    lastRefresh: boolean,
+  ) => Promise<void>;
   clearUser: () => Promise<void>;
 }
 
@@ -16,7 +20,7 @@ interface IAuthObject {
 }
 
 export const createUseCaseUserSlice: StoreSlice<UsersUseCaseSlice> = (set) => ({
-  setUserFromToken: async (accessToken, refreshToken) => {
+  setUserFromToken: async (accessToken, refreshToken, lastRefresh) => {
     if (!accessToken || !refreshToken) {
       return;
     }
@@ -30,6 +34,7 @@ export const createUseCaseUserSlice: StoreSlice<UsersUseCaseSlice> = (set) => ({
       newState.users.appState.user.email = email;
       newState.users.appState.user.isAgent = true;
       newState.users.appState.user.exp = exp;
+      newState.users.appState.user.lastRefresh = lastRefresh;
 
       return newState;
     });
