@@ -66,9 +66,9 @@ export const CountdownToast: React.FC<CountdownToastProps> = ({ onTimeout }) => 
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="flex items-center gap-2">
-        <div className={`${isLastMinute ? 'blinking' : ''} flex flex-row gap-2 items-center`}>
+        <div className="flex flex-row gap-2 items-center">
           <Icon name="clock" size={isExpanded || isHovered ? 'lg' : 'base'} />
-          <span>{remainingTime}</span>
+          <span className={`${isLastMinute ? 'blinking' : ''}`}>{remainingTime}</span>
         </div>
         {(isExpanded || isHovered) && (
           <span className="ml-2">
