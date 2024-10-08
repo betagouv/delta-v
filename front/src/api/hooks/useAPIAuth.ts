@@ -50,7 +50,6 @@ export const useRefreshMutation = ({
     onSuccess: (data: LoginResponse) => {
       queryClient.invalidateQueries();
       if (onSuccess) {
-        console.log('🚀 ~ onSuccess ~ data:', data);
         setAccessToken(data.accessToken);
         setRefreshToken(data.refreshToken);
         setLastRefresh(data.lastRefresh.toString());

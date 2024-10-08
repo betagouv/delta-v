@@ -1,6 +1,5 @@
 import { decode } from 'jsonwebtoken';
-import { Redis } from 'ioredis'; // Import Redis type
-import { v4 as uuidv4 } from 'uuid';
+import { Redis } from 'ioredis';
 import { AgentConnectService } from '../../../../core/agentConnect/service';
 import { UserRepositoryInterface } from '../../../../repositories/user.repository';
 import { config } from '../../../../loader/config';
@@ -8,6 +7,7 @@ import { ValidatedRequest } from '../../../../core/utils/validatedExpressRequest
 import { generateAccessToken, generateRefreshToken } from '../../../../core/jwt/generateToken';
 import { convertToMilliseconds } from '../../../../utils/convertToMilliseconds.util';
 import { calculateRefreshTokenExpiry } from '../../../../utils/refreshTokenExpiration';
+import { generateDeterministicUuid } from '../../../../utils/uuidGenerator.util';
 import { IAuthenticateRequest } from './validator';
 
 interface ILoginServiceOptions {
@@ -69,21 +69,21 @@ export const service = async ({
     }
 
     const userInfo = await agentConnectService.getUserInfo(tokenSet.access_token as string);
-    console.log('🚀 ~ userInfo:', userInfo);
+
+    const uuidUid = generateDeterministicUuid(userInfo.uid);
 
     let user = await userRepository.getOneByEmail(userInfo.email);
 
     if (!user) {
       user = {
         email: userInfo.email,
-        id: uuidv4(),
-        password: '',
+        id: uuidUid,
         enabled: true,
       };
       await userRepository.createUser(user);
+    } else {
+      await userRepository.updateUser(user.id, { id: uuidUid });
     }
-
-    console.log('🚀 ~ user:', user);
 
     const tokenSetExpiry = calculateRefreshTokenExpiry();
     const accessTokenExpiry = Math.min(

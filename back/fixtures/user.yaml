@@ -4,6 +4,5 @@ items:
   user1:
     id: '9b35fa42-536d-40fa-81fb-ab4f71032ccb'
     email: 'user.agent@gmail.com'
-    password: 'password'
     enabled: true
     blocked: false

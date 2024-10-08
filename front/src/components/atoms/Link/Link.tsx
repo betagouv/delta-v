@@ -76,7 +76,11 @@ export const Link: React.FC<LinkProps> = ({
         </CustomTag>
       )}
       {linkType === LinkType.href && href && (
-        <NextLink href={href} target={external ? '_blank' : '_self'}>
+        <NextLink
+          href={href}
+          target={external ? '_blank' : '_self'}
+          rel={external ? 'noopener noreferrer' : undefined}
+        >
           {children}
         </NextLink>
       )}

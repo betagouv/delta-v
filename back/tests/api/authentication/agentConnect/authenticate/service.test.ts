@@ -18,7 +18,6 @@ describe('AgentConnect authenticate service', () => {
   const mockTokenSet: Partial<TokenSet> = {
     access_token: 'mockAccessToken',
     id_token: mockIdToken,
-    // ... autres propriétés ...
   };
 
   const mockUserInfo = {
@@ -115,7 +114,7 @@ describe('AgentConnect authenticate service', () => {
     expect(userRepository.createUser).toHaveBeenCalled();
   });
 
-  it.only('should throw error if nonce is invalid', async () => {
+  it('should throw error if nonce is invalid', async () => {
     const agentConnectService = agentConnectServiceMock({
       getCallbackParams: { code: 'mockCode', state: 'mockState' },
       getTokenSet: mockTokenSet as TokenSet,

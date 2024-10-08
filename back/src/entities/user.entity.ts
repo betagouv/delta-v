@@ -4,7 +4,6 @@ import { FavoriteEntity, FavoriteEntityInterface } from './favorite.entity';
 export interface User {
   id: string;
   email: string;
-  password: string;
   enabled?: boolean;
   blocked?: boolean;
 }
@@ -22,9 +21,6 @@ export default class UserEntity implements UserEntityInterface {
   @Column()
   @Index()
   email: string;
-
-  @Column()
-  password: string;
 
   @Column({ default: false })
   enabled?: boolean;

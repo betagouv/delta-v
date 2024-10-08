@@ -8,6 +8,7 @@ import { testDbManager } from '../../../../helpers/testDb.helper';
 import { prepareContextUser } from '../../../../helpers/prepareContext/user';
 import { CustomSession } from '../../../../../src/core/utils/validatedExpressRequest';
 import api from '../../../../../src/api';
+import { generateDeterministicUuid } from '../../../../../src/utils/uuidGenerator.util';
 
 jest.mock('../../../../../src/core/agentConnect/client', () => {
   const originalModule = jest.requireActual('../../../../../src/core/agentConnect/client');
@@ -93,7 +94,7 @@ describe('AgentConnect authenticate endpoint', () => {
     jest.clearAllMocks();
   });
 
-  it.only('should authenticate user successfully', async () => {
+  it('should authenticate user successfully', async () => {
     const mockRefreshToken = 'mockRefreshToken';
     const mockTokenSet = {
       access_token: 'mockAccessToken',
@@ -125,7 +126,7 @@ describe('AgentConnect authenticate endpoint', () => {
       .get('/api/agent-connect/authenticate')
       .query({ code: 'mockCode', state: 'mockState', iss: 'mockIssuer' });
 
-    const userDataBase = await testDb.getUser(user.id);
+    const userDataBase = await testDb.getUser(generateDeterministicUuid(user.id));
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('accessToken');

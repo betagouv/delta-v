@@ -12,7 +12,7 @@ const AgentConnectCallbackPage = () => {
   const router = useRouter();
   const agentConnectCallbackMutation = useAgentConnectCallbackMutation({
     onSuccess: (data) => {
-      setUserFromToken(data.accessToken, data.refreshToken);
+      setUserFromToken(data.accessToken, data.refreshToken, data.lastRefresh);
       router.replace('/agent');
     },
   });

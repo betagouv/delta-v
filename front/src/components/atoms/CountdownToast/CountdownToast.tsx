@@ -15,6 +15,7 @@ export const CountdownToast: React.FC<CountdownToastProps> = ({ onTimeout }) => 
   const [remainingTime, setRemainingTime] = useState<string>('');
   const [isExpanded, setIsExpanded] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLastMinute, setIsLastMinute] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -41,7 +42,8 @@ export const CountdownToast: React.FC<CountdownToastProps> = ({ onTimeout }) => 
       setRemainingTime(
         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
       );
-      if (remaining <= 60000 && !isExpanded) {
+      setIsLastMinute(remaining <= 300000);
+      if (remaining <= 300000 && !isExpanded) {
         setIsExpanded(true);
       }
     }
@@ -49,21 +51,25 @@ export const CountdownToast: React.FC<CountdownToastProps> = ({ onTimeout }) => 
 
   useEffect(() => {
     const intervalId = setInterval(updateCountdown, 1000);
-    updateCountdown(); // Initial update
+    updateCountdown();
     return () => clearInterval(intervalId);
   }, [updateCountdown]);
 
   const toastContent = (
     <div
-      className={`border fixed bottom-4 right-4 border-primary-600 text-primary-600 bg-white text-xs rounded shadow-lg cursor-pointer transition-all duration-300 ${
-        isExpanded || isHovered ? 'w-[400px] px-4 py-2' : 'w-auto px-2 py-1'
+      className={`border fixed bottom-4 right-4 ${
+        isLastMinute ? ` border-red-600 text-red-600` : 'border-primary-600 text-primary-600'
+      } bg-white text-xs rounded shadow-lg cursor-pointer transition-all duration-300 ${
+        isExpanded || isHovered ? 'w-[400px] px-4 py-2' : 'w-auto px-4 py-2'
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex items-center">
-        <Icon name="clock" />
-        <span>{remainingTime}</span>
+      <div className="flex items-center gap-2">
+        <div className={`${isLastMinute ? 'blinking' : ''} flex flex-row gap-2 items-center`}>
+          <Icon name="clock" size={isExpanded || isHovered ? 'lg' : 'base'} />
+          <span>{remainingTime}</span>
+        </div>
         {(isExpanded || isHovered) && (
           <span className="ml-2">
             Votre session AgentConnect expire, vous serez déconnecté automatiquement

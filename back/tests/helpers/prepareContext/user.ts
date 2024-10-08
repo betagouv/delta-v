@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { faker } from '@faker-js/faker';
-import { hashPassword } from '../../../src/api/authentication/common/services/password.service';
 import { User } from '../../../src/entities/user.entity';
 import { ITestDbManager } from '../testDb.helper';
 import { userEntityFactory } from '../factories/user.factory';
@@ -25,7 +24,6 @@ interface IPrepareContextUserOptions {
 
 interface IPrepareContextUserResponse {
   user: User;
-  clearPassword: string;
   accessToken: string;
   refreshToken: string | null;
   validationToken: string | null;
@@ -41,10 +39,7 @@ export const prepareContextUser = async ({
   userId = '8e339c8f-2187-46a9-8c30-aa15d3ebc330',
   expiredRefreshToken = false,
 }: IPrepareContextUserOptions): Promise<IPrepareContextUserResponse> => {
-  const password = 'Password95*';
-  const hashedPassword = await hashPassword(password);
   const user = userEntityFactory({
-    password: hashedPassword,
     id: userId,
     blocked,
     enabled,
@@ -78,7 +73,6 @@ export const prepareContextUser = async ({
 
   return {
     user,
-    clearPassword: password,
     accessToken,
     refreshToken,
     validationToken,

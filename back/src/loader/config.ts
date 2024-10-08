@@ -10,6 +10,7 @@ const Config = z.object({
     .refine((val) => !Number.isNaN(parseInt(val, 10)), {
       message: 'Expected number, received a string',
     }),
+  UUID_NAMESPACE: z.string(),
   ACCESS_TOKEN_SECRET: z.string(),
   ACCESS_TOKEN_LIFE: z.string().default('30m'),
   REFRESH_TOKEN_SECRET: z.string(),

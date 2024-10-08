@@ -39,6 +39,7 @@ x-envs: &common-envs
   AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG: ${AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG:-RS256}
   AGENTCONNECT_SCOPE: ${AGENTCONNECT_SCOPE:-openid profile email}
   SESSION_SECRET: ${SESSION_SECRET:-sessionSecretLocalDev}
+  UUID_NAMESPACE: ${UUID_NAMESPACE:-1b671a64-40d5-491e-99b0-da01ff1f3341}
 
 x-e2e-test-envs: &common-e2e-test-envs
   <<: *common-envs
