@@ -80,7 +80,7 @@ const HomepageAgentDesktop = () => {
             isSubmittedDeclarationsLoading={isSubmittedDeclarationsLoading}
             isErrorDeclarationsLoading={isErrorDeclarationsLoading}
           />
-          <BlockActualities actualities={apiActualities} isLoading={isActualitiesLoading} />
+          {/* <BlockActualities actualities={apiActualities} isLoading={isActualitiesLoading} /> */}
         </div>
       </div>
     </>
