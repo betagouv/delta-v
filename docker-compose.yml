@@ -143,6 +143,26 @@ services:
       DB_HOST: ${DB_HOST:-database-delta-v}
       DB_HOST_E2E: e2e-test-database-delta-v
 
+  directus:
+    container_name: directus
+    image: directus/directus:11.1.1
+    restart: unless-stopped
+    ports:
+      - 8055:8055
+    networks:
+      - backend
+    environment:
+      SECRET: "replace-with-secure-random-value"
+      ADMIN_EMAIL: "admin@example.com"
+      ADMIN_PASSWORD: "d1r3ctu5"
+      DB_CLIENT: "pg"
+      DB_HOST: "database-delta-v"
+      DB_PORT: 5432
+      DB_DATABASE: postgres
+      DB_USER: postgres
+      DB_PASSWORD: pass
+      WEBSOCKETS_ENABLED: "true"      
+
   frontend-web-delta-v:
     container_name: frontend-web-delta-v
     image: node:18
