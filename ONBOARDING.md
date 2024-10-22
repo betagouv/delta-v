@@ -11,6 +11,14 @@ DB_HOST='database-delta-v'
 DB_USERNAME='postgres'
 DB_PASSWORD='pass'
 DB_DATABASE='postgres'
+ACCESS_TOKEN_SECRET='accessTokenSecretLocalDev'
+REFRESH_TOKEN_SECRET='refreshTokenSecretLocalDev'
+VALIDATION_TOKEN_SECRET='validationTokenSecretLocalDev'
+RESET_PASSWORD_TOKEN_SECRET='resetPasswordTokenSecretLocalDev'
+
+AGENTCONNECT_ISSUER=https://fca.integ01.dev-agentconnect.fr/api/v2
+AGENTCONNECT_CLIENT_ID='ID_A_DEMANDER_AU_RESPONSABLE_DU_PROJET'
+AGENTCONNECT_CLIENT_SECRET='SECRET_A_DEMANDER_AU_RESPONSABLE_DU_PROJET'
 ```
 
 ```

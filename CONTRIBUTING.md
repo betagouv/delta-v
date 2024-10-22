@@ -28,61 +28,23 @@ Il permet principalement de fournir une API REST pour les clients.
 
 Il s'agit d'une interface web pour les clients.
 
+**L'interface Admin**
+
+- Framework : [Directus](https://directus.io/)
+
+Il s'agit d'une interface web permettant à l'administration compétente de modifier les données qui vont être affichées sur les différents clients.
+
+**La base de données**
+
+- [PostgreSql](https://www.postgresql.org/)
+
+**Un cache Redis**
+
+- [Redis](https://redis.io/)
+
 ### Démarrage
 
-#### Créez votre fichier `.env.local.declareDouane` dans le dossier parent avec le contenu suivant
-
-```env
-DB_HOST='database-delta-v'
-DB_USERNAME='postgres'
-DB_PASSWORD='pass'
-DB_DATABASE='postgres'
-ACCESS_TOKEN_SECRET='accessTokenSecretLocalDev'
-REFRESH_TOKEN_SECRET='refreshTokenSecretLocalDev'
-VALIDATION_TOKEN_SECRET='validationTokenSecretLocalDev'
-RESET_PASSWORD_TOKEN_SECRET='resetPasswordTokenSecretLocalDev'
-```
-
-```
-# Cloner le repo
-git clone git@github.com:betagouv/delta-v.git
-
-# Installer le projet
-make init
-
-# démarer le projet
-make start
-```
-
-### Tests
-
-#### Vérification syntaxique :
-
-Pour le backend :
-
-```sh
-make lint-back
-```
-
-Pour le frontend :
-
-```sh
-make lint-front
-```
-
-#### Tests unitaires
-
-pour le backend :
-
-```sh
-make test-back
-```
-
-pour le frontend :
-
-```sh
-make test-front
-```
+consulter la [page d'onboarding](ONBOARDING.md)
 
 ### CI/CD
 
