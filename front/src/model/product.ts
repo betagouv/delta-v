@@ -16,6 +16,7 @@ export interface Product {
   childrenQuestion: string | null;
   nomenclatures?: string[] | null;
   customDuty?: number | null;
+  tobaccoTax?: number | null;
   vat?: number | null;
   subProducts: Product[];
   relatedWords: string[];

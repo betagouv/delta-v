@@ -16,6 +16,7 @@ import { initDetailedShoppingProducts } from '../detailedShoppingProduct/detaile
 import { ShoppingProduct } from '../shoppingProducts';
 import { TravelerData } from '../traveler';
 import { getFranchiseAmount, manageFreeProducts } from '../valueProducts';
+import { TobaccoTaxCalculator } from '../tobacco/tobaccoTaxCalculator';
 
 interface InputDeclaration {
   travelerData: TravelerData;
@@ -68,6 +69,7 @@ export class Declaration {
   uncompletedRealProductsTaxes: ProductTaxesInterface[];
   total: number;
   franchiseAmount: number;
+  tobaccoTax: number;
 
   constructor({ inputDeclaration, detailedShoppingProducts }: DeclarationConstructorOptions) {
     this.inputDeclaration = inputDeclaration;
@@ -76,6 +78,7 @@ export class Declaration {
     this.franchiseAmount = this.getFranchiseAmount();
     this.defaultProductsTaxes = this.getDefaultProductTaxes();
     this.uncompletedRealProductsTaxes = this.getUncompletedProductTaxes();
+    this.tobaccoTax = TobaccoTaxCalculator.calculateTax(this.detailedShoppingProducts);
   }
 
   getAmountProductsGrouped(): AmountGroup[] {
@@ -173,6 +176,11 @@ export class Declaration {
     return uniqueRateProductTaxes;
   }
 
+  getTotalTaxes(): number {
+    const productTaxes = this.getRealProductsTaxes();
+    return getTotalProductsTaxes(productTaxes) + this.tobaccoTax;
+  }
+
   canCalculateTaxes = (): boolean => {
     if (this.total <= this.franchiseAmount) {
       return true;
@@ -190,10 +198,13 @@ export class Declaration {
       return false;
     }
 
-    const hasOverMaximumAmountProduct = this.getAmountProductsGrouped().find(
-      (amountGroup) => amountGroup.isOverMaximum,
+    // Check only alcohol products for over maximum condition
+    const hasOverMaximumAlcoholProduct = this.getAmountProductsGrouped().find(
+      (amountGroup) => amountGroup.group === 'groupedAlcohol' && amountGroup.isOverMaximum,
     );
-    if (hasOverMaximumAmountProduct) {
+
+    // Allow declaration if only tobacco exceeds the limit
+    if (hasOverMaximumAlcoholProduct) {
       return false;
     }
 

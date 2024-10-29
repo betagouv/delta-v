@@ -74,6 +74,7 @@ const Declaration = () => {
   const amountProducts = declarationAgentResponse?.amountProducts;
   const valueProducts = declarationAgentResponse?.valueProducts;
   const customProducts = declarationAgentResponse?.customProducts;
+  const tobaccoTax = declarationAgentResponse?.tobaccoTax;
   const { trackEvent } = useMatomo();
   const router = useRouter();
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
@@ -316,6 +317,7 @@ const Declaration = () => {
                     detailsButton
                     onEditClick={onModifyClick}
                     withCalculation={declarationAgentResponse.canCalculateTaxes}
+                    tobaccoTax={tobaccoTax}
                   />
                 ))}
                 {customProducts?.map((product, index) => (
@@ -331,23 +333,26 @@ const Declaration = () => {
                     detailsButton
                     onEditClick={onModifyClick}
                     withCalculation={declarationAgentResponse.canCalculateTaxes}
+                    tobaccoTax={tobaccoTax}
                   />
                 ))}
                 {amountProducts &&
-                  amountProducts.map((amountProduct, index) => (
-                    <AmountAgentProductBasketGroup
-                      amountProductGroup={amountProduct}
-                      country={meansOfTransportAndCountry.country}
-                      border={declarationAgentRequest.border}
-                      onDelete={(id) => {
-                        setDeletedProductId(id);
-                        setOpenModalDeleteProduct(true);
-                      }}
-                      editable={isAvailableToEdit}
-                      onModifyClick={onModifyClick}
-                      key={`${amountProduct.group}-${index}`}
-                    />
-                  ))}
+                  amountProducts.map((amountProduct, index) => {
+                    return (
+                      <AmountAgentProductBasketGroup
+                        amountProductGroup={amountProduct}
+                        country={meansOfTransportAndCountry.country}
+                        border={declarationAgentRequest.border}
+                        onDelete={(id) => {
+                          setDeletedProductId(id);
+                          setOpenModalDeleteProduct(true);
+                        }}
+                        editable={isAvailableToEdit}
+                        onModifyClick={onModifyClick}
+                        key={`${amountProduct.group}-${index}`}
+                      />
+                    );
+                  })}
               </div>
 
               <Button

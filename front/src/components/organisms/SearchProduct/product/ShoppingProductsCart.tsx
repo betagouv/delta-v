@@ -98,9 +98,23 @@ export const ShoppingProductsCart: React.FC<ShoppingProductsCartProps> = ({
               ))}
             </div>
           )}
-          {amountProducts && amountProducts.length > 0 && (
-            <div className="flex flex-col gap-5">
-              {amountProducts.map((amountProduct, index) => (
+          {amountProducts &&
+            amountProducts.map((amountProduct, index) => {
+              if (amountProduct.group === 'allTobaccoProducts') {
+                return (
+                  <AmountAgentProductBasketGroup
+                    amountProductGroup={amountProduct}
+                    country={meansOfTransportAndCountry.country}
+                    border={declarationAgentRequest.border}
+                    onDelete={onRemoveCartProduct}
+                    editable={isAvailableToEdit}
+                    onModifyClick={onModifyClick}
+                    key={`${amountProduct.group}-${index}`}
+                    tobaccoTax={declarationAgentResponse.tobaccoTax ?? undefined}
+                  />
+                );
+              }
+              return (
                 <AmountAgentProductBasketGroup
                   amountProductGroup={amountProduct}
                   country={meansOfTransportAndCountry.country}
@@ -110,9 +124,8 @@ export const ShoppingProductsCart: React.FC<ShoppingProductsCartProps> = ({
                   onModifyClick={onModifyClick}
                   key={`${amountProduct.group}-${index}`}
                 />
-              ))}
-            </div>
-          )}
+              );
+            })}
         </div>
 
         <Button
