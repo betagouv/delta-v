@@ -45,6 +45,8 @@ export const ShoppingProductsCart: React.FC<ShoppingProductsCartProps> = ({
     return null;
   }
 
+  console.log('declarationAgentResponse', declarationAgentResponse);
+
   return (
     <>
       <div className="flex flex-col gap-10 pb-10">
@@ -102,16 +104,42 @@ export const ShoppingProductsCart: React.FC<ShoppingProductsCartProps> = ({
             amountProducts.map((amountProduct, index) => {
               if (amountProduct.group === 'allTobaccoProducts') {
                 return (
-                  <AmountAgentProductBasketGroup
-                    amountProductGroup={amountProduct}
-                    country={meansOfTransportAndCountry.country}
-                    border={declarationAgentRequest.border}
-                    onDelete={onRemoveCartProduct}
-                    editable={isAvailableToEdit}
-                    onModifyClick={onModifyClick}
-                    key={`${amountProduct.group}-${index}`}
-                    tobaccoTax={declarationAgentResponse.tobaccoTax ?? undefined}
-                  />
+                  <div key={`${amountProduct.group}-${index}`}>
+                    <AmountAgentProductBasketGroup
+                      amountProductGroup={amountProduct}
+                      country={meansOfTransportAndCountry.country}
+                      border={declarationAgentRequest.border}
+                      onDelete={onRemoveCartProduct}
+                      editable={isAvailableToEdit}
+                      onModifyClick={onModifyClick}
+                    />
+
+                    {declarationAgentResponse.tobaccoTaxDetails &&
+                      declarationAgentResponse.tobaccoTaxDetails.length > 0 && (
+                        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                          <Typography weight="bold" size="text-sm">
+                            Détail des taxes tabac
+                          </Typography>
+                          {declarationAgentResponse.tobaccoTaxDetails.map((detail, indexDetail) => (
+                            <div
+                              key={`${indexDetail}-${detail.type}`}
+                              className="flex justify-between text-sm mb-1"
+                            >
+                              <span>
+                                {detail.type} ({detail.amount} unités)
+                              </span>
+                              <span>{detail.tax.toFixed(2)} €</span>
+                            </div>
+                          ))}
+                          <div className="mt-2 pt-2 border-t border-gray-200 flex justify-between font-bold">
+                            <span>Total taxes tabac</span>
+                            <span>
+                              {declarationAgentResponse.tobaccoTax?.toFixed(2) ?? '0.00'} €
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                  </div>
                 );
               }
               return (
