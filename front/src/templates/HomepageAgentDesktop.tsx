@@ -2,10 +2,9 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useActualities } from '@/api/hooks/useAPIActualities';
+// import { useActualities } from '@/api/hooks/useAPIActualities';
 import { useDeclarations } from '@/api/hooks/useAPIDeclaration';
 import { NavBar } from '@/components/molecules/NavBar';
-import { BlockActualities } from '@/components/organisms/BlockActualities';
 import { BlockHeaderAgent } from '@/components/organisms/BlockHeaderAgent';
 import { BlockHistoricDeclarations } from '@/components/organisms/BlockHistoricDeclarations';
 import { MAIN_MENU_AGENT_ITEMS } from '@/utils/const';
@@ -25,11 +24,11 @@ const HomepageAgentDesktop = () => {
     offset: 0,
   };
 
-  const { isLoading: isActualitiesLoading, data: apiActualities } = useActualities({
-    search: null,
-    limit: Constants.SEE_MORE_LIMIT,
-    offset: 0,
-  });
+  // const { isLoading: isActualitiesLoading, data: apiActualities } = useActualities({
+  //   search: null,
+  //   limit: Constants.SEE_MORE_LIMIT,
+  //   offset: 0,
+  // });
 
   const { isLoading: isSubmittedDeclarationsLoading, data: apiSubmittedDeclarations } =
     useDeclarations({
