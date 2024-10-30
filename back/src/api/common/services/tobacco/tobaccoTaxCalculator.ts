@@ -12,13 +12,6 @@ export interface TobaccoTaxDetail {
   };
 }
 
-interface TobaccoTaxRates {
-  unitPrice: number;
-  exciseRate: number;
-  exciseDuty: number;
-  perceptionThreshold: number;
-}
-
 export class TobaccoTaxCalculator {
   private static readonly TAX_RATES = {
     tobaccoCigarettes: {
