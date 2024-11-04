@@ -53,10 +53,7 @@ const preProcessDeclarationFixture = (fields: DeclarationEntity): Partial<Declar
   const totalVatAmount = products.reduce((acc, product) => acc + product.vat, 0);
   const totalCustomDutyAmount = products.reduce((acc, product) => acc + product.customDuty, 0);
   const totalTaxesAmount = products.reduce((acc, product) => acc + product.calculatedTaxes, 0);
-  const totalTaxesRoundedAmount = products.reduce(
-    (acc, product) => acc + product.calculatedTaxesRounded,
-    0,
-  );
+  const totalTaxesRoundedAmount = getRoundedNumber(totalTaxesAmount);
   return {
     ...values,
     id: faker.string.uuid(),
