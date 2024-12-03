@@ -15,6 +15,8 @@ interface AmountProductBasketProps {
   onUpdateProduct: () => void;
   tobaccoTax?: number;
   isTobaccoProduct?: boolean;
+  alcoholTax?: number;
+  isAlcoholProduct?: boolean;
 }
 
 export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
@@ -24,6 +26,8 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
   onUpdateProduct,
   tobaccoTax = 0,
   isTobaccoProduct = false,
+  alcoholTax = 0,
+  isAlcoholProduct = false,
 }) => {
   const [open, setOpen] = useState(false);
   const [unit, setUnit] = useState<string>('');
@@ -121,6 +125,22 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
             weight="bold"
           >
             {`${tobaccoTax.toFixed(2)} €`}
+          </Typography>
+        </div>
+      )}
+      {isAlcoholProduct && alcoholTax > 0 && (
+        <div className="grid grid-cols-2 pt-2">
+          <Typography transform="sentence-case" size="text-sm" weight="bold" desktopSize="text-sm">
+            Droits et taxes dus
+          </Typography>
+          <Typography
+            transform="sentence-case"
+            size="text-sm"
+            desktopSize="text-sm"
+            textPosition="text-right"
+            weight="bold"
+          >
+            {`${alcoholTax.toFixed(2)} €`}
           </Typography>
         </div>
       )}

@@ -18,6 +18,7 @@ interface AmountAgentProductBasketProps {
   onButtonClick?: () => void;
   onProductClick?: (id: string) => void;
   tobaccoTax?: number;
+  alcoholTax?: number;
 }
 
 export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> = ({
@@ -29,6 +30,7 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
   onButtonClick,
   onProductClick,
   tobaccoTax,
+  alcoholTax,
 }: AmountAgentProductBasketProps) => {
   const [unit, setUnit] = useState<string>('');
   useEffect(() => {
@@ -98,6 +100,36 @@ export const AmountAgentProductBasket: React.FC<AmountAgentProductBasketProps> =
                 </Typography>
                 <Typography color="black" transform="sentence-case" size="text-xs" weight="bold">
                   {tobaccoTax.toFixed(2)} €
+                </Typography>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 pt-2">
+                <Typography
+                  color={containError ? 'red' : 'primary'}
+                  transform="sentence-case"
+                  size="text-sm"
+                  weight="bold"
+                >
+                  {unit}
+                </Typography>
+                <Typography
+                  color={containError ? 'red' : 'primary'}
+                  transform="sentence-case"
+                  size="text-sm"
+                  textPosition="text-right"
+                  weight="bold"
+                >
+                  {product.amount}
+                </Typography>
+              </div>
+            )}
+            {alcoholTax ? (
+              <div className="flex flex-row justify-between pt-2">
+                <Typography color="black" transform="sentence-case" size="text-xs" weight="bold">
+                  Taxe fiscale
+                </Typography>
+                <Typography color="black" transform="sentence-case" size="text-xs" weight="bold">
+                  {alcoholTax.toFixed(2)} €
                 </Typography>
               </div>
             ) : (

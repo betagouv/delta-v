@@ -74,7 +74,6 @@ const Declaration = () => {
   const amountProducts = declarationAgentResponse?.amountProducts;
   const valueProducts = declarationAgentResponse?.valueProducts;
   const customProducts = declarationAgentResponse?.customProducts;
-  const tobaccoTax = declarationAgentResponse?.tobaccoTax;
   const { trackEvent } = useMatomo();
   const router = useRouter();
   const [openSearchDownModal, setOpenSearchDownModal] = useState(false);
@@ -317,7 +316,6 @@ const Declaration = () => {
                     detailsButton
                     onEditClick={onModifyClick}
                     withCalculation={declarationAgentResponse.canCalculateTaxes}
-                    tobaccoTax={tobaccoTax}
                   />
                 ))}
                 {customProducts?.map((product, index) => (
@@ -333,7 +331,6 @@ const Declaration = () => {
                     detailsButton
                     onEditClick={onModifyClick}
                     withCalculation={declarationAgentResponse.canCalculateTaxes}
-                    tobaccoTax={tobaccoTax}
                   />
                 ))}
                 {amountProducts &&
@@ -355,12 +352,7 @@ const Declaration = () => {
                   })}
               </div>
 
-              <Button
-                type="submit"
-                onClick={() => onSubmit}
-                disabled={!declarationAgentResponse.canCreateDeclaration}
-                className={{ 'self-center': true }}
-              >
+              <Button type="submit" onClick={() => onSubmit} className={{ 'self-center': true }}>
                 Valider les marchandises
               </Button>
             </div>

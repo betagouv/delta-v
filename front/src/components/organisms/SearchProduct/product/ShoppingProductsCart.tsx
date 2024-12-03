@@ -183,7 +183,6 @@ export const ShoppingProductsCart: React.FC<ShoppingProductsCartProps> = ({
 
         <Button
           type="submit"
-          disabled={!declarationAgentResponse?.canCreateDeclaration}
           className={{
             'self-center': true,
             'md:w-[226px]': true,

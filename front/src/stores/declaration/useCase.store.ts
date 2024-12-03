@@ -182,17 +182,10 @@ export const createUseCaseDeclarationSlice: StoreSlice<DeclarationUseCaseSlice> 
       set((state: any) => {
         const newState = { ...state };
         newState.declaration.appState.declarationAgentResponse = response;
-        console.log('🚀 ~ set ~ response:', response);
 
-        // Ensure that only alcohol limits affect the declaration state
-        const hasOverMaximumAlcohol = response.amountProducts?.some(
-          (product) => product.group === 'groupedAlcohol' && product.isOverMaximum,
-        );
-
-        newState.declaration.appState.canCreateDeclaration = !hasOverMaximumAlcohol;
-
-        // Capture the tobacco tax from the response
+        // Capture both tobacco and alcohol taxes from the response
         newState.declaration.appState.tobaccoTax = response.tobaccoTax;
+        newState.declaration.appState.alcoholTax = response.alcoholTax;
 
         return newState;
       });

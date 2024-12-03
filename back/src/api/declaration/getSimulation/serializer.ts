@@ -9,6 +9,10 @@ import {
   TobaccoTaxCalculator,
   TobaccoTaxDetail,
 } from '../../common/services/tobacco/tobaccoTaxCalculator';
+import {
+  AlcoholTaxCalculator,
+  AlcoholTaxDetail,
+} from '../../common/services/alcohol/alcoholTaxCalculator';
 
 interface SerializedValueProduct {
   id?: string;
@@ -47,7 +51,6 @@ interface SerializedSimulatorOptions {
   amountProducts: AmountGroup[];
   franchiseAmount: number;
   canCalculateTaxes: boolean;
-  canCreateDeclaration: boolean;
 }
 
 interface SerializedSimulatorResponse {
@@ -61,9 +64,10 @@ interface SerializedSimulatorResponse {
   totalTaxesRounded: number;
   franchiseAmount: number | string;
   canCalculateTaxes: boolean;
-  canCreateDeclaration: boolean;
   tobaccoTax?: number;
   tobaccoTaxDetails?: TobaccoTaxDetail[];
+  alcoholTax?: number;
+  alcoholTaxDetails?: AlcoholTaxDetail[];
 }
 
 const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedValueProduct => ({
@@ -103,7 +107,6 @@ export const serializeSimulator = ({
   amountProducts,
   franchiseAmount,
   canCalculateTaxes,
-  canCreateDeclaration,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
   const totalCustomDuty = valueProducts.reduce(
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitCustomDuty()).value,
@@ -119,7 +122,10 @@ export const serializeSimulator = ({
   const allDetailedProducts = amountProducts.flatMap((group) => group.detailedShoppingProducts);
   const tobaccoTax = TobaccoTaxCalculator.calculateTax(allDetailedProducts);
   const tobaccoTaxDetails = TobaccoTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
-  console.log('🚀 ~ tobaccoTaxDetails:', tobaccoTaxDetails);
+  const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts);
+  console.log('🚀 ~ alcoholTax:', alcoholTax);
+  const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
+  console.log('🚀 ~ alcoholTaxDetails:', alcoholTaxDetails);
 
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
@@ -132,11 +138,12 @@ export const serializeSimulator = ({
     totalCustomDuty,
     totalVat,
     totalTaxesRounded,
-    totalTaxes: currency(totalCustomDuty).add(totalVat).add(tobaccoTax).value,
+    totalTaxes: currency(totalCustomDuty).add(totalVat).add(tobaccoTax).add(alcoholTax).value,
     franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
     canCalculateTaxes,
-    canCreateDeclaration,
     tobaccoTax,
     tobaccoTaxDetails,
+    alcoholTax,
+    alcoholTaxDetails,
   };
 };

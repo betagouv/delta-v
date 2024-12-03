@@ -11,6 +11,7 @@ import { currencyEntityFactory } from '../../../helpers/factories/currency.facto
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 import { currencyRepositoryMock } from '../../../mocks/currency.repository.mock';
 import { productRepositoryMock } from '../../../mocks/product.repository.mock';
+import { AmountAlcoholProduct } from '../../../../src/api/common/services/amountProducts/alcohol/alcohol.service';
 
 describe('test simulator service', () => {
   it('should simulate declaration - amount over maximum', async () => {
@@ -107,43 +108,6 @@ describe('test simulator service', () => {
         },
       ],
       franchiseAmount: 300,
-      canCreateDeclaration: true,
-    });
-  });
-  it('should simulate declaration', async () => {
-    const product3 = productEntityFactory({
-      customDuty: 5,
-      vat: 20,
-      productType: ProductType.amount,
-      amountProduct: AmountTobaccoProduct.cigarette,
-    });
-    const shoppingProduct3: ShoppingProduct = {
-      customId: faker.string.uuid(),
-      customName: 'product 3',
-      id: product3.id,
-      originalValue: 100,
-      currency: 'EUR',
-    };
-
-    const productRepository = productRepositoryMock({
-      getManyByIds: [product3],
-    });
-
-    const currencyRepository = currencyRepositoryMock({
-      getManyByIds: [currencyEntityFactory({ id: 'EUR', value: 1 })],
-    });
-
-    const result = await service({
-      border: false,
-      age: 18,
-      shoppingProducts: [shoppingProduct3],
-      meanOfTransport: MeansOfTransport.TRAIN,
-      productRepository,
-      currencyRepository,
-      country: 'US',
-    });
-    expect(result).toMatchObject({
-      canCreateDeclaration: true,
     });
   });
   test.each([
@@ -228,5 +192,54 @@ describe('test simulator service', () => {
       country: 'US',
     });
     expect(result.amountProducts).toEqual([]);
+  });
+  it('should simulate declaration with alcohol tax', async () => {
+    const alcoholProduct = productEntityFactory({
+      customDuty: 5,
+      vat: 20,
+      productType: ProductType.amount,
+      amountProduct: AmountAlcoholProduct.strongAlcohol,
+    });
+    const shoppingProduct1: ShoppingProduct = {
+      id: alcoholProduct.id,
+      customId: faker.string.uuid(),
+      originalValue: 100,
+      currency: 'EUR',
+    };
+
+    const productRepository = productRepositoryMock({ getManyByIds: [alcoholProduct] });
+
+    const currencyRepository = currencyRepositoryMock({
+      getManyByIds: [currencyEntityFactory({ id: 'EUR', value: 1 })],
+    });
+
+    const result = await service({
+      border: false,
+      age: 18,
+      shoppingProducts: [shoppingProduct1],
+      productRepository,
+      currencyRepository,
+      country: 'US',
+    });
+    expect(result).toMatchObject({
+      valueProducts: [
+        {
+          _id: alcoholProduct.id,
+          _name: alcoholProduct.name,
+          _customName: undefined,
+          _customId: shoppingProduct1.customId,
+          _unitPrice: 100,
+          _customDuty: 0,
+          _originalPrice: 100,
+          _originalCurrency: 'EUR',
+          _rateCurrency: 1,
+          _vat: 0,
+        },
+      ],
+      amountProducts: [],
+      franchiseAmount: 100,
+      alcoholTax: expect.any(Number),
+      alcoholTaxDetails: expect.any(Array),
+    });
   });
 });

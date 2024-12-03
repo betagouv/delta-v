@@ -75,10 +75,6 @@ export const service = async ({
     meanOfTransport,
   });
 
-  if (!declaration.canCreateDeclaration()) {
-    throw declarationCreateForbiddenError();
-  }
-
   const declarationEntity: DeclarationEntityInterface = {
     id: declarationId,
     canCalculateTaxes: declaration.canCalculateTaxes(),
