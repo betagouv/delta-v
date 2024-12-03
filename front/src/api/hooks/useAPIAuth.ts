@@ -145,6 +145,7 @@ export const useChangePasswordMutation = ({
 
 export const useAgentConnectCallbackMutation = ({
   onSuccess,
+  onError,
 }: MutationSuccessCallback<AgentConnectCallbackResponse>) => {
   return useMutation<AgentConnectCallbackResponse, IErrorResponse, AgentConnectCallbackOptions>(
     agentConnectCallbackRequest,
@@ -155,6 +156,11 @@ export const useAgentConnectCallbackMutation = ({
           setRefreshToken(data.refreshToken);
           setLastRefresh(data.lastRefresh.toString());
           onSuccess(data);
+        }
+      },
+      onError: (error) => {
+        if (onError) {
+          onError(error);
         }
       },
     },

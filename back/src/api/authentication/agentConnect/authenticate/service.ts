@@ -8,8 +8,8 @@ import { generateAccessToken, generateRefreshToken } from '../../../../core/jwt/
 import { convertToMilliseconds } from '../../../../utils/convertToMilliseconds.util';
 import { calculateRefreshTokenExpiry } from '../../../../utils/refreshTokenExpiration';
 import { generateDeterministicUuid } from '../../../../utils/uuidGenerator.util';
+import unauthorizedEmailError from '../../../common/errors/unauthorizedEmail.error';
 import { IAuthenticateRequest } from './validator';
-
 interface ILoginServiceOptions {
   state: string;
   nonce: string;
@@ -69,6 +69,12 @@ export const service = async ({
     }
 
     const userInfo = await agentConnectService.getUserInfo(tokenSet.access_token as string);
+
+    const allowedDomains = ['@douane.finances.gouv.fr', '@dgddi.finances.gouv.fr'];
+
+    if (!allowedDomains.some((domain) => userInfo.email.endsWith(domain))) {
+      throw unauthorizedEmailError();
+    }
 
     const uuidUid = generateDeterministicUuid(userInfo.uid);
 

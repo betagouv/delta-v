@@ -19,4 +19,5 @@ export enum ErrorCodes {
   DECLARATION_CREATION_FORBIDDEN = 'declaration-creation-forbidden',
   TOO_MANY_REQUESTS = 'too-many-requests',
   TOO_MANY_REQUESTS_EMAIL_SEND = 'too-many-requests-email-send',
+  UNAUTHORIZED_EMAIL = 'unauthorized-email',
 }
