@@ -9,20 +9,25 @@ import { getUnit } from '@/model/amount';
 import { AmountProductInterface } from '@/stores/simulator/appState.store';
 
 interface AmountProductBasketProps {
-  containError?: boolean;
   product: AmountProductInterface;
-  onUpdateProduct?: () => void;
-  onDeleteProduct?: () => void;
+  containError?: boolean;
+  onDeleteProduct: () => void;
+  onUpdateProduct: () => void;
+  tobaccoTax?: number;
+  isTobaccoProduct?: boolean;
 }
 
 export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
-  containError = false,
   product: { name, amount, customName, amountProduct },
-  onUpdateProduct,
+  containError = false,
   onDeleteProduct,
-}: AmountProductBasketProps) => {
+  onUpdateProduct,
+  tobaccoTax = 0,
+  isTobaccoProduct = false,
+}) => {
   const [open, setOpen] = useState(false);
   const [unit, setUnit] = useState<string>('');
+
   useEffect(() => {
     setUnit(getUnit(amountProduct) ?? '');
   }, [amountProduct]);
@@ -103,6 +108,22 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
           )}
         </div>
       </div>
+      {isTobaccoProduct && tobaccoTax > 0 && (
+        <div className="grid grid-cols-2 pt-2">
+          <Typography transform="sentence-case" size="text-sm" weight="bold" desktopSize="text-sm">
+            Droits et taxes dus
+          </Typography>
+          <Typography
+            transform="sentence-case"
+            size="text-sm"
+            desktopSize="text-sm"
+            textPosition="text-right"
+            weight="bold"
+          >
+            {`${tobaccoTax.toFixed(2)} €`}
+          </Typography>
+        </div>
+      )}
     </div>
   );
 };

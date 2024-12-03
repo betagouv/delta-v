@@ -107,7 +107,7 @@ describe('test simulator service', () => {
         },
       ],
       franchiseAmount: 300,
-      canCreateDeclaration: false,
+      canCreateDeclaration: true,
     });
   });
   it('should simulate declaration', async () => {

@@ -48,6 +48,9 @@ const Panier = () => {
   const detailedProducts = declarationResponse?.valueProducts || [];
   const customProducts = declarationResponse?.customProducts || [];
   const amountProducts = declarationResponse?.amountProducts || [];
+  const tobaccoTax = declarationResponse?.tobaccoTax || 0;
+  const tobaccoTaxDetails = declarationResponse?.tobaccoTaxDetails || [];
+  console.log('🚀 ~ Panier ~ declarationResponse:', declarationResponse);
 
   const [openActionModal, setOpenActionModal] = useState(false);
   const idToDelete = useRef('');
@@ -87,6 +90,13 @@ const Panier = () => {
       authorType: 'user',
     });
   };
+
+  const tobaccoProducts = amountProducts.filter(
+    (amountProduct) => amountProduct.group === 'allTobaccoProducts',
+  );
+  const alcoholProducts = amountProducts.filter(
+    (amountProduct) => amountProduct.group !== 'allTobaccoProducts',
+  );
 
   return (
     <Main
@@ -136,7 +146,7 @@ const Panier = () => {
             </div>
           ))}
 
-          {amountProducts.map((amountProduct) => (
+          {tobaccoProducts.map((amountProduct) => (
             <div key={amountProduct.group} className="flex flex-col gap-3">
               <div className="mt-2">
                 <Typography color="light-gray">
@@ -145,6 +155,49 @@ const Panier = () => {
               </div>
               {amountProduct.products.map((product) => (
                 <AmountProductBasket
+                  key={product.customId}
+                  product={product}
+                  onDeleteProduct={() => {
+                    idToDelete.current = product.customId;
+                    setOpenActionModal(true);
+                  }}
+                  onUpdateProduct={() => {
+                    router.push(`/declaration/panier/modifier/${product.customId}`);
+                  }}
+                />
+              ))}
+              {/* Bloc récapitulatif des taxes tabac */}
+              {tobaccoTaxDetails.length > 0 && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                  <Typography weight="bold" size="text-sm">
+                    Détail des taxes tabac
+                  </Typography>
+                  {tobaccoTaxDetails.map((detail, index) => (
+                    <div key={index} className="flex justify-between text-sm mb-1">
+                      <span>
+                        {detail.type} ({detail.amount} unités)
+                      </span>
+                      <span>{detail.tax.toFixed(2)} €</span>
+                    </div>
+                  ))}
+                  <div className="mt-2 pt-2 border-t border-gray-200 flex justify-between font-bold">
+                    <span>Total taxes tabac</span>
+                    <span>{tobaccoTax.toFixed(2)} €</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+          {alcoholProducts.map((amountProduct) => (
+            <div key={amountProduct.group} className="flex flex-col gap-3">
+              <div className="mt-2">
+                <Typography color="light-gray">
+                  {getAmountCategoryName(amountProduct.group)}
+                </Typography>
+              </div>
+              {amountProduct.products.map((product) => (
+                <AmountProductBasket
+                  key={product.customId}
                   containError={amountProduct.isOverMaximum}
                   product={product}
                   onDeleteProduct={() => {
@@ -154,7 +207,6 @@ const Panier = () => {
                   onUpdateProduct={() => {
                     router.push(`/declaration/panier/modifier/${product.customId}`);
                   }}
-                  key={product.customId}
                 />
               ))}
               {amountProduct.isOverMaximum && (

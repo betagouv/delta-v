@@ -5,6 +5,10 @@ import {
   AmountProduct,
 } from '../../common/services/amountProducts/globalAmount.service';
 import { getRoundedNumber } from '../../../utils/roundedNumber';
+import {
+  TobaccoTaxCalculator,
+  TobaccoTaxDetail,
+} from '../../common/services/tobacco/tobaccoTaxCalculator';
 
 interface SerializedValueProduct {
   id?: string;
@@ -58,6 +62,8 @@ interface SerializedSimulatorResponse {
   franchiseAmount: number | string;
   canCalculateTaxes: boolean;
   canCreateDeclaration: boolean;
+  tobaccoTax?: number;
+  tobaccoTaxDetails?: TobaccoTaxDetail[];
 }
 
 const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedValueProduct => ({
@@ -110,6 +116,11 @@ export const serializeSimulator = ({
   const totalTaxes = currency(totalCustomDuty).add(totalVat).value;
   const totalTaxesRounded = getRoundedNumber(totalTaxes);
 
+  const allDetailedProducts = amountProducts.flatMap((group) => group.detailedShoppingProducts);
+  const tobaccoTax = TobaccoTaxCalculator.calculateTax(allDetailedProducts);
+  const tobaccoTaxDetails = TobaccoTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
+  console.log('🚀 ~ tobaccoTaxDetails:', tobaccoTaxDetails);
+
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
     customProducts: customProducts.map(serializeValueProduct),
@@ -120,10 +131,12 @@ export const serializeSimulator = ({
     ),
     totalCustomDuty,
     totalVat,
-    totalTaxes,
     totalTaxesRounded,
+    totalTaxes: currency(totalCustomDuty).add(totalVat).add(tobaccoTax).value,
     franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
     canCalculateTaxes,
     canCreateDeclaration,
+    tobaccoTax,
+    tobaccoTaxDetails,
   };
 };

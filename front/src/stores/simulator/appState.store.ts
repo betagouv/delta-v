@@ -41,6 +41,7 @@ export interface DetailedProduct {
   originalCurrency: string;
   rateCurrency: number;
   unitCustomDuty: number;
+  tobaccoTax?: number | null;
   unitVat: number;
   unitTaxes: number;
   unitTaxesRounded: number;
@@ -64,6 +65,13 @@ export interface GroupedAmountProduct {
   isOverMaximum: boolean;
 }
 
+export interface TobaccoTaxDetail {
+  type: string;
+  amount: number;
+  equivalence: number;
+  tax: number;
+}
+
 export interface SimulatorResponse {
   valueProducts?: DetailedProduct[];
   customProducts?: DetailedProduct[];
@@ -73,9 +81,11 @@ export interface SimulatorResponse {
   totalVat: number;
   totalTaxes: number;
   totalTaxesRounded: number;
-  franchiseAmount: number;
+  franchiseAmount: number | string;
   canCalculateTaxes: boolean;
   canCreateDeclaration: boolean;
+  tobaccoTax: number;
+  tobaccoTaxDetails: TobaccoTaxDetail[];
 }
 
 export interface SimulatorRequest {

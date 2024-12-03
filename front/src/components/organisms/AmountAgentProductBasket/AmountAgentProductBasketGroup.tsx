@@ -20,6 +20,7 @@ interface AmountAgentProductBasketGroupProps {
   onModifyClick: (id: string) => void;
   onDelete: (id: string) => void;
   editable: boolean;
+  tobaccoTax?: number;
 }
 
 export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGroupProps> = ({
@@ -29,6 +30,7 @@ export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGro
   border = false,
   onDelete,
   editable,
+  tobaccoTax,
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [productType, setProductType] = useState<
@@ -48,19 +50,31 @@ export const AmountAgentProductBasketGroup: React.FC<AmountAgentProductBasketGro
         {getAmountCategoryName(amountProductGroup.group)}
       </Typography>
       <div className="flex md:flex-row flex-col flex-wrap gap-4 md:gap-5">
-        {amountProductGroup.products.map((product) => (
-          <div className="md:w-72 w-full" key={product.customId}>
-            <AmountAgentProductBasket
-              containError={amountProductGroup.isOverMaximum}
-              product={product}
-              onProductClick={onModifyClick}
-              onDelete={onDelete}
-              editable={editable}
-            />
-          </div>
-        ))}
+        {amountProductGroup.group === 'allTobaccoProducts'
+          ? amountProductGroup.products.map((product) => (
+              <div className="md:w-72 w-full" key={product.customId}>
+                <AmountAgentProductBasket
+                  product={product}
+                  onProductClick={onModifyClick}
+                  onDelete={onDelete}
+                  editable={editable}
+                  tobaccoTax={tobaccoTax}
+                />
+              </div>
+            ))
+          : amountProductGroup.products.map((product) => (
+              <div className="md:w-72 w-full" key={product.customId}>
+                <AmountAgentProductBasket
+                  containError={amountProductGroup.isOverMaximum}
+                  product={product}
+                  onProductClick={onModifyClick}
+                  onDelete={onDelete}
+                  editable={editable}
+                />
+              </div>
+            ))}
       </div>
-      {amountProductGroup.isOverMaximum && (
+      {amountProductGroup.group === 'groupedAlcohol' && amountProductGroup.isOverMaximum && (
         <div className="flex flex-row gap-1 text-error">
           <p className="md:ml-5 flex-1 text-xs">
             Vous dépassez la limite légale d'unités{' '}
