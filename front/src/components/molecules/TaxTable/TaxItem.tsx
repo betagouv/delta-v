@@ -50,16 +50,18 @@ export const TaxItem: React.FC<ITaxItemProps> = ({
           {detailedProduct.originalCurrency ? '€' : getUnit(detailedProduct.amountProduct)}
         </Typography>
       </div>
-      <div className="px-5 flex flex-row justify-between w-full">
-        <Typography size="text-xs" weight="bold">
-          Droits et taxes dues
-        </Typography>
-        <Typography size="text-xs" weight="bold">
-          {withCalculation || isAmountProduct
-            ? `${detailedProduct.unitTaxesRounded} €`
-            : 'Non renseignés'}
-        </Typography>
-      </div>
+      {detailedProduct.unitTaxesRounded > 0 && (
+        <div className="px-5 flex flex-row justify-between w-full">
+          <Typography size="text-xs" weight="bold">
+            Droits et taxes dues
+          </Typography>
+          <Typography size="text-xs" weight="bold">
+            {withCalculation || isAmountProduct
+              ? `${detailedProduct.unitTaxesRounded} €`
+              : 'Non renseignés'}
+          </Typography>
+        </div>
+      )}
       {!isAmountProduct && !noDetails && (
         <div
           className="flex flex-col w-full justify-center py-2 px-5 bg-[#EEEEFE] rounded-b-xl cursor-pointer"

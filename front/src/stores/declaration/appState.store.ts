@@ -85,6 +85,12 @@ export interface DeclarationResponse {
   totalCustomDutyAmount: number;
   totalTaxesAmount: number;
   totalTaxesRoundedAmount: number;
+  totalTobaccoTaxAmount: number;
+  totalAlcoholTaxAmount: number;
+  totalTobaccoTaxRoundedAmount: number;
+  totalAlcoholTaxRoundedAmount: number;
+  totalTaxesValueAmount: number;
+  totalTaxesValueRoundedAmount: number;
   totalVatAmount: number;
   versionDate: Date;
   products: DetailedProduct[];

@@ -52,8 +52,15 @@ const preProcessDeclarationFixture = (fields: DeclarationEntity): Partial<Declar
   const franchiseAmount = products.reduce((acc, product) => acc + product.originalValue, 0);
   const totalVatAmount = products.reduce((acc, product) => acc + product.vat, 0);
   const totalCustomDutyAmount = products.reduce((acc, product) => acc + product.customDuty, 0);
-  const totalTaxesAmount = products.reduce((acc, product) => acc + product.calculatedTaxes, 0);
-  const totalTaxesRoundedAmount = getRoundedNumber(totalTaxesAmount);
+  const totalTaxesValueAmount = products.reduce((acc, product) => acc + product.calculatedTaxes, 0);
+  const totalTaxesValueRoundedAmount = products.reduce(
+    (acc, product) => acc + product.calculatedTaxesRounded,
+    0,
+  );
+  const totalAlcoholTaxAmount = 1000.04;
+  const totalTobaccoTaxAmount = 2000.67;
+  const totalAlcoholTaxRoundedAmount = getRoundedNumber(totalAlcoholTaxAmount);
+  const totalTobaccoTaxRoundedAmount = getRoundedNumber(totalTobaccoTaxAmount);
   return {
     ...values,
     id: faker.string.uuid(),
@@ -79,8 +86,15 @@ const preProcessDeclarationFixture = (fields: DeclarationEntity): Partial<Declar
     declarantMeanOfTransport: faker.helpers.arrayElement(Object.values(MeansOfTransport)),
     totalVatAmount,
     totalCustomDutyAmount,
-    totalTaxesAmount,
-    totalTaxesRoundedAmount,
+    totalTaxesValueAmount,
+    totalTaxesValueRoundedAmount,
+    totalAlcoholTaxAmount,
+    totalTobaccoTaxAmount,
+    totalAlcoholTaxRoundedAmount,
+    totalTobaccoTaxRoundedAmount,
+    totalTaxesAmount: totalTaxesValueAmount + totalAlcoholTaxAmount + totalTobaccoTaxAmount,
+    totalTaxesRoundedAmount:
+      totalTaxesValueRoundedAmount + totalAlcoholTaxRoundedAmount + totalTobaccoTaxRoundedAmount,
     franchiseAmount,
     totalAmount,
     authorType: faker.helpers.arrayElement(Object.values(AuthorType)),

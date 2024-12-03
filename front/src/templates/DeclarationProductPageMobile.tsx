@@ -335,6 +335,23 @@ const Declaration = () => {
                 ))}
                 {amountProducts &&
                   amountProducts.map((amountProduct, index) => {
+                    if (amountProduct.group === 'allTobaccoProducts') {
+                      return (
+                        <AmountAgentProductBasketGroup
+                          amountProductGroup={amountProduct}
+                          country={meansOfTransportAndCountry.country}
+                          border={declarationAgentRequest.border}
+                          onDelete={(id) => {
+                            setDeletedProductId(id);
+                            setOpenModalDeleteProduct(true);
+                          }}
+                          editable={isAvailableToEdit}
+                          onModifyClick={onModifyClick}
+                          key={`${amountProduct.group}-${index}`}
+                          tobaccoTax={declarationAgentResponse.tobaccoTax}
+                        />
+                      );
+                    }
                     return (
                       <AmountAgentProductBasketGroup
                         amountProductGroup={amountProduct}
@@ -347,6 +364,7 @@ const Declaration = () => {
                         editable={isAvailableToEdit}
                         onModifyClick={onModifyClick}
                         key={`${amountProduct.group}-${index}`}
+                        alcoholTax={declarationAgentResponse.alcoholTax}
                       />
                     );
                   })}

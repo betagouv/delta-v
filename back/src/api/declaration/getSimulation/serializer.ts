@@ -4,7 +4,6 @@ import {
   AmountGroup,
   AmountProduct,
 } from '../../common/services/amountProducts/globalAmount.service';
-import { getRoundedNumber } from '../../../utils/roundedNumber';
 import {
   TobaccoTaxCalculator,
   TobaccoTaxDetail,
@@ -64,9 +63,13 @@ interface SerializedSimulatorResponse {
   totalTaxesRounded: number;
   franchiseAmount: number | string;
   canCalculateTaxes: boolean;
+  totalTaxesValue: number;
+  totalTaxesValueRounded: number;
   tobaccoTax?: number;
+  tobaccoTaxRounded?: number;
   tobaccoTaxDetails?: TobaccoTaxDetail[];
   alcoholTax?: number;
+  alcoholTaxRounded?: number;
   alcoholTaxDetails?: AlcoholTaxDetail[];
 }
 
@@ -116,13 +119,19 @@ export const serializeSimulator = ({
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVat()).value,
     0,
   );
-  const totalTaxes = currency(totalCustomDuty).add(totalVat).value;
-  const totalTaxesRounded = getRoundedNumber(totalTaxes);
+  const totalVatRounded = valueProducts.reduce(
+    (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVatRounded()).value,
+    0,
+  );
+  const totalTaxesValue = currency(totalCustomDuty).add(totalVat).value;
+  const totalTaxesValueRounded = currency(totalCustomDuty).add(totalVatRounded).value;
 
   const allDetailedProducts = amountProducts.flatMap((group) => group.detailedShoppingProducts);
   const tobaccoTax = TobaccoTaxCalculator.calculateTax(allDetailedProducts);
+  const tobaccoTaxRounded = TobaccoTaxCalculator.calculateRoundedTax(allDetailedProducts);
   const tobaccoTaxDetails = TobaccoTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
   const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts);
+  const alcoholTaxRounded = AlcoholTaxCalculator.calculateRoundedTax(allDetailedProducts);
   const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
 
   return {
@@ -135,13 +144,21 @@ export const serializeSimulator = ({
     ),
     totalCustomDuty,
     totalVat,
-    totalTaxesRounded,
-    totalTaxes: currency(totalCustomDuty).add(totalVat).add(tobaccoTax).add(alcoholTax).value,
+    totalTaxesValue,
+    totalTaxesValueRounded,
+    totalTaxes: currency(totalCustomDuty).add(totalTaxesValue).add(tobaccoTax).add(alcoholTax)
+      .value,
+    totalTaxesRounded: currency(totalCustomDuty)
+      .add(totalTaxesValueRounded)
+      .add(tobaccoTaxRounded)
+      .add(alcoholTaxRounded).value,
     franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
     canCalculateTaxes,
     tobaccoTax,
+    tobaccoTaxRounded,
     tobaccoTaxDetails,
     alcoholTax,
+    alcoholTaxRounded,
     alcoholTaxDetails,
   };
 };

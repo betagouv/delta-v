@@ -70,8 +70,12 @@ export class Declaration {
   uncompletedRealProductsTaxes: ProductTaxesInterface[];
   total: number;
   franchiseAmount: number;
-  tobaccoTax: number;
-  alcoholTax: number;
+  tobaccoTaxAmount: number;
+  alcoholTaxAmount: number;
+  tobaccoTaxRoundedAmount: number;
+  alcoholTaxRoundedAmount: number;
+  totalTaxesAmount: number;
+  totalTaxesRoundedAmount: number;
 
   constructor({ inputDeclaration, detailedShoppingProducts }: DeclarationConstructorOptions) {
     this.inputDeclaration = inputDeclaration;
@@ -80,8 +84,14 @@ export class Declaration {
     this.franchiseAmount = this.getFranchiseAmount();
     this.defaultProductsTaxes = this.getDefaultProductTaxes();
     this.uncompletedRealProductsTaxes = this.getUncompletedProductTaxes();
-    this.tobaccoTax = TobaccoTaxCalculator.calculateTax(this.detailedShoppingProducts);
-    this.alcoholTax = AlcoholTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.tobaccoTaxAmount = TobaccoTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.alcoholTaxAmount = AlcoholTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.tobaccoTaxRoundedAmount = TobaccoTaxCalculator.calculateRoundedTax(
+      this.detailedShoppingProducts,
+    );
+    this.alcoholTaxRoundedAmount = AlcoholTaxCalculator.calculateRoundedTax(
+      this.detailedShoppingProducts,
+    );
   }
 
   getAmountProductsGrouped(): AmountGroup[] {
@@ -181,7 +191,7 @@ export class Declaration {
 
   getTotalTaxes(): number {
     const productTaxes = this.getRealProductsTaxes();
-    return getTotalProductsTaxes(productTaxes) + this.tobaccoTax + this.alcoholTax;
+    return getTotalProductsTaxes(productTaxes);
   }
 
   canCalculateTaxes = (): boolean => {

@@ -211,6 +211,10 @@ export const ProductSearchTools = ({
     setFavoriteValue('');
   };
 
+  const onValidateDeclaration = () => {
+    console.log('onValidateDeclaration');
+  };
+
   const onConfirmRemoveFavorite = (product?: Product) => {
     if (!currentFavorite) {
       return;

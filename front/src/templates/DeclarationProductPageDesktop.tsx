@@ -59,9 +59,7 @@ const Declaration = () => {
   };
 
   const onCloseSummaryModal = () => {
-    setOpenSummaryModal(false);
-    resetDeclarationAgent();
-    router.push(RoutingAgent.declarations);
+    console.log('onCloseSummaryModal');
   };
   return (
     <AgentRoute>

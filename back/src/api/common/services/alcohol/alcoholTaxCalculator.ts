@@ -1,5 +1,6 @@
 import { DetailedShoppingProduct } from '../detailedShoppingProduct';
 import { AmountAlcoholProduct } from '../amountProducts/alcohol/alcohol.service';
+import { getRoundedNumber } from '../../../../utils/roundedNumber';
 
 export interface AlcoholTaxDetail {
   type: string;
@@ -54,6 +55,11 @@ export class AlcoholTaxCalculator {
   public static calculateTax(detailedShoppingProducts: DetailedShoppingProduct[]): number {
     const details = this.calculateDetailedTaxes(detailedShoppingProducts);
     return details.reduce((total, detail) => total + detail.tax, 0);
+  }
+
+  public static calculateRoundedTax(detailedShoppingProducts: DetailedShoppingProduct[]): number {
+    const details = this.calculateDetailedTaxes(detailedShoppingProducts);
+    return details.reduce((total, detail) => total + getRoundedNumber(detail.tax), 0);
   }
 
   public static calculateDetailedTaxes(

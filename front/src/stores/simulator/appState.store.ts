@@ -89,8 +89,12 @@ export interface SimulatorResponse {
   total: number;
   totalCustomDuty: number;
   totalVat: number;
+  totalTaxesValue: number;
+  totalTaxesValueRounded: number;
   totalTaxes: number;
   totalTaxesRounded: number;
+  tobaccoTaxRounded: number;
+  alcoholTaxRounded: number;
   franchiseAmount: number | string;
   canCalculateTaxes: boolean;
   tobaccoTax: number;
