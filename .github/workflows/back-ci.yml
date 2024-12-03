@@ -58,6 +58,7 @@ jobs:
       AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG: RS256
       AGENTCONNECT_SCOPE: openid profile email
       SESSION_SECRET: sessionSecretPipeline
+      UUID_NAMESPACE: fakeuuid
 
     steps:
       - uses: actions/checkout@v3
