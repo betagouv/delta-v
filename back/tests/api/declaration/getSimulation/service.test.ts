@@ -222,24 +222,38 @@ describe('test simulator service', () => {
       country: 'US',
     });
     expect(result).toMatchObject({
-      valueProducts: [
+      valueProducts: [],
+      amountProducts: [
         {
-          _id: alcoholProduct.id,
-          _name: alcoholProduct.name,
-          _customName: undefined,
-          _customId: shoppingProduct1.customId,
-          _unitPrice: 100,
-          _customDuty: 0,
-          _originalPrice: 100,
-          _originalCurrency: 'EUR',
-          _rateCurrency: 1,
-          _vat: 0,
+          detailedShoppingProducts: [
+            {
+              product: {
+                amountProduct: alcoholProduct.amountProduct,
+                childrenQuestion: alcoholProduct.childrenQuestion,
+                countries: alcoholProduct.countries,
+                customDuty: alcoholProduct.customDuty,
+                id: alcoholProduct.id,
+                info: alcoholProduct.info,
+                name: alcoholProduct.name,
+                positionRank: alcoholProduct.positionRank,
+                productDisplayTypes: alcoholProduct.productDisplayTypes,
+                productType: alcoholProduct.productType,
+                relatedWords: alcoholProduct.relatedWords,
+                vat: alcoholProduct.vat,
+              },
+              shoppingProduct: {
+                currency: shoppingProduct1.currency,
+                customId: shoppingProduct1.customId,
+                id: alcoholProduct.id,
+                originalValue: shoppingProduct1.originalValue,
+              },
+            },
+          ],
+          group: 'groupedAlcohol',
+          isOverMaximum: true,
         },
       ],
-      amountProducts: [],
-      franchiseAmount: 100,
-      alcoholTax: expect.any(Number),
-      alcoholTaxDetails: expect.any(Array),
+      franchiseAmount: 300,
     });
   });
 });

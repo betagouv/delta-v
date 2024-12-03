@@ -123,9 +123,7 @@ export const serializeSimulator = ({
   const tobaccoTax = TobaccoTaxCalculator.calculateTax(allDetailedProducts);
   const tobaccoTaxDetails = TobaccoTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
   const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts);
-  console.log('🚀 ~ alcoholTax:', alcoholTax);
   const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
-  console.log('🚀 ~ alcoholTaxDetails:', alcoholTaxDetails);
 
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
