@@ -19,6 +19,7 @@ const buildSchema = (): ProductDeclaration => {
     calculatedCustomDuty: faker.number.float({ multipleOf: 0.01 }),
     calculatedVat: faker.number.float({ multipleOf: 0.01 }),
     calculatedTaxes: faker.number.float({ multipleOf: 0.01 }),
+    calculatedTaxesRounded: faker.number.float({ multipleOf: 0.01 }),
     customDuty: faker.number.float({ multipleOf: 0.01 }),
     value: faker.number.float({ multipleOf: 0.01 }),
     vat: faker.number.float({ multipleOf: 0.01 }),

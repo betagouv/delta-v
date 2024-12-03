@@ -26,6 +26,7 @@ describe('Declaration serializer', () => {
           unitCustomDuty: oneDeclaration.products[0].calculatedCustomDuty,
           unitVat: oneDeclaration.products[0].calculatedVat,
           unitTaxes: oneDeclaration.products[0].calculatedTaxes,
+          unitTaxesRounded: oneDeclaration.products[0].calculatedTaxesRounded,
         },
       ],
       versionDate: oneDeclaration.versionDate,
@@ -47,6 +48,7 @@ describe('Declaration serializer', () => {
       totalVatAmount: oneDeclaration.totalVatAmount,
       totalCustomDutyAmount: oneDeclaration.totalCustomDutyAmount,
       totalTaxesAmount: oneDeclaration.totalTaxesAmount,
+      totalTaxesRoundedAmount: oneDeclaration.totalTaxesRoundedAmount,
       franchiseAmount: oneDeclaration.franchiseAmount,
       totalAmount: oneDeclaration.totalAmount,
     });

@@ -84,6 +84,7 @@ export interface DeclarationResponse {
   totalAmount: number;
   totalCustomDutyAmount: number;
   totalTaxesAmount: number;
+  totalTaxesRoundedAmount: number;
   totalVatAmount: number;
   versionDate: Date;
   products: DetailedProduct[];

@@ -4,6 +4,7 @@ import {
   AmountGroup,
   AmountProduct,
 } from '../../common/services/amountProducts/globalAmount.service';
+import { getRoundedNumber } from '../../../utils/roundedNumber';
 
 interface SerializedValueProduct {
   id?: string;
@@ -19,6 +20,7 @@ interface SerializedValueProduct {
   unitCustomDuty: number;
   unitVat: number;
   unitTaxes: number;
+  unitTaxesRounded: number;
   notManagedProduct: boolean;
 }
 
@@ -52,6 +54,7 @@ interface SerializedSimulatorResponse {
   totalCustomDuty: number;
   totalVat: number;
   totalTaxes: number;
+  totalTaxesRounded: number;
   franchiseAmount: number | string;
   canCalculateTaxes: boolean;
   canCreateDeclaration: boolean;
@@ -71,6 +74,7 @@ const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedV
   unitCustomDuty: productTaxes.getUnitCustomDuty(),
   unitVat: productTaxes.getUnitVat(),
   unitTaxes: productTaxes.getUnitTaxes(),
+  unitTaxesRounded: productTaxes.getUnitTaxesRounded(),
   notManagedProduct: productTaxes.notManagedProduct,
 });
 
@@ -103,6 +107,9 @@ export const serializeSimulator = ({
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVat()).value,
     0,
   );
+  const totalTaxes = currency(totalCustomDuty).add(totalVat).value;
+  const totalTaxesRounded = getRoundedNumber(totalTaxes);
+
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
     customProducts: customProducts.map(serializeValueProduct),
@@ -113,7 +120,8 @@ export const serializeSimulator = ({
     ),
     totalCustomDuty,
     totalVat,
-    totalTaxes: currency(totalCustomDuty).add(totalVat).value,
+    totalTaxes,
+    totalTaxesRounded,
     franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
     canCalculateTaxes,
     canCreateDeclaration,

@@ -107,7 +107,7 @@ export const ValueProductBasket: React.FC<ValueProductBasketProps> = ({
                   lineHeight="leading-6"
                 >
                   {detailedProduct && !customProduct
-                    ? `${detailedProduct.unitTaxes}€`
+                    ? `${detailedProduct.unitTaxesRounded}€`
                     : 'non renseigné'}
                 </Typography>
               </div>

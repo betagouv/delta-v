@@ -1,6 +1,7 @@
 import currency from 'currency.js';
 import { TaxesData } from '../../../../entities/declaration.entity';
 import { Declaration } from '../../../common/services/declaration';
+import { getRoundedNumber } from '../../../../utils/roundedNumber';
 
 export const getTaxesDataFromDeclaration = (declaration: Declaration): TaxesData => {
   const valueProducts = declaration.getRealProductsTaxes();
@@ -14,11 +15,16 @@ export const getTaxesDataFromDeclaration = (declaration: Declaration): TaxesData
     0,
   );
 
+  const totalTaxesAmount = currency(totalCustomDutyAmount).add(totalVatAmount).value;
+
+  const totalTaxesRoundedAmount = getRoundedNumber(totalTaxesAmount);
+
   return {
     totalCustomDutyAmount,
     totalVatAmount,
     franchiseAmount: declaration.franchiseAmount,
-    totalTaxesAmount: currency(totalCustomDutyAmount).add(totalVatAmount).value,
+    totalTaxesRoundedAmount,
+    totalTaxesAmount,
     totalAmount: declaration.total,
   };
 };

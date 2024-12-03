@@ -30,7 +30,7 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loadin
           </Typography>
           <Typography size="text-base" weight="bold">
             {declarationResponse.canCalculateTaxes
-              ? `${declarationResponse.totalTaxesAmount}€`
+              ? `${declarationResponse.totalTaxesRoundedAmount}€`
               : 'Non renseignées'}
           </Typography>
         </div>

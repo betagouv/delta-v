@@ -1,6 +1,7 @@
 import currency from 'currency.js';
 import { v4 as uuid } from 'uuid';
 import { DetailedShoppingProduct } from '../api/common/services/detailedShoppingProduct';
+import { getRoundedNumber } from '../utils/roundedNumber';
 import { Product } from './product.entity';
 
 export interface ShoppingProduct {
@@ -37,6 +38,7 @@ export interface ProductTaxesInterface {
   getUnitCustomDuty(): number;
   getUnitVat(): number;
   getUnitTaxes(): number;
+  getUnitTaxesRounded(): number;
   resetFreeTaxesDetails(): ProductTaxesInterface;
   setCustomDuty(customDuty: number): ProductTaxesInterface;
 }
@@ -194,6 +196,10 @@ export class ProductTaxes implements ProductTaxesInterface {
 
   getUnitTaxes = (): number => {
     return currency(this.getUnitCustomDuty()).add(this.getUnitVat()).value;
+  };
+
+  getUnitTaxesRounded = (): number => {
+    return getRoundedNumber(this.getUnitTaxes());
   };
 
   resetFreeTaxesDetails = (): ProductTaxesInterface => {

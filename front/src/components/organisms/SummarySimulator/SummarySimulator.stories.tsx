@@ -3,6 +3,7 @@ import { Meta } from '@storybook/react';
 import { SummarySimulator } from './SummarySimulator';
 import {
   MeansOfTransport,
+  ProductStatus,
   SimulatorRequest,
   SimulatorResponse,
 } from '@/stores/simulator/appState.store';
@@ -24,6 +25,9 @@ const simulatorResponse: SimulatorResponse = {
   franchiseAmount: 430,
   total: 600,
   totalTaxes: 30,
+  canCalculateTaxes: true,
+  totalTaxesRounded: 30,
+  canCreateDeclaration: true,
   totalCustomDuty: 10,
   totalVat: 20,
   valueProducts: [
@@ -41,6 +45,9 @@ const simulatorResponse: SimulatorResponse = {
       unitCustomDuty: 0,
       unitVat: 0,
       unitTaxes: 0,
+      unitTaxesRounded: 0,
+      status: ProductStatus.VALUE_PRODUCT,
+      notManagedProduct: false,
     },
     {
       id: 'test2',
@@ -56,6 +63,9 @@ const simulatorResponse: SimulatorResponse = {
       unitCustomDuty: 10,
       unitVat: 20,
       unitTaxes: 30,
+      unitTaxesRounded: 30,
+      status: ProductStatus.VALUE_PRODUCT,
+      notManagedProduct: false,
     },
   ],
 };

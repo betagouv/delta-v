@@ -19,6 +19,7 @@ const getProductDeclarationFromProductTaxes = (
   calculatedCustomDuty: productTaxes.getUnitCustomDuty(),
   calculatedVat: productTaxes.getUnitVat(),
   calculatedTaxes: productTaxes.getUnitTaxes(),
+  calculatedTaxesRounded: productTaxes.getUnitTaxesRounded(),
   customName: productTaxes.customName,
   customDuty: productTaxes.customDuty,
   vat: productTaxes.vat,
@@ -43,6 +44,7 @@ const getProductsDeclarationFromDetailedShoppingProduct = (
   calculatedCustomDuty: 0,
   calculatedVat: 0,
   calculatedTaxes: 0,
+  calculatedTaxesRounded: 0,
   name: detailedShoppingProduct.product?.name,
   notManagedProduct: detailedShoppingProduct.isNotManagedShoppingProduct(),
 });

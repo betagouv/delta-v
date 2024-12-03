@@ -37,5 +37,5 @@
     }
   },
   "exclude": ["./out/**/*", "./node_modules/**/*"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../back/src/utils/roundedNumber.tsx"]
 }

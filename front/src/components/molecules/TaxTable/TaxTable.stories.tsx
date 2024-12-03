@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react';
 
 import { TaxTable } from './TaxTable';
 import { DeclarationResponse, MeansOfTransport } from '@/stores/declaration/appState.store';
-import { DetailedProduct } from '@/stores/simulator/appState.store';
+import { DetailedProduct, ProductStatus } from '@/stores/simulator/appState.store';
 import { DeclarationStatus } from '@/utils/declarationStatus.util';
 
 export default {
@@ -27,6 +27,9 @@ const valueProducts: DetailedProduct[] = [
     unitCustomDuty: 12.5,
     unitVat: 50,
     unitTaxes: 62.5,
+    unitTaxesRounded: 63,
+    status: ProductStatus.VALUE_PRODUCT,
+    notManagedProduct: false,
   },
   {
     id: '1200',
@@ -42,6 +45,9 @@ const valueProducts: DetailedProduct[] = [
     unitCustomDuty: 12.5,
     unitVat: 50,
     unitTaxes: 50.5,
+    unitTaxesRounded: 51,
+    status: ProductStatus.VALUE_PRODUCT,
+    notManagedProduct: false,
   },
 ];
 
@@ -65,11 +71,13 @@ const simulatorResponse: DeclarationResponse = {
   totalCustomDutyAmount: 0,
   totalVatAmount: 0,
   totalTaxesAmount: 0,
+  totalTaxesRoundedAmount: 0,
   versionDate: new Date('2022-01-01'),
   declarantBorder: false,
   declarantAddressCity: 'Paris',
   declarantAddressPostalCode: '75000',
   declarantAddressStreet: 'Rue de Paris',
+  canCalculateTaxes: true,
 };
 
 export const withVariant = (): JSX.Element => (

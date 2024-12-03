@@ -71,6 +71,7 @@ export interface SerializedDeclaration {
   totalVatAmount: number;
   totalCustomDutyAmount: number;
   totalTaxesAmount: number;
+  totalTaxesRoundedAmount: number;
   franchiseAmount: number;
   totalAmount: number;
   canCalculateTaxes: boolean;
@@ -101,6 +102,7 @@ export const declarationSerializer = (
   totalVatAmount: declaration.totalVatAmount,
   totalCustomDutyAmount: declaration.totalCustomDutyAmount,
   totalTaxesAmount: declaration.totalTaxesAmount,
+  totalTaxesRoundedAmount: declaration.totalTaxesRoundedAmount,
   franchiseAmount: declaration.franchiseAmount,
   totalAmount: declaration.totalAmount,
   canCalculateTaxes: declaration.canCalculateTaxes,

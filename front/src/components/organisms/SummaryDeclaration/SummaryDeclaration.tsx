@@ -40,13 +40,13 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
   qrCodeVersion = false,
   hideDetails = false,
 }: SummaryDeclarationProps) => {
-  const totalTaxes = declarationResponse.totalTaxesAmount ?? 0;
+  const totalTaxes = declarationResponse.totalTaxesRoundedAmount ?? 0;
   const [color, setColor] = useState<Color>('primary');
   useEffect(() => {
-    if (declarationResponse.totalTaxesAmount === 0) {
+    if (declarationResponse.totalTaxesRoundedAmount === 0) {
       setColor('success');
     }
-    if (declarationResponse.totalTaxesAmount !== 0) {
+    if (declarationResponse.totalTaxesRoundedAmount !== 0) {
       setColor('primary');
     }
   }, [declarationResponse]);

@@ -33,13 +33,13 @@ const getProductByType = (products?: DetailedProduct[]): GetProductByTypeOptions
 export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
   declarationResponse,
 }: SummaryDeclarationProps) => {
-  const totalTaxes = declarationResponse.totalTaxesAmount ?? 0;
+  const totalTaxes = declarationResponse.totalTaxesRoundedAmount ?? 0;
   const [color, setColor] = useState<Color>('primary');
   useEffect(() => {
-    if (declarationResponse.totalTaxesAmount === 0) {
+    if (declarationResponse.totalTaxesRoundedAmount === 0) {
       setColor('success');
     }
-    if (declarationResponse.totalTaxesAmount !== 0) {
+    if (declarationResponse.totalTaxesRoundedAmount !== 0) {
       setColor('primary');
     }
   }, [declarationResponse]);
@@ -313,10 +313,10 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
                           </Typography>
                           <div className="flex-1" />
                           <Typography
-                            color={product.unitTaxes === 0 ? 'success' : 'primary'}
+                            color={product.unitTaxesRounded === 0 ? 'success' : 'primary'}
                             size="text-3xs"
                           >
-                            {product.unitTaxes} €
+                            {product.unitTaxesRounded} €
                           </Typography>
                         </div>
                       </div>
@@ -337,8 +337,10 @@ export const SummaryDeclaration: React.FC<SummaryDeclarationProps> = ({
                             <div className="flex flex-1 flex-row">
                               <Typography color="secondary">{product.unitPrice} €</Typography>
                               <div className="flex-1" />
-                              <Typography color={product.unitTaxes === 0 ? 'success' : 'primary'}>
-                                {product.unitTaxes} €
+                              <Typography
+                                color={product.unitTaxesRounded === 0 ? 'success' : 'primary'}
+                              >
+                                {product.unitTaxesRounded} €
                               </Typography>
                             </div>
                           </div>
