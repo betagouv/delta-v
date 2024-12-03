@@ -77,22 +77,13 @@ export const DeclarationPageDesktop = () => {
     });
   };
 
-  const onResetFilter = () => {
-    setFilterBarData({
-      search: '',
-      status: [],
-      meanOfTransport: [],
-      startDate: null,
-      endDate: null,
-    });
-  };
-
   return (
     <div className="flex flex-col">
       <FilterBarDesktop
         onSubmit={onValidateFilter}
         filterBarData={filterBarData}
-        onResetFilter={onResetFilter}
+        withStatusFilter
+        withMeanOfTransportFilter
       />
       <div className="grid grid-cols-3 gap-[30px] pt-10">
         {declarations &&

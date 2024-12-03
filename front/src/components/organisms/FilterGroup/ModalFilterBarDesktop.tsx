@@ -35,7 +35,8 @@ export const ModalFilterBarDesktop = ({
   const { register, control, handleSubmit, setValue, watch } = useForm<FilterBarForm>({
     defaultValues: {
       status: filterBarData?.status ?? [],
-      meanOfTransport: filterBarData?.meanOfTransport,
+      meanOfTransport: filterBarData?.meanOfTransport ?? [],
+      newsTags: filterBarData?.newsTags ?? [],
       startDate: filterBarData?.startDate,
       endDate: filterBarData?.endDate,
       search: filterBarData?.search,
@@ -47,6 +48,7 @@ export const ModalFilterBarDesktop = ({
     setIsModified(
       watch('status')?.join(',') !== filterBarData?.status?.join(',') ||
         watch('meanOfTransport')?.join(',') !== filterBarData?.meanOfTransport?.join(',') ||
+        watch('newsTags')?.join(',') !== filterBarData?.newsTags?.join(',') ||
         watch('startDate') !== filterBarData?.startDate ||
         watch('endDate') !== filterBarData?.endDate ||
         watch('search') !== filterBarData?.search,

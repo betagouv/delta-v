@@ -22,7 +22,7 @@ export const useActualities = ({
   onSuccess,
 }: UseActualityParams) => {
   return useQuery(
-    ['actuality', limit, offset, search, startDate, endDate],
+    ['actuality', limit, offset, search, startDate, endDate, tags],
     () =>
       getActualities({
         limit,

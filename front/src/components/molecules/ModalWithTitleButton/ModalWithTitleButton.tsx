@@ -104,7 +104,11 @@ export const ModalWithTitleButton: React.FC<IModalWithTitleButtonProps> = ({
                 </div>
               )}
               {children && (
-                <div className={`flex ${withMargin && 'sm:mt-base md:m-0'} justify-center`}>
+                <div
+                  className={`flex flex-1 bg-gray-100 ${
+                    withMargin && 'sm:mt-base md:m-0'
+                  } w-full justify-center`}
+                >
                   {children}
                 </div>
               )}

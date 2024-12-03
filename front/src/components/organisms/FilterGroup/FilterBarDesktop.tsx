@@ -12,9 +12,18 @@ import { PeriodInput } from '@/components/input/StandardInputs/PeriodInput';
 export type FilterBarDesktopProps = {
   onSubmit: any;
   filterBarData?: FilterBarForm;
+  withStatusFilter?: boolean;
+  withMeanOfTransportFilter?: boolean;
+  withNewsTagsFilter?: boolean;
 };
 
-export const FilterBarDesktop = ({ onSubmit, filterBarData }: FilterBarDesktopProps) => {
+export const FilterBarDesktop = ({
+  onSubmit,
+  filterBarData,
+  withStatusFilter,
+  withMeanOfTransportFilter,
+  withNewsTagsFilter,
+}: FilterBarDesktopProps) => {
   const [openModal, setOpenModal] = useState(false);
 
   const { register, control, handleSubmit, setValue } = useForm<FilterBarForm>({
@@ -76,8 +85,9 @@ export const FilterBarDesktop = ({ onSubmit, filterBarData }: FilterBarDesktopPr
         </div>
       </form>
       <ModalFilterBarDesktop
-        withStatusFilter={true}
-        withMeanOfTransportFilter={true}
+        withStatusFilter={withStatusFilter}
+        withMeanOfTransportFilter={withMeanOfTransportFilter}
+        withNewsTagsFilter={withNewsTagsFilter}
         onValidateFilter={onSubmit}
         filterBarData={filterBarData}
         open={openModal}
