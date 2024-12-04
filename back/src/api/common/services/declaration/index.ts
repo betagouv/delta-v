@@ -17,6 +17,7 @@ import { ShoppingProduct } from '../shoppingProducts';
 import { TravelerData } from '../traveler';
 import { getFranchiseAmount, manageFreeProducts } from '../valueProducts';
 import { TobaccoTaxCalculator } from '../tobacco/tobaccoTaxCalculator';
+import { AlcoholTaxCalculator } from '../alcohol/alcoholTaxCalculator';
 
 interface InputDeclaration {
   travelerData: TravelerData;
@@ -69,7 +70,12 @@ export class Declaration {
   uncompletedRealProductsTaxes: ProductTaxesInterface[];
   total: number;
   franchiseAmount: number;
-  tobaccoTax: number;
+  tobaccoTaxAmount: number;
+  alcoholTaxAmount: number;
+  tobaccoTaxRoundedAmount: number;
+  alcoholTaxRoundedAmount: number;
+  totalTaxesAmount: number;
+  totalTaxesRoundedAmount: number;
 
   constructor({ inputDeclaration, detailedShoppingProducts }: DeclarationConstructorOptions) {
     this.inputDeclaration = inputDeclaration;
@@ -78,7 +84,14 @@ export class Declaration {
     this.franchiseAmount = this.getFranchiseAmount();
     this.defaultProductsTaxes = this.getDefaultProductTaxes();
     this.uncompletedRealProductsTaxes = this.getUncompletedProductTaxes();
-    this.tobaccoTax = TobaccoTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.tobaccoTaxAmount = TobaccoTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.alcoholTaxAmount = AlcoholTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.tobaccoTaxRoundedAmount = TobaccoTaxCalculator.calculateRoundedTax(
+      this.detailedShoppingProducts,
+    );
+    this.alcoholTaxRoundedAmount = AlcoholTaxCalculator.calculateRoundedTax(
+      this.detailedShoppingProducts,
+    );
   }
 
   getAmountProductsGrouped(): AmountGroup[] {
@@ -178,7 +191,7 @@ export class Declaration {
 
   getTotalTaxes(): number {
     const productTaxes = this.getRealProductsTaxes();
-    return getTotalProductsTaxes(productTaxes) + this.tobaccoTax;
+    return getTotalProductsTaxes(productTaxes);
   }
 
   canCalculateTaxes = (): boolean => {
@@ -187,24 +200,6 @@ export class Declaration {
     }
 
     if (this.hasUncompletedProduct()) {
-      return false;
-    }
-
-    return true;
-  };
-
-  canCreateDeclaration = (): boolean => {
-    if (this.detailedShoppingProducts.length <= 0) {
-      return false;
-    }
-
-    // Check only alcohol products for over maximum condition
-    const hasOverMaximumAlcoholProduct = this.getAmountProductsGrouped().find(
-      (amountGroup) => amountGroup.group === 'groupedAlcohol' && amountGroup.isOverMaximum,
-    );
-
-    // Allow declaration if only tobacco exceeds the limit
-    if (hasOverMaximumAlcoholProduct) {
       return false;
     }
 

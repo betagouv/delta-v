@@ -37,6 +37,7 @@ export interface ProductTaxesInterface {
   ): ProductTaxesInterface;
   getUnitCustomDuty(): number;
   getUnitVat(): number;
+  getUnitVatRounded(): number;
   getUnitTaxes(): number;
   getUnitTaxesRounded(): number;
   resetFreeTaxesDetails(): ProductTaxesInterface;
@@ -192,6 +193,10 @@ export class ProductTaxes implements ProductTaxesInterface {
   getUnitVat = (): number => {
     return currency(this.unitPrice).add(this.getUnitCustomDuty()).multiply(this.vat).divide(100)
       .value;
+  };
+
+  getUnitVatRounded = (): number => {
+    return getRoundedNumber(this.getUnitVat());
   };
 
   getUnitTaxes = (): number => {

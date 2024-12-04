@@ -4,11 +4,15 @@ import {
   AmountGroup,
   AmountProduct,
 } from '../../common/services/amountProducts/globalAmount.service';
-import { getRoundedNumber } from '../../../utils/roundedNumber';
 import {
   TobaccoTaxCalculator,
   TobaccoTaxDetail,
 } from '../../common/services/tobacco/tobaccoTaxCalculator';
+import {
+  AlcoholTaxCalculator,
+  AlcoholTaxDetail,
+} from '../../common/services/alcohol/alcoholTaxCalculator';
+import { getRoundedNumber } from '../../../utils/roundedNumber';
 
 interface SerializedValueProduct {
   id?: string;
@@ -47,7 +51,6 @@ interface SerializedSimulatorOptions {
   amountProducts: AmountGroup[];
   franchiseAmount: number;
   canCalculateTaxes: boolean;
-  canCreateDeclaration: boolean;
 }
 
 interface SerializedSimulatorResponse {
@@ -61,9 +64,14 @@ interface SerializedSimulatorResponse {
   totalTaxesRounded: number;
   franchiseAmount: number | string;
   canCalculateTaxes: boolean;
-  canCreateDeclaration: boolean;
+  totalTaxesValue: number;
+  totalTaxesValueRounded: number;
   tobaccoTax?: number;
+  tobaccoTaxRounded?: number;
   tobaccoTaxDetails?: TobaccoTaxDetail[];
+  alcoholTax?: number;
+  alcoholTaxRounded?: number;
+  alcoholTaxDetails?: AlcoholTaxDetail[];
 }
 
 const serializeValueProduct = (productTaxes: ProductTaxesInterface): SerializedValueProduct => ({
@@ -103,7 +111,6 @@ export const serializeSimulator = ({
   amountProducts,
   franchiseAmount,
   canCalculateTaxes,
-  canCreateDeclaration,
 }: SerializedSimulatorOptions): SerializedSimulatorResponse => {
   const totalCustomDuty = valueProducts.reduce(
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitCustomDuty()).value,
@@ -113,13 +120,26 @@ export const serializeSimulator = ({
     (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVat()).value,
     0,
   );
-  const totalTaxes = currency(totalCustomDuty).add(totalVat).value;
-  const totalTaxesRounded = getRoundedNumber(totalTaxes);
+  const totalVatRounded = valueProducts.reduce(
+    (acc, productTaxes) => currency(acc).add(productTaxes.getUnitVatRounded()).value,
+    0,
+  );
+  const totalTaxesValue = currency(totalCustomDuty).add(totalVat).value;
+  const totalTaxesValueRounded = getRoundedNumber(
+    currency(totalCustomDuty).add(totalVatRounded).value,
+  );
 
   const allDetailedProducts = amountProducts.flatMap((group) => group.detailedShoppingProducts);
   const tobaccoTax = TobaccoTaxCalculator.calculateTax(allDetailedProducts);
+  const tobaccoTaxRounded = getRoundedNumber(
+    TobaccoTaxCalculator.calculateRoundedTax(allDetailedProducts),
+  );
   const tobaccoTaxDetails = TobaccoTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
-  console.log('🚀 ~ tobaccoTaxDetails:', tobaccoTaxDetails);
+  const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts);
+  const alcoholTaxRounded = getRoundedNumber(
+    AlcoholTaxCalculator.calculateRoundedTax(allDetailedProducts),
+  );
+  const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
 
   return {
     valueProducts: valueProducts.map(serializeValueProduct),
@@ -131,12 +151,23 @@ export const serializeSimulator = ({
     ),
     totalCustomDuty,
     totalVat,
-    totalTaxesRounded,
-    totalTaxes: currency(totalCustomDuty).add(totalVat).add(tobaccoTax).value,
+    totalTaxesValue,
+    totalTaxesValueRounded,
+    totalTaxes: currency(totalCustomDuty).add(totalTaxesValue).add(tobaccoTax).add(alcoholTax)
+      .value,
+    totalTaxesRounded: getRoundedNumber(
+      currency(totalCustomDuty)
+        .add(totalTaxesValueRounded)
+        .add(tobaccoTaxRounded)
+        .add(alcoholTaxRounded).value,
+    ),
     franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
     canCalculateTaxes,
-    canCreateDeclaration,
     tobaccoTax,
+    tobaccoTaxRounded,
     tobaccoTaxDetails,
+    alcoholTax,
+    alcoholTaxRounded,
+    alcoholTaxDetails,
   };
 };

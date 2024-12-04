@@ -48,6 +48,12 @@ export interface TaxesData {
   totalCustomDutyAmount: number;
   totalTaxesAmount: number;
   totalTaxesRoundedAmount: number;
+  totalTobaccoTaxAmount: number;
+  totalAlcoholTaxAmount: number;
+  totalTobaccoTaxRoundedAmount: number;
+  totalAlcoholTaxRoundedAmount: number;
+  totalTaxesValueAmount: number;
+  totalTaxesValueRoundedAmount: number;
   franchiseAmount: number;
   totalAmount: number;
 }
@@ -173,6 +179,24 @@ export class DeclarationEntity implements DeclarationEntityInterface {
 
   @Column({ type: 'float' })
   totalTaxesRoundedAmount: number;
+
+  @Column({ type: 'float' })
+  totalTobaccoTaxAmount: number;
+
+  @Column({ type: 'float' })
+  totalAlcoholTaxAmount: number;
+
+  @Column({ type: 'float' })
+  totalTobaccoTaxRoundedAmount: number;
+
+  @Column({ type: 'float' })
+  totalAlcoholTaxRoundedAmount: number;
+
+  @Column({ type: 'float' })
+  totalTaxesValueAmount: number;
+
+  @Column({ type: 'float' })
+  totalTaxesValueRoundedAmount: number;
 
   @Column({ type: 'float' })
   franchiseAmount: number;

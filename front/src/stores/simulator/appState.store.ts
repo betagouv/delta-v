@@ -72,6 +72,16 @@ export interface TobaccoTaxDetail {
   tax: number;
 }
 
+export interface AlcoholTaxDetail {
+  type: string;
+  amount: number;
+  tax: number;
+  details: {
+    excise: number;
+    css: number;
+  };
+}
+
 export interface SimulatorResponse {
   valueProducts?: DetailedProduct[];
   customProducts?: DetailedProduct[];
@@ -79,13 +89,18 @@ export interface SimulatorResponse {
   total: number;
   totalCustomDuty: number;
   totalVat: number;
+  totalTaxesValue: number;
+  totalTaxesValueRounded: number;
   totalTaxes: number;
   totalTaxesRounded: number;
+  tobaccoTaxRounded: number;
+  alcoholTaxRounded: number;
   franchiseAmount: number | string;
   canCalculateTaxes: boolean;
-  canCreateDeclaration: boolean;
   tobaccoTax: number;
   tobaccoTaxDetails: TobaccoTaxDetail[];
+  alcoholTax: number;
+  alcoholTaxDetails: AlcoholTaxDetail[];
 }
 
 export interface SimulatorRequest {

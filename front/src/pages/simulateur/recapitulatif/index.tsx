@@ -80,7 +80,7 @@ const Summary = () => {
           </div>
         </div>
         <div className="mt-2">
-          <Button fullWidth onClick={onDeclare} disabled={!simulatorResponse?.canCreateDeclaration}>
+          <Button fullWidth onClick={onDeclare}>
             Je déclare
           </Button>
         </div>

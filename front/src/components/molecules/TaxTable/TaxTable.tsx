@@ -16,23 +16,62 @@ export const TaxTable: React.FC<ITaxTableProps> = ({ declarationResponse, loadin
       </Typography>
       <div>
         <div className="flex flex-col gap-5 md:gap-[10px]">
-          {declarationResponse.products.map((detailedProduct) => (
-            <TaxItem
-              detailedProduct={detailedProduct}
-              withCalculation={declarationResponse.canCalculateTaxes}
-              noDetails={noDetails}
-            />
-          ))}
+          {declarationResponse.products.map((detailedProduct) => {
+            console.log(
+              '🚀 ~ {declarationResponse.products.map ~ detailedProduct:',
+              detailedProduct,
+            );
+            return (
+              <TaxItem
+                detailedProduct={detailedProduct}
+                withCalculation={declarationResponse.canCalculateTaxes}
+                noDetails={noDetails}
+              />
+            );
+          })}
         </div>
         <div className="flex flex-row justify-between p-5">
           <Typography size="text-base" weight="bold">
             TOTAL
           </Typography>
-          <Typography size="text-base" weight="bold">
-            {declarationResponse.canCalculateTaxes
-              ? `${declarationResponse.totalTaxesRoundedAmount}€`
-              : 'Non renseignées'}
-          </Typography>
+          {declarationResponse.canCalculateTaxes ? (
+            <div className="flex flex-col gap-2">
+              <div className="grid grid-cols-2 gap-4 text-right">
+                <Typography size="text-sm" textPosition="text-left">
+                  Taxes sur la valeur:
+                </Typography>
+                <Typography size="text-sm" weight="bold">
+                  {declarationResponse.totalTaxesValueRoundedAmount}€
+                </Typography>
+
+                <Typography size="text-sm" textPosition="text-left">
+                  Taxes tabac:
+                </Typography>
+                <Typography size="text-sm" weight="bold">
+                  {declarationResponse.totalTobaccoTaxRoundedAmount}€
+                </Typography>
+
+                <Typography size="text-sm" textPosition="text-left">
+                  Taxes alcool:
+                </Typography>
+                <Typography size="text-sm" weight="bold">
+                  {declarationResponse.totalAlcoholTaxRoundedAmount}€
+                </Typography>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-right border-t pt-2">
+                <Typography size="text-base" weight="bold" textPosition="text-left">
+                  Total:
+                </Typography>
+                <Typography size="text-base" weight="bold">
+                  {declarationResponse.totalTaxesRoundedAmount}€
+                </Typography>
+              </div>
+            </div>
+          ) : (
+            <Typography size="text-base" weight="bold">
+              Non renseignées
+            </Typography>
+          )}
         </div>
       </div>
     </div>

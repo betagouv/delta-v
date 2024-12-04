@@ -96,10 +96,16 @@ describe('test put declaration service', () => {
       franchiseAmount: 300,
       totalAmount: 418.33,
       products: expect.any(Array),
+      totalTobaccoTaxAmount: 0,
+      totalAlcoholTaxAmount: 0,
+      totalTobaccoTaxRoundedAmount: 0,
+      totalAlcoholTaxRoundedAmount: 0,
+      totalTaxesValueAmount: 27.22,
+      totalTaxesValueRoundedAmount: 27,
       totalCustomDutyAmount: 2.96,
       totalVatAmount: 24.26,
-      totalTaxesAmount: 27.22,
-      totalTaxesRoundedAmount: 27,
+      totalTaxesAmount: 30.18,
+      totalTaxesRoundedAmount: 30,
     };
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(declarationRepository.createOne).toBeCalledWith(expectedDeclaration);
