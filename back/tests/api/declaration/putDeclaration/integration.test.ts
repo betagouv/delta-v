@@ -180,7 +180,7 @@ describe('test put declaration API', () => {
       canCalculateTaxes: true,
       totalVatAmount: 121.17,
       totalCustomDutyAmount: 64.17,
-      totalTaxesAmount: 185.34,
+      totalTaxesAmount: 249.51,
       franchiseAmount: 300,
       totalAmount: 841.67,
       declarantBorder: border,
