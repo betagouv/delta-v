@@ -12,6 +12,7 @@ import {
   AlcoholTaxCalculator,
   AlcoholTaxDetail,
 } from '../../common/services/alcohol/alcoholTaxCalculator';
+import { getRoundedNumber } from '../../../utils/roundedNumber';
 
 interface SerializedValueProduct {
   id?: string;
@@ -124,14 +125,20 @@ export const serializeSimulator = ({
     0,
   );
   const totalTaxesValue = currency(totalCustomDuty).add(totalVat).value;
-  const totalTaxesValueRounded = currency(totalCustomDuty).add(totalVatRounded).value;
+  const totalTaxesValueRounded = getRoundedNumber(
+    currency(totalCustomDuty).add(totalVatRounded).value,
+  );
 
   const allDetailedProducts = amountProducts.flatMap((group) => group.detailedShoppingProducts);
   const tobaccoTax = TobaccoTaxCalculator.calculateTax(allDetailedProducts);
-  const tobaccoTaxRounded = TobaccoTaxCalculator.calculateRoundedTax(allDetailedProducts);
+  const tobaccoTaxRounded = getRoundedNumber(
+    TobaccoTaxCalculator.calculateRoundedTax(allDetailedProducts),
+  );
   const tobaccoTaxDetails = TobaccoTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
   const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts);
-  const alcoholTaxRounded = AlcoholTaxCalculator.calculateRoundedTax(allDetailedProducts);
+  const alcoholTaxRounded = getRoundedNumber(
+    AlcoholTaxCalculator.calculateRoundedTax(allDetailedProducts),
+  );
   const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
 
   return {
@@ -148,10 +155,12 @@ export const serializeSimulator = ({
     totalTaxesValueRounded,
     totalTaxes: currency(totalCustomDuty).add(totalTaxesValue).add(tobaccoTax).add(alcoholTax)
       .value,
-    totalTaxesRounded: currency(totalCustomDuty)
-      .add(totalTaxesValueRounded)
-      .add(tobaccoTaxRounded)
-      .add(alcoholTaxRounded).value,
+    totalTaxesRounded: getRoundedNumber(
+      currency(totalCustomDuty)
+        .add(totalTaxesValueRounded)
+        .add(tobaccoTaxRounded)
+        .add(alcoholTaxRounded).value,
+    ),
     franchiseAmount: franchiseAmount === Infinity ? '∞' : franchiseAmount,
     canCalculateTaxes,
     tobaccoTax,

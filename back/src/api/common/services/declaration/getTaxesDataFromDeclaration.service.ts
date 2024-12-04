@@ -1,6 +1,7 @@
 import currency from 'currency.js';
 import { TaxesData } from '../../../../entities/declaration.entity';
 import { Declaration } from '../../../common/services/declaration';
+import { getRoundedNumber } from '../../../../utils/roundedNumber';
 
 export const getTaxesDataFromDeclaration = (declaration: Declaration): TaxesData => {
   const valueProducts = declaration.getRealProductsTaxes();
@@ -18,26 +19,31 @@ export const getTaxesDataFromDeclaration = (declaration: Declaration): TaxesData
     0,
   );
 
-  const totalTaxesAmount = currency(totalCustomDutyAmount).add(totalVatAmount).value;
-  const totalTaxesValueRoundedAmount =
-    currency(totalCustomDutyAmount).add(totalVatRoundedAmount).value;
+  const totalTaxesValueAmount = currency(totalCustomDutyAmount).add(totalVatAmount).value;
+  const totalTaxesValueRoundedAmount = getRoundedNumber(
+    currency(totalCustomDutyAmount).add(totalVatRoundedAmount).value,
+  );
 
   return {
     totalCustomDutyAmount,
     totalVatAmount,
     franchiseAmount: declaration.franchiseAmount,
-    totalTaxesRoundedAmount:
-      totalTaxesValueRoundedAmount +
-      declaration.alcoholTaxRoundedAmount +
-      declaration.tobaccoTaxRoundedAmount,
-    totalTaxesAmount:
-      totalTaxesAmount + declaration.alcoholTaxAmount + declaration.tobaccoTaxAmount,
+    totalTaxesValueAmount,
+    totalTaxesValueRoundedAmount,
     totalTobaccoTaxAmount: declaration.tobaccoTaxAmount,
     totalAlcoholTaxAmount: declaration.alcoholTaxAmount,
-    totalTobaccoTaxRoundedAmount: declaration.tobaccoTaxRoundedAmount,
-    totalAlcoholTaxRoundedAmount: declaration.alcoholTaxRoundedAmount,
-    totalTaxesValueAmount: totalCustomDutyAmount + totalVatAmount,
-    totalTaxesValueRoundedAmount,
+    totalTobaccoTaxRoundedAmount: getRoundedNumber(declaration.tobaccoTaxRoundedAmount),
+    totalTaxesRoundedAmount: getRoundedNumber(
+      currency(totalCustomDutyAmount)
+        .add(totalTaxesValueRoundedAmount)
+        .add(declaration.alcoholTaxRoundedAmount)
+        .add(declaration.tobaccoTaxRoundedAmount).value,
+    ),
+    totalTaxesAmount: currency(totalCustomDutyAmount)
+      .add(totalTaxesValueAmount)
+      .add(declaration.tobaccoTaxAmount)
+      .add(declaration.alcoholTaxAmount).value,
+    totalAlcoholTaxRoundedAmount: getRoundedNumber(declaration.alcoholTaxRoundedAmount),
     totalAmount: declaration.total,
   };
 };
