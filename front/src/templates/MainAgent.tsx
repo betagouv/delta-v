@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import { MainAgentDesktop } from './MainAgentDesktop';
 import { MainAgentMobile } from './MainAgentMobile';
+import { useAgentConnectLogoutMutation } from '@/api/hooks/useAPIAuth';
 import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
 
 type IMainAgentProps = {
@@ -33,6 +34,11 @@ const MainAgent = ({
   linkButton,
   isMobile = true,
 }: IMainAgentProps) => {
+  const agentConnectLogoutMutation = useAgentConnectLogoutMutation({});
+
+  const handleLogout = () => {
+    agentConnectLogoutMutation.mutate();
+  };
   return (
     <AgentRoute>
       {isMobile ? (
@@ -48,7 +54,12 @@ const MainAgent = ({
           titleSwitchWordPosition={titleSwitchWordPosition}
         />
       ) : (
-        <MainAgentDesktop children={children} meta={meta} titleHeader={titleHeader} />
+        <MainAgentDesktop
+          children={children}
+          meta={meta}
+          titleHeader={titleHeader}
+          handleLogout={handleLogout}
+        />
       )}
     </AgentRoute>
   );

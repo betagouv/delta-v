@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { ModalTokenExpire } from '../../organisms/ModalTokenExpire';
-import { useRefreshMutation } from '@/api/hooks/useAPIAuth';
+import { useAgentConnectLogoutMutation, useRefreshMutation } from '@/api/hooks/useAPIAuth';
+import { CountdownToast } from '@/components/atoms/CountdownToast';
 import useTokenValidity, { TokenValidity } from '@/hooks/useTokenValidity';
 import { useStore } from '@/stores/store';
 import { clearTokens, hasToken } from '@/utils/auth';
@@ -20,19 +21,58 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
   const [showExpirationModal, setShowExpirationModal] = useState(
     tokenValidity === TokenValidity.SOON_EXPIRED,
   );
-  const { clearUser, setUserFromToken, tokenExpiration } = useStore(
+  const {
+    clearUser,
+    setUserFromToken,
+    tokenExpiration,
+    lastRefresh,
+    setCountdownEnd,
+    getCountdownEnd,
+  } = useStore(
     (state) => ({
       clearUser: state.clearUser,
       setUserFromToken: state.setUserFromToken,
       tokenExpiration: state.users.appState.user.exp,
+      lastRefresh: state.users.appState.user.lastRefresh,
+      setCountdownEnd: state.setCountdownEnd,
+      getCountdownEnd: state.getCountdownEnd,
     }),
     shallow,
   );
 
+  const agentConnectLogoutMutation = useAgentConnectLogoutMutation({});
+
+  const disconnectAgentConnect = () => {
+    agentConnectLogoutMutation.mutate();
+  };
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startCountdown = (duration: number) => {
+    const endTime = Date.now() + duration;
+    setCountdownEnd(endTime);
+  };
+
   const refreshMutation = useRefreshMutation({
     onSuccess: (data) => {
-      setUserFromToken(data.accessToken, data.refreshToken);
+      setUserFromToken(data.accessToken, data.refreshToken, data.lastRefresh);
       setShowExpirationModal(tokenValidity === TokenValidity.SOON_EXPIRED);
+
+      if (data.lastRefresh && data.timeToLogout) {
+        const timeoutInMs = data.timeToLogout;
+        startCountdown(timeoutInMs);
+
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+
+        timerRef.current = setTimeout(() => {
+          disconnectAgentConnect();
+        }, timeoutInMs);
+      }
+    },
+    onError: () => {
+      disconnectAgentConnect();
     },
   });
 
@@ -43,12 +83,17 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
   };
 
   useEffect(() => {
-    setShowExpirationModal(tokenValidity === TokenValidity.SOON_EXPIRED);
+    setShowExpirationModal(tokenValidity === TokenValidity.SOON_EXPIRED && !lastRefresh);
 
-    if (tokenValidity === TokenValidity.INVALID || !hasToken()) {
+    if (!hasToken()) {
       disconnect();
+      return;
     }
-  }, [tokenValidity]);
+
+    if (tokenValidity === TokenValidity.INVALID) {
+      disconnectAgentConnect();
+    }
+  }, [tokenValidity, lastRefresh]);
 
   return (
     <>
@@ -60,6 +105,7 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
         onClose={() => setShowExpirationModal(false)}
         onRefresh={() => refreshMutation.mutate()}
       />
+      {getCountdownEnd() && <CountdownToast onTimeout={disconnectAgentConnect} />}
     </>
   );
 };

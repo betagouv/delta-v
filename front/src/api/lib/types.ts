@@ -23,6 +23,7 @@ export interface IErrorResponse extends ICommonResponse {
 
 export interface MutationSuccessCallback<T = ICommonResponse> {
   onSuccess?: (data: T) => void;
+  onError?: (error: IErrorResponse) => void;
 }
 
 export interface MutationAxiosResponse<T = IErrorResponse> {

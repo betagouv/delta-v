@@ -21,12 +21,20 @@ export const setRefreshToken = (value: string) => {
   }
 };
 
+export const setLastRefresh = (value: string) => {
+  if (value) {
+    setCookie('lastRefresh', value);
+  }
+};
+
 export const getAccessToken = (): string | undefined => getCookie('accessToken');
 export const getRefreshToken = (): string | undefined => getCookie('refreshToken');
+export const getLastRefresh = (): string | undefined => getCookie('lastRefresh');
 
 export const clearTokens = () => {
   removeCookie('accessToken');
   removeCookie('refreshToken');
+  removeCookie('lastRefresh');
 };
 
 export const hasToken = () => {

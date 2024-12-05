@@ -4,6 +4,8 @@ export interface IAuthObject {
 }
 
 export interface AccessTokenAuthObject extends IAuthObject {
+  name: string;
+  lastName: string;
   isAgent: boolean;
 }
 

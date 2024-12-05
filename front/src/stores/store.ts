@@ -5,6 +5,8 @@ import { mountStoreDevtool } from 'simple-zustand-devtools';
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { CountdownSlice, createCountdownSlice } from './countdown/appState.store';
+import { CountdownUseCaseSlice, createUseCaseCountdownSlice } from './countdown/useCase.store';
 import {
   createCurrenciesAppStateSlice,
   CurrenciesAppStateSlice,
@@ -57,7 +59,9 @@ export type StoreState = SimulatorUseCaseSlice &
   PrepareMyTripAppStateSlice &
   PrepareMyTripUseCaseSlice &
   UsersAppStateSlice &
-  UsersUseCaseSlice;
+  UsersUseCaseSlice &
+  CountdownSlice &
+  CountdownUseCaseSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,
@@ -94,6 +98,8 @@ export const useStore = create<StoreState>(
       ...createUseCasePrepareMyTripSlice(set, get, api),
       ...createUsersAppStateSlice(set, get, api),
       ...createUseCaseUserSlice(set, get, api),
+      ...createCountdownSlice(set, get, api),
+      ...createUseCaseCountdownSlice(set, get, api),
     }),
 
     {
@@ -108,6 +114,7 @@ export const useStore = create<StoreState>(
           currencies: state.currencies,
           global: state.global,
           users: state.users,
+          countdown: state.countdown,
         };
       },
       migrate(persistedState: StoreState, version) {

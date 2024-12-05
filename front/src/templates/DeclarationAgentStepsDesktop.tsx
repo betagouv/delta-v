@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
 import { MainAgentDesktop } from './MainAgentDesktop';
+import { useAgentConnectLogoutMutation } from '@/api/hooks/useAPIAuth';
 import { ProgressBarAgent } from '@/components/molecules/ProgressBarAgent';
 import { ProgressBarAgentItemType } from '@/components/molecules/ProgressBarAgent/types';
 import { Meta } from '@/layout/Meta';
@@ -39,6 +40,12 @@ const DeclarationAgentStepsDesktop = ({
     setHeaderHeight(document.getElementById('agentDesktopHeader')?.offsetHeight);
   }, []);
 
+  const agentConnectLogoutMutation = useAgentConnectLogoutMutation({});
+
+  const handleLogout = () => {
+    agentConnectLogoutMutation.mutate();
+  };
+
   return (
     <>
       <MainAgentDesktop
@@ -49,6 +56,7 @@ const DeclarationAgentStepsDesktop = ({
           />
         }
         titleHeader="Créer une déclaration"
+        handleLogout={handleLogout}
       >
         {showProgressBar && <ProgressBarAgent links={links} currentStep={currentStep} />}
       </MainAgentDesktop>

@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, RequestHandler } from 'express';
 import { validatedExpressRequest } from '../../../core/utils/validatedExpressRequest';
 import { jwtMiddleware } from '../../../core/middlewares/jwt.middleware';
 import { multerMiddleware } from '../../../core/middlewares/multer.middleware';
@@ -8,7 +8,7 @@ import validator from './validator';
 export const putFeedback = Router().put(
   '/feedback/:feedbackId',
   jwtMiddleware({ isAgent: true }),
-  multerMiddleware.single('file'),
+  multerMiddleware.single('file') as unknown as RequestHandler,
   validator,
   validatedExpressRequest(route),
 );

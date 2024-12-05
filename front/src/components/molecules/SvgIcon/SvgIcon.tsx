@@ -316,6 +316,7 @@ export type SvgNames =
   | 'star'
   | 'starFull'
   | 'categoryWoodenFloor'
+  | 'logout'
   | 'clearField';
 
 export interface ISvgIconProps {
@@ -629,6 +630,8 @@ const getSvgFromName = (name: SvgNames): any => {
       return ClearField;
     case 'douanier':
       return Douanier;
+    case 'logout':
+      return VisibilityOff;
     case 'visibilityOff':
       return VisibilityOff;
     case 'visibilityOn':

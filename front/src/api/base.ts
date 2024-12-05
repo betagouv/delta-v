@@ -14,7 +14,7 @@ import { isAxiosError } from '@/utils/error';
 
 interface ConfigureAxiosOptions {
   onRefreshTokenError: () => void;
-  onRefreshTokenSuccess: (accessToken: string, refreshToken: string) => void;
+  onRefreshTokenSuccess: (accessToken: string, refreshToken: string, lastRefresh: boolean) => void;
 }
 
 export const configureAxios = ({
@@ -58,7 +58,7 @@ export const configureAxios = ({
           const response = await refreshRequest();
           setAccessToken(response.accessToken);
           setRefreshToken(response.refreshToken);
-          onRefreshTokenSuccess(response.accessToken, response.refreshToken);
+          onRefreshTokenSuccess(response.accessToken, response.refreshToken, response.lastRefresh);
 
           originalRequest.retry = true;
           return await axios(originalRequest);

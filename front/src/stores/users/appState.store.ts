@@ -9,6 +9,7 @@ export interface UsersAppStateSlice {
         email?: string;
         isAgent?: boolean;
         exp?: number;
+        lastRefresh?: boolean;
       };
     };
   };

@@ -1,4 +1,5 @@
 import { verify } from 'jsonwebtoken';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import invalidTokenError from '../../api/common/errors/invalidToken.error';
 import { config } from '../../loader/config';
 import { AccessTokenAuthObject, IAuthObject } from './AuthObject';
@@ -7,6 +8,30 @@ interface VerifyTokenOptions {
   token: string;
   secret: string;
   ignoreExpiration?: boolean;
+}
+
+interface IAgentConnectTokenObject {
+  token: string;
+  secret: string;
+  nonce: string;
+  ignoreExpiration?: boolean;
+}
+
+interface IAgentConnectTokenObjectResponse {
+  header: {
+    alg: string;
+  };
+  payload: {
+    sub: string;
+    auth_time: number;
+    acr: string;
+    nonce: string;
+    at_hash: string;
+    aud: string;
+    exp: number;
+    iat: number;
+    iss: string;
+  };
 }
 
 export const checkAndReturnAuthAccessToken = (header: string | undefined): string => {
@@ -52,6 +77,29 @@ export const buildTokenObject = async <T extends object>(
 
     if (!decoded) {
       throw invalidTokenError;
+    }
+
+    return decoded;
+  } catch {
+    throw invalidTokenError();
+  }
+};
+
+export const buildAgentConnectTokenObject = async ({
+  token,
+  secret,
+  nonce,
+  ignoreExpiration = false,
+}: IAgentConnectTokenObject): Promise<IAgentConnectTokenObjectResponse> => {
+  try {
+    const decoded = await verifyToken<IAgentConnectTokenObjectResponse>({
+      token,
+      secret,
+      ignoreExpiration,
+    });
+
+    if (decoded.payload.nonce !== nonce) {
+      throw invalidTokenError();
     }
 
     return decoded;

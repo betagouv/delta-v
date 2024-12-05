@@ -20,7 +20,11 @@ import { getLevelWithData } from '@/utils/declarationAgent';
 const SCAN_HEIGHT = '184px';
 const SCAN_WIDTH = '326px';
 
-const HomepageAgentMobile = () => {
+interface HomepageAgentMobileProps {
+  handleLogout: () => void;
+}
+
+const HomepageAgentMobile = ({ handleLogout }: HomepageAgentMobileProps) => {
   const tokenValidity = useTokenValidity();
   const router = useRouter();
 
@@ -175,27 +179,24 @@ const HomepageAgentMobile = () => {
             />
           </div>
           {mode === 'tools' ? (
-            <div
-              className={classNames({
-                '[&>.scan-region-highlight]:hidden mb-1 flex flex-col gap-5 mt-4': true,
-              })}
-            >
-              {MAIN_MENU_AGENT_ITEMS.map((item) => {
-                return (
-                  <div onClick={() => handleMenuItemClick(item)} key={item.title}>
-                    <LinkWithIcon
-                      href={item.path}
-                      key={item.title}
-                      svgName={item.svgIcon}
-                      name={item.title}
-                      withBgColor={item.id === 'declaration'}
-                      disabled={item.disabled}
-                    >
-                      {item.title}
-                    </LinkWithIcon>
-                  </div>
-                );
-              })}
+            <div className="flex flex-col gap-5 mt-4">
+              {MAIN_MENU_AGENT_ITEMS.map((item) => (
+                <div onClick={() => handleMenuItemClick(item)} key={item.title}>
+                  <LinkWithIcon
+                    href={item.path}
+                    key={item.title}
+                    svgName={item.svgIcon}
+                    name={item.title}
+                    withBgColor={item.id === 'declaration'}
+                    disabled={item.disabled}
+                  >
+                    {item.title}
+                  </LinkWithIcon>
+                </div>
+              ))}
+              <LinkWithIcon href="#" svgName="logout" name="Déconnexion" onClick={handleLogout}>
+                Déconnexion
+              </LinkWithIcon>
             </div>
           ) : (
             <div

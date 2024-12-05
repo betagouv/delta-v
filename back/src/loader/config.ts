@@ -6,10 +6,11 @@ const Config = z.object({
   NODE_ENV: z.string().default('development'),
   PORT: z
     .string()
-    .default('8080')
+    .default('3000')
     .refine((val) => !Number.isNaN(parseInt(val, 10)), {
       message: 'Expected number, received a string',
     }),
+  UUID_NAMESPACE: z.string(),
   ACCESS_TOKEN_SECRET: z.string(),
   ACCESS_TOKEN_LIFE: z.string().default('30m'),
   REFRESH_TOKEN_SECRET: z.string(),
@@ -30,6 +31,17 @@ const Config = z.object({
   CELLAR_ADDON_KEY_SECRET: z.string(),
   CELLAR_ADDON_HOST: z.string(),
   CELLAR_BUCKET_NAME: z.string(),
+  AGENTCONNECT_ISSUER: z.string(),
+  AGENTCONNECT_CLIENT_ID: z.string(),
+  AGENTCONNECT_CLIENT_SECRET: z.string(),
+  AGENTCONNECT_REDIRECT_URI: z.string(),
+  AGENTCONNECT_TOKEN_ENDPOINT: z.string(),
+  AGENTCONNECT_USERINFO_ENDPOINT: z.string(),
+  AGENTCONNECT_POST_LOGOUT_REDIRECT_URI: z.string(),
+  AGENTCONNECT_ID_TOKEN_SIGNED_RESPONSE_ALG: z.string(),
+  AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG: z.string(),
+  AGENTCONNECT_SCOPE: z.string(),
+  SESSION_SECRET: z.string(),
 });
 export type Config = z.infer<typeof Config>;
 

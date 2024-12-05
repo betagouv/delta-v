@@ -47,6 +47,18 @@ jobs:
       CELLAR_ADDON_KEY_ID: cellarKeyId
       CELLAR_ADDON_KEY_SECRET: cellarKeySecret
       CELLAR_BUCKET_NAME: cellarBuck
+      AGENTCONNECT_ISSUER: https://fca.integ01.dev-agentconnect.fr/api/v2
+      AGENTCONNECT_CLIENT_ID: agentconnectClientIdLocalDev
+      AGENTCONNECT_CLIENT_SECRET: agentconnectClientSecretLocalDev
+      AGENTCONNECT_REDIRECT_URI: http://localhost/connect
+      AGENTCONNECT_TOKEN_ENDPOINT: https://fca.integ01.dev-agentconnect.fr/api/v2/token
+      AGENTCONNECT_USERINFO_ENDPOINT: https://fca.integ01.dev-agentconnect.fr/api/v2/userinfo
+      AGENTCONNECT_POST_LOGOUT_REDIRECT_URI: http://localhost
+      AGENTCONNECT_ID_TOKEN_SIGNED_RESPONSE_ALG: RS256
+      AGENTCONNECT_USERINFO_SIGNED_RESPONSE_ALG: RS256
+      AGENTCONNECT_SCOPE: openid profile email
+      SESSION_SECRET: sessionSecretPipeline
+      UUID_NAMESPACE: 1b671a64-40d5-491e-99b0-da01ff1f3341
 
     steps:
       - uses: actions/checkout@v3
