@@ -1,6 +1,8 @@
 import { IncomingMessage } from 'http';
 import { Http2ServerRequest } from 'http2';
+
 import { Issuer, Client, TokenSet } from 'openid-client';
+
 import * as jose from 'jose';
 import { AgentConnectConfig } from './config';
 import { Agent } from './lib';

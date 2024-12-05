@@ -1,4 +1,4 @@
-import express, { Router, Express } from 'express';
+import express, { Router, Express, RequestHandler } from 'express';
 import session from 'express-session';
 import { jsonParserMiddleware } from '../core/middlewares';
 import { appErrorHandlerMiddleware } from '../core/middlewares/appErrorHandler.middleware';
@@ -21,7 +21,7 @@ export default ({ prefix, router }: IAppOptions): Express => {
         resave: false,
         saveUninitialized: true,
         cookie: { secure: config.NODE_ENV === 'production' },
-      }),
+      }) as unknown as RequestHandler,
     )
     .use(attachLoggerMiddleware())
     .use(jsonParserMiddleware)

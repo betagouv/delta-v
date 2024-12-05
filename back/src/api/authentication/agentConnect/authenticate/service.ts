@@ -37,7 +37,6 @@ export const service = async ({
   try {
     const params = agentConnectService.getCallbackParams(req);
     const tokenSet = await agentConnectService.getTokenSet(params, state, nonce);
-    console.log('🚀 ~ tokenSet:', tokenSet);
 
     if (!tokenSet.access_token) {
       throw new Error('No access token received');
@@ -70,7 +69,7 @@ export const service = async ({
 
     const userInfo = await agentConnectService.getUserInfo(tokenSet.access_token as string);
 
-    const allowedDomains = ['@douane.finances.gouv.fr', '@dgddi.finances.gouv.fr'];
+    const allowedDomains = ['@douane.finances.gouv.fr'];
 
     if (!allowedDomains.some((domain) => userInfo.email.endsWith(domain))) {
       throw unauthorizedEmailError();

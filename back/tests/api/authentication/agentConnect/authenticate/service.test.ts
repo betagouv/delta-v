@@ -22,7 +22,7 @@ describe('AgentConnect authenticate service', () => {
 
   const mockUserInfo = {
     uid: 'mockUserId',
-    email: 'test@example.com',
+    email: 'test@douane.finances.gouv.fr',
     given_name: 'John',
     usual_name: 'Doe',
   };
@@ -37,7 +37,7 @@ describe('AgentConnect authenticate service', () => {
 
   it('should authenticate existing user', async () => {
     const mockUser = userEntityFactory({
-      email: 'test@example.com',
+      email: 'test@douane.finances.gouv.fr',
     });
     const userRepository = userRepositoryMock({
       getOneByEmail: mockUser,
@@ -68,7 +68,7 @@ describe('AgentConnect authenticate service', () => {
     expect(result).toHaveProperty('accessToken');
     expect(result).toHaveProperty('refreshToken');
     expect(result).toHaveProperty('lastRefresh');
-    expect(userRepository.getOneByEmail).toHaveBeenCalledWith('test@example.com');
+    expect(userRepository.getOneByEmail).toHaveBeenCalledWith('test@douane.finances.gouv.fr');
     expect(userRepository.createUser).not.toHaveBeenCalled();
     expect(mockRedisClient.set).toHaveBeenCalled();
     expect(agentConnectService.getCallbackParams).toHaveBeenCalledWith(mockReq);

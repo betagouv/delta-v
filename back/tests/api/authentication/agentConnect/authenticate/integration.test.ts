@@ -24,7 +24,7 @@ jest.mock('../../../../../src/core/agentConnect/client', () => {
       } as TokenSet),
       getUserInfo: jest.fn().mockResolvedValue({
         sub: 'mockUserId',
-        email: 'user@example.com',
+        email: 'user1@douane.finances.gouv.fr',
         given_name: 'John',
         family_name: 'Doe',
       }),
@@ -92,6 +92,11 @@ describe('AgentConnect authenticate endpoint', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterAll(async () => {
+    await testDb.clear();
+    await testDb.disconnect();
   });
 
   it('should authenticate user successfully', async () => {

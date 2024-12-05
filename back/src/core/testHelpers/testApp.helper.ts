@@ -1,4 +1,4 @@
-import { Router, Express } from 'express';
+import { Router, Express, RequestHandler } from 'express';
 import session from 'express-session';
 // eslint-disable-next-line no-restricted-imports
 import { testSessionMiddleware } from '../../../tests/helpers/testSessionMiddleware';
@@ -28,7 +28,8 @@ export const buildTestAppHelper =
         secret: 'test-secret',
         resave: false,
         saveUninitialized: true,
-      }),
+        cookie: { secure: false },
+      }) as unknown as RequestHandler,
     );
 
     // Ajout du middleware de test pour la session
