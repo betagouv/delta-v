@@ -2115,7 +2115,7 @@ busboy@^0.2.11:
   resolved "https://registry.yarnpkg.com/busboy/-/busboy-0.2.14.tgz#6c2a622efcf47c57bbbe1e2a9c37ad36c7925453"
   integrity sha512-InWFDomvlkEj+xWLBfU3AvnbVYqeTWmQopiW0tWWEy5yehYm2YkGEc59sUmw/4ty5Zj/b0WHGs1LgecuBSBGrg==
   dependencies:
-    dicer "0.2.5"
+    dicer "^0.3.1"
     readable-stream "1.1.x"
 
 bytes@3.1.2:
@@ -2721,6 +2721,7 @@ dicer@^0.3.1:
   resolved "https://registry.yarnpkg.com/dicer/-/dicer-0.3.1.tgz#abf28921e3475bc5e801e74e0159fd94f927ba97"
   integrity sha512-ObioMtXnmjYs3aRtpIJt9rgQSPCIhKVkFPip+E9GUDyWl8N435znUxK/JfNwGZJ2wnn5JKQ7Ly3vOK5Q5dylGA==
   dependencies:
+    readable-stream "1.1.x"
     streamsearch "^1.1.0"
 
 diff-sequences@^29.6.3:
