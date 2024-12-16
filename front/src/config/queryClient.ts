@@ -14,7 +14,7 @@ const queryClient = new QueryClient({
     queries: {
       queryFn: defaultQueryFn,
       retryDelay: 1000 * 30, // 30 sec
-      retry: 3,
+      retry: 0,
     },
   },
 });

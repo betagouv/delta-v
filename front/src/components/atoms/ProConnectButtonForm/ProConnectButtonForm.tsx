@@ -27,7 +27,11 @@ export const ProConnectButtonForm: React.FC<ProConnectButtonFormProps> = ({ onSu
       onChange={onFormChange}
     >
       <div>
-        <button className="proconnect-button" type="submit">
+        <button
+          className="proconnect-button grayscale-[70%] opacity-50"
+          type="submit"
+          disabled={true}
+        >
           <span className="proconnect-sr-only">S'identifier avec ProConnect</span>
         </button>
       </div>

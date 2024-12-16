@@ -24,6 +24,7 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
   const {
     clearUser,
     setUserFromToken,
+    user,
     tokenExpiration,
     lastRefresh,
     setCountdownEnd,
@@ -32,6 +33,7 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
     (state) => ({
       clearUser: state.clearUser,
       setUserFromToken: state.setUserFromToken,
+      user: state.users.appState.user,
       tokenExpiration: state.users.appState.user.exp,
       lastRefresh: state.users.appState.user.lastRefresh,
       setCountdownEnd: state.setCountdownEnd,
@@ -91,7 +93,9 @@ export const AgentRoute: React.FC<AdminRouteProps> = ({ children }: AdminRoutePr
     }
 
     if (tokenValidity === TokenValidity.INVALID) {
-      disconnectAgentConnect();
+      if (typeof user.lastRefresh === 'boolean') {
+        disconnectAgentConnect();
+      }
     }
   }, [tokenValidity, lastRefresh]);
 

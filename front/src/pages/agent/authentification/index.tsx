@@ -27,6 +27,9 @@ const LoginPage = () => {
         <div className="mb-16 h-20">
           <SvgIcon name="logoAgent" />
         </div>
+        <span className="text-center text-sm font-bold">
+          La connection à Pro connect est en maintenance.
+        </span>
         <ProConnectButtonForm onSubmit={onSubmit} />
       </section>
     </MainAuth>

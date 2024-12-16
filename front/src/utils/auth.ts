@@ -3,7 +3,7 @@ import { AxiosRequestConfig } from 'axios';
 import { getCookie, removeCookie, setCookie } from './cookie';
 
 const AUTHENTICATION_ERROR_STATUS = 401;
-const REFRESH_ACCESS_TOKEN_API_URL = '/refresh/';
+const REFRESH_ACCESS_TOKEN_API_URL = '/agent-connect/refresh/';
 
 export interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   retry?: boolean;

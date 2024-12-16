@@ -180,16 +180,16 @@ export class DeclarationEntity implements DeclarationEntityInterface {
   @Column({ type: 'float' })
   totalTaxesRoundedAmount: number;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', default: 0 })
   totalTobaccoTaxAmount: number;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', default: 0 })
   totalAlcoholTaxAmount: number;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', default: 0 })
   totalTobaccoTaxRoundedAmount: number;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', default: 0 })
   totalAlcoholTaxRoundedAmount: number;
 
   @Column({ type: 'float' })
