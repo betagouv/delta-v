@@ -84,10 +84,14 @@ export class Declaration {
     this.franchiseAmount = this.getFranchiseAmount();
     this.defaultProductsTaxes = this.getDefaultProductTaxes();
     this.uncompletedRealProductsTaxes = this.getUncompletedProductTaxes();
-    this.tobaccoTaxAmount = TobaccoTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.tobaccoTaxAmount = TobaccoTaxCalculator.calculateTax(
+      this.detailedShoppingProducts,
+      this.inputDeclaration.travelerData,
+    );
     this.alcoholTaxAmount = AlcoholTaxCalculator.calculateTax(this.detailedShoppingProducts);
     this.tobaccoTaxRoundedAmount = TobaccoTaxCalculator.calculateRoundedTax(
       this.detailedShoppingProducts,
+      this.inputDeclaration.travelerData,
     );
     this.alcoholTaxRoundedAmount = AlcoholTaxCalculator.calculateRoundedTax(
       this.detailedShoppingProducts,

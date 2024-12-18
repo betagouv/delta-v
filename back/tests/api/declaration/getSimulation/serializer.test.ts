@@ -5,6 +5,7 @@ import { serializeSimulator } from '../../../../src/api/declaration/getSimulatio
 import { currencyEntityFactory } from '../../../helpers/factories/currency.factory';
 import { productEntityFactory } from '../../../helpers/factories/product.factory';
 import { productTaxesEntityFactory } from '../../../helpers/factories/productTaxes.factory';
+import { travelerDataFactory } from '../../../helpers/factories/travelerData.factory';
 
 describe('test serializer', () => {
   it('should serialize data', () => {
@@ -42,6 +43,7 @@ describe('test serializer', () => {
       customProducts: [],
       amountProducts: [group3],
       canCalculateTaxes: true,
+      travelerData: travelerDataFactory(),
     });
 
     expect(serializedData).toMatchObject({

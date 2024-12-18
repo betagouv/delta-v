@@ -1,6 +1,7 @@
 import { DetailedShoppingProduct } from '../detailedShoppingProduct';
-import { AmountTobaccoProduct } from '../amountProducts/tobacco/tobacco.service';
 import { getRoundedNumber } from '../../../../utils/roundedNumber';
+import { TravelerData } from '../traveler';
+import { TobaccoExceed } from '../amountProducts/tobacco/tobaccoExceed.service';
 
 export interface TobaccoTaxDetail {
   type: string;
@@ -52,20 +53,28 @@ export class TobaccoTaxCalculator {
     return this.TYPE_MAPPING[type as keyof typeof this.TYPE_MAPPING] || type;
   }
 
-  public static calculateTax(detailedShoppingProducts: DetailedShoppingProduct[]): number {
-    const details = this.calculateDetailedTaxes(detailedShoppingProducts);
+  public static calculateTax(
+    detailedShoppingProducts: DetailedShoppingProduct[],
+    travelerData: TravelerData,
+  ): number {
+    const details = this.calculateDetailedTaxes(detailedShoppingProducts, travelerData);
     return details.reduce((total, detail) => total + detail.tax, 0);
   }
 
-  public static calculateRoundedTax(detailedShoppingProducts: DetailedShoppingProduct[]): number {
-    const details = this.calculateDetailedTaxes(detailedShoppingProducts);
+  public static calculateRoundedTax(
+    detailedShoppingProducts: DetailedShoppingProduct[],
+    travelerData: TravelerData,
+  ): number {
+    const details = this.calculateDetailedTaxes(detailedShoppingProducts, travelerData);
     return details.reduce((total, detail) => total + getRoundedNumber(detail.tax), 0);
   }
 
   public static calculateDetailedTaxes(
     detailedShoppingProducts: DetailedShoppingProduct[],
+    travelerData: TravelerData,
   ): TobaccoTaxDetail[] {
-    const tobaccoProducts = this.filterTobaccoProducts(detailedShoppingProducts);
+    const tobaccoGroup = new TobaccoExceed({ detailedShoppingProducts, travelerData });
+    const tobaccoProducts = tobaccoGroup.getExcessProducts();
 
     const groupedByType = this.groupByType(tobaccoProducts);
 
@@ -87,7 +96,7 @@ export class TobaccoTaxCalculator {
         };
       }
 
-      const amount = products.reduce((sum, p) => sum + p.getDefaultCurrencyValue(), 0);
+      const amount = products.reduce((sum, p) => sum + (p.taxableValue ?? 0), 0);
       const excise1 = rates.unitPrice * amount * rates.exciseRate;
       const excise2 = rates.exciseDuty * amount;
       const threshold = rates.perceptionThreshold * amount;
@@ -119,16 +128,6 @@ export class TobaccoTaxCalculator {
       acc[type].push(product);
       return acc;
     }, {} as Record<string, DetailedShoppingProduct[]>);
-  }
-
-  private static filterTobaccoProducts(
-    products: DetailedShoppingProduct[],
-  ): DetailedShoppingProduct[] {
-    return products.filter((product) =>
-      Object.values(AmountTobaccoProduct).includes(
-        product.product?.amountProduct as AmountTobaccoProduct,
-      ),
-    );
   }
 
   private static getReadableTypeName(type: string): string {

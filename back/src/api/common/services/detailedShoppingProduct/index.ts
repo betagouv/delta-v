@@ -7,6 +7,7 @@ export class DetailedShoppingProduct {
   shoppingProduct: ShoppingProduct;
   product?: Product;
   currency?: Currency;
+  taxableValue?: number;
 
   isValueProduct(): boolean {
     if (!this.product || this.isUncompletedProduct()) {
@@ -48,6 +49,21 @@ export class DetailedShoppingProduct {
       this.product === undefined ||
       this.product?.productDisplayTypes === ProductDisplayTypes.notManaged
     );
+  }
+
+  public clone(): DetailedShoppingProduct {
+    const clonedProduct = createDetailedShoppingProduct({
+      shoppingProduct: {
+        ...this.shoppingProduct,
+        id: this.shoppingProduct.id,
+        originalValue: this.shoppingProduct.originalValue,
+        currency: this.shoppingProduct.currency,
+      },
+      products: this.product ? [this.product] : [],
+      currencies: this.currency ? [this.currency] : [],
+    });
+
+    return clonedProduct;
   }
 }
 

@@ -6,6 +6,7 @@ import { MeansOfTransport } from '../../common/enums/meansOfTransport.enum';
 import { AmountGroup } from '../../common/services/amountProducts/globalAmount.service';
 import { generateDeclaration } from '../../common/services/declaration';
 import { ShoppingProduct } from '../../common/services/shoppingProducts';
+import { TravelerData } from '../../common/services/traveler';
 
 interface SimulateServiceOptions {
   productRepository: ProductRepositoryInterface;
@@ -23,6 +24,7 @@ interface SimulateServiceResponse {
   amountProducts: AmountGroup[];
   franchiseAmount: number;
   canCalculateTaxes: boolean;
+  travelerData: TravelerData;
 }
 
 export const service = async ({
@@ -49,5 +51,6 @@ export const service = async ({
     amountProducts: declaration.getAmountProductsGrouped(),
     franchiseAmount: declaration.franchiseAmount,
     canCalculateTaxes: declaration.canCalculateTaxes(),
+    travelerData: declaration.inputDeclaration.travelerData,
   };
 };
