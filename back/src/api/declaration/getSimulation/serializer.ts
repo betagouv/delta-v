@@ -141,11 +141,14 @@ export const serializeSimulator = ({
     allDetailedProducts,
     travelerData,
   );
-  const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts);
+  const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts, travelerData);
   const alcoholTaxRounded = getRoundedNumber(
-    AlcoholTaxCalculator.calculateRoundedTax(allDetailedProducts),
+    AlcoholTaxCalculator.calculateRoundedTax(allDetailedProducts, travelerData),
   );
-  const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(allDetailedProducts);
+  const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(
+    allDetailedProducts,
+    travelerData,
+  );
 
   return {
     valueProducts: valueProducts.map(serializeValueProduct),

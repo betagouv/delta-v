@@ -88,13 +88,17 @@ export class Declaration {
       this.detailedShoppingProducts,
       this.inputDeclaration.travelerData,
     );
-    this.alcoholTaxAmount = AlcoholTaxCalculator.calculateTax(this.detailedShoppingProducts);
+    this.alcoholTaxAmount = AlcoholTaxCalculator.calculateTax(
+      this.detailedShoppingProducts,
+      this.inputDeclaration.travelerData,
+    );
     this.tobaccoTaxRoundedAmount = TobaccoTaxCalculator.calculateRoundedTax(
       this.detailedShoppingProducts,
       this.inputDeclaration.travelerData,
     );
     this.alcoholTaxRoundedAmount = AlcoholTaxCalculator.calculateRoundedTax(
       this.detailedShoppingProducts,
+      this.inputDeclaration.travelerData,
     );
   }
 

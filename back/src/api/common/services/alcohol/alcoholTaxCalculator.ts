@@ -1,6 +1,7 @@
 import { DetailedShoppingProduct } from '../detailedShoppingProduct';
-import { AmountAlcoholProduct } from '../amountProducts/alcohol/alcohol.service';
 import { getRoundedNumber } from '../../../../utils/roundedNumber';
+import { AlcoholExceed } from '../amountProducts/alcohol/alcoholExceed.service';
+import { TravelerData } from '../traveler';
 
 export interface AlcoholTaxDetail {
   type: string;
@@ -52,20 +53,31 @@ export class AlcoholTaxCalculator {
     return this.TYPE_MAPPING[type as keyof typeof this.TYPE_MAPPING] || type;
   }
 
-  public static calculateTax(detailedShoppingProducts: DetailedShoppingProduct[]): number {
-    const details = this.calculateDetailedTaxes(detailedShoppingProducts);
+  public static calculateTax(
+    detailedShoppingProducts: DetailedShoppingProduct[],
+    travelerData: TravelerData,
+  ): number {
+    const details = this.calculateDetailedTaxes(detailedShoppingProducts, travelerData);
     return details.reduce((total, detail) => total + detail.tax, 0);
   }
 
-  public static calculateRoundedTax(detailedShoppingProducts: DetailedShoppingProduct[]): number {
-    const details = this.calculateDetailedTaxes(detailedShoppingProducts);
+  public static calculateRoundedTax(
+    detailedShoppingProducts: DetailedShoppingProduct[],
+    travelerData: TravelerData,
+  ): number {
+    const details = this.calculateDetailedTaxes(detailedShoppingProducts, travelerData);
     return details.reduce((total, detail) => total + getRoundedNumber(detail.tax), 0);
   }
 
   public static calculateDetailedTaxes(
     detailedShoppingProducts: DetailedShoppingProduct[],
+    travelerData: TravelerData,
   ): AlcoholTaxDetail[] {
-    const alcoholProducts = this.filterAlcoholProducts(detailedShoppingProducts);
+    const alcoholExceed = new AlcoholExceed({
+      travelerData: travelerData,
+      detailedShoppingProducts: detailedShoppingProducts,
+    });
+    const alcoholProducts = alcoholExceed.getExcessProducts();
     const groupedByType = this.groupByType(alcoholProducts);
 
     return Object.entries(groupedByType).map(([type, products]) => {
@@ -85,7 +97,7 @@ export class AlcoholTaxCalculator {
         };
       }
 
-      const liters = products.reduce((sum, p) => sum + p.getDefaultCurrencyValue(), 0);
+      const liters = products.reduce((sum, p) => sum + (p.taxableValue ?? 0), 0);
       let excise = rates.exciseRate * liters;
       const css = rates.cssRate * liters;
 
@@ -112,10 +124,13 @@ export class AlcoholTaxCalculator {
 
   private static getReadableTypeName(type: string): string {
     const names: Record<string, string> = {
+      spiritDrink: 'Boissons spiritueuses (whisky, gin, vodka, etc.)',
+      alcoholIntermediate: 'Produits intermédiaires (vermouth, porto, madère, etc.)',
       alcoholStrong: 'Alcool fort (+22°)',
       alcoholWeak: 'Alcool faible (-22°)',
       beer: 'Bière',
       wine: 'Vin tranquille',
+      sparklingWine: 'Vin mousseux',
     };
     return names[type] || type;
   }
@@ -132,15 +147,5 @@ export class AlcoholTaxCalculator {
       acc[type].push(product);
       return acc;
     }, {} as Record<string, DetailedShoppingProduct[]>);
-  }
-
-  private static filterAlcoholProducts(
-    products: DetailedShoppingProduct[],
-  ): DetailedShoppingProduct[] {
-    return products.filter((product) =>
-      Object.values(AmountAlcoholProduct).includes(
-        product.product?.amountProduct as AmountAlcoholProduct,
-      ),
-    );
   }
 }
