@@ -127,7 +127,14 @@ const Declaration = () => {
     },
   });
 
-  const onUpdateProduct = ({ product, value, currency, name, customId }: OnAddProductOptions) => {
+  const onUpdateProduct = ({
+    product,
+    value,
+    currency,
+    name,
+    customId,
+    alcoholDegree,
+  }: OnAddProductOptions) => {
     const shoppingProduct: Partial<ShoppingProduct> = {
       id: customId,
       productId: product.id,
@@ -135,6 +142,7 @@ const Declaration = () => {
       value: parseFloat(value),
       amount: 1,
       currency: currency ?? 'EUR',
+      alcoholDegree,
     };
 
     updateProductCartDeclarationAgent(shoppingProduct);
@@ -143,7 +151,14 @@ const Declaration = () => {
     router.push(`/agent/declaration/ajout/marchandises`);
   };
 
-  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
+  const onAddProduct = ({
+    product,
+    value,
+    currency,
+    name,
+    customName,
+    alcoholDegree,
+  }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
@@ -151,6 +166,7 @@ const Declaration = () => {
       value: parseFloat(value),
       amount: 1,
       currency: currency ?? 'EUR',
+      alcoholDegree,
     };
 
     addProductCartDeclarationAgent(shoppingProduct);
@@ -170,6 +186,7 @@ const Declaration = () => {
       currency: shoppingProduct?.currency,
       name: shoppingProduct?.name,
       value: shoppingProduct?.value,
+      alcoholDegree: shoppingProduct?.alcoholDegree,
     });
     setSelectedProduct(product);
     setOpenModalAddProduct(true);

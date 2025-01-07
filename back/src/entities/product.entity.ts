@@ -27,6 +27,7 @@ export interface Product {
   productType: ProductType;
   amountProduct?: AmountProduct;
   countries: string[];
+  alcoholDegree?: number;
 
   finalProduct: boolean;
   productDisplayTypes: ProductDisplayTypes;
@@ -106,6 +107,9 @@ export class ProductEntity implements ProductEntityInterface {
 
   @Column({ type: 'simple-array', default: '' })
   countries: string[];
+
+  @Column({ type: 'float', nullable: true })
+  alcoholDegree?: number;
 
   @TreeChildren()
   subProducts?: Product[];

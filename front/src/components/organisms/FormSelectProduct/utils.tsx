@@ -16,6 +16,7 @@ export interface FormSelectProductData extends FormStepsProductData {
   value?: number;
   currency?: string;
   templateRole?: Role;
+  alcoholDegree?: number;
 }
 
 export interface RadioCardProductFormOptions {

@@ -74,9 +74,9 @@ export class TobaccoTaxCalculator {
     travelerData: TravelerData,
   ): TobaccoTaxDetail[] {
     const tobaccoGroup = new TobaccoExceed({ detailedShoppingProducts, travelerData });
-    const tobaccoProducts = tobaccoGroup.getExcessProducts();
+    const excessProducts = tobaccoGroup.getExcessProducts();
 
-    const groupedByType = this.groupByType(tobaccoProducts);
+    const groupedByType = this.groupByType(excessProducts);
 
     return Object.entries(groupedByType).map(([type, products]) => {
       const mappedType = this.mapType(type);

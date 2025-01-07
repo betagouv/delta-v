@@ -57,6 +57,7 @@ export const simulateValidator = z.object({
             .uuid(),
           originalValue: parseNumber(z.number().min(0)),
           currency: z.string().length(3).optional().default('EUR'),
+          alcoholDegree: z.number().min(0).max(100).optional(),
         }),
         {
           required_error: 'La liste de produits est requise',

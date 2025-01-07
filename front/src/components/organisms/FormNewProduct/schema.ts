@@ -27,5 +27,6 @@ export const getSchema = () => {
     value: getValue(),
     category: string().required('Veuillez séléctionner la catégorie.'),
     currency: string().required('Veuillez séléctionner la devise.'),
+    alcoholDegree: number().min(0).max(100).optional(),
   }).required();
 };

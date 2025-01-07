@@ -18,6 +18,7 @@ export interface Product {
   customDuty?: number | null;
   tobaccoTax?: number | null;
   vat?: number | null;
+  alcoholDegree?: number | null;
   subProducts: Product[];
   relatedWords: string[];
   related?: string;

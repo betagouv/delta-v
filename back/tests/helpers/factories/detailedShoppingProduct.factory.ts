@@ -24,6 +24,7 @@ export const DetailedShoppingProductFactory = ({
     originalValue: faker.number.int({ min: 1, max: 1000 }),
     currency: 'EUR',
     customName: faker.commerce.productName(),
+    alcoholDegree: faker.number.int({ min: 0, max: 100 }),
     ...shoppingProduct,
   };
   detailedShoppingProduct.product = {

@@ -58,6 +58,7 @@ export class DetailedShoppingProduct {
         id: this.shoppingProduct.id,
         originalValue: this.shoppingProduct.originalValue,
         currency: this.shoppingProduct.currency,
+        alcoholDegree: this.shoppingProduct.alcoholDegree,
       },
       products: this.product ? [this.product] : [],
       currencies: this.currency ? [this.currency] : [],
@@ -81,7 +82,12 @@ export const createDetailedShoppingProduct = ({
   const detailedShoppingProduct = new DetailedShoppingProduct();
   detailedShoppingProduct.shoppingProduct = shoppingProduct;
 
-  detailedShoppingProduct.product = products.find((product) => product.id === shoppingProduct.id);
+  const product = products.find((product) => product.id === shoppingProduct.id);
+  if (product && shoppingProduct.alcoholDegree !== undefined) {
+    product.alcoholDegree = shoppingProduct.alcoholDegree;
+  }
+  detailedShoppingProduct.product = product;
+
   detailedShoppingProduct.currency = currencies.find(
     (currency) => currency.id === shoppingProduct.currency,
   );

@@ -24,6 +24,7 @@ export interface AddNewProductForm {
   category?: string;
   value?: number;
   currency?: string;
+  alcoholDegree?: number;
 }
 
 export const FormNewProduct: React.FC<FormSelectProductProps> = ({
@@ -64,6 +65,7 @@ export const FormNewProduct: React.FC<FormSelectProductProps> = ({
       category: defaultCategory.id,
       value: undefined,
       currency: defaultCurrency ?? 'EUR',
+      alcoholDegree: undefined,
     },
     resolver: yupResolver(getSchema()),
   });

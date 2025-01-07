@@ -223,7 +223,14 @@ export const ProductSearchTools = ({
     onCloseRemoveFavoriteModal();
   };
 
-  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
+  const onAddProduct = ({
+    product,
+    value,
+    currency,
+    name,
+    customName,
+    alcoholDegree,
+  }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
@@ -231,6 +238,7 @@ export const ProductSearchTools = ({
       value: parseFloat(value),
       amount: 1,
       currency: currency ?? 'EUR',
+      alcoholDegree,
     };
 
     addProductCartDeclarationAgent(shoppingProduct);
@@ -241,7 +249,13 @@ export const ProductSearchTools = ({
     setShowCategoryFilters(false);
   };
 
-  const onUpdateProduct = ({ product, value, currency, name }: OnAddProductOptions) => {
+  const onUpdateProduct = ({
+    product,
+    value,
+    currency,
+    name,
+    alcoholDegree,
+  }: OnAddProductOptions) => {
     if (!cartProductId) {
       return;
     }
@@ -252,6 +266,7 @@ export const ProductSearchTools = ({
       value: parseFloat(value),
       amount: 1,
       currency: currency ?? 'EUR',
+      alcoholDegree,
     };
 
     updateProductCartDeclarationAgent(shoppingProduct);

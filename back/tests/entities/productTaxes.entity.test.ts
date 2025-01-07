@@ -58,6 +58,7 @@ describe('ProductTaxes entity', () => {
         customName: faker.string.sample(),
         customId: faker.string.uuid(),
         currency: 'EUR',
+        alcoholDegree: faker.number.int({ min: 0, max: 100 }),
       };
       detailedShoppingProduct.product = productEntityFactory({
         customDuty: faker.number.float({ max: 100, min: 0, multipleOf: 0.01 }),
