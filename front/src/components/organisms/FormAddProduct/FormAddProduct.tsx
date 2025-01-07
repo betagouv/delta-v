@@ -145,7 +145,6 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
 
   const handleSubmitClick = () => {
     const formValues = getValues();
-    console.log('🚀 ~ handleSubmitClick ~ formValues:', formValues);
     if (productType === 'alcohol') {
       const alcoholDegree = parseFloat(formValues.alcoholDegree);
       if (Number.isNaN(alcoholDegree) || alcoholDegree < 0 || alcoholDegree > 100) {

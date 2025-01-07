@@ -149,7 +149,6 @@ export const serializeSimulator = ({
     allDetailedProducts,
     travelerData,
   );
-  console.log("🚀 ~ alcoholTaxDetails:", alcoholTaxDetails)
 
   return {
     valueProducts: valueProducts.map(serializeValueProduct),

@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Icon } from '@/components/atoms/Icon';
 import { Typography } from '@/components/atoms/Typography';
-import { getAmountCategoryName, getMessageOverMaximumAmount, getUnit } from '@/model/amount';
+import { getAmountCategoryName, getUnit } from '@/model/amount';
 import { AmountProduct } from '@/model/product';
 import { GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
@@ -13,7 +12,6 @@ interface SummaryGroupedAmountProductProps {
 
 export const SummaryGroupedAmountProduct: React.FC<SummaryGroupedAmountProductProps> = ({
   groupedAmount,
-  openModalProductType,
 }: SummaryGroupedAmountProductProps) => {
   return (
     <div key={groupedAmount.group}>

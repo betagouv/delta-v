@@ -36,7 +36,6 @@ export const service = async ({
   meanOfTransport,
   shoppingProducts,
 }: SimulateServiceOptions): Promise<SimulateServiceResponse> => {
-  console.log('🚀 ~ shoppingProducts:', shoppingProducts);
   const declaration = await generateDeclaration({
     shoppingProducts,
     productRepository,

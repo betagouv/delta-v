@@ -4,22 +4,15 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/atoms/Button';
-import { Icon } from '@/components/atoms/Icon';
 import { Link } from '@/components/atoms/Link';
 import { Typography } from '@/components/atoms/Typography';
 import { SvgIcon } from '@/components/molecules/SvgIcon';
 import { AmountProductBasket } from '@/components/organisms/AmountProductBasket';
-import { ModalMaximumAmount } from '@/components/organisms/ModalMaximumAmount';
 import { OnActionModal } from '@/components/organisms/OnActionModal';
 import { ValueProductBasket } from '@/components/organisms/ValueProductBasket';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
-import {
-  getAmountCategoryName,
-  getAmountProductType,
-  getMessageOverMaximumAmount,
-} from '@/model/amount';
-import { AmountProduct } from '@/model/product';
+import { getAmountCategoryName } from '@/model/amount';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
@@ -27,9 +20,8 @@ import { Routing } from '@/utils/const';
 const Panier = () => {
   const router = useRouter();
 
-  const { simulatorRequest, simulatorResponse, removeProduct } = useStore(
+  const { simulatorResponse, removeProduct } = useStore(
     (state) => ({
-      simulatorRequest: state.simulator.appState.simulatorRequest,
       simulatorResponse: state.simulator.appState.simulatorResponse,
       removeProduct: state.removeProduct,
     }),
@@ -55,18 +47,6 @@ const Panier = () => {
   const onDelete = (): void => {
     removeProduct(idToDelete.current);
     setOpenActionModal(false);
-  };
-
-  const [productType, setProductType] = useState<
-    'alcohol' | 'tobacco' | 'valueProduct' | undefined
-  >();
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const openModalProductType = (amountProduct?: AmountProduct) => {
-    setProductType(amountProduct ? getAmountProductType(amountProduct) : 'valueProduct');
-
-    setTimeout(() => {
-      setOpenModal(true);
-    }, 150);
   };
 
   return (
@@ -203,15 +183,6 @@ const Panier = () => {
         onSuccess={onDelete}
         onReject={() => setOpenActionModal(false)}
       />
-      {(productType === 'alcohol' || productType === 'tobacco') && (
-        <ModalMaximumAmount
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          productType={productType}
-          country={simulatorRequest.country}
-          border={simulatorRequest.border}
-        />
-      )}
     </Main>
   );
 };
