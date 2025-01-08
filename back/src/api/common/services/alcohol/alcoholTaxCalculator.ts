@@ -13,29 +13,35 @@ export interface AlcoholTaxDetail {
   };
 }
 
+interface TaxRates {
+  exciseRate?: number;
+  cssRate: number;
+  minimumThreshold: number;
+}
+
 export class AlcoholTaxCalculator {
-  private static readonly TAX_RATES = {
+  private static readonly BASE_EXCISE_RATE = 18.6652; // Taux de base par litre d'alcool pur
+
+  private static readonly TAX_RATES: Record<string, TaxRates> = {
     alcoholStrong: {
-      // Alcool +22°
-      exciseRate: 4.11, // 18.6652 * 0.22
-      cssRate: 1.32,
+      // Alcool fort (>22°)
+      cssRate: 1.32, // Cotisation sécurité sociale fixe par litre
       minimumThreshold: 0,
     },
     alcoholWeak: {
-      // Alcool -22°
-      exciseRate: 2.8, // 18.6652 * 0.15
-      cssRate: 0,
+      // Alcool faible (<22°)
+      cssRate: 0, // Pas de cotisation sécurité sociale
       minimumThreshold: 0,
     },
     beer: {
-      exciseRate: 0.6368, // 0.0796 * 8
-      cssRate: 0,
-      minimumThreshold: 1,
+      exciseRate: 0.0796, // Taux par degré d'alcool
+      cssRate: 0, // Pas de cotisation sécurité sociale
+      minimumThreshold: 1, // Si arrondi < 1€, alors droits d'accises = 0€
     },
     wine: {
-      exciseRate: 0.0405,
-      cssRate: 0,
-      minimumThreshold: 1,
+      exciseRate: 0.0405, // Tarif fixe par litre
+      cssRate: 0, // Pas de cotisation sécurité sociale
+      minimumThreshold: 1, // Si arrondi < 1€, alors droits d'accises = 0€
     },
   };
 
@@ -74,15 +80,15 @@ export class AlcoholTaxCalculator {
     travelerData: TravelerData,
   ): AlcoholTaxDetail[] {
     const alcoholExceed = new AlcoholExceed({
-      travelerData: travelerData,
-      detailedShoppingProducts: detailedShoppingProducts,
+      travelerData,
+      detailedShoppingProducts,
     });
-    const alcoholProducts = alcoholExceed.getExcessProducts();
-    const groupedByType = this.groupByType(alcoholProducts);
+    const excessProducts = alcoholExceed.getExcessProducts();
+    const groupedByType = this.groupByType(excessProducts);
 
     return Object.entries(groupedByType).map(([type, products]) => {
       const mappedType = this.mapType(type);
-      const rates = this.TAX_RATES[mappedType as keyof typeof this.TAX_RATES];
+      const rates = this.TAX_RATES[mappedType];
 
       if (!rates) {
         console.warn(`Unknown alcohol type: ${type} (mapped to ${mappedType})`);
@@ -98,28 +104,54 @@ export class AlcoholTaxCalculator {
       }
 
       const liters = products.reduce((sum, p) => sum + (p.taxableValue ?? 0), 0);
-      let excise = rates.exciseRate * liters;
-      const css = rates.cssRate * liters;
+      let excise = 0;
 
-      // Pour la bière et le vin, si l'accise arrondie est < 1€, on met à 0
-      if (['beer', 'wine'].includes(mappedType)) {
-        excise = Math.round(excise) < rates.minimumThreshold ? 0 : Math.round(excise);
+      // Calcul des accises selon le type d'alcool
+      if (mappedType === 'beer' && rates.exciseRate) {
+        // Pour la bière : taux par degré
+        const averageDegree = this.getAverageAlcoholDegree(products) || 8; // 8° par défaut si non spécifié
+        excise = rates.exciseRate * averageDegree * liters;
+      } else if (mappedType === 'wine' && rates.exciseRate) {
+        // Pour le vin : taux fixe
+        excise = rates.exciseRate * liters;
       } else {
-        excise = Math.round(excise);
+        // Pour les autres alcools : calcul basé sur le degré d'alcool réel
+        const averageDegree = this.getAverageAlcoholDegree(products);
+        excise = this.BASE_EXCISE_RATE * (averageDegree / 100) * liters;
       }
 
-      const totalTax = excise + css;
+      const css = rates.cssRate * liters;
+
+      // Application des règles d'arrondi
+      excise = Math.round(excise);
+      if (['beer', 'wine'].includes(mappedType) && excise < rates.minimumThreshold) {
+        excise = 0;
+      }
+
+      const roundedCss = Math.round(css);
+      const totalTax = excise + roundedCss;
 
       return {
         type: this.getReadableTypeName(type),
         amount: liters,
-        tax: Math.round(totalTax * 100) / 100,
+        tax: Math.round(totalTax * 100) / 100, // Arrondi à 2 décimales
         details: {
           excise,
-          css,
+          css: roundedCss,
         },
       };
     });
+  }
+
+  private static getAverageAlcoholDegree(products: DetailedShoppingProduct[]): number {
+    const productsWithDegree = products.filter((p) => p.product?.alcoholDegree);
+    if (productsWithDegree.length === 0) return 0;
+
+    const totalDegree = productsWithDegree.reduce(
+      (sum, p) => sum + (p.product?.alcoholDegree || 0),
+      0,
+    );
+    return totalDegree / productsWithDegree.length;
   }
 
   private static getReadableTypeName(type: string): string {
@@ -135,7 +167,6 @@ export class AlcoholTaxCalculator {
     return names[type] || type;
   }
 
-  // Les autres méthodes utilitaires restent similaires au TobaccoTaxCalculator
   private static groupByType(
     products: DetailedShoppingProduct[],
   ): Record<string, DetailedShoppingProduct[]> {

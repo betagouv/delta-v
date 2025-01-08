@@ -57,7 +57,7 @@ const ProductSearch = () => {
       };
     }) ?? [];
 
-  const onAddProduct = ({ product, value, name, currency }: OnAddProductOptions) => {
+  const onAddProduct = ({ product, value, name, currency, alcoholDegree }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
@@ -65,6 +65,7 @@ const ProductSearch = () => {
       value: parseFloat(value),
       amount: 1,
       currency,
+      alcoholDegree,
     };
     addProduct(shoppingProduct);
     trackEvent({ category: 'user-action', action: 'add-product', name: product.name });

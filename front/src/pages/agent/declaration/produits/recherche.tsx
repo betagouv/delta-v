@@ -114,7 +114,14 @@ const SearchProduct = () => {
     setupSearchProductResults();
   }, [selectedId, search]);
 
-  const onAddProduct = ({ product, value, currency, name, customName }: OnAddProductOptions) => {
+  const onAddProduct = ({
+    product,
+    value,
+    currency,
+    name,
+    customName,
+    alcoholDegree,
+  }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
@@ -122,6 +129,7 @@ const SearchProduct = () => {
       value: parseFloat(value),
       amount: 1,
       currency: currency ?? 'EUR',
+      alcoholDegree,
     };
 
     addProductCartDeclarationAgent(shoppingProduct);

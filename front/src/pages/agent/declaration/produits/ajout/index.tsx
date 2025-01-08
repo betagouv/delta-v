@@ -30,6 +30,7 @@ const AddNewProduct = () => {
       name: data.name ?? '',
       value: data.value ?? 0,
       currency: data.currency ?? 'EUR',
+      alcoholDegree: data.alcoholDegree ? Number(data.alcoholDegree) : undefined,
     });
   };
 

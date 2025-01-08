@@ -16,6 +16,7 @@ export interface FormUpdateShoppingProduct {
   name?: string;
   value: number;
   currency: string;
+  alcoholDegree?: number;
 }
 
 const UpdateProductBasket = () => {
@@ -41,6 +42,7 @@ const UpdateProductBasket = () => {
       name: undefined,
       value: undefined,
       currency: 'EUR',
+      alcoholDegree: undefined,
     },
   });
 
@@ -50,12 +52,18 @@ const UpdateProductBasket = () => {
         name: currentProduct.name,
         value: currentProduct.value,
         currency: currentProduct.currency,
+        alcoholDegree: currentProduct.alcoholDegree,
       });
     }
   }, [currentProduct]);
 
-  const onUpdateShoppingProduct = ({ value, name, currency }: FormUpdateShoppingProduct) => {
-    updateShoppingProduct({ id: id as string, value, name: name ?? '', currency });
+  const onUpdateShoppingProduct = ({
+    value,
+    name,
+    currency,
+    alcoholDegree,
+  }: FormUpdateShoppingProduct) => {
+    updateShoppingProduct({ id: id as string, value, name: name ?? '', currency, alcoholDegree });
     router.push('/simulateur/panier');
   };
 

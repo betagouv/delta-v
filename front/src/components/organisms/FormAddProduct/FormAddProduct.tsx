@@ -23,7 +23,9 @@ export interface OnAddProductValueOptions {
   name: string;
   value: string;
   currency: string;
+  alcoholDegree?: string;
 }
+
 interface FormAddProductProps {
   register: any;
   control: any;
@@ -41,6 +43,7 @@ interface FormAddProductProps {
 export interface FormSimulatorData {
   value?: number;
   currency?: string;
+  alcoholDegree?: number;
 }
 
 interface GetCurrentRequestOptions {
@@ -114,6 +117,10 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   }, [templateRole, declarationAgentRequest, simulatorRequest, declarationRequest]);
 
   const product = productId ? findProduct(productId) : undefined;
+  const isStrongAlcohol =
+    product?.amountProduct === 'strongAlcohol' || product?.amountProduct === 'spiritDrink';
+  const isSoftAlcohol =
+    product?.amountProduct === 'softAlcohol' || product?.amountProduct === 'alcoholIntermediate';
 
   const selectedCurrency = currencies.find(
     (currency: Currencies) => currency.id === defaultCurrency,
@@ -137,15 +144,32 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
   const [openModalInfoProduct, setOpenModalInfoProduct] = useState<boolean>(false);
 
   const handleSubmitClick = () => {
+    const formValues = getValues();
+    if (productType === 'alcohol') {
+      const alcoholDegree = parseFloat(formValues.alcoholDegree);
+      if (Number.isNaN(alcoholDegree) || alcoholDegree < 0 || alcoholDegree > 100) {
+        return;
+      }
+      if (isStrongAlcohol && alcoholDegree < 22) {
+        return;
+      }
+      if (isSoftAlcohol && alcoholDegree >= 22) {
+        return;
+      }
+    }
+
     if (onButtonClick) {
       const data = {
-        name: getValues('name'),
-        value: getValues('value'),
-        currency: getValues('currency'),
+        name: formValues.name,
+        value: formValues.value,
+        currency: formValues.currency,
+        alcoholDegree: formValues.alcoholDegree,
       };
       onButtonClick(data);
     }
   };
+
+  const hasErrors = Object.keys(errors).length > 0;
 
   return (
     <div className="flex flex-1 flex-col gap-6 w-full">
@@ -165,6 +189,40 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             newLabel={false}
             withBorder={templateRole !== 'agent'}
           />
+          {productType === 'alcohol' && (
+            <InputGroup
+              disabled={disabled}
+              label="Degré d'alcool"
+              placeholder="Degré"
+              type="text"
+              fullWidth={false}
+              name="alcoholDegree"
+              register={register('alcoholDegree', {
+                required: productType === 'alcohol',
+                validate: {
+                  isValidDegree: (value: string) => {
+                    if (!value) return true;
+                    const num = parseFloat(value);
+                    if (Number.isNaN(num) || num < 0 || num > 100) {
+                      return "Le degré d'alcool doit être un nombre entre 0 et 100";
+                    }
+                    if (isStrongAlcohol && num < 22) {
+                      return "Le degré d'alcool doit être supérieur ou égal à 22° pour les alcools forts";
+                    }
+                    if (isSoftAlcohol && num >= 22) {
+                      return "Le degré d'alcool doit être inférieur à 22° pour les alcools faibles";
+                    }
+                    return true;
+                  },
+                },
+              })}
+              control={control}
+              trailingAddons="%"
+              error={errors.alcoholDegree?.message as string | undefined}
+              newLabel={false}
+              withBorder={templateRole !== 'agent'}
+            />
+          )}
           <Info>
             <div className="md:text-xs leading-tight">
               Vous souhaitez en savoir plus sur les
@@ -240,7 +298,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
       ) : (
         <div className={classNames({ 'w-40': templateRole === 'agent' })}>
           <Button
-            disabled={disabled}
+            disabled={disabled || hasErrors}
             fullWidth={true}
             type={buttonType}
             onClick={buttonType === 'button' ? handleSubmitClick : undefined}
@@ -254,7 +312,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
           </Button>
         </div>
       )}
-      {productType !== 'valueProduct' && (
+      {productType !== 'valueProduct' && country && (
         <ModalMaximumAmount
           open={openModalInfoProduct}
           onClose={() => setOpenModalInfoProduct(false)}

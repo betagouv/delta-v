@@ -50,6 +50,7 @@ export const checkSimulatorDataRequest = (
       customId: shoppingProduct.id,
       originalValue: shoppingProduct.value,
       currency: shoppingProduct.currency,
+      alcoholDegree: shoppingProduct.alcoholDegree,
     })),
   };
 };
@@ -98,6 +99,7 @@ export const createDeclarationRequest = async (
       customId: shoppingProduct.id,
       originalValue: shoppingProduct.value,
       currency: shoppingProduct.currency,
+      alcoholDegree: shoppingProduct.alcoholDegree,
     })),
     border: params.border ?? false,
     age: params.contactDetails.age,

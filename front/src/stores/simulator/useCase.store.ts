@@ -31,6 +31,7 @@ interface UpdateShoppingProductOptions {
   name: string;
   value: number;
   currency: string;
+  alcoholDegree?: number;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
@@ -99,6 +100,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
           SIMULATOR_EMPTY_STATE.simulatorRequest.country;
         newState.simulator.appState.simulatorRequest.defaultCurrency =
           SIMULATOR_EMPTY_STATE.simulatorRequest.defaultCurrency;
+        newState.simulator.appState.simulatorRequest.alcoholDegree = undefined;
       }
       if (step <= 2) {
         newState.simulator.appState.simulatorRequest.meanOfTransport =
@@ -144,7 +146,13 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
       ) ?? undefined
     );
   },
-  updateShoppingProduct: ({ id, name, value, currency }: UpdateShoppingProductOptions): void => {
+  updateShoppingProduct: ({
+    id,
+    name,
+    value,
+    currency,
+    alcoholDegree,
+  }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
       const currentShoppingProduct =
@@ -161,6 +169,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         name,
         value,
         currency,
+        alcoholDegree,
       });
 
       return newState;

@@ -18,6 +18,7 @@ export const getDetailedShoppingProductFromData = (dataProduct: {
     customId: faker.string.uuid(),
     customName: dataProduct.name,
     currency: 'EUR',
+    alcoholDegree: faker.number.int({ min: 0, max: 100 }),
   };
   detailedShoppingProduct.currency = currencyEntityFactory({ value: 1 });
 

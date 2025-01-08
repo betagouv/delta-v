@@ -27,6 +27,7 @@ export const putDeclarationValidator = z.object({
             .uuid(),
           originalValue: z.coerce.number().gt(0),
           currency: z.string().length(3).optional().default('EUR'),
+          alcoholDegree: z.number().min(0).max(100).optional(),
         }),
         {
           required_error: 'La liste des produits est requise',

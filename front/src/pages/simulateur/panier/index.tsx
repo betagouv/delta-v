@@ -4,22 +4,15 @@ import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
 
 import { Button } from '@/components/atoms/Button';
-import { Icon } from '@/components/atoms/Icon';
 import { Link } from '@/components/atoms/Link';
 import { Typography } from '@/components/atoms/Typography';
 import { SvgIcon } from '@/components/molecules/SvgIcon';
 import { AmountProductBasket } from '@/components/organisms/AmountProductBasket';
-import { ModalMaximumAmount } from '@/components/organisms/ModalMaximumAmount';
 import { OnActionModal } from '@/components/organisms/OnActionModal';
 import { ValueProductBasket } from '@/components/organisms/ValueProductBasket';
 import { simulator } from '@/core/hoc/simulator.hoc';
 import { Meta } from '@/layout/Meta';
-import {
-  getAmountCategoryName,
-  getAmountProductType,
-  getMessageOverMaximumAmount,
-} from '@/model/amount';
-import { AmountProduct } from '@/model/product';
+import { getAmountCategoryName } from '@/model/amount';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
@@ -27,9 +20,8 @@ import { Routing } from '@/utils/const';
 const Panier = () => {
   const router = useRouter();
 
-  const { simulatorRequest, simulatorResponse, removeProduct } = useStore(
+  const { simulatorResponse, removeProduct } = useStore(
     (state) => ({
-      simulatorRequest: state.simulator.appState.simulatorRequest,
       simulatorResponse: state.simulator.appState.simulatorResponse,
       removeProduct: state.removeProduct,
     }),
@@ -38,6 +30,16 @@ const Panier = () => {
   const detailedProducts = simulatorResponse?.valueProducts || [];
   const customProducts = simulatorResponse?.customProducts || [];
   const amountProducts = simulatorResponse?.amountProducts || [];
+  const tobaccoTax = simulatorResponse?.tobaccoTax || 0;
+  const tobaccoTaxDetails = simulatorResponse?.tobaccoTaxDetails || [];
+  const alcoholTax = simulatorResponse?.alcoholTax || 0;
+  const alcoholTaxDetails = simulatorResponse?.alcoholTaxDetails || [];
+  const isAlcoholProduct = amountProducts.some(
+    (amountProduct) =>
+      amountProduct.group === 'groupedAlcohol' ||
+      amountProduct.group === 'beer' ||
+      amountProduct.group === 'wine',
+  );
 
   const [openActionModal, setOpenActionModal] = useState(false);
   const idToDelete = useRef('');
@@ -45,18 +47,6 @@ const Panier = () => {
   const onDelete = (): void => {
     removeProduct(idToDelete.current);
     setOpenActionModal(false);
-  };
-
-  const [productType, setProductType] = useState<
-    'alcohol' | 'tobacco' | 'valueProduct' | undefined
-  >();
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const openModalProductType = (amountProduct?: AmountProduct) => {
-    setProductType(amountProduct ? getAmountProductType(amountProduct) : 'valueProduct');
-
-    setTimeout(() => {
-      setOpenModal(true);
-    }, 150);
   };
 
   return (
@@ -115,7 +105,6 @@ const Panier = () => {
               </div>
               {amountProduct.products.map((product) => (
                 <AmountProductBasket
-                  containError={amountProduct.isOverMaximum}
                   product={product}
                   onDeleteProduct={() => {
                     idToDelete.current = product.customId;
@@ -126,28 +115,49 @@ const Panier = () => {
                   }}
                 />
               ))}
-              {amountProduct.isOverMaximum && (
-                <div className="flex flex-row gap-1 text-red-700">
-                  <div className="h-4 w-4">
-                    <Icon name="error" />
+              {/* Bloc récapitulatif des taxes tabac */}
+              {tobaccoTaxDetails.length > 0 && amountProduct.group === 'allTobaccoProducts' && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                  <Typography weight="bold" size="text-sm">
+                    Détail des taxes tabac
+                  </Typography>
+                  {tobaccoTaxDetails.map((detail, index) => (
+                    <div key={index} className="flex justify-between text-sm mb-1">
+                      <span>
+                        {detail.type} ({detail.amount} unités)
+                      </span>
+                      <span>{detail.tax.toFixed(2)} €</span>
+                    </div>
+                  ))}
+                  <div className="mt-2 pt-2 border-t border-gray-200 flex justify-between font-bold">
+                    <span>Total taxes tabac</span>
+                    <span>{tobaccoTax.toFixed(2)} €</span>
                   </div>
-                  <p className="flex-1 text-xs">
-                    Vous dépassez la limite légale d'unités{' '}
-                    {getMessageOverMaximumAmount(amountProduct.group)}. Pour connaître les quantités
-                    maximales autorisées{' '}
-                    <span
-                      className="text-link cursor-pointer"
-                      onClick={() => {
-                        openModalProductType(amountProduct.products[0]?.amountProduct);
-                      }}
-                    >
-                      cliquez ici
-                    </span>
-                  </p>
                 </div>
               )}
             </div>
           ))}
+
+          {/* Bloc récapitulatif des taxes alcool */}
+          {alcoholTaxDetails.length > 0 && isAlcoholProduct && (
+            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+              <Typography weight="bold" size="text-sm">
+                Détail des taxes alcool
+              </Typography>
+              {alcoholTaxDetails.map((detail, index) => (
+                <div key={index} className="flex justify-between text-sm mb-1">
+                  <span>
+                    {detail.type} ({detail.amount} unités)
+                  </span>
+                  <span>{detail.tax.toFixed(2)} €</span>
+                </div>
+              ))}
+              <div className="mt-2 pt-2 border-t border-gray-200 flex justify-between font-bold">
+                <span>Total taxes alcool</span>
+                <span>{alcoholTax.toFixed(2)} €</span>
+              </div>
+            </div>
+          )}
         </div>
         <div className="mt-3">
           <Link to="/simulateur/produits">
@@ -173,15 +183,6 @@ const Panier = () => {
         onSuccess={onDelete}
         onReject={() => setOpenActionModal(false)}
       />
-      {(productType === 'alcohol' || productType === 'tobacco') && (
-        <ModalMaximumAmount
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          productType={productType}
-          country={simulatorRequest.country}
-          border={simulatorRequest.border}
-        />
-      )}
     </Main>
   );
 };

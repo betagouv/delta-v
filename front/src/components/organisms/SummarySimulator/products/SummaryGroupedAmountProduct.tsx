@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Icon } from '@/components/atoms/Icon';
 import { Typography } from '@/components/atoms/Typography';
-import { getAmountCategoryName, getMessageOverMaximumAmount, getUnit } from '@/model/amount';
+import { getAmountCategoryName, getUnit } from '@/model/amount';
 import { AmountProduct } from '@/model/product';
 import { GroupedAmountProduct } from '@/stores/simulator/appState.store';
 
@@ -13,7 +12,6 @@ interface SummaryGroupedAmountProductProps {
 
 export const SummaryGroupedAmountProduct: React.FC<SummaryGroupedAmountProductProps> = ({
   groupedAmount,
-  openModalProductType,
 }: SummaryGroupedAmountProductProps) => {
   return (
     <div key={groupedAmount.group}>
@@ -24,40 +22,20 @@ export const SummaryGroupedAmountProduct: React.FC<SummaryGroupedAmountProductPr
         <div key={product.customId} className="mt-1 mb-4 ">
           <div className="flex flex-row">
             <div className="flex flex-col">
-              <Typography color={groupedAmount.isOverMaximum ? 'error' : 'secondary'} weight="bold">
+              <Typography color={'secondary'} weight="bold">
                 {product.name}
               </Typography>
-              <Typography color={groupedAmount.isOverMaximum ? 'error' : 'secondary'} italic>
+              <Typography color={'secondary'} italic>
                 {product.customName}
               </Typography>
             </div>
             <div className="flex-1" />
             <div className="flex min-w-[75px] flex-row-reverse">
-              <Typography color={groupedAmount.isOverMaximum ? 'error' : 'secondary'}>
+              <Typography color={'secondary'}>
                 {product.amount} {getUnit(product.amountProduct)}
               </Typography>
             </div>
           </div>
-          {groupedAmount.isOverMaximum && (
-            <div className="mt-2 flex flex-row gap-1 text-red-700">
-              <div className="h-4 w-4">
-                <Icon name="error" />
-              </div>
-              <p className="flex-1 text-2xs">
-                Vous dépassez la limite légale d'unités{' '}
-                {getMessageOverMaximumAmount(groupedAmount.group)}. Pour connaître les quantités
-                maximales autorisées{' '}
-                <span
-                  className="text-link cursor-pointer"
-                  onClick={() => {
-                    openModalProductType(groupedAmount.products[0]?.amountProduct);
-                  }}
-                >
-                  cliquez ici
-                </span>
-              </p>
-            </div>
-          )}
         </div>
       ))}
     </div>

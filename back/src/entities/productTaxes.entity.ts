@@ -10,6 +10,7 @@ export interface ShoppingProduct {
   customName?: string;
   originalValue: number;
   currency: string;
+  alcoholDegree?: number;
 }
 
 export interface CompleteShoppingProduct extends ShoppingProduct {

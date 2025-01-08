@@ -27,6 +27,7 @@ export interface ShoppingProduct {
   amount: number;
   value: number;
   currency: string;
+  alcoholDegree?: number;
 }
 
 export interface DetailedProduct {
