@@ -18,7 +18,7 @@ export const ProductNotManaged: React.FC<ProductNotManagedProps> = ({
           moment.
         </Typography>
         <Typography color="secondary" size="text-base">
-          Certains produit nécessite un calcul de la part d’un Agent Douanier.
+          Certains produits nécessitent un calcul de la part d’un Agent Douanier.
         </Typography>
         <Typography color="secondary" size="text-base">
           Nous vous proposons d’ajouter le produit à titre indicatif et de vous rapprocher d’un
