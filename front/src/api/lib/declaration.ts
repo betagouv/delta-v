@@ -15,16 +15,18 @@ interface RequestShoppingProduct {
   id?: string;
   customName?: string;
   customId: string;
-  currency: string;
   originalValue: number;
+  value?: number;
+  currency?: string;
+  alcoholDegree?: number;
 }
 
-interface SimulatorDataRequest {
-  age: number;
-  meanOfTransport: string;
-  country: string;
-  border: boolean;
+export interface SimulatorDataRequest {
   shoppingProducts: RequestShoppingProduct[];
+  border: boolean;
+  age: number;
+  country: string;
+  meanOfTransport?: string;
 }
 
 export const checkSimulatorDataRequest = (
@@ -51,6 +53,7 @@ export const checkSimulatorDataRequest = (
       originalValue: shoppingProduct.value,
       currency: shoppingProduct.currency,
       alcoholDegree: shoppingProduct.alcoholDegree,
+      amount: shoppingProduct.amount ? shoppingProduct.amount : undefined,
     })),
   };
 };

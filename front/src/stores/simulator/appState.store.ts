@@ -58,6 +58,8 @@ export interface AmountProductInterface {
   customName?: string;
   customId: string;
   amount: number;
+  price?: number;
+  priceInEuros?: number;
 }
 
 export interface GroupedAmountProduct {
@@ -69,17 +71,31 @@ export interface GroupedAmountProduct {
 export interface TobaccoTaxDetail {
   type: string;
   amount: number;
-  equivalence: number;
   tax: number;
+  price?: number;
+  priceInEuros?: number;
+  customId?: string;
+  details: {
+    excise1: number;
+    excise2: number;
+    threshold: number;
+    customsDuty: number;
+    vat: number;
+  };
 }
 
 export interface AlcoholTaxDetail {
   type: string;
   amount: number;
   tax: number;
+  price?: number;
+  priceInEuros?: number;
+  customId?: string;
   details: {
     excise: number;
     css: number;
+    customsDuty: number;
+    vat: number;
   };
 }
 

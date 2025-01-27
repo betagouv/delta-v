@@ -18,7 +18,7 @@ import { Meta } from '@/layout/Meta';
 import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
-import { getLevelWithData as getDeclarationLevelWithData } from '@/utils/declaration';
+// import { getLevelWithData as getDeclarationLevelWithData } from '@/utils/declaration';
 import { getLevelWithData } from '@/utils/simulator';
 
 const Index = () => {
@@ -28,10 +28,10 @@ const Index = () => {
 
   const router = useRouter();
 
-  const { simulatorRequest, declarationRequest } = useStore(
+  const { simulatorRequest } = useStore(
     (state) => ({
       simulatorRequest: state.simulator.appState.simulatorRequest,
-      declarationRequest: state.declaration.appState.declarationRequest,
+      // declarationRequest: state.declaration.appState.declarationRequest,
     }),
     shallow,
   );
@@ -44,13 +44,13 @@ const Index = () => {
     }
   };
 
-  const openDeclaration = () => {
-    if (getDeclarationLevelWithData(declarationRequest) === 1) {
-      router.push(Routing.createDeclaration);
-    } else {
-      setOpenModalResumeDeclaration(true);
-    }
-  };
+  // const openDeclaration = () => {
+  //   if (getDeclarationLevelWithData(declarationRequest) === 1) {
+  //     router.push(Routing.createDeclaration);
+  //   } else {
+  //     setOpenModalResumeDeclaration(true);
+  //   }
+  // };
 
   return (
     <Main
@@ -103,7 +103,7 @@ const Index = () => {
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="cursor-pointer">
+          {/* <div className="cursor-pointer">
             <Card
               title="Déclarer mes achats"
               description="Déclarer vos achats et créer en quelques clics votre déclaration"
@@ -112,7 +112,7 @@ const Index = () => {
               fullWidth
               onClick={() => openDeclaration()}
             />
-          </div>
+          </div> */}
           <Link to={Routing.prepareMyTripConfig}>
             <Card
               title="Préparer mon voyage"

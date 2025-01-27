@@ -15,6 +15,7 @@ import { Main } from '@/templates/Main';
 export interface FormUpdateShoppingProduct {
   name?: string;
   value: number;
+  amount?: number;
   currency: string;
   alcoholDegree?: number;
 }
@@ -51,6 +52,7 @@ const UpdateProductBasket = () => {
       reset({
         name: currentProduct.name,
         value: currentProduct.value,
+        amount: currentProduct.amount,
         currency: currentProduct.currency,
         alcoholDegree: currentProduct.alcoholDegree,
       });
@@ -62,8 +64,16 @@ const UpdateProductBasket = () => {
     name,
     currency,
     alcoholDegree,
+    amount,
   }: FormUpdateShoppingProduct) => {
-    updateShoppingProduct({ id: id as string, value, name: name ?? '', currency, alcoholDegree });
+    updateShoppingProduct({
+      id: id as string,
+      value,
+      name: name ?? '',
+      currency,
+      alcoholDegree: Number(alcoholDegree),
+      amount: Number(amount),
+    });
     router.push('/simulateur/panier');
   };
 

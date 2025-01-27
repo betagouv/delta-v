@@ -98,12 +98,14 @@ const serializeAmountProduct = (amountGroup: AmountGroup): SerializedAmountProdu
   group: amountGroup.group,
   isOverMaximum: amountGroup.isOverMaximum,
   products: amountGroup.detailedShoppingProducts.map((detailedShoppingProduct) => ({
-    amount: detailedShoppingProduct.getDefaultCurrencyValue(),
+    amount: detailedShoppingProduct.getQuantity(),
     amountProduct: detailedShoppingProduct.product?.amountProduct,
     customName: detailedShoppingProduct.shoppingProduct.customName,
     customId: detailedShoppingProduct.shoppingProduct.customId,
     name: detailedShoppingProduct.product?.name,
     id: detailedShoppingProduct.product?.id,
+    price: detailedShoppingProduct.price,
+    priceInEuros: detailedShoppingProduct.priceInEuros,
   })),
 });
 
@@ -133,6 +135,7 @@ export const serializeSimulator = ({
   );
 
   const allDetailedProducts = amountProducts.flatMap((group) => group.detailedShoppingProducts);
+  console.log('🚀 ~ allDetailedProducts:', allDetailedProducts);
   const tobaccoTax = TobaccoTaxCalculator.calculateTax(allDetailedProducts, travelerData);
   const tobaccoTaxRounded = getRoundedNumber(
     TobaccoTaxCalculator.calculateRoundedTax(allDetailedProducts, travelerData),
@@ -140,7 +143,16 @@ export const serializeSimulator = ({
   const tobaccoTaxDetails = TobaccoTaxCalculator.calculateDetailedTaxes(
     allDetailedProducts,
     travelerData,
-  );
+  ).map((detail) => {
+    const product = allDetailedProducts.find(
+      (p) => p.product?.name === detail.type || p.product?.amountProduct === detail.type,
+    );
+    return {
+      ...detail,
+      customId: product?.shoppingProduct?.customId,
+    };
+  });
+
   const alcoholTax = AlcoholTaxCalculator.calculateTax(allDetailedProducts, travelerData);
   const alcoholTaxRounded = getRoundedNumber(
     AlcoholTaxCalculator.calculateRoundedTax(allDetailedProducts, travelerData),
@@ -148,7 +160,12 @@ export const serializeSimulator = ({
   const alcoholTaxDetails = AlcoholTaxCalculator.calculateDetailedTaxes(
     allDetailedProducts,
     travelerData,
-  );
+  ).map((detail) => {
+    return {
+      ...detail,
+    };
+  });
+  console.log('🚀 ~ alcoholTaxDetails:', alcoholTaxDetails);
 
   return {
     valueProducts: valueProducts.map(serializeValueProduct),

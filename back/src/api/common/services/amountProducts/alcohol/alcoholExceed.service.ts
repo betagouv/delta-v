@@ -76,6 +76,7 @@ export class AlcoholExceed {
     totalAmount: number;
     productsWithAmountRatio: ProductWithAmountRatio[];
   } => {
+    console.log('🚀 ~ AlcoholExceed ~ checkProductFromMaximum ~ productMaximum:', productMaximum);
     return productMaximum.products.reduce(
       (totalProducts, amount) => {
         const productsWithRatio = this.getProductWithRatio(

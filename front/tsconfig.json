@@ -27,6 +27,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
+    "types": ["react/next", "react-dom/next"],
     "noEmit": true,
     "isolatedModules": true,
     "incremental": true,

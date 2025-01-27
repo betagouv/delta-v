@@ -24,6 +24,7 @@ const AddNewProduct = () => {
   );
 
   const addNewProduct = (data: AddNewProductForm) => {
+    console.log('🚀 ~ data:', data);
     addProduct({
       amount: 1,
       id: uuidv4(),
@@ -31,6 +32,7 @@ const AddNewProduct = () => {
       value: data.value ?? 0,
       currency: data.currency ?? 'EUR',
       alcoholDegree: data.alcoholDegree,
+      amount: 1,
     });
   };
 

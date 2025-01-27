@@ -25,6 +25,7 @@ export const getSchema = () => {
   return object({
     name: string().required('Vous devez renseigner le nom du produit.'),
     value: getValue(),
+    price: getValue(),
     category: string().required('Veuillez séléctionner la catégorie.'),
     currency: string().required('Veuillez séléctionner la devise.'),
     alcoholDegree: number().min(0).max(100).optional(),

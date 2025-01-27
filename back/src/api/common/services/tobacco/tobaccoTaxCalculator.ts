@@ -5,12 +5,17 @@ import { TobaccoExceed } from '../amountProducts/tobacco/tobaccoExceed.service';
 
 export interface TobaccoTaxDetail {
   type: string;
-  amount: number;
+  amount: number; // Quantité en litres
   tax: number;
+  price?: number; // Prix dans la devise d'origine à l'unité
+  priceInEuros?: number; // Prix converti en euros à l'unité
+  customId?: string; // ID unique du produit
   details: {
     excise1: number;
     excise2: number;
     threshold: number;
+    customsDuty: number;
+    vat: number;
   };
 }
 
@@ -76,9 +81,8 @@ export class TobaccoTaxCalculator {
     const tobaccoGroup = new TobaccoExceed({ detailedShoppingProducts, travelerData });
     const excessProducts = tobaccoGroup.getExcessProducts();
 
-    const groupedByType = this.groupByType(excessProducts);
-
-    return Object.entries(groupedByType).map(([type, products]) => {
+    return excessProducts.map((product) => {
+      const type = product.product?.amountProduct || '';
       const mappedType = this.mapType(type);
       const rates = this.TAX_RATES[mappedType as keyof typeof this.TAX_RATES];
 
@@ -88,54 +92,71 @@ export class TobaccoTaxCalculator {
           type: this.getReadableTypeName(type),
           amount: 0,
           tax: 0,
+          customId: product.shoppingProduct.customId,
           details: {
             excise1: 0,
             excise2: 0,
             threshold: 0,
+            customsDuty: 0,
+            vat: 0,
           },
         };
       }
 
-      const amount = products.reduce((sum, p) => sum + (p.taxableValue ?? 0), 0);
+      const amount = product.taxableValue || 0;
+      const price = product.price || 0;
+      const priceInEuros = product.priceInEuros || 0;
+
+      // Calcul accise 1 : (prix unitaire * quantité) * taux accises
       const excise1 = rates.unitPrice * amount * rates.exciseRate;
+
+      // Calcul accise 2 : tarif accises * quantité
       const excise2 = rates.exciseDuty * amount;
+
+      // Calcul du seuil de perception
       const threshold = rates.perceptionThreshold * amount;
 
-      const totalTax = excise1 + excise2;
-      const finalTax = totalTax <= threshold ? threshold : totalTax;
+      // Calcul du total des accises (sans arrondi)
+      const totalExcise = excise1 + excise2;
+
+      // Application du seuil de perception
+      const finalExcise =
+        totalExcise <= threshold ? Math.round(threshold) : Math.round(totalExcise);
+
+      // Calcul des droits de douane (20% du prix)
+      const customsDuty = Math.round(priceInEuros * 0.2 * 100) / 100;
+
+      // Calcul de la TVA (20% sur prix + accise + droits de douane)
+      const vatBase = priceInEuros + finalExcise + customsDuty;
+      const vat = Math.round(vatBase * 0.2 * 100) / 100;
+
+      // Total des taxes
+      const totalTax = finalExcise + customsDuty + vat;
 
       return {
         type: this.getReadableTypeName(type),
         amount,
-        tax: Math.round(finalTax * 100) / 100,
+        tax: Math.round(totalTax * 100) / 100,
+        price,
+        priceInEuros,
+        customId: product.shoppingProduct.customId,
         details: {
           excise1,
           excise2,
           threshold,
+          customsDuty,
+          vat,
         },
       };
     });
   }
 
-  private static groupByType(
-    products: DetailedShoppingProduct[],
-  ): Record<string, DetailedShoppingProduct[]> {
-    return products.reduce((acc, product) => {
-      const type = product.product?.amountProduct || '';
-      if (!acc[type]) {
-        acc[type] = [];
-      }
-      acc[type].push(product);
-      return acc;
-    }, {} as Record<string, DetailedShoppingProduct[]>);
-  }
-
   private static getReadableTypeName(type: string): string {
     const names: Record<string, string> = {
-      tobaccoCigarettes: 'Cigarettes',
-      tobaccoCigarillos: 'Cigarillos',
-      tobaccoCigars: 'Cigares',
-      tobaccoOther: 'Tabac à fumer',
+      cigarette: 'Cigarettes',
+      cigarillos: 'Cigarillos',
+      cigar: 'Cigares',
+      tobacco: 'Tabac à fumer',
     };
     return names[type] || type;
   }

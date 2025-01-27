@@ -43,20 +43,20 @@ export const NavBar: React.FC<NavBarProps> = ({ links, activePath, handleLogout 
     shallow,
   );
 
-  const openDeclaration = () => {
-    if (getLevelWithData(declarationAgentRequest) === 1) {
-      router.push(RoutingAgent.createDeclaration);
-    } else {
-      setOpenModalResumeDeclaration(true);
-    }
-  };
+  // const openDeclaration = () => {
+  //   if (getLevelWithData(declarationAgentRequest) === 1) {
+  //     router.push(RoutingAgent.createDeclaration);
+  //   } else {
+  //     setOpenModalResumeDeclaration(true);
+  //   }
+  // };
 
   const handleNavbarItemClick = (item: MenuAgentItem) => {
     if (item.disabled) {
       return;
     }
     if (item.openDeclarationResumeModal) {
-      openDeclaration();
+      // openDeclaration();
     } else setOpenModalResumeDeclaration(false);
     if (countryForProductsNomenclature && activePath !== item.path) {
       setCountryForProductsNomenclature(undefined);

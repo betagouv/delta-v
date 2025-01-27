@@ -29,7 +29,7 @@ export interface OnAddProductValueOptions {
 interface FormAddProductProps {
   register: any;
   control: any;
-  getValues: any;
+  getValues?: any;
   disabled?: boolean;
   productId?: string;
   submitted?: boolean;
@@ -164,6 +164,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
         value: formValues.value,
         currency: formValues.currency,
         alcoholDegree: formValues.alcoholDegree,
+        amount: formValues.amount,
       };
       onButtonClick(data);
     }
@@ -181,11 +182,11 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
             placeholder="Quantité"
             type="number"
             fullWidth={false}
-            name="value"
-            register={register('value', { required: false })}
+            name="amount"
+            register={register('amount', { required: true })}
             control={control}
             trailingAddons={getUnit(product?.amountProduct)}
-            error={errors.value?.message as string | undefined}
+            error={errors.amount?.message as string | undefined}
             newLabel={false}
             withBorder={templateRole !== 'agent'}
           />
@@ -194,7 +195,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               disabled={disabled}
               label="Degré d'alcool"
               placeholder="Degré"
-              type="text"
+              type="number"
               fullWidth={false}
               name="alcoholDegree"
               register={register('alcoholDegree', {
@@ -202,14 +203,14 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
                 validate: {
                   isValidDegree: (value: string) => {
                     if (!value) return true;
-                    const num = parseFloat(value);
-                    if (Number.isNaN(num) || num < 0 || num > 100) {
+                    const numValue = parseFloat(value);
+                    if (Number.isNaN(numValue) || numValue < 0 || numValue > 100) {
                       return "Le degré d'alcool doit être un nombre entre 0 et 100";
                     }
-                    if (isStrongAlcohol && num < 22) {
+                    if (isStrongAlcohol && numValue < 22) {
                       return "Le degré d'alcool doit être supérieur ou égal à 22° pour les alcools forts";
                     }
-                    if (isSoftAlcohol && num >= 22) {
+                    if (isSoftAlcohol && numValue >= 22) {
                       return "Le degré d'alcool doit être inférieur à 22° pour les alcools faibles";
                     }
                     return true;
@@ -223,6 +224,43 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               withBorder={templateRole !== 'agent'}
             />
           )}
+          <div
+            className={classNames({
+              'grid grid-cols-2 gap-5': templateRole === 'agent',
+              'flex flex-col gap-5': templateRole !== 'agent',
+            })}
+          >
+            <div className="flex flex-col gap-2">
+              <InputGroup
+                disabled={disabled}
+                placeholder="Montant"
+                type="number"
+                fullWidth={false}
+                label="Saisissez le montant"
+                name="value"
+                register={register('value', { required: true })}
+                control={control}
+                error={errors.value?.message as string | undefined}
+                withBorder={templateRole !== 'agent'}
+                newLabel
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <InputGroup
+                disabled={disabled}
+                type="select"
+                fullWidth={true}
+                name="currency"
+                label="Choisissez une devise"
+                options={selectOptions}
+                register={register('currency', { required: true })}
+                control={control}
+                error={errors.currency?.message as string | undefined}
+                withBorder={templateRole !== 'agent'}
+                newLabel
+              />
+            </div>
+          </div>
           <Info>
             <div className="md:text-xs leading-tight">
               Vous souhaitez en savoir plus sur les
@@ -251,7 +289,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
               fullWidth={false}
               label="Saisissez le montant"
               name="value"
-              register={register('value', { required: false })}
+              register={register('value', { required: true })}
               control={control}
               error={errors.value?.message as string | undefined}
               withBorder={templateRole !== 'agent'}

@@ -8,6 +8,9 @@ export class DetailedShoppingProduct {
   product?: Product;
   currency?: Currency;
   taxableValue?: number;
+  price?: number;
+  priceInEuros?: number;
+  amount?: number;
 
   isValueProduct(): boolean {
     if (!this.product || this.isUncompletedProduct()) {
@@ -32,13 +35,17 @@ export class DetailedShoppingProduct {
     return this.product.productDisplayTypes === ProductDisplayTypes.notManaged;
   }
 
+  getQuantity(): number {
+    return this.shoppingProduct.amount ?? 1;
+  }
+
   getDefaultCurrencyValue(): number {
     if (!this.currency) {
       return 0;
     }
 
     if (this.isAmountProduct()) {
-      return this.shoppingProduct.originalValue;
+      return this.shoppingProduct.amount || 0;
     }
 
     return currency(this.shoppingProduct.originalValue).divide(this.currency.value).value;
@@ -64,6 +71,9 @@ export class DetailedShoppingProduct {
       currencies: this.currency ? [this.currency] : [],
     });
 
+    clonedProduct.price = this.price;
+    clonedProduct.priceInEuros = this.priceInEuros;
+
     return clonedProduct;
   }
 }
@@ -88,9 +98,13 @@ export const createDetailedShoppingProduct = ({
   }
   detailedShoppingProduct.product = product;
 
-  detailedShoppingProduct.currency = currencies.find(
-    (currency) => currency.id === shoppingProduct.currency,
-  );
+  const currency = currencies.find((currency) => currency.id === shoppingProduct.currency);
+  detailedShoppingProduct.currency = currency;
+
+  if (shoppingProduct.originalValue !== undefined && currency) {
+    detailedShoppingProduct.price = shoppingProduct.originalValue;
+    detailedShoppingProduct.priceInEuros = shoppingProduct.originalValue / currency.value;
+  }
 
   return detailedShoppingProduct;
 };

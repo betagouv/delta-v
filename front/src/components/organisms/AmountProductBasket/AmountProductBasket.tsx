@@ -13,22 +13,25 @@ interface AmountProductBasketProps {
   containError?: boolean;
   onDeleteProduct: () => void;
   onUpdateProduct: () => void;
-  tobaccoTax?: number;
-  isTobaccoProduct?: boolean;
-  alcoholTax?: number;
-  isAlcoholProduct?: boolean;
+  taxDetails?: {
+    excise?: number;
+    css?: number;
+    customsDuty?: number;
+    vat?: number;
+    total: number;
+    priceInEuros?: number;
+  };
 }
 
 export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
-  product: { name, amount, customName, amountProduct },
+  product: { name, amount, customName, amountProduct, priceInEuros },
   containError = false,
   onDeleteProduct,
   onUpdateProduct,
-  tobaccoTax = 0,
-  isTobaccoProduct = false,
-  alcoholTax = 0,
-  isAlcoholProduct = false,
+  taxDetails,
 }) => {
+  console.log('🚀 ~ priceInEuros:', priceInEuros);
+  console.log('🚀 ~ taxDetails:', taxDetails);
   const [open, setOpen] = useState(false);
   const [unit, setUnit] = useState<string>('');
 
@@ -51,9 +54,19 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
               {name}
             </Typography>
           </div>
-          <Typography weight="extrabold" color="secondary" size="text-lg" lineHeight="leading-none">
-            {amount} {unit}
-          </Typography>
+          <div className="flex flex-col items-end">
+            <Typography
+              weight="extrabold"
+              color="secondary"
+              size="text-lg"
+              lineHeight="leading-none"
+            >
+              {amount} {unit}
+            </Typography>
+            <Typography weight="normal" color="light-gray" size="text-base">
+              Prix unitaire : {(priceInEuros || 0).toFixed(2)} €
+            </Typography>
+          </div>
         </div>
         <Typography weight="light" color="light-gray" size="text-base">
           {customName}
@@ -74,18 +87,60 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
                 <Icon size="xl" name="chevron-thin-up" />
               </div>
             </div>
-            <div className="flex items-end">
-              <div className="flex-1" />
-              <div className="mb-[2px]">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-end justify-between">
                 <Typography color="secondary" size="text-base">
-                  TOTAL
+                  Quantité
                 </Typography>
-              </div>
-              <div className="ml-5 content-end">
                 <Typography color="primary" size="text-xl">
                   {amount} {unit}
                 </Typography>
               </div>
+              <div className="flex items-end justify-between">
+                <Typography color="secondary" size="text-base">
+                  Prix total
+                </Typography>
+                <Typography color="primary" size="text-xl">
+                  {((priceInEuros || 0) * amount).toFixed(2)} €
+                </Typography>
+              </div>
+              <>
+                <div className="flex items-end justify-between">
+                  <Typography color="secondary" size="text-base">
+                    Accises
+                  </Typography>
+                  <Typography color="primary" size="text-xl">
+                    {((Number(taxDetails?.excise) || 0) + (Number(taxDetails?.css) || 0)).toFixed(
+                      2,
+                    )}{' '}
+                    €
+                  </Typography>
+                </div>
+                <div className="flex items-end justify-between">
+                  <Typography color="secondary" size="text-base">
+                    Droits de douane
+                  </Typography>
+                  <Typography color="primary" size="text-xl">
+                    {(taxDetails?.customsDuty || 0).toFixed(2)} €
+                  </Typography>
+                </div>
+                <div className="flex items-end justify-between">
+                  <Typography color="secondary" size="text-base">
+                    TVA
+                  </Typography>
+                  <Typography color="primary" size="text-xl">
+                    {(taxDetails?.vat || 0).toFixed(2)} €
+                  </Typography>
+                </div>
+                <div className="flex items-end justify-between border-t border-gray-200 pt-2">
+                  <Typography color="secondary" size="text-base" weight="bold">
+                    Total taxes
+                  </Typography>
+                  <Typography color="primary" size="text-xl" weight="bold">
+                    {(taxDetails?.total || 0).toFixed(2)} €
+                  </Typography>
+                </div>
+              </>
             </div>
           </div>
         </div>
@@ -94,7 +149,7 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
             <>
               <div className="flex-1 text-left"></div>
               <Typography weight="normal" color="primary" size="text-lg">
-                {amount} {unit}
+                {(priceInEuros ? priceInEuros * amount : 0).toFixed(2)} €
               </Typography>
               <div className="mt-[2px] ml-3">
                 <Icon size="xl" name="chevron-thin-down" />
@@ -112,38 +167,6 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
           )}
         </div>
       </div>
-      {isTobaccoProduct && tobaccoTax > 0 && (
-        <div className="grid grid-cols-2 pt-2">
-          <Typography transform="sentence-case" size="text-sm" weight="bold" desktopSize="text-sm">
-            Droits et taxes dus
-          </Typography>
-          <Typography
-            transform="sentence-case"
-            size="text-sm"
-            desktopSize="text-sm"
-            textPosition="text-right"
-            weight="bold"
-          >
-            {`${tobaccoTax.toFixed(2)} €`}
-          </Typography>
-        </div>
-      )}
-      {isAlcoholProduct && alcoholTax > 0 && (
-        <div className="grid grid-cols-2 pt-2">
-          <Typography transform="sentence-case" size="text-sm" weight="bold" desktopSize="text-sm">
-            Droits et taxes dus
-          </Typography>
-          <Typography
-            transform="sentence-case"
-            size="text-sm"
-            desktopSize="text-sm"
-            textPosition="text-right"
-            weight="bold"
-          >
-            {`${alcoholTax.toFixed(2)} €`}
-          </Typography>
-        </div>
-      )}
     </div>
   );
 };

@@ -56,6 +56,7 @@ export const simulateValidator = z.object({
             })
             .uuid(),
           originalValue: parseNumber(z.number().min(0)),
+          amount: parseNumber(z.number().min(0)).optional(),
           currency: z.string().length(3).optional().default('EUR'),
           alcoholDegree: z.number().min(0).max(100).optional(),
         }),

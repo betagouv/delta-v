@@ -58,41 +58,6 @@ export const getSchema = ({ amountProduct, withName }: GetSchema) => {
       : string().optional(),
     value: getValue(amountProduct),
     currency: getCurrency(amountProduct),
-    alcoholDegree: number()
-      .transform((value, originalValue) => {
-        if (!originalValue) return undefined;
-        const num = parseFloat(originalValue);
-        return Number.isNaN(num) ? undefined : num;
-      })
-      .test('degree-validation', '', (value, context) => {
-        if (!value) return true;
-
-        if (value < 0 || value > 100) {
-          return context.createError({
-            message: "Le degré d'alcool doit être un nombre entre 0 et 100",
-          });
-        }
-
-        const { parent } = context;
-        const productType = parent.amountProduct;
-        const isStrongAlcohol = productType === 'strongAlcohol' || productType === 'spiritDrink';
-        const isSoftAlcohol =
-          productType === 'softAlcohol' || productType === 'alcoholIntermediate';
-
-        if (isStrongAlcohol && value < 22) {
-          return context.createError({
-            message: "Le degré d'alcool doit être supérieur ou égal à 22° pour les alcools forts",
-          });
-        }
-
-        if (isSoftAlcohol && value >= 22) {
-          return context.createError({
-            message: "Le degré d'alcool doit être inférieur à 22° pour les alcools faibles",
-          });
-        }
-
-        return true;
-      })
-      .nullable(),
+    amount: number().min(1, 'La quantité doit être au minimum de 1').optional(),
   }).required();
 };

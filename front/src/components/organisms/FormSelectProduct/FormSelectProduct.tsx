@@ -21,6 +21,7 @@ export interface OnAddProductOptions {
   currency: string;
   customName: string;
   alcoholDegree?: number;
+  amount?: number;
 }
 
 export interface DefaultValuesUpdateProduct {
@@ -29,6 +30,7 @@ export interface DefaultValuesUpdateProduct {
   value: number;
   currency: string;
   alcoholDegree?: number;
+  amount?: number;
 }
 
 interface FormSelectProductProps {
@@ -99,12 +101,15 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
       value: defaultValues?.value ?? null,
       currency: defaultValues?.currency ?? defaultCurrency,
       alcoholDegree: defaultValues?.alcoholDegree ?? undefined,
+      amount: defaultValues?.amount ?? 1,
       ...getDefaultValues(steps),
     });
   }, [steps]);
 
   const onSubmit = (data: FormSelectProductData | OnAddProductValueOptions): void => {
+    console.log('🚀 ~ onSubmit ~ data:', data);
     const product = steps.pop();
+    console.log('🚀 ~ onSubmit ~ product:', product);
     if (product) {
       onAddProduct({
         customId: (defaultValues?.customId as string) ?? undefined,
@@ -114,6 +119,7 @@ export const FormSelectProduct: React.FC<FormSelectProductProps> = ({
         currency: (data.currency as string) ?? 'EUR',
         customName: getValues('name'),
         alcoholDegree: data.alcoholDegree ? Number(data.alcoholDegree) : undefined,
+        amount: data.amount ? Number(data.amount) : 1,
       });
     }
   };

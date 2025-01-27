@@ -1,15 +1,17 @@
+import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 
 import { AgentRoute } from '@/components/molecules/RouteGuard/AgentRoute';
+import { ModalUnderConstruction } from '@/components/organisms/ModalUnderConstruction';
 import { Meta } from '@/layout/Meta';
-import { DeclarationPageDesktop } from '@/templates/DeclarationPageDesktop';
-import DeclarationPageMobile from '@/templates/DeclarationPageMobile';
 import { MainAgent } from '@/templates/MainAgent';
+import { Routing } from '@/utils/const';
 
 const Declaration = () => {
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
+  const router = useRouter();
 
   return (
     <AgentRoute>
@@ -25,7 +27,13 @@ const Declaration = () => {
         titleHeader="Declaration"
         isMobile={isMobile}
       >
-        {isMobile ? <DeclarationPageMobile /> : <DeclarationPageDesktop />}
+        {/* {isMobile ? <DeclarationPageMobile /> : <DeclarationPageDesktop />} */}
+        <ModalUnderConstruction
+          open={true}
+          onClose={() => {
+            router.push(Routing.home);
+          }}
+        />
       </MainAgent>
     </AgentRoute>
   );

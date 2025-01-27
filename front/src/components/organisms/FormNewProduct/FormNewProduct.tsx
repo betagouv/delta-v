@@ -25,6 +25,7 @@ export interface AddNewProductForm {
   value?: number;
   currency?: string;
   alcoholDegree?: number;
+  amount?: number;
 }
 
 export const FormNewProduct: React.FC<FormSelectProductProps> = ({

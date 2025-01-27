@@ -5,11 +5,16 @@ import { TravelerData } from '../traveler';
 
 export interface AlcoholTaxDetail {
   type: string;
-  amount: number;
+  amount: number; // Quantité en litres
   tax: number;
+  price?: number; // Prix dans la devise d'origine à l'unité
+  priceInEuros?: number; // Prix converti en euros à l'unité
+  customId?: string; // ID unique du produit
   details: {
     excise: number;
     css: number;
+    customsDuty: number; // Droits de douane
+    vat: number; // TVA
   };
 }
 
@@ -21,15 +26,19 @@ interface TaxRates {
 
 export class AlcoholTaxCalculator {
   private static readonly BASE_EXCISE_RATE = 18.6652; // Taux de base par litre d'alcool pur
+  private static readonly CUSTOM_DUTY_RATE = 0.2; // 20% de droits de douane
+  private static readonly VAT_RATE = 0.2; // 20% de TVA
 
   private static readonly TAX_RATES: Record<string, TaxRates> = {
     alcoholStrong: {
       // Alcool fort (>22°)
+      exciseRate: 18.6652, // Taux de base par litre d'alcool pur
       cssRate: 1.32, // Cotisation sécurité sociale fixe par litre
       minimumThreshold: 0,
     },
     alcoholWeak: {
       // Alcool faible (<22°)
+      exciseRate: 18.6652, // Taux de base par litre d'alcool pur
       cssRate: 0, // Pas de cotisation sécurité sociale
       minimumThreshold: 0,
     },
@@ -84,9 +93,9 @@ export class AlcoholTaxCalculator {
       detailedShoppingProducts,
     });
     const excessProducts = alcoholExceed.getExcessProducts();
-    const groupedByType = this.groupByType(excessProducts);
 
-    return Object.entries(groupedByType).map(([type, products]) => {
+    return excessProducts.map((product) => {
+      const type = product.product?.amountProduct || '';
       const mappedType = this.mapType(type);
       const rates = this.TAX_RATES[mappedType];
 
@@ -99,59 +108,74 @@ export class AlcoholTaxCalculator {
           details: {
             excise: 0,
             css: 0,
+            customsDuty: 0,
+            vat: 0,
           },
         };
       }
 
-      const liters = products.reduce((sum, p) => sum + (p.taxableValue ?? 0), 0);
-      let excise = 0;
+      const alcoholDegree = product.product?.alcoholDegree || 0;
+      console.log('alcoholDegree', alcoholDegree);
+      const liters = product.taxableValue || 0;
+      console.log('liters', liters);
+      const price = product.price || 0;
+      const priceInEuros = product.priceInEuros || 0;
 
       // Calcul des accises selon le type d'alcool
+      let exciseNetRate = 0;
       if (mappedType === 'beer' && rates.exciseRate) {
         // Pour la bière : taux par degré
-        const averageDegree = this.getAverageAlcoholDegree(products) || 8; // 8° par défaut si non spécifié
-        excise = rates.exciseRate * averageDegree * liters;
+        exciseNetRate = rates.exciseRate * (alcoholDegree / 100);
       } else if (mappedType === 'wine' && rates.exciseRate) {
         // Pour le vin : taux fixe
-        excise = rates.exciseRate * liters;
+        exciseNetRate = rates.exciseRate;
       } else {
         // Pour les autres alcools : calcul basé sur le degré d'alcool réel
-        const averageDegree = this.getAverageAlcoholDegree(products);
-        excise = this.BASE_EXCISE_RATE * (averageDegree / 100) * liters;
+        exciseNetRate = this.BASE_EXCISE_RATE * (alcoholDegree / 100);
+        console.log('exciseNetRate', exciseNetRate);
       }
 
-      const css = rates.cssRate * liters;
+      console.log('exciseNetRate', exciseNetRate);
+
+      const exciseTotal = exciseNetRate * liters;
+      const cssTotal = rates.cssRate * liters;
 
       // Application des règles d'arrondi
-      excise = Math.round(excise);
-      if (['beer', 'wine'].includes(mappedType) && excise < rates.minimumThreshold) {
-        excise = 0;
-      }
+      const roundedExcise = Math.round(exciseTotal);
+      const finalExcise =
+        ['beer', 'wine'].includes(mappedType) && roundedExcise < rates.minimumThreshold
+          ? 0
+          : roundedExcise;
 
-      const roundedCss = Math.round(css);
-      const totalTax = excise + roundedCss;
+      const roundedCss = Math.round(cssTotal);
+
+      // Calcul des droits de douane (20% du prix)
+      const customsDuty = Math.round(priceInEuros * this.CUSTOM_DUTY_RATE * 100) / 100;
+
+      // Calcul de la TVA (20% sur prix + accise + droits de douane)
+      const vatBase = priceInEuros + finalExcise + customsDuty;
+      const vat = Math.round(vatBase * this.VAT_RATE * 100) / 100;
+
+      // Total des taxes
+      const totalTax = finalExcise + customsDuty + vat + roundedCss;
+
+      console.log('🚀 ~ totalTax:', product.shoppingProduct.customId);
 
       return {
         type: this.getReadableTypeName(type),
         amount: liters,
-        tax: Math.round(totalTax * 100) / 100, // Arrondi à 2 décimales
+        tax: Math.round(totalTax * 100) / 100,
+        price,
+        priceInEuros,
+        customId: product.shoppingProduct.customId,
         details: {
-          excise,
+          excise: finalExcise,
           css: roundedCss,
+          customsDuty,
+          vat,
         },
       };
     });
-  }
-
-  private static getAverageAlcoholDegree(products: DetailedShoppingProduct[]): number {
-    const productsWithDegree = products.filter((p) => p.product?.alcoholDegree);
-    if (productsWithDegree.length === 0) return 0;
-
-    const totalDegree = productsWithDegree.reduce(
-      (sum, p) => sum + (p.product?.alcoholDegree || 0),
-      0,
-    );
-    return totalDegree / productsWithDegree.length;
   }
 
   private static getReadableTypeName(type: string): string {
@@ -165,18 +189,5 @@ export class AlcoholTaxCalculator {
       sparklingWine: 'Vin mousseux',
     };
     return names[type] || type;
-  }
-
-  private static groupByType(
-    products: DetailedShoppingProduct[],
-  ): Record<string, DetailedShoppingProduct[]> {
-    return products.reduce((acc, product) => {
-      const type = product.product?.amountProduct || '';
-      if (!acc[type]) {
-        acc[type] = [];
-      }
-      acc[type].push(product);
-      return acc;
-    }, {} as Record<string, DetailedShoppingProduct[]>);
   }
 }

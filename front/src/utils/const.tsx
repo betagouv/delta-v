@@ -107,17 +107,17 @@ export const MENU_ITEMS: TabItem[] = [
     icon: 'luggages',
     path: Routing.prepareMyTripConfig,
   },
-  {
-    title: (
-      <>
-        Déclarer <br />
-        mes achats
-      </>
-    ),
-    path: Routing.createDeclaration,
-    icon: 'douanier',
-    declaration: true,
-  },
+  // {
+  //   title: (
+  //     <>
+  //       Déclarer <br />
+  //       mes achats
+  //     </>
+  //   ),
+  //   path: Routing.createDeclaration,
+  //   icon: 'douanier',
+  //   declaration: true,
+  // },
   {
     icon: 'calculator',
     title: (
@@ -146,18 +146,18 @@ export interface MenuAgentItem {
 }
 
 export const MAIN_MENU_AGENT_ITEMS: MenuAgentItem[] = [
-  {
-    id: 'declaration',
-    title: 'Créer une déclaration',
-    svgIcon: 'categoryCreateDeclaration' as SvgNames,
-    openDeclarationResumeModal: true,
-  },
-  {
-    id: 'declarationList',
-    title: 'Déclarations',
-    path: RoutingAgent.declarations,
-    svgIcon: 'douanier' as SvgNames,
-  },
+  // {
+  //   id: 'declaration',
+  //   title: 'Créer une déclaration',
+  //   svgIcon: 'categoryCreateDeclaration' as SvgNames,
+  //   openDeclarationResumeModal: true,
+  // },
+  // {
+  //   id: 'declarationList',
+  //   title: 'Déclarations',
+  //   path: RoutingAgent.declarations,
+  //   svgIcon: 'douanier' as SvgNames,
+  // },
   {
     id: 'nomenclature',
     title: 'Nomenclature',

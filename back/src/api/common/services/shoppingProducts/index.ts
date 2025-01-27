@@ -5,4 +5,5 @@ export interface ShoppingProduct {
   originalValue: number;
   currency?: string;
   alcoholDegree?: number;
+  amount?: number;
 }

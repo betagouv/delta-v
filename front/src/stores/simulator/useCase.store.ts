@@ -32,6 +32,7 @@ interface UpdateShoppingProductOptions {
   value: number;
   currency: string;
   alcoholDegree?: number;
+  amount?: number;
 }
 
 export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (set, get) => ({
@@ -152,6 +153,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     value,
     currency,
     alcoholDegree,
+    amount,
   }: UpdateShoppingProductOptions): void => {
     set((state: any) => {
       const newState = { ...state };
@@ -170,6 +172,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
         value,
         currency,
         alcoholDegree,
+        amount,
       });
 
       return newState;
@@ -180,7 +183,9 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     try {
       const simulatorData = get().simulator.appState;
       const simulateRequestData = checkSimulatorDataRequest(simulatorData.simulatorRequest);
+      console.log('🚀 ~ simulate: ~ simulateRequestData:', simulateRequestData);
       const response = await simulateRequest(simulateRequestData);
+      console.log('🚀 ~ simulate: ~ response:', response);
       set((state: any) => {
         const newState = { ...state };
         newState.simulator.appState.simulatorResponse = response;

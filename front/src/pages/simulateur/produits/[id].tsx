@@ -57,13 +57,20 @@ const ProductSearch = () => {
       };
     }) ?? [];
 
-  const onAddProduct = ({ product, value, name, currency, alcoholDegree }: OnAddProductOptions) => {
+  const onAddProduct = ({
+    product,
+    value,
+    name,
+    currency,
+    alcoholDegree,
+    amount,
+  }: OnAddProductOptions) => {
     const shoppingProduct: ShoppingProduct = {
       id: uuidv4(),
       productId: product.id,
       name,
       value: parseFloat(value),
-      amount: 1,
+      amount: amount ?? 1,
       currency,
       alcoholDegree,
     };

@@ -103,7 +103,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
       </div>
       <div className="my-4 flex flex-row">
         <Typography color="secondary" weight="bold">
-          Pays d’origine
+          Pays d'origine
         </Typography>
         <div className="flex-1" />
         <Typography color="secondary">
@@ -120,6 +120,28 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
               openModalProductType={openModalProductType}
             />
           ))}
+          {simulatorResponse?.tobaccoTaxRounded !== undefined &&
+            simulatorResponse.tobaccoTaxRounded > 0 && (
+              <div className="mt-2 flex flex-row justify-between">
+                <Typography color="secondary" weight="bold">
+                  Total taxes tabac
+                </Typography>
+                <Typography color="primary" weight="bold">
+                  {simulatorResponse.tobaccoTaxRounded.toFixed(2)} €
+                </Typography>
+              </div>
+            )}
+          {simulatorResponse?.alcoholTaxRounded !== undefined &&
+            simulatorResponse.alcoholTaxRounded > 0 && (
+              <div className="mt-2 flex flex-row justify-between">
+                <Typography color="secondary" weight="bold">
+                  Total taxes alcool
+                </Typography>
+                <Typography color="primary" weight="bold">
+                  {simulatorResponse.alcoholTaxRounded.toFixed(2)} €
+                </Typography>
+              </div>
+            )}
           <div className="-mx-4 my-4 border-b-2 border-dashed" />
         </>
       )}
@@ -167,7 +189,7 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
       ) : (
         <div className="flex flex-col items-center">
           <Typography color="primary" size="text-lg">
-            Rapprochez vous d’un agent <br />
+            Rapprochez vous d'un agent <br />
             pour déterminer vos droits € *
           </Typography>
         </div>
