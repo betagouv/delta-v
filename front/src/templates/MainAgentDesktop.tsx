@@ -29,7 +29,7 @@ const MainAgentDesktop = ({
       <div className="flex place-content-center border-b border-disabled-bg">
         <NavBar links={MAIN_MENU_AGENT_ITEMS} activePath={path} handleLogout={handleLogout} />
       </div>
-      <div className="container py-5 flex flex-col flex-1 pt-[60px] gap-[30px] max-w-[1052px] px-10">
+      <div className="container py-5 flex flex-col flex-1 pt-[60px] gap-[30px] max-w-[1052px] px-2.5">
         {titleHeader && (
           <TitleAgent
             title={titleHeader}
