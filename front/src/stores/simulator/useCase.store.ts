@@ -183,9 +183,7 @@ export const createUseCaseSimulatorSlice: StoreSlice<SimulatorUseCaseSlice> = (s
     try {
       const simulatorData = get().simulator.appState;
       const simulateRequestData = checkSimulatorDataRequest(simulatorData.simulatorRequest);
-      console.log('🚀 ~ simulate: ~ simulateRequestData:', simulateRequestData);
       const response = await simulateRequest(simulateRequestData);
-      console.log('🚀 ~ simulate: ~ response:', response);
       set((state: any) => {
         const newState = { ...state };
         newState.simulator.appState.simulatorResponse = response;

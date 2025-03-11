@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "build": "tsc -p ./tsconfig.build.json && yarn mjml2html && yarn copy-templates",
     "install": "sh ./build.sh",
     "lint": "eslint --ext .ts src/ tests/",

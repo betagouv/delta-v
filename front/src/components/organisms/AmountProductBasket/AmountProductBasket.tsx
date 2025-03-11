@@ -64,7 +64,7 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
               {amount} {unit}
             </Typography>
             <Typography weight="normal" color="light-gray" size="text-base">
-              Prix unitaire : {(priceInEuros || 0).toFixed(2)} €
+              Prix unitaire : {((priceInEuros || 0) / amount).toFixed(2)} €
             </Typography>
           </div>
         </div>
@@ -101,7 +101,7 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
                   Prix total
                 </Typography>
                 <Typography color="primary" size="text-xl">
-                  {((priceInEuros || 0) * amount).toFixed(2)} €
+                  {priceInEuros?.toFixed(2)} €
                 </Typography>
               </div>
               <>
@@ -149,7 +149,7 @@ export const AmountProductBasket: React.FC<AmountProductBasketProps> = ({
             <>
               <div className="flex-1 text-left"></div>
               <Typography weight="normal" color="primary" size="text-lg">
-                {(priceInEuros ? priceInEuros * amount : 0).toFixed(2)} €
+                {(priceInEuros || 0).toFixed(2)} €
               </Typography>
               <div className="mt-[2px] ml-3">
                 <Icon size="xl" name="chevron-thin-down" />

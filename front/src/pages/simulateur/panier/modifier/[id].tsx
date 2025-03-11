@@ -71,7 +71,7 @@ const UpdateProductBasket = () => {
       value,
       name: name ?? '',
       currency,
-      alcoholDegree: Number(alcoholDegree),
+      alcoholDegree: alcoholDegree ? Number(alcoholDegree) : undefined,
       amount: Number(amount),
     });
     router.push('/simulateur/panier');

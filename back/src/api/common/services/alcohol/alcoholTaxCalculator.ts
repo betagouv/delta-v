@@ -22,12 +22,12 @@ interface TaxRates {
   exciseRate?: number;
   cssRate: number;
   minimumThreshold: number;
+  customDutyRate: number;
+  vatRate: number;
 }
 
 export class AlcoholTaxCalculator {
   private static readonly BASE_EXCISE_RATE = 18.6652; // Taux de base par litre d'alcool pur
-  private static readonly CUSTOM_DUTY_RATE = 0.2; // 20% de droits de douane
-  private static readonly VAT_RATE = 0.2; // 20% de TVA
 
   private static readonly TAX_RATES: Record<string, TaxRates> = {
     alcoholStrong: {
@@ -35,22 +35,30 @@ export class AlcoholTaxCalculator {
       exciseRate: 18.6652, // Taux de base par litre d'alcool pur
       cssRate: 1.32, // Cotisation sécurité sociale fixe par litre
       minimumThreshold: 0,
+      customDutyRate: 0, // 0% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
     alcoholWeak: {
       // Alcool faible (<22°)
       exciseRate: 18.6652, // Taux de base par litre d'alcool pur
       cssRate: 0, // Pas de cotisation sécurité sociale
       minimumThreshold: 0,
+      customDutyRate: 0, // 0% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
     beer: {
       exciseRate: 0.0796, // Taux par degré d'alcool
       cssRate: 0, // Pas de cotisation sécurité sociale
       minimumThreshold: 1, // Si arrondi < 1€, alors droits d'accises = 0€
+      customDutyRate: 0, // 0% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
     wine: {
       exciseRate: 0.0405, // Tarif fixe par litre
       cssRate: 0, // Pas de cotisation sécurité sociale
       minimumThreshold: 1, // Si arrondi < 1€, alors droits d'accises = 0€
+      customDutyRate: 0, // 0% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
   };
 
@@ -150,16 +158,14 @@ export class AlcoholTaxCalculator {
       const roundedCss = Math.round(cssTotal);
 
       // Calcul des droits de douane (20% du prix)
-      const customsDuty = Math.round(priceInEuros * this.CUSTOM_DUTY_RATE * 100) / 100;
+      const customsDuty = Math.round(priceInEuros * rates.customDutyRate * 100) / 100;
 
       // Calcul de la TVA (20% sur prix + accise + droits de douane)
       const vatBase = priceInEuros + finalExcise + customsDuty;
-      const vat = Math.round(vatBase * this.VAT_RATE * 100) / 100;
+      const vat = Math.round(vatBase * rates.vatRate * 100) / 100;
 
       // Total des taxes
       const totalTax = finalExcise + customsDuty + vat + roundedCss;
-
-      console.log('🚀 ~ totalTax:', product.shoppingProduct.customId);
 
       return {
         type: this.getReadableTypeName(type),

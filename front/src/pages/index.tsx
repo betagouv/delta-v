@@ -66,6 +66,14 @@ const Index = () => {
           <SvgIcon name="logo" />
         </div>
       </div>
+
+      {/* Bandeau d'information pour la nouvelle fonctionnalité */}
+      <div className="mb-4 rounded-lg bg-primary-100 p-4 text-center">
+        <Typography color="primary" weight="bold">
+          Nouveau : calcul des droits et taxes des alcools et tabacs
+        </Typography>
+      </div>
+
       <div className="mb-1 flex flex-col gap-6">
         <div>
           <Typography
@@ -147,7 +155,7 @@ const Index = () => {
       </div>
       <div className="-mx-4 flex flex-col gap-6 bg-primary-100 p-4 pb-6">
         <Typography weight="bold" size="text-2xl" color="secondary">
-          Pourquoi déclarer mes achats effectués à l’étranger ?
+          Pourquoi déclarer mes achats effectués à l'étranger ?
         </Typography>
         <Typography
           weight="normal"
@@ -156,8 +164,8 @@ const Index = () => {
           color="secondary"
           lineHeight="leading-4"
         >
-          Pour vous permettre d’être facilement en règle si vous avez acheté des produits à
-          l’étranger et vous assurer un passage rapide et fluide lors de votre retour en France.
+          Pour vous permettre d'être facilement en règle si vous avez acheté des produits à
+          l'étranger et vous assurer un passage rapide et fluide lors de votre retour en France.
         </Typography>
         <TextLink to={Routing.faq} bold withArrow>
           En savoir plus
@@ -165,7 +173,7 @@ const Index = () => {
       </div>
       <div className="flex flex-col gap-6">
         <Typography weight="bold" size="text-2xl" color="secondary">
-          Besoin d’aide ?
+          Besoin d'aide ?
         </Typography>
         <div className="flex flex-row gap-6">
           <div className="grow">
@@ -291,6 +299,17 @@ const Index = () => {
         </Link>
       </Typography>
       <div>
+        <Typography color="middle-gray" tag="div" size="text-xs" lineHeight="leading-6">
+          Application développée par{' '}
+          <Link href="https://snowpact.com/" tag="span" external>
+            <div className="inline-flex flex-row gap-1">
+              <span className="underline">Snowpact</span>
+              <span className="flex items-center">
+                <Icon name="link" size="sm" />
+              </span>
+            </div>
+          </Link>
+        </Typography>
         <Typography color="middle-gray" tag="div" size="text-xs" lineHeight="leading-6">
           Sauf mention contraire, tous les contenus de ce site sont sous{' '}
           <Link

@@ -17,6 +17,21 @@ import { useStore } from '@/stores/store';
 import { Main } from '@/templates/Main';
 import { Routing } from '@/utils/const';
 
+const formatAlcoholType = (type: string) => {
+  switch (type) {
+    case 'wine':
+      return 'Vin';
+    case 'beer':
+      return 'Bière';
+    case 'strongAlcohol':
+      return 'Alcools forts';
+    case 'softAlcohol':
+      return 'Alcools doux';
+    default:
+      return type;
+  }
+};
+
 const Panier = () => {
   const router = useRouter();
 
@@ -240,10 +255,9 @@ const Panier = () => {
                         total: 0,
                       };
                     }
-                    console.log('🚀 ~ tobaccoTaxDetails.reduce ~ detail:', detail);
                     acc[type].details.push(detail);
                     acc[type].amount += detail.amount;
-                    acc[type].totalPrice += (detail.priceInEuros || 0) * detail.amount;
+                    acc[type].totalPrice += detail.priceInEuros || 0 / detail.amount;
                     acc[type].totalExcise += detail.details.excise1 + detail.details.excise2;
                     acc[type].totalCustomsDuty += detail.details.customsDuty;
                     acc[type].totalVat += detail.details.vat;
@@ -252,9 +266,7 @@ const Panier = () => {
                   }, {} as Record<string, any>),
                 ).map(([type, group]) => (
                   <div key={type} className="flex justify-between text-sm mb-1">
-                    <span>
-                      {type} ({group.amount} unités)
-                    </span>
+                    <span>{type}</span>
                     <div className="flex flex-col items-end">
                       <span>Prix total au dessus du seuil : {group.totalPrice.toFixed(2)} €</span>
                       <span>Accises totales : {group.totalExcise.toFixed(2)} €</span>
@@ -300,7 +312,7 @@ const Panier = () => {
                   }
                   acc[type].details.push(detail);
                   acc[type].amount += detail.amount;
-                  acc[type].totalPrice += (detail.priceInEuros || 0) * detail.amount;
+                  acc[type].totalPrice += (detail.priceInEuros || 0) / detail.amount;
                   acc[type].totalExcise += detail.details.excise;
                   acc[type].totalCss += detail.details.css;
                   acc[type].totalCustomsDuty += detail.details.customsDuty;
@@ -310,9 +322,7 @@ const Panier = () => {
                 }, {} as Record<string, any>),
               ).map(([type, group]) => (
                 <div key={type} className="flex justify-between text-sm mb-1">
-                  <span>
-                    {type} ({group.amount} litres)
-                  </span>
+                  <span>{formatAlcoholType(type)}</span>
                   <div className="flex flex-col items-end">
                     <span>Prix total au dessus du seuil : {group.totalPrice.toFixed(2)} €</span>
                     <span>

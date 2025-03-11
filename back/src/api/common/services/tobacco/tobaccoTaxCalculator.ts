@@ -26,24 +26,32 @@ export class TobaccoTaxCalculator {
       exciseRate: 0.55,
       exciseDuty: 0.0713,
       perceptionThreshold: 0.3714,
+      customDutyRate: 0.576, // 57.6% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
     tobaccoCigars: {
       unitPrice: 0.7,
       exciseRate: 0.363,
       exciseDuty: 0.0547,
       perceptionThreshold: 0.2966,
+      customDutyRate: 0.26, // 26% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
     tobaccoCigarillos: {
       unitPrice: 0.7,
       exciseRate: 0.363,
       exciseDuty: 0.0547,
       perceptionThreshold: 0.2966,
+      customDutyRate: 0.26, // 26% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
     tobaccoOther: {
       unitPrice: 0.6,
       exciseRate: 0.491,
       exciseDuty: 0.0997,
       perceptionThreshold: 0.3454,
+      customDutyRate: 0.749, // 74.9% droits de douane
+      vatRate: 0.2, // 20% TVA
     },
   };
 
