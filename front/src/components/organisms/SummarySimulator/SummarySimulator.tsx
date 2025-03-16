@@ -14,6 +14,21 @@ import { AmountProduct } from '@/model/product';
 import { SimulatorRequest, SimulatorResponse } from '@/stores/simulator/appState.store';
 import { getMeanOfTransport } from '@/utils/meansOfTransport.util';
 
+const formatAlcoholType = (type: string) => {
+  switch (type) {
+    case 'wine':
+      return 'Vin';
+    case 'beer':
+      return 'Bière';
+    case 'strongAlcohol':
+      return 'Alcools forts';
+    case 'softAlcohol':
+      return 'Alcools doux';
+    default:
+      return type;
+  }
+};
+
 interface SummarySimulatorProps {
   simulatorRequest: SimulatorRequest;
   simulatorResponse?: SimulatorResponse;
@@ -120,26 +135,121 @@ export const SummarySimulator: React.FC<SummarySimulatorProps> = ({
               openModalProductType={openModalProductType}
             />
           ))}
-          {simulatorResponse?.tobaccoTaxRounded !== undefined &&
-            simulatorResponse.tobaccoTaxRounded > 0 && (
-              <div className="mt-2 flex flex-row justify-between">
-                <Typography color="secondary" weight="bold">
-                  Total taxes tabac
+          {(simulatorResponse?.tobaccoTaxDetails ?? []).length > 0 &&
+            simulatorResponse?.amountProducts?.some(
+              (amountProduct) => amountProduct.group === 'allTobaccoProducts',
+            ) && (
+              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                <Typography weight="bold" size="text-sm">
+                  Détail des taxes tabac
                 </Typography>
-                <Typography color="primary" weight="bold">
-                  {simulatorResponse.tobaccoTaxRounded.toFixed(2)} €
-                </Typography>
+                {Object.entries(
+                  simulatorResponse.tobaccoTaxDetails.reduce((acc, detail) => {
+                    const { type } = detail;
+                    if (!acc[type]) {
+                      acc[type] = {
+                        details: [],
+                        amount: 0,
+                        totalPrice: 0,
+                        totalExcise: 0,
+                        totalCustomsDuty: 0,
+                        totalVat: 0,
+                        total: 0,
+                      };
+                    }
+                    acc[type].details.push(detail);
+                    acc[type].amount += detail.amount;
+                    acc[type].totalPrice += detail.priceInEuros || 0 / detail.amount;
+                    acc[type].totalExcise += detail.details.excise1 + detail.details.excise2;
+                    acc[type].totalCustomsDuty += detail.details.customsDuty;
+                    acc[type].totalVat += detail.details.vat;
+                    acc[type].total += detail.tax;
+                    return acc;
+                  }, {} as Record<string, any>),
+                ).map(([type, group]) => (
+                  <div key={type} className="flex justify-between text-sm mb-1">
+                    <span>{type}</span>
+                    <div className="flex flex-col items-end">
+                      <span>Prix total au dessus du seuil : {group.totalPrice.toFixed(2)} €</span>
+                      <span>Accises totales : {group.totalExcise.toFixed(2)} €</span>
+                      <span>Droits de douane totaux : {group.totalCustomsDuty.toFixed(2)} €</span>
+                      <span>TVA totale : {group.totalVat.toFixed(2)} €</span>
+                      <span className="font-bold">Total : {group.total.toFixed(2)} €</span>
+                    </div>
+                  </div>
+                ))}
+                <div className="mt-2 pt-2 border-t border-gray-200">
+                  <div className="flex justify-between">
+                    <Typography weight="bold" size="text-base">
+                      Total taxes tabac
+                    </Typography>
+                    <Typography weight="bold" size="text-base">
+                      {simulatorResponse.tobaccoTaxRounded.toFixed(2)} €
+                    </Typography>
+                  </div>
+                </div>
               </div>
             )}
-          {simulatorResponse?.alcoholTaxRounded !== undefined &&
-            simulatorResponse.alcoholTaxRounded > 0 && (
-              <div className="mt-2 flex flex-row justify-between">
-                <Typography color="secondary" weight="bold">
-                  Total taxes alcool
+          {(simulatorResponse?.alcoholTaxDetails ?? []).length > 0 &&
+            simulatorResponse?.amountProducts?.some(
+              (amountProduct) =>
+                amountProduct.group === 'groupedAlcohol' ||
+                amountProduct.group === 'beer' ||
+                amountProduct.group === 'wine',
+            ) && (
+              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                <Typography weight="bold" size="text-sm">
+                  Détail des taxes alcool
                 </Typography>
-                <Typography color="primary" weight="bold">
-                  {simulatorResponse.alcoholTaxRounded.toFixed(2)} €
-                </Typography>
+                {Object.entries(
+                  simulatorResponse.alcoholTaxDetails.reduce((acc, detail) => {
+                    const { type } = detail;
+                    if (!acc[type]) {
+                      acc[type] = {
+                        details: [],
+                        amount: 0,
+                        totalPrice: 0,
+                        totalExcise: 0,
+                        totalCss: 0,
+                        totalCustomsDuty: 0,
+                        totalVat: 0,
+                        total: 0,
+                      };
+                    }
+                    acc[type].details.push(detail);
+                    acc[type].amount += detail.amount;
+                    acc[type].totalPrice += (detail.priceInEuros || 0) / detail.amount;
+                    acc[type].totalExcise += detail.details.excise;
+                    acc[type].totalCss += detail.details.css;
+                    acc[type].totalCustomsDuty += detail.details.customsDuty;
+                    acc[type].totalVat += detail.details.vat;
+                    acc[type].total += detail.tax;
+                    return acc;
+                  }, {} as Record<string, any>),
+                ).map(([type, group]) => (
+                  <div key={type} className="flex justify-between text-sm mb-1">
+                    <span>{formatAlcoholType(type)}</span>
+                    <div className="flex flex-col items-end">
+                      <span>Prix total au dessus du seuil : {group.totalPrice.toFixed(2)} €</span>
+                      <span>
+                        Accises totales : {(group.totalExcise + group.totalCss).toFixed(2)} €
+                      </span>
+                      <span>Droits de douane totaux : {group.totalCustomsDuty.toFixed(2)} €</span>
+                      <span>TVA totale : {group.totalVat.toFixed(2)} €</span>
+                      <span className="font-bold">Total : {group.total.toFixed(2)} €</span>
+                    </div>
+                  </div>
+                ))}
+                <div className="mt-2 pt-2 border-t border-gray-200">
+                  <div className="flex justify-between">
+                    <Typography weight="bold" size="text-base">
+                      Total taxes alcool
+                    </Typography>
+                    <Typography weight="bold" size="text-base">
+                      {simulatorResponse.alcoholTaxRounded.toFixed(2)} €
+                    </Typography>
+                  </div>
+                </div>
               </div>
             )}
           <div className="-mx-4 my-4 border-b-2 border-dashed" />

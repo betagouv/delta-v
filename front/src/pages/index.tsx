@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import shallow from 'zustand/shallow';
@@ -21,12 +21,25 @@ import { Routing } from '@/utils/const';
 // import { getLevelWithData as getDeclarationLevelWithData } from '@/utils/declaration';
 import { getLevelWithData } from '@/utils/simulator';
 
+// Date de fin de la bannière (3 mois à partir d'aujourd'hui)
+const BANNER_END_DATE = new Date();
+BANNER_END_DATE.setMonth(BANNER_END_DATE.getMonth() + 3);
+
 const Index = () => {
   const [openModalUnderConstruction, setOpenModalUnderConstruction] = useState<boolean>(false);
   const [openModalResumeSimulator, setOpenModalResumeSimulator] = useState<boolean>(false);
   const [openModalResumeDeclaration, setOpenModalResumeDeclaration] = useState<boolean>(false);
+  const [showBanner, setShowBanner] = useState<boolean>(true);
 
   const router = useRouter();
+
+  useEffect(() => {
+    // Vérifier si la bannière doit être affichée ou non
+    const now = new Date();
+    if (now > BANNER_END_DATE) {
+      setShowBanner(false);
+    }
+  }, []);
 
   const { simulatorRequest } = useStore(
     (state) => ({
@@ -68,11 +81,13 @@ const Index = () => {
       </div>
 
       {/* Bandeau d'information pour la nouvelle fonctionnalité */}
-      <div className="mb-4 rounded-lg bg-primary-100 p-4 text-center">
-        <Typography color="primary" weight="bold">
-          Nouveau : calcul des droits et taxes des alcools et tabacs
-        </Typography>
-      </div>
+      {showBanner && (
+        <div className="mb-4 rounded-lg bg-primary-100 p-4 text-center">
+          <Typography color="primary" weight="bold">
+            Nouveau : calcul des droits et taxes des alcools et tabacs
+          </Typography>
+        </div>
+      )}
 
       <div className="mb-1 flex flex-col gap-6">
         <div>

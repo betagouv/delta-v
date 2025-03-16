@@ -143,8 +143,6 @@ export class AlcoholTaxCalculator {
         console.log('exciseNetRate', exciseNetRate);
       }
 
-      console.log('exciseNetRate', exciseNetRate);
-
       const exciseTotal = exciseNetRate * liters;
       const cssTotal = rates.cssRate * liters;
 

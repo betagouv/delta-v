@@ -131,12 +131,12 @@ export class TobaccoTaxCalculator {
       const finalExcise =
         totalExcise <= threshold ? Math.round(threshold) : Math.round(totalExcise);
 
-      // Calcul des droits de douane (20% du prix)
-      const customsDuty = Math.round(priceInEuros * 0.2 * 100) / 100;
+      // Calcul des droits de douane
+      const customsDuty = Math.round(priceInEuros * rates.customDutyRate * 100) / 100;
 
       // Calcul de la TVA (20% sur prix + accise + droits de douane)
       const vatBase = priceInEuros + finalExcise + customsDuty;
-      const vat = Math.round(vatBase * 0.2 * 100) / 100;
+      const vat = Math.round(vatBase * rates.vatRate * 100) / 100;
 
       // Total des taxes
       const totalTax = finalExcise + customsDuty + vat;
